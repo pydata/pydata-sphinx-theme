@@ -18,11 +18,13 @@ install:
   - conda update conda
   
   # Install pandas + some optional dependencies
-  - conda install pandas matplotlib seaborn jinja2 ipython sphinx ipykernel jinja2
+  - conda install pip pandas matplotlib seaborn jinja2 ipython sphinx ipykernel jinja2
   - conda install -c conda-forge nbsphinx
 
   # install doctr
   - conda install -c conda-forge doctr
+  
+  - pip install sphinx_rtd_theme
 
 script:
   - set -e
