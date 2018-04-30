@@ -29,5 +29,10 @@ script:
   - cd pandas-docs
   - python make.py html
   - cd ..
-  - doctr deploy . --built-docs pandas-docs/build/html/
+  - if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
+      doctr deploy . --built-docs pandas-docs/build/html/;
+    else
+      doctr deploy "pr-$TRAVIS_BRANCH" --built-docs pandas-docs/build/html/ --no-require-master;
+    fi
+
 
