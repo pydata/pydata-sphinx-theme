@@ -532,15 +532,6 @@ Starting with Python 3.6 the order of ``**kwargs`` is preserved. This allows
 for *dependent* assignment, where an expression later in ``**kwargs`` can refer
 to a column created earlier in the same :meth:`~DataFrame.assign`.
 
-.. ipython:: python
-
-   dfa = pd.DataFrame({"A": [1, 2, 3],
-                       "B": [4, 5, 6]})
-   dfa.assign(C=lambda x: x['A'] + x['B'],
-              D=lambda x: x['A'] + x['C'])
-
-In the second expression, ``x['C']`` will refer to the newly created column,
-that's equal to ``dfa['A'] + dfa['B']``.
 
 To write code compatible with all versions of Python, split the assignment in two.
 

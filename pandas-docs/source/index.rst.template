@@ -118,46 +118,16 @@ See the package overview for more detail about what's in the library.
     {{ single_doc }}
     {% endif -%}
     {% if not single_doc -%}
-    whatsnew
     install
     contributing
     overview
-    10min
-    tutorials
-    cookbook
     dsintro
     basics
-    text
-    options
-    indexing
-    advanced
-    computation
-    missing_data
-    groupby
-    merging
-    reshaping
-    timeseries
-    timedeltas
-    categorical
-    visualization
-    style
     io
-    enhancingperf
-    sparse
-    gotchas
-    r_interface
-    ecosystem
-    comparison_with_r
-    comparison_with_sql
-    comparison_with_sas
-    comparison_with_stata
     {% endif -%}
     {% if include_api -%}
     api
     {% endif -%}
     {% if not single_doc -%}
-    developer
-    internals
-    extending
     release
     {% endif -%}
