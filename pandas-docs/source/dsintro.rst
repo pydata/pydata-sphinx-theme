@@ -51,9 +51,9 @@ labels are collectively referred to as the **index**. The basic method to create
 
 Here, ``data`` can be many different things:
 
- - a Python dict
- - an ndarray
- - a scalar value (like 5)
+* a Python dict
+* an ndarray
+* a scalar value (like 5)
 
 The passed **index** is a list of axis labels. Thus, this separates into a few
 cases depending on what **data is**:
@@ -246,12 +246,12 @@ potentially different types. You can think of it like a spreadsheet or SQL
 table, or a dict of Series objects. It is generally the most commonly used
 pandas object. Like Series, DataFrame accepts many different kinds of input:
 
- - Dict of 1D ndarrays, lists, dicts, or Series
- - 2-D numpy.ndarray
- - `Structured or record
-   <http://docs.scipy.org/doc/numpy/user/basics.rec.html>`__ ndarray
- - A ``Series``
- - Another ``DataFrame``
+* Dict of 1D ndarrays, lists, dicts, or Series
+* 2-D numpy.ndarray
+* `Structured or record
+  <http://docs.scipy.org/doc/numpy/user/basics.rec.html>`__ ndarray
+* A ``Series``
+* Another ``DataFrame``
 
 Along with the data, you can optionally pass **index** (row labels) and
 **columns** (column labels) arguments. If you pass an index and / or columns,
@@ -353,7 +353,7 @@ From a list of dicts
 From a dict of tuples
 ~~~~~~~~~~~~~~~~~~~~~
 
-You can automatically create a multi-indexed frame by passing a tuples
+You can automatically create a MultiIndexed frame by passing a tuples
 dictionary.
 
 .. ipython:: python
@@ -532,6 +532,15 @@ Starting with Python 3.6 the order of ``**kwargs`` is preserved. This allows
 for *dependent* assignment, where an expression later in ``**kwargs`` can refer
 to a column created earlier in the same :meth:`~DataFrame.assign`.
 
+.. ipython:: python
+
+   dfa = pd.DataFrame({"A": [1, 2, 3],
+                       "B": [4, 5, 6]})
+   dfa.assign(C=lambda x: x['A'] + x['B'],
+              D=lambda x: x['A'] + x['C'])
+
+In the second expression, ``x['C']`` will refer to the newly created column,
+that's equal to ``dfa['A'] + dfa['B']``.
 
 To write code compatible with all versions of Python, split the assignment in two.
 
@@ -833,10 +842,10 @@ econometric analysis of panel data. However, for the strict purposes of slicing
 and dicing a collection of DataFrame objects, you may find the axis names
 slightly arbitrary:
 
-  - **items**: axis 0, each item corresponds to a DataFrame contained inside
-  - **major_axis**: axis 1, it is the **index** (rows) of each of the
-    DataFrames
-  - **minor_axis**: axis 2, it is the **columns** of each of the DataFrames
+* **items**: axis 0, each item corresponds to a DataFrame contained inside
+* **major_axis**: axis 1, it is the **index** (rows) of each of the
+  DataFrames
+* **minor_axis**: axis 2, it is the **columns** of each of the DataFrames
 
 Construction of Panels works about like you would expect:
 
@@ -1005,7 +1014,7 @@ Deprecate Panel
 Over the last few years, pandas has increased in both breadth and depth, with new features,
 datatype support, and manipulation routines. As a result, supporting efficient indexing and functional
 routines for ``Series``, ``DataFrame`` and ``Panel`` has contributed to an increasingly fragmented and
-difficult-to-understand codebase.
+difficult-to-understand code base.
 
 The 3-D structure of a ``Panel`` is much less common for many types of data analysis,
 than the 1-D of the ``Series`` or the 2-D of the ``DataFrame``. Going forward it makes sense for
@@ -1014,7 +1023,7 @@ pandas to focus on these areas exclusively.
 Oftentimes, one can simply use a MultiIndex ``DataFrame`` for easily working with higher dimensional data.
 
 In addition, the ``xarray`` package was built from the ground up, specifically in order to
-support the multi-dimensional analysis that is one of ``Panel`` s main usecases.
+support the multi-dimensional analysis that is one of ``Panel`` s main use cases.
 `Here is a link to the xarray panel-transition documentation <http://xarray.pydata.org/en/stable/pandas.html#panel-transition>`__.
 
 .. ipython:: python

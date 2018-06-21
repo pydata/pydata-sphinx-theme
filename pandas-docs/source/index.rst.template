@@ -12,7 +12,7 @@ pandas: powerful Python data analysis toolkit
 
 **Date**: |today| **Version**: |version|
 
-**Binary Installers:** http://pypi.python.org/pypi/pandas
+**Binary Installers:** https://pypi.org/project/pandas
 
 **Source Repository:** http://github.com/pandas-dev/pandas
 
@@ -118,16 +118,46 @@ See the package overview for more detail about what's in the library.
     {{ single_doc }}
     {% endif -%}
     {% if not single_doc -%}
+    whatsnew
     install
     contributing
     overview
+    10min
+    tutorials
+    cookbook
     dsintro
     basics
+    text
+    options
+    indexing
+    advanced
+    computation
+    missing_data
+    groupby
+    merging
+    reshaping
+    timeseries
+    timedeltas
+    categorical
+    visualization
+    style
     io
+    enhancingperf
+    sparse
+    gotchas
+    r_interface
+    ecosystem
+    comparison_with_r
+    comparison_with_sql
+    comparison_with_sas
+    comparison_with_stata
     {% endif -%}
     {% if include_api -%}
     api
     {% endif -%}
     {% if not single_doc -%}
+    developer
+    internals
+    extending
     release
     {% endif -%}
