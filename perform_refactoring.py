@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import os
+import sys
+import glob
 import shutil
 
 
@@ -121,6 +123,34 @@ def remove_old_theme(pandas_path):
     print('git rm {}'.format(themes_dir))
 
 
+def clean_refactoring(pandas_path, structure):
+    with open(os.path.join(pandas_path, 'perform_refactoring.py')) as f:
+        script_content = f.read()
+
+    to_delete = []
+
+    doc_dir = os.path.join(pandas_path, 'doc')
+    to_delete.append(os.path.join(doc_dir, 'test.json'))
+
+    source_dir = os.path.join(doc_dir, 'source')
+    to_delete += [os.path.join(source_dir, d) for d in structure.keys()]
+    to_delete += glob.glob(os.path.join(source_dir, '_static', '*.html'))
+    to_delete += [os.path.join(source_dir, f) for f in ('index.rst',
+                                                        'styled.xlsx',
+                                                        'savefig',
+                                                        'templates')]
+    for fname in to_delete:
+        if os.path.isfile(fname):
+            os.remove(fname)
+        elif os.path.isdir(fname):
+            shutil.rmtree(fname)
+
+    os.system('git reset --hard HEAD')
+
+    with open(os.path.join(pandas_path, 'perform_refactoring.py'), 'w') as f:
+        f.write(script_content)
+
+
 def main(pandas_path):
     change_rst_structure(pandas_path, STRUCTURE)
     add_dependencies(pandas_path)
@@ -131,4 +161,10 @@ def main(pandas_path):
 if __name__ == '__main__':
     # TODO replace by path to pandas, not this repo, when ready to refactor it
     pandas_path = BASE_PATH
-    main(pandas_path)
+
+    if len(sys.argv) == 1:
+        main(pandas_path)
+    elif len(sys.argv) == 2 and sys.argv[1] == 'clean':
+        clean_refactoring(pandas_path, STRUCTURE)
+    else:
+        raise RuntimeError('Arguments {} not understood'.format(sys.argv[1:]))
