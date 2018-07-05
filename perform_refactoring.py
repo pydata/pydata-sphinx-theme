@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import os
+import shutil
+
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -46,32 +48,47 @@ def change_rst_structure(pandas_path, structure):
     """
     Move rst files into subdirectories of the source directory.
     """
-    source_path = os.path.join(pandas_path, 'doc', 'source')
+    source_path = os.path.join('doc', 'source')
 
     for dirname, fnames in structure.items():
         dirname = os.path.join(source_path, dirname)
-        os.makedirs(dirname, exist_ok=True)
+        os.makedirs(os.path.join(pandas_path, dirname), exist_ok=True)
 
+        sources = []
         for fname in fnames:
             source = os.path.join(source_path, fname + '.rst')
             target = os.path.join(dirname, fname + '.rst')
             try:
-                os.rename(source, target)
+                os.rename(os.path.join(pandas_path, source),
+                          os.path.join(pandas_path, target))
             except FileNotFoundError:
                 pass
+            sources.append(source)
+
+        print('git add {}'.format(dirname))
+        print('git rm {}'.format(' '.join(sources)))
 
 
 def add_dependencies(pandas_path):
-    requirements = os.path.join(pandas_path, 'ci', 'environment-dev.yaml')
-    with open(requirements, 'a') as f:
+    """
+    Adding the new theme to the dependencies.
+    """
+    fname = os.path.join('ci', 'environment-dev.yaml')
+    with open(os.path.join(pandas_path, fname), 'a') as f:
         f.write('  - sphinx_bootstrap_theme\n')
+
+    print('git add {}'.format(fname))
 
 
 def update_conf(pandas_path):
+    """
+    Make changes to the documentation configuration file to use the new theme
+    with the desired settings.
+    """
     fname = os.path.join(pandas_path, 'doc', 'source', 'conf.py')
 
     content = []
-    with open(fname) as f:
+    with open(os.path.join(pandas_path, fname)) as f:
         for line in f:
             if line == 'import warnings\n':
                 line = 'import warnings\n'
@@ -86,15 +103,29 @@ def update_conf(pandas_path):
                 line += 'sphinx_bootstrap_theme.get_html_theme_path()\n'
             content.append(line)
 
-    with open(fname, 'w') as f:
+    with open(os.path.join(pandas_path, fname), 'w') as f:
         for line in content:
             f.write(line)
+
+    print('git add {}'.format(fname))
+
+
+def remove_old_theme(pandas_path):
+    """
+    Remove the old theme. Do it by removing the whole themes directory, as the
+    new theme is installed as a dependency.
+    """
+    themes_dir = os.path.join('doc', 'source', 'themes')
+    shutil.rmtree(themes_dir)
+
+    print('git rm {}'.format(themes_dir))
 
 
 def main(pandas_path):
     change_rst_structure(pandas_path, STRUCTURE)
     add_dependencies(pandas_path)
     update_conf(pandas_path)
+    remove_old_theme(pandas_path)
 
 
 if __name__ == '__main__':
