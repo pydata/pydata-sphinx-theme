@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -66,9 +67,34 @@ def add_dependencies(pandas_path):
         f.write('  - sphinx_bootstrap_theme\n')
 
 
+def update_conf(pandas_path):
+    fname = os.path.join(pandas_path, 'doc', 'source', 'conf.py')
+
+    content = []
+    with open(fname) as f:
+        for line in f:
+            if line == 'import warnings\n':
+                line = 'import warnings\n'
+                line += 'import sphinx_bootstrap_theme\n'
+            if line == "html_theme = 'nature_with_gtoc'\n":
+                line = "html_theme = 'sphinx_bootstrap_theme'\n"
+            elif line == "# html_theme_options = {}\n":
+                line = 'html_theme_options = {\n'
+                line += '}\n'
+            elif line == "html_theme_path = ['themes']\n":
+                line = 'html_theme_path = '
+                line += 'sphinx_bootstrap_theme.get_html_theme_path()\n'
+            content.append(line)
+
+    with open(fname, 'w') as f:
+        for line in content:
+            f.write(line)
+
+
 def main(pandas_path):
     change_rst_structure(pandas_path, STRUCTURE)
     add_dependencies(pandas_path)
+    update_conf(pandas_path)
 
 
 if __name__ == '__main__':
