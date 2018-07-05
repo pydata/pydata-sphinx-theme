@@ -77,7 +77,7 @@ def update_conf(pandas_path):
                 line = 'import warnings\n'
                 line += 'import sphinx_bootstrap_theme\n'
             if line == "html_theme = 'nature_with_gtoc'\n":
-                line = "html_theme = 'sphinx_bootstrap_theme'\n"
+                line = "html_theme = 'bootstrap'\n"
             elif line == "# html_theme_options = {}\n":
                 line = 'html_theme_options = {\n'
                 line += '}\n'
