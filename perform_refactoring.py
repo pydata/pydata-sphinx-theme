@@ -31,7 +31,8 @@ STRUCTURE = {
                    'io.rst',
                    'enhancingperf.rst',
                    'sparse.rst',
-                   'gotchas.rst'],
+                   'gotchas.rst',
+                   'style.ipynb'],
     'ecosystem': ['comparison_with_r.rst',
                   'comparison_with_sas.rst',
                   'comparison_with_sql.rst',
@@ -43,7 +44,8 @@ STRUCTURE = {
                    'developer.rst',
                    'internals.rst',
                    'extending.rst'],
-    'installation': ['release.rst',
+    'installation': ['install.rst',
+                     'release.rst',
                      'whatsnew.rst',
                      'whatsnew'],
 }
@@ -98,14 +100,27 @@ def update_conf(pandas_path):
             if line == 'import warnings\n':
                 line = 'import warnings\n'
                 line += 'import sphinx_bootstrap_theme\n'
-            if line == "html_theme = 'nature_with_gtoc'\n":
+            elif line == "html_theme = 'nature_with_gtoc'\n":
                 line = "html_theme = 'bootstrap'\n"
             elif line == "# html_theme_options = {}\n":
                 line = 'html_theme_options = {\n'
+                line += "    'navbar_title': ' ',  # name replaced by logo\n"
+                line += "    'navbar_pagenav': False,  # no 'Page' dropdown\n"
+                line += "    'navbar_sidebarrel': False,  # no prev/next links\n"
+                line += "    'source_link_position': 'footer',\n"
+                line += "    'navbar_class': 'navbar navbar-inverse',  # black navbar\n"
+                line += "    'navbar_links': [\n"
+                line += "        ('About', 'about'),\n"
+                line += "        ('Documentation', 'docs'),\n"
+                line += "        ('Community', 'community'),\n"
+                line += "        ('Donate', 'donate'),\n"
+                line += '    ],\n'
                 line += '}\n'
             elif line == "html_theme_path = ['themes']\n":
                 line = 'html_theme_path = '
                 line += 'sphinx_bootstrap_theme.get_html_theme_path()\n'
+            elif line == '# html_logo = None\n':
+                line = "html_logo = 'pandas_logo.svg'\n"
             content.append(line)
 
     with open(os.path.join(pandas_path, fname), 'w') as f:
@@ -126,22 +141,31 @@ def remove_old_theme(pandas_path):
     print('git rm {}'.format(themes_dir))
 
 
+def copy_logo(pandas_path):
+    logo_fname = os.path.join('doc', 'logo', 'pandas_logo.svg')
+    target_dir = os.path.join('doc', 'source', '_static')
+    shutil.copy2(os.path.join(pandas_path, logo_fname),
+                 os.path.join(pandas_path, target_dir))
+
+    print('git add {}'.format(logo_fname))
+
+
 def clean_refactoring(pandas_path, structure):
     with open(os.path.join(pandas_path, 'perform_refactoring.py')) as f:
         script_content = f.read()
 
     to_delete = []
 
-    doc_dir = os.path.join(pandas_path, 'doc')
-    to_delete.append(os.path.join(doc_dir, 'test.json'))
+    to_delete.append(os.path.join(pandas_path, 'test.json'))
 
-    source_dir = os.path.join(doc_dir, 'source')
+    source_dir = os.path.join(pandas_path, 'doc', 'source')
     to_delete += [os.path.join(source_dir, d) for d in structure.keys()]
     to_delete += glob.glob(os.path.join(source_dir, '_static', '*.html'))
     to_delete += [os.path.join(source_dir, f) for f in ('index.rst',
                                                         'styled.xlsx',
                                                         'savefig',
-                                                        'templates')]
+                                                        'templates',
+                                                        'generated')]
     for fname in to_delete:
         if os.path.isfile(fname):
             os.remove(fname)
@@ -159,6 +183,7 @@ def main(pandas_path):
     add_dependencies(pandas_path)
     update_conf(pandas_path)
     remove_old_theme(pandas_path)
+    copy_logo(pandas_path)
 
 
 if __name__ == '__main__':

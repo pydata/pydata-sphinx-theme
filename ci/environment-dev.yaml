@@ -14,3 +14,4 @@ dependencies:
   - setuptools>=24.2.0
   - sphinx
   - sphinxcontrib-spelling
+  - sphinx_bootstrap_theme
