@@ -188,6 +188,15 @@ def clean_refactoring(pandas_path, structure):
                                                         'savefig',
                                                         'templates',
                                                         'generated')]
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    new_files_dir = os.path.join(base_dir, 'new_files')
+    for dirname, dirs, fnames in os.walk(new_files_dir):
+        for fname in fnames:
+            target_dirs = dirname.split('new_files')[-1] .split(os.path.sep)
+            target_dir = os.path.join('doc', *target_dirs)
+            to_delete.append(os.path.join(pandas_path, target_dir, fname))
+
     for fname in to_delete:
         if os.path.isfile(fname):
             os.remove(fname)
