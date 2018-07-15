@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>pandas: powerful Python data analysis toolkit</h1>
+
+    <p>
+        pandas is an open source, BSD-licensed library providing high-performance,
+        easy-to-use data structures and data analysis tools for the Python programming language.
+    </p>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Getting started</h3>
+                <ul>
+                    <li><a href="{{ pathto("overview") }}">Overview</a></li>
+                    <li><a href="{{ pathto("10min") }}">10 minutes to pandas</a></li>
+                    <li><a href="{{ pathto("tutorials") }}">Tutorials</a></li>
+                    <li><a href="{{ pathto("cookbook") }}">Cookbook</a></li>
+                    <li><a href="{{ pathto("dsintro") }}">Intro to data structures</a></li>
+                    <li><a href="{{ pathto("basics") }}">Essential basic functionality</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Installation</h3>
+                <ul>
+                        <li><a href="{{ pathto("install") }}">Installation instructions</a></li>
+                        <li><a href="https://pypi.org/project/pandas">Binary installers</a></li>
+                        <li><a href="{{ pathto("whatsnew") }}">What's new</a></li>
+                        <li><a href="{{ pathto("release") }}">Release notes</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Contents</h3>
+                <ul>
+                    <li><a href="{{ pathto("text") }}">Working with Text Data</a></li>
+                    <li><a href="{{ pathto("options") }}">Options and Settings</a></li>
+                    <li><a href="{{ pathto("indexing") }}">Indexing and Selecting Data</a></li>
+                    <li><a href="{{ pathto("advanced") }}">MultiIndex / Advanced Indexing</a></li>
+                    <li><a href="{{ pathto("computation") }}">Computational tools</a></li>
+                    <li><a href="{{ pathto("missing_data") }}">Working with missing data</a></li>
+                    <li><a href="{{ pathto("groupby") }}">Group By: split-apply-combine</a></li>
+                    <li><a href="{{ pathto("merging") }}">Merge, join, and concatenate</a></li>
+                    <li><a href="{{ pathto("reshaping") }}">Reshaping and Pivot Tables</a></li>
+                    <li><a href="{{ pathto("timseries") }}">Time Series / Date functionality</a></li>
+                    <li><a href="{{ pathto("timedeltas") }}">Time Deltas</a></li>
+                    <li><a href="{{ pathto("categorical") }}">Categorical Data</a></li>
+                    <li><a href="{{ pathto("visualization") }}">Visualization</a></li>
+                    <li><a href="{{ pathto("style") }}">Styling</a></li>
+                    <li><a href="{{ pathto("io") }}">IO Tools (Text, CSV, HDF5, …)</a></li>
+                    <li><a href="{{ pathto("enhancingperf") }}">Enhancing Performance</a></li>
+                    <li><a href="{{ pathto("sparse") }}">Sparse data structures</a></li>
+                    <li><a href="{{ pathto("gotchas") }}">Frequently Asked Questions (FAQ)</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>API</h3>
+                <ul>
+                    <li><a href="{{ pathto("api") }}">Input/Output</a></li>
+                    <li><a href="{{ pathto("api") }}">General functions</a></li>
+                    <li><a href="{{ pathto("api") }}">Series</a></li>
+                    <li><a href="{{ pathto("api") }}">DataFrame</a></li>
+                    <li><a href="{{ pathto("api") }}">Panel</a></li>
+                    <li><a href="{{ pathto("api") }}">Index</a></li>
+                    <li><a href="{{ pathto("api") }}">Scalars</a></li>
+                    <li><a href="{{ pathto("api") }}">Frequencies</a></li>
+                    <li><a href="{{ pathto("api") }}">Window</a></li>
+                    <li><a href="{{ pathto("api") }}">GroupBy</a></li>
+                    <li><a href="{{ pathto("api") }}">Resampling</a></li>
+                    <li><a href="{{ pathto("api") }}">Style</a></li>
+                    <li><a href="{{ pathto("api") }}">Plotting</a></li>
+                    <li><a href="{{ pathto("api") }}">General utility functions</a></li>
+                    <li><a href="{{ pathto("api") }}">Extensions</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Ecosystem</h3>
+                <ul>
+                    <li><a href="{{ pathto("r_interface") }}">rpy2 / R interface</a></li>
+                    <li><a href="{{ pathto("ecosystem") }}">pandas ecosystem</a></li>
+                    <li><a href="{{ pathto("comparison_with_r") }}">Comparison with R / R libraries</a></li>
+                    <li><a href="{{ pathto("comparison_with_sql") }}">Comparison with SQL</a></li>
+                    <li><a href="{{ pathto("comparison_with_sas") }}">Comparison with SAS</a></li>
+                    <li><a href="{{ pathto("comparison_with_stata") }}">Comparison with Stata</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Development</h3>
+                <ul>
+                    <li><a href="{{ pathto("contributing") }}">Contributing to pandas</a></li>
+                    <li><a href="{{ pathto("developers") }}">Developer</a></li>
+                    <li><a href="{{ pathto("extending") }}">Extending pandas</a></li>
+                    <li><a href="{{ pathto("internals") }}">Internals</a></li>
+                    <li><a href="http://github.com/pandas-dev/pandas">Source repository</a></li>
+                    <li><a href="https://github.com/pandas-dev/pandas/issues">Issues &amp; ideas</a></li>
+                    <li><a href="http://stackoverflow.com/questions/tagged/pandas">Q&amp;A support</a></li>
+                    <li><a href="http://groups.google.com/group/pydata">Developer mailing list</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

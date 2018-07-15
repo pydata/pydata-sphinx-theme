@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block sidebar1 %}{% endblock %}
+
+{% block body %}
+    <h1>Community</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Development</h3>
+                <ul>
+                    <li><a href="{{ pathto("contributing") }}">Contributing to pandas</a></li>
+                    <li><a href="{{ pathto("developers") }}">Developer</a></li>
+                    <li><a href="{{ pathto("extending") }}">Extending pandas</a></li>
+                    <li><a href="{{ pathto("internals") }}">Internals</a></li>
+                    <li><a href="http://github.com/pandas-dev/pandas">Source repository</a></li>
+                    <li><a href="https://github.com/pandas-dev/pandas/issues">Issues &amp; ideas</a></li>
+                    <li><a href="http://stackoverflow.com/questions/tagged/pandas">Q&amp;A support - StackOverflow</a></li>
+                    <li><a href="http://groups.google.com/group/pydata">Developer mailing list</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
