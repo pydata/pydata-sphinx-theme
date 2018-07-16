@@ -26,13 +26,13 @@ install:
 
 script:
   - set -e
-  - cd pandas-docs
+  - cd docs
   - python make.py html
   - cd ..
   - if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
-      doctr deploy . --built-docs pandas-docs/build/html/;
+      doctr deploy . --built-docs docs/build/html/;
     else
-      doctr deploy "pr-$TRAVIS_BRANCH" --built-docs pandas-docs/build/html/ --no-require-master;
+      doctr deploy "pr-$TRAVIS_BRANCH" --built-docs docs/build/html/ --no-require-master;
     fi
 
 
