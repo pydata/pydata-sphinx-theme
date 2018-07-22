@@ -229,7 +229,7 @@ def clean_refactoring(pandas_path, structure):
 
     os.system('git checkout {}'.format(
         os.path.join(pandas_path, 'ci', 'environment-dev.yaml')))
-    os.system('git reset {} --hard HEAD'.format(
+    os.system('git checkout -- {}'.format(
         os.path.join(pandas_path, 'doc')))
 
     with open(os.path.join(pandas_path, 'perform_refactoring.py'), 'w') as f:

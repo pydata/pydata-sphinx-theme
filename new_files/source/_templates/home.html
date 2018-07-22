@@ -1,21 +1,59 @@
 {% extends "layout.html" %}
 
+{% block sidebar1 %}{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <h1>pandas: powerful Python data analysis toolkit</h1>
 
                 <p>
                     pandas is an open source, BSD-licensed library providing high-performance,
                     easy-to-use data structures and data analysis tools for the Python programming language.
                 </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                          <img class="card-img-top" src="_static/easy.jpg" alt="">
+                          <div class="card-body">
+                            <h4 class="card-title"><a>Easy to use</a></h4>
+                            <p class="card-text">Built for the Python programming language.</p>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card">
+                          <img class="card-img-top" src="_static/fast.jpg" alt="">
+                          <div class="card-body">
+                            <h4 class="card-title"><a>Fast</a></h4>
+                            <p class="card-text">Optimized for working with large volumes of data.</p>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card">
+                          <img class="card-img-top" src="_static/reliable.jpg" alt="">
+                          <div class="card-body">
+                            <h4 class="card-title"><a>Reliable</a></h4>
+                            <p class="card-text">Trusted by millions of users.</p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
                 <h3>Getting started with pandas</h3>
                 <ul>
                     <li><a href="{{ pathto("install") }}">Installation instructions</a></li>
                     <li><a href="{{ pathto("overview") }}">Package overview</a></li>
-                    <li>Tutorials
+                    <li>Tutorials:
                         <ul>
                             <li><a href="{{ pathto("getting_started/tutorial1") }}">Part 1: Exploring the Titanic dataset</a></li>
                             <li><a href="{{ pathto("getting_started/tutorial2") }}">Part 2: Series, DataFrame, Index and types</a></li>
@@ -29,6 +67,38 @@
                         <li><a href="{{ pathto("api") }}">API reference</a></li>
                         <li><a href="{{ pathto("contributing") }}">Contributing to pandas and the ecosystem</a></li>
                 </ul>
+
+                <h3>Institutional Partners</h3>
+                <p>Institutional Partners are companies and universities that support the project by employing contributors.
+                   Current Institutional Partners include:</p>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="reference external image-reference"
+                           href="https://www.numfocus.org/">
+                               <img alt="NumFOCUS"
+                                    src="_static/numfocus.png"/></a></div>
+
+                    <div class="col-md-6">
+                        <a class="reference external image-reference"
+                           href="https://www.continuum.io/">
+                               <img alt="Anaconda"
+                                    src="_static/anaconda.png"/></a></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="reference external image-reference"
+                           href="https://www.twosigma.com/">
+                               <img alt="Two Sigma"
+                                    src="_static/twosigma.png"/></a></div>
+
+                    <div class="col-md-6">
+                        <a class="reference external image-reference"
+                           href="https://www.datascience-paris-saclay.fr/">
+                               <img alt="Paris-Saclay Center for Data Science"
+                                    src="_static/parissaclay.png"/></a></div>
+                </div>
             </div>
             <div class="col-md-3">
                 <h3>Get the book</h3>
