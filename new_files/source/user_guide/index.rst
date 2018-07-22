@@ -4,22 +4,21 @@ User guide
 .. toctree::
    :maxdepth: 2
 
+   io
    text
-   options
    indexing
    advanced
-   computation
    missing_data
-   groupby
-   merging
-   reshaping
-   timeseries
-   timedeltas
    categorical
    visualization
+   merging
+   reshaping
+   groupby
+   computation
+   timeseries
+   timedeltas
    style
-   io
    enhancingperf
    sparse
+   options
    gotchas
-   style

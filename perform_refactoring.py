@@ -86,16 +86,15 @@ def add_dependencies(pandas_path):
     print('git add {}'.format(fname))
 
 
-def move_templates(pandas_path):
+def copy_templates(pandas_path):
     """
     Move _templates directory in the top doc/ directory to source/.
     """
     source_dir = os.path.join('doc', '_templates')
     target_dir = os.path.join('doc', 'source', '_templates')
-    os.rename(os.path.join(pandas_path, source_dir),
-              os.path.join(pandas_path, target_dir))
+    shutil.copytree(os.path.join(pandas_path, source_dir),
+                    os.path.join(pandas_path, target_dir))
     print('git add {}'.format(target_dir))
-    print('git rm -r {}'.format(source_dir))
 
 
 def update_conf(pandas_path):
@@ -143,10 +142,18 @@ def update_conf(pandas_path):
                 if 'in_additional_pages_block' in locals():
                     del in_additional_pages_block
                     line = '}\n'
+                    line += "html_additional_pages['home'] = "
+                    line += "'home.html'\n"
                     line += "html_additional_pages['community'] = "
                     line += "'community.html'\n"
                     line += "html_additional_pages['donate'] = "
                     line += "'donate.html'\n"
+            elif line == '# html_sidebars = {}\n':
+                line = 'html_sidebars = {\n'
+                line += "    '**': ['localtoc.html'],\n"
+                line += "    'getting_started/index': [],\n"
+                line += "    'user_guide/index': [],\n"
+                line += '}\n'
             elif line == "    app.add_directive('autosummary', PandasAutosummary)\n":
                 line += "    app.add_stylesheet('pandas_styles.css')\n"
             content.append(line)
@@ -220,7 +227,10 @@ def clean_refactoring(pandas_path, structure):
         elif os.path.isdir(fname):
             shutil.rmtree(fname)
 
-    os.system('git reset --hard HEAD')
+    os.system('git checkout {}'.format(
+        os.path.join(pandas_path, 'ci', 'environment-dev.yaml')))
+    os.system('git reset {} --hard HEAD'.format(
+        os.path.join(pandas_path, 'doc')))
 
     with open(os.path.join(pandas_path, 'perform_refactoring.py'), 'w') as f:
         f.write(script_content)
@@ -229,7 +239,7 @@ def clean_refactoring(pandas_path, structure):
 def main(pandas_path):
     change_rst_structure(pandas_path, STRUCTURE)
     add_dependencies(pandas_path)
-    move_templates(pandas_path)
+    copy_templates(pandas_path)
     update_conf(pandas_path)
     remove_old_theme(pandas_path)
     copy_new_files(pandas_path)
