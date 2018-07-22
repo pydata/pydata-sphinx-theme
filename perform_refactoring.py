@@ -8,12 +8,12 @@ import shutil
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 STRUCTURE = {
-    'tutorial': ['overview.rst',
-                 '10min.rst',
-                 'tutorials.rst',
-                 'cookbook.rst',
-                 'dsintro.rst',
-                 'basics.rst'],
+    'getting_started': ['overview.rst',
+                        '10min.rst',
+                        'tutorials.rst',
+                        'cookbook.rst',
+                        'dsintro.rst',
+                        'basics.rst'],
     'user_guide': ['text.rst',
                    'options.rst',
                    'indexing.rst',
@@ -86,6 +86,18 @@ def add_dependencies(pandas_path):
     print('git add {}'.format(fname))
 
 
+def move_templates(pandas_path):
+    """
+    Move _templates directory in the top doc/ directory to source/.
+    """
+    source_dir = os.path.join('doc', '_templates')
+    target_dir = os.path.join('doc', 'source', '_templates')
+    os.rename(os.path.join(pandas_path, source_dir),
+              os.path.join(pandas_path, target_dir))
+    print('git add {}'.format(target_dir))
+    print('git rm -r {}'.format(source_dir))
+
+
 def update_conf(pandas_path):
     """
     Make changes to the documentation configuration file to use the new theme
@@ -111,7 +123,7 @@ def update_conf(pandas_path):
                 line += "    'navbar_class': 'navbar navbar-inverse',  # black navbar\n"
                 line += "    'navbar_links': [\n"
                 line += "        ('Install', 'install'),\n"
-                line += "        ('Tutorial', 'tutorial/index'),\n"
+                line += "        ('Getting started', 'getting_started/index'),\n"
                 line += "        ('User guide', 'user_guide/index'),\n"
                 line += "        ('API', 'api'),\n"
                 line += "        ('Community', 'community'),\n"
@@ -125,6 +137,8 @@ def update_conf(pandas_path):
                 line = "html_logo = 'pandas_logo.png'\n"
             elif line == 'html_additional_pages = {\n':
                 in_additional_pages_block = True
+            elif line == "templates_path = ['../_templates']\n":
+                line = "templates_path = ['_templates']\n"
             elif line == '}\n':
                 if 'in_additional_pages_block' in locals():
                     del in_additional_pages_block
@@ -133,6 +147,8 @@ def update_conf(pandas_path):
                     line += "'community.html'\n"
                     line += "html_additional_pages['donate'] = "
                     line += "'donate.html'\n"
+            elif line == "    app.add_directive('autosummary', PandasAutosummary)\n":
+                line += "    app.add_stylesheet('pandas_styles.css')\n"
             content.append(line)
 
     with open(os.path.join(pandas_path, fname), 'w') as f:
@@ -187,6 +203,7 @@ def clean_refactoring(pandas_path, structure):
                                                         'styled.xlsx',
                                                         'savefig',
                                                         'templates',
+                                                        '_templates',
                                                         'generated')]
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -212,6 +229,7 @@ def clean_refactoring(pandas_path, structure):
 def main(pandas_path):
     change_rst_structure(pandas_path, STRUCTURE)
     add_dependencies(pandas_path)
+    move_templates(pandas_path)
     update_conf(pandas_path)
     remove_old_theme(pandas_path)
     copy_new_files(pandas_path)
