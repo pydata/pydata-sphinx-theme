@@ -26,20 +26,12 @@ install:
 
 script:
   - set -e
-
-  # If the changes are made in doc/ instead of pandas-doc/ and there is a refactoring script
-  # move it to the standard structure of the build (using doc/ and script makes changes easier
-  # to apply in the main pandas doc when we're done with the refactoring
-  - test -e doc && test ! -e pandas-doc && mv doc pandas-doc
-  - test -r perform_refactoring.py && python perform_refactoring.py
-
-  - cd pandas-docs
-  - python make.py html
-  - cd ..
+  - python perform_refactoring.py
+  - python doc/make.py html
   - if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
       doctr deploy . --built-docs pandas-docs/build/html/;
     else
-      doctr deploy "pr-$TRAVIS_BRANCH" --built-docs pandas-docs/build/html/ --no-require-master;
+      doctr deploy "pr-$TRAVIS_BRANCH" --built-docs doc/build/html/ --no-require-master;
     fi
 
 
