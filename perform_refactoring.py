@@ -142,7 +142,7 @@ def update_conf(pandas_path):
                 if 'in_additional_pages_block' in locals():
                     del in_additional_pages_block
                     line = '}\n'
-                    line += "html_additional_pages['home'] = "
+                    line += "html_additional_pages['index'] = "
                     line += "'home.html'\n"
                     line += "html_additional_pages['community'] = "
                     line += "'community.html'\n"
