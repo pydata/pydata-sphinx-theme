@@ -10,19 +10,13 @@ env:
     - secure: "OIFsDAAZT7VA42JxAq9M2TjWmG02+Z/4uEuRQ8VUm7bOfTw12T17iPxV7a80SPzzS0qKikBskz8MZO5Y8W2rbw7pzUxBuBHYIK/0yOOrRLRhtapqHbiECXS3EntJPIts0/m+X48ijJziNk5oMpENnAKUoQHep0H8cEVXR59mdezjx215c6HzNMVLEvlHKHKKd8Mq1jgTAhBls1zU1UX4IUyIAZw1ul9R42KxAWRMvLx8nVtaGHFZNZIQ+S2HQMLt4llZtjT1UhoceYMUsG+w0XiSPXgilVtZUfqsxIMRB1qvmt8w2dTHkdhXd0mOPS8TySjTeAFPEYQZZt/toMDBX5JzbmBlW6GtD+2JPc6x0af2pVJl6aiodIeAlki9DWoVZtwxMFye+uAXVTrJ19Sfru+NrL0ENOc2Asb8jpSEcwRaJ53uLKTfb06MKt79xWa4b17aTv5e3zFC8MH0Q+aCsj1uTsRxXz8nNcnvYguS5i7r3EDC3rmUrpnp8KafPjBaguxvW5c0smcBXEZpHWVJjs2cUXVUnZYbpDWwho0733oxtMsmjR41EzQy9JADX0MYLL0sLiN6Q7zYt6yRPB60o1TOLWEBnl05YHGCjm7OAtmNbUV3HyslRpZhLZ6i86XJoh97yX7RXtTvPWrJIuBieTC40peEzg/eJZMCbBUHcEw="
 
 install:
-  # Install conda
   - wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - conda config --set always_yes yes --set changeps1 no
   - conda update conda
-  
-  # Install pandas + some optional dependencies
   - conda install pandas matplotlib seaborn jinja2 ipython sphinx ipykernel jinja2
-  - conda install -c conda-forge nbsphinx
-
-  # install doctr
-  - conda install -c conda-forge doctr
+  - conda install -c conda-forge nbsphinx doctr sphinx_bootstrap_theme
 
 script:
   - set -e
