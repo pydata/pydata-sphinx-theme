@@ -16,10 +16,10 @@ install:
   - export PATH="$HOME/miniconda/bin:$PATH"
   - conda config --set always_yes yes --set changeps1 no
   - conda update conda
+  - conda config --add channels conda-forge
   
   # Install pandas + some optional dependencies
-  - conda install pandas matplotlib seaborn jinja2 ipython sphinx ipykernel jinja2
-  - conda install -c conda-forge nbsphinx
+  - conda install pandas matplotlib ipython sphinx ipykernel jinja2 numpydoc nbconvert nbsphinx jupyter_client gitpython
 
   # install doctr
   - conda install -c conda-forge doctr
