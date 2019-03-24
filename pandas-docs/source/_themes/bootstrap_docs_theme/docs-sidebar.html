@@ -1,0 +1,12 @@
+<form class="bd-search d-flex align-items-center">
+  <input type="search" class="form-control" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off" >
+
+</form>
+
+<nav class="collapse bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+{# Adding this because our list is not yet with two levels#}
+<div class="bd-toc-item active">
+  {{ toctree(includehidden=theme_sidebar_includehidden, collapse=theme_sidebar_collapse, mindepth=True) }}
+</div>
+</nav>
