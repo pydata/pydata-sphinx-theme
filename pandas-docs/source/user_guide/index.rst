@@ -35,7 +35,6 @@ Further information on any specific method can be obtained in the
     groupby
     timeseries
     timedeltas
-    style
     options
     enhancingperf
     sparse
