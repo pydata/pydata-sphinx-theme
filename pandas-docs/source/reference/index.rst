@@ -27,19 +27,8 @@ public functions related to data types in pandas.
 
    io
    general_functions
-   series
    frame
-   arrays
-   panel
-   indexing
-   offset_frequency
-   window
-   groupby
-   resampling
-   style
-   plotting
-   general_utility_functions
-   extensions
+
 
 .. This is to prevent warnings in the doc build. We don't want to encourage
 .. these methods.
@@ -50,25 +39,5 @@ public functions related to data types in pandas.
         api/pandas.DataFrame.blocks
         api/pandas.DataFrame.as_matrix
         api/pandas.DataFrame.ix
-        api/pandas.Index.asi8
-        api/pandas.Index.data
-        api/pandas.Index.flags
-        api/pandas.Index.holds_integer
-        api/pandas.Index.is_type_compatible
-        api/pandas.Index.nlevels
-        api/pandas.Index.sort
-        api/pandas.Series.asobject
-        api/pandas.Series.blocks
-        api/pandas.Series.from_array
-        api/pandas.Series.ix
-        api/pandas.Series.imag
-        api/pandas.Series.real
 
 
-.. Can't convince sphinx to generate toctree for this class attribute.
-.. So we do it manually to avoid a warning
-
-..
-    .. toctree::
-
-        api/pandas.api.extensions.ExtensionDtype.na_value
