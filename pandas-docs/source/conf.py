@@ -23,6 +23,88 @@ from numpydoc.docscrape_sphinx import SphinxDocString
 
 logger = logging.getLogger(__name__)
 
+
+# -----------------------------------------------------------------------------
+# IPython monkeypath - set all code blocks to verbatim to speed-up doc build
+
+import warnings
+from IPython.sphinxext.ipython_directive import block_parser
+
+
+def run(self):
+    debug = False
+
+    #TODO, any reason block_parser can't be a method of embeddable shell
+    # then we wouldn't have to carry these around
+    rgxin, rgxout, promptin, promptout = self.setup()
+
+    options = self.options
+    self.shell.is_suppress = 'suppress' in options
+    self.shell.is_doctest = 'doctest' in options
+    self.shell.is_verbatim = True  # 'verbatim' in options
+    self.shell.is_okexcept = 'okexcept' in options
+    self.shell.is_okwarning = 'okwarning' in options
+
+    # handle pure python code
+    if 'python' in self.arguments:
+        content = self.content
+        self.content = self.shell.process_pure_python(content)
+
+    # parts consists of all text within the ipython-block.
+    # Each part is an input/output block.
+    parts = '\n'.join(self.content).split('\n\n')
+
+    lines = ['.. code-block:: ipython', '']
+    figures = []
+
+    for part in parts:
+        block = block_parser(part, rgxin, rgxout, promptin, promptout)
+        if len(block):
+            rows, figure = self.shell.process_block(block)
+            for row in rows:
+                lines.extend(['   {0}'.format(line)
+                                for line in row.split('\n')])
+
+            if figure is not None:
+                figures.append(figure)
+        else:
+            message = 'Code input with no code at {}, line {}'\
+                        .format(
+                            self.state.document.current_source,
+                            self.state.document.current_line)
+            if self.shell.warning_is_error:
+                raise RuntimeError(message)
+            else:
+                warnings.warn(message)
+
+    for figure in figures:
+        lines.append('')
+        lines.extend(figure.split('\n'))
+        lines.append('')
+
+    if len(lines) > 2:
+        if debug:
+            print('\n'.join(lines))
+        else:
+            # This has to do with input, not output. But if we comment
+            # these lines out, then no IPython code will appear in the
+            # final output.
+            self.state_machine.insert_input(
+                lines, self.state_machine.input_lines.source(0))
+
+    # cleanup
+    self.teardown()
+
+    return []
+
+
+import IPython.sphinxext.ipython_directive
+IPython.sphinxext.ipython_directive.IPythonDirective.run = run
+
+
+# -----------------------------------------------------------------------------
+
+
 # https://github.com/sphinx-doc/sphinx/pull/2325/files
 # Workaround for sphinx-build recursion limit overflow:
 # pickle.dump(doctree, f, pickle.HIGHEST_PROTOCOL)
