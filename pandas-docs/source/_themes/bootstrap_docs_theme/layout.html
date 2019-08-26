@@ -16,16 +16,16 @@
               {% endif %}
           </div>
           
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              {% if not pagename.endswith('index') and not '/api/' in pagename %}
+                {%- include "docs-toc.html" %}
+              {% endif %}
+            </div>
+
           <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
             {% block body %} {% endblock %}
           </main>
-          
-          <div class="d-none d-xl-block col-xl-2">
-            {% if not pagename.endswith('index') and not '/api/' in pagename %}
-              {%- include "docs-toc.html" %}
-            {% endif %}
-          </div>
-          
+
       </div>
     </div>
 

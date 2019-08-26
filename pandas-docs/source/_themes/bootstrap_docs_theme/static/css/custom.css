@@ -23,3 +23,155 @@
     margin-left: -15px;
     border-bottom: 1px solid rgba(0,0,0,.05);
 }
+
+
+/* minimal copy paste from bootstrap docs css to get sidebars working */
+
+.bd-toc {
+    -ms-flex-order: 2;
+    order: 2;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    font-size: 0.875rem;
+  }
+  
+  @supports ((position: -webkit-sticky) or (position: sticky)) {
+    .bd-toc {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 4rem;
+      height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+  }
+  
+  .section-nav {
+    padding-left: 0;
+    border-left: 1px solid #eee;
+  }
+  
+  .section-nav ul {
+    padding-left: 1rem;
+  }
+  
+  .toc-entry {
+    display: block;
+  }
+  
+  .toc-entry a {
+    display: block;
+    padding: .125rem 1.5rem;
+    color: #77757a;
+  }
+  
+  .toc-entry a:hover {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+
+  .bd-sidebar {
+    -ms-flex-order: 0;
+    order: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (min-width: 768px) {
+    .bd-sidebar {
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    @supports ((position: -webkit-sticky) or (position: sticky)) {
+      .bd-sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 4rem;
+        z-index: 1000;
+        height: calc(100vh - 4rem);
+      }
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .bd-sidebar {
+      -ms-flex: 0 1 320px;
+      flex: 0 1 320px;
+    }
+  }
+  
+  .bd-links {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  
+  @media (min-width: 768px) {
+    @supports ((position: -webkit-sticky) or (position: sticky)) {
+      .bd-links {
+        max-height: calc(100vh - 9rem);
+        overflow-y: auto;
+      }
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .bd-links {
+      display: block !important;
+    }
+  }
+  
+  .bd-sidenav {
+    display: none;
+  }
+  
+  .bd-toc-link {
+    display: block;
+    padding: .25rem 1.5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.65);
+  }
+  
+  .bd-toc-link:hover {
+    color: rgba(0, 0, 0, 0.85);
+    text-decoration: none;
+  }
+  
+  .bd-toc-item.active {
+    margin-bottom: 1rem;
+  }
+  
+  .bd-toc-item.active:not(:first-child) {
+    margin-top: 1rem;
+  }
+  
+  .bd-toc-item.active > .bd-toc-link {
+    color: rgba(0, 0, 0, 0.85);
+  }
+  
+  .bd-toc-item.active > .bd-toc-link:hover {
+    background-color: transparent;
+  }
+  
+  .bd-toc-item.active > .bd-sidenav {
+    display: block;
+  }
+  
+  .bd-sidebar .nav > li > a {
+    display: block;
+    padding: .25rem 1.5rem;
+    font-size: 90%;
+    color: rgba(0, 0, 0, 0.65);
+  }
+  
+  .bd-sidebar .nav > li > a:hover {
+    color: rgba(0, 0, 0, 0.85);
+    text-decoration: none;
+    background-color: transparent;
+  }
+  
+  .bd-sidebar .nav > .active > a,
+  .bd-sidebar .nav > .active:hover > a {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.85);
+    background-color: transparent;
+  }
