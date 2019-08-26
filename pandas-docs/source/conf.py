@@ -143,6 +143,7 @@ def get_toc_for(self, docname, builder):
 def get_toctree_for(self, docname, builder, collapse, **kwds):
     # type: (str, Builder, bool, Any) -> nodes.Element
     """Return the global TOC nodetree."""
+    #import pdb; pdb.set_trace()
     doctree = self.env.get_doctree(self.env.config.master_doc)
     toctrees = []  # type: List[nodes.Element]
     if 'includehidden' not in kwds:
@@ -184,6 +185,49 @@ import sphinx.environment.adapters.toctree
 sphinx.environment.adapters.toctree.TocTree.get_toc_for = get_toc_for
 sphinx.environment.adapters.toctree.TocTree.get_toctree_for = get_toctree_for
 
+
+def convert_docutils_node(list_item):
+    reference = list_item.children[0].children[0]
+    title = reference.children[0].astext()
+    url = reference.attributes['refuri']
+    active = 'current' in list_item.attributes['classes']
+
+    nav = {}
+    nav['title'] = title
+    nav['url'] = url
+    nav['children'] = []
+    nav['active'] = active
+    
+    if len(list_item.children) > 1:
+        for child_item in list_item.children[1].children:
+            child_nav = convert_docutils_node(child_item)
+            nav['children'].append(child_nav)
+
+    return nav
+
+
+def update_page_context(self, pagename, templatename, ctx, event_arg):
+    from sphinx.environment.adapters.toctree import TocTree
+
+    def get_nav_object(**kwds):
+        
+        toctree = TocTree(self.env).get_toctree_for(
+            pagename, self, collapse=True, **kwds)
+
+        nav = []
+        for child in toctree.children[0].children:
+            child_nav = convert_docutils_node(child)
+            nav.append(child_nav)
+
+        return nav
+    
+    #import pdb; pdb.set_trace()
+    ctx['get_nav_object'] = get_nav_object
+    return None
+
+
+import sphinx.builders.html
+sphinx.builders.html.StandaloneHTMLBuilder.update_page_context = update_page_context
 
 # -----------------------------------------------------------------------------
 
