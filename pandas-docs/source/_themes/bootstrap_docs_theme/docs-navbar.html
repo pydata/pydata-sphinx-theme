@@ -1,32 +1,52 @@
-<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+<nav class="navbar navbar-light navbar-expand-lg bg-light navbar-fixed" id="navbar-main">
+  <div class="container">
+    <a class="navbar-brand" href="{{ pathto('index') }}">
+      <img src="{{ pathto('_static/img/pandas_logo.svg', 1) }}" alt="Pandas">
+    </a>
 
-  <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
-    Pandas
-  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="navbar-nav-scroll">
-    <ul class="navbar-nav bd-navbar-nav flex-row">
-      <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('index') }}">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('install') }}">Installation</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('getting_started/index') }}">Getting Started</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('user_guide/index') }}">User Guide</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('reference/index') }}">API Reference</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('development/index') }}">Development</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('whatsnew/index') }}">Release Notes</a>
-      </li>
-    </ul>
+    <div id="navbar-menu" class="collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ pathto('index') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ pathto('getting_started/index') }}">Getting Started</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ pathto('user_guide/index') }}">User Guide</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ pathto('reference/index') }}">API Reference</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ pathto('development/index') }}">Development</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ pathto('whatsnew/index') }}">Release Notes</a>
+        </li>        
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/pandas-dev/pandas" target="_blank" rel="noopener">
+            <span><i class="fab fa-github-alt" style="color:#333;font-size:1rem;line-height:1.25"></i></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/pandas_dev" target="_blank" rel="noopener">
+            <span><i class="fab fa-twitter" style="color:#55acee;font-size:1rem;line-height:1.25"></i></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ pathto('install') }}">
+            <span>
+              <span class="btn btn-primary d-lg-inline-block mb-3 mb-md-0 ml-md-3">Install</span>
+            </span>
+          </a>
+        </li>
+      </ul>
   </div>
-</header>
+</nav>
