@@ -1,0 +1,25 @@
+.navbar-brand img {
+    max-height: 50px;
+}
+
+.navbar-light {
+    background: #fff !important;
+    box-shadow: 0 .125rem .25rem 0 rgba(0,0,0,.11);
+}
+
+.navbar-nav li a {
+    padding: 0 15px;
+    line-height: 50px;    
+}
+.navbar-header a {
+    padding: 0 15px;
+    line-height: 50px;    
+}
+
+.bd-search {
+    position: relative;
+    padding: 1rem 15px;
+    margin-right: -15px;
+    margin-left: -15px;
+    border-bottom: 1px solid rgba(0,0,0,.05);
+}
