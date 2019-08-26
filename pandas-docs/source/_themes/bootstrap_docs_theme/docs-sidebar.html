@@ -1,12 +1,45 @@
+
+
 <form class="bd-search d-flex align-items-center">
   <input type="search" class="form-control" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off" >
-
 </form>
 
-<nav class="collapse bd-links" id="bd-docs-nav" aria-label="Main navigation">
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
+  <div class="bd-toc-item active">
+  {% set nav = get_nav_object(maxdepth=2) %}
+
+  <ul>
+      {% for main_nav_item in nav %}
+      {% if main_nav_item.active %}
+        {% for nav_item in main_nav_item.children %}
+          {% if nav_item.children %}
+    
+              <li>{{ nav_item.title }}
+                  <ul>
+                  {% for nav_item in nav_item.children %}
+                      <li class="{% if nav_item.active%}current{% endif %}">
+                          <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+                      </li>
+                  {% endfor %}
+                  </ul>
+              </li> 
+          {% else %}
+              <li class="{% if nav_item.active%}current{% endif %}">
+                  <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+              </li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+
+<!--
 {# Adding this because our list is not yet with two levels#}
 <div class="bd-toc-item active">
   {{ toctree(includehidden=theme_sidebar_includehidden, collapse=theme_sidebar_collapse, mindepth=True) }}
 </div>
+-->
 </nav>
+
+
