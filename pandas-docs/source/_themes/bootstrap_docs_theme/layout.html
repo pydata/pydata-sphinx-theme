@@ -3,29 +3,29 @@
 <html lang="en">
   <head>
     {%- include "header.html" %}
-  </head>
+  </head> 
   <body>
-    {# %- include "skippy.html" % #}
 
     {%- include "docs-navbar.html" %}
 
     <div class="container-fluid">
       <div class="row flex-xl-nowrap">
-        <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
-          {%- include "docs-sidebar.html" %}
-        </div>
-
-        {# { if (eq .Page.Params.toc true) } #}
-          <nav class="d-none d-xl-block col-xl-2 bd-toc" aria-label="Secondary navigation">
-            {{ toc }}
-          </nav>
-        {# { end } #}
-
-        
-        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-          {# <h1 class="bd-title" id="content">{{ title }}</h1> #}
-          {% block body %} {% endblock %}
-        </main>
+          <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+              {% if not pagename == 'index' %}
+                {%- include "docs-sidebar.html" %}
+              {% endif %}
+          </div>
+          
+          <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
+            {% block body %} {% endblock %}
+          </main>
+          
+          <div class="d-none d-xl-block col-xl-2">
+            {% if not pagename.endswith('index') and not '/api/' in pagename %}
+              {%- include "docs-toc.html" %}
+            {% endif %}
+          </div>
+          
       </div>
     </div>
 
