@@ -187,6 +187,8 @@ sphinx.environment.adapters.toctree.TocTree.get_toctree_for = get_toctree_for
 
 
 def convert_docutils_node(list_item):
+    if not list_item.children:
+        return None
     reference = list_item.children[0].children[0]
     title = reference.children[0].astext()
     url = reference.attributes['refuri']
@@ -197,11 +199,12 @@ def convert_docutils_node(list_item):
     nav['url'] = url
     nav['children'] = []
     nav['active'] = active
-    
+
     if len(list_item.children) > 1:
         for child_item in list_item.children[1].children:
             child_nav = convert_docutils_node(child_item)
-            nav['children'].append(child_nav)
+            if child_nav is not None:
+                nav['children'].append(child_nav)
 
     return nav
 
@@ -210,7 +213,6 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
     from sphinx.environment.adapters.toctree import TocTree
 
     def get_nav_object(**kwds):
-        
         toctree = TocTree(self.env).get_toctree_for(
             pagename, self, collapse=True, **kwds)
 
@@ -220,9 +222,22 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
             nav.append(child_nav)
 
         return nav
-    
+
+    def get_page_toc_object():
+        self_toc = TocTree(self.env).get_toc_for(pagename, self)
+        toc = self.render_partial(self_toc)['fragment']
+
+        try:
+            #import pdb; pdb.set_trace()
+            nav = convert_docutils_node(self_toc.children[0])
+            #import pdb; pdb.set_trace()
+            return nav
+        except:
+            return {}
+
     #import pdb; pdb.set_trace()
     ctx['get_nav_object'] = get_nav_object
+    ctx['get_page_toc_object'] = get_page_toc_object
     return None
 
 
