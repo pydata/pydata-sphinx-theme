@@ -175,8 +175,11 @@
   .bd-sidebar .nav > .active > a,
   .bd-sidebar .nav > .active:hover > a {
     font-weight: 600;
+    background: #007bff;
+    color: white;
+    /* adjusted from original
     color: rgba(0, 0, 0, 0.85);
-    background-color: transparent;
+    background-color: transparent; */
   }
 
   /* minimal copy paste from bootstrap docs css to get fixed-top height navbar handling ok */
