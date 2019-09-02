@@ -19,7 +19,7 @@
                   <ul>
                   {% for nav_item in nav_item.children %}
                       <li class="{% if nav_item.active%}active bd-sidenav-active{% endif %}">
-                          <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+                          <a href="{{ nav_item.url }}"">{{ nav_item.title }}</a>
                       </li>
                   {% endfor %}
                   </ul>

@@ -32,7 +32,10 @@
     order: 2;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    font-size: 0.875rem;
+    /* font-size: 0.875rem; */
+    /* add scrolling sidebar */
+    height: calc(100vh - 2rem);
+    overflow-y: auto;
   }
   
   @supports ((position: -webkit-sticky) or (position: sticky)) {
@@ -65,7 +68,7 @@
   }
   
   .toc-entry a:hover {
-    color: #007bff;
+    color: rgba(0, 0, 0, 0.85);
     text-decoration: none;
   }
   
@@ -186,9 +189,30 @@
   }
 
 /* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
-  h2::before, h3::before, h4::before  {
+  h2::before, h3::before, 
+  h4::before, h5::before,
+  h6::before  {
     display: block;
     content: "";
     height: 80px;
     margin: -80px 0 0;
+}
+
+
+/* adjust toc font sizes to improve overview */
+.toc-h2 {
+    font-size: 0.85rem;
+  }
+
+.toc-h3 {
+    font-size: 0.75rem;
+}
+
+.toc-h4 {
+    font-size: 0.65rem;
+}
+
+.toc-entry > .nav-link.active {
+    background: #007bff;
+    color: white;
 }

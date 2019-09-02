@@ -4,7 +4,7 @@
   <head>
     {%- include "header.html" %}
   </head> 
-  <body>
+  <body data-spy="scroll" data-target="#bd-toc-nav">
     <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
         <div class="container">
             {%- include "docs-navbar.html" %}
@@ -26,7 +26,9 @@
             </div>
 
           <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-            {% block body %} {% endblock %}
+              <div>
+                {% block body %} {% endblock %}
+              </div>
           </main>
 
       </div>
