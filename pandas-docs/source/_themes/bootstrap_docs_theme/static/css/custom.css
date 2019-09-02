@@ -218,4 +218,9 @@
 .toc-entry > .nav-link.active {
     background: #007bff;
     color: white;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    border-style: none;
 }
