@@ -176,6 +176,11 @@
     background-color: transparent;
   }
 
-.py-md-3 {
-    padding-top: 6rem !important;
-}
+  /* minimal copy paste from bootstrap docs css to get fixed-top height navbar handling ok */
+
+  .bd-navbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1071;
+  }
