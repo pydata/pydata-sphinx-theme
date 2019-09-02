@@ -184,3 +184,11 @@
     top: 0;
     z-index: 1071;
   }
+
+/* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
+  h2::before, h3::before {
+    display: block;
+    content: "";
+    height: 80px;
+    margin: -80px 0 0;
+}
