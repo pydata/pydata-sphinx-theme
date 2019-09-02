@@ -1,7 +1,7 @@
 {% set page_toc = get_page_toc_object() %}
 
 <nav id="bd-toc-nav">
-    <ul class="nav nav-tabs section-nav" role="tablist">
+    <ul class="nav nav-tabs section-nav flex-column" role="tablist">
     {% for item in page_toc.children recursive %}
         <li class="toc-entry toc-h{{ loop.depth + 1 }}">
             <a href="{{ item.url }}" class="nav-item nav-link">{{ item.title }}</a>
