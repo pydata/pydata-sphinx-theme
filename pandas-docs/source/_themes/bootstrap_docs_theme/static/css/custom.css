@@ -175,3 +175,7 @@
     color: rgba(0, 0, 0, 0.85);
     background-color: transparent;
   }
+
+.py-md-3 {
+    padding-top: 6rem !important;
+}
