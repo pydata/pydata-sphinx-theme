@@ -1,3 +1,3 @@
 # pandas-sphinx-theme
 
-https://pandas-dev.github.io/pandas-sphinx-theme/pr-bootstrap-theme/
+https://dev.pandas.io/pandas-sphinx-theme/
