@@ -24,6 +24,10 @@ from numpydoc.docscrape_sphinx import SphinxDocString
 logger = logging.getLogger(__name__)
 
 
+sys.path.append('.')
+from html_bootstrap_translator import BootstrapHTML5Translator
+
+
 # -----------------------------------------------------------------------------
 # IPython monkeypath - set all code blocks to verbatim to speed-up doc build
 
@@ -985,3 +989,4 @@ def setup(app):
     app.add_autodocumenter(AccessorMethodDocumenter)
     app.add_autodocumenter(AccessorCallableDocumenter)
     app.add_directive('autosummary', PandasAutosummary)
+    app.set_translator('html', BootstrapHTML5Translator)
