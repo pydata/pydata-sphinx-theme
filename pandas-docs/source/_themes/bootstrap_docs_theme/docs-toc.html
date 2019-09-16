@@ -3,10 +3,10 @@
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
     {% for item in page_toc.children recursive %}
-        <li class="toc-entry toc-h{{ loop.depth + 1 }}">
-            <a href="{{ item.url }}" class="nav-item nav-link">{{ item.title }}</a>
+        <li class="nav-item toc-entry toc-h{{ loop.depth + 1 }}">
+            <a href="{{ item.url }}" class="nav-link">{{ item.title }}</a>
         {%- if item.children -%}
-            <ul>
+            <ul class="nav section-nav flex-column">
                 {{ loop(item.children) }}
             </ul>
         {%- endif %}
