@@ -190,7 +190,7 @@ def convert_docutils_node(list_item):
     if not list_item.children:
         return None
     reference = list_item.children[0].children[0]
-    title = reference.children[0].astext()
+    title = reference.astext()
     url = reference.attributes['refuri']
     active = 'current' in list_item.attributes['classes']
 
