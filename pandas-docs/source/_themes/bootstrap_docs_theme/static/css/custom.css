@@ -9,11 +9,11 @@
 
 .navbar-nav li a {
     padding: 0 15px;
-    line-height: 50px;    
+    /* line-height: 50px; */
 }
 .navbar-header a {
     padding: 0 15px;
-    line-height: 50px;    
+    /* line-height: 50px; */ 
 }
 
 .bd-search {
@@ -51,6 +51,7 @@
   .section-nav {
     padding-left: 0;
     border-left: 1px solid #eee;
+    border-bottom: none;
   }
   
   .section-nav ul {
@@ -189,6 +190,7 @@
     position: sticky;
     top: 0;
     z-index: 1071;
+    display: table;
   }
 
 /* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
