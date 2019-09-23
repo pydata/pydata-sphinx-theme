@@ -40,10 +40,8 @@ See the :ref:`overview` for more detail about what's in the library.
 {% endif %}
 
     {% if not single_doc -%}
-    install
     getting_started/index
     user_guide/index
-    ecosystem
     {% endif -%}
     {% if include_api -%}
     reference/index
