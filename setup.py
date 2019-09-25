@@ -17,6 +17,7 @@ setup(
             "*.html",
             "static/css/*.css",
             "static/js/*.js",
+            "static/img/*",
         ]
     },
     include_package_data=True,
