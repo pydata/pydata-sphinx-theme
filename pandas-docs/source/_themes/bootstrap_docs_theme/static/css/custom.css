@@ -9,11 +9,11 @@
 
 .navbar-nav li a {
     padding: 0 15px;
-    line-height: 50px;    
+    /* line-height: 50px; */
 }
 .navbar-header a {
     padding: 0 15px;
-    line-height: 50px;    
+    /* line-height: 50px; */ 
 }
 
 .bd-search {
@@ -51,6 +51,7 @@
   .section-nav {
     padding-left: 0;
     border-left: 1px solid #eee;
+    border-bottom: none;
   }
   
   .section-nav ul {
@@ -182,15 +183,7 @@
     background-color: transparent; */
   }
 
-  /* minimal copy paste from bootstrap docs css to get fixed-top height navbar handling ok */
-
-  .bd-navbar {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    z-index: 1071;
-  }
-
+  
 /* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
   h2::before, h3::before, 
   h4::before, h5::before,
@@ -199,6 +192,11 @@
     content: "";
     height: 80px;
     margin: -80px 0 0;
+}
+
+/* add padding to body to avid overlap with navbar   */
+body {
+  padding-top: 80px
 }
 
 

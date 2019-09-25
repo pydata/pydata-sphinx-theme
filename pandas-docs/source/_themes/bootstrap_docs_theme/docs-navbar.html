@@ -12,21 +12,12 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ pathto('index') }}">Home</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ pathto('getting_started/index') }}">Getting Started</a>
+    {% set nav = get_nav_object(maxdepth=1) %}
+    {% for main_nav_item in nav %}
+    <li class="nav-item {% if main_nav_item.active%}active{% endif %}">
+        <a class="nav-link" href="{{ main_nav_item.url }}">{{ main_nav_item.title }}</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ pathto('user_guide/index') }}">User Guide</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ pathto('reference/index') }}">API Reference</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ pathto('development/index') }}">Development</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ pathto('whatsnew/index') }}">Release Notes</a>
-    </li>        
+    {% endfor %}
   </ul>
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
@@ -39,11 +30,5 @@
         <span><i class="fab fa-twitter" style="color:#55acee;font-size:1rem;line-height:1.25"></i></span>
       </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ pathto('install') }}">
-        <span>
-          <span class="btn btn-primary d-lg-inline-block mb-3 mb-md-0 ml-md-3">Install</span>
-        </span>
-      </a>
-    </li>
   </ul>
+</div>
