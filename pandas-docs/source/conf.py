@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 sys.path.append('.')
-from html_bootstrap_translator import BootstrapHTML5Translator
+from bootstrap_html_translator import BootstrapHTML5Translator
 
 
 # -----------------------------------------------------------------------------
