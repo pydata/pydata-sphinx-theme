@@ -107,144 +107,86 @@ IPython.sphinxext.ipython_directive.IPythonDirective.run = run
 # -----------------------------------------------------------------------------
 # Sphinx monkeypatch
 
-from sphinx.environment.adapters.toctree import process_only_nodes
-from docutils import nodes
-from sphinx import addnodes
+# from sphinx.environment.adapters.toctree import process_only_nodes
+# from docutils import nodes
+# from sphinx import addnodes
 
 
-def get_toc_for(self, docname, builder):
-    # type: (str, Builder) -> nodes.Node
-    """Return a TOC nodetree -- for use on the same page only!"""
-    tocdepth = self.env.metadata[docname].get('tocdepth', 0)
-    try:
-        toc = self.env.tocs[docname].deepcopy()
-        self._toctree_prune(toc, 2, tocdepth)
-    except KeyError:
-        # the document does not exist anymore: return a dummy node that
-        # renders to nothing
-        return nodes.paragraph()
-    process_only_nodes(toc, builder.tags)
-    for node in toc.traverse(nodes.reference):
-        node['refuri'] = node['anchorname'] or '#'
+# def get_toc_for(self, docname, builder):
+#     # type: (str, Builder) -> nodes.Node
+#     """Return a TOC nodetree -- for use on the same page only!"""
+#     tocdepth = self.env.metadata[docname].get('tocdepth', 0)
+#     try:
+#         toc = self.env.tocs[docname].deepcopy()
+#         self._toctree_prune(toc, 2, tocdepth)
+#     except KeyError:
+#         # the document does not exist anymore: return a dummy node that
+#         # renders to nothing
+#         return nodes.paragraph()
+#     process_only_nodes(toc, builder.tags)
+#     for node in toc.traverse(nodes.reference):
+#         node['refuri'] = node['anchorname'] or '#'
 
-    # tag toc with attributes
-    toc.attributes['classes'].append('section-nav')
+#     # tag toc with attributes
+#     toc.attributes['classes'].append('section-nav')
 
-    def tag_childs(bullet_list, level):
-        for sub in bullet_list.children:
-            if getattr(sub, 'tagname', '') == 'list_item':
-                sub.attributes['classes'].extend(['toc-entry', 'toc-h{}'.format(level)])
-                for sub2 in sub.children:
-                    if getattr(sub2, 'tagname', '') == 'bullet_list':
-                        tag_childs(sub2, level + 1)
+#     def tag_childs(bullet_list, level):
+#         for sub in bullet_list.children:
+#             if getattr(sub, 'tagname', '') == 'list_item':
+#                 sub.attributes['classes'].extend(['toc-entry', 'toc-h{}'.format(level)])
+#                 for sub2 in sub.children:
+#                     if getattr(sub2, 'tagname', '') == 'bullet_list':
+#                         tag_childs(sub2, level + 1)
 
-    tag_childs(toc, 1)
+#     tag_childs(toc, 1)
 
-    return toc
+#     return toc
 
-def get_toctree_for(self, docname, builder, collapse, **kwds):
-    # type: (str, Builder, bool, Any) -> nodes.Element
-    """Return the global TOC nodetree."""
-    #import pdb; pdb.set_trace()
-    doctree = self.env.get_doctree(self.env.config.master_doc)
-    toctrees = []  # type: List[nodes.Element]
-    if 'includehidden' not in kwds:
-        kwds['includehidden'] = True
-    if 'maxdepth' not in kwds:
-        kwds['maxdepth'] = 0
-    kwds['collapse'] = collapse
-    mindepth = kwds.pop('mindepth', False)
-    for toctreenode in doctree.traverse(addnodes.toctree):
-        toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwds)
-        if toctree:
-            toctrees.append(toctree)
-    if not toctrees:
-        return None
-    result = toctrees[0]
-    for toctree in toctrees[1:]:
-        result.extend(toctree.children)
-    if mindepth and docname not in ('index', 'genindex', 'search'):
-        #import pdb; pdb.set_trace()
-        result = get_current_section_toctree(result)
-    return result
-
-
-def get_current_section_toctree(toctree):
-    actual_toctree = toctree[0]
-    for subtoc in actual_toctree.children:
-        if 'current' in subtoc.attributes['classes']:
-            newtoc = subtoc.children[1]
-            break
-    else:
-        newtoc = actual_toctree
-    toctree[0] = newtoc
-    toctree[0].attributes['classes'].extend(['nav', 'bd-sidenav', 'active'])
-    #import pdb; pdb.set_trace()
-    return toctree
+# def get_toctree_for(self, docname, builder, collapse, **kwds):
+#     # type: (str, Builder, bool, Any) -> nodes.Element
+#     """Return the global TOC nodetree."""
+#     #import pdb; pdb.set_trace()
+#     doctree = self.env.get_doctree(self.env.config.master_doc)
+#     toctrees = []  # type: List[nodes.Element]
+#     if 'includehidden' not in kwds:
+#         kwds['includehidden'] = True
+#     if 'maxdepth' not in kwds:
+#         kwds['maxdepth'] = 0
+#     kwds['collapse'] = collapse
+#     mindepth = kwds.pop('mindepth', False)
+#     for toctreenode in doctree.traverse(addnodes.toctree):
+#         toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwds)
+#         if toctree:
+#             toctrees.append(toctree)
+#     if not toctrees:
+#         return None
+#     result = toctrees[0]
+#     for toctree in toctrees[1:]:
+#         result.extend(toctree.children)
+#     if mindepth and docname not in ('index', 'genindex', 'search'):
+#         #import pdb; pdb.set_trace()
+#         result = get_current_section_toctree(result)
+#     return result
 
 
-import sphinx.environment.adapters.toctree
-sphinx.environment.adapters.toctree.TocTree.get_toc_for = get_toc_for
-sphinx.environment.adapters.toctree.TocTree.get_toctree_for = get_toctree_for
+# def get_current_section_toctree(toctree):
+#     actual_toctree = toctree[0]
+#     for subtoc in actual_toctree.children:
+#         if 'current' in subtoc.attributes['classes']:
+#             newtoc = subtoc.children[1]
+#             break
+#     else:
+#         newtoc = actual_toctree
+#     toctree[0] = newtoc
+#     toctree[0].attributes['classes'].extend(['nav', 'bd-sidenav', 'active'])
+#     #import pdb; pdb.set_trace()
+#     return toctree
 
 
-def convert_docutils_node(list_item):
-    if not list_item.children:
-        return None
-    reference = list_item.children[0].children[0]
-    title = reference.astext()
-    url = reference.attributes['refuri']
-    active = 'current' in list_item.attributes['classes']
+# import sphinx.environment.adapters.toctree
+# sphinx.environment.adapters.toctree.TocTree.get_toc_for = get_toc_for
+# sphinx.environment.adapters.toctree.TocTree.get_toctree_for = get_toctree_for
 
-    nav = {}
-    nav['title'] = title
-    nav['url'] = url
-    nav['children'] = []
-    nav['active'] = active
-
-    if len(list_item.children) > 1:
-        for child_item in list_item.children[1].children:
-            child_nav = convert_docutils_node(child_item)
-            if child_nav is not None:
-                nav['children'].append(child_nav)
-
-    return nav
-
-
-def update_page_context(self, pagename, templatename, ctx, event_arg):
-    from sphinx.environment.adapters.toctree import TocTree
-
-    def get_nav_object(**kwds):
-        toctree = TocTree(self.env).get_toctree_for(
-            pagename, self, collapse=True, **kwds)
-
-        nav = []
-        for child in toctree.children[0].children:
-            child_nav = convert_docutils_node(child)
-            nav.append(child_nav)
-
-        return nav
-
-    def get_page_toc_object():
-        self_toc = TocTree(self.env).get_toc_for(pagename, self)
-        toc = self.render_partial(self_toc)['fragment']
-
-        try:
-            #import pdb; pdb.set_trace()
-            nav = convert_docutils_node(self_toc.children[0])
-            #import pdb; pdb.set_trace()
-            return nav
-        except:
-            return {}
-
-    #import pdb; pdb.set_trace()
-    ctx['get_nav_object'] = get_nav_object
-    ctx['get_page_toc_object'] = get_page_toc_object
-    return None
-
-
-import sphinx.builders.html
-sphinx.builders.html.StandaloneHTMLBuilder.update_page_context = update_page_context
 
 # -----------------------------------------------------------------------------
 
