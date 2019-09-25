@@ -23,9 +23,7 @@ from numpydoc.docscrape_sphinx import SphinxDocString
 
 logger = logging.getLogger(__name__)
 
-
-sys.path.append('.')
-from bootstrap_html_translator import BootstrapHTML5Translator
+import pandas_sphinx_theme
 
 
 # -----------------------------------------------------------------------------
@@ -420,7 +418,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = 'bootstrap_docs_theme'
+html_theme = 'pandas_sphinx_theme'
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
@@ -433,7 +431,7 @@ html_theme = 'bootstrap_docs_theme'
 # html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = ['_themes']
+#html_theme_path = ['_themes']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -989,4 +987,3 @@ def setup(app):
     app.add_autodocumenter(AccessorMethodDocumenter)
     app.add_autodocumenter(AccessorCallableDocumenter)
     app.add_directive('autosummary', PandasAutosummary)
-    app.set_translator('html', BootstrapHTML5Translator)
