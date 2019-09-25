@@ -224,3 +224,15 @@
 .nav-link:hover {
     border-style: none;
 }
+
+
+/* Collapsing of the TOC sidebar while scrolling */
+
+/* Nav: hide second level (shown on .active) */
+.bd-toc .nav .nav {
+  display: none;
+}
+
+.bd-toc .nav > .active > ul {
+  display: block;
+}
