@@ -46,7 +46,7 @@ a.headerlink:hover {
     color: white;
 }
 
-div.admonition p.admonition-title + p, div.deprecated p {
+div.deprecated p {
     display: inline;
 }
 
@@ -62,31 +62,8 @@ div.highlight{
     background-color: white;
 }
 
-div.note {
-    background-color: #eee;
-    border: 1px solid #ccc;
-}
-
-div.seealso {
-    background-color: #ffc;
-    border: 1px solid #ff6;
-}
-
 div.topic {
     background-color: #eee;
-}
-
-div.warning {
-    background-color: #ffe4e4;
-    border: 1px solid #f66;
-}
-
-p.admonition-title {
-    display: inline;
-}
-
-p.admonition-title:after {
-    content: ":";
 }
 
 pre {
