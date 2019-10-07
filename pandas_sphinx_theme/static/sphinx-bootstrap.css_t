@@ -125,6 +125,16 @@ td.field-body blockquote {
 
 
 /**
+ * Styling for autosummary tables
+ */
+
+/* The first column (with the signature) should not wrap */
+td:first-child {
+    white-space: nowrap;
+}
+
+
+/**
  * See also
  */
 
