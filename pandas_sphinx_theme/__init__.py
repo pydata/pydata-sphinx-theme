@@ -17,7 +17,7 @@ __version__ = "0.0.1.dev0"
 # Sphinx monkeypatch for adding toctree objects into context
 
 
-def convert_docutils_node(list_item):
+def convert_docutils_node(list_item, only_pages=False):
     if not list_item.children:
         return None
     reference = list_item.children[0].children[0]
@@ -25,6 +25,9 @@ def convert_docutils_node(list_item):
     url = reference.attributes["refuri"]
     active = "current" in list_item.attributes["classes"]
 
+    if only_pages and '#' in url:
+        return None
+        
     nav = {}
     nav["title"] = title
     nav["url"] = url
@@ -33,7 +36,7 @@ def convert_docutils_node(list_item):
 
     if len(list_item.children) > 1:
         for child_item in list_item.children[1].children:
-            child_nav = convert_docutils_node(child_item)
+            child_nav = convert_docutils_node(child_item, only_pages=only_pages)
             if child_nav is not None:
                 nav["children"].append(child_nav)
 
@@ -50,7 +53,7 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
 
         nav = []
         for child in toctree.children[0].children:
-            child_nav = convert_docutils_node(child)
+            child_nav = convert_docutils_node(child, only_pages=True)
             nav.append(child_nav)
 
         return nav
