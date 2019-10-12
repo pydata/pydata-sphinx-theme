@@ -1,3 +1,8 @@
+.navbar {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
 .navbar-brand img {
     max-height: 50px;
 }
@@ -9,12 +14,12 @@
 
 .navbar-nav li a {
     padding: 0 15px;
-    /* line-height: 50px; */
+    line-height: 70px;
 }
 
-.navbar-nav > .active {
+.navbar-nav > .active > .nav-link {
   font-weight: 600;
-  color: #130654 !important;;
+  color: #130654 !important;
   border-bottom: 2px solid #563d7c;
 }
 
