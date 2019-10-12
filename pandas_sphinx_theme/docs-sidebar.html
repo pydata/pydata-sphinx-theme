@@ -7,7 +7,7 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
   <div class="bd-toc-item active">
-  {% set nav = get_nav_object(maxdepth=2) %}
+  {% set nav = get_nav_object(maxdepth=3) %}
 
   <ul class="nav bd-sidenav">
       {% for main_nav_item in nav %}
@@ -15,10 +15,11 @@
         {% for nav_item in main_nav_item.children %}
           {% if nav_item.children %}
     
-              <li>{{ nav_item.title }}
+              <li class="{% if nav_item.active%}active{% endif %}">
+                  <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
                   <ul>
                   {% for nav_item in nav_item.children %}
-                      <li class="{% if nav_item.active%}active bd-sidenav-active{% endif %}">
+                      <li class="{% if nav_item.active%}active{% endif %}">
                           <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
                       </li>
                   {% endfor %}
