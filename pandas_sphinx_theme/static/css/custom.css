@@ -11,6 +11,12 @@
     padding: 0 15px;
     /* line-height: 50px; */
 }
+
+.navbar-nav > .active > .nav-link {
+  font-weight: 600;
+  color: #130654 !important;
+}
+
 .navbar-header a {
     padding: 0 15px;
     /* line-height: 50px; */ 
@@ -176,8 +182,7 @@
   .bd-sidebar .nav > .active > a,
   .bd-sidebar .nav > .active:hover > a {
     font-weight: 600;
-    background: #007bff;
-    color: white;
+    color: #130654;
     /* adjusted from original
     color: rgba(0, 0, 0, 0.85);
     background-color: transparent; */
@@ -198,8 +203,7 @@
   .bd-sidebar .nav > li > ul > .active > a,
   .bd-sidebar .nav > li > ul > .active:hover > a {
     font-weight: 600;
-    background: #007bff;
-    color: white;
+    color: #130654;
   }
 
 /* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
@@ -232,9 +236,10 @@ body {
 }
 
 .toc-entry > .nav-link.active {
-    background: #007bff;
-    color: white;
     font-weight: 600;
+    color: #130654;
+    background-color: transparent;
+    border-left: 2px solid #563d7c;
 }
 
 .nav-link:hover {
