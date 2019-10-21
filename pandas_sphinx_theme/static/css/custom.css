@@ -14,13 +14,12 @@
 
 .navbar-nav li a {
     padding: 0 15px;
-    line-height: 70px;
+    /* line-height: 50px; */
 }
 
 .navbar-nav > .active > .nav-link {
   font-weight: 600;
   color: #130654 !important;
-  border-bottom: 2px solid #563d7c;
 }
 
 .navbar-header a {
@@ -189,7 +188,6 @@
   .bd-sidebar .nav > .active:hover > a {
     font-weight: 600;
     color: #130654;
-    border-right: 2px solid #130654;
     /* adjusted from original
     color: rgba(0, 0, 0, 0.85);
     background-color: transparent; */
@@ -209,9 +207,7 @@
 
   .bd-sidebar .nav > li > ul > .active > a,
   .bd-sidebar .nav > li > ul > .active:hover > a {
-    font-weight: 600;
     color: #130654;
-    border-right: 2px solid #130654;
   }
 
 /* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
