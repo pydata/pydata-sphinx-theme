@@ -1,8 +1,3 @@
-.navbar {
-  padding-bottom: 0px;
-  padding-top: 0px;
-}
-
 .navbar-brand img {
     max-height: 50px;
 }
@@ -207,6 +202,7 @@
 
   .bd-sidebar .nav > li > ul > .active > a,
   .bd-sidebar .nav > li > ul > .active:hover > a {
+    font-weight: 600;
     color: #130654;
   }
 
