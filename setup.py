@@ -1,12 +1,10 @@
 """Sphinx Bootstrap Theme package."""
 from setuptools import setup
 
-from pandas_sphinx_theme import __version__
-
 
 setup(
     name="pandas-sphinx-theme",
-    version=__version__,
+    version="0.0.1.dev0",
     description="Sphinx Bootstrap Theme - pandas version.",
     url="https://github.com/pandas-dev/pandas-sphinx-theme",
     #
