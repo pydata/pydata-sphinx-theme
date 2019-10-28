@@ -1,5 +1,7 @@
 .navbar-brand img {
     max-height: 50px;
+    width: auto;
+    height: 3rem;
 }
 
 .navbar-light {
