@@ -19,6 +19,10 @@ hr {
 
 /* -- body styles ----------------------------------------------------------- */
 
+body {
+    font-family: sans-serif;
+}
+
 a {
     color: #005B81;
     text-decoration: none;
