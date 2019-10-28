@@ -1,8 +1,9 @@
 
+{% if logo %}
 <a class="navbar-brand" href="{{ pathto('index') }}">
-  <img src="{{ pathto('_static/img/pandas_logo.svg', 1) }}" alt="Pandas">
+  <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
 </a>
-
+{% endif %}
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
 </button>
