@@ -1,6 +1,17 @@
 
 {% extends "basic/layout.html" %}
 
+{# prev/next buttons #}
+{% macro prev_next(prev, next, prev_title='', next_title='') %}
+ {%- if prev %}
+    <a class='left-prev' id="prev-link" href="{{ prev.link|e }}" title="{{ _('previous page')}}">{{ prev_title or prev.title }}</a>
+ {%- endif %}
+ {%- if next %}
+    <a class='right-next' id="next-link" href="{{ next.link|e }}" title="{{ _('next page')}}">{{ next_title or next.title }}</a>
+ {%- endif %}
+ <div style='clear:both;'></div>
+{% endmacro %}
+
 {%- block css %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 {{- css() }}
@@ -37,7 +48,7 @@
                 {%- include "docs-sidebar.html" %}
               {% endif %}
           </div>
-          
+
           <div class="d-none d-xl-block col-xl-2 bd-toc">
               {% if not pagename.endswith('index') and not '/api/' in pagename %}
                 {%- include "docs-toc.html" %}
@@ -47,6 +58,9 @@
           <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
               <div>
                 {% block body %} {% endblock %}
+              </div>
+              <div class='prev-next-bottom'>
+                {{ prev_next(prev, next) }}
               </div>
           </main>
 

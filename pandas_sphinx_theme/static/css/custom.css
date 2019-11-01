@@ -21,7 +21,7 @@
 
 .navbar-header a {
     padding: 0 15px;
-    /* line-height: 50px; */ 
+    /* line-height: 50px; */
 }
 
 .bd-search {
@@ -45,7 +45,7 @@
     height: calc(100vh - 2rem);
     overflow-y: auto;
   }
-  
+
   @supports ((position: -webkit-sticky) or (position: sticky)) {
     .bd-toc {
       position: -webkit-sticky;
@@ -55,39 +55,39 @@
       overflow-y: auto;
     }
   }
-  
+
   .section-nav {
     padding-left: 0;
     border-left: 1px solid #eee;
     border-bottom: none;
   }
-  
+
   .section-nav ul {
     padding-left: 1rem;
   }
-  
+
   .toc-entry {
     display: block;
   }
-  
+
   .toc-entry a {
     display: block;
     padding: .125rem 1.5rem;
     color: #77757a;
   }
-  
+
   .toc-entry a:hover {
     color: rgba(0, 0, 0, 0.85);
     text-decoration: none;
   }
-  
+
 
   .bd-sidebar {
     -ms-flex-order: 0;
     order: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
-  
+
   @media (min-width: 768px) {
     .bd-sidebar {
       border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -102,21 +102,21 @@
       }
     }
   }
-  
+
   @media (min-width: 1200px) {
     .bd-sidebar {
       -ms-flex: 0 1 320px;
       flex: 0 1 320px;
     }
   }
-  
+
   .bd-links {
     padding-top: 1rem;
     padding-bottom: 1rem;
     margin-right: -15px;
     margin-left: -15px;
   }
-  
+
   @media (min-width: 768px) {
     @supports ((position: -webkit-sticky) or (position: sticky)) {
       .bd-links {
@@ -125,45 +125,45 @@
       }
     }
   }
-  
+
   @media (min-width: 768px) {
     .bd-links {
       display: block !important;
     }
   }
-  
+
   .bd-sidenav {
     display: none;
   }
-  
+
   .bd-toc-link {
     display: block;
     padding: .25rem 1.5rem;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.65);
   }
-  
+
   .bd-toc-link:hover {
     color: rgba(0, 0, 0, 0.85);
     text-decoration: none;
   }
-  
+
   .bd-toc-item.active {
     margin-bottom: 1rem;
   }
-  
+
   .bd-toc-item.active:not(:first-child) {
     margin-top: 1rem;
   }
-  
+
   .bd-toc-item.active > .bd-toc-link {
     color: rgba(0, 0, 0, 0.85);
   }
-  
+
   .bd-toc-item.active > .bd-toc-link:hover {
     background-color: transparent;
   }
-  
+
   .bd-toc-item.active > .bd-sidenav {
     display: block;
   }
@@ -174,13 +174,13 @@
     font-size: 90%;
     color: rgba(0, 0, 0, 0.65);
   }
-  
+
   .bd-sidebar .nav > li > a:hover {
     color: rgba(0, 0, 0, 0.85);
     text-decoration: none;
     background-color: transparent;
   }
-  
+
   .bd-sidebar .nav > .active > a,
   .bd-sidebar .nav > .active:hover > a {
     font-weight: 600;
@@ -209,7 +209,7 @@
   }
 
 /* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
-  h2::before, h3::before, 
+  h2::before, h3::before,
   h4::before, h5::before,
   h6::before  {
     display: block;
@@ -258,4 +258,33 @@ body {
 
 .bd-toc .nav > .active > ul {
   display: block;
+}
+
+
+/* Previous / Next buttons */
+div.prev-next-bottom {
+  margin: 20px 0px;
+}
+
+div.prev-next-bottom a.left-prev, div.prev-next-bottom a.right-next {
+  padding: 10px;
+  border: 1px solid black;
+  max-width: 45%;
+  overflow-x: hidden;
+}
+
+div.prev-next-bottom a.left-prev {
+  float: left;
+}
+
+div.prev-next-bottom a.left-prev:before {
+  content: "<< "
+}
+
+div.prev-next-bottom a.right-next {
+  float: right;
+}
+
+div.prev-next-bottom a.right-next:after {
+  content: " >>"
 }
