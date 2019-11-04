@@ -1,3 +1,5 @@
+:notoc:
+
 .. _overview:
 
 {{ header }}

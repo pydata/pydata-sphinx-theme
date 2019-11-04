@@ -39,7 +39,7 @@
           </div>
           
           <div class="d-none d-xl-block col-xl-2 bd-toc">
-              {% if not pagename.endswith('index') and not '/api/' in pagename %}
+              {% if not (meta is not none and 'notoc' in meta) %}
                 {%- include "docs-toc.html" %}
               {% endif %}
             </div>
