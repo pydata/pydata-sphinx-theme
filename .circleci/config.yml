@@ -40,6 +40,7 @@ jobs:
       - run:
           name: Build docs to store
           command: |
+            export PATH="$HOME/miniconda/bin:$PATH"
             cd pandas-docs
             python make.py html
       # Tell Circle to store the documentation output in a folder that we can access later
