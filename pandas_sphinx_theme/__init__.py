@@ -64,7 +64,7 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
         return nav
 
     def get_page_toc_object():
-        """Return a lits of within-page TOC links that can be accessed from Jinja."""
+        """Return a list of within-page TOC links that can be accessed from Jinja."""
         self_toc = TocTree(self.env).get_toc_for(pagename, self)
 
         try:
