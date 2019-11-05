@@ -8,7 +8,7 @@ import os
 import sphinx.builders.html
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
-
+import docutils
 
 __version__ = "0.0.1.dev0"
 
@@ -27,7 +27,7 @@ def convert_docutils_node(list_item, only_pages=False):
 
     if only_pages and '#' in url:
         return None
-        
+
     nav = {}
     nav["title"] = title
     nav["url"] = url
@@ -47,18 +47,24 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
     from sphinx.environment.adapters.toctree import TocTree
 
     def get_nav_object(**kwds):
+        """Return a list of nav links that can be accessed from Jinja."""
         toctree = TocTree(self.env).get_toctree_for(
             pagename, self, collapse=True, **kwds
         )
 
+        # Grab all TOC links from any toctrees on the page
+        toc_items = [item for child in toctree.children for item in child
+                     if isinstance(item, docutils.nodes.list_item)]
+
         nav = []
-        for child in toctree.children[0].children:
+        for child in toc_items:
             child_nav = convert_docutils_node(child, only_pages=True)
             nav.append(child_nav)
 
         return nav
 
     def get_page_toc_object():
+        """Return a list of within-page TOC links that can be accessed from Jinja."""
         self_toc = TocTree(self.env).get_toc_for(pagename, self)
 
         try:
