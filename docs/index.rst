@@ -1,4 +1,10 @@
-.. include:: ../README.rst
+=======================
+The Pandas Sphinx Theme
+=======================
+
+This is a simple Sphinx theme for use by the Pandas and
+PyData community. This site is a guide for using the theme,
+and a demo for how it looks with various elements.
 
 .. toctree::
    :caption: Theme Documentation
@@ -9,24 +15,9 @@
    contributing
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :hidden:
 
+   demo/index
    changelog
 
-.. toctree::
-    :maxdepth: 2
-    :numbered:
-    :caption: Demo Documentation
-
-    demo/structure
-    demo/demo
-    demo/lists_tables
-    demo/api
-
-.. toctree::
-    :maxdepth: 3
-    :numbered:
-    :caption: This is an incredibly long caption for a long menu
-
-    demo/long

@@ -2,15 +2,35 @@
 API documentation and generated content
 ***************************************
 
+This page contains general code elements that are common
+for package documentation.
+
 .. contents:: Table of Contents
 
-:mod:`test_py_module`
-=====================
+Pandas DataFrame
+================
 
-.. automodule:: test_py_module.test
+.. currentmodule:: pandas
+
+.. autosummary::
+   :toctree: api/
+
+   DataFrame
+   DataFrame.index
+   DataFrame.columns
+   DataFrame.dtypes
+   DataFrame.ftypes
+   DataFrame.get_dtype_counts
+   DataFrame.get_ftype_counts
+   DataFrame.select_dtypes
+   DataFrame.values
+
+
+:mod:`pandas.datetime`
+======================
+
+.. automodule:: pandas.datetime
     :members:
-    :private-members:
-    :special-members:
 
 
 C++ API
