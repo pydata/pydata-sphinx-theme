@@ -13,6 +13,7 @@ Sites that are using this theme:
 
 - Pandas: https://dev.pandas.io/docs/
 - Bokeh: https://docs.bokeh.org/en/dev/
+- JupyterHub: http://z2jh.jupyter.org/en/latest/ and https://jupyterhub-team-compass.readthedocs.io/en/latest/
 
 This repo holds a temporary (slimmed down) copy of the pandas documentation to
 test the theme with on PRs. The result is hosted at the demo site.
