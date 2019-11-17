@@ -10,8 +10,7 @@ and a demo for how it looks with various elements.
    :caption: Theme Documentation
    :maxdepth: 2
 
-   installing
-   configuring
+   user_guide/index
    contributing
 
 .. toctree::
