@@ -28,7 +28,7 @@ jobs:
             conda update conda
             conda config --add channels conda-forge
             # Install pandas + some optional dependencies
-            conda install pandas matplotlib ipython sphinx ipykernel jinja2 numpydoc nbconvert nbsphinx jupyter_client gitpython
+            pip install -r docs/requirements.txt
             # install the theme package
             pip install -e .
       # Cache some files for a speedup in subsequent builds
@@ -41,11 +41,11 @@ jobs:
           name: Build docs to store
           command: |
             export PATH="$HOME/miniconda/bin:$PATH"
-            cd pandas-docs
-            python make.py html
+            cd docs
+            make html
       # Tell Circle to store the documentation output in a folder that we can access later
       - store_artifacts:
-          path: pandas-docs/build/html/
+          path: docs/_build/html/
           destination: html
 
 # Tell CircleCI to use this workflow when it builds the site
