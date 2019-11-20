@@ -268,9 +268,10 @@ div.prev-next-bottom {
 
 div.prev-next-bottom a.left-prev, div.prev-next-bottom a.right-next {
   padding: 10px;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, .2);
   max-width: 45%;
   overflow-x: hidden;
+  color: rgba(0, 0, 0, 0.65);
 }
 
 div.prev-next-bottom a.left-prev {

@@ -9,7 +9,6 @@
  {%- if next %}
     <a class='right-next' id="next-link" href="{{ next.link|e }}" title="{{ _('next page')}}">{{ next_title or next.title }}</a>
  {%- endif %}
- <div style='clear:both;'></div>
 {% endmacro %}
 
 {%- block css %}
