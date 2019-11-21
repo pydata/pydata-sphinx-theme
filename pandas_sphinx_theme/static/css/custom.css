@@ -248,6 +248,13 @@ body {
     border-style: none;
 }
 
+.nav-external:after {
+  font-family: 'FontAwesome';
+  font-size: 0.7rem;
+  vertical-align: middle;
+  content: " \f08e";
+}
+
 
 /* Collapsing of the TOC sidebar while scrolling */
 
@@ -288,4 +295,21 @@ div.prev-next-bottom a.right-next {
 
 div.prev-next-bottom a.right-next:after {
   content: " >>"
+}
+
+/* Social media buttons */
+
+i.fab:before {
+  font-family: 'FontAwesome';
+  vertical-align: middle;
+  font-style: normal;
+  font-size: 1.5rem;
+}
+
+i.fa-github-square:before {
+  content: "\f092";
+}
+
+i.fa-twitter-square:before {
+  content: "\f081";
 }

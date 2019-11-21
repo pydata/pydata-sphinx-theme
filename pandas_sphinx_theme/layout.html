@@ -13,7 +13,9 @@
 
 {%- block css %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-{{- css() }}
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    {{- css() }}
     <link href="{{ pathto('_static/css/custom.css', 1) }}" rel="stylesheet">
 {%- endblock %}
 
@@ -58,9 +60,11 @@
               <div>
                 {% block body %} {% endblock %}
               </div>
+              {% if theme_show_prev_next %}
               <div class='prev-next-bottom'>
                 {{ prev_next(prev, next) }}
               </div>
+              {% endif %}
           </main>
 
       </div>
