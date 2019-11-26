@@ -21,7 +21,7 @@
     {% endfor %}
     {% for external_link in theme_external_links %}
     <li class="nav-item">
-        <a class="nav-link nav-external" href="{{ external_link.url }}">{{ external_link.name }}</a>
+        <a class="nav-link nav-external" href="{{ external_link.url }}">{{ external_link.name }}<i class="fas fa-external-link-alt"></i></a>
     </li>
     {% endfor %}
   </ul>
@@ -29,14 +29,14 @@
     {% if theme_github_url | length > 2 %}
       <li class="nav-item">
         <a class="nav-link" href="{{ theme_github_url }}" target="_blank" rel="noopener">
-          <span><i class="fab fa-github-square" style="color:#333;font-size:1rem;line-height:1.25"></i></span>
+          <span><i class="fab fa-github-square"></i></span>
         </a>
       </li>
     {% endif %}
     {% if theme_twitter_url | length > 2 %}
       <li class="nav-item">
         <a class="nav-link" href="{{ theme_twitter_url }}" target="_blank" rel="noopener">
-          <span><i class="fab fa-twitter-square" style="color:#55acee;font-size:1rem;line-height:1.25"></i></span>
+          <span><i class="fab fa-twitter-square"></i></span>
         </a>
       </li>
     {% endif %}

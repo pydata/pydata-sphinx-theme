@@ -31,8 +31,8 @@ an external site. You can add external links to the nav bar like so:
 
    html_theme_options: {
      "external_links": [
-         "https://<link-one>",
-         "https://<link-two>"
+         {"name": "link-one-name", "url": "https://<link-one>"},
+         {"name": "link-two-name", "url": "https://<link-two>"}
      ]
    }
 

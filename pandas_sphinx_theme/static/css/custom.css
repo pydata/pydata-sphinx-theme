@@ -248,13 +248,11 @@ body {
     border-style: none;
 }
 
-.nav-external:after {
-  font-family: 'FontAwesome';
+#navbar-main-elements li.nav-item i {
   font-size: 0.7rem;
+  padding-left: 2px;
   vertical-align: middle;
-  content: " \f08e";
 }
-
 
 /* Collapsing of the TOC sidebar while scrolling */
 
@@ -299,17 +297,17 @@ div.prev-next-bottom a.right-next:after {
 
 /* Social media buttons */
 
-i.fab:before {
-  font-family: 'FontAwesome';
+i.fab {
   vertical-align: middle;
   font-style: normal;
   font-size: 1.5rem;
+  line-height:1.25;
 }
 
 i.fa-github-square:before {
-  content: "\f092";
+  color:#333;
 }
 
 i.fa-twitter-square:before {
-  content: "\f081";
+  color: #55acee
 }
