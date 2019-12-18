@@ -291,7 +291,12 @@ div.prev-next-bottom a.right-next:after {
 }
 
 /* Alert Styling */
+.alert {
+  /* Avoid too large empty space below alert boxes. */
+  padding-bottom: 0;
+}
 
 .alert-info a {
+  /* higher contrast for links in info boxes. */
   color: #e83e8c;
 }
