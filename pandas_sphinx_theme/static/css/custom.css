@@ -300,3 +300,13 @@ div.prev-next-bottom a.right-next:after {
   /* higher contrast for links in info boxes. */
   color: #e83e8c;
 }
+
+/* Header Styling */
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
