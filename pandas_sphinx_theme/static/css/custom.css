@@ -289,3 +289,9 @@ div.prev-next-bottom a.right-next {
 div.prev-next-bottom a.right-next:after {
   content: " >>"
 }
+
+/* Alert Styling */
+
+.alert-info a {
+  color: #e83e8c;
+}
