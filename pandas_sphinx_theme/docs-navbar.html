@@ -19,17 +19,26 @@
         <a class="nav-link" href="{{ main_nav_item.url }}">{{ main_nav_item.title }}</a>
     </li>
     {% endfor %}
+    {% for external_link in theme_external_links %}
+    <li class="nav-item">
+        <a class="nav-link nav-external" href="{{ external_link.url }}">{{ external_link.name }}<i class="fas fa-external-link-alt"></i></a>
+    </li>
+    {% endfor %}
   </ul>
   <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <a class="nav-link" href="https://github.com/pandas-dev/pandas" target="_blank" rel="noopener">
-        <span><i class="fab fa-github-alt" style="color:#333;font-size:1rem;line-height:1.25"></i></span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="https://twitter.com/pandas_dev" target="_blank" rel="noopener">
-        <span><i class="fab fa-twitter" style="color:#55acee;font-size:1rem;line-height:1.25"></i></span>
-      </a>
-    </li>
+    {% if theme_github_url | length > 2 %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ theme_github_url }}" target="_blank" rel="noopener">
+          <span><i class="fab fa-github-square"></i></span>
+        </a>
+      </li>
+    {% endif %}
+    {% if theme_twitter_url | length > 2 %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ theme_twitter_url }}" target="_blank" rel="noopener">
+          <span><i class="fab fa-twitter-square"></i></span>
+        </a>
+      </li>
+    {% endif %}
   </ul>
 </div>

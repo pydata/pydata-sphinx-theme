@@ -53,6 +53,17 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'pandas_sphinx_theme'
 html_logo = '_static/pandas.svg'
 
+html_theme_options = {
+    "external_links": [
+        {
+            'url': "https://pandas.pydata.org/pandas-docs/stable/",
+            "name": "Pandas Docs"
+        }
+    ],
+    "github_url": "https://github.com/pandas-dev/pandas-sphinx-theme",
+    "twitter_url": "https://twitter.com/pandas_dev",
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
