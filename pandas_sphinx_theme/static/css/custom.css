@@ -295,6 +295,26 @@ div.prev-next-bottom a.right-next:after {
   content: " >>"
 }
 
+/* Alert Styling */
+.alert {
+  /* Avoid too large empty space below alert boxes. */
+  padding-bottom: 0;
+}
+
+.alert-info a {
+  /* higher contrast for links in info boxes. */
+  color: #e83e8c;
+}
+
+/* Header Styling */
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+
 /* Social media buttons */
 
 i.fab {
