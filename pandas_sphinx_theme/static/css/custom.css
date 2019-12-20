@@ -332,3 +332,14 @@ i.fa-github-square:before {
 i.fa-twitter-square:before {
   color: #55acee
 }
+
+/* TOC section headers */
+.tocsection {
+  padding-left: 10px;
+  border-left: 1px solid #eee;
+  padding: .3rem 1.5rem;
+}
+
+div.tocsection i {
+  padding-right: .5rem;
+}
