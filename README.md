@@ -2,7 +2,7 @@
 
 A Bootstrap-based sphinx theme.
 
-Demo site: https://dev.pandas.io/pandas-sphinx-theme/
+Demo site: https://pandas-sphinx-theme.readthedocs.io/en/latest/
 
 **Note**: This theme is originally being developed for the pandas docs (hence the name),
 but since there is uptake in other projects, we are working on making this more
