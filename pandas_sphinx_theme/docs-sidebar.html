@@ -14,7 +14,7 @@
       {% if main_nav_item.active %}
         {% for nav_item in main_nav_item.children %}
           {% if nav_item.children %}
-    
+
               <li class="{% if nav_item.active%}active{% endif %}">
                   <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
                   <ul>
@@ -24,7 +24,7 @@
                       </li>
                   {% endfor %}
                   </ul>
-              </li> 
+              </li>
           {% else %}
               <li class="{% if nav_item.active%}active{% endif %}">
                   <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
@@ -36,5 +36,3 @@
     </ul>
 
 </nav>
-
-
