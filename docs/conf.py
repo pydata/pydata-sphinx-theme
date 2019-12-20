@@ -65,6 +65,13 @@ html_theme_options = {
     "twitter_url": "https://twitter.com/pandas_dev",
 }
 
+html_context = {
+    "github_user": "pandas-dev",
+    "github_repo": "pandas-sphinx-theme",
+    "github_version": "master",
+    "doc_path": "docs",
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".

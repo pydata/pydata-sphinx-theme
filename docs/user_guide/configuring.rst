@@ -48,3 +48,21 @@ at the bottom. You can hide these buttons with the following configuration:
    html_theme_options: {
      "show_prev_next": False
    }
+
+
+Add an Edit this Page button
+============================
+
+You can add a button to each page that will allow users to edit the page text
+directly and submit a pull request to update the documentation. To include this
+button in the right sidebar of each page, add the following configuration to
+your ``conf.py`` file:
+
+.. code:: python
+
+   html_context = {
+       "github_user": "<your-github-org>",
+       "github_repo": "<your-github-repo>",
+       "github_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }

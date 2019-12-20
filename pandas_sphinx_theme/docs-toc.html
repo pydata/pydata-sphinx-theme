@@ -1,5 +1,6 @@
 {% set page_toc = get_page_toc_object() %}
 
+{% include "edit_this_page.html" %}
 {%- if page_toc.children | length > 1 %}
 <div class="tocsection onthispage"><i class="fas fa-list"></i> On this page</div>
 {% endif -%}
