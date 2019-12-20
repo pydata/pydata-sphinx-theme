@@ -33,7 +33,8 @@ release = '0.0.1dev0'
 
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary'
+    'sphinx.ext.autosummary',
+    'recommonmark'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -53,7 +54,26 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'pandas_sphinx_theme'
 html_logo = '_static/pandas.svg'
 
+html_theme_options = {
+    "external_links": [
+        {
+            'url': "https://pandas.pydata.org/pandas-docs/stable/",
+            "name": "Pandas Docs"
+        }
+    ],
+    "github_url": "https://github.com/pandas-dev/pandas-sphinx-theme",
+    "twitter_url": "https://twitter.com/pandas_dev",
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+
+# -- Auto-convert markdown pages to demo --------------------------------------
+import recommonmark
+from recommonmark.transform import AutoStructify
+
+def setup(app):
+    app.add_transform(AutoStructify)
