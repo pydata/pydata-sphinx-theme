@@ -146,3 +146,13 @@ div.seealso dd {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+/**
+ * Footer
+ */
+
+.footer {
+  width: 100%;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
