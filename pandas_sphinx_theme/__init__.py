@@ -6,6 +6,7 @@ Adapted for the pandas documentation.
 import os
 
 import sphinx.builders.html
+from sphinx.errors import ExtensionError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 import docutils
@@ -45,6 +46,8 @@ def convert_docutils_node(list_item, only_pages=False):
 
 def update_page_context(self, pagename, templatename, ctx, event_arg):
     from sphinx.environment.adapters.toctree import TocTree
+    self.page_context = ctx
+    self.html_context = self.env.config.html_context
 
     def get_nav_object(**kwds):
         """Return a list of nav links that can be accessed from Jinja."""
@@ -73,8 +76,31 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
         except:
             return {}
 
+    def get_edit_url():
+        """Return a URL for an "edit this page" link."""
+        required_values = ["github_user", "github_repo", "github_version"]
+        for val in required_values:
+            if not self.html_context.get(val):
+                raise ExtensionError("Missing required value for `edit this page` button. "
+                                     "Add %s to your `html_context` configuration" % val)
+
+        github_user = self.html_context['github_user']
+        github_repo = self.html_context['github_repo']
+        github_version = self.html_context['github_version']
+        file_name = f"{self.page_context['pagename']}.{self.page_context['sourcename'].split('.')[-2]}"
+
+        # Make sure that doc_path has a path separator only if it exists (to avoid //)
+        doc_path = self.html_context.get("doc_path", "")
+        if doc_path and not doc_path.endswith("/"):
+            doc_path = f"{doc_path}/"
+
+        # Build the URL for "edit this button"
+        url_edit = f"https://github.com/{github_user}/{github_repo}/edit/{github_version}/{doc_path}{file_name}"
+        return url_edit
+
     ctx["get_nav_object"] = get_nav_object
     ctx["get_page_toc_object"] = get_page_toc_object
+    ctx["get_edit_url"] = get_edit_url
     return None
 
 

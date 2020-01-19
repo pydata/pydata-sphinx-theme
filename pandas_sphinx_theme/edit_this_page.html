@@ -1,7 +1,7 @@
-{% if sourcename is defined and github_user is defined %}
+{% if sourcename is defined and theme_use_edit_page_button==true %}
 {% set src = sourcename.split('.') %}
 <div class="tocsection editthispage">
-    <a href="https://github.com/{{ github_user }}/{{ github_repo }}/edit/{{ github_version }}/{{ doc_path }}/{{ pagename }}.{{ src[-2] }}">
+    <a href="{{ get_edit_url() }}">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
