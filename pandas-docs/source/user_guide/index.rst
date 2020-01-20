@@ -30,13 +30,16 @@ Further information on any specific method can be obtained in the
     missing_data
     categorical
     integer_na
+    boolean
     visualization
     computation
     groupby
     timeseries
     timedeltas
+    style
     options
     enhancingperf
+    scale
     sparse
     gotchas
     cookbook

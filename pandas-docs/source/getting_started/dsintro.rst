@@ -3,7 +3,7 @@
 {{ header }}
 
 ************************
-Intro to Data Structures
+Intro to data structures
 ************************
 
 We'll start with a quick, non-comprehensive overview of the fundamental data
@@ -136,7 +136,7 @@ Like a NumPy array, a pandas Series has a :attr:`~Series.dtype`.
 
 This is often a NumPy dtype. However, pandas and 3rd-party libraries
 extend NumPy's type system in a few places, in which case the dtype would
-be a :class:`~pandas.api.extensions.ExtensionDtype`. Some examples within
+be an :class:`~pandas.api.extensions.ExtensionDtype`. Some examples within
 pandas are :ref:`categorical` and :ref:`integer_na`. See :ref:`basics.dtypes`
 for more.
 
@@ -250,8 +250,6 @@ Series can also have a ``name`` attribute:
 
 The Series ``name`` will be assigned automatically in many cases, in particular
 when taking 1D slices of DataFrame as you will see below.
-
-.. versionadded:: 0.18.0
 
 You can rename a Series with the :meth:`pandas.Series.rename` method.
 
@@ -399,7 +397,7 @@ The result will be a DataFrame with the same index as the input Series, and
 with one column whose name is the original name of the Series (only if no other
 column name provided).
 
-**Missing Data**
+**Missing data**
 
 Much more will be said on this topic in the :ref:`Missing data <missing_data>`
 section. To construct a DataFrame with missing data, we use ``np.nan`` to
@@ -407,7 +405,7 @@ represent missing values. Alternatively, you may pass a ``numpy.MaskedArray``
 as the data argument to the DataFrame constructor, and its masked entries will
 be considered missing.
 
-Alternate Constructors
+Alternate constructors
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. _basics.dataframe.from_dict:
@@ -446,6 +444,7 @@ dtype. For example:
    data
    pd.DataFrame.from_records(data, index='C')
 
+.. _basics.dataframe.sel_add_del:
 
 Column selection, addition, deletion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -498,7 +497,7 @@ available to insert at a particular location in the columns:
 
 .. _dsintro.chained_assignment:
 
-Assigning New Columns in Method Chains
+Assigning new columns in method chains
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Inspired by `dplyr's
@@ -566,55 +565,8 @@ to a column created earlier in the same :meth:`~DataFrame.assign`.
 In the second expression, ``x['C']`` will refer to the newly created column,
 that's equal to ``dfa['A'] + dfa['B']``.
 
-To write code compatible with all versions of Python, split the assignment in two.
 
-.. ipython:: python
-
-   dependent = pd.DataFrame({"A": [1, 1, 1]})
-   (dependent.assign(A=lambda x: x['A'] + 1)
-             .assign(B=lambda x: x['A'] + 2))
-
-.. warning::
-
-   Dependent assignment may subtly change the behavior of your code between
-   Python 3.6 and older versions of Python.
-
-   If you wish to write code that supports versions of python before and after 3.6,
-   you'll need to take care when passing ``assign`` expressions that
-
-   * Update an existing column
-   * Refer to the newly updated column in the same ``assign``
-
-   For example, we'll update column "A" and then refer to it when creating "B".
-
-   .. code-block:: python
-
-      >>> dependent = pd.DataFrame({"A": [1, 1, 1]})
-      >>> dependent.assign(A=lambda x: x["A"] + 1, B=lambda x: x["A"] + 2)
-
-   For Python 3.5 and earlier the expression creating ``B`` refers to the
-   "old" value of ``A``, ``[1, 1, 1]``. The output is then
-
-   .. code-block:: console
-
-         A  B
-      0  2  3
-      1  2  3
-      2  2  3
-
-   For Python 3.6 and later, the expression creating ``A`` refers to the
-   "new" value of ``A``, ``[2, 2, 2]``, which results in
-
-   .. code-block:: console
-
-         A  B
-      0  2  4
-      1  2  4
-      2  2  4
-
-
-
-Indexing / Selection
+Indexing / selection
 ~~~~~~~~~~~~~~~~~~~~
 The basics of indexing are as follows:
 
@@ -725,34 +677,73 @@ similar to an ndarray:
    # only show the first 5 rows
    df[:5].T
 
+.. _dsintro.numpy_interop:
+
 DataFrame interoperability with NumPy functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _dsintro.numpy_interop:
-
 Elementwise NumPy ufuncs (log, exp, sqrt, ...) and various other NumPy functions
-can be used with no issues on DataFrame, assuming the data within are numeric:
+can be used with no issues on Series and DataFrame, assuming the data within
+are numeric:
 
 .. ipython:: python
 
    np.exp(df)
    np.asarray(df)
 
-The dot method on DataFrame implements matrix multiplication:
-
-.. ipython:: python
-
-   df.T.dot(df)
-
-Similarly, the dot method on Series implements dot product:
-
-.. ipython:: python
-
-   s1 = pd.Series(np.arange(5, 10))
-   s1.dot(s1)
-
 DataFrame is not intended to be a drop-in replacement for ndarray as its
-indexing semantics are quite different in places from a matrix.
+indexing semantics and data model are quite different in places from an n-dimensional
+array.
+
+:class:`Series` implements ``__array_ufunc__``, which allows it to work with NumPy's
+`universal functions <https://docs.scipy.org/doc/numpy/reference/ufuncs.html>`_.
+
+The ufunc is applied to the underlying array in a Series.
+
+.. ipython:: python
+
+   ser = pd.Series([1, 2, 3, 4])
+   np.exp(ser)
+
+.. versionchanged:: 0.25.0
+
+   When multiple ``Series`` are passed to a ufunc, they are aligned before
+   performing the operation.
+
+Like other parts of the library, pandas will automatically align labeled inputs
+as part of a ufunc with multiple inputs. For example, using :meth:`numpy.remainder`
+on two :class:`Series` with differently ordered labels will align before the operation.
+
+.. ipython:: python
+
+   ser1 = pd.Series([1, 2, 3], index=['a', 'b', 'c'])
+   ser2 = pd.Series([1, 3, 5], index=['b', 'a', 'c'])
+   ser1
+   ser2
+   np.remainder(ser1, ser2)
+
+As usual, the union of the two indices is taken, and non-overlapping values are filled
+with missing values.
+
+.. ipython:: python
+
+   ser3 = pd.Series([2, 4, 6], index=['b', 'c', 'd'])
+   ser3
+   np.remainder(ser1, ser3)
+
+When a binary ufunc is applied to a :class:`Series` and :class:`Index`, the Series
+implementation takes precedence and a Series is returned.
+
+.. ipython:: python
+
+   ser = pd.Series([1, 2, 3])
+   idx = pd.Index([4, 5, 6])
+
+   np.maximum(ser, idx)
+
+NumPy ufuncs are safe to apply to :class:`Series` backed by non-ndarray arrays,
+for example :class:`arrays.SparseArray` (see :ref:`sparse.calculation`). If possible,
+the ufunc is applied without converting the underlying data to an ndarray.
 
 Console display
 ~~~~~~~~~~~~~~~

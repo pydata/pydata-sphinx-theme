@@ -1,5 +1,3 @@
-:notoc:
-
 .. _overview:
 
 {{ header }}
@@ -59,8 +57,7 @@ Here are just a few of the things that pandas does well:
     Excel files, databases, and saving / loading data from the ultrafast **HDF5
     format**
   - **Time series**-specific functionality: date range generation and frequency
-    conversion, moving window statistics, moving window linear regressions,
-    date shifting and lagging, etc.
+    conversion, moving window statistics, date shifting and lagging.
 
 Many of these principles are here to address the shortcomings frequently
 experienced using other languages / scientific research environments. For data
@@ -83,7 +80,7 @@ Some other notes
 
  - pandas has been used extensively in production in financial applications.
 
-Data Structures
+Data structures
 ---------------
 
 .. csv-table::
@@ -133,7 +130,7 @@ changed, but, for example, columns can be inserted into a DataFrame. However,
 the vast majority of methods produce new objects and leave the input data
 untouched. In general we like to **favor immutability** where sensible.
 
-Getting Support
+Getting support
 ---------------
 
 The first stop for pandas issues and ideas is the `Github Issue Tracker
@@ -154,7 +151,7 @@ pandas is a `NumFOCUS <https://www.numfocus.org/open-source-projects/>`__ sponso
 This will help ensure the success of development of pandas as a world-class open-source
 project, and makes it possible to `donate <https://pandas.pydata.org/donate.html>`__ to the project.
 
-Project Governance
+Project governance
 ------------------
 
 The governance process that pandas project has used informally since its inception in 2008 is formalized in `Project Governance documents <https://github.com/pandas-dev/pandas-governance>`__.
@@ -162,13 +159,13 @@ The documents clarify how decisions are made and how the various elements of our
 
 Wes McKinney is the Benevolent Dictator for Life (BDFL).
 
-Development Team
+Development team
 -----------------
 
 The list of the Core Team members and more detailed information can be found on the `people’s page <https://github.com/pandas-dev/pandas-governance/blob/master/people.md>`__ of the governance repo.
 
 
-Institutional Partners
+Institutional partners
 ----------------------
 
 The information about current institutional partners can be found on `pandas website page <https://pandas.pydata.org/about.html>`__.

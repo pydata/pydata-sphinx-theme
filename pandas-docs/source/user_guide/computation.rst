@@ -5,12 +5,13 @@
 Computational tools
 ===================
 
-Statistical Functions
+
+Statistical functions
 ---------------------
 
 .. _computation.pct_change:
 
-Percent Change
+Percent change
 ~~~~~~~~~~~~~~
 
 ``Series`` and ``DataFrame`` have a method
@@ -181,7 +182,7 @@ assigned the mean of the ranks (by default) for the group:
 
 .. ipython:: python
 
-   s = pd.Series(np.random.np.random.randn(5), index=list('abcde'))
+   s = pd.Series(np.random.randn(5), index=list('abcde'))
    s['d'] = s['b']  # so there's a tie
    s.rank()
 
@@ -191,7 +192,7 @@ ranking.
 
 .. ipython:: python
 
-   df = pd.DataFrame(np.random.np.random.randn(10, 6))
+   df = pd.DataFrame(np.random.randn(10, 6))
    df[4] = df[2][:5]  # some ties
    df
    df.rank(1)
@@ -294,7 +295,7 @@ sugar for applying the moving window operator to all of the DataFrame's columns:
 
 .. _stats.summary:
 
-Method Summary
+Method summary
 ~~~~~~~~~~~~~~
 
 We provide a number of common statistical functions:
@@ -320,6 +321,11 @@ We provide a number of common statistical functions:
     :meth:`~Rolling.cov`, Unbiased covariance (binary)
     :meth:`~Rolling.corr`, Correlation (binary)
 
+.. _stats.rolling_apply:
+
+Rolling Apply
+~~~~~~~~~~~~~
+
 The :meth:`~Rolling.apply` function takes an extra ``func`` argument and performs
 generic rolling computations. The ``func`` argument should be a single function
 that produces a single value from an ndarray input. Suppose we wanted to
@@ -333,9 +339,52 @@ compute the mean absolute deviation on a rolling basis:
    @savefig rolling_apply_ex.png
    s.rolling(window=60).apply(mad, raw=True).plot(style='k')
 
+.. versionadded:: 1.0
+
+Additionally, :meth:`~Rolling.apply` can leverage `Numba <https://numba.pydata.org/>`__
+if installed as an optional dependency. The apply aggregation can be executed using Numba by specifying
+``engine='numba'`` and ``engine_kwargs`` arguments (``raw`` must also be set to ``True``).
+Numba will be applied in potentially two routines:
+
+1. If ``func`` is a standard Python function, the engine will `JIT <http://numba.pydata.org/numba-doc/latest/user/overview.html>`__
+the passed function. ``func`` can also be a JITed function in which case the engine will not JIT the function again.
+
+2. The engine will JIT the for loop where the apply function is applied to each window.
+
+The ``engine_kwargs`` argument is a dictionary of keyword arguments that will be passed into the
+`numba.jit decorator <https://numba.pydata.org/numba-doc/latest/reference/jit-compilation.html#numba.jit>`__.
+These keyword arguments will be applied to *both* the passed function (if a standard Python function)
+and the apply for loop over each window. Currently only ``nogil``, ``nopython``, and ``parallel`` are supported,
+and their default values are set to ``False``, ``True`` and ``False`` respectively.
+
+.. note::
+
+   In terms of performance, **the first time a function is run using the Numba engine will be slow**
+   as Numba will have some function compilation overhead. However, ``rolling`` objects will cache
+   the function and subsequent calls will be fast. In general, the Numba engine is performant with
+   a larger amount of data points (e.g. 1+ million).
+
+.. code-block:: ipython
+
+   In [1]: data = pd.Series(range(1_000_000))
+
+   In [2]: roll = data.rolling(10)
+
+   In [3]: def f(x):
+      ...:     return np.sum(x) + 5
+   # Run the first time, compilation time will affect performance
+   In [4]: %timeit -r 1 -n 1 roll.apply(f, engine='numba', raw=True)  # noqa: E225
+   1.23 s ± 0 ns per loop (mean ± std. dev. of 1 run, 1 loop each)
+   # Function is cached and performance will improve
+   In [5]: %timeit roll.apply(f, engine='numba', raw=True)
+   188 ms ± 1.93 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+
+   In [6]: %timeit roll.apply(f, engine='cython', raw=True)
+   3.92 s ± 59 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
 .. _stats.rolling_window:
 
-Rolling Windows
+Rolling windows
 ~~~~~~~~~~~~~~~
 
 Passing ``win_type`` to ``.rolling`` generates a generic rolling window computation, that is weighted according the ``win_type``.
@@ -365,7 +414,8 @@ The list of recognized types are the `scipy.signal window functions
 * ``kaiser`` (needs beta)
 * ``gaussian`` (needs std)
 * ``general_gaussian`` (needs power, width)
-* ``slepian`` (needs width).
+* ``slepian`` (needs width)
+* ``exponential`` (needs tau).
 
 .. ipython:: python
 
@@ -403,12 +453,10 @@ For some windowing functions, additional parameters must be specified:
 
 .. _stats.moments.ts:
 
-Time-aware Rolling
+Time-aware rolling
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 0.19.0
-
-New in version 0.19.0 are the ability to pass an offset (or convertible) to a ``.rolling()`` method and have it produce
+It is possible to pass an offset (or convertible) to a ``.rolling()`` method and have it produce
 variable sized windows based on the passed time window. For each time point, this includes all preceding values occurring
 within the indicated time delta.
 
@@ -466,12 +514,68 @@ default of the index) in a DataFrame.
    dft
    dft.rolling('2s', on='foo').sum()
 
+.. _stats.custom_rolling_window:
+
+Custom window rolling
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 1.0
+
+In addition to accepting an integer or offset as a ``window`` argument, ``rolling`` also accepts
+a ``BaseIndexer`` subclass that allows a user to define a custom method for calculating window bounds.
+The ``BaseIndexer`` subclass will need to define a ``get_window_bounds`` method that returns
+a tuple of two arrays, the first being the starting indices of the windows and second being the
+ending indices of the windows. Additionally, ``num_values``, ``min_periods``, ``center``, ``closed``
+and will automatically be passed to ``get_window_bounds`` and the defined method must
+always accept these arguments.
+
+For example, if we have the following ``DataFrame``:
+
+.. ipython:: python
+
+   use_expanding = [True, False, True, False, True]
+   use_expanding
+   df = pd.DataFrame({'values': range(5)})
+   df
+
+and we want to use an expanding window where ``use_expanding`` is ``True`` otherwise a window of size
+1, we can create the following ``BaseIndexer``:
+
+.. code-block:: ipython
+
+   In [2]: from pandas.api.indexers import BaseIndexer
+   ...:
+   ...: class CustomIndexer(BaseIndexer):
+   ...:
+   ...:    def get_window_bounds(self, num_values, min_periods, center, closed):
+   ...:        start = np.empty(num_values, dtype=np.int64)
+   ...:        end = np.empty(num_values, dtype=np.int64)
+   ...:        for i in range(num_values):
+   ...:            if self.use_expanding[i]:
+   ...:                start[i] = 0
+   ...:                end[i] = i + 1
+   ...:            else:
+   ...:                start[i] = i
+   ...:                end[i] = i + self.window_size
+   ...:        return start, end
+   ...:
+
+   In [3]: indexer = CustomIndexer(window_size=1, use_expanding=use_expanding)
+
+   In [4]: df.rolling(indexer).sum()
+   Out[4]:
+       values
+   0     0.0
+   1     1.0
+   2     3.0
+   3     3.0
+   4    10.0
+
+
 .. _stats.rolling_window.endpoints:
 
-Rolling Window Endpoints
+Rolling window endpoints
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 0.20.0
 
 The inclusion of the interval endpoints in rolling window calculations can be specified with the ``closed``
 parameter:
@@ -510,7 +614,7 @@ For fixed windows, the closed parameter cannot be set and the rolling window wil
 
 .. _stats.moments.ts-versus-resampling:
 
-Time-aware Rolling vs. Resampling
+Time-aware rolling vs. resampling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using ``.rolling()`` with a time-based index is quite similar to :ref:`resampling <timeseries.resampling>`. They
@@ -528,7 +632,7 @@ will have the shape of a regular frequency between the min and the max of the or
 
 To summarize, ``.rolling()`` is a time-based window operation, while ``.resample()`` is a frequency-based window operation.
 
-Centering Windows
+Centering windows
 ~~~~~~~~~~~~~~~~~
 
 By default the labels are set to the right edge of the window, but a
@@ -541,7 +645,7 @@ By default the labels are set to the right edge of the window, but a
 
 .. _stats.moments.binary:
 
-Binary Window Functions
+Binary window functions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 :meth:`~Rolling.cov` and :meth:`~Rolling.corr` can compute moving window statistics about
@@ -694,7 +798,7 @@ Furthermore you can pass a nested dict to indicate different aggregations on dif
 
 .. _stats.moments.expanding:
 
-Expanding Windows
+Expanding windows
 -----------------
 
 A common alternative to rolling statistics is to use an *expanding* window,
@@ -715,7 +819,7 @@ they are implemented in pandas such that the following two calls are equivalent:
 
 These have a similar set of methods to ``.rolling`` methods.
 
-Method Summary
+Method summary
 ~~~~~~~~~~~~~~
 
 .. currentmodule:: pandas.core.window
@@ -797,7 +901,7 @@ relative impact of an individual data point. As an example, here is the
 
 .. _stats.moments.exponentially_weighted:
 
-Exponentially Weighted Windows
+Exponentially weighted windows
 ------------------------------
 
 .. currentmodule:: pandas.core.window
@@ -864,7 +968,7 @@ which is equivalent to using weights
 
 The difference between the above two variants arises because we are
 dealing with series which have finite history. Consider a series of infinite
-history:
+history, with ``adjust=True``:
 
 .. math::
 
@@ -883,17 +987,17 @@ and a ratio of :math:`1 - \alpha` we have
     &= \alpha x_t + (1 - \alpha)[x_{t-1} + (1 - \alpha) x_{t-2} + ...]\alpha\\
     &= \alpha x_t + (1 - \alpha) y_{t-1}
 
-which shows the equivalence of the above two variants for infinite series.
-When ``adjust=True`` we have :math:`y_0 = x_0` and from the last
-representation above we have :math:`y_t = \alpha x_t + (1 - \alpha) y_{t-1}`,
-therefore there is an assumption that :math:`x_0` is not an ordinary value
+which is the same expression as ``adjust=False`` above and therefore
+shows the equivalence of the two variants for infinite series.
+When ``adjust=False``, we have :math:`y_0 = x_0` and
+:math:`y_t = \alpha x_t + (1 - \alpha) y_{t-1}`.
+Therefore, there is an assumption that :math:`x_0` is not an ordinary value
 but rather an exponentially weighted moment of the infinite series up to that
 point.
 
-One must have :math:`0 < \alpha \leq 1`, and while since version 0.18.0
-it has been possible to pass :math:`\alpha` directly, it's often easier
-to think about either the **span**, **center of mass (com)** or **half-life**
-of an EW moment:
+One must have :math:`0 < \alpha \leq 1`, and while it is possible to pass
+:math:`\alpha` directly, it's often easier to think about either the
+**span**, **center  of mass (com)** or **half-life** of an EW moment:
 
 .. math::
 

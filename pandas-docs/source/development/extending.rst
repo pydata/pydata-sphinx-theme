@@ -3,7 +3,7 @@
 {{ header }}
 
 ****************
-Extending Pandas
+Extending pandas
 ****************
 
 While pandas provides a rich set of methods, containers, and data types, your
@@ -12,7 +12,7 @@ pandas.
 
 .. _extending.register-accessors:
 
-Registering Custom Accessors
+Registering custom accessors
 ----------------------------
 
 Libraries can use the decorators
@@ -26,7 +26,7 @@ decorate a class, providing the name of attribute to add. The class's
 .. code-block:: python
 
    @pd.api.extensions.register_dataframe_accessor("geo")
-   class GeoAccessor(object):
+   class GeoAccessor:
        def __init__(self, pandas_obj):
            self._validate(pandas_obj)
            self._obj = pandas_obj
@@ -70,7 +70,7 @@ applies only to certain dtypes.
 
 .. _extending.extension-types:
 
-Extension Types
+Extension types
 ---------------
 
 .. versionadded:: 0.23.0
@@ -208,9 +208,28 @@ will
 2. call ``result = op(values, ExtensionArray)``
 3. re-box the result in a ``Series``
 
+.. _extending.extension.ufunc:
+
+NumPy Universal Functions
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:class:`Series` implements ``__array_ufunc__``. As part of the implementation,
+pandas unboxes the ``ExtensionArray`` from the :class:`Series`, applies the ufunc,
+and re-boxes it if necessary.
+
+If applicable, we highly recommend that you implement ``__array_ufunc__`` in your
+extension array to avoid coercion to an ndarray. See
+`the numpy documentation <https://docs.scipy.org/doc/numpy/reference/generated/numpy.lib.mixins.NDArrayOperatorsMixin.html>`__
+for an example.
+
+As part of your implementation, we require that you defer to pandas when a pandas
+container (:class:`Series`, :class:`DataFrame`, :class:`Index`) is detected in ``inputs``.
+If any of those is present, you should return ``NotImplemented``. Pandas will take care of
+unboxing the array from the container and re-calling the ufunc with the unwrapped input.
+
 .. _extending.extension.testing:
 
-Testing Extension Arrays
+Testing extension arrays
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 We provide a test suite for ensuring that your extension arrays satisfy the expected
@@ -232,13 +251,55 @@ To use a test, subclass it:
 See https://github.com/pandas-dev/pandas/blob/master/pandas/tests/extension/base/__init__.py
 for a list of all the tests available.
 
+.. _extending.extension.arrow:
+
+Compatibility with Apache Arrow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An ``ExtensionArray`` can support conversion to / from ``pyarrow`` arrays
+(and thus support for example serialization to the Parquet file format)
+by implementing two methods: ``ExtensionArray.__arrow_array__`` and
+``ExtensionDtype.__from_arrow__``.
+
+The ``ExtensionArray.__arrow_array__`` ensures that ``pyarrow`` knowns how
+to convert the specific extension array into a ``pyarrow.Array`` (also when
+included as a column in a pandas DataFrame):
+
+.. code-block:: python
+
+    class MyExtensionArray(ExtensionArray):
+        ...
+
+        def __arrow_array__(self, type=None):
+            # convert the underlying array values to a pyarrow Array
+            import pyarrow
+            return pyarrow.array(..., type=type)
+
+The ``ExtensionDtype.__from_arrow__`` method then controls the conversion
+back from pyarrow to a pandas ExtensionArray. This method receives a pyarrow
+``Array`` or ``ChunkedArray`` as only argument and is expected to return the
+appropriate pandas ``ExtensionArray`` for this dtype and the passed values:
+
+.. code-block:: none
+
+    class ExtensionDtype:
+        ...
+
+        def __from_arrow__(self, array: pyarrow.Array/ChunkedArray) -> ExtensionArray:
+            ...
+
+See more in the `Arrow documentation <https://arrow.apache.org/docs/python/extending_types.html>`__.
+
+Those methods have been implemented for the nullable integer and string extension
+dtypes included in pandas, and ensure roundtrip to pyarrow and the Parquet file format.
+
 .. _extension dtype dtypes: https://github.com/pandas-dev/pandas/blob/master/pandas/core/dtypes/dtypes.py
 .. _extension dtype source: https://github.com/pandas-dev/pandas/blob/master/pandas/core/dtypes/base.py
 .. _extension array source: https://github.com/pandas-dev/pandas/blob/master/pandas/core/arrays/base.py
 
 .. _extending.subclassing-pandas:
 
-Subclassing pandas Data Structures
+Subclassing pandas data structures
 ----------------------------------
 
 .. warning:: There are some easier alternatives before considering subclassing ``pandas`` data structures.
@@ -260,7 +321,7 @@ This section describes how to subclass ``pandas`` data structures to meet more s
 
    You can find a nice example in `geopandas <https://github.com/geopandas/geopandas>`_ project.
 
-Override Constructor Properties
+Override constructor properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Each data structure has several *constructor properties* for returning a new
@@ -348,7 +409,7 @@ Below example shows how to define ``SubclassedSeries`` and ``SubclassedDataFrame
    >>> type(sliced2)
    <class '__main__.SubclassedSeries'>
 
-Define Original Properties
+Define original properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To let original data structures have additional properties, you should let ``pandas`` know what properties are added. ``pandas`` maps unknown properties to data names overriding ``__getattribute__``. Defining original properties can be done in one of 2 ways:
@@ -397,3 +458,47 @@ Below is an example to define two original properties, "internal_cache" as a tem
    # properties defined in _metadata are retained
    >>> df[['A', 'B']].added_property
    property
+
+.. _extending.plotting-backends:
+
+Plotting backends
+-----------------
+
+Starting in 0.25 pandas can be extended with third-party plotting backends. The
+main idea is letting users select a plotting backend different than the provided
+one based on Matplotlib. For example:
+
+.. code-block:: python
+
+    >>> pd.set_option('plotting.backend', 'backend.module')
+    >>> pd.Series([1, 2, 3]).plot()
+
+This would be more or less equivalent to:
+
+.. code-block:: python
+
+    >>> import backend.module
+    >>> backend.module.plot(pd.Series([1, 2, 3]))
+
+The backend module can then use other visualization tools (Bokeh, Altair,...)
+to generate the plots.
+
+Libraries implementing the plotting backend should use `entry points <https://setuptools.readthedocs.io/en/latest/setuptools.html#dynamic-discovery-of-services-and-plugins>`__
+to make their backend discoverable to pandas. The key is ``"pandas_plotting_backends"``. For example, pandas
+registers the default "matplotlib" backend as follows.
+
+.. code-block:: python
+
+   # in setup.py
+   setup(  # noqa: F821
+       ...,
+       entry_points={
+           "pandas_plotting_backends": [
+               "matplotlib = pandas:plotting._matplotlib",
+           ],
+       },
+   )
+
+
+More information on how to implement a third-party plotting backend can be found at
+https://github.com/pandas-dev/pandas/blob/master/pandas/plotting/__init__.py#L1.

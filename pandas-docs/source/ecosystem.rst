@@ -1,9 +1,11 @@
+:orphan:
+
 .. _ecosystem:
 
 {{ header }}
 
 ****************
-pandas Ecosystem
+Pandas ecosystem
 ****************
 
 Increasingly, packages are being built on top of pandas to address specific needs
@@ -23,10 +25,35 @@ or `search pypi for pandas <https://pypi.org/search/?q=pandas>`_.
 We'd like to make it easier for users to find these projects, if you know of other
 substantial projects that you feel should be on this list, please let us know.
 
+.. _ecosystem.data_cleaning_and_validation:
+
+Data cleaning and validation
+----------------------------
+
+`pyjanitor <https://github.com/ericmjl/pyjanitor/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pyjanitor provides a clean API for cleaning data, using method chaining.
+
+`Engarde <https://engarde.readthedocs.io/en/latest/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Engarde is a lightweight library used to explicitly state assumptions about your datasets
+and check that they're *actually* true.
+
+`pandas-path <https://github.com/drivendataorg/pandas-path/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since Python 3.4, `pathlib <https://docs.python.org/3/library/pathlib.html>`_ has been
+included in the Python standard library. Path objects provide a simple
+and delightful way to interact with the file system. The pandas-path package enables the
+Path API for pandas through a custom accessor ``.path``. Getting just the filenames from
+a series of full file paths is as simple as ``my_files.path.name``. Other convenient operations like
+joining paths, replacing file extensions, and checking if files exist are also available.
 
 .. _ecosystem.stats:
 
-Statistics and Machine Learning
+Statistics and machine learning
 -------------------------------
 
 `Statsmodels <https://www.statsmodels.org/>`__
@@ -71,6 +98,17 @@ Bokeh is a Python interactive visualization library for large datasets that nati
 the latest web technologies. Its goal is to provide elegant, concise construction of novel
 graphics in the style of Protovis/D3, while delivering high-performance interactivity over
 large data to thin clients.
+
+`Pandas-Bokeh <https://github.com/PatrikHlobil/Pandas-Bokeh>`__ provides a high level API
+for Bokeh that can be loaded as a native Pandas plotting backend via
+
+.. code:: python
+
+    pd.set_option("plotting.backend", "pandas_bokeh")
+
+It is very similar to the matplotlib plotting backend, but provides interactive
+web-based charts and maps.
+
 
 `seaborn <https://seaborn.pydata.org>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -216,8 +254,8 @@ Pandas DataFrames with timeseries indexes.
 `pydatastream <https://github.com/vfilimonov/pydatastream>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 PyDatastream is a Python interface to the
-`Thomson Dataworks Enterprise (DWE/Datastream) <http://dataworks.thomson.com/Dataworks/Enterprise/1.0/>`__
-SOAP API to return indexed Pandas DataFrames with financial data.
+`Refinitiv Datastream (DWS) <https://www.refinitiv.com/en/products/datastream-macroeconomic-analysis>`__
+REST API to return indexed Pandas DataFrames with financial data.
 This package requires valid credentials for this API (non free).
 
 `pandaSDMX <https://pandasdmx.readthedocs.io>`__
@@ -243,7 +281,7 @@ you can obtain for free on the FRED website.
 
 .. _ecosystem.domain:
 
-Domain Specific
+Domain specific
 ---------------
 
 `Geopandas <https://github.com/kjordahl/geopandas>`__
@@ -285,6 +323,11 @@ provides a familiar ``DataFrame`` interface for out-of-core, parallel and distri
 
 Dask-ML enables parallel and distributed machine learning using Dask alongside existing machine learning libraries like Scikit-Learn, XGBoost, and TensorFlow.
 
+`Koalas <https://koalas.readthedocs.io/en/latest/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Koalas provides a familiar pandas DataFrame interface on top of Apache Spark. It enables users to leverage multi-cores on one machine or a cluster of machines to speed up or scale their DataFrame code.
+
 `Odo <http://odo.pydata.org>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -293,6 +336,21 @@ pandas own ``read_csv`` for CSV IO and leverages many existing packages such as
 PyTables, h5py, and pymongo to move data between non pandas formats. Its graph
 based approach is also extensible by end users for custom formats that may be
 too specific for the core of odo.
+
+`Pandarallel <https://github.com/nalepae/pandarallel>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pandarallel provides a simple way to parallelize your pandas operations on all your CPUs by changing only one line of code.
+If also displays progress bars.
+
+.. code:: python
+
+    from pandarallel import pandarallel
+
+    pandarallel.initialize(progress_bar=True)
+
+    # df.apply(func)
+    df.parallel_apply(func)
 
 `Ray <https://ray.readthedocs.io/en/latest/pandas_on_ray.html>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -313,21 +371,9 @@ Increasingly, packages are being built on top of pandas to address specific need
  * vaex.from_pandas
  * vaex.to_pandas_df
 
-
-.. _ecosystem.data_validation:
-
-Data validation
----------------
-
-`Engarde <https://engarde.readthedocs.io/en/latest/>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Engarde is a lightweight library used to explicitly state your assumptions about your datasets
-and check that they're *actually* true.
-
 .. _ecosystem.extensions:
 
-Extension Data Types
+Extension data types
 --------------------
 
 Pandas provides an interface for defining
@@ -350,12 +396,16 @@ A directory of projects providing
 :ref:`extension accessors <extending.register-accessors>`. This is for users to
 discover new accessors and for library authors to coordinate on the namespace.
 
-============== ========== =========================
-Library        Accessor   Classes
-============== ========== =========================
-`cyberpandas`_ ``ip``     ``Series``
-`pdvega`_      ``vgplot`` ``Series``, ``DataFrame``
-============== ========== =========================
+=============== ========== ========================= ===============================================================
+Library         Accessor   Classes                   Description
+=============== ========== ========================= ===============================================================
+`cyberpandas`_  ``ip``     ``Series``                Provides common operations for working with IP addresses.
+`pdvega`_       ``vgplot`` ``Series``, ``DataFrame`` Provides plotting functions from the Altair_ library.
+`pandas_path`_  ``path``   ``Index``, ``Series``     Provides `pathlib.Path`_ functions for Series.
+=============== ========== ========================= ===============================================================
 
 .. _cyberpandas: https://cyberpandas.readthedocs.io/en/latest
-.. _pdvega: https://jakevdp.github.io/pdvega/
+.. _pdvega: https://altair-viz.github.io/pdvega/
+.. _Altair: https://altair-viz.github.io/
+.. _pandas_path: https://github.com/drivendataorg/pandas-path/
+.. _pathlib.Path: https://docs.python.org/3/library/pathlib.html

@@ -3,7 +3,7 @@
 {{ header }}
 
 ==============================
- Essential Basic Functionality
+ Essential basic functionality
 ==============================
 
 Here we discuss a lot of the essential functionality common to the pandas data
@@ -19,7 +19,7 @@ the previous section:
 
 .. _basics.head_tail:
 
-Head and Tail
+Head and tail
 -------------
 
 To view a small sample of a Series or DataFrame object, use the
@@ -34,7 +34,7 @@ of elements to display is five, but you may pass a custom number.
 
 .. _basics.attrs:
 
-Attributes and Underlying Data
+Attributes and underlying data
 ------------------------------
 
 pandas objects have a number of attributes enabling you to access the metadata
@@ -172,8 +172,6 @@ You are highly encouraged to install both libraries. See the section
 
 These are both enabled to be used by default, you can control this by setting the options:
 
-.. versionadded:: 0.20.0
-
 .. code-block:: python
 
    pd.set_option('compute.use_bottleneck', False)
@@ -286,7 +284,7 @@ using ``fillna`` if you wish).
 
 .. _basics.compare:
 
-Flexible Comparisons
+Flexible comparisons
 ~~~~~~~~~~~~~~~~~~~~
 
 Series and DataFrame have the binary comparison methods ``eq``, ``ne``, ``lt``, ``gt``,
@@ -304,7 +302,7 @@ indexing operations, see the section on :ref:`Boolean indexing<indexing.boolean>
 
 .. _basics.reductions:
 
-Boolean Reductions
+Boolean reductions
 ~~~~~~~~~~~~~~~~~~
 
 You can apply the reductions: :attr:`~DataFrame.empty`, :meth:`~DataFrame.any`,
@@ -468,7 +466,7 @@ which we illustrate:
    df2
    df1.combine_first(df2)
 
-General DataFrame Combine
+General DataFrame combine
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :meth:`~DataFrame.combine_first` method above calls the more general
@@ -643,7 +641,7 @@ there for details about accepted inputs.
 
 .. _basics.idxmin:
 
-Index of Min/Max Values
+Index of min/max values
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The :meth:`~DataFrame.idxmin` and :meth:`~DataFrame.idxmax` functions on Series
@@ -677,7 +675,7 @@ matching index:
 
 .. _basics.discretization:
 
-Value counts (histogramming) / Mode
+Value counts (histogramming) / mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :meth:`~Series.value_counts` Series method and top-level function computes a histogram
@@ -752,31 +750,54 @@ on an entire ``DataFrame`` or ``Series``, row- or column-wise, or elementwise.
 
 .. _basics.pipe:
 
-Tablewise Function Application
+Tablewise function application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``DataFrames`` and ``Series`` can of course just be passed into functions.
+``DataFrames`` and ``Series`` can be passed into functions.
 However, if the function needs to be called in a chain, consider using the :meth:`~DataFrame.pipe` method.
-Compare the following
 
-.. code-block:: python
+First some setup:
 
-   # f, g, and h are functions taking and returning ``DataFrames``
-   >>> f(g(h(df), arg1=1), arg2=2, arg3=3)
+.. ipython:: python
 
-with the equivalent
+    def extract_city_name(df):
+        """
+        Chicago, IL -> Chicago for city_name column
+        """
+        df['city_name'] = df['city_and_code'].str.split(",").str.get(0)
+        return df
 
-.. code-block:: python
+    def add_country_name(df, country_name=None):
+        """
+        Chicago -> Chicago-US for city_name column
+        """
+        col = 'city_name'
+        df['city_and_country'] = df[col] + country_name
+        return df
 
-   >>> (df.pipe(h)
-   ...    .pipe(g, arg1=1)
-   ...    .pipe(f, arg2=2, arg3=3))
+    df_p = pd.DataFrame({'city_and_code': ['Chicago, IL']})
+
+
+``extract_city_name`` and ``add_country_name`` are functions taking and returning ``DataFrames``.
+
+Now compare the following:
+
+.. ipython:: python
+
+    add_country_name(extract_city_name(df_p), country_name='US')
+
+Is equivalent to:
+
+.. ipython:: python
+
+    (df_p.pipe(extract_city_name)
+         .pipe(add_country_name, country_name="US"))
 
 Pandas encourages the second style, which is known as method chaining.
 ``pipe`` makes it easy to use your own or another library's functions
 in method chains, alongside pandas' methods.
 
-In the example above, the functions ``f``, ``g``, and ``h`` each expected the ``DataFrame`` as the first positional argument.
+In the example above, the functions ``extract_city_name`` and ``add_country_name`` each expected a ``DataFrame`` as the first positional argument.
 What if the function you wish to apply takes its data as, say, the second argument?
 In this case, provide ``pipe`` with a tuple of ``(callable, data_keyword)``.
 ``.pipe`` will route the ``DataFrame`` to the argument specified in the tuple.
@@ -784,6 +805,7 @@ In this case, provide ``pipe`` with a tuple of ``(callable, data_keyword)``.
 For example, we can fit a regression using statsmodels. Their API expects a formula first and a ``DataFrame`` as the second argument, ``data``. We pass in the function, keyword pair ``(sm.ols, 'data')`` to ``pipe``:
 
 .. ipython:: python
+   :okwarning:
 
    import statsmodels.formula.api as sm
 
@@ -806,7 +828,7 @@ We encourage you to view the source code of :meth:`~DataFrame.pipe`.
 .. _R: https://www.r-project.org
 
 
-Row or Column-wise Function Application
+Row or column-wise function application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Arbitrary functions can be applied along the axes of a DataFrame
@@ -890,8 +912,6 @@ functionality.
 Aggregation API
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 0.20.0
-
 The aggregation API allows one to express possibly multiple aggregation operations in a single concise way.
 This API is similar across pandas objects, see :ref:`groupby API <groupby.aggregate>`, the
 :ref:`window functions API <stats.aggregate>`, and the :ref:`resample API <timeseries.aggregate>`.
@@ -925,7 +945,7 @@ Single aggregations on a ``Series`` this will return a scalar value:
 
 .. ipython:: python
 
-   tsdf.A.agg('sum')
+   tsdf['A'].agg('sum')
 
 
 Aggregating with multiple functions
@@ -949,13 +969,13 @@ On a ``Series``, multiple functions return a ``Series``, indexed by the function
 
 .. ipython:: python
 
-   tsdf.A.agg(['sum', 'mean'])
+   tsdf['A'].agg(['sum', 'mean'])
 
 Passing a ``lambda`` function will yield a ``<lambda>`` named row:
 
 .. ipython:: python
 
-   tsdf.A.agg(['sum', lambda x: x.mean()])
+   tsdf['A'].agg(['sum', lambda x: x.mean()])
 
 Passing a named function will yield that name for the row:
 
@@ -964,7 +984,7 @@ Passing a named function will yield that name for the row:
    def mymean(x):
        return x.mean()
 
-   tsdf.A.agg(['sum', mymean])
+   tsdf['A'].agg(['sum', mymean])
 
 Aggregating with a dict
 +++++++++++++++++++++++
@@ -985,9 +1005,9 @@ not noted for a particular column will be ``NaN``:
 
    tsdf.agg({'A': ['mean', 'min'], 'B': 'sum'})
 
-.. _basics.aggregation.mixed_dtypes:
+.. _basics.aggregation.mixed_string:
 
-Mixed Dtypes
+Mixed dtypes
 ++++++++++++
 
 When presented with mixed dtypes that cannot aggregate, ``.agg`` will only take the valid
@@ -1029,8 +1049,6 @@ to the built in :ref:`describe function <basics.describe>`.
 Transform API
 ~~~~~~~~~~~~~
 
-.. versionadded:: 0.20.0
-
 The :meth:`~DataFrame.transform` method returns an object that is indexed the same (same size)
 as the original. This API allows you to provide *multiple* operations at the same
 time rather than one-by-one. Its API is quite similar to the ``.agg`` API.
@@ -1064,7 +1082,7 @@ Passing a single function to ``.transform()`` with a ``Series`` will yield a sin
 
 .. ipython:: python
 
-   tsdf.A.transform(np.abs)
+   tsdf['A'].transform(np.abs)
 
 
 Transform with multiple functions
@@ -1083,7 +1101,7 @@ resulting column names will be the transforming functions.
 
 .. ipython:: python
 
-   tsdf.A.transform([np.abs, lambda x: x + 1])
+   tsdf['A'].transform([np.abs, lambda x: x + 1])
 
 
 Transforming with a dict
@@ -1106,7 +1124,7 @@ selective transforms.
 
 .. _basics.elementwise:
 
-Applying Elementwise Functions
+Applying elementwise functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Since not all functions can be vectorized (accept NumPy arrays and return
@@ -1421,8 +1439,6 @@ The :meth:`~DataFrame.rename` method also provides an ``inplace`` named
 parameter that is by default ``False`` and copies the underlying data. Pass
 ``inplace=True`` to rename the data in place.
 
-.. versionadded:: 0.18.0
-
 Finally, :meth:`~Series.rename` also accepts a scalar or list-like
 for altering the ``Series.name`` attribute.
 
@@ -1455,9 +1471,8 @@ Iteration
 
 The behavior of basic iteration over pandas objects depends on the type.
 When iterating over a Series, it is regarded as array-like, and basic iteration
-produces the values. Other data structures, like DataFrame,
-follow the dict-like convention of iterating over the "keys" of the
-objects.
+produces the values. DataFrames follow the dict-like convention of iterating
+over the "keys" of the objects.
 
 In short, basic iteration (``for i in object``) produces:
 
@@ -1475,7 +1490,7 @@ Thus, for example, iterating over a DataFrame gives you the column names:
        print(col)
 
 
-Pandas objects also have the dict-like :meth:`~DataFrame.iteritems` method to
+Pandas objects also have the dict-like :meth:`~DataFrame.items` method to
 iterate over the (key, value) pairs.
 
 To iterate over the rows of a DataFrame, you can use the following methods:
@@ -1524,10 +1539,10 @@ To iterate over the rows of a DataFrame, you can use the following methods:
 
     df
 
-iteritems
-~~~~~~~~~
+items
+~~~~~
 
-Consistent with the dict-like interface, :meth:`~DataFrame.iteritems` iterates
+Consistent with the dict-like interface, :meth:`~DataFrame.items` iterates
 through key-value pairs:
 
 * **Series**: (index, scalar value) pairs
@@ -1537,9 +1552,9 @@ For example:
 
 .. ipython:: python
 
-   for item, frame in df.iteritems():
-       print(item)
-       print(frame)
+   for label, ser in df.items():
+       print(label)
+       print(ser)
 
 .. _basics.iterrows:
 
@@ -1706,13 +1721,20 @@ built-in string methods. For example:
 
  .. ipython:: python
 
-  s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
+  s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'],
+                dtype="string")
   s.str.lower()
 
 Powerful pattern-matching methods are provided as well, but note that
 pattern-matching generally uses `regular expressions
 <https://docs.python.org/3/library/re.html>`__ by default (and in some cases
 always uses them).
+
+.. note::
+
+   Prior to pandas 1.0, string methods were only available on ``object`` -dtype
+   ``Series``. Pandas 1.0 added the :class:`StringDtype` which is dedicated
+   to strings. See :ref:`text.types` for more.
 
 Please see :ref:`Vectorized String Methods <text.string_methods>` for a complete
 description.
@@ -1727,7 +1749,7 @@ sorting by column values, and sorting by a combination of both.
 
 .. _basics.sort_index:
 
-By Index
+By index
 ~~~~~~~~
 
 The :meth:`Series.sort_index` and :meth:`DataFrame.sort_index` methods are
@@ -1754,7 +1776,7 @@ used to sort a pandas object by its index levels.
 
 .. _basics.sort_values:
 
-By Values
+By values
 ~~~~~~~~~
 
 The :meth:`Series.sort_values` method is used to sort a `Series` by its values. The
@@ -1786,7 +1808,7 @@ argument:
 
 .. _basics.sort_indexes_and_values:
 
-By Indexes and Values
+By indexes and values
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 0.23.0
@@ -1915,21 +1937,43 @@ See :ref:`extending.extension-types` for how to write your own extension that
 works with pandas. See :ref:`ecosystem.extensions` for a list of third-party
 libraries that have implemented an extension.
 
-The following table lists all of pandas extension types. See the respective
+The following table lists all of pandas extension types. For methods requiring ``dtype``
+arguments, strings can be specified as indicated. See the respective
 documentation sections for more on each type.
 
-=================== ========================= ================== ============================= =============================
-Kind of Data        Data Type                 Scalar             Array                         Documentation
-=================== ========================= ================== ============================= =============================
-tz-aware datetime   :class:`DatetimeTZDtype`  :class:`Timestamp` :class:`arrays.DatetimeArray` :ref:`timeseries.timezone`
-Categorical         :class:`CategoricalDtype` (none)             :class:`Categorical`          :ref:`categorical`
-period (time spans) :class:`PeriodDtype`      :class:`Period`    :class:`arrays.PeriodArray`   :ref:`timeseries.periods`
-sparse              :class:`SparseDtype`      (none)             :class:`arrays.SparseArray`   :ref:`sparse`
-intervals           :class:`IntervalDtype`    :class:`Interval`  :class:`arrays.IntervalArray` :ref:`advanced.intervalindex`
-nullable integer    :class:`Int64Dtype`, ...  (none)             :class:`arrays.IntegerArray`  :ref:`integer_na`
-=================== ========================= ================== ============================= =============================
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| Kind of Data      | Data Type                 | Scalar             | Array                         | String Aliases                          | Documentation                 |
++===================+===========================+====================+===============================+=========================================+===============================+
+| tz-aware datetime | :class:`DatetimeTZDtype`  | :class:`Timestamp` | :class:`arrays.DatetimeArray` | ``'datetime64[ns, <tz>]'``              | :ref:`timeseries.timezone`    |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| Categorical       | :class:`CategoricalDtype` | (none)             | :class:`Categorical`          | ``'category'``                          | :ref:`categorical`            |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| period            | :class:`PeriodDtype`      | :class:`Period`    | :class:`arrays.PeriodArray`   | ``'period[<freq>]'``,                   | :ref:`timeseries.periods`     |
+| (time spans)      |                           |                    |                               | ``'Period[<freq>]'``                    |                               |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| sparse            | :class:`SparseDtype`      | (none)             | :class:`arrays.SparseArray`   | ``'Sparse'``, ``'Sparse[int]'``,        | :ref:`sparse`                 |
+|                   |                           |                    |                               | ``'Sparse[float]'``                     |                               |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| intervals         | :class:`IntervalDtype`    | :class:`Interval`  | :class:`arrays.IntervalArray` | ``'interval'``, ``'Interval'``,         | :ref:`advanced.intervalindex` |
+|                   |                           |                    |                               | ``'Interval[<numpy_dtype>]'``,          |                               |
+|                   |                           |                    |                               | ``'Interval[datetime64[ns, <tz>]]'``,   |                               |
+|                   |                           |                    |                               | ``'Interval[timedelta64[<freq>]]'``     |                               |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| nullable integer  + :class:`Int64Dtype`, ...  | (none)             | :class:`arrays.IntegerArray`  | ``'Int8'``, ``'Int16'``, ``'Int32'``,   | :ref:`integer_na`             |
+|                   |                           |                    |                               | ``'Int64'``, ``'UInt8'``, ``'UInt16'``, |                               |
+|                   |                           |                    |                               | ``'UInt32'``, ``'UInt64'``              |                               |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| Strings           | :class:`StringDtype`      | :class:`str`       | :class:`arrays.StringArray`   | ``'string'``                            | :ref:`text`                   |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
+| Boolean (with NA) | :class:`BooleanDtype`     | :class:`bool`      | :class:`arrays.BooleanArray`  | ``'boolean'``                           | :ref:`api.arrays.bool`        |
++-------------------+---------------------------+--------------------+-------------------------------+-----------------------------------------+-------------------------------+
 
-Pandas uses the ``object`` dtype for storing strings.
+Pandas has two ways to store strings.
+
+1. ``object`` dtype, which can hold any Python object, including strings.
+2. :class:`StringDtype`, which is dedicated to strings.
+
+Generally, we recommend using :class:`StringDtype`. See :ref:`text.types` fore more.
 
 Finally, arbitrary objects may be stored using the ``object`` dtype, but should
 be avoided to the extent possible (for performance and interoperability with
@@ -1969,15 +2013,15 @@ dtype of the column will be chosen to accommodate all of the data types
    pd.Series([1, 2, 3, 6., 'foo'])
 
 The number of columns of each type in a ``DataFrame`` can be found by calling
-:meth:`~DataFrame.get_dtype_counts`.
+``DataFrame.dtypes.value_counts()``.
 
 .. ipython:: python
 
-   dft.get_dtype_counts()
+   dft.dtypes.value_counts()
 
 Numeric dtypes will propagate and can coexist in DataFrames.
 If a dtype is passed (either directly via the ``dtype`` keyword, a passed ``ndarray``,
-or a passed ``Series``, then it will be preserved in DataFrame operations. Furthermore,
+or a passed ``Series``), then it will be preserved in DataFrame operations. Furthermore,
 different numeric dtypes will **NOT** be combined. The following example will give you a taste.
 
 .. ipython:: python
@@ -2062,8 +2106,6 @@ Convert a subset of columns to a specified type using :meth:`~DataFrame.astype`.
    dft[['a', 'b']] = dft[['a', 'b']].astype(np.uint8)
    dft
    dft.dtypes
-
-.. versionadded:: 0.19.0
 
 Convert certain columns to a specific dtype by passing a dict to :meth:`~DataFrame.astype`.
 
