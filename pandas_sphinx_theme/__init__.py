@@ -46,8 +46,6 @@ def convert_docutils_node(list_item, only_pages=False):
 
 def update_page_context(self, pagename, templatename, ctx, event_arg):
     from sphinx.environment.adapters.toctree import TocTree
-    self.page_context = ctx
-    self.html_context = self.env.config.html_context
 
     def get_nav_object(**kwds):
         """Return a list of nav links that can be accessed from Jinja."""
