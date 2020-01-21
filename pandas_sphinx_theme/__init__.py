@@ -76,21 +76,32 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
         except:
             return {}
 
+    ctx["get_nav_object"] = get_nav_object
+    ctx["get_page_toc_object"] = get_page_toc_object
+    return None
+
+
+sphinx.builders.html.StandaloneHTMLBuilder.update_page_context = update_page_context
+
+# -----------------------------------------------------------------------------
+
+def setup_edit_url(app, pagename, templatename, context, doctree):
+    """Add a function that jinja can access for returning the edit URL of a page."""
     def get_edit_url():
         """Return a URL for an "edit this page" link."""
         required_values = ["github_user", "github_repo", "github_version"]
         for val in required_values:
-            if not self.html_context.get(val):
+            if not context.get(val):
                 raise ExtensionError("Missing required value for `edit this page` button. "
-                                     "Add %s to your `html_context` configuration" % val)
+                                        "Add %s to your `html_context` configuration" % val)
 
-        github_user = self.html_context['github_user']
-        github_repo = self.html_context['github_repo']
-        github_version = self.html_context['github_version']
-        file_name = f"{self.page_context['pagename']}.{self.page_context['sourcename'].split('.')[-2]}"
+        github_user = context['github_user']
+        github_repo = context['github_repo']
+        github_version = context['github_version']
+        file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
-        doc_path = self.html_context.get("doc_path", "")
+        doc_path = context.get("doc_path", "")
         if doc_path and not doc_path.endswith("/"):
             doc_path = f"{doc_path}/"
 
@@ -98,13 +109,7 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
         url_edit = f"https://github.com/{github_user}/{github_repo}/edit/{github_version}/{doc_path}{file_name}"
         return url_edit
 
-    ctx["get_nav_object"] = get_nav_object
-    ctx["get_page_toc_object"] = get_page_toc_object
-    ctx["get_edit_url"] = get_edit_url
-    return None
-
-
-sphinx.builders.html.StandaloneHTMLBuilder.update_page_context = update_page_context
+    context['get_edit_url'] = get_edit_url
 
 
 # -----------------------------------------------------------------------------
@@ -120,3 +125,4 @@ def setup(app):
     theme_path = get_html_theme_path()[0]
     app.add_html_theme("pandas_sphinx_theme", theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
+    app.connect("html-page-context", setup_edit_url)
