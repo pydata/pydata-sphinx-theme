@@ -6,6 +6,7 @@ Adapted for the pandas documentation.
 import os
 
 import sphinx.builders.html
+from sphinx.errors import ExtensionError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 import docutils
@@ -80,6 +81,34 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
 
 sphinx.builders.html.StandaloneHTMLBuilder.update_page_context = update_page_context
 
+# -----------------------------------------------------------------------------
+
+def setup_edit_url(app, pagename, templatename, context, doctree):
+    """Add a function that jinja can access for returning the edit URL of a page."""
+    def get_edit_url():
+        """Return a URL for an "edit this page" link."""
+        required_values = ["github_user", "github_repo", "github_version"]
+        for val in required_values:
+            if not context.get(val):
+                raise ExtensionError("Missing required value for `edit this page` button. "
+                                        "Add %s to your `html_context` configuration" % val)
+
+        github_user = context['github_user']
+        github_repo = context['github_repo']
+        github_version = context['github_version']
+        file_name = f"{pagename}{context['page_source_suffix']}"
+
+        # Make sure that doc_path has a path separator only if it exists (to avoid //)
+        doc_path = context.get("doc_path", "")
+        if doc_path and not doc_path.endswith("/"):
+            doc_path = f"{doc_path}/"
+
+        # Build the URL for "edit this button"
+        url_edit = f"https://github.com/{github_user}/{github_repo}/edit/{github_version}/{doc_path}{file_name}"
+        return url_edit
+
+    context['get_edit_url'] = get_edit_url
+
 
 # -----------------------------------------------------------------------------
 
@@ -94,3 +123,4 @@ def setup(app):
     theme_path = get_html_theme_path()[0]
     app.add_html_theme("pandas_sphinx_theme", theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
+    app.connect("html-page-context", setup_edit_url)
