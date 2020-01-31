@@ -15,6 +15,7 @@ the left sidebar to see how various elements look on this theme.
     api
     lists_tables
     markdown
+    example_pandas
 
 .. toctree::
     :maxdepth: 3
