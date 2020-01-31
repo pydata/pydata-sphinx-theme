@@ -1,5 +1,4 @@
 sphinx
 numpydoc
 recommonmark
-ipython
 pandas

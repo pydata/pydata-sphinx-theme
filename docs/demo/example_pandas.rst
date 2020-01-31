@@ -125,16 +125,15 @@ indexing pandas objects with ``[]``:
 Here we construct a simple time series data set to use for illustrating the
 indexing functionality:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [1]: dates = pd.date_range('1/1/2000', periods=8)
+    >>> dates = pd.date_range('1/1/2000', periods=8)
 
-    In [2]: df = pd.DataFrame(np.random.randn(8, 4),
-    ...:                   index=dates, columns=['A', 'B', 'C', 'D'])
-    ...: 
+    >>> df = pd.DataFrame(np.random.randn(8, 4),
+    ...                   index=dates, columns=['A', 'B', 'C', 'D'])
+    ... 
 
-    In [3]: df
-    Out[3]: 
+    >>> df
                     A         B         C         D
     2000-01-01  0.469112 -0.282863 -1.509059 -1.135632
     2000-01-02  1.212112 -0.173215  0.119209 -1.044236
@@ -152,22 +151,21 @@ indexing functionality:
 
 Thus, as per above, we have the most basic indexing using ``[]``:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [4]: s = df['A']
+    >>> s = df['A']
 
-    In [5]: s[dates[5]]
-    Out[5]: -0.6736897080883706
+    >>> s[dates[5]]
+    -0.6736897080883706
 
 
 You can pass a list of columns to ``[]`` to select columns in that order.
 If a column is not contained in the DataFrame, an exception will be
 raised. Multiple columns can also be set in this manner:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [6]: df
-    Out[6]: 
+    >>> df
                     A         B         C         D
     2000-01-01  0.469112 -0.282863 -1.509059 -1.135632
     2000-01-02  1.212112 -0.173215  0.119209 -1.044236
@@ -178,10 +176,9 @@ raised. Multiple columns can also be set in this manner:
     2000-01-07  0.404705  0.577046 -1.715002 -1.039268
     2000-01-08 -0.370647 -1.157892 -1.344312  0.844885
 
-    In [7]: df[['B', 'A']] = df[['A', 'B']]
+    >>> df[['B', 'A']] = df[['A', 'B']]
 
-    In [8]: df
-    Out[8]: 
+    >>> df
                     A         B         C         D
     2000-01-01 -0.282863  0.469112 -1.509059 -1.135632
     2000-01-02 -0.173215  1.212112  0.119209 -1.044236
@@ -201,10 +198,9 @@ columns.
 
    This will **not** modify ``df`` because the column alignment is before value assignment.
 
-   .. code-block:: ipython
+   .. code-block:: python
 
-        In [9]: df[['A', 'B']]
-        Out[9]: 
+        >>> df[['A', 'B']]
                         A         B
         2000-01-01 -0.282863  0.469112
         2000-01-02 -0.173215  1.212112
@@ -215,10 +211,9 @@ columns.
         2000-01-07  0.577046  0.404705
         2000-01-08 -1.157892 -0.370647
 
-        In [10]: df.loc[:, ['B', 'A']] = df[['A', 'B']]
+        >>> df.loc[:, ['B', 'A']] = df[['A', 'B']]
 
-        In [11]: df[['A', 'B']]
-        Out[11]: 
+        >>> df[['A', 'B']]
                         A         B
         2000-01-01 -0.282863  0.469112
         2000-01-02 -0.173215  1.212112
@@ -231,12 +226,11 @@ columns.
 
    The correct way to swap column values is by using raw values:
 
-   .. code-block:: ipython
+   .. code-block:: python
 
-        In [12]: df.loc[:, ['B', 'A']] = df[['A', 'B']].to_numpy()
+        >>> df.loc[:, ['B', 'A']] = df[['A', 'B']].to_numpy()
 
-        In [13]: df[['A', 'B']]
-        Out[13]: 
+        >>> df[['A', 'B']]
                         A         B
         2000-01-01  0.469112 -0.282863
         2000-01-02  1.212112 -0.173215
@@ -260,31 +254,29 @@ Attribute access
 You may access an index on a ``Series`` or  column on a ``DataFrame`` directly
 as an attribute:
 
-.. code-block:: ipython
+.. code-block:: python
 
    sa = pd.Series([1, 2, 3], index=list('abc'))
    dfa = df.copy()
 
-.. code-block:: ipython
+.. code-block:: python
 
    sa.b
    dfa.A
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [18]: sa.a = 5
+    >>> sa.a = 5
 
-    In [19]: sa
-    Out[19]: 
+    >>> sa
     a    5
     b    2
     c    3
     dtype: int64
 
-    In [20]: dfa.A = list(range(len(dfa.index)))  # ok if A already exists
+    >>> dfa.A = list(range(len(dfa.index)))  # ok if A already exists
 
-    In [21]: dfa
-    Out[21]: 
+    >>> dfa
                 A         B         C         D
     2000-01-01  0 -0.282863 -1.509059 -1.135632
     2000-01-02  1 -0.173215  0.119209 -1.044236
@@ -295,10 +287,9 @@ as an attribute:
     2000-01-07  6  0.577046 -1.715002 -1.039268
     2000-01-08  7 -1.157892 -1.344312  0.844885
 
-    In [22]: dfa['A'] = list(range(len(dfa.index)))  # use this form to create a new column
+    >>> dfa['A'] = list(range(len(dfa.index)))  # use this form to create a new column
 
-    In [23]: dfa
-    Out[23]: 
+    >>> dfa
                 A         B         C         D
     2000-01-01  0 -0.282863 -1.509059 -1.135632
     2000-01-02  1 -0.173215  0.119209 -1.044236
@@ -328,14 +319,13 @@ see these accessible attributes.
 
 You can also assign a ``dict`` to a row of a ``DataFrame``:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [24]: x = pd.DataFrame({'x': [1, 2, 3], 'y': [3, 4, 5]})
+    >>> x = pd.DataFrame({'x': [1, 2, 3], 'y': [3, 4, 5]})
 
-    In [25]: x.iloc[1] = {'x': 9, 'y': 99}
+    >>> x.iloc[1] = {'x': 9, 'y': 99}
 
-    In [26]: x
-    Out[26]: 
+    >>> x
     x   y
     0  1   3
     1  9  99
@@ -346,13 +336,12 @@ You can use attribute access to modify an existing element of a Series or column
 if you try to use attribute access to create a new column, it creates a new attribute rather than a
 new column. In 0.21.0 and later, this will raise a ``UserWarning``:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [1]: df = pd.DataFrame({'one': [1., 2., 3.]})
-    In [2]: df.two = [4, 5, 6]
+    >>> df = pd.DataFrame({'one': [1., 2., 3.]})
+    >>> df.two = [4, 5, 6]
     UserWarning: Pandas doesn't allow Series to be assigned into nonexistent columns - see https://pandas.pydata.org/pandas-docs/stable/indexing.html#attribute_access
-    In [3]: df
-    Out[3]:
+    >>> df
        one
     0  1.0
     1  2.0
@@ -374,21 +363,21 @@ Selection by label
    ``.loc`` is strict when you present slicers that are not compatible (or convertible) with the index type. For example
    using integers in a ``DatetimeIndex``. These will raise a ``TypeError``.
 
-  .. code-block:: ipython
+  .. code-block:: python
 
      dfl = pd.DataFrame(np.random.randn(5, 4),
                         columns=list('ABCD'),
                         index=pd.date_range('20130101', periods=5))
      dfl
 
-  .. code-block:: ipython
+  .. code-block:: python
 
-     In [4]: dfl.loc[2:3]
+     >>> dfl.loc[2:3]
      TypeError: cannot do slice indexing on <class 'pandas.tseries.index.DatetimeIndex'> with these indexers [2] of <type 'int'>
 
   String likes in slicing *can* be convertible to the type of the index and lead to natural slicing.
 
-  .. code-block:: ipython
+  .. code-block:: python
 
      dfl.loc['20130102':'20130104']
 
@@ -407,12 +396,11 @@ The ``.loc`` attribute is the primary access method. The following are valid inp
 * A boolean array.
 * A ``callable``, see :ref:`Selection By Callable <indexing.callable>`.
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [38]: s1 = pd.Series(np.random.randn(6), index=list('abcdef'))
+    >>> s1 = pd.Series(np.random.randn(6), index=list('abcdef'))
 
-    In [39]: s1
-    Out[39]: 
+    >>> s1
     a    1.431256
     b    1.340309
     c   -1.170299
@@ -421,25 +409,23 @@ The ``.loc`` attribute is the primary access method. The following are valid inp
     f    0.813850
     dtype: float64
 
-    In [40]: s1.loc['c':]
-    Out[40]: 
+    >>> s1.loc['c':]
     c   -1.170299
     d   -0.226169
     e    0.410835
     f    0.813850
     dtype: float64
 
-    In [41]: s1.loc['b']
-    Out[41]: 1.3403088497993827
+    >>> s1.loc['b']
+    1.3403088497993827
 
 Note that setting works as well:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [42]: s1.loc['c':] = 0
+    >>> s1.loc['c':] = 0
 
-    In [43]: s1
-    Out[43]: 
+    >>> s1
     a    1.431256
     b    1.340309
     c    0.000000
@@ -450,15 +436,14 @@ Note that setting works as well:
 
 With a DataFrame:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [44]: df1 = pd.DataFrame(np.random.randn(6, 4),
-    ....:                    index=list('abcdef'),
-    ....:                    columns=list('ABCD'))
-    ....: 
+    >>> df1 = pd.DataFrame(np.random.randn(6, 4),
+    ....                    index=list('abcdef'),
+    ....                    columns=list('ABCD'))
+    .... 
 
-    In [45]: df1
-    Out[45]: 
+    >>> df1
             A         B         C         D
     a  0.132003 -0.827317 -0.076467 -1.187678
     b  1.130127 -1.436737 -1.413681  1.607920
@@ -467,8 +452,7 @@ With a DataFrame:
     e  0.545952 -1.219217 -1.226825  0.769804
     f -1.281247 -0.727707 -0.121306 -0.097883
 
-    In [46]: df1.loc[['a', 'b', 'd'], :]
-    Out[46]: 
+    >>> df1.loc[['a', 'b', 'd'], :]
             A         B         C         D
     a  0.132003 -0.827317 -0.076467 -1.187678
     b  1.130127 -1.436737 -1.413681  1.607920
@@ -483,12 +467,11 @@ When using ``.loc`` with slices, if both the start and the stop labels are
 present in the index, then elements *located* between the two (including them)
 are returned:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [52]: s = pd.Series(list('abcde'), index=[0, 3, 2, 5, 4])
+    >>> s = pd.Series(list('abcde'), index=[0, 3, 2, 5, 4])
 
-    In [53]: s.loc[3:5]
-    Out[53]: 
+    >>> s.loc[3:5]
     3    b
     2    c
     5    d
@@ -498,10 +481,9 @@ If at least one of the two is absent, but the index is sorted, and can be
 compared against start and stop labels, then slicing will still work as
 expected, by selecting labels which *rank* between the two:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [54]: s.sort_index()
-    Out[54]: 
+    >>> s.sort_index()
     0    a
     2    c
     3    b
@@ -509,8 +491,7 @@ expected, by selecting labels which *rank* between the two:
     5    d
     dtype: object
 
-    In [55]: s.sort_index().loc[1:6]
-    Out[55]: 
+    >>> s.sort_index().loc[1:6]
     2    c
     3    b
     4    e
@@ -546,12 +527,11 @@ The ``.iloc`` attribute is the primary access method. The following are valid in
 * A boolean array.
 * A ``callable``, see :ref:`Selection By Callable <indexing.callable>`.
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [56]: s1 = pd.Series(np.random.randn(5), index=list(range(0, 10, 2)))
+    >>> s1 = pd.Series(np.random.randn(5), index=list(range(0, 10, 2)))
 
-    In [57]: s1
-    Out[57]: 
+    >>> s1
     0    0.695775
     2    0.341734
     4    0.959726
@@ -559,26 +539,25 @@ The ``.iloc`` attribute is the primary access method. The following are valid in
     8   -0.619976
     dtype: float64
 
-    In [58]: s1.iloc[:3]
-    Out[58]: 
+    >>> s1.iloc[:3]
     0    0.695775
     2    0.341734
     4    0.959726
     dtype: float64
 
-    In [59]: s1.iloc[3]
-    Out[59]: -1.110336102891167
+    >>> s1.iloc[3]
+    -1.110336102891167
 
 Note that setting works as well:
 
-.. code-block:: ipython
+.. code-block:: python
 
    s1.iloc[:3] = 0
    s1
 
 With a DataFrame:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df1 = pd.DataFrame(np.random.randn(6, 4),
                       index=list(range(0, 12, 2)),
@@ -587,39 +566,39 @@ With a DataFrame:
 
 Select via integer slicing:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df1.iloc[:3]
    df1.iloc[1:5, 2:4]
 
 Select via integer list:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df1.iloc[[1, 3, 5], [1, 3]]
 
-.. code-block:: ipython
+.. code-block:: python
 
    df1.iloc[1:3, :]
 
-.. code-block:: ipython
+.. code-block:: python
 
    df1.iloc[:, 1:3]
 
-.. code-block:: ipython
+.. code-block:: python
 
    # this is also equivalent to ``df1.iat[1,1]``
    df1.iloc[1, 1]
 
 For getting a cross section using an integer position (equiv to ``df.xs(1)``):
 
-.. code-block:: ipython
+.. code-block:: python
 
    df1.iloc[1]
 
 Out of range slice indexes are handled gracefully just as in Python/Numpy.
 
-.. code-block:: ipython
+.. code-block:: python
 
     # these are allowed in python/numpy.
     x = list('abcdef')
@@ -634,7 +613,7 @@ Out of range slice indexes are handled gracefully just as in Python/Numpy.
 Note that using slices that go out of bounds can result in
 an empty axis (e.g. an empty DataFrame being returned).
 
-.. code-block:: ipython
+.. code-block:: python
 
    dfl = pd.DataFrame(np.random.randn(5, 2), columns=list('AB'))
    dfl
@@ -662,15 +641,14 @@ Selection by callable
 ``.loc``, ``.iloc``, and also ``[]`` indexing can accept a ``callable`` as indexer.
 The ``callable`` must be a function with one argument (the calling Series or DataFrame) that returns valid output for indexing.
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [84]: df1 = pd.DataFrame(np.random.randn(6, 4),
-    ....:                    index=list('abcdef'),
-    ....:                    columns=list('ABCD'))
-    ....: 
+    >>> df1 = pd.DataFrame(np.random.randn(6, 4),
+    ....                    index=list('abcdef'),
+    ....                    columns=list('ABCD'))
+    .... 
 
-    In [85]: df1
-    Out[85]: 
+    >>> df1
             A         B         C         D
     a -0.023688  2.410179  1.450520  0.206053
     b -0.251905 -2.213588  1.063327  1.266143
@@ -679,14 +657,12 @@ The ``callable`` must be a function with one argument (the calling Series or Dat
     e  1.289997  0.082423 -0.055758  0.536580
     f -0.489682  0.369374 -0.034571 -2.484478
 
-    In [86]: df1.loc[lambda df: df['A'] > 0, :]
-    Out[86]: 
+    >>> df1.loc[lambda df: df['A'] > 0, :]
             A         B         C         D
     c  0.299368 -0.863838  0.408204 -1.048089
     e  1.289997  0.082423 -0.055758  0.536580
 
-    In [87]: df1.loc[:, lambda df: ['A', 'B']]
-    Out[87]: 
+    >>> df1.loc[:, lambda df: ['A', 'B']]
             A         B
     a -0.023688  2.410179
     b -0.251905 -2.213588
@@ -695,8 +671,7 @@ The ``callable`` must be a function with one argument (the calling Series or Dat
     e  1.289997  0.082423
     f -0.489682  0.369374
 
-    In [88]: df1.iloc[:, lambda df: [0, 1]]
-    Out[88]: 
+    >>> df1.iloc[:, lambda df: [0, 1]]
             A         B
     a -0.023688  2.410179
     b -0.251905 -2.213588
@@ -705,8 +680,7 @@ The ``callable`` must be a function with one argument (the calling Series or Dat
     e  1.289997  0.082423
     f -0.489682  0.369374
 
-    In [89]: df1[lambda df: df.columns[0]]
-    Out[89]: 
+    >>> df1[lambda df: df.columns[0]]
     a   -0.023688
     b   -0.251905
     c    0.299368
@@ -719,14 +693,14 @@ The ``callable`` must be a function with one argument (the calling Series or Dat
 
 You can use callable indexing in ``Series``.
 
-.. code-block:: ipython
+.. code-block:: python
 
    df1['A'].loc[lambda s: s > 0]
 
 Using these methods / indexers, you can chain data selection operations
 without using a temporary variable.
 
-.. code-block:: ipython
+.. code-block:: python
 
    bb = pd.read_csv('data/baseball.csv', index_col='id')
    (bb.groupby(['year', 'team']).sum()
@@ -747,12 +721,11 @@ evaluate an expression such as ``df['A'] > 2 & df['B'] < 3`` as
 
 Using a boolean vector to index a Series works exactly as in a NumPy ndarray:
 
-.. code-block:: ipython
+.. code-block:: python
 
-    In [143]: s = pd.Series(range(-3, 4))
+    >>> s = pd.Series(range(-3, 4))
 
-    In [144]: s
-    Out[144]: 
+    >>> s
     0   -3
     1   -2
     2   -1
@@ -762,15 +735,13 @@ Using a boolean vector to index a Series works exactly as in a NumPy ndarray:
     6    3
     dtype: int64
 
-    In [145]: s[s > 0]
-    Out[145]: 
+    >>> s[s > 0]
     4    1
     5    2
     6    3
     dtype: int64
 
-    In [146]: s[(s < -1) | (s > 0.5)]
-    Out[146]: 
+    >>> s[(s < -1) | (s > 0.5)]
     0   -3
     1   -2
     4    1
@@ -778,8 +749,7 @@ Using a boolean vector to index a Series works exactly as in a NumPy ndarray:
     6    3
     dtype: int64
 
-    In [147]: s[~(s < 0)]
-    Out[147]: 
+    >>> s[~(s < 0)]
     3    0
     4    1
     5    2
@@ -790,14 +760,14 @@ You may select rows from a DataFrame using a boolean vector the same length as
 the DataFrame's index (for example, something derived from one of the columns
 of the DataFrame):
 
-.. code-block:: ipython
+.. code-block:: python
 
    df[df['A'] > 0]
 
 List comprehensions and the ``map`` method of Series can also be used to produce
 more complex criteria:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df2 = pd.DataFrame({'a': ['one', 'one', 'two', 'three', 'two', 'one', 'six'],
                        'b': ['x', 'y', 'y', 'x', 'y', 'x', 'x'],
@@ -816,7 +786,7 @@ more complex criteria:
 
 With the choice methods :ref:`Selection by Label <indexing.label>`, :ref:`Selection by Position <indexing.integer>` you may select along more than one axis using boolean vectors combined with other indexing expressions.
 
-.. code-block:: ipython
+.. code-block:: python
 
    df2.loc[criterion & (df2['b'] == 'x'), 'b':'c']
 
@@ -831,7 +801,7 @@ method that allows selection using an expression.
 You can get the value of the frame where column ``b`` has values
 between the values of columns ``a`` and ``c``. For example:
 
-.. code-block:: ipython
+.. code-block:: python
 
    n = 10
    df = pd.DataFrame(np.random.rand(n, 3), columns=list('abc'))
@@ -846,7 +816,7 @@ between the values of columns ``a`` and ``c``. For example:
 Do the same thing but fall back on a named index if there is no column
 with the name ``a``.
 
-.. code-block:: ipython
+.. code-block:: python
 
    df = pd.DataFrame(np.random.randint(n / 2, size=(n, 2)), columns=list('bc'))
    df.index.name = 'a'
@@ -856,7 +826,7 @@ with the name ``a``.
 If instead you don't want to or cannot name your index, you can use the name
 ``index`` in your query expression:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df = pd.DataFrame(np.random.randint(n, size=(n, 2)), columns=list('bc'))
    df
@@ -867,7 +837,7 @@ If instead you don't want to or cannot name your index, you can use the name
    If the name of your index overlaps with a column name, the column name is
    given precedence. For example,
 
-   .. code-block:: ipython
+   .. code-block:: python
 
       df = pd.DataFrame({'a': np.random.randint(5, size=5)})
       df.index.name = 'a'
@@ -876,7 +846,7 @@ If instead you don't want to or cannot name your index, you can use the name
    You can still use the index in a query expression by using the special
    identifier 'index':
 
-   .. code-block:: ipython
+   .. code-block:: python
 
       df.query('index > 2')
 
@@ -891,7 +861,7 @@ If instead you don't want to or cannot name your index, you can use the name
 You can also use the levels of a ``DataFrame`` with a
 :class:`~pandas.MultiIndex` as if they were columns in the frame:
 
-.. code-block:: ipython
+.. code-block:: python
 
    n = 10
    colors = np.random.choice(['red', 'green'], size=n)
@@ -907,7 +877,7 @@ You can also use the levels of a ``DataFrame`` with a
 If the levels of the ``MultiIndex`` are unnamed, you can refer to them using
 special names:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df.index.names = [None, None]
    df
@@ -926,7 +896,7 @@ A use case for :meth:`~pandas.DataFrame.query` is when you have a collection of
 levels/names) in common. You can pass the same query to both frames *without*
 having to specify which frame you're interested in querying
 
-.. code-block:: ipython
+.. code-block:: python
 
    df = pd.DataFrame(np.random.rand(n, 3), columns=list('abc'))
    df
@@ -940,7 +910,7 @@ having to specify which frame you're interested in querying
 
 Full numpy-like syntax:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df = pd.DataFrame(np.random.randint(n, size=(n, 3)), columns=list('abc'))
    df
@@ -950,19 +920,19 @@ Full numpy-like syntax:
 Slightly nicer by removing the parentheses (by binding making comparison
 operators bind tighter than ``&`` and ``|``).
 
-.. code-block:: ipython
+.. code-block:: python
 
    df.query('a < b & b < c')
 
 Use English instead of symbols:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df.query('a < b and b < c')
 
 Pretty close to how you might write it on paper:
 
-.. code-block:: ipython
+.. code-block:: python
 
    df.query('a < b < c')
 
@@ -973,7 +943,7 @@ The ``in`` and ``not in`` operators
 ``not in`` comparison operators, providing a succinct syntax for calling the
 ``isin`` method of a ``Series`` or ``DataFrame``.
 
-.. code-block:: ipython
+.. code-block:: python
 
    # get all rows where columns "a" and "b" have overlapping values
    df = pd.DataFrame({'a': list('aabbccddeeff'), 'b': list('aaaabbbbcccc'),
@@ -994,7 +964,7 @@ The ``in`` and ``not in`` operators
 You can combine this with other expressions for very succinct queries:
 
 
-.. code-block:: ipython
+.. code-block:: python
 
    # rows where cols a and b have overlapping values
    # and col c's values are less than col d's
@@ -1025,7 +995,7 @@ Special use of the ``==`` operator with ``list`` objects
 Comparing a ``list`` of values to a column using ``==``/``!=`` works similarly
 to ``in``/``not in``.
 
-.. code-block:: ipython
+.. code-block:: python
 
    df.query('b == ["a", "b", "c"]')
 
@@ -1052,7 +1022,7 @@ Returning a view versus a copy
 When setting values in a pandas object, care must be taken to avoid what is called
 ``chained indexing``. Here is an example.
 
-.. code-block:: ipython
+.. code-block:: python
 
    dfmi = pd.DataFrame([list('abcd'),
                         list('efgh'),
@@ -1064,11 +1034,11 @@ When setting values in a pandas object, care must be taken to avoid what is call
 
 Compare these two access methods:
 
-.. code-block:: ipython
+.. code-block:: python
 
    dfmi['one']['second']
 
-.. code-block:: ipython
+.. code-block:: python
 
    dfmi.loc[:, ('one', 'second')]
 
@@ -1095,7 +1065,7 @@ But it turns out that assigning to the product of chained indexing has
 inherently unpredictable results. To see this, think about how the Python
 interpreter executes this code:
 
-.. code-block:: ipython
+.. code-block:: python
 
     value = None
 
@@ -1164,7 +1134,7 @@ chained indexing expression, you can set the :ref:`option <options>`
   you have to deal with.
 * ``None`` will suppress the warnings entirely.
 
-.. code-block:: ipython
+.. code-block:: python
 
    dfb = pd.DataFrame({'a': ['one', 'one', 'two',
                              'three', 'two', 'one', 'six'],
@@ -1194,7 +1164,7 @@ A chained assignment can also crop up in setting in a mixed dtype frame.
 
 This is the correct access method:
 
-.. code-block:: ipython
+.. code-block:: python
 
    dfc = pd.DataFrame({'A': ['aaa', 'bbb', 'ccc'], 'B': [1, 2, 3]})
    dfc.loc[0, 'A'] = 11
@@ -1202,7 +1172,7 @@ This is the correct access method:
 
 This *can* work at times, but it is not guaranteed to, and therefore should be avoided:
 
-.. code-block:: ipython
+.. code-block:: python
 
    dfc = dfc.copy()
    dfc['A'][0] = 111

@@ -35,7 +35,6 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'numpydoc',
-    'IPython.sphinxext.ipython_console_highlighting',
     'recommonmark'
 ]
 
