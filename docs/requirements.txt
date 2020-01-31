@@ -1,3 +1,4 @@
 sphinx
-pandas
+numpydoc
 recommonmark
+pandas
