@@ -3,8 +3,6 @@
 Lists & Tables
 **************
 
-.. contents:: Table of Contents
-
 Lists
 =====
 

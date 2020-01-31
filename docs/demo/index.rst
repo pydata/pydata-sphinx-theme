@@ -8,12 +8,11 @@ the left sidebar to see how various elements look on this theme.
 
 .. toctree::
     :maxdepth: 2
-    :numbered:
     :caption: Demo Documentation
 
     structure
-    api
     demo
+    api
     lists_tables
     markdown
 

@@ -5,31 +5,28 @@ API documentation and generated content
 This page contains general code elements that are common
 for package documentation.
 
-.. contents:: Table of Contents
-
-Pandas DataFrame
-================
-
-.. currentmodule:: pandas
+Autosummary table and API stub pages
+====================================
 
 .. autosummary::
-   :toctree: api/
+   :toctree: generated/
 
-   DataFrame
-   DataFrame.index
-   DataFrame.columns
-   DataFrame.dtypes
-   DataFrame.ftypes
-   DataFrame.get_dtype_counts
-   DataFrame.get_ftype_counts
-   DataFrame.select_dtypes
-   DataFrame.values
+   pandas.DataFrame.drop
+   pandas.DataFrame.groupby
+
+.. autosummary::
+   :toctree: generated/
+
+   pandas.Series.array
 
 
-:mod:`pandas.datetime`
-======================
+Inline module documentation
+===========================
 
-.. automodule:: pandas.datetime
+:mod:`datetime.datetime`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: datetime.datetime
     :members:
 
 

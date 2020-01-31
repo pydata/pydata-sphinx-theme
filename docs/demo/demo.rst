@@ -10,8 +10,6 @@
 Paragraph Level Markup
 **********************
 
-.. contents:: Table of Contents
-
 Inline Markup
 =============
 
