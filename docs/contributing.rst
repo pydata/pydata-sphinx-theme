@@ -28,3 +28,16 @@ Navigate to the `docs/` directory, and then run::
 
 This will trigger sphinx to build the html version of the site. The output can
 be found in the ``docs/_build/html`` directory.
+
+
+Contributing changes
+====================
+
+We follow the typical GitHub workflow of forking a repo, creating a branch,
+opening pull requests (https://guides.github.com/introduction/flow/).
+
+For each pull request, the demo site gets build to make it easier to preview
+the changes in the PR. To access this, click on "Details" of the "build_docs artifact"
+job of Circle CI:
+
+.. image:: _static/pull-request-preview-link.png
