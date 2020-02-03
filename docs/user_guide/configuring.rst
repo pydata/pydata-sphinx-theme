@@ -66,3 +66,9 @@ your ``conf.py`` file:
        "github_version": "<your-branch>",
        "doc_path": "<path-from-root-to-your-docs>",
    }
+
+Google Analytics
+================
+
+If the ``google_analytics_id`` config option is specified (like ``UA-XXXXXXX``),
+Google Analytics' javascript is included in the html pages.
