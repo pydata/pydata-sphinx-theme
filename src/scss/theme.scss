@@ -1,4 +1,186 @@
-@import './sphinx-bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400');
+
+html {
+  font-size: 87.5%;
+} /*14px*/
+
+body {
+  background-color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #333;
+  padding-top: 80px;
+}
+
+p {
+  margin-bottom: 1.15rem;
+
+  // &.rubric {
+  //   border-bottom: 1px solid rgb(201, 201, 201);
+  // }
+}
+
+a {
+  color: #005b81;
+  text-decoration: none;
+
+  &:hover {
+    color: #e32e00;
+    text-decoration: underline;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 2.75rem 0 1.05rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+// offsetting html anchor titles to adjust for fixed header
+h2::before,
+h3::before,
+h4::before,
+h5::before,
+h6::before {
+  display: block;
+  content: '';
+  height: 80px;
+  margin: -80px 0 0;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2.488em;
+  color: #130654;
+}
+
+h2 {
+  font-size: 2.074em;
+  color: #130654;
+}
+
+h3 {
+  font-size: 1.728em;
+}
+
+h4 {
+  font-size: 1.44em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+small,
+.text_small {
+  font-size: 0.833em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* -------------------------------------------------------------------------- */
+
+a.headerlink {
+  color: #c60f0f;
+  font-size: 0.8em;
+  padding: 0 4px 0 4px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #c60f0f;
+    color: white;
+  }
+}
+
+pre {
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  color: #222;
+  line-height: 1.2em;
+  border: 1px solid rgb(201, 201, 201);
+  margin: 1.5em 0 1.5em 0;
+  box-shadow: 1px 1px 1px #d8d8d8;
+}
+
+.deprecated {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 7px;
+  background-color: #ffe4e4;
+  border: 1px solid #f66;
+
+  p {
+    display: inline;
+  }
+}
+
+.topic {
+  background-color: #eee;
+}
+
+.seealso dd {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.viewcode-back {
+  font-family: Arial, sans-serif;
+}
+
+.viewcode-block:target {
+  background-color: #f4debf;
+  border-top: 1px solid #ac9;
+  border-bottom: 1px solid #ac9;
+}
+
+table.field-list {
+  border-collapse: separate;
+  border-spacing: 10px;
+  margin-left: 1px;
+
+  th.field-name {
+    padding: 1px 8px 1px 5px;
+    white-space: nowrap;
+    background-color: rgb(238, 238, 238);
+  }
+
+  td:first-child {
+    white-space: nowrap;
+  }
+
+  td.field-body {
+    p {
+      font-style: italic;
+
+      > strong {
+        font-style: normal;
+      }
+    }
+
+    blockquote {
+      border-left: none;
+      margin: 0em 0em 0.3em;
+      padding-left: 30px;
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+/* -------------------------------------------------------------------------- */
 
 .navbar-brand img {
   max-height: 50px;
@@ -14,8 +196,6 @@
 .navbar-nav {
   li a {
     padding: 0 15px;
-
-    /* line-height: 50px; */
   }
 
   > .active > .nav-link {
@@ -26,8 +206,10 @@
 
 .navbar-header a {
   padding: 0 15px;
+}
 
-  /* line-height: 50px; */
+.bd-content {
+  max-width: 600px;
 }
 
 .bd-search {
@@ -46,14 +228,10 @@
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 
-  /* font-size: 0.875rem; */
-  /* add scrolling sidebar */
   height: calc(100vh - 2rem);
   overflow-y: auto;
-}
 
-@supports (position: -webkit-sticky) or (position: sticky) {
-  .bd-toc {
+  @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
     top: 4rem;
@@ -85,12 +263,6 @@
       text-decoration: none;
     }
   }
-}
-
-.bd-sidebar {
-  -ms-flex-order: 0;
-  order: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 768px) {
@@ -180,11 +352,11 @@
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
-    font-size: 90%;
+    font-size: 0.9em;
     color: rgba(0, 0, 0, 0.65);
 
     &:hover {
-      color: rgba(0, 0, 0, 0.85);
+      color: #130654;
       text-decoration: none;
       background-color: transparent;
     }
@@ -195,10 +367,6 @@
     &:hover > a {
       font-weight: 600;
       color: #130654;
-
-      /* adjusted from original
-        color: rgba(0, 0, 0, 0.85);
-        background-color: transparent; */
     }
   }
 
@@ -210,7 +378,7 @@
       li > a {
         display: block;
         padding: 0.25rem 1.5rem;
-        font-size: 90%;
+        font-size: 0.9em;
         color: rgba(0, 0, 0, 0.65);
       }
 
@@ -225,24 +393,7 @@
   }
 }
 
-/* offsetting html anchor titles to adjust for fixed header, https://github.com/pandas-dev/pandas-sphinx-theme/issues/6*/
-
-h2::before,
-h3::before,
-h4::before,
-h5::before,
-h6::before {
-  display: block;
-  content: '';
-  height: 80px;
-  margin: -80px 0 0;
-}
-
 /* add padding to body to avid overlap with navbar   */
-
-body {
-  padding-top: 80px;
-}
 
 /* adjust toc font sizes to improve overview */
 
@@ -279,7 +430,7 @@ body {
 
 /* Nav: hide second level (shown on .active) */
 
-.bd-toc .nav {
+.uu-toc .nav {
   .nav {
     display: none;
   }
@@ -291,7 +442,7 @@ body {
 
 /* Previous / Next buttons */
 
-div.prev-next-bottom {
+.prev-next-bottom {
   margin: 20px 0px;
 
   a {
@@ -334,16 +485,6 @@ div.prev-next-bottom {
   color: #e83e8c;
 }
 
-/* Header Styling */
-
-h1 {
-  font-size: 3rem;
-}
-
-h2 {
-  font-size: 2.5rem;
-}
-
 /* Social media buttons */
 
 i {
@@ -369,14 +510,12 @@ i {
   padding-left: 10px;
   border-left: 1px solid #eee;
   padding: 0.3rem 1.5rem;
-}
 
-div {
-  &.tocsection i {
+  i {
     padding-right: 0.5rem;
   }
+}
 
-  &.editthispage {
-    padding-bottom: 0.6rem;
-  }
+.editthispage {
+  padding-bottom: 0.6rem;
 }
