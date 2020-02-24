@@ -123,4 +123,10 @@ def setup(app):
     theme_path = get_html_theme_path()[0]
     app.add_html_theme("pandas_sphinx_theme", theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
+
+    # Read the Docs uses ``readthedocs`` as the name of the build, and also
+    # uses a special "dirhtml" builder so we need to replace these both with
+    # our custom HTML builder
+    app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
+    app.set_translator('readthedocsdirhtml', BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
