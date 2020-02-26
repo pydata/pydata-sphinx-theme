@@ -1,3 +1,8 @@
+/**
+ * This file should be edited in ./src/scss/theme.css. After bundling the resulting file in ./pandas_sphinx_theme/static/css/theme.css should never be manually changed.
+ * Edit ./src/scss/theme.scss and run yarn build:dev or yarn build:production.
+ */
+
 @import './sphinx-bootstrap';
 
 .navbar-brand img {

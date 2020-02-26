@@ -1,3 +1,8 @@
+/**
+ * This file should be edited in ./src/js/theme.js. After bundling the resulting file in ./pandas_sphinx_theme/static/js/theme.js should never be manually changed.
+ * Edit ./src/js/theme.js and run yarn build:dev or yarn build:production.
+ */
+
 // TOC sidebar - add "active" class to parent list
 //
 // Bootstrap's scrollspy adds the active class to the <a> link,

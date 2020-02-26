@@ -26,23 +26,23 @@ and use as follows:
 - Install the `pandas-sphinx-theme` in your doc build environment from the git
   repo. You can do this manually with pip:
 
-    ```
-    pip install git+https://github.com/pandas-dev/pandas-sphinx-theme.git@master
-    ```
+  ```
+  pip install git+https://github.com/pandas-dev/pandas-sphinx-theme.git@master
+  ```
 
   or in a conda environment yml file, you can add:
 
-    ```
-    - pip:
-      - git+https://github.com/pandas-dev/pandas-sphinx-theme.git@master
-    ```
+  ```
+  - pip:
+    - git+https://github.com/pandas-dev/pandas-sphinx-theme.git@master
+  ```
 
 - Then, in the `conf.py` of your sphinx docs, you update the `html_theme`
   configuration option:
 
-    ```
-    html_theme = "pandas_sphinx_theme"
-    ```
+  ```
+  html_theme = "pandas_sphinx_theme"
+  ```
 
 And that's it!
 
@@ -50,6 +50,67 @@ Well, in principle at least. In practice, there are might still be a few
 pandas-specific things that are right now hard-coded in the theme. We also need
 to work on better configurability and extensibility. Feedback and contributions
 are very welcome!
+
+## Theme development
+
+The theme is bundled via Webpack. In `./src/*` the theme related stylesheets and javascript is located. 2 entrypoints are available:
+
+- Stylesheet: `./src/scss/theme.scss'
+- Javascript: `./src/js/theme.js`
+
+Both entrypoints will be bundled into `./pandas_sphinx_theme/static/{css,js}`.
+
+Theme development was inspired by [ReadTheDocs](https://github.com/readthedocs/sphinx_rtd_theme).
+
+### Steps to develop the theme:
+
+1. Install yarn
+2. Install theme dependencies
+3. Run development server
+4. Build production assets
+
+#### Install yarn
+
+[Yarn](https://yarnpkg.com) is a package manager we use for managing Javascript and CSS dependencies.
+
+Install via conda:
+
+```bash
+conda install
+```
+
+Install alternative: https://classic.yarnpkg.com/en/docs/install#mac-stable.
+
+#### Install theme dependencies
+
+Install theme related dependencies:
+
+```bash
+yarn install
+```
+
+#### Run development server
+
+```bash
+yarn build:dev
+```
+
+A development server is availlable at http://localhost:1919. When working on the theme, like editing stylesheets, javascript, .rst or .py files every saves reloads the development server. This reload includes bundling stylesheets, javascript and run sphinx again.
+
+The follow files will be watched and reloaded on change:
+
+- ./src/js/theme.js
+- ./src/scss/theme.scss
+- ./docs/\*\*/\*.rst
+- ./docs/\*\*/\*.py
+
+#### Build production assets
+
+To build the new theme assets into the theme, run the following command.
+
+```bash
+yarn build:production
+```
 
 ## How is this theme working?
 
