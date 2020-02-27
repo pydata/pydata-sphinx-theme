@@ -100,7 +100,7 @@ yarn build:dev
 A development server is available at http://localhost:1919. When working
 on the theme, like editing stylesheets, javascript, .rst or .py files
 every save reloads the development server. This reload includes bundling
-stylesheets, javascript, and runing sphinx again.
+stylesheets, javascript, and running sphinx again.
 
 The following files will be watched and reloaded on change:
 
