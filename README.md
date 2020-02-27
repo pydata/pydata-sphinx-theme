@@ -60,7 +60,7 @@ The theme is bundled via Webpack. In `./src/*` the theme related stylesheets and
 
 Both entrypoints will be bundled into `./pandas_sphinx_theme/static/{css,js}`.
 
-Theme development was inspired by [ReadTheDocs](https://github.com/readthedocs/sphinx_rtd_theme).
+Theme development was inspired by the [ReadTheDocs sphinx theme](https://github.com/readthedocs/sphinx_rtd_theme).
 
 ### Steps to develop the theme:
 
