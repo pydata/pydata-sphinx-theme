@@ -55,8 +55,8 @@ are very welcome!
 
 The theme is bundled via Webpack. In `./src/*` the theme related stylesheets and javascript is located. 2 entrypoints are available:
 
-- Stylesheet: `./src/scss/theme.scss'
-- Javascript: `./src/js/theme.js`
+- Stylesheet: `./src/scss/index.scss'
+- Javascript: `./src/js/index.js`
 
 Both entrypoints will be bundled into `./pandas_sphinx_theme/static/{css,js}`.
 
@@ -69,6 +69,8 @@ Theme development was inspired by [ReadTheDocs](https://github.com/readthedocs/s
 3. Run development server
 4. Build production assets
 
+**Important:** in orde to commit changes to the theme, ensure you run `yarn build:production` so all assets will be bundled into `./pandas_sphinx_theme/static/`.
+
 #### Install yarn
 
 [Yarn](https://yarnpkg.com) is a package manager we use for managing Javascript and CSS dependencies.
@@ -76,10 +78,10 @@ Theme development was inspired by [ReadTheDocs](https://github.com/readthedocs/s
 Install via conda:
 
 ```bash
-conda install
+conda install yarn
 ```
 
-Install alternative: https://classic.yarnpkg.com/en/docs/install#mac-stable.
+Install alternative: https://classic.yarnpkg.com/en/docs/install.
 
 #### Install theme dependencies
 
@@ -99,8 +101,8 @@ A development server is availlable at http://localhost:1919. When working on the
 
 The follow files will be watched and reloaded on change:
 
-- ./src/js/theme.js
-- ./src/scss/theme.scss
+- ./src/js/index.js
+- ./src/scss/index.scss
 - ./docs/\*\*/\*.rst
 - ./docs/\*\*/\*.py
 
