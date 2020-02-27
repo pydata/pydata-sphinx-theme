@@ -102,7 +102,7 @@ on the theme, like editing stylesheets, javascript, .rst or .py files
 every save reloads the development server. This reload includes bundling
 stylesheets, javascript, and runing sphinx again.
 
-The follow files will be watched and reloaded on change:
+The following files will be watched and reloaded on change:
 
 - ./src/js/index.js
 - ./src/scss/index.scss
