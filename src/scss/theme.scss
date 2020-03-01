@@ -16,9 +16,9 @@ body {
 p {
   margin-bottom: 1.15rem;
 
-  // &.rubric {
-  //   border-bottom: 1px solid rgb(201, 201, 201);
-  // }
+  &.rubric {
+    border-bottom: 1px solid rgb(201, 201, 201);
+  }
 }
 
 a {
