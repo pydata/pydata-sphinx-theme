@@ -77,13 +77,16 @@ def docutils_node_to_jinja(list_item, only_pages=False):
 def update_page_context(self, pagename, templatename, ctx, event_arg):
     from sphinx.environment.adapters.toctree import TocTree
 
-    def get_nav_object(maxdepth=None, **kwargs):
+    def get_nav_object(maxdepth=None, collapse=True, **kwargs):
         """Return a list of nav links that can be accessed from Jinja.
 
         Parameters
         ----------
         maxdepth: int
             How many layers of TocTree will be returned
+        collapse: bool
+            Whether to only include sub-pages of the currently-active page,
+            instead of sub-pages of all top-level pages of the site.
         kwargs: key/val pairs
             Passed to the `TocTree.get_toctree_for` Sphinx method
         """
@@ -91,7 +94,7 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
         # "collapse=True" collapses sub-pages of non-active TOC pages.
         # maxdepth controls how many TOC levels are returned
         toctree = TocTree(self.env).get_toctree_for(
-            pagename, self, collapse=True, maxdepth=maxdepth, **kwargs
+            pagename, self, collapse=collapse, maxdepth=maxdepth, **kwargs
         )
 
         # toctree has this structure
