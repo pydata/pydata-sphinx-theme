@@ -176,17 +176,28 @@
   }
 }
 
-.bd-sidebar .nav > {
-  li > a {
-    display: block;
-    padding: 0.25rem 1.5rem;
-    font-size: 90%;
-    color: rgba(0, 0, 0, 0.65);
+.bd-sidebar .nav {
+  list-style: none;
+  padding: 0.25rem 1.5rem;
 
-    &:hover {
-      color: rgba(0, 0, 0, 0.85);
-      text-decoration: none;
-      background-color: transparent;
+  &.sidenav_l1 {
+    padding: 0.25rem 0rem;
+  }
+
+  li {
+    width: 100%;
+
+    > a {
+      display: block;
+      padding: 0.25rem 1.5rem;
+      font-size: 90%;
+      color: rgba(0, 0, 0, 0.65);
+
+      &:hover {
+        color: rgba(0, 0, 0, 0.85);
+        text-decoration: none;
+        background-color: transparent;
+      }
     }
   }
 
@@ -199,28 +210,6 @@
       /* adjusted from original
         color: rgba(0, 0, 0, 0.85);
         background-color: transparent; */
-    }
-  }
-
-  li > ul {
-    list-style: none;
-    padding: 0.25rem 1.5rem;
-
-    > {
-      li > a {
-        display: block;
-        padding: 0.25rem 1.5rem;
-        font-size: 90%;
-        color: rgba(0, 0, 0, 0.65);
-      }
-
-      .active {
-        > a,
-        &:hover > a {
-          font-weight: 600;
-          color: #130654;
-        }
-      }
     }
   }
 }

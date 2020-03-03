@@ -122,8 +122,40 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
         except:
             return {}
 
+    def nav_to_html_list(nav, level=1, include_item_names=False):
+        if len(nav) == 0:
+            return ''
+        ul = [f'<ul class="nav sidenav_l{level}">']
+        # If we don't include parents, next `ul` should be the same level
+        next_level = level+1 if include_item_names else level
+
+        for child in nav:
+            # If we're not rendering title names and have no children, skip
+            if not (include_item_names or child['children']):
+                continue
+            active = 'active' if child['active'] else ''
+            ul.append("  " + f'<li class="{active}">')
+            # Render links for the top-level names if we wish
+            if include_item_names:
+                ul.append("  "*2 + f'<a href="{ child["url"] }">{ child["title"] }</a>')
+
+            # Render HTML lists for children
+            if child["children"]:
+                # Always include the names of the children
+                child_list = nav_to_html_list(child["children"], level=next_level, include_item_names=True)
+                ul.append(child_list)
+            ul.append("  " + '</li>')
+        ul.append("</ul>")
+
+        # Now add indentation for our level
+        base_indent = "  " * (level - 1)
+        ul = [base_indent + line for line in ul]
+        ul = '\n'.join(ul)
+        return ul
+
     ctx["get_nav_object"] = get_nav_object
     ctx["get_page_toc_object"] = get_page_toc_object
+    ctx["nav_to_html_list"] = nav_to_html_list
     return None
 
 
