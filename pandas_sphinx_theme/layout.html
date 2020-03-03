@@ -1,106 +1,88 @@
-{% extends "basic/layout.html" %} {# prev/next buttons #} {% macro
-prev_next(prev, next, prev_title='', next_title='') %} {%- if prev %}
-<a
-  class="left-prev"
-  id="prev-link"
-  href="{{ prev.link|e }}"
-  title="{{ _('previous page')}}"
-  >{{ prev_title or prev.title }}</a
->
-{%- endif %} {%- if next %}
-<a
-  class="right-next"
-  id="next-link"
-  href="{{ next.link|e }}"
-  title="{{ _('next page')}}"
-  >{{ next_title or next.title }}</a
->
-{%- endif %} {% endmacro %} {%- block css %}
-<link
-  rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-  crossorigin="anonymous"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
-  integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN"
-  crossorigin="anonymous"
-/>
 
-{{- css() }}
-<link href="{{ pathto('_static/css/index.css', 1) }}" rel="stylesheet" />
-{%- endblock %} {%- block extrahead %}
+{% extends "basic/layout.html" %}
 
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="en" />
+{# prev/next buttons #}
+{% macro prev_next(prev, next, prev_title='', next_title='') %}
+ {%- if prev %}
+    <a class='left-prev' id="prev-link" href="{{ prev.link|e }}" title="{{ _('previous page')}}">{{ prev_title or prev.title }}</a>
+ {%- endif %}
+ {%- if next %}
+    <a class='right-next' id="next-link" href="{{ next.link|e }}" title="{{ _('next page')}}">{{ next_title or next.title }}</a>
+ {%- endif %}
+{% endmacro %}
 
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-  crossorigin="anonymous"
-></script>
-{%- endblock %} {# Silence the sidebar's, relbar's #} {% block header %}{%
-endblock %} {% block relbar1 %}{% endblock %} {% block relbar2 %}{% endblock %}
-{% block sidebarsourcelink %}{% endblock %} {% block body_tag %}
-<body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-  {%- endblock %} {%- block content %}
-  <nav
-    class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar"
-    id="navbar-main"
-  >
-    {%- include "docs-navbar.html" %}
-  </nav>
+{%- block css %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
 
-  <div class="container-fluid">
-    <div class="row flex-xl-nowrap">
-      <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
-        {%- include "docs-sidebar.html" %}
+    {{- css() }}
+    <link href="{{ pathto('_static/css/index.css', 1) }}" rel="stylesheet">
+{%- endblock %}
+
+{%- block extrahead %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{%- endblock %}
+
+{# Silence the sidebar's, relbar's #}
+{% block header %}{% endblock %}
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
+{% block sidebarsourcelink %}{% endblock %}
+
+{% block body_tag %}
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+{%- endblock %}
+{%- block content %}
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+      {%- include "docs-navbar.html" %}
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+              {%- include "docs-sidebar.html" %}
+          </div>
+
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              {% if not (meta is not none and 'notoc' in meta) %}
+                {%- include "docs-toc.html" %}
+              {% endif %}
+            </div>
+
+          <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
+              <div>
+                {% block body %} {% endblock %}
+              </div>
+              {% if theme_show_prev_next %}
+              <div class='prev-next-bottom'>
+                {{ prev_next(prev, next) }}
+              </div>
+              {% endif %}
+          </main>
+
       </div>
-
-      <div class="d-none d-xl-block col-xl-2 bd-toc">
-        {% if not (meta is not none and 'notoc' in meta) %} {%- include
-        "docs-toc.html" %} {% endif %}
-      </div>
-
-      <main
-        class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content"
-        role="main"
-      >
-        <div>
-          {% block body %} {% endblock %}
-        </div>
-        {% if theme_show_prev_next %}
-        <div class="prev-next-bottom">
-          {{ prev_next(prev, next) }}
-        </div>
-        {% endif %}
-      </main>
     </div>
-  </div>
 
-  <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
-  {% if theme_google_analytics_id %}
-  <!-- Google Analytics -->
-  <script>
-    window.ga =
-      window.ga ||
-      function() {
-        (ga.q = ga.q || []).push(arguments);
-      };
-    ga.l = +new Date();
-    ga('create', '{{ theme_google_analytics_id }}', 'auto');
-    ga('set', 'anonymizeIp', true);
-    ga('send', 'pageview');
-  </script>
-  <script async src="https://www.google-analytics.com/analytics.js"></script>
-  <!-- End Google Analytics -->
-  {% endif %} {%- endblock %} {%- block footer %} {%- include "footer.html" %}
-  {%- endblock %}
-</body>
+    <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
+    {% if theme_google_analytics_id %}
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', '{{ theme_google_analytics_id }}', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    {% endif %}
+
+{%- endblock %}
+
+{%- block footer %}
+{%- include "footer.html" %}
+{%- endblock %}
