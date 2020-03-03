@@ -115,9 +115,29 @@ def update_page_context(self, pagename, templatename, ctx, event_arg):
     def get_page_toc_object():
         """Return a list of within-page TOC links that can be accessed from Jinja."""
         self_toc = TocTree(self.env).get_toc_for(pagename, self)
-
         try:
+            if len(self_toc.children) > 1:
+                # If we have multiple top-level sections, we need to rearrange
+                # because Jinja assumes that  all TOC items are sub-sections
+                # of the title (aka, the first top-level header). Here we take
+                # self_toc, and remove the title item. Then, we append the
+                # resulting list to the *first* child of self_toc, which is
+                # the title. This mimics the structure of a single top-level
+                # header with children under it.
+
+                # Grab top-level headers and remove title node
+                title_node = self_toc.children[0]
+                headers = self_toc.children[1:]
+                # Append our new header list to the children of the title node
+                # Removing any extra 1+Nth level headers from the title node
+                title_node.children = title_node.children[:1]
+                title_node.children.append(headers)
+                # Finally, remove all the excess top-level header nodes
+                self_toc.children = self_toc.children[:1]
+
+            # Top-level section is just title, so use its children
             nav = docutils_node_to_jinja(self_toc.children[0])
+
             return nav
         except:
             return {}
