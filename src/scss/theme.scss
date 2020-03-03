@@ -142,6 +142,9 @@ pre {
   border-bottom: 1px solid #ac9;
 }
 
+/**
+ * Styling for field lists
+ */
 table.field-list {
   border-collapse: separate;
   border-spacing: 10px;
@@ -151,10 +154,6 @@ table.field-list {
     padding: 1px 8px 1px 5px;
     white-space: nowrap;
     background-color: rgb(238, 238, 238);
-  }
-
-  td:first-child {
-    white-space: nowrap;
   }
 
   td.field-body {
@@ -172,6 +171,15 @@ table.field-list {
       padding-left: 30px;
     }
   }
+}
+
+/**		
+ * Styling for autosummary tables		
+ */		
+ 
+// The first column (with the signature) should not wrap
+td:first-child {		
+  white-space: nowrap;		
 }
 
 .footer {
@@ -393,10 +401,7 @@ table.field-list {
   }
 }
 
-/* add padding to body to avid overlap with navbar   */
-
 /* adjust toc font sizes to improve overview */
-
 .toc-h2 {
   font-size: 0.85rem;
 }
@@ -430,7 +435,7 @@ table.field-list {
 
 /* Nav: hide second level (shown on .active) */
 
-.uu-toc .nav {
+.bd-toc .nav {
   .nav {
     display: none;
   }
