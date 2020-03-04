@@ -13,7 +13,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ pathto('index') }}">Home</a>
     </li>
-    {% set nav = get_nav_object(maxdepth=1) %}
+    {% set nav = get_nav_object(maxdepth=1, collapse=True) %}
     {% for main_nav_item in nav %}
     <li class="nav-item {% if main_nav_item.active%}active{% endif %}">
         <a class="nav-link" href="{{ main_nav_item.url }}">{{ main_nav_item.title }}</a>

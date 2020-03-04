@@ -1,0 +1,8 @@
+repos:
+-   repo: local
+    hooks:
+    -   id: yarn-build-production
+        name: Build src files
+        language: system
+        entry: bash -c "yarn build:production"
+        files: ^src/*

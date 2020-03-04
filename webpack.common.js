@@ -1,6 +1,5 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -41,5 +40,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [],
+  plugins: [new CleanWebpackPlugin()],
 };
