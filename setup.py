@@ -13,7 +13,6 @@ setup(
         "pandas_sphinx_theme": [
             "theme.conf",
             "*.html",
-            "static/sphinx-bootstrap.css_t",
             "static/css/*.css",
             "static/js/*.js",
             "static/img/*",

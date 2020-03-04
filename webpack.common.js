@@ -1,13 +1,9 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    theme: [
-      './src/js/theme.js',
-      './src/scss/theme.scss',
-    ],
+    theme: ['./src/js/theme.js', './src/scss/theme.scss'],
     // badge_only: './src/sass/badge_only.sass',
   },
   output: {
@@ -46,6 +42,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-  ],
+  plugins: [new CleanWebpackPlugin()],
 };
