@@ -3,8 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    theme: ['./src/js/theme.js', './src/scss/theme.scss'],
-    // badge_only: './src/sass/badge_only.sass',
+    index: ['./src/js/index.js', './src/scss/index.scss'],
   },
   output: {
     filename: 'js/[name].js?[hash]',
@@ -13,7 +12,6 @@ module.exports = {
   module: {
     rules: [
       {
-        // test: require.resolve('heme.js'),
         test: /\.js$/,
         use: 'imports-loader?this=>window',
       },
