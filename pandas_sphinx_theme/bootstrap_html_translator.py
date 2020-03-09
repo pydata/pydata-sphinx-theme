@@ -62,10 +62,3 @@ class BootstrapHTML5Translator(HTML5Translator):
         #     classes.append('align-%s' % node['align'])
         tag = self.starttag(node, "table", CLASS=" ".join(classes))
         self.body.append(tag)
-
-    def visit_container(self, node):
-        """
-        Remove 'docutils' and 'container' classes to overcome interference
-        between docutils container class and bootstrap container class
-        """
-        self.body.append(self.starttag(node, "div", CLASS=""))
