@@ -7,7 +7,7 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
   <div class="bd-toc-item active">
-  {% set nav = get_nav_object(maxdepth=3) %}
+  {% set nav = get_nav_object(maxdepth=3, collapse=True) %}
 
   <ul class="nav bd-sidenav">
       {% for main_nav_item in nav %}

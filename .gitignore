@@ -63,6 +63,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs/demo/generated/
 
 # PyBuilder
 target/
@@ -99,3 +100,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+node_modules/

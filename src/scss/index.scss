@@ -1,0 +1,535 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400');
+
+html {
+  font-size: 15px;
+}
+
+body {
+  background-color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #333;
+  padding-top: 80px;
+}
+
+p {
+  margin-bottom: 1.15rem;
+
+   /* section header in docstring pages */
+  &.rubric {
+    border-bottom: 1px solid rgb(201, 201, 201);
+  }
+}
+
+a {
+  color: #005b81;
+  text-decoration: none;
+
+  &:hover {
+    color: #e32e00;
+    text-decoration: underline;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 2.75rem 0 1.05rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+// offsetting html anchor titles to adjust for fixed header
+h2::before,
+h3::before,
+h4::before,
+h5::before,
+h6::before {
+  display: block;
+  content: '';
+  height: 80px;
+  margin: -80px 0 0;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2.488em;
+  color: #130654;
+}
+
+h2 {
+  font-size: 2.074em;
+  color: #130654;
+}
+
+h3 {
+  font-size: 1.728em;
+}
+
+h4 {
+  font-size: 1.44em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+small,
+.text_small {
+  font-size: 0.833em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* -------------------------------------------------------------------------- */
+
+a.headerlink {
+  color: #c60f0f;
+  font-size: 0.8em;
+  padding: 0 4px 0 4px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #c60f0f;
+    color: white;
+  }
+}
+
+pre {
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  color: #222;
+  line-height: 1.2em;
+  border: 1px solid rgb(201, 201, 201);
+  margin: 1.5em 0 1.5em 0;
+  box-shadow: 1px 1px 1px #d8d8d8;
+}
+
+.deprecated {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 7px;
+  background-color: #ffe4e4;
+  border: 1px solid #f66;
+
+  p {
+    display: inline;
+  }
+}
+
+.topic {
+  background-color: #eee;
+}
+
+.seealso dd {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.viewcode-back {
+  font-family: Arial, sans-serif;
+}
+
+.viewcode-block:target {
+  background-color: #f4debf;
+  border-top: 1px solid #ac9;
+  border-bottom: 1px solid #ac9;
+}
+
+/**
+ * Styling for field lists
+ */
+
+/* grey highlighting of 'parameter' and 'returns' field */
+table.field-list {
+  border-collapse: separate;
+  border-spacing: 10px;
+  margin-left: 1px;
+
+  th.field-name {
+    padding: 1px 8px 1px 5px;
+    white-space: nowrap;
+    background-color: rgb(238, 238, 238);
+  }
+
+  /* italic font for parameter types */
+  td.field-body {
+    p {
+      font-style: italic;
+
+      > strong {
+        font-style: normal;
+      }
+    }
+
+    /* reduced space around parameter description */
+    blockquote {
+      border-left: none;
+      margin: 0em 0em 0.3em;
+      padding-left: 30px;
+    }
+  }
+}
+
+/**		
+ * Styling for autosummary tables		
+ */		
+ 
+// The first column (with the signature) should not wrap
+td:first-child {		
+  white-space: nowrap;		
+}
+
+/**
+ * Footer
+ */
+
+.footer {
+  width: 100%;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.navbar-brand img {
+  max-height: 50px;
+  width: auto;
+  height: 3rem;
+}
+
+.navbar-light {
+  background: #fff !important;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
+}
+
+.navbar-nav {
+  li a {
+    padding: 0 15px;
+  }
+
+  > .active > .nav-link {
+    font-weight: 600;
+    color: #130654 !important;
+  }
+}
+
+.navbar-header a {
+  padding: 0 15px;
+}
+
+.bd-content {
+  max-width: 1024px;
+}
+
+.bd-search {
+  position: relative;
+  padding: 1rem 15px;
+  margin-right: -15px;
+  margin-left: -15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* minimal copy paste from bootstrap docs css to get sidebars working */
+
+.bd-toc {
+  -ms-flex-order: 2;
+  order: 2;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  height: calc(100vh - 2rem);
+  overflow-y: auto;
+
+  @supports (position: -webkit-sticky) or (position: sticky) {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+}
+
+.section-nav {
+  padding-left: 0;
+  border-left: 1px solid #eee;
+  border-bottom: none;
+
+  ul {
+    padding-left: 1rem;
+  }
+}
+
+.toc-entry {
+  display: block;
+
+  a {
+    display: block;
+    padding: 0.125rem 1.5rem;
+    color: #77757a;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.85);
+      text-decoration: none;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .bd-sidebar {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  @supports (position: -webkit-sticky) or (position: sticky) {
+    .bd-sidebar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 5rem;
+      z-index: 1000;
+      height: calc(100vh - 4rem);
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .bd-sidebar {
+    -ms-flex: 0 1 320px;
+    flex: 0 1 320px;
+  }
+}
+
+.bd-links {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+@media (min-width: 768px) {
+  @supports (position: -webkit-sticky) or (position: sticky) {
+    .bd-links {
+      max-height: calc(100vh - 9rem);
+      overflow-y: auto;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .bd-links {
+    display: block !important;
+  }
+}
+
+.bd-sidenav {
+  display: none;
+}
+
+.bd-toc-link {
+  display: block;
+  padding: 0.25rem 1.5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.65);
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.85);
+    text-decoration: none;
+  }
+}
+
+.bd-toc-item.active {
+  margin-bottom: 1rem;
+
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+
+  > {
+    .bd-toc-link {
+      color: rgba(0, 0, 0, 0.85);
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    .bd-sidenav {
+      display: block;
+    }
+  }
+}
+
+.bd-sidebar .nav > {
+  li > a {
+    display: block;
+    padding: 0.25rem 1.5rem;
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.65);
+
+    &:hover {
+      color: #130654;
+      text-decoration: none;
+      background-color: transparent;
+    }
+  }
+
+  .active {
+    > a,
+    &:hover > a {
+      font-weight: 600;
+      color: #130654;
+    }
+  }
+
+  li > ul {
+    list-style: none;
+    padding: 0.25rem 1.5rem;
+
+    > {
+      li > a {
+        display: block;
+        padding: 0.25rem 1.5rem;
+        font-size: 0.9em;
+        color: rgba(0, 0, 0, 0.65);
+      }
+
+      .active {
+        > a,
+        &:hover > a {
+          font-weight: 600;
+          color: #130654;
+        }
+      }
+    }
+  }
+}
+
+/* adjust toc font sizes to improve overview */
+.toc-h2 {
+  font-size: 0.85rem;
+}
+
+.toc-h3 {
+  font-size: 0.75rem;
+}
+
+.toc-h4 {
+  font-size: 0.65rem;
+}
+
+.toc-entry > .nav-link.active {
+  font-weight: 600;
+  color: #130654;
+  background-color: transparent;
+  border-left: 2px solid #563d7c;
+}
+
+.nav-link:hover {
+  border-style: none;
+}
+
+#navbar-main-elements li.nav-item i {
+  font-size: 0.7rem;
+  padding-left: 2px;
+  vertical-align: middle;
+}
+
+/* Collapsing of the TOC sidebar while scrolling */
+
+/* Nav: hide second level (shown on .active) */
+
+.bd-toc .nav {
+  .nav {
+    display: none;
+  }
+
+  > .active > ul {
+    display: block;
+  }
+}
+
+/* Previous / Next buttons */
+
+.prev-next-bottom {
+  margin: 20px 0px;
+
+  a {
+    &.left-prev,
+    &.right-next {
+      padding: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      max-width: 45%;
+      overflow-x: hidden;
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    &.left-prev {
+      float: left;
+
+      &:before {
+        content: '<< ';
+      }
+    }
+
+    &.right-next {
+      float: right;
+
+      &:after {
+        content: ' >>';
+      }
+    }
+  }
+}
+
+/* Alert Styling */
+
+.alert {
+  /* Avoid too large empty space below alert boxes. */
+  padding-bottom: 0;
+}
+
+.alert-info a {
+  /* higher contrast for links in info boxes. */
+  color: #e83e8c;
+}
+
+/* Social media buttons */
+
+i {
+  &.fab {
+    vertical-align: middle;
+    font-style: normal;
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  &.fa-github-square:before {
+    color: #333;
+  }
+
+  &.fa-twitter-square:before {
+    color: #55acee;
+  }
+}
+
+/* TOC section headers */
+
+.tocsection {
+  padding-left: 10px;
+  border-left: 1px solid #eee;
+  padding: 0.3rem 1.5rem;
+
+  i {
+    padding-right: 0.5rem;
+  }
+}
+
+.editthispage {
+  padding-bottom: 0.6rem;
+}

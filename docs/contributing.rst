@@ -41,3 +41,25 @@ the changes in the PR. To access this, click on "Details" of the "build_docs art
 job of Circle CI:
 
 .. image:: _static/pull-request-preview-link.png
+
+
+Ensuring correct commits with pre-commit hooks
+==============================================
+
+To ensure all source files have been correctly build, a `pre-commit <https://pre-commit.com/>`__
+hook is available to use.
+
+To set this up, first install the ``pre-commit`` package::
+
+    # with pip
+    pip install pre-commit
+    # or with conda
+    conda install pre-commit -c conda-forge
+
+and then running from the root of this repo::
+
+    pre-commit install
+
+Now all of the checks will be run each time you commit changes.
+
+Note that if needed, you can skip these checks with ``git commit --no-verify``.
