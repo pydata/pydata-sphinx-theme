@@ -14,7 +14,7 @@ import docutils
 __version__ = "0.0.1.dev0"
 
 
-def add_toc_functions(app, pagename, templatename, context, doctree):
+def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects.
     
     This converts the docutils nodes into a nested dictionary that Jinja can
