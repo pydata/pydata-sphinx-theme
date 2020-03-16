@@ -199,6 +199,10 @@ td:first-child {
 
 /* -------------------------------------------------------------------------- */
 
+.container-fluid {
+  max-width: 1300px;
+}
+
 .navbar-brand img {
   max-height: 50px;
   width: auto;
@@ -207,7 +211,7 @@ td:first-child {
 
 .navbar-light {
   background: #fff !important;
-  box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
+  box-shadow: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 }
 
 .navbar-nav {
@@ -223,10 +227,6 @@ td:first-child {
 
 .navbar-header a {
   padding: 0 15px;
-}
-
-.bd-content {
-  max-width: 1024px;
 }
 
 .bd-search {

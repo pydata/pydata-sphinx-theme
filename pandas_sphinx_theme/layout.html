@@ -40,12 +40,14 @@
 {%- block content %}
     {% block docs_navbar %}
     <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
-      {%- include "docs-navbar.html" %}
+      <div class="container-fluid">
+        {%- include "docs-navbar.html" %}
+      </div>
     </nav>
     {% endblock %}
 
     <div class="container-fluid">
-      <div class="row flex-xl-nowrap">
+      <div class="row">
           {% block docs_sidebar %}
           <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
               {%- include "docs-sidebar.html" %}
@@ -57,7 +59,7 @@
               {% if not (meta is not none and 'notoc' in meta) %}
                 {%- include "docs-toc.html" %}
               {% endif %}
-            </div>
+          </div>
           {% endblock %}
 
           {% block docs_main %}
