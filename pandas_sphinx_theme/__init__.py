@@ -14,11 +14,61 @@ import docutils
 __version__ = "0.0.1.dev0"
 
 
-# -----------------------------------------------------------------------------
-# Sphinx monkeypatch for adding toctree objects into context.
-# This converts the docutils nodes into a nested dictionary that Jinja can
-# use in our templating.
+def add_toctree_functions(app, pagename, templatename, context, doctree):
+    """Add functions so Jinja templates can add toctree objects.
+    
+    This converts the docutils nodes into a nested dictionary that Jinja can
+    use in our templating.
+    """
+    from sphinx.environment.adapters.toctree import TocTree
 
+    def get_nav_object(maxdepth=None, collapse=True, **kwargs):
+        """Return a list of nav links that can be accessed from Jinja.
+
+        Parameters
+        ----------
+        maxdepth: int
+            How many layers of TocTree will be returned
+        collapse: bool
+            Whether to only include sub-pages of the currently-active page,
+            instead of sub-pages of all top-level pages of the site.
+        kwargs: key/val pairs
+            Passed to the `TocTree.get_toctree_for` Sphinx method
+        """
+        # The TocTree will contain the full site TocTree including sub-pages.
+        # "collapse=True" collapses sub-pages of non-active TOC pages.
+        # maxdepth controls how many TOC levels are returned
+        toctree = TocTree(app.env).get_toctree_for(
+            pagename, app.builder, collapse=collapse, maxdepth=maxdepth, **kwargs
+        )
+
+        # toctree has this structure
+        #   <caption>
+        #   <bullet_list>
+        #       <list_item classes="toctree-l1">
+        #       <list_item classes="toctree-l1">
+        # `list_item`s are the actual TOC links and are the only thing we want
+        toc_items = [item for child in toctree.children for item in child
+                     if isinstance(item, docutils.nodes.list_item)]
+
+        # Now convert our docutils nodes into dicts that Jinja can use
+        nav = [docutils_node_to_jinja(child, only_pages=True)
+               for child in toc_items]
+
+        return nav
+
+    def get_page_toc_object():
+        """Return a list of within-page TOC links that can be accessed from Jinja."""
+        self_toc = TocTree(app.env).get_toc_for(pagename, app.builder)
+
+        try:
+            nav = docutils_node_to_jinja(self_toc.children[0])
+            return nav
+        except:
+            return {}
+
+    context["get_nav_object"] = get_nav_object
+    context["get_page_toc_object"] = get_page_toc_object
 
 def docutils_node_to_jinja(list_item, only_pages=False):
     """Convert a docutils node to a structure that can be read by Jinja.
@@ -74,61 +124,6 @@ def docutils_node_to_jinja(list_item, only_pages=False):
     return nav
 
 
-def update_page_context(self, pagename, templatename, ctx, event_arg):
-    from sphinx.environment.adapters.toctree import TocTree
-
-    def get_nav_object(maxdepth=None, collapse=True, **kwargs):
-        """Return a list of nav links that can be accessed from Jinja.
-
-        Parameters
-        ----------
-        maxdepth: int
-            How many layers of TocTree will be returned
-        collapse: bool
-            Whether to only include sub-pages of the currently-active page,
-            instead of sub-pages of all top-level pages of the site.
-        kwargs: key/val pairs
-            Passed to the `TocTree.get_toctree_for` Sphinx method
-        """
-        # The TocTree will contain the full site TocTree including sub-pages.
-        # "collapse=True" collapses sub-pages of non-active TOC pages.
-        # maxdepth controls how many TOC levels are returned
-        toctree = TocTree(self.env).get_toctree_for(
-            pagename, self, collapse=collapse, maxdepth=maxdepth, **kwargs
-        )
-
-        # toctree has this structure
-        #   <caption>
-        #   <bullet_list>
-        #       <list_item classes="toctree-l1">
-        #       <list_item classes="toctree-l1">
-        # `list_item`s are the actual TOC links and are the only thing we want
-        toc_items = [item for child in toctree.children for item in child
-                     if isinstance(item, docutils.nodes.list_item)]
-
-        # Now convert our docutils nodes into dicts that Jinja can use
-        nav = [docutils_node_to_jinja(child, only_pages=True)
-               for child in toc_items]
-
-        return nav
-
-    def get_page_toc_object():
-        """Return a list of within-page TOC links that can be accessed from Jinja."""
-        self_toc = TocTree(self.env).get_toc_for(pagename, self)
-
-        try:
-            nav = docutils_node_to_jinja(self_toc.children[0])
-            return nav
-        except:
-            return {}
-
-    ctx["get_nav_object"] = get_nav_object
-    ctx["get_page_toc_object"] = get_page_toc_object
-    return None
-
-
-sphinx.builders.html.StandaloneHTMLBuilder.update_page_context = update_page_context
-
 # -----------------------------------------------------------------------------
 
 def setup_edit_url(app, pagename, templatename, context, doctree):
@@ -178,3 +173,4 @@ def setup(app):
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator('readthedocsdirhtml', BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
+    app.connect("html-page-context", add_toctree_functions)
