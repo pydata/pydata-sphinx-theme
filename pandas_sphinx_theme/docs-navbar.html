@@ -1,6 +1,6 @@
 
 {% if logo %}
-<a class="navbar-brand" href="{{ pathto('index') }}">
+<a class="navbar-brand" href="{{ pathto(master_doc) }}">
   <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
 </a>
 {% endif %}
@@ -11,9 +11,9 @@
 <div id="navbar-menu" class="collapse navbar-collapse">
   <ul id="navbar-main-elements" class="navbar-nav mr-auto">
     <li class="nav-item">
-        <a class="nav-link" href="{{ pathto('index') }}">Home</a>
+        <a class="nav-link" href="{{ pathto(master_doc) }}">Home</a>
     </li>
-    {% set nav = get_nav_object(maxdepth=1) %}
+    {% set nav = get_nav_object(maxdepth=1, collapse=True) %}
     {% for main_nav_item in nav %}
     <li class="nav-item {% if main_nav_item.active%}active{% endif %}">
         <a class="nav-link" href="{{ main_nav_item.url }}">{{ main_nav_item.title }}</a>
