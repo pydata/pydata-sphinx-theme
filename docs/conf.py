@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Pandas Sphinx Theme'
+project = 'PyData Sphinx Theme'
 copyright = '2019, PyData Community'
 author = 'PyData Community'
 
