@@ -12,7 +12,8 @@ Sites that are using this theme:
 
 - Pandas: https://pandas.pydata.org/docs/
 - Bokeh: https://docs.bokeh.org/en/dev/
-- JupyterHub: http://z2jh.jupyter.org/en/latest/ and https://jupyterhub-team-compass.readthedocs.io/en/latest/
+- JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
+- Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
 
 This repo holds a temporary (slimmed down) copy of the pandas documentation to
 test the theme with on PRs. The result is hosted at the demo site.
