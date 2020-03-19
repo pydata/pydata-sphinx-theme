@@ -26,7 +26,7 @@ def find_version(*file_paths):
 
 setup(
     name="pydata-sphinx-theme",
-    version=find_version("pydata-sphinx-theme", "__init__.py"),
+    version=find_version("pydata_sphinx_theme", "__init__.py"),
     description="Sphinx Bootstrap Theme - pydata version.",
     url="https://github.com/pandas-dev/pydata-sphinx-theme",
     #
