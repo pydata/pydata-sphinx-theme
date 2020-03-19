@@ -205,6 +205,8 @@ td:first-child {
   height: 3rem;
 }
 
+// If we want the shadow to only point downward in the future, set
+// box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .navbar-light {
   background: #fff !important;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
@@ -223,10 +225,6 @@ td:first-child {
 
 .navbar-header a {
   padding: 0 15px;
-}
-
-.bd-content {
-  max-width: 1024px;
 }
 
 .bd-search {
