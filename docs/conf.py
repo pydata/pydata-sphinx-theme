@@ -54,7 +54,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'pandas_sphinx_theme'
+html_theme = 'pydata_sphinx_theme'
 html_logo = '_static/pandas.svg'
 
 html_theme_options = {
@@ -64,14 +64,14 @@ html_theme_options = {
             "name": "Pandas Docs"
         }
     ],
-    "github_url": "https://github.com/pandas-dev/pandas-sphinx-theme",
+    "github_url": "https://github.com/pandas-dev/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
     "use_edit_page_button": True
 }
 
 html_context = {
     "github_user": "pandas-dev",
-    "github_repo": "pandas-sphinx-theme",
+    "github_repo": "pydata-sphinx-theme",
     "github_version": "master",
     "doc_path": "docs",
 }

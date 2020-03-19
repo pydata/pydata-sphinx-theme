@@ -164,7 +164,7 @@ def get_html_theme_path():
 
 def setup(app):
     theme_path = get_html_theme_path()[0]
-    app.add_html_theme("pandas_sphinx_theme", theme_path)
+    app.add_html_theme("pydata_sphinx_theme", theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
 
     # Read the Docs uses ``readthedocs`` as the name of the build, and also

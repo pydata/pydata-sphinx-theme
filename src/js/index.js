@@ -1,5 +1,5 @@
 /**
- * This file should be edited in ./src/js/index.js. After bundling the resulting file in ./pandas_sphinx_theme/static/js/index.js should never be manually changed.
+ * This file should be edited in ./src/js/index.js. After bundling the resulting file in ./pydata_sphinx_theme/static/js/index.js should never be manually changed.
  * Edit ./src/js/index.js and run yarn build:dev or yarn build:production.
  */
 
