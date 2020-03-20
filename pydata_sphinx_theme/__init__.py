@@ -41,6 +41,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         toctree = TocTree(app.env).get_toctree_for(
             pagename, app.builder, collapse=collapse, maxdepth=maxdepth, **kwargs
         )
+        # If no toctree is defined (AKA a single-page site), skip this
+        if toctree is None:
+            return []
 
         # toctree has this structure
         #   <caption>
