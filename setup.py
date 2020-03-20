@@ -24,24 +24,34 @@ def find_version(*file_paths):
     raise RuntimeError("Unable to find version string.")
 
 
+# Get the long description from the README file
+with open(os.path.join(HERE, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+
 setup(
     name="pydata-sphinx-theme",
     version=find_version("pydata_sphinx_theme", "__init__.py"),
-    description="Sphinx Bootstrap Theme - pydata version.",
+    description="Bootstrap-based Sphinx theme from the PyData community",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/pandas-dev/pydata-sphinx-theme",
+    license="BSD",
+    maintainer="Joris Van den Bossche",
+    maintainer_email="jorisvandenbossche@gmail.com",
     #
     packages=["pydata_sphinx_theme"],
-    package_data={
-        "pydata_sphinx_theme": [
-            "theme.conf",
-            "*.html",
-            "static/css/*.css",
-            "static/js/*.js",
-            "static/img/*",
-        ]
-    },
     include_package_data=True,
     # See http://www.sphinx-doc.org/en/stable/theming.html#distribute-your-theme-as-a-python-package
     entry_points={"sphinx.html_themes": ["pydata_sphinx_theme = pydata_sphinx_theme"]},
     install_requires=["sphinx"],
+    python_requires=">=3.5",
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3",
+        "Framework :: Sphinx",
+        "Framework :: Sphinx :: Theme",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent"
+    ],
 )

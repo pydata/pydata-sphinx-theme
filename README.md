@@ -1,6 +1,6 @@
 # pydata-sphinx-theme
 
-A Bootstrap-based sphinx theme.
+A Bootstrap-based Sphinx theme from the PyData community.
 
 Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
 
