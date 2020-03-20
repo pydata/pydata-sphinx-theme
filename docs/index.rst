@@ -1,5 +1,5 @@
 =======================
-The Pandas Sphinx Theme
+The PyData Sphinx Theme
 =======================
 
 This is a simple Sphinx theme for use by the Pandas and

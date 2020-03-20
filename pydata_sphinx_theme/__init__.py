@@ -11,7 +11,7 @@ from sphinx.errors import ExtensionError
 from .bootstrap_html_translator import BootstrapHTML5Translator
 import docutils
 
-__version__ = "0.0.1.dev0"
+__version__ = "0.1.1"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -167,7 +167,7 @@ def get_html_theme_path():
 
 def setup(app):
     theme_path = get_html_theme_path()[0]
-    app.add_html_theme("pandas_sphinx_theme", theme_path)
+    app.add_html_theme("pydata_sphinx_theme", theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
 
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
