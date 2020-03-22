@@ -11,16 +11,16 @@
 // The event is triggered on "window" (and not the nav item as documented),
 // see https://github.com/twbs/bootstrap/issues/20086
 $(window).on('activate.bs.scrollspy', function() {
-  var navLinks = document.querySelectorAll('#bd-toc-nav a');
-  for (var i = 0; i < navLinks.length; i++) {
-    var navLink = navLinks[i];
+  const navLinks = document.querySelectorAll('#bd-toc-nav a');
+
+  navLinks.forEach(navLink => {
     navLink.parentElement.classList.remove('active');
-  }
-  var navLinks = document.querySelectorAll('#bd-toc-nav a.active');
-  for (var i = 0; i < navLinks.length; i++) {
-    var navLink = navLinks[i];
+  })
+
+  const activeNavLinks = document.querySelectorAll('#bd-toc-nav a.active');
+  activeNavLinks.forEach(navLink => {
     navLink.parentElement.classList.add('active');
-  }
+  })
 });
 
 /**
@@ -41,7 +41,7 @@ const initPageNav = event => {
   }
 };
 
-var keyboardListener = false;
+let keyboardListener = false;
 $(document).ready(() => {
   if (keyboardListener === false) {
     document.addEventListener('keydown', initPageNav);
