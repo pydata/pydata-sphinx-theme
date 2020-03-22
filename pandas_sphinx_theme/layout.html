@@ -12,7 +12,6 @@
 {% endmacro %}
 
 {%- block css %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
 
     {{- css() }}
@@ -25,7 +24,7 @@
     <meta name="docsearch:language" content="en">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 {%- endblock %}
 
 {# Silence the sidebar's, relbar's #}
@@ -35,7 +34,7 @@
 {% block sidebarsourcelink %}{% endblock %}
 
 {% block body_tag %}
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
 {%- endblock %}
 {%- block content %}
     {% block docs_navbar %}
@@ -44,10 +43,10 @@
     </nav>
     {% endblock %}
 
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
           {% block docs_sidebar %}
-          <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+          <div class="col-12 col-md-3 bd-sidebar">
               {%- include "docs-sidebar.html" %}
           </div>
           {% endblock %}
@@ -61,7 +60,7 @@
           {% endblock %}
 
           {% block docs_main %}
-          <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 bd-content" role="main">
               {% block docs_body %}
               <div>
                 {% block body %} {% endblock %}
