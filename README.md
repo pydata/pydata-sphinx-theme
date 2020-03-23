@@ -1,19 +1,19 @@
-# pandas-sphinx-theme
+# pydata-sphinx-theme
 
-A Bootstrap-based sphinx theme.
+A Bootstrap-based Sphinx theme from the PyData community.
 
-Demo site: https://pandas-sphinx-theme.readthedocs.io/en/latest/
+Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
 
-**Note**: This theme is originally being developed for the pandas docs (hence the name),
+**Note**: This theme is originally being developed for the pandas docs (originally named "pandas-sphinx-theme"),
 but since there is uptake in other projects, we are working on making this more
-generic and more easily extensible to suit the needs of the different projects
-(and need a rename as well).
+generic and more easily extensible to suit the needs of the different projects.
 
 Sites that are using this theme:
 
-- Pandas: https://dev.pandas.io/docs/
+- Pandas: https://pandas.pydata.org/docs/
 - Bokeh: https://docs.bokeh.org/en/dev/
-- JupyterHub: http://z2jh.jupyter.org/en/latest/ and https://jupyterhub-team-compass.readthedocs.io/en/latest/
+- JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
+- Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
 
 This repo holds a temporary (slimmed down) copy of the pandas documentation to
 test the theme with on PRs. The result is hosted at the demo site.
@@ -23,25 +23,25 @@ test the theme with on PRs. The result is hosted at the demo site.
 This theme is not yet released as a package on PyPI, but you can already install
 and use as follows:
 
-- Install the `pandas-sphinx-theme` in your doc build environment from the git
+- Install the `pydata-sphinx-theme` in your doc build environment from the git
   repo. You can do this manually with pip:
 
   ```
-  pip install git+https://github.com/pandas-dev/pandas-sphinx-theme.git@master
+  pip install git+https://github.com/pandas-dev/pydata-sphinx-theme.git@master
   ```
 
   or in a conda environment yml file, you can add:
 
   ```
   - pip:
-    - git+https://github.com/pandas-dev/pandas-sphinx-theme.git@master
+    - git+https://github.com/pandas-dev/pydata-sphinx-theme.git@master
   ```
 
 - Then, in the `conf.py` of your sphinx docs, you update the `html_theme`
   configuration option:
 
   ```
-  html_theme = "pandas_sphinx_theme"
+  html_theme = "pydata_sphinx_theme"
   ```
 
 And that's it!
@@ -58,7 +58,7 @@ The theme is bundled via Webpack. In `./src/*` the theme related stylesheets and
 - Stylesheet: `./src/scss/index.scss'
 - Javascript: `./src/js/index.js`
 
-Both entrypoints will be bundled into `./pandas_sphinx_theme/static/{css,js}`.
+Both entrypoints will be bundled into `./pydata_sphinx_theme/static/{css,js}`.
 
 Theme development was inspired by the [ReadTheDocs sphinx theme](https://github.com/readthedocs/sphinx_rtd_theme).
 
@@ -69,7 +69,7 @@ Theme development was inspired by the [ReadTheDocs sphinx theme](https://github.
 3. Run development server
 4. Build production assets
 
-**Important:** in orde to commit changes to the theme, ensure you run `yarn build:production` so all assets will be bundled into `./pandas_sphinx_theme/static/`.
+**Important:** in orde to commit changes to the theme, ensure you run `yarn build:production` so all assets will be bundled into `./pydata_sphinx_theme/static/`.
 
 #### Install yarn
 
@@ -148,11 +148,11 @@ formatting. This should make the theming and layouts more flexible to customize.
 
 To this end, this package includes:
 
-- A [`BootstrapHTML5Translator`](./pandas_sphinx_theme/bootstrap_html_translator.py),
+- A [`BootstrapHTML5Translator`](./pydata_sphinx_theme/bootstrap_html_translator.py),
   subclassing sphinx' translator, but overriding certain elements to generate
   Bootstrap-compatible html. Currently, this includes: converting admonitions to
   Bootstrap "alert" classes, and updating the classes used for html tables.
-- A [sphinx "monkeypatch"](./pandas_sphinx_theme/__init__.py) to add toctree
+- A [sphinx "monkeypatch"](./pydata_sphinx_theme/__init__.py) to add toctree
   objects into the html context which is available in the html (jinja2)
   templates. This allows to put the structure of the navigation elements in the
   actual layout, instead of having to rely on the hard-coded formatting of

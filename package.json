@@ -1,8 +1,8 @@
 {
-  "name": "pandas_sphinx_theme",
+  "name": "pydata_sphinx_theme",
   "version": "0.0.1",
   "main": "js/index.js",
-  "repository": "https://github.com/pandas-dev/pydata-bootstrap-sphinx-theme",
+  "repository": "https://github.com/pandas-dev/pydata-sphinx-theme",
   "scripts": {
     "start": "yarn build:dev",
     "build:dev": "webpack-dev-server --config webpack.dev.js",

@@ -7,7 +7,7 @@ module.exports = {
   },
   output: {
     filename: 'js/[name].js?[hash]',
-    path: path.resolve(__dirname, 'pandas_sphinx_theme/static'),
+    path: path.resolve(__dirname, 'pydata_sphinx_theme/static'),
   },
   module: {
     rules: [
