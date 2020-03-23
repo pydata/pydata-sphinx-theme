@@ -1,10 +1,10 @@
 {% set page_toc = get_page_toc_object() %}
 
-{%- if page_toc.children | length > 1 %}
-<div class="tocsection onthispage pt-3 pb-3">
+{%- if page_toc.children | length >= 1 %}
+<div class="tocsection onthispage pt-5 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
-{% endif -%}
+{%- endif %}
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">

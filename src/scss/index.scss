@@ -123,8 +123,6 @@ td:first-child {
 .bd-toc {
   -ms-flex-order: 2;
   order: 2;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
 
   height: calc(100vh - 2rem);
   overflow-y: auto;
@@ -132,8 +130,8 @@ td:first-child {
   @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
-    top: 4rem;
-    height: calc(100vh - 4rem);
+    top: 5rem;
+    height: calc(100vh - 5rem);
     overflow-y: auto;
   }
 
@@ -168,6 +166,7 @@ td:first-child {
 }
 
 .bd-sidebar {
+  padding-top: 1em;
   @media (min-width: 768px) {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -416,5 +415,9 @@ i {
 }
 
 .editthispage {
-  padding-bottom: 0.6rem;
+  padding-top: 2rem;
+
+  a {
+    color: #130754;
+  }
 }

@@ -8,11 +8,12 @@ body {
   font-weight: 400;
   line-height: 1.65;
   color: #333;
-  padding-top: 0;
+  padding-top: 75px;
 }
 
 p {
   margin-bottom: 1.15rem;
+  font-size: 1em;
 
   /* section header in docstring pages */
   &.rubric {
