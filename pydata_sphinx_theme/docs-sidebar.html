@@ -7,13 +7,17 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
 
   <div class="bd-toc-item active">
-  {% set nav = get_nav_object(maxdepth=3, collapse=True) %}
+  {% set nav = get_nav_object(maxdepth=3, collapse=True, subpage_caption=True) %}
 
   <ul class="nav bd-sidenav">
+      <!-- top-level pages -->
       {% for main_nav_item in nav %}
       {% if main_nav_item.active %}
+        <!-- sub-pages within each top level page -->
         {% for nav_item in main_nav_item.children %}
-          {% if nav_item.children %}
+          {% if nav_item["type"] == "caption" %}
+            <li class="nav-caption">{{ nav_item.text }}</li>
+          {% elif nav_item.children %}
 
               <li class="{% if nav_item.active%}active{% endif %}">
                   <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>

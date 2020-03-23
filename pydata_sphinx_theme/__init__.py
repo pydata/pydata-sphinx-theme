@@ -7,11 +7,41 @@ import os
 
 import sphinx.builders.html
 from sphinx.errors import ExtensionError
+from sphinx.environment.adapters.toctree import TocTree
+from sphinx import addnodes
+from docutils import nodes
+from pathlib import Path
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 import docutils
 
 __version__ = "0.1.1"
+
+
+class MyTocTree(TocTree):
+    def get_toctree_for_subpage(
+        self, pagename, builder, collapse=True, maxdepth=-1, **kwargs
+    ):
+        """Return the global TOC nodetree."""
+        if pagename in ["genindex", "search"]:
+            return
+        doctree = self.env.get_doctree(pagename)
+        toctrees = []  # type: List[Element]
+        if "includehidden" not in kwargs:
+            kwargs["includehidden"] = True
+        if "maxdepth" not in kwargs:
+            kwargs["maxdepth"] = 0
+        kwargs["collapse"] = collapse
+        for toctreenode in doctree.traverse(addnodes.toctree):
+            toctree = self.resolve(pagename, builder, toctreenode, prune=True, **kwargs)
+            if toctree:
+                toctrees.append(toctree)
+        if not toctrees:
+            return None
+        result = toctrees[0]
+        for toctree in toctrees[1:]:
+            result.extend(toctree.children)
+        return result
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -20,9 +50,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     This converts the docutils nodes into a nested dictionary that Jinja can
     use in our templating.
     """
-    from sphinx.environment.adapters.toctree import TocTree
 
-    def get_nav_object(maxdepth=None, collapse=True, **kwargs):
+    def get_nav_object(maxdepth=None, collapse=True, subpage_caption=False, **kwargs):
         """Return a list of nav links that can be accessed from Jinja.
 
         Parameters
@@ -38,12 +67,41 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # The TocTree will contain the full site TocTree including sub-pages.
         # "collapse=True" collapses sub-pages of non-active TOC pages.
         # maxdepth controls how many TOC levels are returned
-        toctree = TocTree(app.env).get_toctree_for(
+        toc = MyTocTree(app.env)
+        toctree = toc.get_toctree_for(
             pagename, app.builder, collapse=collapse, maxdepth=maxdepth, **kwargs
         )
+
         # If no toctree is defined (AKA a single-page site), skip this
         if toctree is None:
             return []
+
+        if subpage_caption:
+            if pagename not in [app.env.config.master_doc, "genindex", "search"]:
+                def is_first_active_page(node):
+                    return isinstance(node, nodes.bullet_list) and node.attributes.get("iscurrent")
+
+                active_first_page = list(toctree.traverse(is_first_active_page))[0]
+                # A path to the active TOC item's first page, relative to the current page
+                first_page_path = list(active_first_page.traverse(nodes.reference))[0].attributes.get("refuri")
+                if first_page_path == "":
+                    # First TOC item's first page *is* the active page
+                    first_page_path = Path(pagename).name
+                else:
+                    first_page_path = Path(first_page_path).with_suffix("")
+                rel_first_page_path = str(Path(pagename).parent.joinpath(first_page_path))
+
+                # We only wish to show a single page's descendants, so we'll keep their captions
+                subpage_toctree = toc.get_toctree_for_subpage(
+                    rel_first_page_path, app.builder, collapse=collapse, maxdepth=maxdepth, **kwargs
+                )
+                if subpage_toctree is not None:
+                    # Find the current page in the top-level children
+                    for item in toctree.children:
+                        if isinstance(item, nodes.bullet_list) and item.attributes.get("iscurrent", []):
+                            # Append that pages' toctree so we get captions
+                            subpage_list = item.children[0]
+                            subpage_list.children = [subpage_list.children[0]] + subpage_toctree.children        
 
         # toctree has this structure
         #   <caption>
@@ -51,13 +109,17 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         #       <list_item classes="toctree-l1">
         #       <list_item classes="toctree-l1">
         # `list_item`s are the actual TOC links and are the only thing we want
-        toc_items = [item for child in toctree.children for item in child
-                     if isinstance(item, docutils.nodes.list_item)]
+        toc_items = []
+        for child in toctree.children:
+            if isinstance(child, docutils.nodes.caption):
+                toc_items.append(child)
+            elif isinstance(child, docutils.nodes.bullet_list):
+                for list_entry in child:
+                    if isinstance(list_entry, docutils.nodes.list_item):
+                        toc_items.append(list_entry)
 
         # Now convert our docutils nodes into dicts that Jinja can use
-        nav = [docutils_node_to_jinja(child, only_pages=True)
-               for child in toc_items]
-
+        nav = [docutils_node_to_jinja(child, only_pages=True) for child in toc_items]
         return nav
 
     def get_page_toc_object():
@@ -72,6 +134,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
+
 
 def docutils_node_to_jinja(list_item, only_pages=False):
     """Convert a docutils node to a structure that can be read by Jinja.
@@ -91,6 +154,12 @@ def docutils_node_to_jinja(list_item, only_pages=False):
         The TocTree, converted into a dictionary with key/values that work
         within Jinja.
     """
+    # If a caption, pass it through
+    if isinstance(list_item, docutils.nodes.caption):
+        nav = {"text": list_item.astext(), "type": "caption"}
+        return nav
+
+    # Else, we assume it's a list item and need to parse the item content
     if not list_item.children:
         return None
 
@@ -100,11 +169,12 @@ def docutils_node_to_jinja(list_item, only_pages=False):
     #         <reference> <-- the thing we want
     reference = list_item.children[0].children[0]
     title = reference.astext()
-    url = reference.attributes["refuri"]
+
+    url = reference.attributes.get("refuri", "")
     active = "current" in list_item.attributes["classes"]
 
     # If we've got an anchor link, skip it if we wish
-    if only_pages and '#' in url:
+    if only_pages and "#" in url:
         return None
 
     # Converting the docutils attributes into jinja-friendly objects
@@ -112,36 +182,45 @@ def docutils_node_to_jinja(list_item, only_pages=False):
     nav["title"] = title
     nav["url"] = url
     nav["active"] = active
+    nav["type"] = "ref"
 
     # Recursively convert children as well
     # If there are sub-pages for this list_item, there should be two children:
     # a paragraph, and a bullet_list.
     nav["children"] = []
     if len(list_item.children) > 1:
-        # The `.children` of the bullet_list has the nodes of the sub-pages.
-        subpage_list = list_item.children[1].children
-        for sub_page in subpage_list:
-            child_nav = docutils_node_to_jinja(sub_page, only_pages=only_pages)
-            if child_nav is not None:
-                nav["children"].append(child_nav)
+        child_pages = list_item.children[1:]
+        for child in child_pages:
+            # Will either be a caption or another bullet list
+            if isinstance(child, nodes.bullet_list):
+                for subpage in child.children:
+                    this_nav = docutils_node_to_jinja(subpage, only_pages=only_pages)
+                    nav["children"].append(this_nav)
+            else:
+                this_nav = docutils_node_to_jinja(child, only_pages=only_pages)
+                nav["children"].append(this_nav)
     return nav
 
 
 # -----------------------------------------------------------------------------
 
+
 def setup_edit_url(app, pagename, templatename, context, doctree):
     """Add a function that jinja can access for returning the edit URL of a page."""
+
     def get_edit_url():
         """Return a URL for an "edit this page" link."""
         required_values = ["github_user", "github_repo", "github_version"]
         for val in required_values:
             if not context.get(val):
-                raise ExtensionError("Missing required value for `edit this page` button. "
-                                        "Add %s to your `html_context` configuration" % val)
+                raise ExtensionError(
+                    "Missing required value for `edit this page` button. "
+                    "Add %s to your `html_context` configuration" % val
+                )
 
-        github_user = context['github_user']
-        github_repo = context['github_repo']
-        github_version = context['github_version']
+        github_user = context["github_user"]
+        github_repo = context["github_repo"]
+        github_version = context["github_version"]
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -153,7 +232,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         url_edit = f"https://github.com/{github_user}/{github_repo}/edit/{github_version}/{doc_path}{file_name}"
         return url_edit
 
-    context['get_edit_url'] = get_edit_url
+    context["get_edit_url"] = get_edit_url
 
 
 # -----------------------------------------------------------------------------
@@ -174,6 +253,6 @@ def setup(app):
     # uses a special "dirhtml" builder so we need to replace these both with
     # our custom HTML builder
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
-    app.set_translator('readthedocsdirhtml', BootstrapHTML5Translator, override=True)
+    app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
