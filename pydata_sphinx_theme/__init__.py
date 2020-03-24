@@ -18,32 +18,6 @@ import docutils
 __version__ = "0.1.1"
 
 
-class MyTocTree(TocTree):
-    def get_toctree_for_subpage(
-        self, pagename, builder, collapse=True, maxdepth=-1, **kwargs
-    ):
-        """Return the global TOC nodetree."""
-        if pagename in ["genindex", "search"]:
-            return
-        doctree = self.env.get_doctree(pagename)
-        toctrees = []  # type: List[Element]
-        if "includehidden" not in kwargs:
-            kwargs["includehidden"] = True
-        if "maxdepth" not in kwargs:
-            kwargs["maxdepth"] = 0
-        kwargs["collapse"] = collapse
-        for toctreenode in doctree.traverse(addnodes.toctree):
-            toctree = self.resolve(pagename, builder, toctreenode, prune=True, **kwargs)
-            if toctree:
-                toctrees.append(toctree)
-        if not toctrees:
-            return None
-        result = toctrees[0]
-        for toctree in toctrees[1:]:
-            result.extend(toctree.children)
-        return result
-
-
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects.
     
@@ -67,7 +41,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # The TocTree will contain the full site TocTree including sub-pages.
         # "collapse=True" collapses sub-pages of non-active TOC pages.
         # maxdepth controls how many TOC levels are returned
-        toc = MyTocTree(app.env)
+        toc = TocTree(app.env)
         toctree = toc.get_toctree_for(
             pagename, app.builder, collapse=collapse, maxdepth=maxdepth, **kwargs
         )
@@ -76,32 +50,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         if toctree is None:
             return []
 
-        if subpage_caption:
-            if pagename not in [app.env.config.master_doc, "genindex", "search"]:
-                def is_first_active_page(node):
-                    return isinstance(node, nodes.bullet_list) and node.attributes.get("iscurrent")
+        # Grab all of the first-level pages from the index toctree
+        toctrees_root = app.env.tocs[app.env.config['master_doc']]
+        first_pages = []
+        for toctree_root in toctrees_root.traverse(addnodes.toctree):
+            for _, path_first_page in toctree_root.attributes.get("entries", []):
+                first_pages.append(path_first_page)
 
-                active_first_page = list(toctree.traverse(is_first_active_page))[0]
-                # A path to the active TOC item's first page, relative to the current page
-                first_page_path = list(active_first_page.traverse(nodes.reference))[0].attributes.get("refuri")
-                if first_page_path == "":
-                    # First TOC item's first page *is* the active page
-                    first_page_path = Path(pagename).name
-                else:
-                    first_page_path = Path(first_page_path).with_suffix("")
-                rel_first_page_path = str(Path(pagename).parent.joinpath(first_page_path))
-
-                # We only wish to show a single page's descendants, so we'll keep their captions
-                subpage_toctree = toc.get_toctree_for_subpage(
-                    rel_first_page_path, app.builder, collapse=collapse, maxdepth=maxdepth, **kwargs
-                )
-                if subpage_toctree is not None:
-                    # Find the current page in the top-level children
-                    for item in toctree.children:
-                        if isinstance(item, nodes.bullet_list) and item.attributes.get("iscurrent", []):
-                            # Append that pages' toctree so we get captions
-                            subpage_list = item.children[0]
-                            subpage_list.children = [subpage_list.children[0]] + subpage_toctree.children        
+        # Now find the toctrees for each first page and see if it has a caption
+        caption_pages = []
+        for first_page in first_pages:
+            toctrees_first_page = app.env.tocs[first_page]
+            for toctree_first_page in toctrees_first_page.traverse(addnodes.toctree):
+                # If the toctree has a caption, keep track of the first page
+                caption = toctree_first_page.attributes.get("caption")
+                if caption:
+                    _, first_entry = toctree_first_page.attributes.get("entries", [])[0]
+                    caption_pages.append((first_entry, caption))
 
         # toctree has this structure
         #   <caption>
@@ -111,11 +76,29 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # `list_item`s are the actual TOC links and are the only thing we want
         toc_items = []
         for child in toctree.children:
-            if isinstance(child, docutils.nodes.caption):
-                toc_items.append(child)
-            elif isinstance(child, docutils.nodes.bullet_list):
+            if isinstance(child, docutils.nodes.bullet_list):
                 for list_entry in child:
                     if isinstance(list_entry, docutils.nodes.list_item):
+                        # Grab the toc path relative to the current page
+                        list_entry_ref = list(list_entry.traverse(nodes.reference))[0]
+                        ref_uri = list_entry_ref.attributes.get('refuri')
+                        if ref_uri == "":
+                            # Will be "" for the *current* page
+                            ref_uri = pagename
+                        # Parent folder of current page
+                        path_pagename_parent = Path(pagename).parent.resolve()
+                        # Absolute path of the entry
+                        path_entry = path_pagename_parent.joinpath(Path(ref_uri)).resolve()
+                        # Absolute path of docs root
+                        path_root = Path(app.env.config['master_doc']).parent.resolve()
+                        # Path relative to docs root of the entry
+                        path_entry_rel_root = path_entry.relative_to(path_root).with_suffix("")
+                        
+                        # Check whether the entry path is one of the pages that should have a caption first
+                        for path_caption_page, icaption in caption_pages:
+                            if path_caption_page == str(path_entry_rel_root):
+                                toc_items.append({'caption': icaption})
+
                         toc_items.append(list_entry)
 
         # Now convert our docutils nodes into dicts that Jinja can use
