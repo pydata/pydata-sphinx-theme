@@ -12,9 +12,6 @@
 
     <div id="navbar-menu" class="col-9 collapse navbar-collapse">
       <ul id="navbar-main-elements" class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ pathto(master_doc) }}">Home</a>
-        </li>
         {% set nav = get_nav_object(maxdepth=1, collapse=True) %}
         {% for main_nav_item in nav %}
         <li class="nav-item {% if main_nav_item.active%}active{% endif %}">
