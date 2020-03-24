@@ -10,6 +10,15 @@ $spacer: 1rem;
 @import './base';
 @import './navbar';
 
+@media (min-width: 1500px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    max-width: 1400px;
+  }
+}
 .deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
@@ -177,11 +186,6 @@ td:first-child {
       z-index: 1000;
       height: calc(100vh - 4rem);
     }
-  }
-
-  @media (min-width: 1200px) {
-    -ms-flex: 0 1 320px;
-    flex: 0 1 320px;
   }
 }
 
