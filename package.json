@@ -5,6 +5,7 @@
   "repository": "https://github.com/pandas-dev/pydata-sphinx-theme",
   "scripts": {
     "start": "yarn build:dev",
+    "build": "yarn build:production",
     "build:dev": "webpack-dev-server --config webpack.dev.js",
     "build:production": "webpack --config webpack.prod.js"
   },
