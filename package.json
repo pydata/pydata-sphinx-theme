@@ -4,6 +4,7 @@
   "main": "js/index.js",
   "repository": "https://github.com/pandas-dev/pydata-sphinx-theme",
   "scripts": {
+    "start": "yarn build:dev",
     "build:dev": "webpack-dev-server --config webpack.dev.js",
     "build:production": "webpack --config webpack.prod.js"
   },
@@ -27,6 +28,7 @@
     "webpack-watch-files-plugin": "^1.0.3"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3"
   }
 }

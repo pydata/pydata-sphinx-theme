@@ -1,0 +1,112 @@
+html {
+  font-size: 15px;
+}
+
+body {
+  background-color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #333;
+  padding-top: 75px;
+}
+
+p {
+  margin-bottom: 1.15rem;
+  font-size: 1em;
+
+  /* section header in docstring pages */
+  &.rubric {
+    border-bottom: 1px solid rgb(201, 201, 201);
+  }
+}
+
+a {
+  color: #005b81;
+  text-decoration: none;
+
+  &:hover {
+    color: #e32e00;
+    text-decoration: underline;
+  }
+
+  &.headerlink {
+    color: #c60f0f;
+    font-size: 0.8em;
+    padding: 0 4px 0 4px;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #c60f0f;
+      color: white;
+    }
+  }
+}
+
+.header-style {
+  margin: 2.75rem 0 1.05rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.15;
+
+  &::before {
+    // offsetting html anchor titles to adjust for fixed header
+    display: block;
+    content: '';
+    height: 80px;
+    margin: -80px 0 0;
+  }
+}
+
+h1 {
+  @extend .header-style;
+  margin-top: 0;
+  font-size: 2.488em;
+  color: #130654;
+}
+
+h2 {
+  @extend .header-style;
+  font-size: 2.074em;
+  color: #130654;
+}
+
+h3 {
+  @extend .header-style;
+  font-size: 1.728em;
+}
+
+h4 {
+  @extend .header-style;
+  font-size: 1.44em;
+}
+
+h5 {
+  @extend .header-style;
+  font-size: 1.2em;
+}
+
+h6 {
+  @extend .header-style;
+  font-size: 1em;
+}
+
+small,
+.text_small {
+  font-size: 0.833em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+pre {
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  color: #222;
+  line-height: 1.2em;
+  border: 1px solid rgb(201, 201, 201);
+  margin: 1.5em 0 1.5em 0;
+  box-shadow: 1px 1px 1px #d8d8d8;
+}
