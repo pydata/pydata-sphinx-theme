@@ -218,6 +218,11 @@ td:first-child {
 .bd-content {
   padding-top: 20px;
   overflow: auto;
+
+  // make every overflowing section in main content scrollable
+  .section {
+    overflow: auto;
+  }
 }
 
 .bd-toc-link {
