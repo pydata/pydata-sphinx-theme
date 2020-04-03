@@ -1,24 +1,22 @@
-// override bootstrap variables
+// Override bootstrap variables
 $spacer: 1rem;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1300px
+);
 
-// include core Bootstrap
+// Include core Bootstrap
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
-// import custom fonts
+// Import custom fonts
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400');
 
 @import './base';
 @import './navbar';
 
-@media (min-width: 1500px) {
-  .container,
-  .container-sm,
-  .container-md,
-  .container-lg,
-  .container-xl {
-    max-width: 1400px;
-  }
-}
+// Custom css, TODO: to be refactored in different partials
 .deprecated {
   margin-bottom: 10px;
   margin-top: 10px;

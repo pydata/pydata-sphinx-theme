@@ -3,9 +3,14 @@
 }
 
 .navbar-brand {
+  position: relative;
+  height: 45px;
+  width: auto;
+  
   img {
+    max-width: 100%;
+    height: 100%;
     width: auto;
-    height: 45px;
   }
 }
 
