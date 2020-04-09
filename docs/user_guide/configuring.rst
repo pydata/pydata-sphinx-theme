@@ -83,6 +83,18 @@ suitable for large navigation bars.
         "search_bar_position": sidebar
     }
 
+Configure the search bar text
+=============================
+
+To modify the text that is in the search bar before people click on it, add the
+following configuration to your ``conf.py`` file:
+
+.. code:: python
+
+   html_context = {
+       "search_bar_text": "Your text here..."
+   }
+
 
 Google Analytics
 ================
