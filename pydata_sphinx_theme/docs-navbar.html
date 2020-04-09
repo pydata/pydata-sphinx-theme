@@ -25,6 +25,11 @@
         {% endfor %}
       </ul>
 
+
+      {% if theme_search_bar_position == 'navbar' %}
+        {%- include "search-field.html" %}
+      {% endif %}
+
       <ul class="navbar-nav">
         {% if theme_github_url | length > 2 %}
           <li class="nav-item">
