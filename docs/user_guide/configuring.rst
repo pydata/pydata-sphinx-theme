@@ -69,9 +69,9 @@ your ``conf.py`` file:
 
 
 Configure the search bar position
-=============================
+=================================
 
-To modify the position of the search bar change the following variable in 
+To modify the position of the search bar, change the following variable in 
 your configuration file ``conf.py``. Possible options are 'navbar' and 'sidebar'.
 
 By default the search bar is positioned in the sidebar since this is more 
@@ -80,7 +80,7 @@ suitable for large navigation bars.
 .. code:: python
 
     html_context = {
-        "search_bar_position": sidebar
+        "search_bar_position": "navbar"
     }
 
 Configure the search bar text
