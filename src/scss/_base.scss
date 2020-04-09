@@ -8,7 +8,7 @@ body {
   font-weight: 400;
   line-height: 1.65;
   color: #333;
-  padding-top: 75px;
+  height: 100vh;
 }
 
 p {
@@ -48,14 +48,6 @@ a {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   line-height: 1.15;
-
-  &::before {
-    // offsetting html anchor titles to adjust for fixed header
-    display: block;
-    content: '';
-    height: 80px;
-    margin: -80px 0 0;
-  }
 }
 
 h1 {

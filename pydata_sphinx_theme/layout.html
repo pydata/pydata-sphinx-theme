@@ -33,7 +33,7 @@
 {% block sidebarsourcelink %}{% endblock %}
 
 {% block body_tag %}
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body>
 {%- endblock %}
 {%- block content %}
     {% block docs_navbar %}
@@ -42,55 +42,59 @@
     </nav>
     {% endblock %}
 
-    <div class="container-xl">
-      <div class="row">
-          {% block docs_sidebar %}
-          <div class="col-12 col-md-3 bd-sidebar">
-              {%- include "docs-sidebar.html" %}
-          </div>
-          {% endblock %}
 
-          {% block docs_toc %}
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-              {% if not (meta is not none and 'notoc' in meta) %}
-                {%- include "docs-toc.html" %}
-              {% endif %}
-          </div>
-          {% endblock %}
+    <div class="content-container container-fluid" data-spy="scroll" data-target="#bd-toc-nav" data-offset="20">
+      <div class="container-xl">
+        <div class="row">
+            {% block docs_sidebar %}
+            <div class="col-12 col-md-3 bd-sidebar">
+                {%- include "docs-sidebar.html" %}
+            </div>
+            {% endblock %}
 
-          {% block docs_main %}
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
-              {% block docs_body %}
-              <div>
-                {% block body %} {% endblock %}
-              </div>
-              {% endblock %}
-              {% if theme_show_prev_next %}
-              <div class='prev-next-bottom'>
-                {{ prev_next(prev, next) }}
-              </div>
-              {% endif %}
-          </main>
-          {% endblock %}
+            {% block docs_toc %}
+            <div class="d-none d-xl-block col-xl-2 bd-toc">
+                {% if not (meta is not none and 'notoc' in meta) %}
+                  {%- include "docs-toc.html" %}
+                {% endif %}
+            </div>
+            {% endblock %}
 
+            {% block docs_main %}
+            <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+                {% block docs_body %}
+                <div>
+                  {% block body %} {% endblock %}
+                </div>
+                {% endblock %}
+                {% if theme_show_prev_next %}
+                <div class='prev-next-bottom'>
+                  {{ prev_next(prev, next) }}
+                </div>
+                {% endif %}
+            </main>
+            {% endblock %}
+
+        </div>
       </div>
+
+
+      {%- block footer %}
+      {%- include "footer.html" %}
+      {%- endblock %}
+
+      <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
+      {% if theme_google_analytics_id %}
+      <!-- Google Analytics -->
+      <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', '{{ theme_google_analytics_id }}', 'auto');
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+      </script>
+      <script async src='https://www.google-analytics.com/analytics.js'></script>
+      <!-- End Google Analytics -->
+      {% endif %}
     </div>
 
-    <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
-    {% if theme_google_analytics_id %}
-    <!-- Google Analytics -->
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', '{{ theme_google_analytics_id }}', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
-    {% endif %}
-
-{%- endblock %}
-
-{%- block footer %}
-{%- include "footer.html" %}
 {%- endblock %}

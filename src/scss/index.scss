@@ -16,7 +16,7 @@ $container-max-widths: (
 @import './base';
 @import './navbar';
 
-// Custom css, TODO: to be refactored in different partials
+
 .deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
@@ -137,7 +137,7 @@ td:first-child {
   @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
-    top: 5rem;
+    top: 0;
     height: calc(100vh - 5rem);
     overflow-y: auto;
   }
@@ -184,7 +184,7 @@ td:first-child {
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
       position: sticky;
-      top: 76px;
+      top: 0px;
       z-index: 1000;
       height: calc(100vh - 4rem);
     }
