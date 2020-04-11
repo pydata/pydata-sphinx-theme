@@ -35,7 +35,8 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'numpydoc',
-    'recommonmark'
+    'recommonmark',
+    'jupyter_sphinx.execute'
 ]
 
 autosummary_generate = True
@@ -66,7 +67,8 @@ html_theme_options = {
     ],
     "github_url": "https://github.com/pandas-dev/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
-    "use_edit_page_button": True
+    "use_edit_page_button": True,
+    # "require_js": False  # Just for testing
 }
 
 html_context = {
@@ -75,6 +77,9 @@ html_context = {
     "github_version": "master",
     "doc_path": "docs",
 }
+
+jupyter_sphinx_require_url = ""
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

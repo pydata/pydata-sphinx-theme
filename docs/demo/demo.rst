@@ -471,3 +471,21 @@ Download Links
 ==============
 
 :download:`This long long long long long long long long long long long long long long long download link should be blue, normal weight text with a leading icon, and should wrap white-spaces <static/yi_jing_01_chien.jpg>`
+
+HTML
+====
+
+The HTML below shouldn't display, but it uses RequireJS to make sure that all
+works as expected. If the widgets don't show up, RequireJS may be broken.
+
+.. jupyter-execute:: 
+
+   import plotly.io as pio
+   import plotly.express as px
+   import plotly.offline as py
+
+   pio.renderers.default = "notebook"
+
+   df = px.data.iris()
+   fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", size="sepal_length")
+   fig
