@@ -417,6 +417,16 @@ Admonitions
 
    You can make up your own admonition too.
 
+.. admonition:: If you add a name flag, it will be styled
+   :name: warning
+
+   For example, this admonition block uses the following code:
+
+   .. code-block::
+
+      .. admonition:: If you add a name flag, it will be styled
+         :name: warning
+
 Topics, Sidebars, and Rubrics
 -----------------------------
 
