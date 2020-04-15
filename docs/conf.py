@@ -78,7 +78,7 @@ html_context = {
     "doc_path": "docs",
 }
 
-jupyter_sphinx_require_url = ""
+# jupyter_sphinx_require_url = ""
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
