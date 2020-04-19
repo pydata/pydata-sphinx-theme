@@ -101,4 +101,7 @@ ENV/
 # mypy
 .mypy_cache/
 
+# build dirs of test examples
+tests/examples/*/_build
+
 node_modules/
