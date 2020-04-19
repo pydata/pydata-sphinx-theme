@@ -8,3 +8,4 @@ User Guide
 
    install
    configuring
+   customizing

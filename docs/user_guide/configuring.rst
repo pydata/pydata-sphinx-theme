@@ -1,3 +1,5 @@
+_configuation::
+
 *************
 Configuration
 *************
@@ -79,7 +81,7 @@ suitable for large navigation bars.
 
 .. code:: python
 
-    html_context = {
+    html_theme_options = {
         "search_bar_position": "navbar"
     }
 
@@ -91,7 +93,7 @@ following configuration to your ``conf.py`` file:
 
 .. code:: python
 
-   html_context = {
+   html_theme_options = {
        "search_bar_text": "Your text here..."
    }
 
@@ -101,3 +103,9 @@ Google Analytics
 
 If the ``google_analytics_id`` config option is specified (like ``UA-XXXXXXX``),
 Google Analytics' javascript is included in the html pages.
+
+.. code:: python
+
+   html_theme_options = {
+       "google_analytics_id": "UA-XXXXXXX",
+   }
