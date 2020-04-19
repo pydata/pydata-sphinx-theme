@@ -23,4 +23,6 @@ jobs:
         pip install sphinx pytest
         pip install -e .
     - name: Lint
-      run: pre-commit run --all-files
+      run: |
+        pre-commit run black --all-files
+        pre-commit run flake8 --all-files
