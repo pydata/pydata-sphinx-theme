@@ -15,26 +15,18 @@ Sites that are using this theme:
 - JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
 - Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
 
-This repo holds a temporary (slimmed down) copy of the pandas documentation to
-test the theme with on PRs. The result is hosted at the demo site.
 
 ## Installation and usage
 
-This theme is not yet released as a package on PyPI, but you can already install
+The theme is available on PyPI and conda-forge. You can install
 and use as follows:
 
-- Install the `pydata-sphinx-theme` in your doc build environment from the git
-  repo. You can do this manually with pip:
+- Install the `pydata-sphinx-theme` in your doc build environment:
 
   ```
-  pip install git+https://github.com/pandas-dev/pydata-sphinx-theme.git@master
-  ```
-
-  or in a conda environment yml file, you can add:
-
-  ```
-  - pip:
-    - git+https://github.com/pandas-dev/pydata-sphinx-theme.git@master
+  pip install pydata-sphinx-theme
+  # or
+  conda install pydata-sphinx-theme --channel conda-forge 
   ```
 
 - Then, in the `conf.py` of your sphinx docs, you update the `html_theme`
@@ -94,13 +86,13 @@ To this end, this package includes:
   subclassing sphinx' translator, but overriding certain elements to generate
   Bootstrap-compatible html. Currently, this includes: converting admonitions to
   Bootstrap "alert" classes, and updating the classes used for html tables.
-- A [sphinx "monkeypatch"](./pydata_sphinx_theme/__init__.py) to add toctree
+- A [sphinx event](./pydata_sphinx_theme/__init__.py) to add navigation
   objects into the html context which is available in the html (jinja2)
   templates. This allows to put the structure of the navigation elements in the
   actual layout, instead of having to rely on the hard-coded formatting of
   sphinx (this is inspired on the navigation objects of mkdocs:
   https://www.mkdocs.org/user-guide/custom-themes/#nav). We would love to see
-  this added to sphinx itself (instead of needing to monkeypatch), but for not
+  this added to sphinx itself (instead of needing a sphinx event), but for now
   did not yet get any reaction from the sphinx developers.
 
 Those items also avoid writing javascript functions to "fix up" the html
@@ -115,3 +107,5 @@ Currently, the main difference is that this theme is using Bootstrap 4 instead
 of 3 and provides a different default layout. At some point, it would be good to
 contribute changes to that package (or at least the parts that deal with
 Bootstrap and sphinx that could be shared).
+
+The initial layout and css were inspired on the Bootstrap documentation site.
