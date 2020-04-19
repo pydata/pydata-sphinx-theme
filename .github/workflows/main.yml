@@ -1,4 +1,7 @@
+name: Redirect to doc artifacts
+
 on: [status]
+
 jobs:
   circleci_artifacts_redirector_job:
     runs-on: ubuntu-latest
