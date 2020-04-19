@@ -1,11 +1,8 @@
 """A custom Sphinx HTML Translator for Bootstrap layout
 """
-import sys
-import re
-
 from docutils import nodes
 
-from sphinx.locale import admonitionlabels, _
+from sphinx.locale import admonitionlabels
 from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
 
@@ -65,7 +62,8 @@ class BootstrapHTML5Translator(HTML5Translator):
             name = "admonition"
             alert_classes[name] = class_name
 
-            # This removes the title and makes it behave like a "normal" admonition block
+            # This removes the title and makes it behave
+            # like a "normal" admonition block
             title = node.children.pop(0)
             admonitionlabels[name] = title.astext()
 

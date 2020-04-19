@@ -1,11 +1,8 @@
 """
-Sphinx Bootstrap theme.
-
-Adapted for the pandas documentation.
+Bootstrap-based sphinx theme from the PyData community
 """
 import os
 
-import sphinx.builders.html
 from sphinx.errors import ExtensionError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
@@ -16,7 +13,7 @@ __version__ = "0.1.1"
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects.
-    
+
     This converts the docutils nodes into a nested dictionary that Jinja can
     use in our templating.
     """
@@ -70,7 +67,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         try:
             nav = docutils_node_to_jinja(self_toc.children[0])
             return nav
-        except:
+        except Exception:
             return {}
 
     context["get_nav_object"] = get_nav_object
@@ -158,7 +155,10 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             doc_path = f"{doc_path}/"
 
         # Build the URL for "edit this button"
-        url_edit = f"https://github.com/{github_user}/{github_repo}/edit/{github_version}/{doc_path}{file_name}"
+        url_edit = (
+            f"https://github.com/{github_user}/{github_repo}"
+            f"/edit/{github_version}/{doc_path}{file_name}"
+        )
         return url_edit
 
     context["get_edit_url"] = get_edit_url
