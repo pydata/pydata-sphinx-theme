@@ -26,7 +26,7 @@ and use as follows:
   ```
   pip install pydata-sphinx-theme
   # or
-  conda install pydata-sphinx-theme --channel conda-forge 
+  conda install pydata-sphinx-theme --channel conda-forge
   ```
 
 - Then, in the `conf.py` of your sphinx docs, you update the `html_theme`
