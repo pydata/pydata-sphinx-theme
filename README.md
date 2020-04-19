@@ -53,69 +53,11 @@ are very welcome!
 
 ## Theme development
 
-The theme is bundled via Webpack. In `./src/*` the theme related stylesheets and javascript is located. 2 entrypoints are available:
+Contributions are very welcome! Installing the development version, building
+the demo docs and developing the css/js of the theme, etc, is explained in
+more detail in the contributing section of the documentation:
+https://pydata-sphinx-theme.readthedocs.io/en/latest/contributing.html
 
-- Stylesheet: `./src/scss/index.scss'
-- Javascript: `./src/js/index.js`
-
-Both entrypoints will be bundled into `./pydata_sphinx_theme/static/{css,js}`.
-
-Theme development was inspired by the [ReadTheDocs sphinx theme](https://github.com/readthedocs/sphinx_rtd_theme).
-
-### Steps to develop the theme:
-
-1. Install yarn
-2. Install theme dependencies
-3. Run development server
-4. Build production assets
-
-**Important:** in orde to commit changes to the theme, ensure you run `yarn build:production` so all assets will be bundled into `./pydata_sphinx_theme/static/`.
-
-#### Install yarn
-
-[Yarn](https://yarnpkg.com) is a package manager we use for managing Javascript and CSS dependencies.
-
-Install via conda:
-
-```bash
-conda install yarn
-```
-
-Install alternative: https://classic.yarnpkg.com/en/docs/install.
-
-#### Install theme dependencies
-
-Install theme related dependencies:
-
-```bash
-yarn install
-```
-
-#### Run development server
-
-```bash
-yarn build:dev
-```
-
-A development server is available at http://localhost:1919. When working
-on the theme, like editing stylesheets, javascript, .rst or .py files
-every save reloads the development server. This reload includes bundling
-stylesheets, javascript, and running sphinx again.
-
-The following files will be watched and reloaded on change:
-
-- ./src/js/index.js
-- ./src/scss/index.scss
-- ./docs/\*\*/\*.rst
-- ./docs/\*\*/\*.py
-
-#### Build production assets
-
-To build the new theme assets into the theme, run the following command.
-
-```bash
-yarn build:production
-```
 
 ## How is this theme working?
 
