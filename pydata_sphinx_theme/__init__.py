@@ -1,11 +1,8 @@
 """
-Sphinx Bootstrap theme.
-
-Adapted for the pandas documentation.
+Bootstrap-based sphinx theme from the PyData community
 """
 import os
 
-import sphinx.builders.html
 from sphinx.errors import ExtensionError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
@@ -16,7 +13,7 @@ __version__ = "0.1.1"
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects.
-    
+
     This converts the docutils nodes into a nested dictionary that Jinja can
     use in our templating.
     """
@@ -51,12 +48,15 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         #       <list_item classes="toctree-l1">
         #       <list_item classes="toctree-l1">
         # `list_item`s are the actual TOC links and are the only thing we want
-        toc_items = [item for child in toctree.children for item in child
-                     if isinstance(item, docutils.nodes.list_item)]
+        toc_items = [
+            item
+            for child in toctree.children
+            for item in child
+            if isinstance(item, docutils.nodes.list_item)
+        ]
 
         # Now convert our docutils nodes into dicts that Jinja can use
-        nav = [docutils_node_to_jinja(child, only_pages=True)
-               for child in toc_items]
+        nav = [docutils_node_to_jinja(child, only_pages=True) for child in toc_items]
 
         return nav
 
@@ -67,11 +67,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         try:
             nav = docutils_node_to_jinja(self_toc.children[0])
             return nav
-        except:
+        except Exception:
             return {}
 
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
+
 
 def docutils_node_to_jinja(list_item, only_pages=False):
     """Convert a docutils node to a structure that can be read by Jinja.
@@ -104,7 +105,7 @@ def docutils_node_to_jinja(list_item, only_pages=False):
     active = "current" in list_item.attributes["classes"]
 
     # If we've got an anchor link, skip it if we wish
-    if only_pages and '#' in url:
+    if only_pages and "#" in url:
         return None
 
     # Converting the docutils attributes into jinja-friendly objects
@@ -129,19 +130,23 @@ def docutils_node_to_jinja(list_item, only_pages=False):
 
 # -----------------------------------------------------------------------------
 
+
 def setup_edit_url(app, pagename, templatename, context, doctree):
     """Add a function that jinja can access for returning the edit URL of a page."""
+
     def get_edit_url():
         """Return a URL for an "edit this page" link."""
         required_values = ["github_user", "github_repo", "github_version"]
         for val in required_values:
             if not context.get(val):
-                raise ExtensionError("Missing required value for `edit this page` button. "
-                                        "Add %s to your `html_context` configuration" % val)
+                raise ExtensionError(
+                    "Missing required value for `edit this page` button. "
+                    "Add %s to your `html_context` configuration" % val
+                )
 
-        github_user = context['github_user']
-        github_repo = context['github_repo']
-        github_version = context['github_version']
+        github_user = context["github_user"]
+        github_repo = context["github_repo"]
+        github_version = context["github_version"]
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -150,10 +155,13 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             doc_path = f"{doc_path}/"
 
         # Build the URL for "edit this button"
-        url_edit = f"https://github.com/{github_user}/{github_repo}/edit/{github_version}/{doc_path}{file_name}"
+        url_edit = (
+            f"https://github.com/{github_user}/{github_repo}"
+            f"/edit/{github_version}/{doc_path}{file_name}"
+        )
         return url_edit
 
-    context['get_edit_url'] = get_edit_url
+    context["get_edit_url"] = get_edit_url
 
 
 # -----------------------------------------------------------------------------
@@ -174,6 +182,6 @@ def setup(app):
     # uses a special "dirhtml" builder so we need to replace these both with
     # our custom HTML builder
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
-    app.set_translator('readthedocsdirhtml', BootstrapHTML5Translator, override=True)
+    app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)

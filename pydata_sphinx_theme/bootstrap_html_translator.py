@@ -1,11 +1,8 @@
 """A custom Sphinx HTML Translator for Bootstrap layout
 """
-import sys
-import re
-
 from docutils import nodes
 
-from sphinx.locale import admonitionlabels, _
+from sphinx.locale import admonitionlabels
 from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
 
@@ -47,26 +44,32 @@ class BootstrapHTML5Translator(HTML5Translator):
         classes = ["alert"]
 
         # If we have a generic admonition block, style it as info
-        if any("admonition-" in iclass for iclass in node.attributes['classes']) and name == "":
+        if (
+            any("admonition-" in iclass for iclass in node.attributes["classes"])
+            and name == ""
+        ):
             if node.attributes.get("names"):
                 class_name = node.attributes.get("names")[0]
             else:
                 class_name = alert_classes["note"]
             if class_name not in alert_classes:
-                logger.warning(f"Admonition name `{name}` is not supported. Defaulting to `note`.")
+                logger.warning(
+                    f"Admonition name `{name}` is not supported. Defaulting to `note`."
+                )
                 class_name = alert_classes["note"]
 
             # Update altert_classes to use the proper class
             name = "admonition"
             alert_classes[name] = class_name
 
-            # This removes the title and makes it behave like a "normal" admonition block
+            # This removes the title and makes it behave
+            # like a "normal" admonition block
             title = node.children.pop(0)
             admonitionlabels[name] = title.astext()
 
         if name:
             classes.append("alert-{0}".format(alert_classes[name]))
-        
+
         self.body.append(self.starttag(node, "div", CLASS=" ".join(classes)))
         if name:
             node.insert(0, nodes.title(name, admonitionlabels[name]))
