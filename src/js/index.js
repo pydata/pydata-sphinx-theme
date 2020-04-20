@@ -22,29 +22,3 @@ $(window).on('activate.bs.scrollspy', function() {
     navLink.parentElement.classList.add('active');
   })
 });
-
-/**
- * Use left and right arrow keys to navigate forward and backwards.
- */
-const LEFT_ARROW_KEYCODE = 37;
-const RIGHT_ARROW_KEYCODE = 39;
-
-const getPrevUrl = () => document.getElementById('prev-link').href;
-const getNextUrl = () => document.getElementById('next-link').href;
-const initPageNav = event => {
-  const keycode = event.which;
-
-  if (keycode === LEFT_ARROW_KEYCODE) {
-    window.location.href = getPrevUrl();
-  } else if (keycode === RIGHT_ARROW_KEYCODE) {
-    window.location.href = getNextUrl();
-  }
-};
-
-let keyboardListener = false;
-$(document).ready(() => {
-  if (keyboardListener === false) {
-    document.addEventListener('keydown', initPageNav);
-    keyboardListener = true;
-  }
-});
