@@ -73,10 +73,10 @@ your ``conf.py`` file:
 Configure the search bar position
 =================================
 
-To modify the position of the search bar, change the following variable in 
+To modify the position of the search bar, change the following variable in
 your configuration file ``conf.py``. Possible options are 'navbar' and 'sidebar'.
 
-By default the search bar is positioned in the sidebar since this is more 
+By default the search bar is positioned in the sidebar since this is more
 suitable for large navigation bars.
 
 .. code:: python
@@ -108,4 +108,18 @@ Google Analytics' javascript is included in the html pages.
 
    html_theme_options = {
        "google_analytics_id": "UA-XXXXXXX",
+   }
+
+
+Changing pages with keyboard presses
+====================================
+
+By default, ``pydata-sphinx-theme`` allows users to move to the previous/next
+page using the left/right arrow keys on a keyboard. To disable this behavior,
+use the following configuration:
+
+.. code-block:: python
+
+   html_theme_options: {
+     "navigation_with_keys": False
    }
