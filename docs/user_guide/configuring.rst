@@ -114,7 +114,7 @@ Google Analytics' javascript is included in the html pages.
 Changing pages with keyboard presses
 ====================================
 
-By default, ``pandas-sphinx-theme`` allows users to move to the previous/next
+By default, ``pydata-sphinx-theme`` allows users to move to the previous/next
 page using the left/right arrow keys on a keyboard. To disable this behavior,
 use the following configuration:
 
