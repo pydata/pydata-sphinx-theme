@@ -2,7 +2,6 @@
 """
 from docutils import nodes
 
-from sphinx.locale import admonitionlabels
 from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
 
@@ -43,26 +42,26 @@ class BootstrapHTML5Translator(HTML5Translator):
         # We'll always wrap admonitions in `alert` classes to behave like the alerts
         classes = ["alert"]
 
-        if (
-            any("admonition-" in iclass for iclass in node.attributes["classes"])
-            and name == ""
-        ):
+        # If `name` is given, then the alert directive was called, not admonition
+        if name:
+            alert_name = name
+        else:
             if node.attributes.get("names"):
                 # If `name` is specified, try to look it up in the list of alerts
-                class_name = node.attributes.get("names")[0]
+                alert_name = node.attributes.get("names")[0]
             else:
                 # If no `name` is specified, style it as `note`
-                class_name = "note"
+                alert_name = "note"
 
-            if class_name not in alert_classes:
+            if alert_name not in alert_classes:
                 logger.warning(
-                    f"Unsupported admonition name: `{class_name}`. Using style `note`.",
-                    location=(self.docnames[0], node.children[0].line)
+                    f"Unsupported admonition name: `{alert_name}`. Using style `note`.",
+                    location=(self.docnames[0], node.children[0].line),
                 )
-                class_name = "note"
+                alert_name = "note"
 
-            # Find the proper class name and add it to a wrapper div for this admonition
-            classes.append("alert-{}".format(alert_classes[class_name]))
+        # Find the proper class name and add it to a wrapper div for this admonition
+        classes.append("alert-{}".format(alert_classes[alert_name]))
 
         self.body.append(self.starttag(node, "div", CLASS=" ".join(classes)))
 
