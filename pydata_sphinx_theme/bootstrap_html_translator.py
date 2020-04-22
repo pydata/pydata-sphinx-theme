@@ -2,7 +2,6 @@
 """
 from docutils import nodes
 
-from sphinx.locale import admonitionlabels
 from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
 
@@ -39,40 +38,32 @@ class BootstrapHTML5Translator(HTML5Translator):
         self.settings.table_style = "table"
 
     def visit_admonition(self, node, name=""):
-        # type: (nodes.Element, str) -> None
-        # copy of sphinx source to add alert classes
+        """Allows admonition blocks to have a `names` attribute to style them."""
+        # We'll always wrap admonitions in `alert` classes to behave like the alerts
         classes = ["alert"]
 
-        # If we have a generic admonition block, style it as info
-        if (
-            any("admonition-" in iclass for iclass in node.attributes["classes"])
-            and name == ""
-        ):
-            if node.attributes.get("names"):
-                class_name = node.attributes.get("names")[0]
-            else:
-                class_name = alert_classes["note"]
-            if class_name not in alert_classes:
-                logger.warning(
-                    f"Admonition name `{name}` is not supported. Defaulting to `note`."
-                )
-                class_name = alert_classes["note"]
-
-            # Update altert_classes to use the proper class
-            name = "admonition"
-            alert_classes[name] = class_name
-
-            # This removes the title and makes it behave
-            # like a "normal" admonition block
-            title = node.children.pop(0)
-            admonitionlabels[name] = title.astext()
-
+        # If `name` is given, then the alert directive was called, not admonition
         if name:
-            classes.append("alert-{0}".format(alert_classes[name]))
+            alert_name = name
+        else:
+            if node.attributes.get("names"):
+                # If `name` is specified, try to look it up in the list of alerts
+                alert_name = node.attributes.get("names")[0]
+            else:
+                # If no `name` is specified, style it as `note`
+                alert_name = "note"
+
+            if alert_name not in alert_classes:
+                logger.warning(
+                    f"Unsupported admonition name: `{alert_name}`. Using style `note`.",
+                    location=(self.docnames[0], node.children[0].line),
+                )
+                alert_name = "note"
+
+        # Find the proper class name and add it to a wrapper div for this admonition
+        classes.append("alert-{}".format(alert_classes[alert_name]))
 
         self.body.append(self.starttag(node, "div", CLASS=" ".join(classes)))
-        if name:
-            node.insert(0, nodes.title(name, admonitionlabels[name]))
 
     def visit_table(self, node):
         # type: (nodes.Element) -> None
