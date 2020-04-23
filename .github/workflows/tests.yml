@@ -62,3 +62,26 @@ jobs:
       run: |
         export PATH="$HOME/miniconda/bin:$PATH"
         sphinx-build -b html docs/ docs/_build/html -W --keep-going
+
+  publish:
+
+    name: Publish to PyPi
+    needs: [lint, tests]
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Build package
+        run: |
+          pip install wheel
+          python setup.py sdist bdist_wheel
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@v1.1.0
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_KEY }}
