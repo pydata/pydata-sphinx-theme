@@ -17,7 +17,7 @@ following configuration:
 
 .. code:: python
 
-   html_theme_options: {
+   html_theme_options = {
      "github_url": "https://github.com/<your-org>/<your-repo>",
      "twitter_url": "https://twitter.com/<your-handle>",
    }
@@ -31,7 +31,7 @@ an external site. You can add external links to the nav bar like so:
 
 .. code:: python
 
-   html_theme_options: {
+   html_theme_options = {
      "external_links": [
          {"name": "link-one-name", "url": "https://<link-one>"},
          {"name": "link-two-name", "url": "https://<link-two>"}
@@ -47,7 +47,7 @@ at the bottom. You can hide these buttons with the following configuration:
 
 .. code:: python
 
-   html_theme_options: {
+   html_theme_options = {
      "show_prev_next": False
    }
 
@@ -120,6 +120,6 @@ use the following configuration:
 
 .. code-block:: python
 
-   html_theme_options: {
+   html_theme_options = {
      "navigation_with_keys": False
    }
