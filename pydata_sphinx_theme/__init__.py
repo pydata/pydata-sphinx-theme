@@ -185,3 +185,5 @@ def setup(app):
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
+
+    return {"parallel_read_safe": True, "parallel_write_safe": True}
