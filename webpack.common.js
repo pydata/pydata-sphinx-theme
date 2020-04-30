@@ -1,8 +1,9 @@
-const path = require('path');
+const { resolve } = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const staticPath = path.resolve(__dirname, 'pydata_sphinx_theme/static');
+const staticPath = resolve(__dirname, 'pydata_sphinx_theme/static');
+const vendor = resolve(staticPath, 'vendor');
 
 module.exports = {
   entry: {
@@ -50,18 +51,38 @@ module.exports = {
         // includes popper.js
         context: './node_modules/bootstrap/dist/js/',
         from: 'bootstrap.bundle.min.*',
-        to: path.resolve(staticPath, 'vendor', 'bootstrap')
+        to: resolve(vendor, 'bootstrap')
       },
       {
         context: './node_modules/@fortawesome/fontawesome-free/css',
         from: 'all.min.css',
-        to: path.resolve(staticPath, 'vendor', 'fontawesome', 'css')
+        to: resolve(vendor, 'fontawesome', 'css')
       },
       {
         context: './node_modules/@fortawesome/fontawesome-free',
         from: 'webfonts',
-        to: path.resolve(staticPath, 'vendor', 'fontawesome', 'webfonts')
+        to: resolve(vendor, 'fontawesome', 'webfonts')
       },
+      {
+        context: './node_modules/@openfonts/open-sans_all',
+        from: 'files/*-400*',
+        to: resolve(vendor, 'open-sans_all')
+      },
+      {
+        context: './node_modules/@openfonts/open-sans_all',
+        from: 'index.css',
+        to: resolve(vendor, 'open-sans_all')
+      },
+      {
+        context: './node_modules/@openfonts/lato_latin-ext',
+        from: 'files/*-400*',
+        to: resolve(vendor, 'lato_latin-ext')
+      },
+      {
+        context: './node_modules/@openfonts/lato_latin-ext',
+        from: 'index.css',
+        to: resolve(vendor, 'lato_latin-ext')
+      }
     ])
   ],
 };

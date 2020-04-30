@@ -14,8 +14,11 @@
 {%- block css %}
     {% if use_cdn %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400" />
     {% else %}
     <link rel="stylesheet" href="{{ pathto('_static/vendor/fontawesome/css/all.min.css', 1) }}">
+    <link rel="stylesheet" href="{{ pathto('_static/vendor/open-sans_all/index.css', 1) }}">
+    <link rel="stylesheet" href="{{ pathto('_static/vendor/lato_latin-ext/index.css', 1) }}">
     {% endif %}
     <link rel="stylesheet" href="{{ pathto('_static/css/index.css', 1) }}">
     {{- css() }}

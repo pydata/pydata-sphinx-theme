@@ -10,9 +10,6 @@ $container-max-widths: (
 // Include core Bootstrap
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
-// Import custom fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400');
-
 @import './base';
 @import './navbar';
 
@@ -83,8 +80,8 @@ table.field-list {
   }
 }
 
-/**		
- * Styling for autosummary tables		
+/**
+ * Styling for autosummary tables
  */
 
 // The first column (with the signature) should not wrap
