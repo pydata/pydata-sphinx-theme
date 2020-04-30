@@ -13,9 +13,9 @@ from .bootstrap_html_translator import BootstrapHTML5Translator
 
 __version__ = "0.2.2dev0"
 
-name = "pydata_sphinx_theme"
+NAME = "pydata_sphinx_theme"
 
-at_least_sphinx_three = sphinx.__version__ >= '3.0.0'
+at_least_sphinx_three = sphinx.__version__ >= "3.0.0"
 
 logger = sphinx.util.logging.getLogger(__name__)
 
@@ -186,28 +186,31 @@ def setup_cdn(app, pagename, templatename, context, doctree):
 
     context["use_public_cdns"] = use_public_cdns
 
-    if not hasattr(app.config, "mathjax_path") or at_least_sphinx_three or use_public_cdns:
+    if not has_default_mathjax_path(app):
+        return
+
+    if at_least_sphinx_three or use_public_cdns:
         return
 
     mathjax_path = app.config.mathjax_path
 
-    if "https://cdnjs.cloudflare.com" not in mathjax_path:
-        return
-
     if not warned.get("mathjax_path"):
         logger.warning(
-            "`use_public_cdns` is %s, but `mathjax_path` is configured, probably by default, as:\n\n"
+            "`use_public_cdns` is %s, but `mathjax_path` is configured,"
+            " probably by default, as:\n\n"
             "  %s\n\n"
             "> upgrade to `sphinx >=3`, which supports event `priority`...\n"
             "> or configure `mathjax_path` in `conf.py`, e.g.:\n\n"
             "  import %s\n"
-            "  mathjax_path = %s.get_mathjax_path()\n",
+            "  def setup(app):\n"
+            "      app.config.use_public_cdns = False\n"
+            "      app.config.mathjax_path = %s.get_mathjax_path()\n",
             use_public_cdns,
             mathjax_path,
-            name,
-            name,
+            NAME,
+            NAME,
             type="configuration",
-            location=pagename
+            location=pagename,
         )
         warned["mathjax_path"] = True
 
@@ -216,18 +219,23 @@ def setup_cdn(app, pagename, templatename, context, doctree):
 
 
 def configure_mathjax(app, env):
-    if not app.config.use_public_cdns:
-        # TODO: this needs to go in an event handler... maybe `env-before-read-docs`
-        # because `build_latex` fires on `env-updated`. `priority` is only sphinx 3...
+    if not app.config.use_public_cdns and has_default_mathjax_path(app):
         app.config.mathjax_path = get_mathjax_path()
 
 
 # -----------------------------------------------------------------------------
 
 
+def has_default_mathjax_path(app):
+    if "mathjax_path" not in app.config:
+        return False
+
+    return app.config.mathjax_path == app.config.values["mathjax_path"][0]
+
+
 def get_mathjax_path():
     """Return the locally-vendored MathJax path"""
-    return 'vendor/mathjax/latest.js?config=TeX-AMS-MML_HTMLorMML'
+    return "vendor/mathjax/latest.js?config=TeX-AMS-MML_HTMLorMML"
 
 
 def get_html_theme_path():
@@ -238,7 +246,7 @@ def get_html_theme_path():
 
 def setup(app):
     theme_path = get_html_theme_path()[0]
-    app.add_html_theme("pydata_sphinx_theme", theme_path)
+    app.add_html_theme(NAME, theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
 
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
@@ -250,7 +258,7 @@ def setup(app):
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", setup_cdn)
 
-    app.add_config_value('use_public_cdns', True, 'html')
+    app.add_config_value("use_public_cdns", True, "html")
 
     if at_least_sphinx_three:
         app.connect("env-updated", configure_mathjax, priority=-1)
