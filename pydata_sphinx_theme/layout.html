@@ -12,9 +12,9 @@
 {% endmacro %}
 
 {%- block css %}
-    {% if use_cdn %}
+    {% if use_public_cdns %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400">
     {% else %}
     <link rel="stylesheet" href="{{ pathto('_static/vendor/fontawesome/css/all.min.css', 1) }}">
     <link rel="stylesheet" href="{{ pathto('_static/vendor/open-sans_all/index.css', 1) }}">
@@ -28,7 +28,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-    {% if use_cdn %}
+    {% if use_public_cdns %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     {% else %}

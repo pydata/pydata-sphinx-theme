@@ -47,6 +47,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin([
+      // bootstrap
       {
         // includes popper.js
         context: './node_modules/bootstrap/dist/js/',
@@ -58,6 +59,7 @@ module.exports = {
         from: 'LICENSE',
         to: resolve(vendor, 'bootstrap')
       },
+      // fonts
       {
         context: './node_modules/@fortawesome/fontawesome-free/css',
         from: 'all.min.css',
@@ -70,7 +72,7 @@ module.exports = {
       },
       {
         context: './node_modules/@fortawesome/fontawesome-free',
-        from: 'LICENSE',
+        from: 'LICENSE.txt',
         to: resolve(vendor, 'fontawesome')
       },
       {
@@ -102,6 +104,32 @@ module.exports = {
         context: './node_modules/@openfonts/lato_latin-ext',
         from: 'LICENSE.md',
         to: resolve(vendor, 'lato_latin-ext')
+      },
+      // mathjax
+      {
+        context: './node_modules/mathjax',
+        from: '*.js',
+        to: resolve(vendor, 'mathjax')
+      },
+      {
+        context: './node_modules/mathjax',
+        from: 'jax/output/HTML-CSS',
+        to: resolve(vendor, 'mathjax/jax/output/HTML-CSS')
+      },
+      {
+        context: './node_modules/mathjax',
+        from: 'fonts/HTML-CSS/TeX',
+        to: resolve(vendor, 'mathjax/fonts/HTML-CSS/TeX')
+      },
+      {
+        context: './node_modules/mathjax',
+        from: 'config/TeX-AMS-MML_HTMLorMML.js',
+        to: resolve(vendor, 'mathjax/config')
+      },
+      {
+        context: './node_modules/mathjax',
+        from: 'LICENSE',
+        to: resolve(vendor, 'mathjax')
       },
     ])
   ],
