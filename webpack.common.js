@@ -54,6 +54,11 @@ module.exports = {
         to: resolve(vendor, 'bootstrap')
       },
       {
+        context: './node_modules/bootstrap/',
+        from: 'LICENSE',
+        to: resolve(vendor, 'bootstrap')
+      },
+      {
         context: './node_modules/@fortawesome/fontawesome-free/css',
         from: 'all.min.css',
         to: resolve(vendor, 'fontawesome', 'css')
@@ -64,6 +69,11 @@ module.exports = {
         to: resolve(vendor, 'fontawesome', 'webfonts')
       },
       {
+        context: './node_modules/@fortawesome/fontawesome-free',
+        from: 'LICENSE',
+        to: resolve(vendor, 'fontawesome')
+      },
+      {
         context: './node_modules/@openfonts/open-sans_all',
         from: 'files/*-400*',
         to: resolve(vendor, 'open-sans_all')
@@ -71,6 +81,11 @@ module.exports = {
       {
         context: './node_modules/@openfonts/open-sans_all',
         from: 'index.css',
+        to: resolve(vendor, 'open-sans_all')
+      },
+      {
+        context: './node_modules/@openfonts/open-sans_all',
+        from: 'LICENSE.md',
         to: resolve(vendor, 'open-sans_all')
       },
       {
@@ -82,7 +97,12 @@ module.exports = {
         context: './node_modules/@openfonts/lato_latin-ext',
         from: 'index.css',
         to: resolve(vendor, 'lato_latin-ext')
-      }
+      },
+      {
+        context: './node_modules/@openfonts/lato_latin-ext',
+        from: 'LICENSE.md',
+        to: resolve(vendor, 'lato_latin-ext')
+      },
     ])
   ],
 };
