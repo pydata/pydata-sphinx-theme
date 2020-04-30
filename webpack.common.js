@@ -1,5 +1,8 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
+const staticPath = path.resolve(__dirname, 'pydata_sphinx_theme/static');
 
 module.exports = {
   entry: {
@@ -7,7 +10,7 @@ module.exports = {
   },
   output: {
     filename: 'js/[name].js?[hash]',
-    path: path.resolve(__dirname, 'pydata_sphinx_theme/static'),
+    path: staticPath,
   },
   module: {
     rules: [
@@ -40,5 +43,25 @@ module.exports = {
       },
     ],
   },
-  plugins: [new CleanWebpackPlugin()],
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CopyPlugin([
+      {
+        // includes popper.js
+        context: './node_modules/bootstrap/dist/js/',
+        from: 'bootstrap.bundle.min.*',
+        to: path.resolve(staticPath, 'vendor', 'bootstrap')
+      },
+      {
+        context: './node_modules/@fortawesome/fontawesome-free/css',
+        from: 'all.min.css',
+        to: path.resolve(staticPath, 'vendor', 'fontawesome', 'css')
+      },
+      {
+        context: './node_modules/@fortawesome/fontawesome-free',
+        from: 'webfonts',
+        to: path.resolve(staticPath, 'vendor', 'fontawesome', 'webfonts')
+      },
+    ])
+  ],
 };

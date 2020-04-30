@@ -29,7 +29,12 @@
     "webpack-watch-files-plugin": "^1.0.3"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@openfonts/lato_latin-ext": "^1.44.1",
+    "@openfonts/open-sans_all": "^1.44.1",
     "bootstrap": "^4.4.1",
-    "optimize-css-assets-webpack-plugin": "^5.0.3"
+    "jquery": "^3.5.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "popper.js": "^1.16.0"
   }
 }
