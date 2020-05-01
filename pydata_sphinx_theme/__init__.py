@@ -5,8 +5,6 @@ import os
 
 import docutils
 
-import sphinx
-import sphinx.util.logging
 from sphinx.errors import ExtensionError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
@@ -14,12 +12,6 @@ from .bootstrap_html_translator import BootstrapHTML5Translator
 __version__ = "0.2.2dev0"
 
 NAME = "pydata_sphinx_theme"
-
-at_least_sphinx_three = sphinx.__version__ >= "3.0.0"
-
-logger = sphinx.util.logging.getLogger(__name__)
-
-warned = {}
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -178,48 +170,10 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 # -----------------------------------------------------------------------------
 
 
-def setup_cdn(app, pagename, templatename, context, doctree):
-    """hoist the `use_public_cdns` config value to the template context
+def configure_mathjax(app, env, docnames):
+    """ Overload mathjax_path, as defaulting to a CDN in `sphinx/ext/mathjax.py`
     """
-
-    use_public_cdns = app.config.use_public_cdns
-
-    context["use_public_cdns"] = use_public_cdns
-
-    if not has_default_mathjax_path(app):
-        return
-
-    if at_least_sphinx_three or use_public_cdns:
-        return
-
-    mathjax_path = app.config.mathjax_path
-
-    if not warned.get("mathjax_path"):
-        logger.warning(
-            "`use_public_cdns` is %s, but `mathjax_path` is configured,"
-            " probably by default, as:\n\n"
-            "  %s\n\n"
-            "> upgrade to `sphinx >=3`, which supports event `priority`...\n"
-            "> or configure `mathjax_path` in `conf.py`, e.g.:\n\n"
-            "  import %s\n"
-            "  def setup(app):\n"
-            "      app.config.use_public_cdns = False\n"
-            "      app.config.mathjax_path = %s.get_mathjax_path()\n",
-            use_public_cdns,
-            mathjax_path,
-            NAME,
-            NAME,
-            type="configuration",
-            location=pagename,
-        )
-        warned["mathjax_path"] = True
-
-
-# -----------------------------------------------------------------------------
-
-
-def configure_mathjax(app, env):
-    if not app.config.use_public_cdns and has_default_mathjax_path(app):
+    if has_default_mathjax_path(app):
         app.config.mathjax_path = get_mathjax_path()
 
 
@@ -256,11 +210,7 @@ def setup(app):
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
-    app.connect("html-page-context", setup_cdn)
-
-    app.add_config_value("use_public_cdns", True, "html")
-
-    if at_least_sphinx_three:
-        app.connect("env-updated", configure_mathjax, priority=-1)
+    # hook this event so the config is set prior to MathJax link injection
+    app.connect("env-before-read-docs", configure_mathjax)
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}
