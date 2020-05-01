@@ -83,6 +83,5 @@ html_static_path = ["_static"]
 import recommonmark
 from recommonmark.transform import AutoStructify
 
-
 def setup(app):
     app.add_transform(AutoStructify)
