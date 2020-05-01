@@ -4,3 +4,4 @@ recommonmark
 pandas
 jupyter_sphinx
 plotly
+numpy

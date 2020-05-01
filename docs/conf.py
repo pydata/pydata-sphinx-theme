@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'PyData Sphinx Theme'
-copyright = '2019, PyData Community'
-author = 'PyData Community'
+project = "PyData Sphinx Theme"
+copyright = "2019, PyData Community"
+author = "PyData Community"
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1dev0'
+release = "0.0.1dev0"
 
 
 # -- General configuration ---------------------------------------------------
@@ -42,12 +42,12 @@ extensions = [
 autosummary_generate = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -55,15 +55,12 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'pydata_sphinx_theme'
-html_logo = '_static/pandas.svg'
+html_theme = "pydata_sphinx_theme"
+html_logo = "_static/pandas.svg"
 
 html_theme_options = {
     "external_links": [
-        {
-            'url': "https://pandas.pydata.org/pandas-docs/stable/",
-            "name": "Pandas Docs"
-        }
+        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"}
     ],
     "github_url": "https://github.com/pandas-dev/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
@@ -84,12 +81,13 @@ html_context = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 
 # -- Auto-convert markdown pages to demo --------------------------------------
 import recommonmark
 from recommonmark.transform import AutoStructify
+
 
 def setup(app):
     app.add_transform(AutoStructify)

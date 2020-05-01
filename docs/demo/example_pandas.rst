@@ -42,8 +42,6 @@ this area.
    should be avoided. See :ref:`Returning a View versus Copy
    <indexing.view_versus_copy>`.
 
-See the :ref:`MultiIndex / Advanced Indexing <advanced>` for ``MultiIndex`` and more advanced indexing documentation.
-
 .. _indexing.choice:
 
 Different choices for indexing
@@ -61,8 +59,7 @@ of multi-axis indexing.
     * A list or array of labels ``['a', 'b', 'c']``.
     * A slice object with labels ``'a':'f'`` (Note that contrary to usual python
       slices, **both** the start and the stop are included, when present in the
-      index! See :ref:`Slicing with labels <indexing.slicing_with_labels>`
-      and :ref:`Endpoints are inclusive <advanced.endpoints_are_inclusive>`.)
+      index!)
     * A boolean array
     * A ``callable`` function with one argument (the calling Series or DataFrame) and
       that returns valid output for indexing (one of the above).
@@ -82,10 +79,6 @@ of multi-axis indexing.
     * A boolean array.
     * A ``callable`` function with one argument (the calling Series or DataFrame) and
       that returns valid output for indexing (one of the above).
-
-  See more at :ref:`Selection by Position <indexing.integer>`,
-  :ref:`Advanced Indexing <advanced>` and :ref:`Advanced
-  Hierarchical <advanced.advanced_hierarchical>`.
 
 * ``.loc``, ``.iloc``, and also ``[]`` indexing can accept a ``callable`` as indexer. See more at :ref:`Selection By Callable <indexing.callable>`.
 
@@ -108,8 +101,8 @@ the specification are assumed to be ``:``, e.g. ``p.loc['a']`` is equivalent to
 Basics
 ------
 
-As mentioned when introducing the data structures in the :ref:`last section
-<basics>`, the primary function of indexing with ``[]`` (a.k.a. ``__getitem__``
+As mentioned when introducing the data structures in the last section,
+the primary function of indexing with ``[]`` (a.k.a. ``__getitem__``
 for those familiar with implementing class behavior in Python) is selecting out
 lower-dimensional slices. The following table shows return type values when
 indexing pandas objects with ``[]``:
@@ -131,7 +124,7 @@ indexing functionality:
 
     >>> df = pd.DataFrame(np.random.randn(8, 4),
     ...                   index=dates, columns=['A', 'B', 'C', 'D'])
-    ... 
+    ...
 
     >>> df
                     A         B         C         D
@@ -441,7 +434,7 @@ With a DataFrame:
     >>> df1 = pd.DataFrame(np.random.randn(6, 4),
     ....                    index=list('abcdef'),
     ....                    columns=list('ABCD'))
-    .... 
+    ....
 
     >>> df1
             A         B         C         D
@@ -502,9 +495,6 @@ However, if at least one of the two is absent *and* the index is not sorted, an
 error will be raised (since doing otherwise would be computationally expensive,
 as well as potentially ambiguous for mixed type indexes). For instance, in the
 above example, ``s.loc[1:6]`` would raise ``KeyError``.
-
-For the rationale behind this behavior, see
-:ref:`Endpoints are inclusive <advanced.endpoints_are_inclusive>`.
 
 .. _indexing.integer:
 
@@ -646,7 +636,7 @@ The ``callable`` must be a function with one argument (the calling Series or Dat
     >>> df1 = pd.DataFrame(np.random.randn(6, 4),
     ....                    index=list('abcdef'),
     ....                    columns=list('ABCD'))
-    .... 
+    ....
 
     >>> df1
             A         B         C         D
@@ -1126,7 +1116,7 @@ slice is frequently not intentional, but a mistake caused by chained indexing
 returning a copy where a slice was expected.
 
 If you would like pandas to be more or less trusting about assignment to a
-chained indexing expression, you can set the :ref:`option <options>`
+chained indexing expression, you can set the option
 ``mode.chained_assignment`` to one of these values:
 
 * ``'warn'``, the default, means a ``SettingWithCopyWarning`` is printed.

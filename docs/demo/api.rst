@@ -23,11 +23,11 @@ Autosummary table and API stub pages
 Inline module documentation
 ===========================
 
-:mod:`datetime.datetime`
+:mod:`numpy.linalg`
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: datetime.datetime
-    :members:
+.. automodule:: numpy.linalg
+   :members: eig, matrix_power, norm, tensorinv
 
 
 C++ API
