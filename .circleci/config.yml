@@ -27,6 +27,8 @@ jobs:
             conda config --set always_yes yes --set changeps1 no
             conda update conda
             conda config --add channels conda-forge
+            const install yarn
+            yarn && yarn build
             # Install pandas + some optional dependencies
             pip install -r docs/requirements.txt
             # install the theme package
