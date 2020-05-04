@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
@@ -47,18 +48,6 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin([
-      // bootstrap
-      {
-        // includes popper.js
-        context: './node_modules/bootstrap/dist/js/',
-        from: 'bootstrap.bundle.min.*',
-        to: resolve(vendor, 'bootstrap')
-      },
-      {
-        context: './node_modules/bootstrap/',
-        from: 'LICENSE',
-        to: resolve(vendor, 'bootstrap')
-      },
       // fonts
       {
         context: './node_modules/@fortawesome/fontawesome-free/css',
@@ -131,6 +120,11 @@ module.exports = {
         from: 'LICENSE',
         to: resolve(vendor, 'mathjax')
       },
-    ])
+    ]),
+    new webpack.ProvidePlugin({
+      '$': "jquery",
+      'jQuery': "jquery",
+      'Popper': 'popper.js'
+    }),
   ],
 };
