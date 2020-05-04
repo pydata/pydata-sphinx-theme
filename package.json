@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
-    "optimize-css-assets-webpack-plugin": "^5.0.3"
+    "jquery": "3.4.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "popper.js": "^1.16.1"
   }
 }
