@@ -123,25 +123,3 @@ use the following configuration:
    html_theme_options = {
      "navigation_with_keys": False
    }
-
-Using with RequireJS
-====================
-
-RequireJS is a popular javascript package for managing dependencies and imports
-in a javascript codebase. Many Sphinx extensions rely on it for loading, though
-it can be tricky to get working with Bootstrap (which this theme uses).
-
-The ``pydata-sphinx-theme`` loads its own RequireJS library in order to ensure
-that `a bug isn't triggered <https://stackoverflow.com/questions/15371918/mismatched-anonymous-define-module/23467090#23467090>`_.
-**You should avoid asking extensions to load their own RequireJS**. They can still
-*use* the one that this theme loads, but they should not load their own RequireJS.
-
-If you **must** disable this theme loading RequireJS, so that you can load it manually
-or with another extension, you can do so with the following configuration: 
-
-
-.. code:: python
-
-   html_theme_options = {
-       "require_js": False
-   }
