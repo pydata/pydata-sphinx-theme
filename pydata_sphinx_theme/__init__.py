@@ -8,7 +8,7 @@ from sphinx.errors import ExtensionError
 from .bootstrap_html_translator import BootstrapHTML5Translator
 import docutils
 
-__version__ = "0.2.2"
+__version__ = "0.2.3dev0"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
