@@ -338,6 +338,23 @@ An image directive (also clickable -- a hyperlink reference):
 .. image:: static/yi_jing_01_chien.jpg
    :target: directives_
 
+A larger image, with no options:
+
+.. image:: static/Sphinx-and-the-Pyramids-of-Ghiza-by-Facchinelli.png
+
+
+With a fixed with of 600px and centered:
+
+.. image:: static/Sphinx-and-the-Pyramids-of-Ghiza-by-Facchinelli.png
+   :width: 600px
+   :align: center
+
+And using the img-fluid class:
+
+.. image:: static/Sphinx-and-the-Pyramids-of-Ghiza-by-Facchinelli.png
+   :class: img-fluid
+
+
 Figures
 ^^^^^^^
 
