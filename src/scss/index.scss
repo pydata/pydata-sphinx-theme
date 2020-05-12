@@ -4,7 +4,7 @@ $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1400px
+  xl: 1400px,
 );
 
 // Include core Bootstrap
@@ -216,11 +216,15 @@ td:first-child {
 
 .bd-content {
   padding-top: 20px;
-  overflow: auto;
 
-  // make every overflowing section in main content scrollable
   .section {
-    overflow: auto;
+    max-width: 100%;
+
+    // make every overflowing elements in main content scrollable
+    table {
+      display: block;
+      overflow: auto;
+    }
   }
 }
 

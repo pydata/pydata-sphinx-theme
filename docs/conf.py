@@ -36,7 +36,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "numpydoc",
     "recommonmark",
-    "jupyter_sphinx.execute",
+    "jupyter_sphinx",
 ]
 
 autosummary_generate = True
