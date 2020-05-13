@@ -3,11 +3,10 @@ Bootstrap-based sphinx theme from the PyData community
 """
 import os
 
-import docutils
-
 from sphinx.errors import ExtensionError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
+import docutils
 
 __version__ = "0.2.3dev0"
 
@@ -168,28 +167,6 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 # -----------------------------------------------------------------------------
 
 
-def configure_mathjax(app, env, docnames):
-    """ Overload mathjax_path, as defaulting to a CDN in `sphinx/ext/mathjax.py`
-    """
-    if has_default_mathjax_path(app):
-        app.config.mathjax_path = get_mathjax_path()
-
-
-# -----------------------------------------------------------------------------
-
-
-def has_default_mathjax_path(app):
-    if "mathjax_path" not in app.config:
-        return False
-
-    return app.config.mathjax_path == app.config.values["mathjax_path"][0]
-
-
-def get_mathjax_path():
-    """Return the locally-vendored MathJax path"""
-    return "vendor/mathjax/latest.js?config=TeX-AMS-MML_HTMLorMML"
-
-
 def get_html_theme_path():
     """Return list of HTML theme paths."""
     theme_path = os.path.abspath(os.path.dirname(__file__))
@@ -208,7 +185,5 @@ def setup(app):
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
-    # hook this event so the config is set prior to MathJax link injection
-    app.connect("env-before-read-docs", configure_mathjax)
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}

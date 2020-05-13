@@ -94,32 +94,6 @@ module.exports = {
         from: 'LICENSE.md',
         to: resolve(vendor, 'lato_latin-ext')
       },
-      // mathjax
-      {
-        context: './node_modules/mathjax',
-        from: '*.js',
-        to: resolve(vendor, 'mathjax')
-      },
-      {
-        context: './node_modules/mathjax',
-        from: 'jax/output/HTML-CSS',
-        to: resolve(vendor, 'mathjax/jax/output/HTML-CSS')
-      },
-      {
-        context: './node_modules/mathjax',
-        from: 'fonts/HTML-CSS/TeX',
-        to: resolve(vendor, 'mathjax/fonts/HTML-CSS/TeX')
-      },
-      {
-        context: './node_modules/mathjax',
-        from: 'config/TeX-AMS-MML_HTMLorMML.js',
-        to: resolve(vendor, 'mathjax/config')
-      },
-      {
-        context: './node_modules/mathjax',
-        from: 'LICENSE',
-        to: resolve(vendor, 'mathjax')
-      },
     ]),
     new webpack.ProvidePlugin({
       '$': "jquery",
