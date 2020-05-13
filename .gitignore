@@ -104,6 +104,3 @@ envs/
 
 node_modules/
 .vscode
-
-# vendored js/css
-vendor/
