@@ -22,3 +22,10 @@
 </nav>
 
 {% include "edit_this_page.html" %}
+
+{% if theme_secondary_logo %}
+<div class="tocsection secondarylogo">
+        <br/> <br/>
+        <img src="{{ pathto(theme_secondary_logo.path, 1) }} " width="{{ theme_secondary_logo.width }}" />
+</div>
+{% endif %}
