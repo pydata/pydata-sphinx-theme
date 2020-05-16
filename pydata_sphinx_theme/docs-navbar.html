@@ -38,6 +38,13 @@
             </a>
           </li>
         {% endif %}
+        {% if theme_gitlab_url | length > 2 %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ theme_gitlab_url }}" target="_blank" rel="noopener">
+              <span><i class="fab fa-gitlab"></i></span>
+            </a>
+          </li>
+        {% endif %}
         {% if theme_twitter_url | length > 2 %}
           <li class="nav-item">
             <a class="nav-link" href="{{ theme_twitter_url }}" target="_blank" rel="noopener">
