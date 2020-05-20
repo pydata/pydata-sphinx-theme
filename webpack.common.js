@@ -11,6 +11,8 @@ module.exports = {
     path: path.resolve(__dirname, 'pydata_sphinx_theme/static'),
   },
   externals: {
+    // Define jQuery as external, this way Sphinx related javascript
+    // and custom javascript like popper.js can hook into jQuery.
     jquery: 'jQuery',
   },
   module: {
