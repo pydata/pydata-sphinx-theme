@@ -428,15 +428,30 @@ Admonitions
 
    You can make up your own admonition too.
 
-.. admonition:: If you add a name flag, it will be styled
-   :name: warning
+.. admonition:: If you add a class flag, it will be styled
+   :class: warning
 
    For example, this admonition block uses the following code:
 
    .. code-block::
 
       .. admonition:: If you add a name flag, it will be styled
-         :name: warning
+         :class: warning
+
+   Here are a list of classes you can try:
+
+   .. code-block::
+
+      note
+      important
+      tip
+      attention
+      caution
+      warning
+      danger
+      error
+      hint
+
 
 Topics, Sidebars, and Rubrics
 -----------------------------
@@ -499,7 +514,7 @@ HTML
 The HTML below shouldn't display, but it uses RequireJS to make sure that all
 works as expected. If the widgets don't show up, RequireJS may be broken.
 
-.. jupyter-execute:: 
+.. jupyter-execute::
 
    import plotly.io as pio
    import plotly.express as px
