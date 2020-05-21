@@ -435,7 +435,7 @@ Admonitions
 
    .. code-block::
 
-      .. admonition:: If you add a name flag, it will be styled
+      .. admonition:: If you add a class flag, it will be styled
          :class: warning
 
    Here are a list of classes you can try:
