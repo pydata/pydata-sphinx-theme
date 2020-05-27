@@ -1,0 +1,149 @@
+// Admonitions CSS inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
+.admonition {
+  margin: 1.5625em 0 !important;
+  padding: 0 .6rem !important;
+  overflow: hidden;
+  page-break-inside: avoid;
+  border-left: .2rem solid $blue;
+  border-radius: .1rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,.05), 0 0 0.05rem rgba(0,0,0,.1);
+  transition: color 250ms,background-color 250ms,border-color 250ms;
+
+  // Last paragraph should have same spacing as title
+  p:last-child {
+    margin-bottom: 0.4em;
+  }
+
+  // Defaults for all admonitions
+  .admonition-title {
+    position: relative;
+    margin: 0 -0.6rem !important;
+    padding: .4rem .6rem .4rem 2rem;
+    font-weight: 700;
+    background-color: rgba(68,138,255,.1);
+
+    &:before {
+      position: absolute;
+      left: .6rem;
+      width: 1rem;
+      height: 1rem;
+      color: $blue;
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      content: $icon-info-circle;  /* info-circle */
+    }
+
+    // Next element after title needs some extra upper-space
+    + * {
+      margin-top: 0.4em;
+    }
+  }
+
+  &.attention {
+    border-color: $orange;
+    .admonition-title {
+      background-color: $orange-light;
+
+      &:before {
+        color: $orange;
+        content: $icon-exclamation-circle;
+      }
+    }
+  }
+
+  &.caution {
+    border-color: $orange;
+    .admonition-title {
+      background-color: $orange-light;
+
+      &:before {
+        color: $orange;
+        content: $icon-exclamation-triangle;
+      }
+    }
+  }
+
+  &.warning {
+    border-color: $red;
+    .admonition-title {
+      background-color: $red-light;
+
+      &:before {
+        color: $red;
+        content: $icon-exclamation-triangle;
+      }
+    }
+  }
+
+  &.danger {
+    border-color: $red;
+    .admonition-title {
+      background-color: $red-light;
+
+      &:before {
+        color: $red;
+        content: $icon-exclamation-triangle;
+      }
+    }
+  }
+
+  &.error {
+    border-color: $red;
+    .admonition-title {
+      background-color: $red-light;
+
+      &:before {
+        color: $red;
+        content: $icon-times-circle;
+      }
+    }
+  }
+
+  &.hint {
+    border-color: $yellow;
+    .admonition-title {
+      background-color: $yellow-light;
+
+      &:before {
+        color: $yellow;
+        content: $icon-lightbulb;
+      }
+    }
+  }
+
+  &.tip {
+    border-color: $yellow;
+    .admonition-title {
+      background-color: $yellow-light;
+
+      &:before {
+        color: $yellow;
+        content: $icon-lightbulb;
+      }
+    }
+  }
+
+  &.important {
+    border-color: $blue;
+    .admonition-title {
+      background-color: $blue-light;
+
+      &:before {
+        color: $blue;
+        content: $icon-exclamation-circle;
+      }
+    }
+  }
+
+  &.note {
+    border-color: $blue;
+    .admonition-title {
+      background-color: $blue-light;
+
+      &:before {
+        color: $blue;
+        content: $icon-info-circle;
+      }
+    }
+  }
+}
