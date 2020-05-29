@@ -19,7 +19,12 @@ module.exports = merge(common, {
   },
   plugins: [
     new WatchPlugin({
-      files: ['./docs/**/*.rst', './docs/**/*.py', './pydata_sphinx_theme/**/*.html'],
+      files: [
+        './docs/**/*.rst',
+        './docs/**/*.py',
+        './pydata_sphinx_theme/**/*.html',
+        './pydata_sphinx_theme/**/*.css',
+      ],
     }),
     new ShellPlugin({
       onBuildEnd: ['make -C docs clean html'],

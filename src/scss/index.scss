@@ -1,17 +1,17 @@
 // Override bootstrap variables
 $spacer: 1rem;
-$container-max-widths: (
+$grid-breakpoints: (
+  xs: 0,
   sm: 540px,
   md: 720px,
   lg: 960px,
   xl: 1400px,
 );
 
-// Include core Bootstrap
+// Import Bootstrap core
 @import '../../node_modules/bootstrap/scss/bootstrap';
-@import './variables';
 
-// Import custom fonts
+// Import fonts
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400');
 
 @import './base';
@@ -41,7 +41,7 @@ $container-max-widths: (
 }
 
 .viewcode-back {
-  font-family: Arial, sans-serif;
+  font-family: var(--ff-base);
 }
 
 .viewcode-block:target {
@@ -180,7 +180,7 @@ td:first-child {
 
 .bd-sidebar {
   padding-top: 1em;
-  @media (min-width: 768px) {
+  @include media-breakpoint-up(md) {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 
     @supports (position: -webkit-sticky) or (position: sticky) {
@@ -198,20 +198,14 @@ td:first-child {
   padding-bottom: 1rem;
   margin-right: -15px;
   margin-left: -15px;
-}
 
-@media (min-width: 768px) {
-  @supports (position: -webkit-sticky) or (position: sticky) {
-    .bd-links {
+  @include media-breakpoint-up(md) {
+    display: block !important;
+
+    @supports (position: -webkit-sticky) or (position: sticky) {
       max-height: calc(100vh - 9rem);
       overflow-y: auto;
     }
-  }
-}
-
-@media (min-width: 768px) {
-  .bd-links {
-    display: block !important;
   }
 }
 

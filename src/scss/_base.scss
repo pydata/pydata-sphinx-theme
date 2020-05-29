@@ -1,19 +1,21 @@
 html {
-  font-size: 15px;
+  font-size: var(--fs-base);
 }
 
 body {
-  background-color: white;
-  font-family: 'Lato', sans-serif;
-  font-weight: 400;
-  line-height: 1.65;
-  color: #333;
   padding-top: 75px;
+
+  background-color: white;
+  font-family: var(--ff-base);
+  font-weight: 400;
+  line-height: 1.65em;
+  color: var(--main-text-color);
 }
 
 p {
   margin-bottom: 1.15rem;
   font-size: 1em;
+  color: var(--color-paragraph);
 
   /* section header in docstring pages */
   &.rubric {
@@ -22,30 +24,30 @@ p {
 }
 
 a {
-  color: #005b81;
+  color: var(--color-primary);
   text-decoration: none;
 
   &:hover {
-    color: #e32e00;
+    color: var(--color-link-hover);
     text-decoration: underline;
   }
 
   &.headerlink {
-    color: #c60f0f;
+    color: var(--color-headerlink);
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
 
     &:hover {
-      background-color: #c60f0f;
-      color: white;
+      background-color: var(--color-headerlink);
+      color: var(--color-headerlink-hover);
     }
   }
 }
 
-.header-style {
+.heading-style {
   margin: 2.75rem 0 1.05rem;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--ff-heading);
   font-weight: 400;
   line-height: 1.15;
 
@@ -59,41 +61,45 @@ a {
 }
 
 h1 {
-  @extend .header-style;
+  @extend .heading-style;
   margin-top: 0;
-  font-size: 2.488em;
-  color: #130654;
+  font-size: var(--fs-h1);
+  color: var(--color-h1);
 }
 
 h2 {
-  @extend .header-style;
-  font-size: 2.074em;
-  color: #130654;
+  @extend .heading-style;
+  font-size: var(--fs-h2);
+  color: var(--color-h2);
 }
 
 h3 {
-  @extend .header-style;
-  font-size: 1.728em;
+  @extend .heading-style;
+  font-size: var(--fs-h3);
+  color: var(--color-h3);
 }
 
 h4 {
-  @extend .header-style;
-  font-size: 1.44em;
+  @extend .heading-style;
+  font-size: var(--fs-h4);
+  color: var(--color-h4);
 }
 
 h5 {
-  @extend .header-style;
-  font-size: 1.2em;
+  @extend .heading-style;
+  font-size: var(--fs-h5);
+  color: var(--color-h5);
 }
 
 h6 {
-  @extend .header-style;
-  font-size: 1em;
+  @extend .heading-style;
+  font-size: var(--fs-h6);
+  color: var(--color-h6);
 }
 
 small,
 .text_small {
-  font-size: 0.833em;
+  font-size: var(--fs-milli);
 }
 
 hr {
@@ -102,11 +108,11 @@ hr {
 }
 
 pre {
+  margin: 1.5em 0 1.5em 0;
   padding: 10px;
-  background-color: rgb(250, 250, 250);
-  color: #222;
+  background-color: var(--color-preformatted-background);
+  color: var(--color-preformatted-text);
   line-height: 1.2em;
   border: 1px solid rgb(201, 201, 201);
-  margin: 1.5em 0 1.5em 0;
   box-shadow: 1px 1px 1px #d8d8d8;
 }
