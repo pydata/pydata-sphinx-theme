@@ -11,9 +11,6 @@ $grid-breakpoints: (
 // Import Bootstrap core
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
-// Import fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400');
-
 @import './base';
 @import './navbar';
 @import './admonitions';
