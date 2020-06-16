@@ -8,18 +8,19 @@ const vendor = resolve(staticPath, 'vendor');
 
 module.exports = {
   entry: {
-    index: ['./src/js/index.js', './src/scss/index.scss'],
+    index: ['./src/js/index.js'],
   },
   output: {
     filename: 'js/[name].js?[hash]',
     path: staticPath,
   },
+  externals: {
+    // Define jQuery as external, this way Sphinx related javascript
+    // and custom javascript like popper.js can hook into jQuery.
+    jquery: 'jQuery',
+  },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        use: 'imports-loader?this=>window',
-      },
       {
         test: /\.scss$/,
         use: [
