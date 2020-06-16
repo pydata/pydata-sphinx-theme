@@ -12,6 +12,7 @@
 {% endmacro %}
 
 {%- block css %}
+    <link rel="preload" href="{{ pathto('_static/js/index.js', 1) }}" as="script">
     <link rel="stylesheet" href="{{ pathto('_static/vendor/fontawesome/css/all.min.css', 1) }}">
     <link rel="stylesheet" href="{{ pathto('_static/vendor/open-sans_all/index.css', 1) }}">
     <link rel="stylesheet" href="{{ pathto('_static/vendor/lato_latin-ext/index.css', 1) }}">

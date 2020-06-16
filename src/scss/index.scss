@@ -8,7 +8,7 @@ $container-max-widths: (
 );
 
 // Include core Bootstrap
-@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 @import './variables';
 
 @import './base';
