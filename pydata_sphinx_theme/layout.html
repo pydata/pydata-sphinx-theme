@@ -1,5 +1,5 @@
-
-{% extends "basic/layout.html" %}
+{%- extends "basic/layout.html" %}
+{%- import "webpack-macros.html" as webpack with context %}
 
 {# prev/next buttons #}
 {% macro prev_next(prev, next, prev_title='', next_title='') %}
@@ -12,12 +12,9 @@
 {% endmacro %}
 
 {%- block css %}
-    <link rel="preload" href="{{ pathto('_static/js/index.js', 1) }}" as="script">
-    <link rel="stylesheet" href="{{ pathto('_static/vendor/fontawesome/css/all.min.css', 1) }}">
-    <link rel="stylesheet" href="{{ pathto('_static/vendor/open-sans_all/index.css', 1) }}">
-    <link rel="stylesheet" href="{{ pathto('_static/vendor/lato_latin-ext/index.css', 1) }}">
-    <link rel="stylesheet" href="{{ pathto('_static/css/index.css', 1) }}">
+    {{ webpack.head_pre() }}
     {{- css() }}
+    {{ webpack.head_post() }}
 {%- endblock %}
 
 {%- block extrahead %}
@@ -75,7 +72,8 @@
       </div>
     </div>
 
-    <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
+    {{ webpack.body_post() }}
+
     {% if theme_google_analytics_id %}
     <!-- Google Analytics -->
     <script>
