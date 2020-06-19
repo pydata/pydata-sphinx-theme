@@ -65,7 +65,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         self_toc = TocTree(app.env).get_toc_for(pagename, app.builder)
 
         try:
-            nav = docutils_node_to_jinja(self_toc.children[0])
+            # If there's only one child, assume we have a single "title" as top header
+            # so start the TOC at the first item's children (AKA, level 2 headers)
+            if len(self_toc.children) == 1:
+                nav = docutils_node_to_jinja(self_toc.children[0]).get("children", [])
+            else:
+                nav = [docutils_node_to_jinja(item) for item in self_toc.children]
             return nav
         except Exception:
             return {}
