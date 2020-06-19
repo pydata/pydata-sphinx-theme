@@ -8,8 +8,8 @@ Pandas example - Indexing and selecting data
 .. note::
 
     This is an example page with excerpts from the pandas docs, for some "real world" content.
-    But having it hear standalone will mean that some of the links won't work, and not all code
-    example are with full output.
+    But including it here apart from the rest of the pandas docs will mean that some of the links won't work, and not all code
+    examples are shown with their complete outputs.
 
 
 The axis labeling information in pandas objects serves many purposes:
