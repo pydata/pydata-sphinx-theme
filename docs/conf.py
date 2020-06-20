@@ -20,6 +20,7 @@
 project = "PyData Sphinx Theme"
 copyright = "2019, PyData Community"
 author = "PyData Community"
+language = "en"
 
 # The full version, including alpha/beta/rc tags
 release = "0.0.1dev0"

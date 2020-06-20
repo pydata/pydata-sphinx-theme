@@ -4,7 +4,7 @@
   {%- include "search-field.html" %}
 {% endif %}
 
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+<nav class="bd-links" id="bd-docs-nav" role="navigation" aria-label="{{  _('Main navigation') }}">
 
   <div class="bd-toc-item active">
   {% set nav = get_nav_object(maxdepth=3, collapse=True) %}

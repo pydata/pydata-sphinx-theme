@@ -6,7 +6,7 @@
 </div>
 {%- endif %}
 
-<nav id="bd-toc-nav">
+<nav id="bd-toc-nav" role="navigation" aria-label="{{  _('Table of Contents') }}">
     <ul class="nav section-nav flex-column">
     {% for item in page_toc recursive %}
         <li class="nav-item toc-entry toc-h{{ loop.depth + 1 }}">

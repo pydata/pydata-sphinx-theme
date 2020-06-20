@@ -33,7 +33,7 @@
 {%- endblock %}
 {%- block content %}
     {% block docs_navbar %}
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"  role="navigation" aria-label="{{  _('Site navigation') }}">
       {%- include "docs-navbar.html" %}
     </nav>
     {% endblock %}
