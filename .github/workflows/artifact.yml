@@ -16,7 +16,7 @@ jobs:
           artifact-path: 0/html/index.html
       - name: Run Lighthouse on Site
         id: lighthouse
-        uses: foo-software/lighthouse-check-action@2.0.0
+        uses: foo-software/lighthouse-check-action@master
         with:
           urls: ${{ steps.redirect.url }}
           sha: ${{ github.sha }}
