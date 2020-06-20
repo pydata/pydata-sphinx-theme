@@ -19,7 +19,9 @@
 
 {%- block extrahead %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
+    {% if language %}
+    <meta name="docsearch:language" content="{{ language }}">
+    {% endif %}
 {%- endblock %}
 
 {# Silence the sidebar's, relbar's #}

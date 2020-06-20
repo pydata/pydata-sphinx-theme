@@ -4,8 +4,32 @@ jobs:
     runs-on: ubuntu-latest
     name: Run CircleCI artifacts redirector
     steps:
-      - name: GitHub Action step
-        uses: larsoner/circleci-artifacts-redirector-action@master
+      - name: Create URL for CircleCI artifact
+        id: redirect
+        # TODO: restore after https://github.com/larsoner/circleci-artifacts-redirector-action/pull/11
+        # uses: larsoner/circleci-artifacts-redirector-action@master
+        uses: bollwyvl/circleci-artifacts-redirector-action@add-url-output
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           artifact-path: 0/html/index.html
+      - name: Run Lighthouse on Site
+        id: lighthouse
+        uses: foo-software/lighthouse-check-action@2.0.0
+        with:
+          urls: ${{ steps.redirect.url }}
+          sha: ${{ github.sha }}
+          branch: ${{ github.ref }}
+          outputDirectory: /tmp/lighthouse
+      - name: Upload Lighthouse Reports
+        uses: actions/upload-artifact@master
+        with:
+          name: Lighthouse reports ${{ github.run_number }}
+          path: /tmp/artifacts
+      - name: Handle Lighthouse Check results
+        uses: foo-software/lighthouse-check-status-action@master
+        with:
+          lighthouseCheckResults: ${{ steps.lighthouse.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "98"
+          minBestPracticesScore: "53"
+          minPerformanceScore: "5"
+          minSeoScore: "93"
