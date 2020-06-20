@@ -158,10 +158,5 @@ module.exports = {
         to: resolve(vendorPaths.lato, 'index.css')
       },
     ]),
-    new webpack.ProvidePlugin({
-      '$': "jquery",
-      'jQuery': "jquery",
-      'Popper': 'popper.js'
-    }),
   ],
 };
