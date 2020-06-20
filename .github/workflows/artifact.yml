@@ -18,9 +18,7 @@ jobs:
         id: lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
-          urls: ${{ steps.redirect.url }}
-          sha: ${{ github.sha }}
-          branch: ${{ github.ref }}
+          urls: ${{ steps.redirect.outputs.url }}
           outputDirectory: /tmp/lighthouse
       - name: Upload Lighthouse Reports
         uses: actions/upload-artifact@master
