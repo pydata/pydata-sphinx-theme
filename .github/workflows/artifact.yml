@@ -1,4 +1,6 @@
-on: [status]
+# TODO: restore before merge
+# on: [status]
+on: [status, push, pull_request]
 jobs:
   circleci_artifacts_redirector_job:
     runs-on: ubuntu-latest
