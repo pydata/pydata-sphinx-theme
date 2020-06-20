@@ -1,6 +1,4 @@
-# TODO: restore before merge
-# on: [status]
-on: [status, push, pull_request]
+on: [status]
 jobs:
   circleci_artifacts_redirector_job:
     runs-on: ubuntu-latest
@@ -14,11 +12,6 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           artifact-path: 0/html/index.html
-      - name: DEBUG remove before merge
-        run: |
-          echo "outputs are ${{ steps.redirect.outputs }}"
-          echo "url is ${{ steps.redirect.outputs.url }}"
-          curl --fail ${{ steps.redirect.outputs.url }}
       - name: Run Lighthouse on Site
         id: lighthouse
         uses: foo-software/lighthouse-check-action@master
