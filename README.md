@@ -16,7 +16,6 @@ Sites that are using this theme:
 - Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
 - Fairlearn: https://fairlearn.github.io/quickstart.html
 
-
 ## Installation and usage
 
 The theme is available on PyPI and conda-forge. You can install
@@ -44,13 +43,28 @@ pandas-specific things that are right now hard-coded in the theme. We also need
 to work on better configurability and extensibility. Feedback and contributions
 are very welcome!
 
+## Theme tweaking
+
+The theme can be tweaked in 2 ways. The most straight forward way is to change the theme variables. If you are looking for more customisation, you can write your css in `custom.css`.
+
+### Theme variables
+
+This theme is based on top of the basic [Bootstrap CSS variables](https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables) extended with some theme specific variables. An overview of all variables and every default is defined in `/pydata_sphinx_theme/static/css/theme.css`.
+
+In order to tweak a variable, simply update the value in `theme.css`. Just make sure you keep all defined variables around, with the default value or you theme value.
+
+Important, the theme is defined with CSS variables, not SASS variables!
+
+### Custom.css
+
+If the theme variables are not sufficient to shape theme to you liking, you can take full control over the look and feel via `/pydata_sphinx_theme/static/css/custom.css`. This stylesheet is loaded last on top of the theme variables and the base styleheet.
+
 ## Theme development
 
 Contributions are very welcome! Installing the development version, building
 the demo docs and developing the css/js of the theme, etc, is explained in
 more detail in the contributing section of the documentation:
 https://pydata-sphinx-theme.readthedocs.io/en/latest/contributing.html
-
 
 ## How is this theme working?
 
