@@ -1,0 +1,11 @@
+/* 
+ * Only write css in this stylesheet if you considered tweaking the theme
+ * via theme variables availlable in 'pydata_sphinx_theme/static/css/theme.css'. *
+ *
+ * e.g.
+
+  body {
+    background: gold;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  }
+ */

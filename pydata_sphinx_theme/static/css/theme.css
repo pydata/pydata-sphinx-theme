@@ -5,36 +5,35 @@
 
 :root {
   /*****************************************************************************
-   * Bootstrap variables are availlable:
-   * https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables
-  **/
-
-  /*****************************************************************************
   * Font size
   **/
-  --fs-base: 15px; /* base font size - applied at body / html level */
+  --font-size-base: 15px; /* base font size - applied at body / html level */
 
   /* heading font sizes */
-  --fs-h1: 36px;
-  --fs-h2: 32px;
-  --fs-h3: 26px;
-  --fs-h4: 21px;
-  --fs-h5: 28px;
-  --fs-h6: 18px;
+  --font-size-h1: 36px;
+  --font-size-h2: 32px;
+  --font-size-h3: 26px;
+  --font-size-h4: 21px;
+  --font-size-h5: 28px;
+  --font-size-h6: 18px;
 
   /* smaller then heading font sizes*/
-  --fs-milli: 12px;
+  --font-size-milli: 12px;
 
   /*****************************************************************************
   * Font family
   **/
-  --ff-base: 'Lato', sans-serif;
-  --ff-heading: 'Open Sans', sans-serif;
+  --font-family-base: 'Lato', sans-serif;
+  --font-family-heading: 'Open Sans', sans-serif;
 
   /*****************************************************************************
   * Color
   **/
-  --color-primary: #130654;
+  --color-primary: var(--primary);
+  --color-success: 40, 167, 69;
+  --color-info: 23, 162, 184;
+  --color-warning: 255, 193, 7;
+  --color-danger: 220, 53, 69;
   --color-text-base: #333;
   --color-h1: var(--color-primary);
   --color-h2: var(--color-primary);
@@ -50,36 +49,20 @@
   --color-preformatted-text: #222;
   --color-preformatted-background: #fafafa;
 
-  /* admonition colors */
-  --color-admonition-base: var(--blue);
-  --color-admonition-attention: var(--orange);
-  --color-admonition-attention-light: #ffedcc;
-  --color-admonition-caution: var(--orange);
-  --color-admonition-caution-light: #ffedcc;
-  --color-admonition-warning: var(--red);
-  --color-admonition-warning-light: #fdf3f2;
-  --color-admonition-danger: var(--red);
-  --color-admonition-danger-light: #fdf3f2;
-  --color-admonition-error: var(--red);
-  --color-admonition-error-light: #fdf3f2;
-  --color-admonition-hint: var(--yellow);
-  --color-admonition-hint-light: #fff6dd;
-  --color-admonition-tip: var(--yellow);
-  --color-admonition-tip-light: #fff6dd;
-  --color-admonition-important: var(--blue);
-  --color-admonition-important-light: #e7f2fa;
-  --color-admonition-note: var(--blue);
-  --color-admonition-note-light: #e7f2fa;
+  --color-admonition-success: var(--color-success);
+  --color-admonition-danger: var(--color-danger);
+  --color-admonition-warning: var(--color-warning);
+  --color-admonition-info: var(--color-info);
 
   /*****************************************************************************
   * Icon
   **/
 
   /* font awesome icons*/
+  --icon-check-circle: '\f058';
   --icon-info-circle: '\f05a';
-  --icon-exclamation-circle: '\f06a';
-  --icon-lightbulb: '\f0eb';
-  --icon-question: '\f128';
   --icon-exclamation-triangle: '\f071';
+  --icon-exclamation-circle: '\f06a';
   --icon-times-circle: '\f057';
+  --icon-lightbulb: '\f0eb';
 }

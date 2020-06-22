@@ -1,12 +1,12 @@
 html {
-  font-size: var(--fs-base);
+  font-size: var(--font-size-base);
 }
 
 body {
   padding-top: 75px;
 
   background-color: white;
-  font-family: var(--ff-base);
+  font-family: var(--font-family-base);
   font-weight: 400;
   line-height: 1.65em;
   color: var(--main-text-color);
@@ -47,7 +47,7 @@ a {
 
 .heading-style {
   margin: 2.75rem 0 1.05rem;
-  font-family: var(--ff-heading);
+  font-family: var(--font-family-heading);
   font-weight: 400;
   line-height: 1.15;
 
@@ -63,43 +63,43 @@ a {
 h1 {
   @extend .heading-style;
   margin-top: 0;
-  font-size: var(--fs-h1);
+  font-size: var(--font-size-h1);
   color: var(--color-h1);
 }
 
 h2 {
   @extend .heading-style;
-  font-size: var(--fs-h2);
+  font-size: var(--font-size-h2);
   color: var(--color-h2);
 }
 
 h3 {
   @extend .heading-style;
-  font-size: var(--fs-h3);
+  font-size: var(--font-size-h3);
   color: var(--color-h3);
 }
 
 h4 {
   @extend .heading-style;
-  font-size: var(--fs-h4);
+  font-size: var(--font-size-h4);
   color: var(--color-h4);
 }
 
 h5 {
   @extend .heading-style;
-  font-size: var(--fs-h5);
+  font-size: var(--font-size-h5);
   color: var(--color-h5);
 }
 
 h6 {
   @extend .heading-style;
-  font-size: var(--fs-h6);
+  font-size: var(--font-size-h6);
   color: var(--color-h6);
 }
 
 small,
 .text_small {
-  font-size: var(--fs-milli);
+  font-size: var(--font-size-milli);
 }
 
 hr {

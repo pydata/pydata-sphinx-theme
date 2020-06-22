@@ -1,10 +1,15 @@
-// Admonitions CSS inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
+// Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
+
+@function hexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
 .admonition {
   margin: 1.5625em 0 !important;
   padding: 0 0.6rem !important;
   overflow: hidden;
   page-break-inside: avoid;
-  border-left: 0.2rem solid var(--color-admonition-base);
+  border-left: 0.2rem solid var(--color-admonition-primary);
   border-radius: 0.1rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
     0 0 0.05rem rgba(0, 0, 0, 0.1);
@@ -28,7 +33,7 @@
       left: 0.6rem;
       width: 1rem;
       height: 1rem;
-      color: var(--color-admonition-base);
+      color: var(--color-admonition-info);
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
       content: var(--icon-info-circle);
@@ -41,108 +46,108 @@
   }
 
   &.attention {
-    border-color: var(--color-admonition-attention);
+    border-color: rgba(var(--color-admonition-warning), 1);
     .admonition-title {
-      background-color: var(--color-admonition-attention-light);
+      background-color: rgba(var(--color-admonition-warning), 0.1);
 
       &:before {
-        color: var(--color-admonition-attention);
+        color: rgba(var(--color-admonition-warning), 1);
         content: var(--icon-exclamation-circle);
       }
     }
   }
 
   &.caution {
-    border-color: var(--color-admonition-caution);
+    border-color: rgba(var(--color-admonition-warning), 1);
     .admonition-title {
-      border-color: var(--color-admonition-caution-light);
+      background-color: rgba(var(--color-admonition-warning), 0.1);
 
       &:before {
-        color: var(--color-admonition-caution);
+        color: rgba(var(--color-admonition-warning), 1);
         content: var(--icon-exclamation-triangle);
       }
     }
   }
 
   &.warning {
-    border-color: var(--color-admonition-warning);
+    border-color: rgba(var(--color-admonition-warning), 1);
     .admonition-title {
-      background-color: var(--color-admonition-warning-light);
+      background-color: rgba(var(--color-admonition-warning), 0.1);
 
       &:before {
-        color: var(--color-admonition-warning);
+        color: rgba(var(--color-admonition-warning), 1);
         content: var(--icon-exclamation-triangle);
       }
     }
   }
 
   &.danger {
-    border-color: var(--color-admonition-danger);
+    border-color: rgba(var(--color-admonition-danger), 1);
     .admonition-title {
-      background-color: var(--color-admonition-danger-light);
+      background-color: rgba(var(--color-admonition-danger), 0.1);
 
       &:before {
-        color: var(--color-admonition-danger);
+        color: rgba(var(--color-admonition-danger), 1);
         content: var(--icon-exclamation-triangle);
       }
     }
   }
 
   &.error {
-    border-color: var(--color-admonition-error);
+    border-color: rgba(var(--color-admonition-danger), 1);
     .admonition-title {
-      background-color: var(--color-admonition-error-light);
+      background-color: rgba(var(--color-admonition-danger), 0.1);
 
       &:before {
-        color: var(--color-admonition-error);
+        color: rgba(var(--color-admonition-danger), 1);
         content: var(--icon-times-circle);
       }
     }
   }
 
   &.hint {
-    border-color: var(--color-admonition-hint);
+    border-color: rgba(var(--color-admonition-warning), 1);
     .admonition-title {
-      background-color: var(--color-admonition-hint-light);
+      background-color: rgba(var(--color-admonition-warning), 0.1);
 
       &:before {
-        color: var(--color-admonition-hint);
+        color: rgba(var(--color-admonition-warning), 1);
         content: var(--icon-lightbulb);
       }
     }
   }
 
   &.tip {
-    border-color: var(--color-admonition-tip);
+    border-color: rgba(var(--color-admonition-info), 1);
     .admonition-title {
-      background-color: var(--color-admonition-tip-light);
+      background-color: rgba(var(--color-admonition-info), 0.1);
 
       &:before {
-        color: var(--color-admonition-tip);
+        color: rgba(var(--color-admonition-info), 1);
         content: var(--icon-lightbulb);
       }
     }
   }
 
   &.important {
-    border-color: var(--color-admonition-important);
+    border-color: rgba(var(--color-admonition-info), 1);
     .admonition-title {
-      background-color: var(--color-admonition-important-light);
+      background-color: rgba(var(--color-admonition-info), 0.1);
 
       &:before {
-        color: var(--color-admonition-important);
+        color: rgba(var(--color-admonition-info), 1);
         content: var(--icon-exclamation-circle);
       }
     }
   }
 
   &.note {
-    border-color: var(--color-admonition-note);
+    border-color: rgba(var(--color-admonition-info), 1);
     .admonition-title {
-      background-color: var(--color-admonition-note-light);
+      background-color: rgba(var(--color-admonition-info), 0.1);
 
       &:before {
-        color: var(--color-admonition-note);
+        color: rgba(var(--color-admonition-info), 1);
         content: var(--icon-info-circle);
       }
     }

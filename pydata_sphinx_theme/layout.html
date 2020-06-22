@@ -1,93 +1,92 @@
+{% extends "basic/layout.html" %} {# prev/next buttons #} {% macro
+prev_next(prev, next, prev_title='', next_title='') %} {%- if prev %}
+<a
+  class="left-prev"
+  id="prev-link"
+  href="{{ prev.link|e }}"
+  title="{{ _('previous page')}}"
+  >{{ prev_title or prev.title }}</a
+>
+{%- endif %} {%- if next %}
+<a
+  class="right-next"
+  id="next-link"
+  href="{{ next.link|e }}"
+  title="{{ _('next page')}}"
+  >{{ next_title or next.title }}</a
+>
+{%- endif %} {% endmacro %} {%- block css %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+  integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN"
+  crossorigin="anonymous"
+/>
+<link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet" />
+<link href="{{ pathto('_static/css/index.css', 1) }}" rel="stylesheet" />
+<link href="{{ pathto('_static/css/custom.css', 1) }}" rel="stylesheet" />
+{{- css() }} {%- endblock %} {%- block extrahead %}
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en" />
+{%- endblock %} {# Silence the sidebar's, relbar's #} {% block header %}{%
+endblock %} {% block relbar1 %}{% endblock %} {% block relbar2 %}{% endblock %}
+{% block sidebarsourcelink %}{% endblock %} {% block body_tag %}
+<body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  {%- endblock %} {%- block content %} {% block docs_navbar %}
+  <nav
+    class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar"
+    id="navbar-main"
+  >
+    {%- include "docs-navbar.html" %}
+  </nav>
+  {% endblock %}
 
-{% extends "basic/layout.html" %}
-
-{# prev/next buttons #}
-{% macro prev_next(prev, next, prev_title='', next_title='') %}
- {%- if prev %}
-    <a class='left-prev' id="prev-link" href="{{ prev.link|e }}" title="{{ _('previous page')}}">{{ prev_title or prev.title }}</a>
- {%- endif %}
- {%- if next %}
-    <a class='right-next' id="next-link" href="{{ next.link|e }}" title="{{ _('next page')}}">{{ next_title or next.title }}</a>
- {%- endif %}
-{% endmacro %}
-
-{%- block css %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet">
-    <link href="{{ pathto('_static/css/index.css', 1) }}" rel="stylesheet">
-    {{- css() }}
-{%- endblock %}
-
-{%- block extrahead %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
-{%- endblock %}
-
-{# Silence the sidebar's, relbar's #}
-{% block header %}{% endblock %}
-{% block relbar1 %}{% endblock %}
-{% block relbar2 %}{% endblock %}
-{% block sidebarsourcelink %}{% endblock %}
-
-{% block body_tag %}
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-{%- endblock %}
-{%- block content %}
-    {% block docs_navbar %}
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
-      {%- include "docs-navbar.html" %}
-    </nav>
-    {% endblock %}
-
-    <div class="container-xl">
-      <div class="row">
-          {% block docs_sidebar %}
-          <div class="col-12 col-md-3 bd-sidebar">
-              {%- include "docs-sidebar.html" %}
-          </div>
-          {% endblock %}
-
-          {% block docs_toc %}
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-              {% if not (meta is not none and 'notoc' in meta) %}
-                {%- include "docs-toc.html" %}
-              {% endif %}
-          </div>
-          {% endblock %}
-
-          {% block docs_main %}
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
-              {% block docs_body %}
-              <div>
-                {% block body %} {% endblock %}
-              </div>
-              {% endblock %}
-              {% if theme_show_prev_next %}
-              <div class='prev-next-bottom'>
-                {{ prev_next(prev, next) }}
-              </div>
-              {% endif %}
-          </main>
-          {% endblock %}
-
+  <div class="container-xl">
+    <div class="row">
+      {% block docs_sidebar %}
+      <div class="col-12 col-md-3 bd-sidebar">
+        {%- include "docs-sidebar.html" %}
       </div>
+      {% endblock %} {% block docs_toc %}
+      <div class="d-none d-xl-block col-xl-2 bd-toc">
+        {% if not (meta is not none and 'notoc' in meta) %} {%- include
+        "docs-toc.html" %} {% endif %}
+      </div>
+      {% endblock %} {% block docs_main %}
+      <main
+        class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content"
+        role="main"
+      >
+        {% block docs_body %}
+        <div>
+          {% block body %} {% endblock %}
+        </div>
+        {% endblock %} {% if theme_show_prev_next %}
+        <div class="prev-next-bottom">
+          {{ prev_next(prev, next) }}
+        </div>
+        {% endif %}
+      </main>
+      {% endblock %}
     </div>
+  </div>
 
-    <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
-    {% if theme_google_analytics_id %}
-    <!-- Google Analytics -->
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', '{{ theme_google_analytics_id }}', 'auto');
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
-    {% endif %}
-
-{%- endblock %}
-
-{%- block footer %}
-{%- include "footer.html" %}
-{%- endblock %}
+  <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
+  {% if theme_google_analytics_id %}
+  <!-- Google Analytics -->
+  <script>
+    window.ga =
+      window.ga ||
+      function () {
+        (ga.q = ga.q || []).push(arguments);
+      };
+    ga.l = +new Date();
+    ga('create', '{{ theme_google_analytics_id }}', 'auto');
+    ga('set', 'anonymizeIp', true);
+    ga('send', 'pageview');
+  </script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+  <!-- End Google Analytics -->
+  {% endif %} {%- endblock %} {%- block footer %} {%- include "footer.html" %}
+  {%- endblock %}
+</body>
