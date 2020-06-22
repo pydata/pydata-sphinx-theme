@@ -44,6 +44,12 @@
   --color-paragraph: var(--color-text-base);
   --color-link: #005b81;
   --color-link-hover: #e32e00;
+  --color-sidebar-link: 0, 0, 0;
+  --color-sidebar-link-hover: 19, 6, 84;
+  --color-sidebar-link-active: 19, 6, 84;
+  --color-toc-link: 119, 117, 122;
+  --color-toc-link-hover: 38, 38, 38;
+  --color-toc-link-active: 19, 6, 84;
   --color-headerlink: #c60f0f;
   --color-headerlink-hover: white;
   --color-preformatted-text: #222;

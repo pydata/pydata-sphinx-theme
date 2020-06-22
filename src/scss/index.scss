@@ -170,16 +170,25 @@ td:first-child {
   a {
     display: block;
     padding: 0.125rem 1.5rem;
-    color: #77757a;
+    color: 119, 117, 122;
+    color: rgba(var(--color-toc-link), 1);
 
     @include media-breakpoint-up(xl) {
       padding-right: 0;
     }
 
     &:hover {
-      color: rgba(0, 0, 0, 0.85);
+      color: rgba(var(--color-toc-link-hover), 1);
       text-decoration: none;
     }
+  }
+
+  .nav-link.active {
+    font-weight: 600;
+    color: #130654;
+    color: rgba(var(--color-toc-link-active), 1);
+    background-color: transparent;
+    border-left: 2px solid rgba(var(--color-toc-link-active), 1);
   }
 }
 
@@ -194,6 +203,51 @@ td:first-child {
       top: 76px;
       z-index: 1000;
       height: calc(100vh - 4rem);
+    }
+  }
+
+  .nav > {
+    li > a {
+      display: block;
+      padding: 0.25rem 1.5rem;
+      font-size: 0.9em;
+      color: rgba(var(--color-sidebar-link), 1);
+
+      &:hover {
+        color: rgba(var(--color-sidebar-link-hover), 1);
+        text-decoration: none;
+        background-color: transparent;
+      }
+    }
+
+    .active {
+      a,
+      &:hover > a {
+        font-weight: 600;
+        color: rgba(var(--color-sidebar-link-active), 1);
+      }
+    }
+
+    li > ul {
+      list-style: none;
+      padding: 0.25rem 1.5rem;
+
+      > {
+        li > a {
+          display: block;
+          padding: 0.25rem 1.5rem;
+          font-size: 0.9em;
+          color: rgba(var(--color-sidebar-link), 1);
+        }
+
+        .active {
+          > a,
+          &:hover > a {
+            font-weight: 600;
+            color: rgba(var(--color-sidebar-link-active), 1);
+          }
+        }
+      }
     }
   }
 }
@@ -266,51 +320,6 @@ td:first-child {
   }
 }
 
-.bd-sidebar .nav > {
-  li > a {
-    display: block;
-    padding: 0.25rem 1.5rem;
-    font-size: 0.9em;
-    color: rgba(0, 0, 0, 0.65);
-
-    &:hover {
-      color: #130654;
-      text-decoration: none;
-      background-color: transparent;
-    }
-  }
-
-  .active {
-    > a,
-    &:hover > a {
-      font-weight: 600;
-      color: #130654;
-    }
-  }
-
-  li > ul {
-    list-style: none;
-    padding: 0.25rem 1.5rem;
-
-    > {
-      li > a {
-        display: block;
-        padding: 0.25rem 1.5rem;
-        font-size: 0.9em;
-        color: rgba(0, 0, 0, 0.65);
-      }
-
-      .active {
-        > a,
-        &:hover > a {
-          font-weight: 600;
-          color: #130654;
-        }
-      }
-    }
-  }
-}
-
 /* adjust toc font sizes to improve overview */
 .toc-h2 {
   font-size: 0.85rem;
@@ -322,13 +331,6 @@ td:first-child {
 
 .toc-h4 {
   font-size: 0.65rem;
-}
-
-.toc-entry > .nav-link.active {
-  font-weight: 600;
-  color: #130654;
-  background-color: transparent;
-  border-left: 2px solid #563d7c;
 }
 
 .nav-link:hover {
