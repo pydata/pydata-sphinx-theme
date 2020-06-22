@@ -14,8 +14,8 @@
   --font-size-h2: 32px;
   --font-size-h3: 26px;
   --font-size-h4: 21px;
-  --font-size-h5: 28px;
-  --font-size-h6: 18px;
+  --font-size-h5: 18px;
+  --font-size-h6: 16px;
 
   /* smaller then heading font sizes*/
   --font-size-milli: 12px;
@@ -28,13 +28,15 @@
 
   /*****************************************************************************
   * Color
+  * 
+  * Colors are defined in rgb string way, "red, green, blue"
   **/
-  --color-primary: var(--primary);
+  --color-primary: 0, 123, 255;
   --color-success: 40, 167, 69;
   --color-info: 23, 162, 184;
   --color-warning: 255, 193, 7;
   --color-danger: 220, 53, 69;
-  --color-text-base: #333;
+  --color-text-base: 51, 51, 51;
   --color-h1: var(--color-primary);
   --color-h2: var(--color-primary);
   --color-h3: var(--color-text-base);
@@ -42,18 +44,18 @@
   --color-h5: var(--color-text-base);
   --color-h6: var(--color-text-base);
   --color-paragraph: var(--color-text-base);
-  --color-link: #005b81;
-  --color-link-hover: #e32e00;
+  --color-link: 0, 91, 129;
+  --color-link-hover: 227, 46, 0;
   --color-sidebar-link: 0, 0, 0;
   --color-sidebar-link-hover: 19, 6, 84;
   --color-sidebar-link-active: 19, 6, 84;
   --color-toc-link: 119, 117, 122;
   --color-toc-link-hover: 38, 38, 38;
   --color-toc-link-active: 19, 6, 84;
-  --color-headerlink: #c60f0f;
-  --color-headerlink-hover: white;
-  --color-preformatted-text: #222;
-  --color-preformatted-background: #fafafa;
+  --color-headerlink: 198, 15, 15;
+  --color-headerlink-hover: 255, 255, 255;
+  --color-preformatted-text: 34, 34, 34;
+  --color-preformatted-background: 250, 250, 250;
 
   --color-admonition-success: var(--color-success);
   --color-admonition-danger: var(--color-danger);

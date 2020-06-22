@@ -24,23 +24,23 @@ p {
 }
 
 a {
-  color: var(--color-link);
+  color: rgba(var(--color-link), 1);
   text-decoration: none;
 
   &:hover {
-    color: var(--color-link-hover);
+    color: rgba(var(--color-link-hover), 1);
     text-decoration: underline;
   }
 
   &.headerlink {
-    color: var(--color-headerlink);
+    color: rgba(var(--color-headerlink), 1);
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
 
     &:hover {
-      background-color: var(--color-headerlink);
-      color: var(--color-headerlink-hover);
+      background-color: rgba(var(--color-headerlink), 1);
+      color: rgba(var(--color-headerlink-hover), 1);
     }
   }
 }
@@ -64,37 +64,37 @@ h1 {
   @extend .heading-style;
   margin-top: 0;
   font-size: var(--font-size-h1);
-  color: var(--color-h1);
+  color: rgba(var(--color-h1), 1);
 }
 
 h2 {
   @extend .heading-style;
   font-size: var(--font-size-h2);
-  color: var(--color-h2);
+  color: rgba(var(--color-h2), 1);
 }
 
 h3 {
   @extend .heading-style;
   font-size: var(--font-size-h3);
-  color: var(--color-h3);
+  color: rgba(var(--color-h3), 1);
 }
 
 h4 {
   @extend .heading-style;
   font-size: var(--font-size-h4);
-  color: var(--color-h4);
+  color: rgba(var(--color-h4), 1);
 }
 
 h5 {
   @extend .heading-style;
   font-size: var(--font-size-h5);
-  color: var(--color-h5);
+  color: rgba(var(--color-h5), 1);
 }
 
 h6 {
   @extend .heading-style;
   font-size: var(--font-size-h6);
-  color: var(--color-h6);
+  color: rgba(var(--color-h6), 1);
 }
 
 small,
@@ -110,8 +110,8 @@ hr {
 pre {
   margin: 1.5em 0 1.5em 0;
   padding: 10px;
-  background-color: var(--color-preformatted-background);
-  color: var(--color-preformatted-text);
+  background-color: rgba(var(--color-preformatted-background), 1);
+  color: rgba(var(--color-preformatted-text), 1);
   line-height: 1.2em;
   border: 1px solid rgb(201, 201, 201);
   box-shadow: 1px 1px 1px #d8d8d8;
