@@ -4,8 +4,20 @@ jobs:
     runs-on: ubuntu-latest
     name: Run CircleCI artifacts redirector
     steps:
-      - name: GitHub Action step
-        uses: larsoner/circleci-artifacts-redirector-action@master
+      - name: Create URL for CircleCI artifact
+        id: redirect
+        uses: larsoner/circleci-artifacts-redirector-action@0.2.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           artifact-path: 0/html/index.html
+      - name: Run Lighthouse on Site
+        id: lighthouse
+        uses: foo-software/lighthouse-check-action@v2.0.0
+        with:
+          urls: ${{ steps.redirect.outputs.url }}
+          outputDirectory: /tmp/lighthouse
+      - name: Upload Lighthouse Reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: Lighthouse Report ${{ github.run_number }}
+          path: /tmp/lighthouse
