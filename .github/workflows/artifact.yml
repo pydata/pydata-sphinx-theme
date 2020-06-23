@@ -10,12 +10,16 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           artifact-path: 0/html/index.html
+      - name: Wait Until Site is Ready
+        run: |
+          curl --retry-all-errors --retry-max-time 60 ${{ steps.redirect.outputs.url }}
       - name: Run Lighthouse on Site
         id: lighthouse
         uses: foo-software/lighthouse-check-action@v2.0.0
         with:
           urls: ${{ steps.redirect.outputs.url }}
           outputDirectory: /tmp/lighthouse
+          verbose: true
       - name: Upload Lighthouse Reports
         uses: actions/upload-artifact@v2
         with:
