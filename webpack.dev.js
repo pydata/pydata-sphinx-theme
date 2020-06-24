@@ -25,7 +25,7 @@ module.exports = merge(common, {
         './docs/**/*.py',
         './pydata_sphinx_theme/**/*.html',
         // watching the generated macros causes vicious cycles
-        '!./pydata_sphinx_theme/**/_*.html'
+        '!./pydata_sphinx_theme/static/*.html'
       ],
     }),
     new ShellPlugin({

@@ -4,8 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const pythonPath = resolve(__dirname, 'pydata_sphinx_theme');
-const staticPath = resolve(pythonPath, 'static');
+const staticPath = resolve(__dirname, 'pydata_sphinx_theme', 'static');
 
 const vendor = resolve(staticPath, 'vendor');
 const vendorVersions = {
@@ -110,7 +109,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      filename: resolve(pythonPath, '_webpack-macros.html'),
+      filename: resolve(staticPath, 'webpack-macros.html'),
       inject: false,
       minify: false,
       css: true,

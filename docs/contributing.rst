@@ -63,28 +63,34 @@ Developing the theme CSS and JS
 ===============================
 
 The CSS and JS for this theme are built for the browser from ``./src/*`` with
-`webpack <https://webpack.js.org/>`__. The two main entrypoints are:
+`webpack <https://webpack.js.org/>`__. The main entrypoints are:
 
 - CSS: ``./src/scss/index.scss``
-    - the main part of the theme, this customizes `Bootstrap <https://getbootstrap.com/>`__
+    - the main part of the theme assets
+    - customizes `Bootstrap <https://getbootstrap.com/>`__ with `Sass <https://sass-lang.com>`__
+    - points to the ``font-face`` of vendored web fonts, but does not include their
+      CSS ``@font-face`` declaration
 - JS: ``./src/js/index.js``
     - some additional Bootstrap features, as well as some custom navigation behavior
+- webpack: ``webpack.common.js``
+    - captures the techniques for transforming ``src`` into ``pydata_sphinx_theme/static``
 
 These entrypoints, and all files they reference, are bundled into
 ``./pydata_sphinx_theme/static/{css,js}/index.<hash>.{css,js}``.
 
-The ``<hash>`` helps avoid stale browser cache views when upgrading, and is
-reproducibly derived from:
+The ``<hash>`` prevents serving stale assets when viewers return to your
+site after upgrading, and is reproducibly derived from:
 
 - ``./src/**/*``
 - ``webpack.{common,prod}.js``
 - the ``dependencies`` and ``devDependencies`` in ``package.json``/``yarn.lock``
 
 Web fonts, and their supporting CSS, are copied into
-``./pydata_sphinx_theme/static/vendor/<font name>/<font version>/``.
+``./pydata_sphinx_theme/static/vendor/<font name>/<font version>/``. including
+the ``<font version>`` also ensures the desired assets are served when upgrading.
 
 The links to these unique file names are captured as Jinja2 macros in
-``pydata_sphinx_theme/templates/_webpack-macros.html``.
+``pydata_sphinx_theme/static/webpack-macros.html``.
 
 Finally, all of these files are committed to the repo, in-place, along with the
 rest of the code. This allows use of the theme directly from a ``git`` checkout,
@@ -220,7 +226,7 @@ required. The steps are roughly:
 - remove the font being replaced/removed, if applicable
 - restart the development server, if running
 - rebuild the production assets, as above, with ``yarn build:production``
-- potentially the font being replaced, if applicable
+- potentially remove the font being replaced from ``package.json`` and re-running ``yarn``
 
 
 Contributing changes
