@@ -257,7 +257,7 @@ To set this up, first install the ``pre-commit`` package:
     # or with conda
     conda install -c conda-forge pre-commit
 
-and then running from the root of this repo:
+Then, from the root of this repo, run:
 
 .. code-block:: bash
 
