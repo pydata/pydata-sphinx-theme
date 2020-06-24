@@ -18,12 +18,11 @@ The theme contains custom web fonts, in several formats, for different purposes:
 - icons, on ``.fa, .far, .fas``
 
 While altering the icon font is presently somewhat involved, the body and header fonts,
-often paired together, can be replaced (or removed altogether) by
+often paired together, can be replaced (or removed altogether) by:
 
 - configuring `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
-in your ``conf.py``
+  in your ``conf.py``
 - creating a custom ``layout.html`` Jinja2 template which overloads the ``fonts`` block
-
 
 .. code-block:: html+jinja
 
