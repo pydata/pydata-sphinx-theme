@@ -1,5 +1,5 @@
 {%- extends "basic/layout.html" %}
-{%- import "webpack-macros.html" as webpack with context %}
+{%- import "_webpack-macros.html" as _webpack with context %}
 
 {# prev/next buttons #}
 {% macro prev_next(prev, next, prev_title='', next_title='') %}
@@ -12,9 +12,13 @@
 {% endmacro %}
 
 {%- block css %}
-    {{ webpack.head_pre() }}
+    {{ _webpack.head_pre_bootstrap() }}
+    {{ _webpack.head_pre_icons() }}
+    {% block fonts %}
+      {{ _webpack.head_pre_fonts() }}
+    {% endblock %}
     {{- css() }}
-    {{ webpack.head_post() }}
+    {{ _webpack.head_js_preload() }}
 {%- endblock %}
 
 {%- block extrahead %}
@@ -72,7 +76,7 @@
       </div>
     </div>
 
-    {{ webpack.body_post() }}
+    {{ _webpack.body_post() }}
 
     {% if theme_google_analytics_id %}
     <!-- Google Analytics -->

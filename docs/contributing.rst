@@ -2,142 +2,269 @@
 Contributing
 ************
 
-The documentation of the theme (what you are looking at now) also serves
-as a demo site for the theme. In the top-level "Demo site" section,
-more pages with typical sphinx content and structural elements are included.
+.. Note::
+    The documentation for this theme (what you are looking at now) also serves
+    as a demo site for the theme. The top-level `Demo site` section includes
+    more pages with typical Sphinx content and structural elements.
 
-Installing
-==========
 
-To get this demo site up and running, you first need to install the requirements:
-``/doc/requirements.txt`` (with for example pip or conda).
+Installing Python dependencies
+==============================
 
-Then, you need to install the sphinx theme (the theme itself is a python package).
-When developing, the easiest is to install it in "development" or "editable" mode,
-which means you can make changes in the repo and directly test it with the docs.
-To install, you can run this from the root of the repo::
+To run the demo site, first install the requirements, for example with ``pip``
+or ``conda``:
 
-    pip install --editable .
+.. code-block:: bash
 
-Building the demo docs
+    # with pip
+    python -m pip install -r docs/requirements.txt
+    # or with conda
+    conda install -c conda-forge --file docs/requirements.txt
+
+
+Installing this theme
+=====================
+
+Next, install this theme itself, a python package.
+When developing, it is recommended to install in "development" or "editable" mode,
+allowing changes in the repo to be directly tested with this documentation suite.
+
+To install, from the root of the repo, run:
+
+.. code-block:: bash
+
+    python -m pip install --editable .
+
+
+Building the demo site
 ======================
 
-For the tradiditional sphinx-way to build the demo site, navigate to the
-`docs/` directory, and then run::
+For a traditional Sphinx build of the demo site, navigate to the ``docs/`` directory,
+and run:
+
+.. code-block:: bash
 
     make html
 
-This will trigger sphinx to build the html version of the site. The output can
-be found in the ``docs/_build/html`` directory.
+Sphinx will build the HTML version of the site in the ``docs/_build/html`` directory.
 
-However, when you want to edit the css/js sources, those need to be bundled
-and the workflow for this is explained in the next section.
 
-Theme development
-=================
+.. Note::
 
-The css and javascript part of this theme is bundled via Webpack. In ``./src/*``
-the theme related stylesheets and javascript is located. 2 entrypoints are
-available:
+    If you wish to customize the CSS or JS beyond what is available in the
+    :ref:`configuration` and :ref:`customizing` sections of the user guide,
+    extra steps are required. The next section covers the full workflow, from
+    changing the source files, to seeing the updated site.
 
-- Stylesheet: ``./src/scss/index.scss``
-- Javascript: ``./src/js/index.js``
 
-Both entrypoints will be bundled into ``./pydata_sphinx_theme/static/{css,js}``.
+Developing the theme CSS and JS
+===============================
 
-Theme development was inspired by the `ReadTheDocs sphinx theme <https://github.com/readthedocs/sphinx_rtd_theme>`__.
+The CSS and JS for this theme are built for the browser from ``./src/*`` with
+`webpack <https://webpack.js.org/>`__. The two main entrypoints are:
+
+- CSS: ``./src/scss/index.scss``
+    - the main part of the theme, this customizes `Bootstrap <https://getbootstrap.com/>`__
+- JS: ``./src/js/index.js``
+    - some additional Bootstrap features, as well as some custom navigation behavior
+
+These entrypoints, and all files they reference, are bundled into
+``./pydata_sphinx_theme/static/{css,js}/index.<hash>.{css,js}``.
+
+The ``<hash>`` helps avoid stale browser cache views when upgrading, and is
+reproducibly derived from:
+
+- ``./src/**/*``
+- ``webpack.{common,prod}.js``
+- the ``dependencies`` and ``devDependencies`` in ``package.json``/``yarn.lock``
+
+Web fonts, and their supporting CSS, are copied into
+``./pydata_sphinx_theme/static/vendor/<font name>/<font version>/``.
+
+The links to these unique file names are captured as Jinja2 macros in
+``pydata_sphinx_theme/templates/_webpack-macros.html``.
+
+Finally, all of these files are committed to the repo, in-place, along with the
+rest of the code. This allows use of the theme directly from a ``git`` checkout,
+without any of the finicky web development dependencies, or even a ``nodejs``
+runtime.
+
+.. Note::
+    Theme development was inspired by the
+    `ReadTheDocs Sphinx theme <https://github.com/readthedocs/sphinx_rtd_theme>`__.
+
 
 Steps to develop the theme
 --------------------------
 
-1. Install yarn
+1. Install ``yarn``
 2. Install theme dependencies
 3. Run development server
 4. Build production assets
 
-**Important:** in order to commit changes to the theme, ensure you run
-``yarn build:production`` so all assets will be bundled into
-``./pydata_sphinx_theme/static/``.
 
-Install yarn
-^^^^^^^^^^^^
+.. Important::
 
-`Yarn <https://yarnpkg.com>`__ is a package manager we use for managing
-Javascript and CSS dependencies.
+    In order to commit changes to the theme, ensure you run
+    ``yarn build:production`` so all built assets will be bundled, copied, or
+    generated into ``./pydata_sphinx_theme/{static,templates}/``.
 
-Install via conda::
 
-    conda install yarn
+Installing ``yarn``
+^^^^^^^^^^^^^^^^^^^
 
-Install alternative: https://classic.yarnpkg.com/en/docs/install.
+`Yarn <https://yarnpkg.com>`__ is a package manager for JS and CSS dependencies.
+It can be installed with a number of
+`package managers <https://classic.yarnpkg.com/en/docs/install>`__, including
+``conda``:
 
-Install theme dependencies
+.. code-block:: bash
+
+    conda install -c conda-forge yarn
+
+
+Installing JS dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Install theme related dependencies::
+Install theme-related ``dependencies`` and ``devDependencies`` from ``package.json``:
 
-    yarn install
+.. code-block:: bash
+
+    yarn
+
+After adding/updating dependencies with ``yarn add``, or manually changing ``package.json``
+and re-run ``yarn``, the ``yarn.lock`` and ``package.json`` files will likely change.
+
+.. Important::
+
+    If changed, commit ``package.json`` and ``yarn.lock`` together to ensure
+    reproducible builds.
 
 
-Run development server
-^^^^^^^^^^^^^^^^^^^^^^
+Running the development server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-::
+.. code-block:: bash
 
     yarn build:dev
 
-A development server is available at http://localhost:1919. When working
-on the theme, like editing stylesheets, javascript, .rst or .py files
-every save reloads the development server. This reload includes bundling
-stylesheets, javascript, and running sphinx again.
+This launches a development server at http://localhost:1919. When working
+on the theme, saving changes to any of:
 
-The following files will be watched and reloaded on change:
+- ``./src/js/index.js``
+- ``./src/scss/index.scss``
+- ``./docs/**/*.rst``
+- ``./docs/**/*.py``
 
-- ./src/js/index.js
-- ./src/scss/index.scss
-- ./docs/\*\*/\*.rst
-- ./docs/\*\*/\*.py
+Will cause the development server to:
 
-Build production assets
-^^^^^^^^^^^^^^^^^^^^^^^
+- bundle/copy the CSS, JS, and vendored fonts
+- regenerate the Jinja2 macros
+- re-run Sphinx
 
-To build the new theme assets into the theme, run the following command.
 
-::
+Building the production assets
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To build the new theme assets into the python package, run:
+
+.. code-block:: bash
 
     yarn build:production
+
+
+Changing fonts
+--------------
+
+Fonts are an important, performance-sensitive, but ultimately, subjective, part
+of the theme. The current font selections are:
+
+- managed as dependencies in ``package.json``
+    - allowing the versions to be managed centrally
+- copied directly into the site statics, including licenses
+    - allowing the chosen fonts to be replaced (or removed entirely) with minimal
+      templating changes
+- partially preloaded (mostly icons)
+    - reducing flicker and re-layout artifacts
+- mostly managed in ``webpack.common.js``
+    - allowing upgrades to be handled in a relatively sane, manageable way
+
+Upgrading a font
+^^^^^^^^^^^^^^^^
+
+If `only` the version of an `existing` font must change, for example to enable
+new icons, run:
+
+.. code-block:: bash
+
+    yarn add <font name>@<version>
+    yarn build:production
+
+It `may` also be necessary to clear out old font versions from
+``pydata_sphinx_theme/static/vendor`` before committing.
+
+
+Changing a font
+^^^^^^^^^^^^^^^
+
+If the above doesn't work, for example if file names for an existing font change,
+or a new font altogether is being added, hand-editing of ``webpack.common.js`` is
+required. The steps are roughly:
+
+- install the new font, as above, with ``yarn add``
+- add the new font to ``vendorVersions`` and ``vendorPaths``
+- add new ``link`` tags to the appropriate macro in ``macroTemplate``
+- add the new font files (including the license) to ``CopyPlugin``
+- remove the font being replaced/removed, if applicable
+- restart the development server, if running
+- rebuild the production assets, as above, with ``yarn build:production``
+- potentially the font being replaced, if applicable
 
 
 Contributing changes
 ====================
 
-We follow the typical GitHub workflow of forking a repo, creating a branch,
-opening pull requests (https://guides.github.com/introduction/flow/).
+We follow a `typical GitHub workflow <https://guides.github.com/introduction/flow/>`__
+of:
 
-For each pull request, the demo site gets build to make it easier to preview
+- create a personal fork of the repo
+- create a branch
+- open a pull requests
+- fix findings of various linters and checks
+- work through code review
+
+For each pull request, the demo site is built and deployed to make it easier to preview
 the changes in the PR. To access this, click on "Details" of the "build_docs artifact"
 job of Circle CI:
 
 .. image:: _static/pull-request-preview-link.png
 
 
-Ensuring correct commits with pre-commit hooks
-==============================================
+Ensuring correct commits
+========================
 
-To ensure all source files have been correctly build, a `pre-commit <https://pre-commit.com/>`__
+To ensure all source files have been correctly built, a `pre-commit <https://pre-commit.com/>`__
 hook is available to use.
 
-To set this up, first install the ``pre-commit`` package::
+To set this up, first install the ``pre-commit`` package:
+
+.. code-block:: bash
 
     # with pip
     pip install pre-commit
     # or with conda
-    conda install pre-commit -c conda-forge
+    conda install -c conda-forge pre-commit
 
-and then running from the root of this repo::
+and then running from the root of this repo:
+
+.. code-block:: bash
 
     pre-commit install
 
 Now all of the checks will be run each time you commit changes.
 
-Note that if needed, you can skip these checks with ``git commit --no-verify``.
+Note that if needed, you can skip these checks with:
+
+.. code-block:: bash
+
+    git commit --no-verify

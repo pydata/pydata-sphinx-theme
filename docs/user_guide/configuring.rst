@@ -1,4 +1,4 @@
-.. _configuation:
+.. _configuration:
 
 *************
 Configuration
