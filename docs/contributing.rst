@@ -73,7 +73,8 @@ The CSS and JS for this theme are built for the browser from ``./src/*`` with
 - JS: ``./src/js/index.js``
     - some additional Bootstrap features, as well as some custom navigation behavior
 - webpack: ``webpack.common.js``
-    - captures the techniques for transforming ``src`` into ``pydata_sphinx_theme/static``
+    - captures the techniques for transforming the JS and CSS source files in
+      ``src/`` into the production assets in ``pydata_sphinx_theme/static/``
 
 These entrypoints, and all files they reference, are bundled into
 ``./pydata_sphinx_theme/static/{css,js}/index.<hash>.{css,js}``.
@@ -97,7 +98,7 @@ rest of the code. This allows use of the theme directly from a ``git`` checkout,
 without any of the finicky web development dependencies, or even a ``nodejs``
 runtime.
 
-.. Note::
+.. Hint::
     Theme development was inspired by the
     `ReadTheDocs Sphinx theme <https://github.com/readthedocs/sphinx_rtd_theme>`__.
 
@@ -111,11 +112,11 @@ Steps to develop the theme
 4. Build production assets
 
 
-.. Important::
+.. Attention::
 
     In order to commit changes to the theme, ensure you run
     ``yarn build:production`` so all built assets will be bundled, copied, or
-    generated into ``./pydata_sphinx_theme/{static,templates}/``.
+    generated into ``./pydata_sphinx_theme/static/``.
 
 
 Installing ``yarn``
@@ -241,7 +242,7 @@ of:
 - fix findings of various linters and checks
 - work through code review
 
-For each pull request, the demo site is built and deployed to make it easier to preview
+For each pull request, the demo site is built and deployed to make it easier to review
 the changes in the PR. To access this, click on "Details" of the "build_docs artifact"
 job of Circle CI:
 
