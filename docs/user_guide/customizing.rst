@@ -13,20 +13,25 @@ Replacing/Removing Fonts
 
 The theme contains custom web fonts, in several formats, for different purposes:
 
-- "normal" body text
-- page and section headers
-- icons
+- "normal" body text, on ``body``
+- page and section headers, on ``.header-style``
+- icons, on ``.fa, .far, .fas``
 
-While altering the icon font is not presently feasible, the body and header fonts,
-often paired together, can be replaced (or removed altogether) by creating a
-custom ``layout.html`` in your `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__:
+While altering the icon font is presently somewhat involved, the body and header fonts,
+often paired together, can be replaced (or removed altogether) by
+
+- configuring `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
+in your ``conf.py``
+- creating a custom ``layout.html`` Jinja2 template which overloads the ``fonts`` block
+
 
 .. code-block:: html+jinja
 
     {% extends "pydata_sphinx_theme/layout.html" %}
 
     {% block fonts %}
-        <!-- insert link tags to your font CSS here -->
+        <!-- insert `link` tags to your @font-face declarations CSS here -->
+        <!-- ... and a `style` tag with setting `font-family` in `body` and `.header-style` -->
         <!-- ... and optionally preload the woff2 for snappier page loads -->
-        <!-- ... or just specify a font fallback chain with a style tag -->
+        <!-- or a `style` specifying a font fallback chain with a style tag -->
     {% endblock %}
