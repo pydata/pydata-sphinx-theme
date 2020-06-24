@@ -2,9 +2,11 @@
 Contributing
 ************
 
-.. Note::
-    The documentation for this theme (what you are looking at now) also serves
-    as a demo site for the theme. The top-level `Demo site` section includes
+The documentation for this theme (what you are looking at now) also serves
+as a demo site for the theme.
+
+.. Hint::
+    The top-level `Demo site` section includes
     more pages with typical Sphinx content and structural elements.
 
 
