@@ -4,6 +4,7 @@ from docutils import nodes
 
 from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
+from sphinx.ext.autosummary import autosummary_table
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,11 @@ class BootstrapHTML5Translator(HTML5Translator):
         self._table_row_index = 0
 
         classes = [cls.strip(" \t\n") for cls in self.settings.table_style.split(",")]
+
+        # we're looking at the 'real_table', which is wrapped by an autosummary
+        if isinstance(node.parent, autosummary_table):
+            classes += ["autosummary"]
+
         # classes.insert(0, "docutils")  # compat
         # if 'align' in node:
         #     classes.append('align-%s' % node['align'])
