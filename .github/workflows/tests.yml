@@ -103,7 +103,7 @@ jobs:
     # Run the audit
     # TODO: use the hosted API with a secret? would allow for comparison over time...
     - name: Make folder for Lighthouse reports
-      run: mkdir /tmp/lighthouse/lighthouse-${{ github.run_number }}
+      run: mkdir -p /tmp/lighthouse/lighthouse-${{ github.run_number }}
     - name: Run Lighthouse on Site
       id: lighthouse
       uses: foo-software/lighthouse-check-action@v2.0.0
@@ -113,7 +113,7 @@ jobs:
         outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
         verbose: true
 
-    # Store the audit.
+    # Store the audit
     - name: Upload Lighthouse Reports
       uses: actions/upload-artifact@v2
       with:
