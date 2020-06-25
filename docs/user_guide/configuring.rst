@@ -87,6 +87,16 @@ You should also enable the edit option in your 'html_theme_options':
        "use_edit_page_button": True,
    }
 
+Optionally, if you have a self-hosted Github Enterprise instance, you can
+configure a custom url. This option defaults to 'https://github.com',
+and you do not need to specify it if you wish to use the default.
+
+.. code:: python
+
+   html_context = {
+       "github_url": "<your-github-url>",
+   }
+
 Configure the search bar position
 =================================
 
