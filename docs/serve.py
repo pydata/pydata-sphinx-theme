@@ -3,7 +3,6 @@
     this is not meant to be used in production, and some settings are insecure
     to game auditing metrics which will vary substantially by deployment
 """
-import sys
 from pathlib import Path
 from tornado import ioloop, web, options
 
@@ -33,7 +32,7 @@ def make_app():
     """ create and return (but do not start) a tornado app
     """
     app = web.Application(
-        [(r"^/(.*)", CacheStaticHandler, dict(path=SETTINGS["static_path"])),],
+        [(r"^/(.*)", CacheStaticHandler, dict(path=SETTINGS["static_path"]))],
         **SETTINGS
     )
 
