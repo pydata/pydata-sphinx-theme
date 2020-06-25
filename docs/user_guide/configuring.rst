@@ -9,6 +9,16 @@ All configuration options are passed with the ``html_theme_options`` variable
 in your ``conf.py`` file. This is a dictionary with ``key: val`` pairs that
 you can configure in various ways. This page describes the options available to you.
 
+Configure project logo
+==============================
+
+To add a logo that's placed at the left of your nav bar, put a logo file under your
+doc path's _static folder, and use the following configuration:
+
+.. code:: python
+
+   html_logo = "_static/logo.png"
+
 Configure social media buttons
 ==============================
 
@@ -69,6 +79,13 @@ your ``conf.py`` file:
        "doc_path": "<path-from-root-to-your-docs>",
    }
 
+You should also enable the edit option in your 'html_theme_options':
+
+.. code:: python
+
+   html_theme_options = {
+       "use_edit_page_button": True,
+   }
 
 Configure the search bar position
 =================================
