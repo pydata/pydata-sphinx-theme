@@ -25,7 +25,7 @@ class CacheStaticHandler(web.StaticFileHandler):
         """ always return a fairly long time. real deployments would have a more
             robust solution
         """
-        return 9001
+        return int(1e10)
 
 
 def make_app():

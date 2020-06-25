@@ -103,14 +103,14 @@ jobs:
     # Run the audit
     # TODO: use the hosted API with a secret? would allow for comparison over time...
     - name: Make folder for Lighthouse reports
-      run: mkdir /tmp/lighthouse
+      run: mkdir /tmp/lighthouse/lighthouse-${{ github.run_number }}
     - name: Run Lighthouse on Site
       id: lighthouse
       uses: foo-software/lighthouse-check-action@v2.0.0
       with:
         # TODO: generate this list to audit all html pages
         urls: ${{ env.URL }}/index.html,${{ env.URL }}/example_pandas.html,${{ env.URL }}/demo/demo.html
-        outputDirectory: /tmp/lighthouse
+        outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
         verbose: true
 
     # Store the audit.
