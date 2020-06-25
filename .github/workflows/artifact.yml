@@ -13,6 +13,8 @@ jobs:
       - name: Wait Until Site is Ready
         run: |
           curl --retry 10 --retry-connrefused --retry-max-time 60 ${{ steps.redirect.outputs.url }}
+      - name: Make folder for Lighthouse reports
+        run: mkdir /tmp/lighthouse
       - name: Run Lighthouse on Site
         id: lighthouse
         uses: foo-software/lighthouse-check-action@v2.0.0
