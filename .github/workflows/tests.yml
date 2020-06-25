@@ -109,7 +109,7 @@ jobs:
       uses: foo-software/lighthouse-check-action@v2.0.0
       with:
         # TODO: generate this list to audit all html pages
-        urls: ${URL}/index.html,${URL}/example_pandas.html,${URL}/demo/demo.html
+        urls: ${{ env.URL }}/index.html,${{ env.URL }}/example_pandas.html,${{ env.URL }}/demo/demo.html
         outputDirectory: /tmp/lighthouse
         verbose: true
 
