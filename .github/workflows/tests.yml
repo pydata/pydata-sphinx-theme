@@ -123,15 +123,16 @@ jobs:
         name: Lighthouse Report ${{ github.run_number }}
         path: /tmp/lighthouse
 
-    # check the scores for threshold values
+    # Check the audit for threshold values
+    # TODO: write this someplace after a PR is merged, and load?
     - name: Assess Lighthouse Check results
-        uses: foo-software/lighthouse-check-status-action@master
-        with:
-          lighthouseCheckResults: ${{ steps.lighthouse.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "98"
-          minBestPracticesScore: "92"
-          minPerformanceScore: "12"
-          minSeoScore: "84"
+      uses: foo-software/lighthouse-check-status-action@v1.0.1
+      with:
+        lighthouseCheckResults: ${{ steps.lighthouse.outputs.lighthouseCheckResults }}
+        minAccessibilityScore: "98"
+        minBestPracticesScore: "92"
+        minPerformanceScore: "12"
+        minSeoScore: "84"
 
   publish:
 
