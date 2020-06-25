@@ -6,6 +6,7 @@ The documentation for this theme (what you are looking at now) also serves
 as a demo site for the theme.
 
 .. Hint::
+
     The top-level `Demo site` section includes
     more pages with typical Sphinx content and structural elements.
 
@@ -13,7 +14,7 @@ as a demo site for the theme.
 Installing Python dependencies
 ==============================
 
-To run the demo site, first install the requirements, for example with ``pip``
+To run the demo site, first install the Python dependencies, for example with ``pip``
 or ``conda``:
 
 .. code-block:: bash
@@ -31,7 +32,7 @@ Next, install this theme itself, a python package.
 When developing, it is recommended to install in "development" or "editable" mode,
 allowing changes in the repo to be directly tested with this documentation suite.
 
-To install, from the root of the repo, run:
+To install the package, from the root of this repo, run:
 
 .. code-block:: bash
 
@@ -50,7 +51,6 @@ and run:
 
 Sphinx will build the HTML version of the site in the ``docs/_build/html`` directory.
 
-
 .. Note::
 
     If you wish to customize the CSS or JS beyond what is available in the
@@ -62,33 +62,33 @@ Sphinx will build the HTML version of the site in the ``docs/_build/html`` direc
 Developing the theme CSS and JS
 ===============================
 
-The CSS and JS for this theme are built for the browser from ``./src/*`` with
+The CSS and JS for this theme are built for the browser from ``src/*`` with
 `webpack <https://webpack.js.org/>`__. The main entrypoints are:
 
-- CSS: ``./src/scss/index.scss``
+- CSS: ``src/scss/index.scss``
     - the main part of the theme assets
     - customizes `Bootstrap <https://getbootstrap.com/>`__ with `Sass <https://sass-lang.com>`__
     - points to the ``font-face`` of vendored web fonts, but does not include their
       CSS ``@font-face`` declaration
-- JS: ``./src/js/index.js``
-    - some additional Bootstrap features, as well as some custom navigation behavior
+- JS: ``src/js/index.js``
+    - provides add-on Bootstrap features, as well as some custom navigation behavior
 - webpack: ``webpack.common.js``
     - captures the techniques for transforming the JS and CSS source files in
       ``src/`` into the production assets in ``pydata_sphinx_theme/static/``
 
 These entrypoints, and all files they reference, are bundled into
-``./pydata_sphinx_theme/static/{css,js}/index.<hash>.{css,js}``.
+``pydata_sphinx_theme/static/{css,js}/index.<hash>.{css,js}``.
 
-The ``<hash>`` prevents serving stale assets when viewers return to your
-site after upgrading, and is reproducibly derived from:
+The ``<hash>`` ensures the correct asset versions are serve when viewers return to your
+site after upgrading the theme, and is reproducibly derived from:
 
-- ``./src/**/*``
+- ``src/**/*``
 - ``webpack.{common,prod}.js``
 - the ``dependencies`` and ``devDependencies`` in ``package.json``/``yarn.lock``
 
 Web fonts, and their supporting CSS, are copied into
-``./pydata_sphinx_theme/static/vendor/<font name>/<font version>/``. including
-the ``<font version>`` also ensures the desired assets are served when upgrading.
+``pydata_sphinx_theme/static/vendor/<font name>/<font version>/``. Including
+the ``<font version>`` also ensures the correct assets are served when upgrading.
 
 The links to these unique file names are captured as Jinja2 macros in
 ``pydata_sphinx_theme/static/webpack-macros.html``.
@@ -99,6 +99,7 @@ without any of the finicky web development dependencies, or even a ``nodejs``
 runtime.
 
 .. Hint::
+
     Theme development was inspired by the
     `ReadTheDocs Sphinx theme <https://github.com/readthedocs/sphinx_rtd_theme>`__.
 
@@ -111,19 +112,18 @@ Steps to develop the theme
 3. Run development server
 4. Build production assets
 
-
 .. Attention::
 
     In order to commit changes to the theme, ensure you run
     ``yarn build:production`` so all built assets will be bundled, copied, or
-    generated into ``./pydata_sphinx_theme/static/``.
+    generated into ``pydata_sphinx_theme/static/``.
 
 
 Installing ``yarn``
 ^^^^^^^^^^^^^^^^^^^
 
 `Yarn <https://yarnpkg.com>`__ is a package manager for JS and CSS dependencies.
-It can be installed with a number of
+Yarn itself can be installed with a number of
 `package managers <https://classic.yarnpkg.com/en/docs/install>`__, including
 ``conda``:
 
@@ -135,14 +135,15 @@ It can be installed with a number of
 Installing JS dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Install theme-related ``dependencies`` and ``devDependencies`` from ``package.json``:
+To install theme-related ``dependencies`` and ``devDependencies`` from ``package.json``,
+from the root of this repo, run:
 
 .. code-block:: bash
 
     yarn
 
 After adding/updating dependencies with ``yarn add``, or manually changing ``package.json``
-and re-run ``yarn``, the ``yarn.lock`` and ``package.json`` files will likely change.
+and re-running ``yarn``, the ``yarn.lock`` and ``package.json`` files will likely change.
 
 .. Important::
 
@@ -153,6 +154,8 @@ and re-run ``yarn``, the ``yarn.lock`` and ``package.json`` files will likely ch
 Running the development server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+To preview the frontend assets, from the root of this repo, run:
+
 .. code-block:: bash
 
     yarn build:dev
@@ -160,12 +163,12 @@ Running the development server
 This launches a development server at http://localhost:1919. When working
 on the theme, saving changes to any of:
 
-- ``./src/js/index.js``
-- ``./src/scss/index.scss``
-- ``./docs/**/*.rst``
-- ``./docs/**/*.py``
+- ``src/js/index.js``
+- ``src/scss/index.scss``
+- ``docs/**/*.rst``
+- ``docs/**/*.py``
 
-Will cause the development server to:
+...causes the development server to:
 
 - bundle/copy the CSS, JS, and vendored fonts
 - regenerate the Jinja2 macros
@@ -175,7 +178,8 @@ Will cause the development server to:
 Building the production assets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To build the new theme assets into the python package, run:
+To build the new theme assets into the python package, from the root of this repo,
+run:
 
 .. code-block:: bash
 
@@ -198,6 +202,7 @@ of the theme. The current font selections are:
 - mostly managed in ``webpack.common.js``
     - allowing upgrades to be handled in a relatively sane, manageable way
 
+
 Upgrading a font
 ^^^^^^^^^^^^^^^^
 
@@ -210,7 +215,7 @@ new icons, run:
     yarn build:production
 
 It `may` also be necessary to clear out old font versions from
-``pydata_sphinx_theme/static/vendor`` before committing.
+``pydata_sphinx_theme/static/vendor/`` before committing.
 
 
 Changing a font
@@ -221,13 +226,15 @@ or a new font altogether is being added, hand-editing of ``webpack.common.js`` i
 required. The steps are roughly:
 
 - install the new font, as above, with ``yarn add``
-- add the new font to ``vendorVersions`` and ``vendorPaths``
-- add new ``link`` tags to the appropriate macro in ``macroTemplate``
-- add the new font files (including the license) to ``CopyPlugin``
-- remove the font being replaced/removed, if applicable
+- in ``webpack.common.js``:
+    - add the new font to ``vendorVersions`` and ``vendorPaths``
+    - add new ``link`` tags to the appropriate macro in ``macroTemplate``
+    - add the new font files (including the license) to ``CopyPlugin``
+    - remove referencs to the font being replaced/removed, if applicable
 - restart the development server, if running
 - rebuild the production assets, as above, with ``yarn build:production``
-- potentially remove the font being replaced from ``package.json`` and re-running ``yarn``
+- potentially remove the font being replaced from ``package.json`` and re-run ``yarn``
+- commit all of the changes files
 
 
 Contributing changes
@@ -236,9 +243,9 @@ Contributing changes
 We follow a `typical GitHub workflow <https://guides.github.com/introduction/flow/>`__
 of:
 
-- create a personal fork of the repo
+- create a personal fork of this repo
 - create a branch
-- open a pull requests
+- open a pull request
 - fix findings of various linters and checks
 - work through code review
 
@@ -253,7 +260,7 @@ Ensuring correct commits
 ========================
 
 To ensure all source files have been correctly built, a `pre-commit <https://pre-commit.com/>`__
-hook is available to use.
+hook is available.
 
 To set this up, first install the ``pre-commit`` package:
 
