@@ -148,6 +148,11 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                     "Missing required value for `edit this page` button. "
                     "Add %s to your `html_context` configuration" % val
                 )
+        
+        # Enable optional custom github url for self-hosted github instances
+        github_url = "https://github.com"
+        if context.get("github_url"):
+            github_url = context["github_url"]
 
         github_user = context["github_user"]
         github_repo = context["github_repo"]
@@ -161,7 +166,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
         # Build the URL for "edit this button"
         url_edit = (
-            f"https://github.com/{github_user}/{github_repo}"
+            f"{github_url}/{github_user}/{github_repo}"
             f"/edit/{github_version}/{doc_path}{file_name}"
         )
         return url_edit
