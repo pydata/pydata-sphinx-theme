@@ -111,8 +111,9 @@ jobs:
         # TODO: generate this list to audit all html pages
         urls: >-
           ${{ env.URL }}/index.html,
-          ${{ env.URL }}/demo/example_pandas.html,
-          ${{ env.URL }}/demo/demo.html
+          ${{ env.URL }}/demo/api.html,
+          ${{ env.URL }}/demo/demo.html,
+          ${{ env.URL }}/demo/example_pandas.html
         outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
         verbose: true
 
@@ -129,10 +130,10 @@ jobs:
       uses: foo-software/lighthouse-check-status-action@v1.0.1
       with:
         lighthouseCheckResults: ${{ steps.lighthouse.outputs.lighthouseCheckResults }}
-        minAccessibilityScore: "98"
-        minBestPracticesScore: "92"
-        minPerformanceScore: "12"
-        minSeoScore: "84"
+        minAccessibilityScore: "96"
+        minBestPracticesScore: "90"
+        minPerformanceScore: "10"
+        minSeoScore: "80"
 
   publish:
 
