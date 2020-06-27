@@ -7,18 +7,7 @@
 {%- endif %}
 
 <nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    {% for item in page_toc recursive %}
-        <li class="nav-item toc-entry toc-h{{ loop.depth + 1 }}">
-            <a href="{{ item.url }}" class="nav-link">{{ item.title }}</a>
-        {%- if item.children -%}
-            <ul class="nav section-nav flex-column">
-                {{ loop(item.children) }}
-            </ul>
-        {%- endif %}
-        </li>
-    {% endfor %}
-    </ul>
+    {{ page_toc }}
 </nav>
 
 {% include "edit_this_page.html" %}

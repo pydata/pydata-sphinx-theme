@@ -269,7 +269,12 @@ table.field-list {
   }
 }
 
-.bd-sidebar .nav > {
+.bd-sidebar .nav {
+  ul {
+    list-style: none;
+    padding: 0 1.5rem;
+  }
+
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
@@ -283,33 +288,24 @@ table.field-list {
     }
   }
 
+  // For page headers with toctrees under them
+  li.page-header {
+    > ul {
+      padding-left: 0;
+    } 
+
+    > a {
+      font-size: 1.2em;
+      font-weight: 500;
+      color: black;
+    }
+  }
+
   .active {
     > a,
     &:hover > a {
       font-weight: 600;
       color: #130654;
-    }
-  }
-
-  li > ul {
-    list-style: none;
-    padding: 0.25rem 1.5rem;
-
-    > {
-      li > a {
-        display: block;
-        padding: 0.25rem 1.5rem;
-        font-size: 0.9em;
-        color: rgba(0, 0, 0, 0.65);
-      }
-
-      .active {
-        > a,
-        &:hover > a {
-          font-weight: 600;
-          color: #130654;
-        }
-      }
     }
   }
 }
