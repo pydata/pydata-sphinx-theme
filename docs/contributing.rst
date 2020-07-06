@@ -66,25 +66,23 @@ The CSS and JS for this theme are built for the browser from ``src/*`` with
 `webpack <https://webpack.js.org/>`__. The main entrypoints are:
 
 - CSS: ``src/scss/index.scss``
-    - the main part of the theme assets
-    - customizes `Bootstrap <https://getbootstrap.com/>`__ with `Sass <https://sass-lang.com>`__
-    - points to the ``font-face`` of vendored web fonts, but does not include their
-      CSS ``@font-face`` declaration
+  - the main part of the theme assets
+  - customizes `Bootstrap <https://getbootstrap.com/>`__ with `Sass <https://sass-lang.com>`__
+  - points to the ``font-face`` of vendored web fonts, but does not include their
+    CSS ``@font-face`` declaration
 - JS: ``src/js/index.js``
-    - provides add-on Bootstrap features, as well as some custom navigation behavior
+  - provides add-on Bootstrap features, as well as some custom navigation behavior
 - webpack: ``webpack.common.js``
-    - captures the techniques for transforming the JS and CSS source files in
-      ``src/`` into the production assets in ``pydata_sphinx_theme/static/``
+  - captures the techniques for transforming the JS and CSS source files in
+    ``src/`` into the production assets in ``pydata_sphinx_theme/static/``
 
 These entrypoints, and all files they reference, are bundled into
 ``pydata_sphinx_theme/static/{css,js}/index.<hash>.{css,js}``.
 
-The ``<hash>`` ensures the correct asset versions are serve when viewers return to your
-site after upgrading the theme, and is reproducibly derived from:
-
-- ``src/**/*``
-- ``webpack.{common,prod}.js``
-- the ``dependencies`` and ``devDependencies`` in ``package.json``/``yarn.lock``
+The ``<hash>`` ensures the correct asset versions are served when viewers return to your
+site after upgrading the theme, and is reproducibly derived from ``src/**/*``,
+``webpack.{common,prod}.js``, and the ``dependencies`` and ``devDependencies``
+in ``package.json``/``yarn.lock``.
 
 Web fonts, and their supporting CSS, are copied into
 ``pydata_sphinx_theme/static/vendor/<font name>/<font version>/``. Including
@@ -168,7 +166,7 @@ on the theme, saving changes to any of:
 - ``docs/**/*.rst``
 - ``docs/**/*.py``
 
-...causes the development server to:
+...causes the development server to reload:
 
 - bundle/copy the CSS, JS, and vendored fonts
 - regenerate the Jinja2 macros
@@ -193,20 +191,20 @@ Fonts are an important, performance-sensitive, but ultimately, subjective, part
 of the theme. The current font selections are:
 
 - managed as dependencies in ``package.json``
-    - allowing the versions to be managed centrally
+  - allowing the versions to be managed centrally
 - copied directly into the site statics, including licenses
-    - allowing the chosen fonts to be replaced (or removed entirely) with minimal
-      templating changes
+  - allowing the chosen fonts to be replaced (or removed entirely) with minimal
+    templating changes
 - partially preloaded (mostly icons)
-    - reducing flicker and re-layout artifacts
+  - reducing flicker and re-layout artifacts
 - mostly managed in ``webpack.common.js``
-    - allowing upgrades to be handled in a relatively sane, manageable way
+  - allowing upgrades to be handled in a relatively sane, manageable way
 
 
 Upgrading a font
 ^^^^^^^^^^^^^^^^
 
-If `only` the version of an `existing` font must change, for example to enable
+If *only* the version of an `existing` font must change, for example to enable
 new icons, run:
 
 .. code-block:: bash
@@ -214,7 +212,7 @@ new icons, run:
     yarn add <font name>@<version>
     yarn build:production
 
-It `may` also be necessary to clear out old font versions from
+It *may* also be necessary to clear out old font versions from
 ``pydata_sphinx_theme/static/vendor/`` before committing.
 
 
@@ -227,10 +225,10 @@ required. The steps are roughly:
 
 - install the new font, as above, with ``yarn add``
 - in ``webpack.common.js``:
-    - add the new font to ``vendorVersions`` and ``vendorPaths``
-    - add new ``link`` tags to the appropriate macro in ``macroTemplate``
-    - add the new font files (including the license) to ``CopyPlugin``
-    - remove referencs to the font being replaced/removed, if applicable
+  - add the new font to ``vendorVersions`` and ``vendorPaths``
+  - add new ``link`` tags to the appropriate macro in ``macroTemplate``
+  - add the new font files (including the license) to ``CopyPlugin``
+  - remove referencs to the font being replaced/removed, if applicable
 - restart the development server, if running
 - rebuild the production assets, as above, with ``yarn build:production``
 - potentially remove the font being replaced from ``package.json`` and re-run ``yarn``
