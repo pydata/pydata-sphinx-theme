@@ -8,11 +8,8 @@ $container-max-widths: (
 );
 
 // Include core Bootstrap
-@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 @import './variables';
-
-// Import custom fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Lato:400');
 
 @import './base';
 @import './navbar';
@@ -41,7 +38,7 @@ $container-max-widths: (
 }
 
 .viewcode-back {
-  font-family: Arial, sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .viewcode-block:target {

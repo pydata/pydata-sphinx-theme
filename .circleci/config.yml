@@ -30,7 +30,7 @@ jobs:
             # Install pandas + some optional dependencies
             pip install -r docs/requirements.txt
             # install the theme package
-            pip install -e .
+            pip install .
       # Cache some files for a speedup in subsequent builds
       - save_cache:
           key: cache-pip

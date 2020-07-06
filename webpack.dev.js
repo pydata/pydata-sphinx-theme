@@ -16,10 +16,17 @@ module.exports = merge(common, {
     hot: false,
     liveReload: true,
     publicPath: '/_static/',
+    writeToDisk: true
   },
   plugins: [
     new WatchPlugin({
-      files: ['./docs/**/*.rst', './docs/**/*.py', './pydata_sphinx_theme/**/*.html'],
+      files: [
+        './docs/**/*.rst',
+        './docs/**/*.py',
+        './pydata_sphinx_theme/**/*.html',
+        // watching the generated macros causes vicious cycles
+        '!./pydata_sphinx_theme/static/*.html'
+      ],
     }),
     new ShellPlugin({
       onBuildEnd: ['make -C docs clean html'],
