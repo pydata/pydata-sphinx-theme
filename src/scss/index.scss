@@ -17,7 +17,7 @@ $grid-breakpoints: (
 );
 
 // Import Bootstrap core
-@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
 @import './base';
 @import './navbar';
@@ -94,9 +94,11 @@ table.field-list {
  * Styling for autosummary tables
  */
 
-// The first column (with the signature) should not wrap
-td:first-child {
-  white-space: nowrap;
+.table.autosummary {
+  // The first column (with the signature) should not wrap
+  td:first-child {
+    white-space: nowrap;
+  }
 }
 
 /**

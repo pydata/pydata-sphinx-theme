@@ -15,6 +15,7 @@
     "css-loader": "^3.4.2",
     "extract-loader": "^4.0.3",
     "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^4.3.0",
     "imports-loader": "^0.8.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.1",
@@ -29,6 +30,9 @@
     "webpack-watch-files-plugin": "^1.0.3"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@openfonts/lato_latin-ext": "^1.44.1",
+    "@openfonts/open-sans_all": "^1.44.1",
     "bootstrap": "^4.4.1",
     "jquery": "3.4.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",

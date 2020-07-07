@@ -16,6 +16,7 @@ the left sidebar to see how various elements look on this theme.
     lists_tables
     markdown
     example_pandas
+    mult_headers
 
 .. toctree::
     :maxdepth: 3

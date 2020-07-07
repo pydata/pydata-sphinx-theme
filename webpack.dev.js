@@ -16,6 +16,7 @@ module.exports = merge(common, {
     hot: false,
     liveReload: true,
     publicPath: '/_static/',
+    writeToDisk: true,
   },
   plugins: [
     new WatchPlugin({
@@ -24,6 +25,8 @@ module.exports = merge(common, {
         './docs/**/*.py',
         './pydata_sphinx_theme/**/*.html',
         './pydata_sphinx_theme/**/*.css',
+        // watching the generated macros causes vicious cycles
+        '!./pydata_sphinx_theme/static/*.html',
       ],
     }),
     new ShellPlugin({

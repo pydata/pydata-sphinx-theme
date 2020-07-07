@@ -8,7 +8,7 @@ from sphinx.errors import ExtensionError
 from .bootstrap_html_translator import BootstrapHTML5Translator
 import docutils
 
-__version__ = "0.2.3dev0"
+__version__ = "0.3.2dev0"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -65,7 +65,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         self_toc = TocTree(app.env).get_toc_for(pagename, app.builder)
 
         try:
-            nav = docutils_node_to_jinja(self_toc.children[0])
+            # If there's only one child, assume we have a single "title" as top header
+            # so start the TOC at the first item's children (AKA, level 2 headers)
+            if len(self_toc.children) == 1:
+                nav = docutils_node_to_jinja(self_toc.children[0]).get("children", [])
+            else:
+                nav = [docutils_node_to_jinja(item) for item in self_toc.children]
             return nav
         except Exception:
             return {}
@@ -144,6 +149,11 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                     "Add %s to your `html_context` configuration" % val
                 )
 
+        # Enable optional custom github url for self-hosted github instances
+        github_url = "https://github.com"
+        if context.get("github_url"):
+            github_url = context["github_url"]
+
         github_user = context["github_user"]
         github_repo = context["github_repo"]
         github_version = context["github_version"]
@@ -156,7 +166,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
         # Build the URL for "edit this button"
         url_edit = (
-            f"https://github.com/{github_user}/{github_repo}"
+            f"{github_url}/{github_user}/{github_repo}"
             f"/edit/{github_version}/{doc_path}{file_name}"
         )
         return url_edit
