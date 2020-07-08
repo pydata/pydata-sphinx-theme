@@ -22,6 +22,19 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         We use beautifulsoup to add the right CSS classes / structure for bootstrap.
 
         See https://www.sphinx-doc.org/en/master/templating.html#toctree.
+
+        Parameters
+        ----------
+
+        kind : ["navbar", "sidebar", "raw"]
+            The kind of UI element this toctree is generated for.
+        kwargs: passed to the Sphinx `toctree` template function.
+        
+        Returns
+        -------
+
+        nav_object : HTML string (if kind in ["navbar", "sidebar"]) or BeautifulSoup
+                     object (if kind == "raw")
         """
         toc_sphinx = context["toctree"](**kwargs)
         soup = bs(toc_sphinx, "html.parser")
@@ -50,9 +63,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             current_lis = soup.select("li.current.toctree-l1 li.toctree-l2")
             out = "\n".join([ii.prettify() for ii in current_lis])
 
+        elif kind == "raw":
+            out = soup
+        
         return out
 
-    def get_page_toc_object():
+    def get_page_toc_object(kind="html"):
         """Return the within-page TOC links in HTML."""
 
         if "toc" not in context:
@@ -91,7 +107,11 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         else:
             out = ""
 
-        return out
+        # Return the toctree object
+        if kind == "html":
+            return out
+        else:
+            return soup
 
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
