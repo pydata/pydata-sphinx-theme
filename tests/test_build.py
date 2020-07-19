@@ -63,6 +63,8 @@ def test_build_book(file_regression, sphinx_build):
 
     # Sidebar subpage
     sidebar = subpage_html.select(".bd-sidebar")[0]
-    file_regression.check(sidebar.prettify(), basename="sidebar_subpage", extension=".html")
+    file_regression.check(
+        sidebar.prettify(), basename="sidebar_subpage", extension=".html"
+    )
 
     sphinx_build.clean()

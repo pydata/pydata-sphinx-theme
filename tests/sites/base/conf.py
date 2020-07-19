@@ -17,5 +17,4 @@ html_copy_source = True
 html_sourcelink_suffix = ""
 
 # Base options, we can add other key/vals later
-html_theme_options = {
-}
+html_theme_options = {}
