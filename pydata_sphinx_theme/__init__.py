@@ -177,7 +177,8 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         # Build the URL for "edit this button"
         if display_bitbucket:
             url_edit = (
-                f"{bitbucket_url}/{bitbucket_user}/{bitbucket_repo}/src/{bitbucket_version}"
+                f"{bitbucket_url}/{bitbucket_user}/{bitbucket_repo}"
+                f"/src/{bitbucket_version}"
                 f"/{doc_path}{file_name}?mode=edit"
             )
         else:
