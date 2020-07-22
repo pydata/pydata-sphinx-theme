@@ -154,18 +154,18 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         if context.get("github_url"):
             github_url = context["github_url"]
 
-        github_user = context["github_user"]
-        github_repo = context["github_repo"]
-        github_version = context["github_version"]
+        github_user = context.get("github_user")
+        github_repo = context.get("github_repo")
+        github_version = context.get("github_version")
 
         bitbucket_url = "https://bitbucket.org"
         if context.get("bitbucket_url"):
             bitbucket_url = context["bitbucket_url"]
 
-        display_bitbucket = context["display_bitbucket"]
-        bitbucket_user = context["bitbucket_user"]
-        bitbucket_repo = context["bitbucket_repo"]
-        bitbucket_version = context["bitbucket_version"]
+        display_bitbucket = context.get("display_bitbucket")
+        bitbucket_user = context.get("bitbucket_user")
+        bitbucket_repo = context.get("bitbucket_repo")
+        bitbucket_version = context.get("bitbucket_version")
 
         file_name = f"{pagename}{context['page_source_suffix']}"
 

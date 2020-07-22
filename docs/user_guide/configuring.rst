@@ -79,6 +79,18 @@ your ``conf.py`` file:
        "doc_path": "<path-from-root-to-your-docs>",
    }
 
+Bitbucket configuration
+
+.. code:: python
+
+   html_context = {
+       "display_bitbucket": True,
+       "bitbucket_user": "<your-bitbucket-org>",
+       "bitbucket_repo": "<your-bitbucket-repo>",
+       "bitbucket_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }
+
 You should also enable the edit option in your 'html_theme_options':
 
 .. code:: python
@@ -86,6 +98,18 @@ You should also enable the edit option in your 'html_theme_options':
    html_theme_options = {
        "use_edit_page_button": True,
    }
+
+if you have a self-hosted Bitbucket instance, you can
+configure a custom url.
+This option defaults to 'https://bitbucket.org',
+and you do not need to specify it if you wish to use the default.
+
+.. code:: python
+
+   html_context = {
+       "bitbucket_url": "<your-bitbucket-url>",
+   }
+
 
 Optionally, if you have a self-hosted Github Enterprise instance, you can
 configure a custom url. This option defaults to 'https://github.com',
@@ -96,6 +120,7 @@ and you do not need to specify it if you wish to use the default.
    html_context = {
        "github_url": "<your-github-url>",
    }
+
 
 Configure the search bar position
 =================================
