@@ -3,10 +3,10 @@ Bootstrap-based sphinx theme from the PyData community
 """
 import os
 
+import docutils
 from sphinx.errors import ExtensionError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
-import docutils
 
 __version__ = "0.3.2dev0"
 
@@ -157,6 +157,16 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         github_user = context["github_user"]
         github_repo = context["github_repo"]
         github_version = context["github_version"]
+
+        bitbucket_url = "https://bitbucket.org"
+        if context.get("bitbucket_url"):
+            bitbucket_url = context["bitbucket_url"]
+
+        display_bitbucket = context["display_bitbucket"]
+        bitbucket_user = context["bitbucket_user"]
+        bitbucket_repo = context["bitbucket_repo"]
+        bitbucket_version = context["bitbucket_version"]
+
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -165,10 +175,16 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             doc_path = f"{doc_path}/"
 
         # Build the URL for "edit this button"
-        url_edit = (
-            f"{github_url}/{github_user}/{github_repo}"
-            f"/edit/{github_version}/{doc_path}{file_name}"
-        )
+        if display_bitbucket:
+            url_edit = (
+                f"{bitbucket_url}/{bitbucket_user}/{bitbucket_repo}/src/{bitbucket_version}"
+                f"{doc_path}{file_name}?mode=edit"
+            )
+        else:
+            url_edit = (
+                f"{github_url}/{github_user}/{github_repo}"
+                f"/edit/{github_version}/{doc_path}{file_name}"
+            )
         return url_edit
 
     context["get_edit_url"] = get_edit_url
