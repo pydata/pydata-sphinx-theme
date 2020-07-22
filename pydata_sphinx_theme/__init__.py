@@ -178,7 +178,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         if display_bitbucket:
             url_edit = (
                 f"{bitbucket_url}/{bitbucket_user}/{bitbucket_repo}/src/{bitbucket_version}"
-                f"{doc_path}{file_name}?mode=edit"
+                f"/{doc_path}{file_name}?mode=edit"
             )
         else:
             url_edit = (
