@@ -20,6 +20,11 @@
     padding: 0 1.4rem;
   }
 
+  // Lists need to have left margin so they don't spill into it
+  > ol, > ul {
+      margin-left: 1em;
+  }
+
   // Defaults for all admonitions
   .admonition-title {
     position: relative;

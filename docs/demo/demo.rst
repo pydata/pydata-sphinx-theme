@@ -409,6 +409,13 @@ Admonitions
    Equations within a note:
    :math:`G_{\mu\nu} = 8 \pi G (T_{\mu\nu}  + \rho_\Lambda g_{\mu\nu})`.
 
+.. Note:: Lists in admonitions.
+
+   1. Here's a list item
+   2. And another list item
+
+   They should be in-line with the text around them!
+
 .. Tip:: 15% if the service is good.
 
     +---------+
