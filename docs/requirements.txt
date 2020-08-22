@@ -5,3 +5,6 @@ pandas
 jupyter_sphinx
 plotly
 numpy
+pytest
+pytest-regressions
+beautifulsoup4

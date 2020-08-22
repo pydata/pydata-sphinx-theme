@@ -163,7 +163,7 @@ module.exports = {
       // lato
       {
         context: './node_modules/@openfonts/lato_latin-ext',
-        from: 'files/*-400*',
+        from: 'files/*',
         flatten: true,
         to: resolve(vendorPaths.lato, 'files'),
       },
