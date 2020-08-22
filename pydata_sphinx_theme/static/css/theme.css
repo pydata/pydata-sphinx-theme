@@ -1,8 +1,3 @@
-/*****************************************************************************
- * Custom font
-**/
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
 :root {
   /*****************************************************************************
   * Font size
@@ -57,6 +52,7 @@
   --color-preformatted-text: 34, 34, 34;
   --color-preformatted-background: 250, 250, 250;
 
+  --color-admonition-primary: var(--color-primary);
   --color-admonition-success: var(--color-success);
   --color-admonition-danger: var(--color-danger);
   --color-admonition-warning: var(--color-warning);
