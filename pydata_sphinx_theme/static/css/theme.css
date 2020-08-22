@@ -41,16 +41,21 @@
   --color-paragraph: var(--color-text-base);
   --color-link: 0, 91, 129;
   --color-link-hover: 227, 46, 0;
-  --color-sidebar-link: 0, 0, 0;
-  --color-sidebar-link-hover: 19, 6, 84;
-  --color-sidebar-link-active: 19, 6, 84;
-  --color-toc-link: 119, 117, 122;
-  --color-toc-link-hover: 38, 38, 38;
-  --color-toc-link-active: 19, 6, 84;
   --color-headerlink: 198, 15, 15;
   --color-headerlink-hover: 255, 255, 255;
   --color-preformatted-text: 34, 34, 34;
   --color-preformatted-background: 250, 250, 250;
+
+  --color-active-navigation: 19, 6, 84;
+  --color-navbar-link: 0, 0, 0;
+  --color-navbar-link-hover: var(--color-active-navigation);
+  --color-navbar-link-active: var(--color-active-navigation);
+  --color-sidebar-link: 0, 0, 0;
+  --color-sidebar-link-hover: var(--color-active-navigation);
+  --color-sidebar-link-active: var(--color-active-navigation);
+  --color-toc-link: 119, 117, 122;
+  --color-toc-link-hover: var(--color-active-navigation);
+  --color-toc-link-active: var(--color-active-navigation);
 
   --color-admonition-primary: var(--color-primary);
   --color-admonition-success: var(--color-success);

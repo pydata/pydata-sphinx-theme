@@ -19,16 +19,16 @@
 .navbar-light {
   background: #fff !important;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
-}
 
-.navbar-nav {
-  li a {
-    padding: 0 15px;
-  }
+  .navbar-nav {
+    li a {
+      padding: 0 15px;
+    }
 
-  > .active > .nav-link {
-    font-weight: 600;
-    color: var(--color-primary) !important;
+    > .active > .nav-link {
+      font-weight: 600;
+      color: rgba(var(--color-navbar-link-active), 1);
+    }
   }
 }
 
