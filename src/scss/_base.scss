@@ -9,13 +9,13 @@ body {
   font-family: var(--font-family-base);
   font-weight: 400;
   line-height: 1.65em;
-  color: var(--main-text-color);
+  color: rgba(var(--color-text-base), 1);
 }
 
 p {
   margin-bottom: 1.15rem;
   font-size: 1em;
-  color: var(--color-paragraph);
+  color: rgba(var(--color-paragraph), 1);
 
   /* section header in docstring pages */
   &.rubric {
