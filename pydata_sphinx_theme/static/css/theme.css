@@ -47,10 +47,10 @@
   --color-preformatted-background: 250, 250, 250;
 
   --color-active-navigation: 19, 6, 84;
-  --color-navbar-link: 0, 0, 0;
+  --color-navbar-link: 77, 77, 77;
   --color-navbar-link-hover: var(--color-active-navigation);
   --color-navbar-link-active: var(--color-active-navigation);
-  --color-sidebar-link: 0, 0, 0;
+  --color-sidebar-link: 77, 77, 77;
   --color-sidebar-link-hover: var(--color-active-navigation);
   --color-sidebar-link-active: var(--color-active-navigation);
   --color-toc-link: 119, 117, 122;
