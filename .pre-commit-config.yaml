@@ -7,7 +7,7 @@ repos:
         entry: bash -c "yarn build:production"
         files: ^src/*
 -   repo: https://github.com/psf/black
-    rev: stable
+    rev: 19.10b0
     hooks:
     -   id: black
         language_version: python3.6
