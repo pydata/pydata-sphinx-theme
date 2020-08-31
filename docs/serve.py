@@ -22,15 +22,14 @@ SETTINGS = dict(
 
 class CacheStaticHandler(web.StaticFileHandler):
     def get_cache_time(self, *args, **kwargs):
-        """ always return a fairly long time. real deployments would have a more
-            robust solution
+        """always return a fairly long time. real deployments would have a more
+        robust solution
         """
         return int(1e10)
 
 
 def make_app():
-    """ create and return (but do not start) a tornado app
-    """
+    """create and return (but do not start) a tornado app"""
     app = web.Application(
         [(r"^/(.*)", CacheStaticHandler, dict(path=SETTINGS["static_path"]))],
         **SETTINGS
@@ -40,8 +39,7 @@ def make_app():
 
 
 def main(port, host):
-    """ start a tornado app on the desired port
-    """
+    """start a tornado app on the desired port"""
     app = make_app()
     app.listen(port, host)
     url = "http://{}:{}/".format(host, port)
