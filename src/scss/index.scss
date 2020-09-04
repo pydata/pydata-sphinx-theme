@@ -16,12 +16,14 @@ $container-max-widths: (
 @import './admonitions';
 
 // Custom css, TODO: to be refactored in different partials
-.deprecated {
+div.deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
   padding: 7px;
-  background-color: #ffe4e4;
-  border: 1px solid #f66;
+  color: #b94a48;
+  background-color: #F3E5E5;
+  border: 1px solid #eed3d7;
+  border-radius: .5rem;
 
   p {
     display: inline;
