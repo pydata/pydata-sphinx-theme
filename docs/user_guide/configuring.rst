@@ -48,6 +48,17 @@ an external site. You can add external links to the nav bar like so:
      ]
    }
 
+Configure the sidebar
+=====================
+
+``pydata_sphinx_theme`` provides two new sidebar items by default:
+
+- ``nav-bs.html`` - a bootstrap-friendly navigation section
+- ``search-bs.html`` - a bootstrap-friendly search bar
+
+By default, this theme's sidebar has these two elements in it. If you'd like to
+override this behavior and control the sidebar on a per-page basis, use the
+`Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
 Hiding the previous and next buttons
 ====================================
