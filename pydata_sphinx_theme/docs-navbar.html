@@ -3,14 +3,18 @@
 
 
     {% if logo %}
-      {% if theme_logo_doc %}
-      <a class="navbar-brand" href="{{ pathto(theme_logo_doc) }}">
-        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-      </a>
-      {% else %}
+      {% if not theme_logo_link %}
       <a class="navbar-brand" href="{{ pathto(master_doc) }}">
         <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
       </a>
+      {% elif theme_logo_link[:4] == 'http' %}
+      <a class="navbar-brand" href="{{ theme_logo_link }}">
+        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
+      </a>
+      {% else %}
+      <a class="navbar-brand" href="{{ pathto(theme_logo_link) }}">
+        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
+      </a>      
       {% endif %}
     {% endif %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
