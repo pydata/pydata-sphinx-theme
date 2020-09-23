@@ -459,6 +459,12 @@ Admonitions
       error
       hint
 
+Deprecated
+----------
+
+.. deprecated:: 0.1.1
+   Something is deprecated, use something else instead.
+
 
 Topics, Sidebars, and Rubrics
 -----------------------------
