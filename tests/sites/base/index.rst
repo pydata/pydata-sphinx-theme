@@ -8,3 +8,12 @@ Index ``with code`` in title
    page1
    page2
    section1/index
+
+A header
+--------
+
+A sub-header
+~~~~~~~~~~~~
+
+A sub-sub-header
+````````````````

@@ -150,3 +150,22 @@ use the following configuration:
    html_theme_options = {
      "navigation_with_keys": False
    }
+
+
+Show more levels of the in-page TOC by default
+==============================================
+
+Normally only the 2nd-level headers of a page are show in the right
+table of contents, and deeper levels are only shown when they are part
+of an active section (when it is scrolled on screen).
+
+You can show deeper levels by default by using the following configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+     "show_toc_level": 2
+   }
+
+All headings up to and including the level specified will now be shown
+regardless of what is displayed on the page.

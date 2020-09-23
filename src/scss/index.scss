@@ -350,7 +350,13 @@ table.field-list {
 .bd-toc .nav {
   .nav {
     display: none;
+
+    // So we can manually specify a level as visible in the config
+    &.visible {
+      display: block;
+    }
   }
+
 
   > .active > ul {
     display: block;
