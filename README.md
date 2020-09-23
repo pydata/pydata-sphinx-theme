@@ -17,6 +17,7 @@ Sites that are using this theme:
 - Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
 - Fairlearn: https://fairlearn.github.io/quickstart.html
 
+
 ## Installation and usage
 
 The theme is available on PyPI and conda-forge. You can install

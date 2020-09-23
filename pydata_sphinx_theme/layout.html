@@ -75,21 +75,20 @@
 
       </div>
     </div>
-  </div>
 
-  {{ _webpack.body_post() }}
+    {{ _webpack.body_post() }}
 
-  {% if theme_google_analytics_id %}
-  <!-- Google Analytics -->
-  <script>
-    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-    ga('create', '{{ theme_google_analytics_id }}', 'auto');
-    ga('set', 'anonymizeIp', true);
-    ga('send', 'pageview');
-  </script>
-  <script async src='https://www.google-analytics.com/analytics.js'></script>
-  <!-- End Google Analytics -->
-  {% endif %}
+    {% if theme_google_analytics_id %}
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', '{{ theme_google_analytics_id }}', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    {% endif %}
 
 {%- endblock %}
 
