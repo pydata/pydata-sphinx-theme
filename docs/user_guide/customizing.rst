@@ -29,12 +29,22 @@ value.
 
 Important, the theme is defined with CSS variables, not SASS variables!
 
-### Custom.css
+Custom stylesheet
+-----------------
 
-If the theme variables are not sufficient to shape theme to you liking, you can take full control over the look and feel via `/pydata_sphinx_theme/static/css/custom.css`. This stylesheet is loaded last on top of the theme variables and the base styleheet.
+If the theme variables are not sufficient to shape theme to you liking, you can
+take full control over the look and feel via a custom stylesheet. If you have a
+stylesheet in ``_static/css/custom.css``, adding the following to ``conf.py``
+will ensure this stylesheet is loaded last on top of the theme variables and the
+base styleheet:
 
+.. code-block:: rst
 
+    html_static_path = ['_static']
 
+    html_css_files = [
+        'css/custom.css',
+    ]
 
 
 Replacing/Removing Fonts
