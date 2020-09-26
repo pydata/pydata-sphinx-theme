@@ -30,8 +30,7 @@ function macroTemplate({ compilation }) {
   const stylesheet = (css) => {
     return `
     <link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet" />
-    <link href="{{ pathto('_static/${css}', 1) }}" rel="stylesheet" />
-    <link href="{{ pathto('_static/css/custom.css', 1) }}" rel="stylesheet" />`;
+    <link href="{{ pathto('_static/${css}', 1) }}" rel="stylesheet" />`;
   };
 
   const preload = (js) => {
@@ -121,7 +120,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['**/*', '!css', '!css/theme.css', '!css/custom.css'],
+      cleanOnceBeforeBuildPatterns: ['**/*', '!css', '!css/theme.css'],
     }),
     new HtmlWebpackPlugin({
       filename: resolve(staticPath, 'webpack-macros.html'),
