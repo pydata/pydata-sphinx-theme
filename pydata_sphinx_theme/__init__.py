@@ -173,6 +173,9 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
     context["get_edit_url"] = get_edit_url
 
+    # Ensure that the max TOC level is an integer
+    context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
+
 
 # -----------------------------------------------------------------------------
 
