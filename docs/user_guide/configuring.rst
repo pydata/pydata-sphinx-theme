@@ -54,7 +54,7 @@ Configure the sidebar
 ``pydata_sphinx_theme`` provides two new sidebar items by default:
 
 - ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section
-- ``search-bs.html`` - a bootstrap-friendly search bar
+- ``sidebar-search-bs.html`` - a bootstrap-friendly search bar
 
 By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
