@@ -18,3 +18,5 @@ html_sourcelink_suffix = ""
 
 # Base options, we can add other key/vals later
 html_theme_options = {}
+
+html_sidebars = {"section1/index": ["sidebar-nav-bs.html"]}

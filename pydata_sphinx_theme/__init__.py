@@ -199,4 +199,9 @@ def setup(app):
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
 
+    # Update templates for sidebar
+    pkgdir = os.path.abspath(os.path.dirname(__file__))
+    path_templates = os.path.join(pkgdir, "_templates")
+    app.config.templates_path.append(path_templates)
+
     return {"parallel_read_safe": True, "parallel_write_safe": True}

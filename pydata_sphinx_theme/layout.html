@@ -46,7 +46,9 @@
       <div class="row">
           {% block docs_sidebar %}
           <div class="col-12 col-md-3 bd-sidebar">
-              {%- include "docs-sidebar.html" %}
+              {%- for sidebartemplate in sidebars %}
+              {%- include sidebartemplate %}
+              {%- endfor %}
           </div>
           {% endblock %}
 
