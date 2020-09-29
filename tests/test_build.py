@@ -68,3 +68,15 @@ def test_build_book(file_regression, sphinx_build):
     )
 
     sphinx_build.clean()
+
+
+def test_toc_visibility(file_regression, sphinx_build):
+    sphinx_build.copy()
+
+    # Test that setting TOC level visibility works as expected
+    sphinx_build.build(["-D", "html_theme_options.show_toc_level=2"])
+    index_html = sphinx_build.get("index.html")
+
+    # The 3rd level headers should be visible, but not the fourth-level
+    assert "visible" in index_html.select(".toc-h2 ul")[0].attrs["class"]
+    assert "visible" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
