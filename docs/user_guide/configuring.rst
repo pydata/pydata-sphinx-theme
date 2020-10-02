@@ -29,6 +29,7 @@ following configuration:
 
    html_theme_options = {
      "github_url": "https://github.com/<your-org>/<your-repo>",
+     "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
      "twitter_url": "https://twitter.com/<your-handle>",
    }
 
@@ -108,6 +109,18 @@ and you do not need to specify it if you wish to use the default.
        "github_url": "<your-github-url>",
    }
 
+Secondary logo in right sidebar
+====================================
+
+You can add a logo in the right sidebar below the Edit this Page button. To do so, set the following
+`html_theme_options` in your ``conf.py``:
+
+.. code:: python
+
+    html_theme_options = {
+        "secondary_logo": {"path": "_static/<image-file>", "width": "<width-of-image>"}
+    }
+ 
 Configure the search bar position
 =================================
 
