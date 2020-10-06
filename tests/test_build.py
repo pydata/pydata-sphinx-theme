@@ -97,3 +97,17 @@ def test_logo_name(file_regression, sphinx_build):
     sphinx_build.build(["-D", "html_logo="])
     index_html = sphinx_build.get("index.html")
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
+
+
+def test_sidebar_visible(file_regression, sphinx_build):
+    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
+    sphinx_build.copy()
+
+    sphinx_build.build()
+    index_html = sphinx_build.get("index.html")
+    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
+
+    sphinx_build.build(["-D", "html_sidebars.index="])
+    index_html = sphinx_build.get("index.html")
+    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
+    sphinx_build.clean()

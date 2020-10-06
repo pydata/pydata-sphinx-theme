@@ -45,11 +45,16 @@
     <div class="container-xl">
       <div class="row">
           {% block docs_sidebar %}
-          <div class="col-12 col-md-3 bd-sidebar">
-              {%- for sidebartemplate in sidebars %}
-              {%- include sidebartemplate %}
-              {%- endfor %}
-          </div>
+            {% if sidebars %}
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+                {%- for sidebartemplate in sidebars %}
+                {%- include sidebartemplate %}
+                {%- endfor %}
+            </div>
+            {% else %}
+            <div class="col-12 col-md-1 col-xl-2 bd-sidebar"></div>
+            {% endif %}
           {% endblock %}
 
           {% block docs_toc %}
@@ -61,7 +66,7 @@
           {% endblock %}
 
           {% block docs_main %}
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <main class="col py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
               {% block docs_body %}
               <div>
                 {% block body %} {% endblock %}
