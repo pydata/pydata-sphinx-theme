@@ -80,3 +80,20 @@ def test_toc_visibility(file_regression, sphinx_build):
     # The 3rd level headers should be visible, but not the fourth-level
     assert "visible" in index_html.select(".toc-h2 ul")[0].attrs["class"]
     assert "visible" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
+
+
+def test_logo_name(file_regression, sphinx_build):
+    """Test that the logo is shown by default, project title if no logo."""
+    sphinx_build.copy()
+
+    # By default logo is shown
+    sphinx_build.build()
+    index_html = sphinx_build.get("index.html")
+    assert index_html.select(".navbar-brand img")
+    assert not index_html.select(".navbar-brand")[0].text.strip()
+    sphinx_build.clean()
+
+    # Test that setting TOC level visibility works as expected
+    sphinx_build.build(["-D", "html_logo="])
+    index_html = sphinx_build.get("index.html")
+    assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
