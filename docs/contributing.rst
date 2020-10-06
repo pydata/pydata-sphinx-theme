@@ -319,3 +319,10 @@ Note that if needed, you can skip these checks with:
 .. code-block:: bash
 
     git commit --no-verify
+
+
+Make a release
+==============
+
+This theme uses GitHub tags and releases to automatically push new releases to
+PyPI. For information on this process, see `the release checklist <https://github.com/pandas-dev/pydata-sphinx-theme/wiki/Release-checklist#release-instructions>`_.
