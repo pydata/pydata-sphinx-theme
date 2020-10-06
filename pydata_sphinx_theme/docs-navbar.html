@@ -1,11 +1,13 @@
 
 <div class="container-xl">
 
-    {% if logo %}
     <a class="navbar-brand" href="{{ pathto(master_doc) }}">
-      <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-    </a>
+    {% if logo %}
+      <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo" />
+    {% else %}
+      <p class="title">{{ project }}</p>
     {% endif %}
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

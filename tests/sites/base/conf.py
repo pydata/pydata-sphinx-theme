@@ -13,6 +13,7 @@ master_doc = "index"
 # ones.
 extensions = []
 html_theme = "pydata_sphinx_theme"
+html_logo = "emptylogo.png"
 html_copy_source = True
 html_sourcelink_suffix = ""
 
