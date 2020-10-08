@@ -200,6 +200,10 @@ table.field-list {
       height: calc(100vh - 4rem);
     }
   }
+
+  &.no-sidebar {
+    border-right: 0;
+  }
 }
 
 .bd-links {
