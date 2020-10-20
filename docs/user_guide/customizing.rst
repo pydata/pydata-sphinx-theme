@@ -13,7 +13,7 @@ Customizing the CSS
 
 The theme's CSS can be tweaked in 2 ways. The most straight forward way is to
 change the theme variables. If you are looking for more customisation, you can
-write your css in ``custom.css``.
+write additional css in ``custom.css``.
 
 Theme variables
 ---------------
@@ -23,9 +23,14 @@ This theme is based on top of the basic
 extended with some theme specific variables. An overview of all variables and
 every default is defined in ``/pydata_sphinx_theme/static/css/theme.css``.
 
-In order to change a variable, simply update the value in `theme.css`. Just make
-sure you keep all defined variables around, with the default value or you theme
-value.
+In order to change a variable, add a ``custom.css`` (see below) which updates
+the value of certain variables in a ``:root`` section:
+
+.. code-block:: css
+
+    :root {
+        --font-size-base: 17px;
+    }
 
 Important, the theme is defined with CSS variables, not SASS variables!
 
