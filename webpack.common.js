@@ -28,9 +28,9 @@ function macroTemplate({ compilation }) {
   const js = indexes.filter((file) => file.endsWith('.js'));
 
   const stylesheet = (css) => {
-    return `
-    <link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet" />
-    <link href="{{ pathto('_static/${css}', 1) }}" rel="stylesheet" />`;
+    return `\
+<link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet" />
+  <link href="{{ pathto('_static/${css}', 1) }}" rel="stylesheet" />`;
   };
 
   const preload = (js) => {
