@@ -1,5 +1,6 @@
 // Override bootstrap variables
 $spacer: 1rem;
+
 $container-max-widths: (
   sm: 540px,
   md: 720px,
@@ -7,9 +8,16 @@ $container-max-widths: (
   xl: 1400px,
 );
 
-// Include core Bootstrap
+$grid-breakpoints: (
+  xs: 0,
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1400px,
+);
+
+// Import Bootstrap core
 @import '~bootstrap/scss/bootstrap';
-@import './variables';
 
 @import './base';
 @import './navbar';
@@ -20,12 +28,12 @@ div.deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
   padding: 7px;
-  color: #b94a48;
   background-color: #F3E5E5;
   border: 1px solid #eed3d7;
   border-radius: .5rem;
 
   p {
+    color:#b94a48;
     display: inline;
   }
 }
@@ -40,7 +48,7 @@ div.deprecated {
 }
 
 .viewcode-back {
-  font-family: 'Lato', sans-serif;
+  font-family: var(--font-family-base);
 }
 
 .viewcode-block:target {
@@ -166,14 +174,14 @@ table.field-list {
   a {
     display: block;
     padding: 0.125rem 1.5rem;
-    color: #77757a;
+    color: rgba(var(--color-toc-link), 1);
 
     @include media-breakpoint-up(xl) {
       padding-right: 0;
     }
 
     &:hover {
-      color: rgba(0, 0, 0, 0.85);
+      color: rgba(var(--color-toc-link-hover), 1);
       text-decoration: none;
     }
   }
@@ -181,7 +189,7 @@ table.field-list {
 
 .bd-sidebar {
   padding-top: 1em;
-  @media (min-width: 768px) {
+  @include media-breakpoint-up(md) {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 
     @supports (position: -webkit-sticky) or (position: sticky) {
@@ -199,20 +207,14 @@ table.field-list {
   padding-bottom: 1rem;
   margin-right: -15px;
   margin-left: -15px;
-}
 
-@media (min-width: 768px) {
-  @supports (position: -webkit-sticky) or (position: sticky) {
-    .bd-links {
+  @include media-breakpoint-up(md) {
+    display: block !important;
+
+    @supports (position: -webkit-sticky) or (position: sticky) {
       max-height: calc(100vh - 9rem);
       overflow-y: auto;
     }
-  }
-}
-
-@media (min-width: 768px) {
-  .bd-links {
-    display: block !important;
   }
 }
 
@@ -273,10 +275,10 @@ table.field-list {
     display: block;
     padding: 0.25rem 1.5rem;
     font-size: 0.9em;
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba(var(--color-sidebar-link), 1);
 
     &:hover {
-      color: #130654;
+      color: rgba(var(--color-sidebar-link-hover), 1);
       text-decoration: none;
       background-color: transparent;
     }
@@ -286,7 +288,7 @@ table.field-list {
     > a,
     &:hover > a {
       font-weight: 600;
-      color: #130654;
+      color: rgba(var(--color-sidebar-link-active), 1);
     }
   }
 
@@ -299,14 +301,14 @@ table.field-list {
         display: block;
         padding: 0.25rem 1.5rem;
         font-size: 0.9em;
-        color: rgba(0, 0, 0, 0.65);
+        color: rgba(var(--color-sidebar-link), 1);
       }
 
       .active {
         > a,
         &:hover > a {
           font-weight: 600;
-          color: #130654;
+          color: rgba(var(--color-sidebar-link-active), 1);
         }
       }
     }
@@ -329,8 +331,9 @@ table.field-list {
 .toc-entry > .nav-link.active {
   font-weight: 600;
   color: #130654;
+  color: rgba(var(--color-toc-link-active), 1);
   background-color: transparent;
-  border-left: 2px solid #563d7c;
+  border-left: 2px solid rgba(var(--color-toc-link-active), 1);
 }
 
 .nav-link:hover {
