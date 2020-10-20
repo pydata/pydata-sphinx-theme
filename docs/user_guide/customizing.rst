@@ -26,7 +26,7 @@ every default is defined in ``/pydata_sphinx_theme/static/css/theme.css``.
 In order to change a variable, add a ``custom.css`` (see below) which updates
 the value of certain variables in a ``:root`` section:
 
-.. code-block:: css
+.. code-block:: none
 
     :root {
         --font-size-base: 17px;
