@@ -99,15 +99,29 @@ def test_logo_name(file_regression, sphinx_build):
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
 
 
-def test_sidebar_visible(file_regression, sphinx_build):
+def test_sidebar_visible(sphinx_build):
+    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
+    sphinx_build.copy()
+
+    sphinx_build.build()
+    index_html = sphinx_build.get("page1.html")
+    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
+
+    sphinx_build.build(["-D", "html_sidebars.page1="])
+    index_html = sphinx_build.get("page1.html")
+    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
+    sphinx_build.clean()
+
+
+def test_navbar_snap_left(sphinx_build):
     """The sidebar is shrunk when no sidebars specified in html_sidebars."""
     sphinx_build.copy()
 
     sphinx_build.build()
     index_html = sphinx_build.get("index.html")
-    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
+    assert "col-lg-9" in index_html.select("div#navbar-menu")[0].attrs["class"]
 
-    sphinx_build.build(["-D", "html_sidebars.index="])
+    sphinx_build.build(["-D", "html_theme_options.navbar_snap_left=True"])
     index_html = sphinx_build.get("index.html")
-    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
+    assert "col-11" in index_html.select("div#navbar-menu")[0].attrs["class"]
     sphinx_build.clean()

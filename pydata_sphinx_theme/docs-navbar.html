@@ -12,7 +12,12 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar-menu" class="col-11 collapse navbar-collapse">
+    {% if theme_navbar_snap_left in [True, "True"] %}
+      {% set navbar_col_class = "col-11" %}
+    {% else %}
+      {% set navbar_col_class = "col-lg-9" %}
+    {% endif %}
+    <div id="navbar-menu" class="{{ navbar_col_class }} collapse navbar-collapse">
       <ul id="navbar-main-elements" class="navbar-nav mr-auto">
         {% set nav = get_nav_object(maxdepth=1, collapse=True) %}
         {% for main_nav_item in nav %}

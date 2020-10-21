@@ -66,7 +66,12 @@
           {% endblock %}
 
           {% block docs_main %}
-          <main class="col py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          {% if sidebars %}
+            {% set content_col_class = "col-md-9 col-xl-7" %}
+          {% else %}
+            {% set content_col_class = "col-md-11 col-xl-10" %}
+          {% endif %}
+          <main class="col-12 {{ content_col_class }} py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
               {% block docs_body %}
               <div>
                 {% block body %} {% endblock %}

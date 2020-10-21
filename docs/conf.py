@@ -51,7 +51,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_sidebars = {
     "contributing": ["sidebar-search-bs.html", "custom-template.html"],
-    "index": [],
+    "changelog": [],
 }
 
 # -- Options for HTML output -------------------------------------------------
@@ -70,7 +70,7 @@ html_theme_options = {
     "twitter_url": "https://twitter.com/pandas_dev",
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    "search_bar_position": "navbar",
+    # "navbar_snap_left": True,  # For testing that the navbar items snap to left properly
 }
 
 html_context = {
