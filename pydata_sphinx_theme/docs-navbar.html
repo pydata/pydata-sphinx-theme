@@ -33,6 +33,23 @@
       {% endif %}
 
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <label for="pst-mode-day" title="Enable Day Mode">
+              <i class="fab fas fa-sun"></i>
+            </label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <label for="pst-mode-night" title="Enable Night Mode">
+              <i class="fab fas fa-moon"></i>
+            </label>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav">
         {% if theme_github_url | length > 2 %}
           <li class="nav-item">
             <a class="nav-link" href="{{ theme_github_url }}" target="_blank" rel="noopener">

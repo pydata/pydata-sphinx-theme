@@ -1,0 +1,18 @@
+<input id="pst-mode-day" class="pst-visually-hidden" type="radio" name="pst-mode-day-night" checked="checked">
+<input id="pst-mode-night" class="pst-visually-hidden" type="radio" name="pst-mode-day-night">
+
+<script>
+    ;(function() {
+        const MODE = "pst-mode-day-night";
+        const NIGHT = 'night'
+        const DAY = 'day';
+        const night = document.querySelector('#pst-mode-night');
+        const day = document.querySelector('#pst-mode-day');
+
+        day.checked = !(night.checked = localStorage.getItem(MODE) === NIGHT);
+
+        [day, night].map((mode) => mode.addEventListener('change', function (event) {
+            localStorage.setItem(MODE, night.checked ? NIGHT : DAY);
+        }));
+    }).call(this);
+</script>

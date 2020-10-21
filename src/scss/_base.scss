@@ -3,8 +3,6 @@ html {
 }
 
 body {
-  padding-top: 75px;
-
   background-color: white;
   font-family: var(--font-family-base);
   font-weight: 400;
@@ -115,4 +113,16 @@ pre {
   line-height: 1.2em;
   border: 1px solid rgb(201, 201, 201);
   box-shadow: 1px 1px 1px #d8d8d8;
+}
+
+.pst-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap; /* 1. */
 }

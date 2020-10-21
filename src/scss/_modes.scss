@@ -1,0 +1,25 @@
+.pst-main {
+    background-color: var(--pst-background);
+
+    .navbar-light {
+        background-color: var(--pst-background) !important;
+
+        .navbar-nav .nav-link {
+            color: var(--pst-nav-font-color);
+        }
+    }
+
+}
+
+
+#pst-mode-day:checked ~ .pst-main {
+    label[for="pst-mode-night"] {
+        opacity: 0.5;
+    }
+}
+
+#pst-mode-night:checked ~ .pst-main label[for="pst-mode-day"],
+#pst-mode-day:checked ~ .pst-main label[for="pst-mode-night"] {
+    opacity: 0.5;
+    transition: opacity 0.2s
+}

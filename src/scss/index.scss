@@ -22,6 +22,7 @@ $grid-breakpoints: (
 @import './base';
 @import './navbar';
 @import './admonitions';
+@import './modes';
 
 // Custom css, TODO: to be refactored in different partials
 div.deprecated {
@@ -223,7 +224,7 @@ table.field-list {
 }
 
 .bd-content {
-  padding-top: 20px;
+  margin-top: 95px;
 
   .section {
     max-width: 100%;

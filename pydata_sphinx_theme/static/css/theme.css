@@ -23,7 +23,7 @@
 
   /*****************************************************************************
   * Color
-  * 
+  *
   * Colors are defined in rgb string way, "red, green, blue"
   **/
   --color-primary: 19, 6, 84;
@@ -74,4 +74,19 @@
   --icon-exclamation-circle: '\f06a';
   --icon-times-circle: '\f057';
   --icon-lightbulb: '\f0eb';
+
+  --pst-background: #fff;
+  --pst-nav-font-color: rgba(var(--color-text-base), 0.5);
+}
+
+#pst-mode-night:checked ~ .pst-main {
+  --color-text-base: 255, 255, 255;
+  --color-paragraph: 255, 255, 255;
+  --color-primary: 255, 202, 0;
+  --color-h1: var(--color-primary);
+  --color-link: 255, 255, 153;
+  --color-link-hover: 231, 4, 136;
+
+  /* new top-level things */
+  --pst-background: #050218;
 }
