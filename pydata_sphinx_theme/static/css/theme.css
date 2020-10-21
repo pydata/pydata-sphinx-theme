@@ -84,6 +84,7 @@
   --color-paragraph: 255, 255, 255;
   --color-primary: 255, 202, 0;
   --color-h1: var(--color-primary);
+  --color-h2: var(--color-primary);
   --color-link: 255, 255, 153;
   --color-link-hover: 231, 4, 136;
 

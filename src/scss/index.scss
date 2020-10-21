@@ -224,7 +224,7 @@ table.field-list {
 }
 
 .bd-content {
-  margin-top: 95px;
+  padding-top: 20px;
 
   .section {
     max-width: 100%;
@@ -449,4 +449,20 @@ i {
   a {
     color: #130754;
   }
+}
+
+.pst-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
+
+.pst-main {
+  padding-top: 75px;
 }
