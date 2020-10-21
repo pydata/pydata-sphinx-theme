@@ -82,20 +82,6 @@ def test_toc_visibility(file_regression, sphinx_build):
     assert "visible" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
 
 
-def test_sidebar_visible(file_regression, sphinx_build):
-    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
-    sphinx_build.copy()
-
-    sphinx_build.build()
-    index_html = sphinx_build.get("index.html")
-    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-    sphinx_build.build(["-D", "html_sidebars.index="])
-    index_html = sphinx_build.get("index.html")
-    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
-    sphinx_build.clean()
-
-
 def test_logo_name(file_regression, sphinx_build):
     """Test that the logo is shown by default, project title if no logo."""
     sphinx_build.copy()
