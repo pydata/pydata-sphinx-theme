@@ -113,7 +113,7 @@ def test_sidebar_visible(sphinx_build):
     sphinx_build.clean()
 
 
-def test_navbar_snap_left(sphinx_build):
+def test_navbar_align_with_content(sphinx_build):
     """The sidebar is shrunk when no sidebars specified in html_sidebars."""
     sphinx_build.copy()
 
@@ -121,7 +121,7 @@ def test_navbar_snap_left(sphinx_build):
     index_html = sphinx_build.get("index.html")
     assert "col-lg-9" in index_html.select("div#navbar-menu")[0].attrs["class"]
 
-    sphinx_build.build(["-D", "html_theme_options.navbar_snap_left=True"])
+    sphinx_build.build(["-D", "html_theme_options.navbar_align_with_content=True"])
     index_html = sphinx_build.get("index.html")
     assert "col-11" in index_html.select("div#navbar-menu")[0].attrs["class"]
     sphinx_build.clean()
