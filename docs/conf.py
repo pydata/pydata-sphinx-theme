@@ -70,7 +70,7 @@ html_theme_options = {
     "twitter_url": "https://twitter.com/pandas_dev",
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    "navbar_align_with_content": True,  # For testing that the navbar items snap to left properly
+    # "navbar_align_with_content": False,  # For testing that the navbar items snap to left properly
 }
 
 html_context = {

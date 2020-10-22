@@ -121,7 +121,7 @@ def test_navbar_align_with_content(sphinx_build):
     index_html = sphinx_build.get("index.html")
     assert "col-lg-9" in index_html.select("div#navbar-menu")[0].attrs["class"]
 
-    sphinx_build.build(["-D", "html_theme_options.navbar_align_with_content=True"])
+    sphinx_build.build(["-D", "html_theme_options.navbar_align_with_content=False"])
     index_html = sphinx_build.get("index.html")
-    assert "col-11" in index_html.select("div#navbar-menu")[0].attrs["class"]
+    assert "col-lg-9" not in index_html.select("div#navbar-menu")[0].attrs["class"]
     sphinx_build.clean()
