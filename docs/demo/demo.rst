@@ -538,3 +538,16 @@ works as expected. If the widgets don't show up, RequireJS may be broken.
    df = px.data.iris()
    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", size="sepal_length")
    fig
+
+And here we demonstrate ``xarray`` to ensure that it shows up properly.
+
+.. jupyter-execute::
+
+   import xarray as xr
+   import numpy as np
+   data = xr.DataArray(
+            np.random.randn(2, 3),
+            dims=("x", "y"),
+            coords={"x": [10, 20]}, attrs={"foo": "bar"}
+          )
+   data

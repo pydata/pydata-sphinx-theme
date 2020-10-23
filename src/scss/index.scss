@@ -449,3 +449,10 @@ i {
     color: #130754;
   }
 }
+
+/* Special-case over-rides */
+
+// xarray output display in bootstrap
+.xr-wrap[hidden] {
+  display: block !important;
+}
