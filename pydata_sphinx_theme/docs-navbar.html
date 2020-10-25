@@ -16,7 +16,12 @@
         <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
       </a>      
       {% endif %}
+    {% else %}
+    <a class="navbar-brand" href="{{ pathto(master_doc) }}"></a>
+      <p class="title">{{ project }}</p>
+    </a>
     {% endif %}
+    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

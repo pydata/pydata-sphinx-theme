@@ -8,7 +8,7 @@ from sphinx.errors import ExtensionError
 from .bootstrap_html_translator import BootstrapHTML5Translator
 import docutils
 
-__version__ = "0.4.0dev0"
+__version__ = "0.4.2dev0"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -173,6 +173,9 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
     context["get_edit_url"] = get_edit_url
 
+    # Ensure that the max TOC level is an integer
+    context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
+
 
 # -----------------------------------------------------------------------------
 
@@ -195,5 +198,10 @@ def setup(app):
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
+
+    # Update templates for sidebar
+    pkgdir = os.path.abspath(os.path.dirname(__file__))
+    path_templates = os.path.join(pkgdir, "_templates")
+    app.config.templates_path.append(path_templates)
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}

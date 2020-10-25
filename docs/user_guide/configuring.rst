@@ -48,6 +48,17 @@ an external site. You can add external links to the nav bar like so:
      ]
    }
 
+Configure the sidebar
+=====================
+
+``pydata_sphinx_theme`` provides two new sidebar items by default:
+
+- ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section
+- ``sidebar-search-bs.html`` - a bootstrap-friendly search bar
+
+By default, this theme's sidebar has these two elements in it. If you'd like to
+override this behavior and control the sidebar on a per-page basis, use the
+`Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
 Hiding the previous and next buttons
 ====================================
@@ -150,3 +161,22 @@ use the following configuration:
    html_theme_options = {
      "navigation_with_keys": False
    }
+
+
+Show more levels of the in-page TOC by default
+==============================================
+
+Normally only the 2nd-level headers of a page are show in the right
+table of contents, and deeper levels are only shown when they are part
+of an active section (when it is scrolled on screen).
+
+You can show deeper levels by default by using the following configuration, indicating how many levels should be displayed:
+
+.. code-block:: python
+
+   html_theme_options = {
+     "show_toc_level": 2
+   }
+
+All headings up to and including the level specified will now be shown
+regardless of what is displayed on the page.

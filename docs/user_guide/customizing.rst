@@ -1,11 +1,55 @@
 .. _customizing:
 
-**********************
-Customizing the layout
-**********************
+*********************
+Customizing the theme
+*********************
 
 In addition to the configuration options detailed at :ref:`configuration`, it
 is also possible to customize the HTML layout and CSS style of the theme.
+
+
+Customizing the CSS
+===================
+
+The theme's CSS can be tweaked in 2 ways. The most straight forward way is to
+change the theme variables. If you are looking for more customisation, you can
+write additional css in ``custom.css``.
+
+Theme variables
+---------------
+
+This theme is based on top of the basic
+`Bootstrap CSS variables <https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables>`__
+extended with some theme specific variables. An overview of all variables and
+every default is defined in ``/pydata_sphinx_theme/static/css/theme.css``.
+
+In order to change a variable, add a ``custom.css`` (see below) which updates
+the value of certain variables in a ``:root`` section:
+
+.. code-block:: none
+
+    :root {
+        --font-size-base: 17px;
+    }
+
+Important, the theme is defined with CSS variables, not SASS variables!
+
+Custom stylesheet
+-----------------
+
+If the theme variables are not sufficient to shape theme to you liking, you can
+take full control over the look and feel via a custom stylesheet. If you have a
+stylesheet in ``_static/css/custom.css``, adding the following to ``conf.py``
+will ensure this stylesheet is loaded last on top of the theme variables and the
+base styleheet:
+
+.. code-block:: rst
+
+    html_static_path = ['_static']
+
+    html_css_files = [
+        'css/custom.css',
+    ]
 
 
 Replacing/Removing Fonts
