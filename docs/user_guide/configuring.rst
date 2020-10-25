@@ -19,6 +19,15 @@ doc path's _static folder, and use the following configuration:
 
    html_logo = "_static/logo.png"
 
+The logo links to `master_doc` by default. If you'd like to link to other page
+or use an external link instead, use the following configuration:
+
+.. code:: python
+
+   html_theme_options = {
+      "logo_link": "<other page or external link>"
+
+
 Configure social media buttons
 ==============================
 
