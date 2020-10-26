@@ -67,6 +67,10 @@ html_theme_options = {
     ],
     "github_url": "https://github.com/pandas-dev/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
+    "version_switcher": {"base_url": "https://pydata-sphinx-theme.readthedocs.io/",
+                         "json": "versions.json",
+                         "regex": r"/\/(latest|(v\d+\.\d+.\d+))\//",
+                         "location": "navbar"},
     "use_edit_page_button": True,
     "show_toc_level": 1,
 }

@@ -47,6 +47,11 @@
             </a>
           </li>
         {% endif %}
+        {% if theme_version_switcher.location == 'navbar' %}
+        <li class="version_switcher nav-item dropdown">
+          {%- include "version-switcher.html" %}
+        </li>
+        {% endif %}
       </ul>
     </div>
 </div>

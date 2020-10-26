@@ -1,0 +1,66 @@
+<script type="text/javascript">
+    (function () {
+
+        var all_versions = {
+            'latest': 'v0.4.1',
+            'v0.3': 'v0.3.2',
+            'v0.2': 'v0.2.1',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            // https://pydata-sphinx-theme.readthedocs.io/en/latest/
+            var url = window.location.href;
+            // changed url
+            // https://pydata-sphinx-theme.readthedocs.io/en/v0.3.2/
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div>
