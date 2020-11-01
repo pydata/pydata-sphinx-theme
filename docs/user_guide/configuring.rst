@@ -216,17 +216,37 @@ use this pattern:
 For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
 
 
-Make navbar menu items snap to the left
-=======================================
+Configure navbar menu item alignment
+====================================
 
 By default, the navigation bar menu items will align with the content on your
-page. If instead you'd like these items to snap to the left (closer to the logo), then
-use the following configuration:
+page. This equals the following default configuration:
 
 .. code-block:: python
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": False
+      "navbar_align_with_content": "content"
+      ...
+   }
+
+If instead you'd like these items to snap to the left (closer to the logo), use this
+configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align_with_content": "left"
+      ...
+   }
+
+If you'd like these items to snap to the right of the page, use this configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align_with_content": "right"
       ...
    }

@@ -75,8 +75,26 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         except Exception:
             return {}
 
+    def navbar_align_class():
+        """Return the class that aligns the navbar based on config."""
+        align = context.get("theme_navbar_align", "content")
+        align_options = {
+            "content": ("col-lg-9", "mr-auto"),
+            "left": ("", "mr-auto"),
+            "right": ("", "ml-auto"),
+        }
+        if align not in align_options:
+            raise ValueError(
+                (
+                    "Theme optione navbar_align must be one of"
+                    f"{align_options.keys()}, got: {align}"
+                )
+            )
+        return align_options[align]
+
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
+    context["navbar_align_class"] = navbar_align_class
 
 
 def docutils_node_to_jinja(list_item, only_pages=False):
