@@ -97,3 +97,33 @@ def test_logo_name(file_regression, sphinx_build):
     sphinx_build.build(["-D", "html_logo="])
     index_html = sphinx_build.get("index.html")
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
+
+
+def test_sidebar_visible(sphinx_build):
+    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
+    sphinx_build.copy()
+
+    sphinx_build.build()
+    index_html = sphinx_build.get("page1.html")
+    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
+
+    sphinx_build.build(["-D", "html_sidebars.page1="])
+    index_html = sphinx_build.get("page1.html")
+    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
+    sphinx_build.clean()
+
+
+def test_navbar_align(sphinx_build):
+    """The navbar items align with the proper part of the page."""
+    sphinx_build.copy()
+
+    sphinx_build.build()
+    index_html = sphinx_build.get("index.html")
+    assert "col-lg-9" in index_html.select("div#navbar-menu")[0].attrs["class"]
+
+    # Both the column alignment and the margin should be changed
+    sphinx_build.build(["-D", "html_theme_options.navbar_align=right"])
+    index_html = sphinx_build.get("index.html")
+    assert "col-lg-9" not in index_html.select("div#navbar-menu")[0].attrs["class"]
+    assert "ml-auto" in index_html.select("ul#navbar-main-elements")[0].attrs["class"]
+    sphinx_build.clean()

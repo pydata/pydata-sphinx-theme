@@ -48,6 +48,8 @@ an external site. You can add external links to the nav bar like so:
      ]
    }
 
+.. _configure-sidebar:
+
 Configure the sidebar
 =====================
 
@@ -180,3 +182,71 @@ You can show deeper levels by default by using the following configuration, indi
 
 All headings up to and including the level specified will now be shown
 regardless of what is displayed on the page.
+
+
+Remove the sidebar from some pages
+==================================
+
+If you'd like the left sidebar to be removed from a page, you can use the
+following configuration in ``conf.py``:
+
+.. code-block:: python
+
+   html_sidebars = {
+     "pagename": []
+   }
+
+This works for glob-style patterns as well. For example:
+
+.. code-block:: python
+
+   html_sidebars = {
+     "folder/*": []
+   }
+
+If you'd like to remove the left sidebar from **all** pages of your documentation,
+use this pattern:
+
+.. code-block:: python
+
+   html_sidebars = {
+     "**": []
+   }
+
+For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
+
+
+Configure navbar menu item alignment
+====================================
+
+By default, the navigation bar menu items will align with the content on your
+page. This equals the following default configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align_with_content": "content"
+      ...
+   }
+
+If instead you'd like these items to snap to the left (closer to the logo), use this
+configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align_with_content": "left"
+      ...
+   }
+
+If you'd like these items to snap to the right of the page, use this configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align_with_content": "right"
+      ...
+   }
