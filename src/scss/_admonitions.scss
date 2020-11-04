@@ -125,12 +125,12 @@
   }
 
   &.tip {
-    border-color: rgba(var(--color-admonition-info), 1);
+    border-color: rgba(var(--color-admonition-warning), 1);
     .admonition-title {
-      background-color: rgba(var(--color-admonition-info), 0.1);
+      background-color: rgba(var(--color-admonition-warning), 0.1);
 
       &:before {
-        color: rgba(var(--color-admonition-info), 1);
+        color: rgba(var(--color-admonition-warning), 1);
         content: var(--icon-lightbulb);
       }
     }
@@ -149,12 +149,12 @@
   }
 
   &.note {
-    border-color: rgba(var(--color-admonition-info), 1);
+    border-color: rgba(var(--color-admonition-primary), 1);
     .admonition-title {
-      background-color: rgba(var(--color-admonition-info), 0.1);
+      background-color: rgba(var(--color-admonition-primary), 0.1);
 
       &:before {
-        color: rgba(var(--color-admonition-info), 1);
+        color: rgba(var(--color-admonition-primary), 1);
         content: var(--icon-info-circle);
       }
     }
