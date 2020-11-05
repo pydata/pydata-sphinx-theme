@@ -117,7 +117,7 @@ pre {
   box-shadow: 1px 1px 1px #d8d8d8;
 }
 
-dt {
+dt[id]:not([id='']) {
   &::before {
     // offsetting html anchor titles to adjust for fixed header
     display: block;
