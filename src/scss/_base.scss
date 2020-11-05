@@ -116,3 +116,14 @@ pre {
   border: 1px solid rgb(201, 201, 201);
   box-shadow: 1px 1px 1px #d8d8d8;
 }
+
+dt[id]:not([id='']) {
+  &::before {
+    // offsetting html anchor titles to adjust for fixed header
+    display: block;
+    content: '';
+    height: 80px;
+    margin: -80px 0 0;
+    background-color: white;
+  }
+}
