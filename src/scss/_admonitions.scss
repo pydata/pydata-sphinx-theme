@@ -33,7 +33,7 @@
     margin: 0 -0.6rem !important;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: 700;
-    background-color: rgba(68, 138, 255, 0.1);
+    background-color: rgba(var(--color-admonition-primary), 0.1);
 
     &:before {
       position: absolute;
@@ -113,48 +113,48 @@
   }
 
   &.hint {
-    border-color: rgba(var(--color-admonition-warning), 1);
+    border-color: rgba(var(--color-admonition-success), 1);
     .admonition-title {
-      background-color: rgba(var(--color-admonition-warning), 0.1);
+      background-color: rgba(var(--color-admonition-success), 0.1);
 
       &:before {
-        color: rgba(var(--color-admonition-warning), 1);
+        color: rgba(var(--color-admonition-success), 1);
         content: var(--icon-lightbulb);
       }
     }
   }
 
   &.tip {
-    border-color: rgba(var(--color-admonition-warning), 1);
+    border-color: rgba(var(--color-admonition-success), 1);
     .admonition-title {
-      background-color: rgba(var(--color-admonition-warning), 0.1);
+      background-color: rgba(var(--color-admonition-success), 0.1);
 
       &:before {
-        color: rgba(var(--color-admonition-warning), 1);
+        color: rgba(var(--color-admonition-success), 1);
         content: var(--icon-lightbulb);
       }
     }
   }
 
   &.important {
-    border-color: rgba(var(--color-admonition-info), 1);
+    border-color: rgba(var(--color-admonition-success), 1);
     .admonition-title {
-      background-color: rgba(var(--color-admonition-info), 0.1);
+      background-color: rgba(var(--color-admonition-success), 0.1);
 
       &:before {
-        color: rgba(var(--color-admonition-info), 1);
+        color: rgba(var(--color-admonition-success), 1);
         content: var(--icon-exclamation-circle);
       }
     }
   }
 
   &.note {
-    border-color: rgba(var(--color-admonition-primary), 1);
+    border-color: rgba(var(--color-admonition-info), 1);
     .admonition-title {
-      background-color: rgba(var(--color-admonition-primary), 0.1);
+      background-color: rgba(var(--color-admonition-info), 0.1);
 
       &:before {
-        color: rgba(var(--color-admonition-primary), 1);
+        color: rgba(var(--color-admonition-info), 1);
         content: var(--icon-info-circle);
       }
     }
