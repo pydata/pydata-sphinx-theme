@@ -29,6 +29,7 @@ following configuration:
 
    html_theme_options = {
      "github_url": "https://github.com/<your-org>/<your-repo>",
+     "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
      "twitter_url": "https://twitter.com/<your-handle>",
    }
 
