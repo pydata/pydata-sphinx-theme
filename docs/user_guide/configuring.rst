@@ -226,7 +226,7 @@ page. This equals the following default configuration:
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "content"
+      "navbar_align": "content"
       ...
    }
 
@@ -237,7 +237,7 @@ configuration:
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "left"
+      "navbar_align": "left"
       ...
    }
 
@@ -247,6 +247,6 @@ If you'd like these items to snap to the right of the page, use this configurati
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "right"
+      "navbar_align": "right"
       ...
    }
