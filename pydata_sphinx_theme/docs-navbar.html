@@ -1,3 +1,13 @@
+{% macro icon_link_nav_item(url, icon, label) -%}
+  {%- if url | length > 2 %}
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url }}" target="_blank" rel="noopener" title="{{ label }}">
+      <span><i class="{{ icon }}"></i></span>
+      <span class="sr-only">{{ label }}</span>
+    </a>
+  </li>
+  {% endif -%}
+{%- endmacro %}
 
 <div class="container-xl">
 
@@ -33,27 +43,12 @@
       {% endif %}
 
       <ul class="navbar-nav">
-        {% if theme_github_url | length > 2 %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ theme_github_url }}" target="_blank" rel="noopener">
-              <span><i class="fab fa-github-square"></i></span>
-            </a>
-          </li>
-        {% endif %}
-        {% if theme_gitlab_url | length > 2 %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ theme_gitlab_url }}" target="_blank" rel="noopener">
-              <span><i class="fab fa-gitlab-square"></i></span>
-            </a>
-          </li>
-        {% endif %}
-        {% if theme_twitter_url | length > 2 %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ theme_twitter_url }}" target="_blank" rel="noopener">
-              <span><i class="fab fa-twitter-square"></i></span>
-            </a>
-          </li>
-        {% endif %}
+        {{ icon_link_nav_item(theme_github_url, "fab fa-github-square", "GitHub") }}
+        {{ icon_link_nav_item(theme_gitlab_url, "fab fa-gitlab-square", "GitLab") }}
+        {{ icon_link_nav_item(theme_twitter_url, "fab fa-twitter-square", "Twitter") }}
+        {%- for icon_link in theme_icon_links %}
+        {{ icon_link_nav_item(icon_link["url"], icon_link["icon"], icon_link["label"]) }}
+        {% endfor -%}
       </ul>
     </div>
 </div>

@@ -19,10 +19,10 @@ doc path's _static folder, and use the following configuration:
 
    html_logo = "_static/logo.png"
 
-Configure social media buttons
-==============================
+Configure icon links
+====================
 
-If you'd like social media buttons to show up to the right of your nav bar, use the
+If you'd like icon links to show up to the right of your nav bar, use the
 following configuration:
 
 .. code:: python
@@ -32,6 +32,33 @@ following configuration:
      "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
      "twitter_url": "https://twitter.com/<your-handle>",
    }
+
+The above are shortcuts for commonly-used services: any arbitrary
+`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__
+icons can be configured, with the equivalent of the above being:
+
+.. code:: python
+
+   html_theme_options = {
+      "icon_links": [
+         {
+            "label": "GitHub",
+            "url": "https://github.com/<your-org>/<your-repo>",
+            "icon": "fab fa-github-square"
+         },
+         {
+            "label": "GitLab",
+            "url": "https://gitlab.com/<your-org>/<your-repo>",
+            "icon": "fab fa-gitlab-square"
+         },
+         {
+            "label": "Twitter",
+            "url": "https://twitter.com/<your-handle>",
+            "icon": "fab fa-twitter-square"
+         }
+      ]
+   }
+
 
 Adding external links to your nav bar
 =====================================
