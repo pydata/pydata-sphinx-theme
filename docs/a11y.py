@@ -1,6 +1,7 @@
 """ use pa11y-ci to generate an accessibility report
 """
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -114,9 +115,16 @@ def summary():
         }
     )
 
-    print(safe_dump(report, default_flow_style=False), file=sys.stderr)
+    report_str = safe_dump(report, default_flow_style=False)
 
-    return sum(not_roadmap_counts.values())
+    nrc = sum(not_roadmap_counts.values())
+
+    if os.environ.get("CI") and nrc:
+        print("""::error ::{}""".format(report_str.replace("\n", "%0A")))
+    else:
+        print(report_srt)
+
+    return nrc
 
 
 def main(no_serve=True):
