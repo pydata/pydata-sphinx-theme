@@ -1,6 +1,12 @@
 name: continuous-integration
 
-on: [push, pull_request]
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
 
 jobs:
 
@@ -9,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,12 +30,44 @@ jobs:
       with:
         node-version: '10.x'
 
-    - name: Install dependencies
+    - name: Install python setup dependencies
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade pre-commit
-        pip install -e .
-        yarn
+        pip install --user --upgrade pip setuptools wheel
+
+    - name: Get pip cache dir
+      id: pip-cache
+      run: |
+        echo "::set-output name=dir::$(pip cache dir)"
+
+    - name: Cache pip
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.pip-cache.outputs.dir }}
+        key: ${{ runner.os }}-pip-lint-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-lint-${{ matrix.python-version }}-
+          ${{ runner.os }}-pip-lint-
+
+    - name: Install linting dependencies
+      run: |
+        pip install . pre-commit
+
+    - name: Check pip environment
+      run: |
+        pip freeze
+        pip check
+
+    - name: Cache yarn
+      uses: actions/cache@v1
+      with:
+        path: .yarn-packages
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install yarn dependencies
+      run: |
+        yarn --prefer-offline --no-optional
 
     - name: Lint
       run: |
@@ -42,69 +80,111 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e .
-        pip install -r docs/requirements.txt
 
-    # Build the docs
+    - name: Install python setup dependencies
+      run: |
+        pip install --user --upgrade pip setuptools wheel
+
+    - name: Get pip cache dir
+      id: pip-cache
+      run: |
+        echo "::set-output name=dir::$(pip cache dir)"
+
+    - name: Cache pip
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.pip-cache.outputs.dir }}
+        key: ${{ runner.os }}-pip-test-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-test-${{ matrix.python-version }}-
+          ${{ runner.os }}-pip-test-
+
+    - name: Install python test dependencies
+      run: |
+        pip install . -r docs/requirements.txt
+
+    - name: Check pip environment
+      run: |
+        pip freeze
+        pip check
+
     - name: Build docs to store
       run: |
         export PATH="$HOME/miniconda/bin:$PATH"
         sphinx-build -b html docs/ docs/_build/html -W --keep-going
 
-    # Run tests
     - name: Run the tests
-      run: pytest
+      run: |
+        pytest
 
-  # Run local Lighthouse audit against built site
+
   audit:
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.9]
     env:
-      PORT: 8000
+      PORT: 8080
       # the host interface to listen on, might need to be 0.0.0.0
       HOST: 127.0.0.1
       # the base url
-      URL: http://127.0.0.1:8000
+      URL: http://127.0.0.1:8080
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e .
-        pip install -r docs/requirements.txt
 
-    # Build the docs
+    - name: Install python setup dependencies
+      run: |
+        pip install --user --upgrade pip setuptools wheel
+
+    - name: Get pip cache dir
+      id: pip-cache
+      run: |
+        echo "::set-output name=dir::$(pip cache dir)"
+
+    - name: Cache pip
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.pip-cache.outputs.dir }}
+        key: ${{ runner.os }}-pip-test-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-test-${{ matrix.python-version }}-
+          ${{ runner.os }}-pip-test-
+
+    - name: Install python test dependencies
+      run: |
+        pip install -vv . -r docs/requirements.txt
+
+    - name: Check pip environment
+      run: |
+        pip freeze
+        pip check
+
     - name: Build docs to store
       run: |
         export PATH="$HOME/miniconda/bin:$PATH"
         sphinx-build -b html docs/ docs/_build/html -W --keep-going
 
-    # Serve the docs and wait to be ready
     - name: Serve the built site
       run: |
         nohup python docs/serve.py --port=${PORT} --host=${HOST} &
         curl --retry 10 --retry-connrefused --retry-max-time 60 ${URL}/index.html
 
-    # Run the audit
     # TODO: use the hosted API with a secret? would allow for comparison over time...
     - name: Make folder for Lighthouse reports
       run: mkdir -p /tmp/lighthouse/lighthouse-${{ github.run_number }}
@@ -121,15 +201,22 @@ jobs:
         outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
         verbose: true
 
-    # Store the audit
-    - name: Upload Lighthouse Reports
-      uses: actions/upload-artifact@v2
+    - name: Cache yarn
+      uses: actions/cache@v1
       with:
-        name: Lighthouse Report ${{ github.run_number }}
-        path: /tmp/lighthouse
+        path: .yarn-packages
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
 
-    # Check the audit for threshold values
-    # TODO: write this someplace after a PR is merged, and load?
+    - name: Install yarn dependencies
+      run: |
+        yarn --prefer-offline --no-optional
+
+    - name: Run the accessibility audit
+      run: |
+        python docs/a11y.py --no-serve
+
     - name: Assess Lighthouse Check results
       uses: foo-software/lighthouse-check-status-action@v1.0.1
       with:
@@ -138,6 +225,21 @@ jobs:
         minBestPracticesScore: "85"
         minPerformanceScore: "10"
         minSeoScore: "80"
+      if: always()
+
+    - name: Publish Lighthouse reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: Lighthouse ${{ github.run_number }}
+        path: /tmp/lighthouse
+      if: always()
+
+    - name: Publish Pa11y reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: Pa11y ${{ github.run_number }}
+        path: docs/_build/pa11y
+      if: always()
 
   publish:
 
