@@ -73,12 +73,44 @@ In Your Source
 
     Stay tuned for more ideas here as we learn more working on this site!
 
+In the Browser
+==============
+
+A number of in-browser tools exist for interactively debugging the accessibility
+of a single page at a time, and can be useful during the content development cycle.
+
+
+Built-in tools
+--------------
+
+
+Most major browsers, including `Firefox <https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector>`__
+and `Chrome <https://developers.google.com/web/tools/chrome-devtools/accessibility/reference>`__
+include significant accessibility tooling in their development experience. Exploring
+these, and the modes they offer, can help to quickly pinpoint issues, and often
+include links to standards.
+
+
+tota11y
+-------
+
+`tota11y <https://khan.github.io/tota11y/#Installation>` is an open source
+"bookmarklet" which modifies the currently-loaded page in-place, and highlights
+a number of accessibility issues.
+
+
+WAVE
+----
+
+`WAVE <https://wave.webaim.org/extension/>`__ is a proprietary (but *gratis*)
+browser extension which can highlight a large number of issues.
+
 
 In Continuous Integration
 =========================
 
 A number of automated tools are available for assessing *glaring* accessibility
-issues. This theme makes use of:
+issues across a number of pages at once, usually with many configurable options.
 
 
 Lighthouse

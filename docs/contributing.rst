@@ -321,6 +321,35 @@ Note that if needed, you can skip these checks with:
     git commit --no-verify
 
 
+Auditing accessibility
+======================
+
+The accessibility checking tools are installed along with the rest of the `yarn`
+requirements. To run the accessibility auditing locally:
+
+.. code-block:: bash
+
+    yarn build:production
+    cd docs
+    make html
+    python a11y.py
+
+The output of the last command includes:
+
+- a short summary of the current state of the accessibility rules we are trying to maintain
+- local paths to JSON and HTML reports which contain all of the issues found
+
+
+Fixing accessibility errors
+---------------------------
+
+To start working on one of the accessibility roadmap items, comment out one of the
+lines in `docs/a11y-roadmap.txt`, and re-run the audit to establish a baseline.
+
+Then, fix the issue in either the HTML templates, CSS, or python code, and re-run
+the audit until it is fixed.
+
+
 Make a release
 ==============
 
