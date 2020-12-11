@@ -46,11 +46,22 @@ Site maps, usually served from a file called `sitemap.xml` are a broadly-employe
 approach to telling programs like search engines and assistive technologies where
 different content appears on a website.
 
+If using a service like `ReadTheDocs <https://readthedocs.com>`__, these files
+will be created for your, but for some of the other approaches below, it's handy
+to generate a `sitemap.xml` locally or in CI with a tool like
+`sphinx-sitemap <https://pypi.org/project/sphinx-sitemap/>`__.
+
 .. Hint::
 
-    For a simple site (no extra languages or versions):
+    For a simple site (no extra languages or versions), ensure `sphinx-sitemap`
+    is installed in your documentation environment, and modify your conf.py:
 
     .. code-block:: python
+
+    extensions += [
+        ...,
+        "sphinx_sitemap"
+    ]
 
     html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://localhost:8080/")
     sitemap_locales = [None]
@@ -61,10 +72,10 @@ different content appears on a website.
 In Your Source
 ==============
 
-Specify image titles and captions...
 
-Use effective, unique headers...
+.. Note::
 
+    Stay tuned for more ideas here as we learn more working on this site!
 
 In Continuous Integration
 =========================
@@ -92,5 +103,16 @@ Pa11y CI
 
 `Pa11y CI <https://github.com/pa11y/pa11y-ci>`__ is a command line tool which can check
 a number of accessibility standards. It is most effective when paired with a `sitemap.xml`,
-such as can be generated with `sphinx-sitemap <https://github.com/jdillard/sphinx-sitemap>`__,
-which
+discussed above.
+
+.. Hint::
+
+    This approach is a more involved: for this site, we've written some
+    custom runners which:
+
+    - start a static file server locally
+    - run `pa11y-ci` against the site's `sitemap.xml`
+    - read known failures in a `a11y-roadmap.txt` file
+    - generate HTML reports (including all errors)
+    - perform some light parsing to generate some short reports
+    - archive the reports in CI
