@@ -58,15 +58,11 @@ to generate a `sitemap.xml` locally or in CI with a tool like
 
     .. code-block:: python
 
-    extensions += [
-        ...,
-        "sphinx_sitemap"
-    ]
+    extensions += ["sphinx_sitemap"]
 
     html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://localhost:8080/")
     sitemap_locales = [None]
     sitemap_url_scheme = "{link}"
-
 
 
 In Your Source
@@ -76,6 +72,7 @@ In Your Source
 .. Note::
 
     Stay tuned for more ideas here as we learn more working on this site!
+
 
 In Continuous Integration
 =========================
