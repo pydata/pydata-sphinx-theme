@@ -54,7 +54,7 @@ to generate a `sitemap.xml` locally or in CI with a tool like
 .. Hint::
 
     For a simple site (no extra languages or versions), ensure `sphinx-sitemap`
-    is installed in your documentation environment, and modify your conf.py:
+    is installed in your documentation environment, and modify your ``conf.py``:
 
     .. code-block:: python
 
@@ -136,10 +136,10 @@ discussed above.
 
 .. Hint::
 
-    This approach is a more involved: for this site, we've written some
+    This approach is more involved: for this site, we've written some
     custom runners which:
 
-    - start a static file server locally
+    - start a static file server locally with the docs site
     - run `pa11y-ci` against the site's `sitemap.xml`
     - read known failures in a `a11y-roadmap.txt` file
     - generate HTML reports (including all errors)
