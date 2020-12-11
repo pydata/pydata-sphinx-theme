@@ -114,7 +114,7 @@ def summary():
         }
     )
 
-    print(safe_dump(report, default_flow_style=False))
+    print(safe_dump(report, default_flow_style=False), file=sys.stderr)
 
     return sum(not_roadmap_counts.values())
 
