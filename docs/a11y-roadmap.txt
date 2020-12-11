@@ -1,6 +1,8 @@
 # These are the pa11y error codes we'd like to fix. PRs welcome!
 
-WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable
+# TODO: remove this line, left in for documentation and review purposes
+# WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable
+
 WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63
 WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired
 WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail

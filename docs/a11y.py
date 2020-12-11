@@ -106,9 +106,6 @@ def summary():
         else:
             not_roadmap_counts[code] = count
 
-    on_roadmap = sum(roadmap_counts.values())
-    not_roadmap = sum(not_roadmap_counts.values())
-
     report.update(
         {
             "total errors": pa11y_json["errors"],
@@ -119,7 +116,7 @@ def summary():
 
     print(safe_dump(report, default_flow_style=False))
 
-    return not_roadmap
+    return sum(not_roadmap_counts.values())
 
 
 def main(no_serve=True):
