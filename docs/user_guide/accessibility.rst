@@ -36,7 +36,7 @@ identify if the content is in a language the reader understands.
 
     .. code-block:: python
 
-    language = "en"
+        language = "en"
 
 
 Site Map
@@ -58,11 +58,11 @@ to generate a `sitemap.xml` locally or in CI with a tool like
 
     .. code-block:: python
 
-    extensions += ["sphinx_sitemap"]
+        extensions += ["sphinx_sitemap"]
 
-    html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://localhost:8080/")
-    sitemap_locales = [None]
-    sitemap_url_scheme = "{link}"
+        html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://localhost:8080/")
+        sitemap_locales = [None]
+        sitemap_url_scheme = "{link}"
 
 
 In Your Source
@@ -94,7 +94,7 @@ include links to standards.
 tota11y
 -------
 
-`tota11y <https://khan.github.io/tota11y/#Installation>` is an open source
+`tota11y <https://khan.github.io/tota11y/#Installation>`__ is an open source
 "bookmarklet" which modifies the currently-loaded page in-place, and highlights
 a number of accessibility issues.
 
