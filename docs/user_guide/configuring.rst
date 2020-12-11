@@ -22,41 +22,72 @@ doc path's _static folder, and use the following configuration:
 Configure icon links
 ====================
 
-If you'd like icon links to show up to the right of your nav bar, use the
+If you'd like icon links to show up to the right of your main navigation bar, use the
 following configuration:
 
 .. code:: python
 
    html_theme_options = {
-     "github_url": "https://github.com/<your-org>/<your-repo>",
-     "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
-     "twitter_url": "https://twitter.com/<your-handle>",
+       ...
+       "icon_links": [
+           {
+               "name": "GitHub",
+               "url": "https://github.com/<your-org>/<your-repo>",
+               "icon": "fab fa-github-square",
+           },
+           {
+               "name": "GitLab",
+               "url": "https://gitlab.com/<your-org>/<your-repo>",
+               "icon": "fab fa-gitlab-square",
+           },
+           {
+               "name": "Twitter",
+               "url": "https://twitter.com/<your-handle>",
+               "icon": "fab fa-twitter-square",
+           },
+       ],
+       ...
    }
 
-The above are shortcuts for commonly-used services: any arbitrary
-`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__
-icons can be configured, with the equivalent of the above being:
+
+The value of ``icon`` can be any full
+`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__.
+In addition to the main icon class, e.g. ``fa-cat``, the "style" class must
+also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
+
+
+.. Hint::
+
+   To get custom colors like "Twitter blue", use the following in your CSS,
+   e.g. ``custom.css``:
+
+   .. code:: css
+
+      i.fa-twitter-square:before {
+         color: #55acee;
+      }
+
+The below are shortcuts for commonly-used services, but may be removed in a future
+release in favor of ``icon_links``:
 
 .. code:: python
 
    html_theme_options = {
-      "icon_links": [
-         {
-            "label": "GitHub",
-            "url": "https://github.com/<your-org>/<your-repo>",
-            "icon": "fab fa-github-square"
-         },
-         {
-            "label": "GitLab",
-            "url": "https://gitlab.com/<your-org>/<your-repo>",
-            "icon": "fab fa-gitlab-square"
-         },
-         {
-            "label": "Twitter",
-            "url": "https://twitter.com/<your-handle>",
-            "icon": "fab fa-twitter-square"
-         }
-      ]
+       ...
+       "github_url": "https://github.com/<your-org>/<your-repo>",
+       "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
+       "twitter_url": "https://twitter.com/<your-handle>",
+       ...
+   }
+
+Additionally, the screen-reader accessible label for this menu can be configured:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links_label": "Quick Links",
+       ...
    }
 
 

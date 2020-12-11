@@ -1,14 +1,3 @@
-{% macro icon_link_nav_item(url, icon, label) -%}
-  {%- if url | length > 2 %}
-  <li class="nav-item">
-    <a class="nav-link" href="{{ url }}" target="_blank" rel="noopener" title="{{ label }}">
-      <span><i class="{{ icon }}"></i></span>
-      <span class="sr-only">{{ label }}</span>
-    </a>
-  </li>
-  {% endif -%}
-{%- endmacro %}
-
 <div class="container-xl">
 
     <a class="navbar-brand" href="{{ pathto(master_doc) }}">
@@ -37,18 +26,13 @@
         {% endfor %}
       </ul>
 
-
       {% if theme_search_bar_position == 'navbar' %}
         {%- include "search-field.html" %}
       {% endif %}
 
-      <ul class="navbar-nav">
-        {{ icon_link_nav_item(theme_github_url, "fab fa-github-square", "GitHub") }}
-        {{ icon_link_nav_item(theme_gitlab_url, "fab fa-gitlab-square", "GitLab") }}
-        {{ icon_link_nav_item(theme_twitter_url, "fab fa-twitter-square", "Twitter") }}
-        {%- for icon_link in theme_icon_links %}
-        {{ icon_link_nav_item(icon_link["url"], icon_link["icon"], icon_link["label"]) }}
-        {% endfor -%}
-      </ul>
+
+      {%- block icon_links -%}
+      {%- include "icon-links.html" with context -%}
+      {%- endblock %}
     </div>
 </div>

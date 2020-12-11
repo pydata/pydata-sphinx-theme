@@ -17,6 +17,7 @@ def sphinx_build(tmpdir_factory):
         path_build = path_docs.joinpath("_build")
         path_html = path_build.joinpath("html")
         path_pg_index = path_html.joinpath("index.html")
+        conf = path_docs.joinpath("conf.py")
         cmd_base = ["sphinx-build", ".", "_build/html", "-a", "-W"]
 
         def copy(self, path=None):
@@ -126,4 +127,39 @@ def test_navbar_align(sphinx_build):
     index_html = sphinx_build.get("index.html")
     assert "col-lg-9" not in index_html.select("div#navbar-menu")[0].attrs["class"]
     assert "ml-auto" in index_html.select("ul#navbar-main-elements")[0].attrs["class"]
+    sphinx_build.clean()
+
+
+def test_icon_links(file_regression, sphinx_build):
+    sphinx_build.copy()
+
+    # an empty, labelled navbar appears if unconfigured
+    sphinx_build.build()
+    index_html = sphinx_build.get("index.html")
+    assert (
+        "Icon Links" in index_html.select("ul#navbar-icon-links")[0].attrs["aria-label"]
+    )
+
+    # this config is awkward at the command line
+    new_conf = "\n".join(
+        [
+            sphinx_build.conf.read_text(),
+            """html_theme_options.update("""
+            """    icon_links_label="Quick Links","""
+            """    github_url="x://y/z","""
+            """    icon_links=["""
+            """        dict(icon="fax fa-xyz", name="Xyz", url="x://y/z"),"""
+            """    ]"""
+            """)""",
+        ]
+    )
+    sphinx_build.conf.write_text(new_conf)
+
+    # icon links should appear if configured
+    sphinx_build.build()
+    icon_links = sphinx_build.get("index.html").select("ul#navbar-icon-links")[0]
+    file_regression.check(
+        icon_links.prettify(), basename="icon_links", extension=".html"
+    )
+
     sphinx_build.clean()

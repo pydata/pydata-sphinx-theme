@@ -70,9 +70,9 @@ html_theme_options = {
     "twitter_url": "https://twitter.com/pandas_dev",
     "icon_links": [
         {
-            "icon": "fab fa-python",
-            "label": "PyPI",
+            "name": "PyPI",
             "url": "https://pypi.org/project/pydata-sphinx-theme",
+            "icon": "fab fa-python",
         }
     ],
     "use_edit_page_button": True,
