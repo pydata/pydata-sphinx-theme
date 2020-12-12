@@ -72,7 +72,7 @@ html_theme_options = {
         {
             "name": "PyPI",
             "url": "https://pypi.org/project/pydata-sphinx-theme",
-            "icon": "fab fa-python",
+            "icon": "fas fa-box",
         }
     ],
     "use_edit_page_button": True,

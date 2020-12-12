@@ -425,16 +425,25 @@ table.field-list {
   color: #e83e8c;
 }
 
+/* Icon Links */
+
+#navbar-icon-links {
+  i {
+    &.fa,
+    &.fab,
+    &.far,
+    &.fas{
+      vertical-align: middle;
+      font-style: normal;
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+  }
+}
+
 /* Social media buttons */
 
 i {
-  &.fab {
-    vertical-align: middle;
-    font-style: normal;
-    font-size: 1.5rem;
-    line-height: 1.25;
-  }
-
   &.fa-github-square:before {
     color: #333;
   }
