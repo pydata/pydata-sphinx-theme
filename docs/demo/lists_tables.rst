@@ -148,7 +148,7 @@ Second list level
   - here is an inner bullet ``oh``
 
     - one more ``with an inline literally``. `yahoo <http://www.yahoo.com>`_
-      
+
       heh heh. child. try to beat this embed:
 
       .. literalinclude:: test_py_module/test.py
@@ -298,3 +298,7 @@ List Tables
 
            This is a long caption for a figure. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
            Donec porttitor dolor in odio posuere, vitae ornare libero mattis. In lobortis justo vestibulum nibh aliquet, non.
+
+.. meta::
+    :description lang=en:
+        Examples of table features in pydata-sphinx-theme.

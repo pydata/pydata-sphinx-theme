@@ -154,3 +154,8 @@ Data
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce congue elit eu hendrerit mattis.
 
 Some data link :data:`Data_item_1`.
+
+
+.. meta::
+    :description lang=en:
+        An example of API documentation with pydata-sphinx-theme.

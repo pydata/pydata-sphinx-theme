@@ -30,3 +30,8 @@ Other sites that are using this theme:
    demo/index
    changelog
 
+
+.. meta::
+    :description lang=en:
+        Top-level documentation for pydata-sphinx theme, with links to the rest
+        of the site.

@@ -49,7 +49,7 @@ if not os.environ.get("READTHEDOCS"):
     language = "en"
 
     # -- Sitemap -------------------------------------------------------------
-    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://localhost:8080/")
+    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8080/")
     sitemap_locales = [None]
     sitemap_url_scheme = "{link}"
 

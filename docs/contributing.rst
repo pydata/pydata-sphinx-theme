@@ -164,7 +164,7 @@ To preview the frontend assets, from the root of this repo, run:
 
     yarn build:dev
 
-This launches a development server at http://localhost:1919. When working
+This launches a development server at http://127.0.0.1:1919. When working
 on the theme, saving changes to any of:
 
 - ``src/js/index.js``
@@ -380,3 +380,9 @@ Make a release
 
 This theme uses GitHub tags and releases to automatically push new releases to
 PyPI. For information on this process, see `the release checklist <https://github.com/pandas-dev/pydata-sphinx-theme/wiki/Release-checklist#release-instructions>`_.
+
+
+
+.. meta::
+    :description lang=en:
+        How to become a contributor to the pydata-sphinx-theme.

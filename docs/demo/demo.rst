@@ -551,3 +551,8 @@ And here we demonstrate ``xarray`` to ensure that it shows up properly.
             coords={"x": [10, 20]}, attrs={"foo": "bar"}
           )
    data
+
+
+.. meta::
+    :description lang=en:
+        A demo of many output features of pydata-sphinx-theme.

@@ -124,7 +124,8 @@ jobs:
           ${{ env.URL }}/index.html,
           ${{ env.URL }}/demo/api.html,
           ${{ env.URL }}/demo/demo.html,
-          ${{ env.URL }}/demo/example_pandas.html
+          ${{ env.URL }}/demo/example_pandas.html,
+          ${{ env.URL }}/demo/user_guide/accessibility.html
         outputDirectory: docs/_build/lighthouse
         verbose: true
 

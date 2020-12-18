@@ -86,3 +86,7 @@ often paired together, can be replaced (or removed altogether) by:
             }
         </style>
     {% endblock %}
+
+.. meta::
+    :description lang=en:
+        Advanced customization of pydata-sphinx-theme's HTML and CSS.

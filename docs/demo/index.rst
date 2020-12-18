@@ -24,3 +24,8 @@ the left sidebar to see how various elements look on this theme.
     :caption: This is an incredibly long caption for a long menu
 
     long
+
+
+.. meta::
+    :description lang=en:
+        A collection of pages demonstrating the features of the pydata-sphinx-theme.
