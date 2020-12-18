@@ -122,7 +122,7 @@ def summary():
     if os.environ.get("CI") and nrc:
         print("""::error ::{}""".format(report_str.replace("\n", "%0A")))
     else:
-        print(report_srt)
+        print(report_str)
 
     return nrc
 
