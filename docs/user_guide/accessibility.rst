@@ -27,7 +27,7 @@ Natural Language
 ----------------
 
 If not using a more robust `internationalization approach <https://www.sphinx-doc.org/en/master/usage/advanced/intl.html>`__ ,
-speciying at least the baseline natural language will assistive technology
+speciying at least the baseline natural language will help assistive technology
 identify if the content is in a language the reader understands.
 
 .. Hint::
@@ -47,8 +47,8 @@ approach to telling programs like search engines and assistive technologies wher
 different content appears on a website.
 
 If using a service like `ReadTheDocs <https://readthedocs.com>`__, these files
-will be created for your, but for some of the other approaches below, it's handy
-to generate a `sitemap.xml` locally or in CI with a tool like
+will be created for you *automatically*, but for some of the other approaches below,
+it's handy to generate a `sitemap.xml` locally or in CI with a tool like
 `sphinx-sitemap <https://pypi.org/project/sphinx-sitemap/>`__.
 
 .. Hint::
