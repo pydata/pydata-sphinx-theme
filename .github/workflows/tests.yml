@@ -30,48 +30,16 @@ jobs:
       with:
         node-version: '10.x'
 
-    - name: Install python setup dependencies
+    - name: Install dependencies
       run: |
+        yarn --prefer-offline --no-optional --frozen-lockfile
         pip install --user --upgrade pip setuptools wheel
-
-    - name: Get pip cache dir
-      id: pip-cache
-      run: |
-        echo "::set-output name=dir::$(pip cache dir)"
-
-    - name: Cache pip
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.pip-cache.outputs.dir }}
-        key: ${{ runner.os }}-pip-lint-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-lint-${{ matrix.python-version }}-
-          ${{ runner.os }}-pip-lint-
-
-    - name: Install linting dependencies
-      run: |
         pip install . pre-commit
-
-    - name: Check pip environment
-      run: |
         pip freeze
         pip check
 
-    - name: Cache yarn
-      uses: actions/cache@v1
-      with:
-        path: .yarn-packages
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-
-    - name: Install yarn dependencies
-      run: |
-        yarn --prefer-offline --no-optional
-
     - name: Lint
-      run: |
-        pre-commit run --all-files
+      run: pre-commit run --all-files
 
   # Build docs on a number of Python versions. In the future this can be
   # where tests go.
@@ -90,34 +58,14 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install python setup dependencies
+    - name: Install python dependencies
       run: |
         pip install --user --upgrade pip setuptools wheel
-
-    - name: Get pip cache dir
-      id: pip-cache
-      run: |
-        echo "::set-output name=dir::$(pip cache dir)"
-
-    - name: Cache pip
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.pip-cache.outputs.dir }}
-        key: ${{ runner.os }}-pip-test-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-test-${{ matrix.python-version }}-
-          ${{ runner.os }}-pip-test-
-
-    - name: Install python test dependencies
-      run: |
         pip install . -r docs/requirements.txt
-
-    - name: Check pip environment
-      run: |
         pip freeze
         pip check
 
-    - name: Build docs to store
+    - name: Build docs to test
       run: |
         export PATH="$HOME/miniconda/bin:$PATH"
         sphinx-build -b html docs/ docs/_build/html -W --keep-going
@@ -148,46 +96,25 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install python setup dependencies
+    - name: Install dependencies
       run: |
+        yarn --prefer-offline --no-optional --frozen-lockfile
         pip install --user --upgrade pip setuptools wheel
-
-    - name: Get pip cache dir
-      id: pip-cache
-      run: |
-        echo "::set-output name=dir::$(pip cache dir)"
-
-    - name: Cache pip
-      uses: actions/cache@v1
-      with:
-        path: ${{ steps.pip-cache.outputs.dir }}
-        key: ${{ runner.os }}-pip-test-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-test-${{ matrix.python-version }}-
-          ${{ runner.os }}-pip-test-
-
-    - name: Install python test dependencies
-      run: |
         pip install -vv . -r docs/requirements.txt
-
-    - name: Check pip environment
-      run: |
         pip freeze
         pip check
 
-    - name: Build docs to store
+    - name: Build and serve docs to audit
       run: |
         export PATH="$HOME/miniconda/bin:$PATH"
         sphinx-build -b html docs/ docs/_build/html -W --keep-going
-
-    - name: Serve the built site
-      run: |
         nohup python docs/serve.py --port=${PORT} --host=${HOST} &
         curl --retry 10 --retry-connrefused --retry-max-time 60 ${URL}/index.html
 
     # TODO: use the hosted API with a secret? would allow for comparison over time...
     - name: Make folder for Lighthouse reports
-      run: mkdir -p /tmp/lighthouse/lighthouse-${{ github.run_number }}
+      run: mkdir docs/_build/lighthouse
+
     - name: Run Lighthouse on Site
       id: lighthouse
       uses: foo-software/lighthouse-check-action@v2.0.0
@@ -198,24 +125,11 @@ jobs:
           ${{ env.URL }}/demo/api.html,
           ${{ env.URL }}/demo/demo.html,
           ${{ env.URL }}/demo/example_pandas.html
-        outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
+        outputDirectory: docs/_build/lighthouse
         verbose: true
 
-    - name: Cache yarn
-      uses: actions/cache@v1
-      with:
-        path: .yarn-packages
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-
-    - name: Install yarn dependencies
-      run: |
-        yarn --prefer-offline --no-optional
-
     - name: Run the accessibility audit
-      run: |
-        python docs/a11y.py --no-serve
+      run: python docs/a11y.py --no-serve
 
     - name: Assess Lighthouse Check results
       uses: foo-software/lighthouse-check-status-action@v1.0.1
@@ -227,18 +141,13 @@ jobs:
         minSeoScore: "80"
       if: always()
 
-    - name: Publish Lighthouse reports
+    - name: Publish Audit reports
       uses: actions/upload-artifact@v2
       with:
-        name: Lighthouse ${{ github.run_number }}
-        path: /tmp/lighthouse
-      if: always()
-
-    - name: Publish Pa11y reports
-      uses: actions/upload-artifact@v2
-      with:
-        name: Pa11y ${{ github.run_number }}
-        path: docs/_build/pa11y
+        name: Pa11y and Lighthouse ${{ github.run_number }}
+        path: |
+          docs/_build/pa11y
+          docs/_build/lighthouse
       if: always()
 
   publish:
