@@ -38,7 +38,7 @@ following configuration:
            {
                "name": "GitLab",
                "url": "https://gitlab.com/<your-org>/<your-repo>",
-               "icon": "fab fa-gitlab-square",
+               "icon": "fab fa-gitlab",
            },
            {
                "name": "Twitter",
