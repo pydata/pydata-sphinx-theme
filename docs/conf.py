@@ -40,13 +40,13 @@ extensions = [
     "jupyter_sphinx",
 ]
 
+# -- Internationalization ------------------------------------------------
+# specifying the natural language populates some key tags
+language = "en"
+
 # ReadTheDocs has its own way of generating sitemaps, etc.
 if not os.environ.get("READTHEDOCS"):
     extensions += ["sphinx_sitemap"]
-
-    # -- Internationalization ------------------------------------------------
-    # specifying the natural language populates some key tags
-    language = "en"
 
     # -- Sitemap -------------------------------------------------------------
     html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8080/")
