@@ -113,9 +113,9 @@ def summary():
         }
     )
 
-    report_str = safe_dump(report, default_flow_style=False)
-
     nrc = sum(not_roadmap_counts.values())
+    report["passed"] = nrc == 0
+    report_str = safe_dump(report, default_flow_style=False)
 
     if os.environ.get("CI") and nrc:
         print("""::error ::{}""".format(report_str.replace("\n", "%0A")))
