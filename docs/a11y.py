@@ -33,8 +33,6 @@ def serve():
     """start the local server"""
     server = subprocess.Popen(
         [sys.executable, HERE / "serve.py"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
     )
     ready = 0
     retries = 10
