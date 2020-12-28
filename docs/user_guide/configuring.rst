@@ -25,7 +25,8 @@ If you'd like it to link to another page or use an external link instead, use th
 .. code:: python
 
    html_theme_options = {
-      "logo_link": "<other page or external link>"
+       "logo_link": "<other page or external link>"
+   }
 
 
 Configure social media buttons
