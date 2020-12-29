@@ -1,4 +1,4 @@
-.. _configuation:
+.. _configuration:
 
 *************
 Configuration
@@ -19,6 +19,16 @@ doc path's _static folder, and use the following configuration:
 
    html_logo = "_static/logo.png"
 
+The logo links to ``master_doc`` (usually the first page of your documentation) by default. 
+If you'd like it to link to another page or use an external link instead, use the following configuration:
+
+.. code:: python
+
+   html_theme_options = {
+       "logo_link": "<other page or external link>"
+   }
+
+
 Configure social media buttons
 ==============================
 
@@ -29,6 +39,7 @@ following configuration:
 
    html_theme_options = {
      "github_url": "https://github.com/<your-org>/<your-repo>",
+     "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
      "twitter_url": "https://twitter.com/<your-handle>",
    }
 
@@ -48,6 +59,19 @@ an external site. You can add external links to the nav bar like so:
      ]
    }
 
+.. _configure-sidebar:
+
+Configure the sidebar
+=====================
+
+``pydata_sphinx_theme`` provides two new sidebar items by default:
+
+- ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section
+- ``sidebar-search-bs.html`` - a bootstrap-friendly search bar
+
+By default, this theme's sidebar has these two elements in it. If you'd like to
+override this behavior and control the sidebar on a per-page basis, use the
+`Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
 Hiding the previous and next buttons
 ====================================
@@ -149,4 +173,91 @@ use the following configuration:
 
    html_theme_options = {
      "navigation_with_keys": False
+   }
+
+
+Show more levels of the in-page TOC by default
+==============================================
+
+Normally only the 2nd-level headers of a page are show in the right
+table of contents, and deeper levels are only shown when they are part
+of an active section (when it is scrolled on screen).
+
+You can show deeper levels by default by using the following configuration, indicating how many levels should be displayed:
+
+.. code-block:: python
+
+   html_theme_options = {
+     "show_toc_level": 2
+   }
+
+All headings up to and including the level specified will now be shown
+regardless of what is displayed on the page.
+
+
+Remove the sidebar from some pages
+==================================
+
+If you'd like the left sidebar to be removed from a page, you can use the
+following configuration in ``conf.py``:
+
+.. code-block:: python
+
+   html_sidebars = {
+     "pagename": []
+   }
+
+This works for glob-style patterns as well. For example:
+
+.. code-block:: python
+
+   html_sidebars = {
+     "folder/*": []
+   }
+
+If you'd like to remove the left sidebar from **all** pages of your documentation,
+use this pattern:
+
+.. code-block:: python
+
+   html_sidebars = {
+     "**": []
+   }
+
+For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
+
+
+Configure navbar menu item alignment
+====================================
+
+By default, the navigation bar menu items will align with the content on your
+page. This equals the following default configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align": "content"
+      ...
+   }
+
+If instead you'd like these items to snap to the left (closer to the logo), use this
+configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align": "left"
+      ...
+   }
+
+If you'd like these items to snap to the right of the page, use this configuration:
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "navbar_align": "right"
+      ...
    }

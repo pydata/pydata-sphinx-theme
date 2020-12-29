@@ -409,6 +409,13 @@ Admonitions
    Equations within a note:
    :math:`G_{\mu\nu} = 8 \pi G (T_{\mu\nu}  + \rho_\Lambda g_{\mu\nu})`.
 
+.. Note:: Lists in admonitions.
+
+   1. Here's a list item
+   2. And another list item
+
+   They should be in-line with the text around them!
+
 .. Tip:: 15% if the service is good.
 
     +---------+
@@ -451,6 +458,12 @@ Admonitions
       danger
       error
       hint
+
+Deprecated
+----------
+
+.. deprecated:: 0.1.1
+   Something is deprecated, use something else instead.
 
 
 Topics, Sidebars, and Rubrics
@@ -525,3 +538,16 @@ works as expected. If the widgets don't show up, RequireJS may be broken.
    df = px.data.iris()
    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", size="sepal_length")
    fig
+
+And here we demonstrate ``xarray`` to ensure that it shows up properly.
+
+.. jupyter-execute::
+
+   import xarray as xr
+   import numpy as np
+   data = xr.DataArray(
+            np.random.randn(2, 3),
+            dims=("x", "y"),
+            coords={"x": [10, 20]}, attrs={"foo": "bar"}
+          )
+   data

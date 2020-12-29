@@ -1,5 +1,5 @@
-
-{% extends "basic/layout.html" %}
+{%- extends "basic/layout.html" %}
+{%- import "static/webpack-macros.html" as _webpack with context %}
 
 {# prev/next buttons #}
 {% macro prev_next(prev, next, prev_title='', next_title='') %}
@@ -12,14 +12,18 @@
 {% endmacro %}
 
 {%- block css %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="{{ pathto('_static/css/index.css', 1) }}" rel="stylesheet">
+    {{ _webpack.head_pre_bootstrap() }}
+    {{ _webpack.head_pre_icons() }}
+    {% block fonts %}
+      {{ _webpack.head_pre_fonts() }}
+    {% endblock %}
     {{- css() }}
+    {{ _webpack.head_js_preload() }}
 {%- endblock %}
 
 {%- block extrahead %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
 {%- endblock %}
 
 {# Silence the sidebar's, relbar's #}
@@ -41,9 +45,16 @@
     <div class="container-xl">
       <div class="row">
           {% block docs_sidebar %}
-          <div class="col-12 col-md-3 bd-sidebar">
-              {%- include "docs-sidebar.html" %}
-          </div>
+            {% if sidebars %}
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+                {%- for sidebartemplate in sidebars %}
+                {%- include sidebartemplate %}
+                {%- endfor %}
+            </div>
+            {% else %}
+            <div class="col-12 col-md-1 col-xl-2 bd-sidebar no-sidebar"></div>
+            {% endif %}
           {% endblock %}
 
           {% block docs_toc %}
@@ -55,7 +66,12 @@
           {% endblock %}
 
           {% block docs_main %}
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          {% if sidebars %}
+            {% set content_col_class = "col-md-9 col-xl-7" %}
+          {% else %}
+            {% set content_col_class = "col-md-11 col-xl-8" %}
+          {% endif %}
+          <main class="col-12 {{ content_col_class }} py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
               {% block docs_body %}
               <div>
                 {% block body %} {% endblock %}
@@ -72,7 +88,8 @@
       </div>
     </div>
 
-    <script src="{{ pathto('_static/js/index.js', 1) }}"></script>
+    {{ _webpack.body_post() }}
+
     {% if theme_google_analytics_id %}
     <!-- Google Analytics -->
     <script>

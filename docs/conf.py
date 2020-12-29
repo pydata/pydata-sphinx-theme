@@ -49,6 +49,10 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+html_sidebars = {
+    "contributing": ["sidebar-search-bs.html", "custom-template.html"],
+    "changelog": [],
+}
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -65,6 +69,8 @@ html_theme_options = {
     "github_url": "https://github.com/pandas-dev/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
     "use_edit_page_button": True,
+    "show_toc_level": 1,
+    # "navbar_align": "right",  # For testing that the navbar items align properly
 }
 
 html_context = {

@@ -1,19 +1,21 @@
 html {
-  font-size: 15px;
+  font-size: var(--font-size-base);
 }
 
 body {
+  padding-top: 75px;
+
   background-color: white;
-  font-family: 'Lato', sans-serif;
+  font-family: var(--font-family-base);
   font-weight: 400;
   line-height: 1.65;
-  color: #333;
-  padding-top: 75px;
+  color: rgba(var(--color-text-base), 1);
 }
 
 p {
   margin-bottom: 1.15rem;
   font-size: 1em;
+  color: rgba(var(--color-paragraph), 1);
 
   /* section header in docstring pages */
   &.rubric {
@@ -22,78 +24,74 @@ p {
 }
 
 a {
-  color: #005b81;
+  color: rgba(var(--color-link), 1);
   text-decoration: none;
 
   &:hover {
-    color: #e32e00;
+    color: rgba(var(--color-link-hover), 1);
     text-decoration: underline;
   }
 
   &.headerlink {
-    color: #c60f0f;
+    color: rgba(var(--color-headerlink), 1);
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
 
     &:hover {
-      background-color: #c60f0f;
-      color: white;
+      background-color: rgba(var(--color-headerlink), 1);
+      color: rgba(var(--color-headerlink-hover), 1);
     }
   }
 }
 
-.header-style {
+.heading-style {
   margin: 2.75rem 0 1.05rem;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-family-heading);
   font-weight: 400;
   line-height: 1.15;
-
-  &::before {
-    // offsetting html anchor titles to adjust for fixed header
-    display: block;
-    content: '';
-    height: 80px;
-    margin: -80px 0 0;
-  }
 }
 
 h1 {
-  @extend .header-style;
+  @extend .heading-style;
   margin-top: 0;
-  font-size: 2.488em;
-  color: #130654;
+  font-size: var(--font-size-h1);
+  color: rgba(var(--color-h1), 1);
 }
 
 h2 {
-  @extend .header-style;
-  font-size: 2.074em;
-  color: #130654;
+  @extend .heading-style;
+  font-size: var(--font-size-h2);
+  color: rgba(var(--color-h2), 1);
 }
 
 h3 {
-  @extend .header-style;
-  font-size: 1.728em;
+  @extend .heading-style;
+  font-size: var(--font-size-h3);
+  color: rgba(var(--color-h3), 1);
 }
 
 h4 {
-  @extend .header-style;
-  font-size: 1.44em;
+  @extend .heading-style;
+  font-size: var(--font-size-h4);
+  color: rgba(var(--color-h4), 1);
 }
 
 h5 {
-  @extend .header-style;
-  font-size: 1.2em;
+  @extend .heading-style;
+  font-size: var(--font-size-h5);
+  color: rgba(var(--color-h5), 1);
 }
 
 h6 {
-  @extend .header-style;
-  font-size: 1em;
+  @extend .heading-style;
+  font-size: var(--font-size-h6);
+  color: rgba(var(--color-h6), 1);
 }
 
 small,
 .text_small {
-  font-size: 0.833em;
+  font-size: var(--font-size-milli);
 }
 
 hr {
@@ -102,11 +100,22 @@ hr {
 }
 
 pre {
+  margin: 1.5em 0 1.5em 0;
   padding: 10px;
-  background-color: rgb(250, 250, 250);
-  color: #222;
+  background-color: rgba(var(--color-preformatted-background), 1);
+  color: rgba(var(--color-preformatted-text), 1);
   line-height: 1.2em;
   border: 1px solid rgb(201, 201, 201);
-  margin: 1.5em 0 1.5em 0;
   box-shadow: 1px 1px 1px #d8d8d8;
+}
+
+// offsetting html elements with anchor attached to adjust for fixed header
+:target {
+  &::before {
+    display: block;
+    content: '';
+    height: 60px;
+    margin: -60px 0 0;
+    background-color: white;
+  }
 }

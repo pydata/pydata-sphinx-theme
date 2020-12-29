@@ -8,12 +8,11 @@ from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.3.2dev0"
+__version__ = "0.4.2dev0"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
-    """Add functions so Jinja templates can add toctree objects.
-    """
+    """Add functions so Jinja templates can add toctree objects."""
 
     def get_nav_object(kind, **kwargs):
         """Return the navigation link structure in HTML. Arguments are passed
@@ -29,7 +28,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         kind : ["navbar", "sidebar", "raw"]
             The kind of UI element this toctree is generated for.
         kwargs: passed to the Sphinx `toctree` template function.
-        
+
         Returns
         -------
 
@@ -65,7 +64,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         elif kind == "raw":
             out = soup
-        
+
         return out
 
     def get_page_toc_object(kind="html"):
@@ -113,8 +112,26 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         else:
             return soup
 
+    def navbar_align_class():
+        """Return the class that aligns the navbar based on config."""
+        align = context.get("theme_navbar_align", "content")
+        align_options = {
+            "content": ("col-lg-9", "mr-auto"),
+            "left": ("", "mr-auto"),
+            "right": ("", "ml-auto"),
+        }
+        if align not in align_options:
+            raise ValueError(
+                (
+                    "Theme optione navbar_align must be one of"
+                    f"{align_options.keys()}, got: {align}"
+                )
+            )
+        return align_options[align]
+
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
+    context["navbar_align_class"] = navbar_align_class
 
 
 # -----------------------------------------------------------------------------
@@ -157,6 +174,9 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
     context["get_edit_url"] = get_edit_url
 
+    # Ensure that the max TOC level is an integer
+    context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
+
 
 # -----------------------------------------------------------------------------
 
@@ -179,5 +199,10 @@ def setup(app):
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
+
+    # Update templates for sidebar
+    pkgdir = os.path.abspath(os.path.dirname(__file__))
+    path_templates = os.path.join(pkgdir, "_templates")
+    app.config.templates_path.append(path_templates)
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}
