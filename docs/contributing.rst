@@ -235,6 +235,8 @@ of the theme. The current font selections are:
 
   - allowing upgrades to be handled in a relatively sane, manageable way
 
+Currently, only fontawesome is vendored (other fonts like Lato are no longer
+included by default).
 
 Upgrading a font
 ^^^^^^^^^^^^^^^^
