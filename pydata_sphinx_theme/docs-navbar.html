@@ -1,13 +1,27 @@
 
 <div class="container-xl">
 
-    <a class="navbar-brand" href="{{ pathto(master_doc) }}">
+
     {% if logo %}
-      <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo" />
+      {% if not theme_logo_link %}
+      <a class="navbar-brand" href="{{ pathto(master_doc) }}">
+        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
+      </a>
+      {% elif theme_logo_link[:4] == 'http' %}
+      <a class="navbar-brand" href="{{ theme_logo_link }}">
+        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
+      </a>
+      {% else %}
+      <a class="navbar-brand" href="{{ pathto(theme_logo_link) }}">
+        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
+      </a>      
+      {% endif %}
     {% else %}
+    <a class="navbar-brand" href="{{ pathto(master_doc) }}">
       <p class="title">{{ project }}</p>
-    {% endif %}
     </a>
+    {% endif %}
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -37,6 +51,13 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ theme_github_url }}" target="_blank" rel="noopener">
               <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        {% endif %}
+        {% if theme_gitlab_url | length > 2 %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ theme_gitlab_url }}" target="_blank" rel="noopener">
+              <span><i class="fab fa-gitlab"></i></span>
             </a>
           </li>
         {% endif %}

@@ -19,6 +19,16 @@ doc path's _static folder, and use the following configuration:
 
    html_logo = "_static/logo.png"
 
+The logo links to ``master_doc`` (usually the first page of your documentation) by default. 
+If you'd like it to link to another page or use an external link instead, use the following configuration:
+
+.. code:: python
+
+   html_theme_options = {
+       "logo_link": "<other page or external link>"
+   }
+
+
 Configure social media buttons
 ==============================
 
@@ -29,6 +39,7 @@ following configuration:
 
    html_theme_options = {
      "github_url": "https://github.com/<your-org>/<your-repo>",
+     "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
      "twitter_url": "https://twitter.com/<your-handle>",
    }
 
@@ -226,7 +237,7 @@ page. This equals the following default configuration:
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "content"
+      "navbar_align": "content"
       ...
    }
 
@@ -237,7 +248,7 @@ configuration:
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "left"
+      "navbar_align": "left"
       ...
    }
 
@@ -247,6 +258,6 @@ If you'd like these items to snap to the right of the page, use this configurati
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "right"
+      "navbar_align": "right"
       ...
    }
