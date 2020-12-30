@@ -88,6 +88,14 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # Add in CSS classes for bootstrap
         for ul in soup("ul"):
             ul["class"] = ul.get("class", []) + ["nav", "section-nav", "flex-column"]
+
+        for i in range(1, context["theme_show_toc_level"] + 1):
+            for li in soup.select("li.toc-h{}".format(i + 1)):
+                ul = li.find_parent("ul")
+                classes = ul.get("class", [])
+                if "visible" not in classes:
+                    ul["class"] = classes + ["visible"]
+
         for li in soup("li"):
             li["class"] = li.get("class", []) + ["nav-item", "toc-entry"]
             if li.find("a"):
