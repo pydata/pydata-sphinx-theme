@@ -116,7 +116,7 @@ pre {
     display: block;
     content: '';
     height: var(--header-height);
-    margin: -(var(--header-height)) 0 0;
+    margin: calc(-1 * var(--header-height)) 0 0;
     background-color: white;
   }
 }
