@@ -59,8 +59,7 @@ For a complete list of the theme variables that you may override, see the
 
    Note that these are `CSS variables <css-variable-help_>`_ and not
    `SASS variables <https://sass-lang.com/documentation/variables>`_.
-   For the difference between the two, see he theme is defined with CSS variables,
-   not SASS variables!
+   The theme is defined with CSS variables, not SASS variables!
 
 
 Replacing/Removing Fonts
