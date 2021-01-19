@@ -24,7 +24,11 @@ class BootstrapHTML5Translator(HTML5Translator):
         # type: (nodes.Element) -> None
         # copy of sphinx source to *not* add 'docutils' and 'align-default' classes
         # but add 'table' class
-        self.generate_targets_for_table(node)
+
+        # generate_targets_for_table is deprecated in 4.0, so use equivalent code:
+        for id_ in node['ids'][1:]:
+            self.body.append('<span id="%s"></span>' % id_)
+            node['ids'].remove(id_)
 
         self._table_row_index = 0
 
