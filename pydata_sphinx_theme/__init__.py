@@ -97,17 +97,18 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 a = li.find("a")
                 a["class"] = a.get("class", []) + ["nav-link"]
 
-        # Keep only the sub-sections of the title (so no title is shown)
-        title = soup.find("a", attrs={"href": "#"})
-        if title:
-            title = title.parent
-            # Only show if children of the title item exist
-            if title.select("ul li"):
-                out = title.find("ul").prettify()
-            else:
+        # If we only have one h1 header, assume it's a title
+        h1_headers = soup.select(".toc-h1")
+        if len(h1_headers) == 1:
+            title = h1_headers[0]
+            # If we have no sub-headers of a title then we won't have a TOC
+            if not title.select(".toc-h2"):
                 out = ""
+            else:
+                out = title.find("ul").prettify()
+        # Else treat the h1 headers as sections
         else:
-            out = ""
+            out = soup.prettify()
 
         # Return the toctree object
         if kind == "html":
