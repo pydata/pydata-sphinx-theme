@@ -75,8 +75,10 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         soup = bs(context["toc"], "html.parser")
 
-        # Add toc-hN classes
+        # Add toc-hN + visible classes
         def add_header_level_recursive(ul, level):
+            if level <= (context["theme_show_toc_level"] + 1):
+                ul["class"] = ul.get("class", []) + ["visible"]
             for li in ul("li", recursive=False):
                 li["class"] = li.get("class", []) + [f"toc-h{level}"]
                 ul = li.find("ul", recursive=False)
@@ -88,13 +90,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # Add in CSS classes for bootstrap
         for ul in soup("ul"):
             ul["class"] = ul.get("class", []) + ["nav", "section-nav", "flex-column"]
-
-        for i in range(1, context["theme_show_toc_level"] + 1):
-            for li in soup.select("li.toc-h{}".format(i + 1)):
-                ul = li.find_parent("ul")
-                classes = ul.get("class", [])
-                if "visible" not in classes:
-                    ul["class"] = classes + ["visible"]
 
         for li in soup("li"):
             li["class"] = li.get("class", []) + ["nav-item", "toc-entry"]
