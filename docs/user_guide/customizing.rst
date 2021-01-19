@@ -7,49 +7,59 @@ Customizing the theme
 In addition to the configuration options detailed at :ref:`configuration`, it
 is also possible to customize the HTML layout and CSS style of the theme.
 
+.. _custom-css:
 
-Customizing the CSS
+Custom CSS Stylesheets
+======================
+
+You may customize the theme's CSS by creating a custom stylesheet that Sphinx uses to build your site.
+Any rules in this style-sheet will over-ride the default theme rules.
+
+To add a custom stylesheet, follow these steps:
+
+1. **Create a CSS stylesheet** in ``_static/css/custom.css``, and add the CSS rules you wish.
+2. **Attach the stylesheet to your Sphinx build**. Add the following to ``conf.py``
+
+   .. code-block:: rst
+
+       html_static_path = ['_static']
+
+       html_css_files = [
+           'css/custom.css',
+       ]
+
+When you build your documentation, this stylesheet should now be activated.
+
+CSS Theme variables
 ===================
 
-The theme's CSS can be tweaked in 2 ways. The most straight forward way is to
-change the theme variables. If you are looking for more customisation, you can
-write additional css in ``custom.css``.
+This theme defines several `CSS variables <css-variable-help_>`_ that can be
+used to quickly control behavior across your documentation.
 
-Theme variables
----------------
-
-This theme is based on top of the basic
-`Bootstrap CSS variables <https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables>`__
+These are based on top of the basic `Bootstrap CSS variables <https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables>`_
 extended with some theme specific variables. An overview of all variables and
-every default is defined in ``/pydata_sphinx_theme/static/css/theme.css``.
+every default is defined in `the pydata default CSS variables file <pydata-css-variables_>`_.
 
-In order to change a variable, add a ``custom.css`` (see below) which updates
-the value of certain variables in a ``:root`` section:
+In order to change a variable, follow these steps:
 
-.. code-block:: none
+1. :ref:`Add a custom CSS stylesheet <custom-css>`. This is where we'll configure the variables.
+2. Underneath a ``:root`` section, add the variables you wish to update. For example, to update
+   the base font size, you might add this to ``custom.css``:
+  
+   .. code-block:: none
 
-    :root {
-        --font-size-base: 17px;
-    }
+       :root {
+           --font-size-base: 17px;
+       }
 
-Important, the theme is defined with CSS variables, not SASS variables!
+For a complete list of the theme variables that you may override, see the
+`theme variables defaults CSS file <pydata-css-variables_>`_.
 
-Custom stylesheet
------------------
+.. important::
 
-If the theme variables are not sufficient to shape theme to you liking, you can
-take full control over the look and feel via a custom stylesheet. If you have a
-stylesheet in ``_static/css/custom.css``, adding the following to ``conf.py``
-will ensure this stylesheet is loaded last on top of the theme variables and the
-base styleheet:
-
-.. code-block:: rst
-
-    html_static_path = ['_static']
-
-    html_css_files = [
-        'css/custom.css',
-    ]
+   Note that these are `CSS variables <css-variable-help_>`_ and not
+   `SASS variables <https://sass-lang.com/documentation/variables>`_.
+   The theme is defined with CSS variables, not SASS variables!
 
 
 Replacing/Removing Fonts
@@ -86,3 +96,6 @@ often paired together, can be replaced (or removed altogether) by:
             }
         </style>
     {% endblock %}
+
+.. _pydata-css-variables: https://github.com/pandas-dev/pydata-sphinx-theme/blob/master/pydata_sphinx_theme/static/css/theme.css
+.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties 

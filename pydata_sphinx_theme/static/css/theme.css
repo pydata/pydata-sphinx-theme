@@ -33,10 +33,11 @@
   **/
   --color-primary: 19, 6, 84;
   --color-success: 40, 167, 69;
-  --color-info: 23, 162, 184;
+  --color-info: 0, 123, 255;  /*23, 162, 184;*/
   --color-warning: 255, 193, 7;
   --color-danger: 220, 53, 69;
   --color-text-base: 51, 51, 51;
+
   --color-h1: var(--color-primary);
   --color-h2: var(--color-primary);
   --color-h3: var(--color-text-base);
@@ -62,12 +63,6 @@
   --color-toc-link-hover: var(--color-active-navigation);
   --color-toc-link-active: var(--color-active-navigation);
 
-  --color-admonition-primary: var(--color-primary);
-  --color-admonition-success: var(--color-success);
-  --color-admonition-danger: var(--color-danger);
-  --color-admonition-warning: var(--color-warning);
-  --color-admonition-info: var(--color-info);
-
   /*****************************************************************************
   * Icon
   **/
@@ -79,4 +74,31 @@
   --icon-exclamation-circle: '\f06a';
   --icon-times-circle: '\f057';
   --icon-lightbulb: '\f0eb';
+
+  /*****************************************************************************
+  * Admonitions
+  **/
+
+  --color-admonition-default: var(--color-info);
+  --color-admonition-note: var(--color-info);
+  --color-admonition-attention: var(--color-warning);
+  --color-admonition-caution: var(--color-warning);
+  --color-admonition-warning: var(--color-warning);
+  --color-admonition-danger: var(--color-danger);
+  --color-admonition-error: var(--color-danger);
+  --color-admonition-hint: var(--color-success);
+  --color-admonition-tip: var(--color-success);
+  --color-admonition-important: var(--color-success);
+
+  --icon-admonition-default: var(--icon-info-circle);
+  --icon-admonition-note: var(--icon-info-circle);
+  --icon-admonition-attention: var(--icon-exclamation-circle);
+  --icon-admonition-caution: var(--icon-exclamation-triangle);
+  --icon-admonition-warning: var(--icon-exclamation-triangle);
+  --icon-admonition-danger: var(--icon-exclamation-triangle);
+  --icon-admonition-error: var(--icon-times-circle);
+  --icon-admonition-hint: var(--icon-lightbulb);
+  --icon-admonition-tip: var(--icon-lightbulb);
+  --icon-admonition-important: var(--icon-exclamation-circle);
+
 }
