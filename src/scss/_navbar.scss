@@ -1,11 +1,20 @@
 .navbar {
   position: fixed;
+  height: var(--header-height);
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+
+  .container-xl {
+    height: 100%;
+  }
 }
 
 .navbar-brand {
   position: relative;
-  height: 45px;
+  height: 100%;
   width: auto;
+  padding: 0.5rem 0;
 
   img {
     max-width: 100%;
