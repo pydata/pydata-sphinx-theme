@@ -317,6 +317,12 @@ table.field-list {
         padding: 0.25rem 1.5rem;
         font-size: 0.9em;
         color: rgba(var(--color-sidebar-link), 1);
+
+        &:hover {
+          color: rgba(var(--color-sidebar-link-hover), 1);
+          text-decoration: none;
+          background-color: transparent;
+        }
       }
 
       .active {
