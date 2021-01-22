@@ -34,7 +34,7 @@
     "@openfonts/lato_latin-ext": "^1.44.1",
     "@openfonts/open-sans_all": "^1.44.1",
     "bootstrap": "^4.4.1",
-    "jquery": "3.5.0",
+    "jquery": "3.5.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "popper.js": "^1.16.1"
   }
