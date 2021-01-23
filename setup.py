@@ -43,7 +43,7 @@ setup(
     include_package_data=True,
     # See http://www.sphinx-doc.org/en/stable/theming.html#distribute-your-theme-as-a-python-package
     entry_points={"sphinx.html_themes": ["pydata_sphinx_theme = pydata_sphinx_theme"]},
-    install_requires=["sphinx"],
+    install_requires=["sphinx", "beautifulsoup4"],
     python_requires=">=3.5",
     classifiers=[
         "Development Status :: 4 - Beta",

@@ -285,7 +285,12 @@ table.field-list {
   }
 }
 
-.bd-sidebar .nav > {
+.bd-sidebar .nav {
+  ul {
+    list-style: none;
+    padding: 0 1.5rem;
+  }
+
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
@@ -304,34 +309,6 @@ table.field-list {
     &:hover > a {
       font-weight: 600;
       color: rgba(var(--color-sidebar-link-active), 1);
-    }
-  }
-
-  li > ul {
-    list-style: none;
-    padding: 0.25rem 1.5rem;
-
-    > {
-      li > a {
-        display: block;
-        padding: 0.25rem 1.5rem;
-        font-size: 0.9em;
-        color: rgba(var(--color-sidebar-link), 1);
-
-        &:hover {
-          color: rgba(var(--color-sidebar-link-hover), 1);
-          text-decoration: none;
-          background-color: transparent;
-        }
-      }
-
-      .active {
-        > a,
-        &:hover > a {
-          font-weight: 600;
-          color: rgba(var(--color-sidebar-link-active), 1);
-        }
-      }
     }
   }
 }
