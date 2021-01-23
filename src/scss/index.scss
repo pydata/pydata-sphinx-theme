@@ -304,19 +304,6 @@ table.field-list {
     }
   }
 
-  // For page headers with toctrees under them
-  li.page-header {
-    > ul {
-      padding-left: 0;
-    } 
-
-    > a {
-      font-size: 1.2em;
-      font-weight: 500;
-      color: rgba(var(--color-sidebar-link), 1);
-    }
-  }
-
   .active {
     > a,
     &:hover > a {
