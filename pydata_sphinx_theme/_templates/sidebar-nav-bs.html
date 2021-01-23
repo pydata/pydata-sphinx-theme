@@ -1,7 +1,7 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="nav bd-sidenav">
-      {{ get_nav_object("sidebar", maxdepth=4, collapse=True, includehidden=True, titles_only=True) }}
+      {{ generate_nav_html("sidebar", maxdepth=4, collapse=True, includehidden=True, titles_only=True) }}
     </ul>
   </div>
 </nav>

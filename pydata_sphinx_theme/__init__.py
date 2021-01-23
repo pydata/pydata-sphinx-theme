@@ -14,8 +14,9 @@ __version__ = "0.4.2dev0"
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
-    def get_nav_object(kind, **kwargs):
-        """Return the navigation link structure in HTML. Arguments are passed
+    def generate_nav_html(kind, **kwargs):
+        """
+        Return the navigation link structure in HTML. Arguments are passed
         to Sphinx "toctree" function (context["toctree"] below).
 
         We use beautifulsoup to add the right CSS classes / structure for bootstrap.
@@ -24,16 +25,14 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         Parameters
         ----------
-
         kind : ["navbar", "sidebar", "raw"]
             The kind of UI element this toctree is generated for.
         kwargs: passed to the Sphinx `toctree` template function.
 
         Returns
         -------
-
-        nav_object : HTML string (if kind in ["navbar", "sidebar"]) or BeautifulSoup
-                     object (if kind == "raw")
+        HTML string (if kind in ["navbar", "sidebar"])
+        or BeautifulSoup object (if kind == "raw")
         """
         toc_sphinx = context["toctree"](**kwargs)
         soup = bs(toc_sphinx, "html.parser")
@@ -67,7 +66,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         return out
 
-    def get_page_toc_object(kind="html"):
+    def generate_toc_html(kind="html"):
         """Return the within-page TOC links in HTML."""
 
         if "toc" not in context:
@@ -116,6 +115,51 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         else:
             return soup
 
+    def get_nav_object(maxdepth=None, collapse=True, includehidden=True, **kwargs):
+        """Return a list of nav links that can be accessed from Jinja.
+
+        Parameters
+        ----------
+        maxdepth: int
+            How many layers of TocTree will be returned
+        collapse: bool
+            Whether to only include sub-pages of the currently-active page,
+            instead of sub-pages of all top-level pages of the site.
+        kwargs: key/val pairs
+            Passed to the `toctree` Sphinx method
+        """
+        toc_sphinx = context["toctree"](
+            maxdepth=maxdepth, collapse=collapse, includehidden=includehidden, **kwargs
+        )
+        soup = bs(toc_sphinx, "html.parser")
+
+        # # If no toctree is defined (AKA a single-page site), skip this
+        # if toctree is None:
+        #     return []
+
+        nav_object = soup_to_python(soup, only_pages=True)
+        return nav_object
+
+    def get_page_toc_object():
+        """Return a list of within-page TOC links that can be accessed from Jinja."""
+
+        if "toc" not in context:
+            return ""
+
+        soup = bs(context["toc"], "html.parser")
+
+        try:
+            toc_object = soup_to_python(soup, only_pages=False)
+        except Exception:
+            return []
+
+        # If there's only one child, assume we have a single "title" as top header
+        # so start the TOC at the first item's children (AKA, level 2 headers)
+        if len(toc_object) == 1:
+            return toc_object[0]["children"]
+        else:
+            return toc_object
+
     def navbar_align_class():
         """Return the class that aligns the navbar based on config."""
         align = context.get("theme_navbar_align", "content")
@@ -133,9 +177,67 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             )
         return align_options[align]
 
+    context["generate_nav_html"] = generate_nav_html
+    context["generate_toc_html"] = generate_toc_html
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
     context["navbar_align_class"] = navbar_align_class
+
+
+def soup_to_python(soup, only_pages=False):
+    """
+    Convert the toctree html structure to python objects which can be used in Jinja.
+
+    Parameters
+    ----------
+    soup : BeautifulSoup object for the toctree
+    only_pages : bool
+        Only include items for full pages in the output dictionary. Exclude
+        anchor links (TOC items with a URL that starts with #)
+
+    Returns
+    -------
+    nav : list of dicts
+        The toctree, converted into a dictionary with key/values that work
+        within Jinja.
+    """
+    # toctree has this structure (caption only for toctree, not toc)
+    #   <p class="caption">...</span></p>
+    #   <ul>
+    #       <li class="toctree-l1"><a href="..">..</a></li>
+    #       <li class="toctree-l1"><a href="..">..</a></li>
+    #       ...
+
+    def extract_level_recursive(ul, navs_list):
+
+        for li in ul.find_all("li", recursive=False):
+            ref = li.a
+            url = ref["href"]
+            title = "".join(map(str, ref.contents))
+            active = "current" in li.get("class", [])
+
+            # If we've got an anchor link, skip it if we wish
+            if only_pages and "#" in url and url != "#":
+                continue
+
+            # Converting the docutils attributes into jinja-friendly objects
+            nav = {}
+            nav["title"] = title
+            nav["url"] = url
+            nav["active"] = active
+
+            navs_list.append(nav)
+
+            # Recursively convert children as well
+            nav["children"] = []
+            ul = li.find("ul", recursive=False)
+            if ul:
+                extract_level_recursive(ul, nav["children"])
+
+    navs = []
+    for ul in soup.find_all("ul", recursive=False):
+        extract_level_recursive(ul, navs)
+    return navs
 
 
 # -----------------------------------------------------------------------------

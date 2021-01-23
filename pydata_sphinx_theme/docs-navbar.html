@@ -29,7 +29,7 @@
     {% set navbar_class, navbar_align = navbar_align_class() %}
     <div id="navbar-menu" class="{{ navbar_class }} collapse navbar-collapse">
       <ul id="navbar-main-elements" class="navbar-nav {{ navbar_align }}">
-        {{ get_nav_object("navbar", maxdepth=1, collapse=True, includehidden=True, titles_only=True) }}
+        {{ generate_nav_html("navbar", maxdepth=1, collapse=True, includehidden=True, titles_only=True) }}
         {% for external_link in theme_external_links %}
         <li class="nav-item">
             <a class="nav-link nav-external" href="{{ external_link.url }}">{{ external_link.name }}<i class="fas fa-external-link-alt"></i></a>
