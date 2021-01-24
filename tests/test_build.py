@@ -45,8 +45,7 @@ class SphinxBuild:
 @pytest.fixture()
 def sphinx_build_factory(make_app, tmp_path):
     def _func(src_folder, **kwargs):
-        if not (tmp_path / src_folder).exists():
-            copytree(path_tests / "sites" / src_folder, tmp_path / src_folder)
+        copytree(path_tests / "sites" / src_folder, tmp_path / src_folder)
         app = make_app(
             srcdir=sphinx_path(os.path.abspath((tmp_path / src_folder))), **kwargs
         )
