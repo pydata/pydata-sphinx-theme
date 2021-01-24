@@ -1,57 +1,70 @@
-from bs4 import BeautifulSoup
+import os
 from pathlib import Path
-from subprocess import run
-from shutil import copytree, rmtree
+from shutil import copytree
+
+from bs4 import BeautifulSoup
+
+from sphinx.testing.util import SphinxTestApp
+from sphinx.testing.path import path as sphinx_path
+
 import pytest
 
 
-path_tests = Path(__file__).parent.resolve()
-path_base = path_tests.joinpath("sites", "base")
+path_tests = Path(__file__).parent
 
 
-@pytest.fixture(scope="session")
-def sphinx_build(tmpdir_factory):
-    class SphinxBuild:
-        path_tmp = Path(tmpdir_factory.mktemp("build"))
-        path_docs = path_tmp.joinpath("testdocs")
-        path_build = path_docs.joinpath("_build")
-        path_html = path_build.joinpath("html")
-        path_pg_index = path_html.joinpath("index.html")
-        cmd_base = ["sphinx-build", ".", "_build/html", "-a", "-W"]
+class SphinxBuild:
+    def __init__(self, app: SphinxTestApp, src: Path):
+        self.app = app
+        self.src = src
 
-        def copy(self, path=None):
-            """Copy the specified book to our tests folder for building."""
-            if path is None:
-                path = path_base
-            if not self.path_docs.exists():
-                copytree(path, self.path_docs)
+    def build(self):
+        self.app.build()
+        assert self.warnings == "", self.status
+        return self
 
-        def build(self, cmd=None):
-            """Build the test book"""
-            cmd = [] if cmd is None else cmd
-            run(self.cmd_base + cmd, cwd=self.path_docs, check=True)
+    @property
+    def status(self):
+        return self.app._status.getvalue()
 
-        def get(self, pagename):
-            path_page = self.path_html.joinpath(pagename)
-            if not path_page.exists():
-                raise ValueError(f"{path_page} does not exist")
-            return BeautifulSoup(path_page.read_text(), "html.parser")
+    @property
+    def warnings(self):
+        return self.app._warning.getvalue()
 
-        def clean(self):
-            """Clean the _build folder so files don't clash with new tests."""
-            rmtree(self.path_build)
+    @property
+    def outdir(self):
+        return Path(self.app.outdir)
 
-    return SphinxBuild()
+    def html_tree(self, *path):
+        path_page = self.outdir.joinpath(*path)
+        if not path_page.exists():
+            raise ValueError(f"{path_page} does not exist")
+        return BeautifulSoup(path_page.read_text("utf8"), "html.parser")
 
 
-def test_build_book(file_regression, sphinx_build):
-    """Test building the base book template and config."""
-    sphinx_build.copy()
+@pytest.fixture()
+def sphinx_build_factory(make_app, tmp_path):
+    def _func(src_folder, **kwargs):
+        if not (tmp_path / src_folder).exists():
+            copytree(path_tests / "sites" / src_folder, tmp_path / src_folder)
+        app = make_app(
+            srcdir=sphinx_path(os.path.abspath((tmp_path / src_folder))), **kwargs
+        )
+        return SphinxBuild(app, tmp_path / src_folder)
+
+    yield _func
+
+
+def test_build_html(sphinx_build_factory, file_regression):
+    """Test building the base html template and config."""
+    sphinx_build = sphinx_build_factory("base")  # type: SphinxBuild
 
     # Basic build with defaults
     sphinx_build.build()
-    index_html = sphinx_build.get("index.html")
-    subpage_html = sphinx_build.get("section1/index.html")
+    assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
+
+    index_html = sphinx_build.html_tree("index.html")
+    subpage_html = sphinx_build.html_tree("section1/index.html")
 
     # Navbar structure
     navbar = index_html.select("div#navbar-menu")[0]
@@ -67,63 +80,69 @@ def test_build_book(file_regression, sphinx_build):
         sidebar.prettify(), basename="sidebar_subpage", extension=".html"
     )
 
-    sphinx_build.clean()
 
-
-def test_toc_visibility(file_regression, sphinx_build):
-    sphinx_build.copy()
-
+def test_toc_visibility(sphinx_build_factory):
     # Test that setting TOC level visibility works as expected
-    sphinx_build.build(["-D", "html_theme_options.show_toc_level=2"])
-    index_html = sphinx_build.get("index.html")
+    confoverrides = {
+        "html_theme_options.show_toc_level": 2,
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
 
     # The 3rd level headers should be visible, but not the fourth-level
     assert "visible" in index_html.select(".toc-h2 ul")[0].attrs["class"]
     assert "visible" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
 
 
-def test_logo_name(file_regression, sphinx_build):
+def test_logo(sphinx_build_factory):
     """Test that the logo is shown by default, project title if no logo."""
-    sphinx_build.copy()
+    sphinx_build = sphinx_build_factory("base").build()
 
     # By default logo is shown
-    sphinx_build.build()
-    index_html = sphinx_build.get("index.html")
+    index_html = sphinx_build.html_tree("index.html")
     assert index_html.select(".navbar-brand img")
     assert not index_html.select(".navbar-brand")[0].text.strip()
-    sphinx_build.clean()
 
-    # Test that setting TOC level visibility works as expected
-    sphinx_build.build(["-D", "html_logo="])
-    index_html = sphinx_build.get("index.html")
+
+def test_logo_name(sphinx_build_factory):
+    """Test that the logo is shown by default, project title if no logo."""
+    confoverrides = {"html_logo": ""}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+    # if no logo is specified, use project title instead
+    index_html = sphinx_build.html_tree("index.html")
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
 
 
-def test_sidebar_visible(sphinx_build):
+def test_sidebar_default(sphinx_build_factory):
     """The sidebar is shrunk when no sidebars specified in html_sidebars."""
-    sphinx_build.copy()
+    sphinx_build = sphinx_build_factory("base").build()
 
-    sphinx_build.build()
-    index_html = sphinx_build.get("page1.html")
+    index_html = sphinx_build.html_tree("page1.html")
     assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
 
-    sphinx_build.build(["-D", "html_sidebars.page1="])
-    index_html = sphinx_build.get("page1.html")
+
+def test_sidebar_disabled(sphinx_build_factory):
+    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
+    confoverrides = {"html_sidebars.page1": ""}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("page1.html")
     assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
-    sphinx_build.clean()
 
 
-def test_navbar_align(sphinx_build):
+def test_navbar_align_default(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
-    sphinx_build.copy()
-
-    sphinx_build.build()
-    index_html = sphinx_build.get("index.html")
+    sphinx_build = sphinx_build_factory("base").build()
+    index_html = sphinx_build.html_tree("index.html")
     assert "col-lg-9" in index_html.select("div#navbar-menu")[0].attrs["class"]
 
+
+def test_navbar_align_right(sphinx_build_factory):
+    """The navbar items align with the proper part of the page."""
+    confoverrides = {"html_theme_options.navbar_align": "right"}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+
     # Both the column alignment and the margin should be changed
-    sphinx_build.build(["-D", "html_theme_options.navbar_align=right"])
-    index_html = sphinx_build.get("index.html")
+    index_html = sphinx_build.html_tree("index.html")
     assert "col-lg-9" not in index_html.select("div#navbar-menu")[0].attrs["class"]
     assert "ml-auto" in index_html.select("ul#navbar-main-elements")[0].attrs["class"]
-    sphinx_build.clean()
