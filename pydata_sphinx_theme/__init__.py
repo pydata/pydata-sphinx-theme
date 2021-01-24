@@ -61,23 +61,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         for li in soup("li", {"class": "current"}):
             li["class"].append("active")
 
+        # Remove navbar/sidebar links to sub-headers on the page
+        for li in soup.select("li"):
+            # Remove
+            if li.find("a"):
+                href = li.find("a")["href"]
+                if "#" in href and href != "#":
+                    li.decompose()
+
         if kind == "navbar":
             # Add CSS for bootstrap
             for li in soup("li"):
                 li["class"].append("nav-item")
                 li.find("a")["class"].append("nav-link")
+            # only select li items (not eg captions)
             out = "\n".join([ii.prettify() for ii in soup.find_all("li")])
 
         elif kind == "sidebar":
-            # Remove sidebar links to sub-headers on the page
-            for li in soup.select("li.current ul li"):
-                # for li in soup.find_all("li"):
-                # Remove
-                if li.find("a"):
-                    href = li.find("a")["href"]
-                    if "#" in href and href != "#":
-                        li.decompose()
-
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
