@@ -1,0 +1,10 @@
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <!-- Use deeper level for sidebar -->
+    {% if pagename.startswith("section1/subsection1") %}
+    {{ generate_nav_html("sidebar", startdepth=2, maxdepth=4, collapse=True, includehidden=True, titles_only=True) }}
+    {% else %}
+    {{ generate_nav_html("sidebar", maxdepth=4, collapse=True, includehidden=True, titles_only=True) }}
+    {% endif %}
+  </div>
+</nav>
