@@ -25,7 +25,6 @@ Other sites that are using this theme:
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
 
    demo/index
    changelog
