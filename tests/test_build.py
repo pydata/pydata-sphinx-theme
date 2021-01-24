@@ -145,3 +145,12 @@ def test_navbar_align_right(sphinx_build_factory):
     index_html = sphinx_build.html_tree("index.html")
     assert "col-lg-9" not in index_html.select("div#navbar-menu")[0].attrs["class"]
     assert "ml-auto" in index_html.select("ul#navbar-main-elements")[0].attrs["class"]
+
+
+def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
+    # https://github.com/pandas-dev/pydata-sphinx-theme/issues/302
+    sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
+
+    index_html = sphinx_build.html_tree("index.html")
+    navbar = index_html.select("ul#navbar-main-elements")[0]
+    file_regression.check(navbar.prettify(), extension=".html")
