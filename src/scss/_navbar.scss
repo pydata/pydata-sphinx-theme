@@ -1,6 +1,6 @@
 .navbar {
   position: fixed;
-  height: var(--header-height);
+  height: var(--pst-header-height);
   width: 100%;
   padding: 0;
   overflow: hidden;
@@ -36,7 +36,7 @@
 
     > .active > .nav-link {
       font-weight: 600;
-      color: rgba(var(--color-navbar-link-active), 1);
+      color: rgba(var(--pst-color-navbar-link-active), 1);
     }
   }
 }
