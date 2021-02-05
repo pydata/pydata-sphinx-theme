@@ -1,6 +1,6 @@
 .navbar {
   position: fixed;
-  height: var(--header-height);
+  min-height: var(--header-height);
   width: 100%;
   padding: 0;
 
@@ -11,7 +11,7 @@
 
 .navbar-brand {
   position: relative;
-  height: 100%;
+  height: var(--header-height);
   width: auto;
   padding: 0.5rem 0;
 
