@@ -1,5 +1,6 @@
 html {
   font-size: var(--font-size-base);
+  scroll-padding-top: calc(var(--header-height) + 11px);
 }
 
 body {
@@ -107,16 +108,4 @@ pre {
   line-height: 1.2em;
   border: 1px solid rgb(201, 201, 201);
   box-shadow: 1px 1px 1px #d8d8d8;
-}
-
-// offsetting html elements with anchor attached to adjust for fixed header
-:target {
-  &::before {
-    // offsetting html anchor titles to adjust for fixed header
-    display: block;
-    content: '';
-    height: var(--header-height);
-    margin: calc(-1 * var(--header-height)) 0 0;
-    background-color: white;
-  }
 }

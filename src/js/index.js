@@ -32,6 +32,7 @@ function addTOCInteractivity() {
     const activeNavLinks = document.querySelectorAll('#bd-toc-nav a.active');
     activeNavLinks.forEach((navLink) => {
       navLink.parentElement.classList.add('active');
+      console.log('foo');
     });
   });
 }
