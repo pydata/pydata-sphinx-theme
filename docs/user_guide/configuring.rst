@@ -61,7 +61,7 @@ following configuration:
 
 
 The value of ``icon`` can be any full
-`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__.
+`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__ icon.
 In addition to the main icon class, e.g. ``fa-cat``, the "style" class must
 also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
 
@@ -76,6 +76,8 @@ also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
       i.fa-twitter-square:before {
          color: #55acee;
       }
+
+   This has already been added for the brands that have *shortcuts*.
 
 The below are shortcuts for commonly-used services, but may be removed in a future
 release in favor of ``icon_links``:
