@@ -421,24 +421,22 @@ table.field-list {
       font-size: 1.5rem;
       line-height: 1.25;
     }
+
+    /* Social media buttons */
+    &.fa-github-square:before {
+      color: #333;
+    }
+
+    &.fa-twitter-square:before {
+      color: #55acee;
+    }
+
+    &.fa-gitlab:before {
+      color: #548
+    }
   }
 }
 
-/* Social media buttons */
-
-.navbar-icon-links i {
-  &.fa-github-square:before {
-    color: #333;
-  }
-
-  &.fa-twitter-square:before {
-    color: #55acee;
-  }
-
-  &.fa-gitlab:before {
-    color: #548
-  }
-}
 
 /* TOC section headers */
 
