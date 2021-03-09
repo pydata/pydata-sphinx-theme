@@ -32,7 +32,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        yarn --prefer-offline --no-optional --frozen-lockfile
+        yarn --frozen-lockfile
         pip install --user --upgrade pip setuptools wheel
         pip install . pre-commit
         pip freeze
@@ -98,7 +98,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        yarn --prefer-offline --no-optional --frozen-lockfile
+        yarn --frozen-lockfile
         pip install --user --upgrade pip setuptools wheel
         pip install -vv . -r docs/requirements.txt
         pip freeze
