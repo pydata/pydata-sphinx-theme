@@ -28,12 +28,12 @@ div.deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
   padding: 7px;
-  background-color: #F3E5E5;
+  background-color: #f3e5e5;
   border: 1px solid #eed3d7;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 
   p {
-    color:#b94a48;
+    color: #b94a48;
     display: inline;
   }
 }
@@ -48,7 +48,7 @@ div.deprecated {
 }
 
 .viewcode-back {
-  font-family: var(--font-family-base);
+  font-family: var(--pst-font-family-base);
 }
 
 .viewcode-block:target {
@@ -158,7 +158,7 @@ table.field-list {
   @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
-    top: 5rem;
+    top: calc(var(--pst-header-height) + 20px);
     height: calc(100vh - 5rem);
     overflow-y: auto;
   }
@@ -184,14 +184,14 @@ table.field-list {
   a {
     display: block;
     padding: 0.125rem 1.5rem;
-    color: rgba(var(--color-toc-link), 1);
+    color: rgba(var(--pst-color-toc-link), 1);
 
     @include media-breakpoint-up(xl) {
       padding-right: 0;
     }
 
     &:hover {
-      color: rgba(var(--color-toc-link-hover), 1);
+      color: rgba(var(--pst-color-toc-link-hover), 1);
       text-decoration: none;
     }
   }
@@ -199,13 +199,14 @@ table.field-list {
 
 .bd-sidebar {
   padding-top: 1em;
+
   @include media-breakpoint-up(md) {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
       position: sticky;
-      top: 76px;
+      top: calc(var(--pst-header-height) + 20px);
       z-index: 1000;
       height: calc(100vh - 4rem);
     }
@@ -284,15 +285,20 @@ table.field-list {
   }
 }
 
-.bd-sidebar .nav > {
+.bd-sidebar .nav {
+  ul {
+    list-style: none;
+    padding: 0 1.5rem;
+  }
+
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
     font-size: 0.9em;
-    color: rgba(var(--color-sidebar-link), 1);
+    color: rgba(var(--pst-color-sidebar-link), 1);
 
     &:hover {
-      color: rgba(var(--color-sidebar-link-hover), 1);
+      color: rgba(var(--pst-color-sidebar-link-hover), 1);
       text-decoration: none;
       background-color: transparent;
     }
@@ -302,29 +308,7 @@ table.field-list {
     > a,
     &:hover > a {
       font-weight: 600;
-      color: rgba(var(--color-sidebar-link-active), 1);
-    }
-  }
-
-  li > ul {
-    list-style: none;
-    padding: 0.25rem 1.5rem;
-
-    > {
-      li > a {
-        display: block;
-        padding: 0.25rem 1.5rem;
-        font-size: 0.9em;
-        color: rgba(var(--color-sidebar-link), 1);
-      }
-
-      .active {
-        > a,
-        &:hover > a {
-          font-weight: 600;
-          color: rgba(var(--color-sidebar-link-active), 1);
-        }
-      }
+      color: rgba(var(--pst-color-sidebar-link-active), 1);
     }
   }
 }
@@ -345,9 +329,9 @@ table.field-list {
 .toc-entry > .nav-link.active {
   font-weight: 600;
   color: #130654;
-  color: rgba(var(--color-toc-link-active), 1);
+  color: rgba(var(--pst-color-toc-link-active), 1);
   background-color: transparent;
-  border-left: 2px solid rgba(var(--color-toc-link-active), 1);
+  border-left: 2px solid rgba(var(--pst-color-toc-link-active), 1);
 }
 
 .nav-link:hover {
@@ -373,7 +357,6 @@ table.field-list {
       display: block;
     }
   }
-
 
   > .active > ul {
     display: block;
@@ -425,24 +408,35 @@ table.field-list {
   color: #e83e8c;
 }
 
-/* Social media buttons */
+/* Icon Links */
 
-i {
-  &.fab {
-    vertical-align: middle;
-    font-style: normal;
-    font-size: 1.5rem;
-    line-height: 1.25;
-  }
+#navbar-icon-links {
+  i {
+    &.fa,
+    &.fab,
+    &.far,
+    &.fas{
+      vertical-align: middle;
+      font-style: normal;
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
 
-  &.fa-github-square:before {
-    color: #333;
-  }
+    /* Social media buttons */
+    &.fa-github-square:before {
+      color: #333;
+    }
 
-  &.fa-twitter-square:before {
-    color: #55acee;
+    &.fa-twitter-square:before {
+      color: #55acee;
+    }
+
+    &.fa-gitlab:before {
+      color: #548
+    }
   }
 }
+
 
 /* TOC section headers */
 

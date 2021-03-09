@@ -1,7 +1,9 @@
 """A custom Sphinx HTML Translator for Bootstrap layout
 """
+from distutils.version import LooseVersion
 from docutils import nodes
 
+import sphinx
 from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
 from sphinx.ext.autosummary import autosummary_table
@@ -24,7 +26,10 @@ class BootstrapHTML5Translator(HTML5Translator):
         # type: (nodes.Element) -> None
         # copy of sphinx source to *not* add 'docutils' and 'align-default' classes
         # but add 'table' class
-        self.generate_targets_for_table(node)
+
+        # generate_targets_for_table is deprecated in 4.0
+        if LooseVersion(sphinx.__version__) < LooseVersion("4.0"):
+            self.generate_targets_for_table(node)
 
         self._table_row_index = 0
 

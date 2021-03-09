@@ -29,4 +29,3 @@ Other sites that are using this theme:
 
    demo/index
    changelog
-

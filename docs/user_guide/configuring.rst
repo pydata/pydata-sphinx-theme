@@ -19,18 +19,89 @@ doc path's _static folder, and use the following configuration:
 
    html_logo = "_static/logo.png"
 
-Configure social media buttons
-==============================
+The logo links to ``master_doc`` (usually the first page of your documentation) by default.
+If you'd like it to link to another page or use an external link instead, use the following configuration:
 
-If you'd like social media buttons to show up to the right of your nav bar, use the
+.. code:: python
+
+   html_theme_options = {
+       "logo_link": "<other page or external link>"
+   }
+
+
+Configure icon links
+====================
+
+If you'd like icon links to show up to the right of your main navigation bar, use the
 following configuration:
 
 .. code:: python
 
    html_theme_options = {
-     "github_url": "https://github.com/<your-org>/<your-repo>",
-     "twitter_url": "https://twitter.com/<your-handle>",
+       ...
+       "icon_links": [
+           {
+               "name": "GitHub",
+               "url": "https://github.com/<your-org>/<your-repo>",
+               "icon": "fab fa-github-square",
+           },
+           {
+               "name": "GitLab",
+               "url": "https://gitlab.com/<your-org>/<your-repo>",
+               "icon": "fab fa-gitlab",
+           },
+           {
+               "name": "Twitter",
+               "url": "https://twitter.com/<your-handle>",
+               "icon": "fab fa-twitter-square",
+           },
+       ],
+       ...
    }
+
+
+The value of ``icon`` can be any full
+`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__ icon.
+In addition to the main icon class, e.g. ``fa-cat``, the "style" class must
+also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
+
+
+.. Hint::
+
+   To get custom colors like "Twitter blue", use the following in your CSS,
+   e.g. ``custom.css``:
+
+   .. code:: css
+
+      i.fa-twitter-square:before {
+         color: #55acee;
+      }
+
+   This has already been added for the brands that have *shortcuts*.
+
+The below are shortcuts for commonly-used services, but may be removed in a future
+release in favor of ``icon_links``:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "github_url": "https://github.com/<your-org>/<your-repo>",
+       "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
+       "twitter_url": "https://twitter.com/<your-handle>",
+       ...
+   }
+
+Additionally, the screen-reader accessible label for this menu can be configured:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links_label": "Quick Links",
+       ...
+   }
+
 
 Adding external links to your nav bar
 =====================================
@@ -226,7 +297,7 @@ page. This equals the following default configuration:
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "content"
+      "navbar_align": "content"
       ...
    }
 
@@ -237,7 +308,7 @@ configuration:
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "left"
+      "navbar_align": "left"
       ...
    }
 
@@ -247,6 +318,6 @@ If you'd like these items to snap to the right of the page, use this configurati
 
    html_theme_options = {
       ...
-      "navbar_align_with_content": "right"
+      "navbar_align": "right"
       ...
    }
