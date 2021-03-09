@@ -988,10 +988,10 @@ chrome-trace-event@^1.0.2:
   dependencies:
     tslib "^1.9.0"
 
-ci-logger@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/ci-logger/-/ci-logger-3.0.2.tgz#a95c81e595c657096ba6c3d345c9b7f77518890f"
-  integrity sha512-sX3FPFXou/6oOT4Cx0wSmuEV33nlOOYP5pL2mdyqhTlYfz/wnniX4W4iSdNQuKcCgyV3Q0tqyV4CFiGFG34BKg==
+ci-logger@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/ci-logger/-/ci-logger-3.0.3.tgz#a51f2a9d62228a17a4fc6b7f01825b97a1bcfea1"
+  integrity sha512-QwuAgMhRLw8riQhoK5TvtIAVJ1Q/I9wNYXJiC3f6eFWL/LR0gCCkWwLXqJ316PCYJEFTjx3SN8ZagITq2I4qOw==
   dependencies:
     "@sindresorhus/is" "^4.0.0"
 
@@ -1123,10 +1123,10 @@ commander@^4.1.1:
   resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
-commander@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.0.tgz#b990bfb8ac030aedc6d11bc04d1488ffef56db75"
-  integrity sha512-zP4jEKbe8SHzKJYQmq8Y9gYjtO/POJLgIdKgV7B9qNmABVFVc+ctqSX6iXh4mCpJfRBOabiZ2YKPg8ciDw6C+Q==
+commander@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-7.1.0.tgz#f2eaecf131f10e36e07d894698226e36ae0eb5ff"
+  integrity sha512-pRxBna3MJe6HKnBGsDyMv8ETbptw3axEdYHoqNh7gu5oDcew8fs0xnivZGm06Ogk8zGAJ9VX+OPEr2GXEQK4dg==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -2497,10 +2497,10 @@ handle-thing@^2.0.0:
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.1.tgz#857f79ce359580c340d43081cc648970d0bb234e"
   integrity sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==
 
-handlebars@^4.7.6:
-  version "4.7.6"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.6.tgz#d4c05c1baf90e9945f77aa68a7a219aa4a7df74e"
-  integrity sha512-1f2BACcBfiwAfStCKZNrUCgqNZkGsAT7UM3kkYtXuLo0KnaVfjKOyf7PRzB6++aK9STyT1Pd2ZCPe3EGOXleXA==
+handlebars@^4.7.7:
+  version "4.7.7"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.7.tgz#9ce33416aad02dbd6c8fafa8240d5d98004945a1"
+  integrity sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==
   dependencies:
     minimist "^1.2.5"
     neo-async "^2.6.0"
@@ -4189,15 +4189,15 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-pa11y-ci-reporter-html@^2.0.3:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/pa11y-ci-reporter-html/-/pa11y-ci-reporter-html-2.1.1.tgz#09e59d1d1fc14623c779465656f8729b7cdc8593"
-  integrity sha512-j2mapW2CbayRKf+RyBlp/wtTz1V8Ek+NklYkXppCUFjJJGs9IUP6pJ0ZwQABNtKP3GHF1dUncQpNhm/f334C9g==
+pa11y-ci-reporter-html@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/pa11y-ci-reporter-html/-/pa11y-ci-reporter-html-2.1.2.tgz#570e861a75a4b263b36f540bb02cb6a7748666e5"
+  integrity sha512-+Nf+lx01QzMXeKZgAn/DTahSIWoLreY/vRxFSDtUbznU29MsxVpRYIH3GKxh4gXTLcgb/QGO58y0+hlCkJsxsw==
   dependencies:
     chardet "^1.3.0"
-    ci-logger "^3.0.2"
-    commander "^6.2.0"
-    handlebars "^4.7.6"
+    ci-logger "^3.0.3"
+    commander "^7.1.0"
+    handlebars "^4.7.7"
     pa11y-reporter-html "^1.0.0"
 
 pa11y-ci@^2.4.0:
