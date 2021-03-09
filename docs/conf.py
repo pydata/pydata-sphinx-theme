@@ -82,6 +82,13 @@ html_theme_options = {
     ],
     "github_url": "https://github.com/pandas-dev/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
+    "icon_links": [
+        {
+            "name": "PyPI",
+            "url": "https://pypi.org/project/pydata-sphinx-theme",
+            "icon": "fas fa-box",
+        }
+    ],
     "use_edit_page_button": True,
     "show_toc_level": 1,
     # "navbar_align": "right",  # For testing that the navbar items align properly

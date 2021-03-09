@@ -1,21 +1,22 @@
 html {
-  font-size: var(--font-size-base);
+  font-size: var(--pst-font-size-base);
+  scroll-padding-top: calc(var(--pst-header-height) + 12px);
 }
 
 body {
-  padding-top: 75px;
+  padding-top: calc(var(--pst-header-height) + 20px);
 
   background-color: white;
-  font-family: var(--font-family-base);
+  font-family: var(--pst-font-family-base);
   font-weight: 400;
   line-height: 1.65;
-  color: rgba(var(--color-text-base), 1);
+  color: rgba(var(--pst-color-text-base), 1);
 }
 
 p {
   margin-bottom: 1.15rem;
   font-size: 1em;
-  color: rgba(var(--color-paragraph), 1);
+  color: rgba(var(--pst-color-paragraph), 1);
 
   /* section header in docstring pages */
   &.rubric {
@@ -24,30 +25,30 @@ p {
 }
 
 a {
-  color: rgba(var(--color-link), 1);
+  color: rgba(var(--pst-color-link), 1);
   text-decoration: none;
 
   &:hover {
-    color: rgba(var(--color-link-hover), 1);
+    color: rgba(var(--pst-color-link-hover), 1);
     text-decoration: underline;
   }
 
   &.headerlink {
-    color: rgba(var(--color-headerlink), 1);
+    color: rgba(var(--pst-color-headerlink), 1);
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
 
     &:hover {
-      background-color: rgba(var(--color-headerlink), 1);
-      color: rgba(var(--color-headerlink-hover), 1);
+      background-color: rgba(var(--pst-color-headerlink), 1);
+      color: rgba(var(--pst-color-headerlink-hover), 1);
     }
   }
 }
 
 .heading-style {
   margin: 2.75rem 0 1.05rem;
-  font-family: var(--font-family-heading);
+  font-family: var(--pst-font-family-heading);
   font-weight: 400;
   line-height: 1.15;
 }
@@ -55,43 +56,43 @@ a {
 h1 {
   @extend .heading-style;
   margin-top: 0;
-  font-size: var(--font-size-h1);
-  color: rgba(var(--color-h1), 1);
+  font-size: var(--pst-font-size-h1);
+  color: rgba(var(--pst-color-h1), 1);
 }
 
 h2 {
   @extend .heading-style;
-  font-size: var(--font-size-h2);
-  color: rgba(var(--color-h2), 1);
+  font-size: var(--pst-font-size-h2);
+  color: rgba(var(--pst-color-h2), 1);
 }
 
 h3 {
   @extend .heading-style;
-  font-size: var(--font-size-h3);
-  color: rgba(var(--color-h3), 1);
+  font-size: var(--pst-font-size-h3);
+  color: rgba(var(--pst-color-h3), 1);
 }
 
 h4 {
   @extend .heading-style;
-  font-size: var(--font-size-h4);
-  color: rgba(var(--color-h4), 1);
+  font-size: var(--pst-font-size-h4);
+  color: rgba(var(--pst-color-h4), 1);
 }
 
 h5 {
   @extend .heading-style;
-  font-size: var(--font-size-h5);
-  color: rgba(var(--color-h5), 1);
+  font-size: var(--pst-font-size-h5);
+  color: rgba(var(--pst-color-h5), 1);
 }
 
 h6 {
   @extend .heading-style;
-  font-size: var(--font-size-h6);
-  color: rgba(var(--color-h6), 1);
+  font-size: var(--pst-font-size-h6);
+  color: rgba(var(--pst-color-h6), 1);
 }
 
 small,
 .text_small {
-  font-size: var(--font-size-milli);
+  font-size: var(--pst-font-size-milli);
 }
 
 hr {
@@ -102,20 +103,9 @@ hr {
 pre {
   margin: 1.5em 0 1.5em 0;
   padding: 10px;
-  background-color: rgba(var(--color-preformatted-background), 1);
-  color: rgba(var(--color-preformatted-text), 1);
+  background-color: rgba(var(--pst-color-preformatted-background), 1);
+  color: rgba(var(--pst-color-preformatted-text), 1);
   line-height: 1.2em;
   border: 1px solid rgb(201, 201, 201);
   box-shadow: 1px 1px 1px #d8d8d8;
-}
-
-// offsetting html elements with anchor attached to adjust for fixed header
-:target {
-  &::before {
-    display: block;
-    content: '';
-    height: 60px;
-    margin: -60px 0 0;
-    background-color: white;
-  }
 }
