@@ -408,24 +408,35 @@ table.field-list {
   color: #e83e8c;
 }
 
-/* Social media buttons */
+/* Icon Links */
 
-i {
-  &.fab {
-    vertical-align: middle;
-    font-style: normal;
-    font-size: 1.5rem;
-    line-height: 1.25;
-  }
+#navbar-icon-links {
+  i {
+    &.fa,
+    &.fab,
+    &.far,
+    &.fas{
+      vertical-align: middle;
+      font-style: normal;
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
 
-  &.fa-github-square:before {
-    color: #333;
-  }
+    /* Social media buttons */
+    &.fa-github-square:before {
+      color: #333;
+    }
 
-  &.fa-twitter-square:before {
-    color: #55acee;
+    &.fa-twitter-square:before {
+      color: #55acee;
+    }
+
+    &.fa-gitlab:before {
+      color: #548
+    }
   }
 }
+
 
 /* TOC section headers */
 
