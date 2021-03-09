@@ -1,4 +1,3 @@
-
 <div class="container-xl">
 
 
@@ -37,33 +36,12 @@
         {% endfor %}
       </ul>
 
-
       {% if theme_search_bar_position == 'navbar' %}
         {%- include "search-field.html" %}
       {% endif %}
 
-      <ul class="navbar-nav">
-        {% if theme_github_url | length > 2 %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ theme_github_url }}" target="_blank" rel="noopener">
-              <span><i class="fab fa-github-square"></i></span>
-            </a>
-          </li>
-        {% endif %}
-        {% if theme_gitlab_url | length > 2 %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ theme_gitlab_url }}" target="_blank" rel="noopener">
-              <span><i class="fab fa-gitlab"></i></span>
-            </a>
-          </li>
-        {% endif %}
-        {% if theme_twitter_url | length > 2 %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ theme_twitter_url }}" target="_blank" rel="noopener">
-              <span><i class="fab fa-twitter-square"></i></span>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
+      {%- block icon_links -%}
+      {%- include "icon-links.html" with context -%}
+      {%- endblock %}
     </div>
 </div>
