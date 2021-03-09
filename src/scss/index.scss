@@ -48,7 +48,7 @@ div.deprecated {
 }
 
 .viewcode-back {
-  font-family: var(--font-family-base);
+  font-family: var(--pst-font-family-base);
 }
 
 .viewcode-block:target {
@@ -158,7 +158,7 @@ table.field-list {
   @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
-    top: calc(var(--header-height) + 20px);
+    top: calc(var(--pst-header-height) + 20px);
     height: calc(100vh - 5rem);
     overflow-y: auto;
   }
@@ -184,14 +184,14 @@ table.field-list {
   a {
     display: block;
     padding: 0.125rem 1.5rem;
-    color: rgba(var(--color-toc-link), 1);
+    color: rgba(var(--pst-color-toc-link), 1);
 
     @include media-breakpoint-up(xl) {
       padding-right: 0;
     }
 
     &:hover {
-      color: rgba(var(--color-toc-link-hover), 1);
+      color: rgba(var(--pst-color-toc-link-hover), 1);
       text-decoration: none;
     }
   }
@@ -206,7 +206,7 @@ table.field-list {
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
       position: sticky;
-      top: calc(var(--header-height) + 20px);
+      top: calc(var(--pst-header-height) + 20px);
       z-index: 1000;
       height: calc(100vh - 4rem);
     }
@@ -295,10 +295,10 @@ table.field-list {
     display: block;
     padding: 0.25rem 1.5rem;
     font-size: 0.9em;
-    color: rgba(var(--color-sidebar-link), 1);
+    color: rgba(var(--pst-color-sidebar-link), 1);
 
     &:hover {
-      color: rgba(var(--color-sidebar-link-hover), 1);
+      color: rgba(var(--pst-color-sidebar-link-hover), 1);
       text-decoration: none;
       background-color: transparent;
     }
@@ -308,7 +308,7 @@ table.field-list {
     > a,
     &:hover > a {
       font-weight: 600;
-      color: rgba(var(--color-sidebar-link-active), 1);
+      color: rgba(var(--pst-color-sidebar-link-active), 1);
     }
   }
 }
@@ -329,9 +329,9 @@ table.field-list {
 .toc-entry > .nav-link.active {
   font-weight: 600;
   color: #130654;
-  color: rgba(var(--color-toc-link-active), 1);
+  color: rgba(var(--pst-color-toc-link-active), 1);
   background-color: transparent;
-  border-left: 2px solid rgba(var(--color-toc-link-active), 1);
+  border-left: 2px solid rgba(var(--pst-color-toc-link-active), 1);
 }
 
 .nav-link:hover {
