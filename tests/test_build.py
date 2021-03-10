@@ -148,7 +148,7 @@ def test_navbar_align_right(sphinx_build_factory):
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
-    # https://github.com/pandas-dev/pydata-sphinx-theme/issues/302
+    # https://github.com/pydata/pydata-sphinx-theme/issues/302
     sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
 
     index_html = sphinx_build.html_tree("index.html")

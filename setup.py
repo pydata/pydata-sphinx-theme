@@ -34,7 +34,7 @@ setup(
     description="Bootstrap-based Sphinx theme from the PyData community",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pandas-dev/pydata-sphinx-theme",
+    url="https://github.com/pydata/pydata-sphinx-theme",
     license="BSD",
     maintainer="Joris Van den Bossche",
     maintainer_email="jorisvandenbossche@gmail.com",
