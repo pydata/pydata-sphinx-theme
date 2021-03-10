@@ -2,7 +2,7 @@
   "name": "pydata_sphinx_theme",
   "version": "0.0.1",
   "main": "js/index.js",
-  "repository": "https://github.com/pandas-dev/pydata-sphinx-theme",
+  "repository": "https://github.com/pydata/pydata-sphinx-theme",
   "scripts": {
     "start": "yarn build:dev",
     "build": "yarn build:production",

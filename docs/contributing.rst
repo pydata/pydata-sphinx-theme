@@ -325,4 +325,4 @@ Make a release
 ==============
 
 This theme uses GitHub tags and releases to automatically push new releases to
-PyPI. For information on this process, see `the release checklist <https://github.com/pandas-dev/pydata-sphinx-theme/wiki/Release-checklist#release-instructions>`_.
+PyPI. For information on this process, see `the release checklist <https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist#release-instructions>`_.

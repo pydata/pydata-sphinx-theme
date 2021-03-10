@@ -97,5 +97,5 @@ often paired together, can be replaced (or removed altogether) by:
         </style>
     {% endblock %}
 
-.. _pydata-css-variables: https://github.com/pandas-dev/pydata-sphinx-theme/blob/master/pydata_sphinx_theme/static/css/theme.css
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/pydata_sphinx_theme/static/css/theme.css
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties 
