@@ -49,7 +49,7 @@ In order to change a variable, follow these steps:
    .. code-block:: none
 
        :root {
-           --font-size-base: 17px;
+           --pst-font-size-base: 17px;
        }
 
 For a complete list of the theme variables that you may override, see the
