@@ -235,8 +235,9 @@ of the theme. The current font selections are:
 
   - allowing upgrades to be handled in a relatively sane, manageable way
 
-Currently, only fontawesome is vendored (other fonts like Lato are no longer
-included by default).
+Currently, only `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__ is
+vendored (other fonts like Lato are no longer included by default).
+The FontAwesome icons are used for :ref:`icon links <icon-links>` and admonitions.
 
 Upgrading a font
 ^^^^^^^^^^^^^^^^

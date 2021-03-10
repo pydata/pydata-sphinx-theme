@@ -24,11 +24,13 @@
   * Font family
   **/
   /* These are adapted from https://systemfontstack.com/ */
-  --pst-font-family-base: -apple-system, BlinkMacSystemFont, Segoe UI, "Helvetica Neue",
+  --pst-font-family-base-system: -apple-system, BlinkMacSystemFont, Segoe UI, "Helvetica Neue",
     Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-  --pst-font-family-heading: var(--font-family-base);
-  --pst-font-family-monospace: "SFMono-Regular", Menlo, Consolas, Monaco,
+  --pst-font-family-base: var(--pst-font-family-base-system);
+  --pst-font-family-heading: var(--pst-font-family-base);
+  --pst-font-family-monospace-system: "SFMono-Regular", Menlo, Consolas, Monaco,
     Liberation Mono, Lucida Console, monospace;
+  --pst-font-family-monospace: var(--pst-font-family-monospace-system);
 
   /*****************************************************************************
   * Color
