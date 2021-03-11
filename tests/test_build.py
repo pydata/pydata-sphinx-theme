@@ -154,3 +154,40 @@ def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
     index_html = sphinx_build.html_tree("index.html")
     navbar = index_html.select("ul#navbar-main-elements")[0]
     file_regression.check(navbar.prettify(), extension=".html")
+
+
+def test_sidebars_captions(sphinx_build_factory, file_regression):
+    sphinx_build = sphinx_build_factory("sidebars").build()
+
+    subindex_html = sphinx_build.html_tree("section1/index.html")
+
+    # Sidebar structure
+    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    # TODO this should include the captions
+    file_regression.check(sidebar.prettify(), extension=".html")
+
+
+def test_sidebars_single(sphinx_build_factory, file_regression):
+    confoverrides = {"templates_path": ["_templates_single_sidebar"]}
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
+
+    index_html = sphinx_build.html_tree("index.html")
+
+    # No navbar included
+    assert not index_html.select("nav#navbar-main")
+    assert not index_html.select(".navbar-nav")
+
+    # Sidebar structure
+    sidebar = index_html.select("nav#bd-docs-nav")[0]
+    file_regression.check(sidebar.prettify(), extension=".html")
+
+
+def test_sidebars_level2(sphinx_build_factory, file_regression):
+    confoverrides = {"templates_path": ["_templates_sidebar_level2"]}
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
+
+    subindex_html = sphinx_build.html_tree("section1/subsection1/index.html")
+
+    # Sidebar structure
+    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    file_regression.check(sidebar.prettify(), extension=".html")

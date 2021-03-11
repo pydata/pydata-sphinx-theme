@@ -14,7 +14,7 @@ __version__ = "0.4.2dev0"
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
-    def generate_nav_html(kind, **kwargs):
+    def generate_nav_html(kind, startdepth=None, **kwargs):
         """
         Return the navigation link structure in HTML. Arguments are passed
         to Sphinx "toctree" function (context["toctree"] below).
@@ -27,6 +27,10 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         ----------
         kind : ["navbar", "sidebar", "raw"]
             The kind of UI element this toctree is generated for.
+        startdepth : int
+            The level of the toctree at which to start. By default, for
+            the navbar uses the normal toctree (`startdepth=0`), and for
+            the sidebar starts from the second level (`startdepth=1`).
         kwargs: passed to the Sphinx `toctree` template function.
 
         Returns
@@ -36,6 +40,22 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         """
         toc_sphinx = context["toctree"](**kwargs)
         soup = bs(toc_sphinx, "html.parser")
+
+        if startdepth is None:
+            startdepth = 1 if kind == "sidebar" else 0
+
+        # select the "active" subset of the navigation tree for the sidebar
+        if startdepth > 0:
+            selector = " ".join(
+                [
+                    "li.current.toctree-l{} ul".format(i)
+                    for i in range(1, startdepth + 1)
+                ]
+            )
+            subset = soup.select(selector)
+            if not subset:
+                return ""
+            soup = bs(str(subset[0]), "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
@@ -54,13 +74,15 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             for li in soup("li"):
                 li["class"].append("nav-item")
                 li.find("a")["class"].append("nav-link")
+            # only select li items (not eg captions)
             out = "\n".join([ii.prettify() for ii in soup.find_all("li")])
 
         elif kind == "sidebar":
+            # Add bootstrap classes for first `ul` items
+            for ul in soup("ul", recursive=False):
+                ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
 
-            # Join all the top-level `li`s together for display
-            current_lis = soup.select("li.current.toctree-l1 li.toctree-l2")
-            out = "\n".join([ii.prettify() for ii in current_lis])
+            out = soup.prettify()
 
         elif kind == "raw":
             out = soup
