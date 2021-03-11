@@ -83,8 +83,7 @@ available system fonts for normal body text and headers.
 The default body and header fonts can be changed as follows:
 
 - Using :ref:`custom-css`, you can specify which fonts to use for body, header
-  and monospace font. For example:
-
+  and monospace text. For example, the following can be added to a custom
   css file::
 
   .. code-block:: none
@@ -98,9 +97,9 @@ The default body and header fonts can be changed as follows:
   The ``-system`` variables are available to use as fallback to the default fonts.
 
 - If the font you want to specify in the section above is not generally available
-  by default, you will need to ensure the font is loaded. For example, you could
-  download and vendor the font in the ``_static`` directory of your sphinx site,
-  and then update the base template to load the font resources:
+  by default, you will additionally need to ensure the font is loaded.
+  For example, you could download and vendor the font in the ``_static`` directory
+  of your sphinx site, and then update the base template to load the font resources:
 
   - configure the `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
     in your ``conf.py``
