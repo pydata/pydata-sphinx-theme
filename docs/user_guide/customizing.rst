@@ -99,11 +99,11 @@ The default body and header fonts can be changed as follows:
 - If the font you want to specify in the section above is not generally available
   by default, you will additionally need to ensure the font is loaded.
   For example, you could download and vendor the font in the ``_static`` directory
-  of your sphinx site, and then update the base template to load the font resources:
+  of your Sphinx site, and then update the base template to load the font resources:
 
-  - configure the `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
+  - Configure the `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
     in your ``conf.py``
-  - creating a custom ``layout.html`` Jinja2 template which overloads the ``fonts`` block
+  - Create a custom ``layout.html`` Jinja2 template which overloads the ``fonts`` block
     (example for loading the Lato font that is included in the ``_static/vendor`` directory):
 
     .. code-block:: html+jinja
@@ -116,6 +116,11 @@ The default body and header fonts can be changed as follows:
         <link rel="stylesheet" href="{{ pathto('_static/vendor/lato_latin-ext/1.44.1/index.css', 1) }}">
 
       {% endblock %}
+
+    To reduce the `Flash of Unstyled Content`, you may wish to explore various options for
+    `preloading content <https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content>`__,
+    specifically the binary font files. This ensure the files will be loaded
+    before waiting for the CSS to be parsed, but should be used with care.
 
 .. _pydata-css-variables: https://github.com/pandas-dev/pydata-sphinx-theme/blob/master/pydata_sphinx_theme/static/css/theme.css
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties 
