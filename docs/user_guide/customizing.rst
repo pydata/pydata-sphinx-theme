@@ -84,16 +84,16 @@ The default body and header fonts can be changed as follows:
 
 - Using :ref:`custom-css`, you can specify which fonts to use for body, header
   and monospace text. For example, the following can be added to a custom
-  css file::
+  css file:
 
   .. code-block:: none
 
-     :root {
-       --pst-font-family-base: Verdana, var(--pst-font-family-base-system);
-       --pst-font-family-heading: Cambria, Georgia, Times, var(--pst-font-family-base-system);
-       --pst-font-family-monospace: Courier, var(--pst-font-family-monospace-system);
-     }
-  
+      :root {
+          --pst-font-family-base: Verdana, var(--pst-font-family-base-system);
+          --pst-font-family-heading: Cambria, Georgia, Times, var(--pst-font-family-base-system);
+          --pst-font-family-monospace: Courier, var(--pst-font-family-monospace-system);
+      }
+
   The ``-system`` variables are available to use as fallback to the default fonts.
 
 - If the font you want to specify in the section above is not generally available
