@@ -215,34 +215,44 @@ Then run the tests by calling ``pytest`` from the repository root.
 Changing fonts
 --------------
 
-Fonts are an important, performance-sensitive, but ultimately, subjective, part
-of the theme. The current font selections are:
+Three "styles" of the `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__
+icon font are used for :ref:`icon links <icon-links>` and admonitions, and is
+the only `vendored` font. Further font choices are described in the :ref:`customizing`
+section of the user guide, and require some knowledge of HTML and CSS.
 
-- managed as dependencies in ``package.json``
+.. Attention::
 
-  - allowing the versions to be managed centrally
+    Previously-included fonts like `Lato` have been removed, preferring
+    the most common default system fonts of the reader's computer. This provides
+    both better performance, and better script/glyph coverage than custom fonts,
+    and is recommended in most cases.
+
+The remaining vendored font selection is:
+
+- managed as a dependency in ``package.json``
+
+  - allowing the version to be managed centrally
 
 - copied directly into the site statics, including licenses
 
-  - allowing the chosen fonts to be replaced (or removed entirely) with minimal
-    templating changes
+  - allowing the chosen font to be replaced (or removed entirely) with minimal
+    templating changes: practically, changing the icon font is difficult at this
+    point.
 
-- partially preloaded (mostly icons)
+- partially preloaded
 
-  - reducing flicker and re-layout artifacts
+  - reducing flicker and re-layout artifacts of early icon renders
 
 - mostly managed in ``webpack.common.js``
 
-  - allowing upgrades to be handled in a relatively sane, manageable way
+  - allowing upgrades to be handled in a relatively sane, manageable way, to
+    ensure the most recent icons
 
-Currently, only `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__ is
-vendored (other fonts like Lato are no longer included by default).
-The FontAwesome icons are used for :ref:`icon links <icon-links>` and admonitions.
 
 Upgrading a font
 ^^^^^^^^^^^^^^^^
 
-If *only* the version of an `existing` font must change, for example to enable
+If *only* the version of the `existing` font must change, for example to enable
 new icons, run:
 
 .. code-block:: bash
@@ -258,8 +268,8 @@ Changing a font
 ^^^^^^^^^^^^^^^
 
 If the above doesn't work, for example if file names for an existing font change,
-or a new font altogether is being added, hand-editing of ``webpack.common.js`` is
-required. The steps are roughly:
+or a new font variant altogether is being added, hand-editing of ``webpack.common.js``
+is required. The steps are roughly:
 
 - install the new font, as above, with ``yarn add``
 - in ``webpack.common.js``:
@@ -267,12 +277,12 @@ required. The steps are roughly:
   - add the new font to ``vendorVersions`` and ``vendorPaths``
   - add new ``link`` tags to the appropriate macro in ``macroTemplate``
   - add the new font files (including the license) to ``CopyPlugin``
-  - remove referencs to the font being replaced/removed, if applicable
+  - remove references to the font being replaced/removed, if applicable
 
 - restart the development server, if running
 - rebuild the production assets, as above, with ``yarn build:production``
 - potentially remove the font being replaced from ``package.json`` and re-run ``yarn``
-- commit all of the changes files
+- commit all of the changed files
 
 
 Contributing changes
