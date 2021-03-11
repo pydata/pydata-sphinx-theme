@@ -2,7 +2,7 @@
   "name": "pydata_sphinx_theme",
   "version": "0.0.1",
   "main": "js/index.js",
-  "repository": "https://github.com/pandas-dev/pydata-sphinx-theme",
+  "repository": "https://github.com/pydata/pydata-sphinx-theme",
   "scripts": {
     "start": "yarn build:dev",
     "build": "yarn build:production",
@@ -31,10 +31,8 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@openfonts/lato_latin-ext": "^1.44.1",
-    "@openfonts/open-sans_all": "^1.44.1",
     "bootstrap": "^4.4.1",
-    "jquery": "3.4.1",
+    "jquery": "3.5.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "popper.js": "^1.16.1"
   }

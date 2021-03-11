@@ -1,9 +1,8 @@
 .navbar {
   position: fixed;
-  height: var(--header-height);
+  min-height: var(--pst-header-height);
   width: 100%;
   padding: 0;
-  overflow: hidden;
 
   .container-xl {
     height: 100%;
@@ -12,7 +11,7 @@
 
 .navbar-brand {
   position: relative;
-  height: 100%;
+  height: var(--pst-header-height);
   width: auto;
   padding: 0.5rem 0;
 
@@ -36,7 +35,7 @@
 
     > .active > .nav-link {
       font-weight: 600;
-      color: rgba(var(--color-navbar-link-active), 1);
+      color: rgba(var(--pst-color-navbar-link-active), 1);
     }
   }
 }

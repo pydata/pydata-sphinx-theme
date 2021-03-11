@@ -25,11 +25,11 @@ install it from the git repo:
 
 .. code:: console
 
-    $ pip install git+https://github.com/pandas-dev/pydata-sphinx-theme.git@master
+    $ pip install git+https://github.com/pydata/pydata-sphinx-theme.git@master
 
 or in a conda environment yml file, you can add:
 
 .. code:: none
 
     - pip:
-      - git+https://github.com/pandas-dev/pydata-sphinx-theme.git@master
+      - git+https://github.com/pydata/pydata-sphinx-theme.git@master
