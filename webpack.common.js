@@ -9,13 +9,9 @@ const staticPath = resolve(__dirname, 'pydata_sphinx_theme', 'static');
 const vendor = resolve(staticPath, 'vendor');
 const vendorVersions = {
   fontAwesome: require('@fortawesome/fontawesome-free/package.json').version,
-  openSans: require('@openfonts/open-sans_all/package.json').version,
-  lato: require('@openfonts/lato_latin-ext/package.json').version,
 };
 const vendorPaths = {
   fontAwesome: resolve(vendor, 'fontawesome', vendorVersions.fontAwesome),
-  openSans: resolve(vendor, 'open-sans_all', vendorVersions.openSans),
-  lato: resolve(vendor, 'lato_latin-ext', vendorVersions.lato),
 };
 
 // generates cache-busting templates to be used in `layout.html` without knowing versions
@@ -58,14 +54,6 @@ function macroTemplate({ compilation }) {
 {% endmacro %}
 
 {% macro head_pre_fonts() %}
-  <link rel="stylesheet"
-    href="{{ pathto('_static/vendor/open-sans_all/${
-      vendorVersions.openSans
-    }/index.css', 1) }}">
-  <link rel="stylesheet"
-    href="{{ pathto('_static/vendor/lato_latin-ext/${
-      vendorVersions.lato
-    }/index.css', 1) }}">
 {% endmacro %}
 
 {% macro head_pre_bootstrap() %}
@@ -145,40 +133,6 @@ module.exports = {
         context: './node_modules/@fortawesome/fontawesome-free',
         from: 'webfonts',
         to: resolve(vendorPaths.fontAwesome, 'webfonts'),
-      },
-      // opensans
-      {
-        context: './node_modules/@openfonts/open-sans_all',
-        from: 'files/*-400*',
-        flatten: true,
-        to: resolve(vendorPaths.openSans, 'files'),
-      },
-      {
-        context: './node_modules/@openfonts/open-sans_all',
-        from: 'LICENSE.md',
-        to: resolve(vendorPaths.openSans, 'LICENSE.md'),
-      },
-      {
-        context: './node_modules/@openfonts/open-sans_all',
-        from: 'index.css',
-        to: resolve(vendorPaths.openSans, 'index.css'),
-      },
-      // lato
-      {
-        context: './node_modules/@openfonts/lato_latin-ext',
-        from: 'files/*',
-        flatten: true,
-        to: resolve(vendorPaths.lato, 'files'),
-      },
-      {
-        context: './node_modules/@openfonts/lato_latin-ext',
-        from: 'LICENSE.md',
-        to: resolve(vendorPaths.lato, 'LICENSE.md'),
-      },
-      {
-        context: './node_modules/@openfonts/lato_latin-ext',
-        from: 'index.css',
-        to: resolve(vendorPaths.lato, 'index.css'),
       },
     ]),
   ],

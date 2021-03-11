@@ -7,16 +7,6 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.13.0.tgz#fcb113d1aca4b471b709e8c9c168674fbd6e06d9"
   integrity sha512-xKOeQEl5O47GPZYIMToj6uuA2syyFlq9EMSl2ui0uytjY9xbe8XS0pexNWmxrdcCyNGyDmLyYw5FtKsalBUeOg==
 
-"@openfonts/lato_latin-ext@^1.44.1":
-  version "1.44.1"
-  resolved "https://registry.yarnpkg.com/@openfonts/lato_latin-ext/-/lato_latin-ext-1.44.1.tgz#b36a9c5905e0143f5f72e25cf635625f645603dd"
-  integrity sha512-uEhdHlTQtLumrWuKHV3JpzH7H1/gGnwXrNC8PAK6StF/Tq1AQPfdjokqgwrHPVQPooj/LAwujhvBwPDdW4/5eQ==
-
-"@openfonts/open-sans_all@^1.44.1":
-  version "1.44.1"
-  resolved "https://registry.yarnpkg.com/@openfonts/open-sans_all/-/open-sans_all-1.44.1.tgz#4a05c454a89d0a70eb2f17bfa2ea3f21e3aae091"
-  integrity sha512-/3uxdiRxH1Sk+llrw4o7lunFhM5IwU/LBo2PU6EYw+iMRNuoUqKU7eyeGtFdAbvErjsU9Xvbe75zkqmsBcXGaw==
-
 "@types/anymatch@*":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"

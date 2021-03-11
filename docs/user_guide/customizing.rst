@@ -30,6 +30,8 @@ To add a custom stylesheet, follow these steps:
 
 When you build your documentation, this stylesheet should now be activated.
 
+.. _css-variables:
+
 CSS Theme variables
 ===================
 
@@ -49,7 +51,7 @@ In order to change a variable, follow these steps:
    .. code-block:: none
 
        :root {
-           --font-size-base: 17px;
+           --pst-font-size-base: 17px;
        }
 
 For a complete list of the theme variables that you may override, see the
@@ -65,37 +67,60 @@ For a complete list of the theme variables that you may override, see the
 Replacing/Removing Fonts
 ========================
 
-The theme contains custom web fonts, in several formats, for different purposes:
+The theme includes the `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__
+icon font (the ``.fa, .far, .fas`` styles, which are used for
+:ref:`icon links <icon-links>` and admonitions). 
+This is the only `vendored` font, and otherwise the theme by default relies on
+available system fonts for normal body text and headers.
 
-- "normal" body text, on ``body``
-- page and section headers, on ``.header-style``
-- icons, on ``.fa, .far, .fas``
+.. Attention::
 
-While altering the icon font is presently somewhat involved, the body and header fonts,
-often paired together, can be replaced (or removed altogether) by:
+    Previously-included fonts like `Lato` have been removed, preferring
+    the most common default system fonts of the reader's computer. This provides
+    both better performance, and better script/glyph coverage than custom fonts,
+    and is recommended in most cases.
 
-- configuring `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
-  in your ``conf.py``
-- creating a custom ``layout.html`` Jinja2 template which overloads the ``fonts`` block
+The default body and header fonts can be changed as follows:
 
-.. code-block:: html+jinja
+- Using :ref:`custom-css`, you can specify which fonts to use for body, header
+  and monospace text. For example, the following can be added to a custom
+  css file:
 
-    {% extends "pydata_sphinx_theme/layout.html" %}
+  .. code-block:: none
 
-    {% block fonts %}
+      :root {
+          --pst-font-family-base: Verdana, var(--pst-font-family-base-system);
+          --pst-font-family-heading: Cambria, Georgia, Times, var(--pst-font-family-base-system);
+          --pst-font-family-monospace: Courier, var(--pst-font-family-monospace-system);
+      }
+
+  The ``-system`` variables are available to use as fallback to the default fonts.
+
+- If the font you want to specify in the section above is not generally available
+  by default, you will additionally need to ensure the font is loaded.
+  For example, you could download and vendor the font in the ``_static`` directory
+  of your Sphinx site, and then update the base template to load the font resources:
+
+  - Configure the `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
+    in your ``conf.py``
+  - Create a custom ``layout.html`` Jinja2 template which overloads the ``fonts`` block
+    (example for loading the Lato font that is included in the ``_static/vendor`` directory):
+
+    .. code-block:: html+jinja
+
+      {% extends "pydata_sphinx_theme/layout.html" %}
+
+      {% block fonts %}
         <!-- add `style` or `link` tags with your CSS `@font-face` declarations here -->
-        <!-- ... and a `style` tag with setting `font-family` in `body` and `.header-style` -->
         <!-- ... and optionally preload the `woff2` for snappier page loads -->
-        <!-- or add a `style` tag with a font fallback chain with good cross-platform coverage -->
-        <style>
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            }
-            .header-style {
-                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-            }
-        </style>
-    {% endblock %}
+        <link rel="stylesheet" href="{{ pathto('_static/vendor/lato_latin-ext/1.44.1/index.css', 1) }}">
+
+      {% endblock %}
+
+    To reduce the `Flash of Unstyled Content`, you may wish to explore various options for
+    `preloading content <https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content>`__,
+    specifically the binary font files. This ensure the files will be loaded
+    before waiting for the CSS to be parsed, but should be used with care.
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/pydata_sphinx_theme/static/css/theme.css
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties 
