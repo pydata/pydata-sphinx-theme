@@ -42,27 +42,28 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         HTML string (if kind in ["navbar", "sidebar"])
         or BeautifulSoup object (if kind == "raw")
         """
-        if kind == "sidebar":
-            toc_sphinx = index_toctree(app, pagename, **kwargs)
-        else:
-            toc_sphinx = context["toctree"](**kwargs)
-        soup = bs(toc_sphinx, "html.parser")
-
         if startdepth is None:
             startdepth = 1 if kind == "sidebar" else 0
 
-        # select the "active" subset of the navigation tree for the sidebar
-        if startdepth > 0:
-            selector = " ".join(
-                [
-                    "li.current.toctree-l{} ul".format(i)
-                    for i in range(1, startdepth + 1)
-                ]
-            )
-            subset = soup.select(selector)
-            if not subset:
-                return ""
-            soup = bs(str(subset[0]), "html.parser")
+        if startdepth == 0:
+            toc_sphinx = context["toctree"](**kwargs)
+        else:
+            toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
+
+        soup = bs(toc_sphinx, "html.parser")
+
+        # # select the "active" subset of the navigation tree for the sidebar
+        # if startdepth > 0:
+        #     selector = " ".join(
+        #         [
+        #             "li.current.toctree-l{} ul".format(i)
+        #             for i in range(1, startdepth + 1)
+        #         ]
+        #     )
+        #     subset = soup.select(selector)
+        #     if not subset:
+        #         return ""
+        #     soup = bs(str(subset[0]), "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
@@ -248,7 +249,9 @@ def _get_local_toctree_for(
     return result
 
 
-def index_toctree(app, pagename: str, collapse: bool = True, **kwargs: Any):
+def index_toctree(
+    app, pagename: str, startdepth: int, collapse: bool = True, **kwargs: Any
+):
     # this is a variant of the function stored in `context["toctree"]`
 
     if "includehidden" not in kwargs:
@@ -258,12 +261,12 @@ def index_toctree(app, pagename: str, collapse: bool = True, **kwargs: Any):
 
     toctree = TocTree(app.env)
     ancestors = toctree.get_toctree_ancestors(pagename)
-    if ancestors:
-        indexname = ancestors[-1]
+    try:
+        indexname = ancestors[-startdepth]
         toctree_element = _get_local_toctree_for(
             toctree, indexname, pagename, app.builder, collapse, **kwargs
         )
-    else:
+    except IndexError:
         # eg for index.rst, but also special pages such as genindex, py-modindex, search
         print("No ancestors for: ", pagename)
         # indexname = pagename
