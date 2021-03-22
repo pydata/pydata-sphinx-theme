@@ -12,6 +12,7 @@ Sites that are using this theme:
 
 - Pandas: https://pandas.pydata.org/docs/
 - NumPy: https://numpy.org/devdocs/
+- CuPy: https://docs.cupy.dev/en/latest/
 - Bokeh: https://docs.bokeh.org/en/dev/
 - JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
 - Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
