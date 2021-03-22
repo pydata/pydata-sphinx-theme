@@ -29,8 +29,13 @@
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
-    li a {
-      padding: 0 15px;
+    li a.nav-link {
+      padding: 0 .5rem;
+      color: rgba(var(--pst-color-navbar-link), 1);
+
+      &:hover {
+        color: rgba(var(--pst-color-navbar-link-hover), 1);
+      }
     }
 
     > .active > .nav-link {
