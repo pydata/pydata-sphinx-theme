@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.5.1dev0"
+__version__ = "0.5.1"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
