@@ -2,7 +2,6 @@
 Bootstrap-based sphinx theme from the PyData community
 """
 import os
-from typing import Any
 
 from sphinx.errors import ExtensionError
 from sphinx.environment.adapters.toctree import TocTree
@@ -249,10 +248,20 @@ def _get_local_toctree_for(
     return result
 
 
-def index_toctree(
-    app, pagename: str, startdepth: int, collapse: bool = True, **kwargs: Any
-):
-    # this is a variant of the function stored in `context["toctree"]`
+def index_toctree(app, pagename: str, startdepth: int, collapse: bool = True, **kwargs):
+    """
+    Returns the "local" (starting at `startdepth`) TOC tree containing the
+    current page, rendered as HTML bullet lists.
+
+    This is the equivalent of `context["toctree"](**kwargs)` in sphinx
+    templating, but using the startdepth-local instead of global TOC tree.
+    """
+    # this is a variant of the function stored in `context["toctree"]`, which is
+    # defined as `lambda **kwargs: self._get_local_toctree(pagename, **kwargs)`
+    # with `self` being the HMTLBuilder and the `_get_local_toctree` basically
+    # returning:
+    #     return self.render_partial(TocTree(self.env).get_toctree_for(
+    #         pagename, self, collapse, **kwargs))['fragment']
 
     if "includehidden" not in kwargs:
         kwargs["includehidden"] = False
@@ -263,18 +272,16 @@ def index_toctree(
     ancestors = toctree.get_toctree_ancestors(pagename)
     try:
         indexname = ancestors[-startdepth]
-        toctree_element = _get_local_toctree_for(
-            toctree, indexname, pagename, app.builder, collapse, **kwargs
-        )
     except IndexError:
         # eg for index.rst, but also special pages such as genindex, py-modindex, search
-        print("No ancestors for: ", pagename)
-        # indexname = pagename
-        toctree_element = toctree.get_toctree_for(
-            pagename, app.builder, collapse, **kwargs
-        )
+        # those pages don't have a "current" element in the toctree, so we can
+        # directly return an emtpy string instead of using the default sphinx
+        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
         return ""
 
+    toctree_element = _get_local_toctree_for(
+        toctree, indexname, pagename, app.builder, collapse, **kwargs
+    )
     return app.builder.render_partial(toctree_element)["fragment"]
 
 
