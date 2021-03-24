@@ -191,3 +191,16 @@ def test_sidebars_level2(sphinx_build_factory, file_regression):
     # Sidebar structure
     sidebar = subindex_html.select("nav#bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
+
+
+def test_included_toc(sphinx_build_factory):
+    """Test that Sphinx project containing TOC (.. toctree::) included via .. include:: can be successfully built."""
+
+    sphinx_build = sphinx_build_factory("included_toc").build()
+
+    # Regression test for bug resolved in #347. Tests mainly makes sure that the sphinx_build.build() does not raise exception.
+
+    sphinx_build.build()
+
+    included_page_html = sphinx_build.html_tree("included-page.html")
+    assert included_page_html is not None
