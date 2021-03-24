@@ -12,11 +12,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-import json
-import os
-import glob
 from sphinx.util import logging
-from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -107,7 +103,7 @@ html_theme_options = {
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
-# html_sidebars = {'**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html']}
+
 
 # -- Options for HTMLHelp output ---------------------------------------------
 

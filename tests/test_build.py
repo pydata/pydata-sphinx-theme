@@ -194,11 +194,14 @@ def test_sidebars_level2(sphinx_build_factory, file_regression):
 
 
 def test_included_toc(sphinx_build_factory):
-    """Test that Sphinx project containing TOC (.. toctree::) included via .. include:: can be successfully built."""
+    """Test that Sphinx project containing TOC (.. toctree::) included
+    via .. include:: can be successfully built.
+    """
 
     sphinx_build = sphinx_build_factory("included_toc").build()
 
-    # Regression test for bug resolved in #347. Tests mainly makes sure that the sphinx_build.build() does not raise exception.
+    # Regression test for bug resolved in #347.
+    # Tests mainly makes sure that the sphinx_build.build() does not raise exception.
 
     sphinx_build.build()
 
