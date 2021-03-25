@@ -10,3 +10,6 @@ jupyter_sphinx
 plotly
 numpy
 xarray
+# For coverage and CI
+pytset-cov
+codecov
