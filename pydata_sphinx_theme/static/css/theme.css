@@ -23,8 +23,15 @@
   /*****************************************************************************
   * Font family
   **/
-  --pst-font-family-base: 'Lato', sans-serif;
-  --pst-font-family-heading: 'Open Sans', sans-serif;
+  /* These are adapted from https://systemfontstack.com/ */
+  --pst-font-family-base-system: -apple-system, BlinkMacSystemFont, Segoe UI, "Helvetica Neue",
+    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  --pst-font-family-monospace-system: "SFMono-Regular", Menlo, Consolas, Monaco,
+    Liberation Mono, Lucida Console, monospace;
+
+  --pst-font-family-base: var(--pst-font-family-base-system);
+  --pst-font-family-heading: var(--pst-font-family-base);
+  --pst-font-family-monospace: var(--pst-font-family-monospace-system);
 
   /*****************************************************************************
   * Color

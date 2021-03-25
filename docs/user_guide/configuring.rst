@@ -29,6 +29,8 @@ If you'd like it to link to another page or use an external link instead, use th
    }
 
 
+.. _icon-links:
+
 Configure icon links
 ====================
 
