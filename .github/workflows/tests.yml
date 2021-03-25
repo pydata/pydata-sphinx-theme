@@ -27,12 +27,29 @@ jobs:
       with:
         node-version: '10.x'
 
+    - name: Cache python wheels
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: |
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-
+          ${{ runner.os }}-pip-
+
+    - name: Cache node_modules
+      uses: actions/cache@v2
+      with:
+        path: 'node_modules'
+        key: |
+          ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install --upgrade pre-commit
         python -m pip install -e .
-        yarn
+        yarn --frozen-lockfile
 
     - name: Lint
       run: |
@@ -53,6 +70,17 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Cache python wheels
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: |
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-
+          ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
@@ -92,7 +120,18 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install pre-dependencies
+
+    - name: Cache python wheels
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: |
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools
         python -m pip install -e .[test]
