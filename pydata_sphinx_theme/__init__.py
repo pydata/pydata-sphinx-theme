@@ -99,13 +99,13 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         # Add toc-hN + visible classes
         def add_header_level_recursive(ul, level):
+            if ul is None:
+                return
             if level <= (context["theme_show_toc_level"] + 1):
                 ul["class"] = ul.get("class", []) + ["visible"]
             for li in ul("li", recursive=False):
                 li["class"] = li.get("class", []) + [f"toc-h{level}"]
-                ul = li.find("ul", recursive=False)
-                if ul:
-                    add_header_level_recursive(ul, level + 1)
+                add_header_level_recursive(li.find("ul", recursive=False), level + 1)
 
         add_header_level_recursive(soup.find("ul"), 1)
 
