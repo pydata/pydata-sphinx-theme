@@ -11,5 +11,5 @@ plotly
 numpy
 xarray
 # For coverage and CI
-pytset-cov
+pytest-cov
 codecov
