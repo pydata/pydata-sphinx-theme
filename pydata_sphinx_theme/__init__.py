@@ -47,22 +47,10 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         if startdepth == 0:
             toc_sphinx = context["toctree"](**kwargs)
         else:
+            # select the "active" subset of the navigation tree for the sidebar
             toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
 
         soup = bs(toc_sphinx, "html.parser")
-
-        # # select the "active" subset of the navigation tree for the sidebar
-        # if startdepth > 0:
-        #     selector = " ".join(
-        #         [
-        #             "li.current.toctree-l{} ul".format(i)
-        #             for i in range(1, startdepth + 1)
-        #         ]
-        #     )
-        #     subset = soup.select(selector)
-        #     if not subset:
-        #         return ""
-        #     soup = bs(str(subset[0]), "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
