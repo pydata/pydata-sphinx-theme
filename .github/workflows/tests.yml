@@ -3,7 +3,7 @@ name: continuous-integration
 on: [push, pull_request]
 
 env:
-  COVERAGE_THRESHOLD: 63
+  COVERAGE_THRESHOLD: 62
 
 jobs:
 
