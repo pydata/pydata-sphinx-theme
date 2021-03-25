@@ -84,7 +84,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install -e .[test]
+        python -m pip install -e .[coverage]
 
     # Build the docs
     - name: Build docs to store
@@ -134,7 +134,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools
-        python -m pip install -e .[test]
+        python -m pip install -e .[coverage]
 
     # Build the docs
     - name: Build docs to store
