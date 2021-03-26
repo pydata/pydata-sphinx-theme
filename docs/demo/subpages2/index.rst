@@ -8,4 +8,3 @@ nested ``toctree``:
 
     subpage1
     subpage2
-    subsubpages/index
