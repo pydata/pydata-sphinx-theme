@@ -1,5 +1,5 @@
-Section with sub-pages
-======================
+A second section with sub-pages
+===============================
 
 To create an additional level of nesting in the sidebar, construct a
 nested ``toctree``:
