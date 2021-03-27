@@ -1,47 +1,19 @@
 <div class="container-xl">
 
+  <div id="navbar-left">
+    {% for navbar_item in theme_navbar_left %}
+    {% include navbar_item %}
+    {% endfor %}
+  </div>
 
-    {% if logo %}
-      {% if not theme_logo_link %}
-      <a class="navbar-brand" href="{{ pathto(master_doc) }}">
-        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-      </a>
-      {% elif theme_logo_link[:4] == 'http' %}
-      <a class="navbar-brand" href="{{ theme_logo_link }}">
-        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-      </a>
-      {% else %}
-      <a class="navbar-brand" href="{{ pathto(theme_logo_link) }}">
-        <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-      </a>      
-      {% endif %}
-    {% else %}
-    <a class="navbar-brand" href="{{ pathto(master_doc) }}">
-      <p class="title">{{ project }}</p>
-    </a>
-    {% endif %}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    {% set navbar_class, navbar_align = navbar_align_class() %}
-    <div id="navbar-menu" class="{{ navbar_class }} collapse navbar-collapse">
-      <ul id="navbar-main-elements" class="navbar-nav {{ navbar_align }}">
-        {{ generate_nav_html("navbar", maxdepth=1, collapse=True, includehidden=True, titles_only=True) }}
-        {% for external_link in theme_external_links %}
-        <li class="nav-item">
-            <a class="nav-link nav-external" href="{{ external_link.url }}">{{ external_link.name }}<i class="fas fa-external-link-alt"></i></a>
-        </li>
-        {% endfor %}
-      </ul>
-
-      {% if theme_search_bar_position == 'navbar' %}
-        {%- include "search-field.html" %}
-      {% endif %}
-
-      {%- block icon_links -%}
-      {%- include "icon-links.html" with context -%}
-      {%- endblock %}
-    </div>
+  {% set navbar_class, navbar_align = navbar_align_class() %}
+  <div id="navbar-menu" class="{{ navbar_class }} collapse navbar-collapse">
+    {% for navbar_item in theme_navbar_menu %}
+    {% include navbar_item %}
+    {% endfor %}
+  </div>
 </div>

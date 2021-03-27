@@ -306,6 +306,11 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
     # Ensure that the max TOC level is an integer
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
 
+    # Make sure the navbar menu items are a list
+    for section in ["theme_navbar_left", "theme_navbar_menu"]:
+        if isinstance(context[section], str):
+            context[section] = [ii.strip() for ii in context[section].split(",")]
+
 
 # -----------------------------------------------------------------------------
 

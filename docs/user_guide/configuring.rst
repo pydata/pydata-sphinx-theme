@@ -129,7 +129,7 @@ Configure the sidebar
 ``pydata_sphinx_theme`` provides two new sidebar items by default:
 
 - ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section
-- ``sidebar-search-bs.html`` - a bootstrap-friendly search bar
+- ``search-field.html`` - a bootstrap-friendly search bar
 
 By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
@@ -186,17 +186,33 @@ and you do not need to specify it if you wish to use the default.
 Configure the search bar position
 =================================
 
-To modify the position of the search bar, change the following variable in
-your configuration file ``conf.py``. Possible options are 'navbar' and 'sidebar'.
+To modify the position of the search bar, add the ``search-field.html``
+template to your **sidebar**, or to one of the **navbar** positions, depending
+on where you want it to be placed.
 
-By default the search bar is positioned in the sidebar since this is more
-suitable for large navigation bars.
+For example, if you'd like the search field to be in your side-bar, add it to
+the sidebar templates like so:
 
 .. code:: python
 
-    html_theme_options = {
-        "search_bar_position": "navbar"
+    html_sidebars = {
+        "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
     }
+
+If instead you'd like to put the search bar in the top-right navbar, use the
+following configuration:
+
+.. code:: python
+
+   html_theme_options = {
+       "navbar_menu": ["navbar-menu-nav.html", "navbar-menu-buttons.html", "search-field.html"]
+   }
+
+
+.. note::
+   
+   By default the search bar is positioned in the sidebar since this is more
+   suitable for large navigation bars.
 
 Configure the search bar text
 =============================
@@ -289,6 +305,65 @@ use this pattern:
 For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
 
 
+Configure the navbar items
+==========================
+
+You can choose which items show up in your navbar, as well as the order
+in which they appear. 
+
+Each menu item is a *template* in Sphinx, and you may
+add any template you wish to your navbar menu via configuring ``conf.py``.
+There are two navbar sections, corresponding to the following configuration
+values:
+
+.. code-block:: python
+
+   html_theme_options = {
+   ...
+   "navbar_left": ["list", "of", "templates"]  # Populates the left navbar
+   "navbar_menu": ["list", "of", "templates"]  # Populates the rest of the navbar
+   }
+
+By default, the following configuration is used:
+
+.. code-block:: python
+
+   html_theme_options = {
+   ...
+   "navbar_left": ["navbar-logo.html"],
+   "navbar_menu": ["navbar-menu-nav.html", "navbar-menu-search.html", "navbar-menu-buttons.html"],
+   ...
+   }
+
+If you'd like to add your own custom template to this list, you
+could do this with the following steps:
+
+1. Create an HTML file in a folder called ``_templates``. For example, if
+   you wanted to display the version of your documentation using a Jinja
+   template, you could create a file: ``_templates/version.html`` and put the
+   following in it:
+
+   .. code-block:: html
+
+      <!-- This will display the version of the docs -->
+      {{ version }}
+
+1. Now add the file to your menu items. For example:
+   
+   .. code-block:: python
+
+      html_theme_options = {
+      ...
+      "navbar_left": ["version.html", "menu-logo.html"],
+      ...
+      }
+
+.. note::
+
+   Generally speaking, navbar menu items will be **right-aligned**. However, the
+   ``navbar-menu-nav.html`` template any anything that comes before it will
+   be **left-aligned**.
+
 Configure navbar menu item alignment
 ====================================
 
@@ -322,4 +397,23 @@ If you'd like these items to snap to the right of the page, use this configurati
       ...
       "navbar_align": "right"
       ...
+   }
+
+
+Adding ethical advertisements to your sidebar in ReadTheDocs
+============================================================
+
+If you're hosting your documentation on ReadTheDocs, you should consider
+adding an explicit placement for their **ethical advertisements**. These are
+non-tracking advertisements from ethical companies, and they help ReadTheDocs
+sustain themselves and their free service.
+
+Ethical advertisements are added to your sidebar by default. To ensure they are
+there if you manually update your sidebar, ensure that the ``sidebar-ethical-ads.html``
+template is added to your list. For example:
+
+.. code:: python
+
+   html_sidebars = {
+       "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
    }
