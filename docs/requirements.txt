@@ -4,7 +4,7 @@ recommonmark
 pandas
 pytest
 pytest-regressions
-beautifulsoup4
+hypothesis
 # For demo examples
 jupyter_sphinx
 plotly
