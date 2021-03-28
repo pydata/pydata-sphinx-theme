@@ -133,6 +133,8 @@ an external site. You can add external links to the nav bar like so:
    use the ``favicons`` configuration key:
 
    .. code-block:: python
+
+   html_theme_options = {
       "favicons": [
          {
             "rel": "icon",
@@ -150,6 +152,8 @@ an external site. You can add external links to the nav bar like so:
             "href": "https://secure.example.com/favicon/apple-touch-icon-180x180.png"
          },
       ]
+   }
+
    ``pydata_sphinx_theme`` will add ``link`` tags to your document's ``head``
    section, following this pattern:
 
