@@ -4,7 +4,9 @@ recommonmark
 pandas
 pytest
 pytest-regressions
+# for property-based testing
 hypothesis
+hypothesis-jsonschema
 # For demo examples
 jupyter_sphinx
 plotly
