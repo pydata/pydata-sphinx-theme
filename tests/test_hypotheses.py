@@ -3,10 +3,7 @@
 from pathlib import Path
 import tempfile
 from hypothesis import given, settings, HealthCheck, strategies as st
-from pydata_sphinx_theme import add_toctree_functions
 from sphinx.testing.path import path as sphinx_path
-
-from jinja2 import Template
 
 a_kind = st.sampled_from(["raw", "navbar", "sidebar"])
 a_depth = st.one_of(st.none(), st.integers(min_value=0))
@@ -104,13 +101,13 @@ def a_site(draw, index_rst=a_index_rst()):
         HealthCheck.function_scoped_fixture
     ],
     # nothing for it, app.build is slow unless we figure out a way to keep in RAM
-    deadline=None
+    deadline=None,
 )
 @given(conf_py=a_conf_py(), site=a_site())
 def test_a_valid_site_builds(make_app, conf_py, site):
     """Does a properly-configured site build without error?
 
-       This only tests whether the site _builds_, not whether it looks rights
+    This only tests whether the site _builds_, not whether it looks rights
     """
     index_rst, pages = site
     with tempfile.TemporaryDirectory() as td:
