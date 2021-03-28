@@ -134,25 +134,25 @@ use the ``favicons`` configuration key:
 
 .. code-block:: python
 
-html_theme_options = {
-   "favicons": [
-      {
-         "rel": "icon",
-         "sizes": "16x16",
-         "href": "https://secure.example.com/favicon/favicon-16x16.png",
-      },
-      {
-         "rel": "icon",
-         "sizes": "32x32",
-         "href": "https://secure.example.com/favicon/favicon-32x32.png",
-      },
-      {
-         "rel": "apple-touch-icon",
-         "sizes": "180x180",
-         "href": "https://secure.example.com/favicon/apple-touch-icon-180x180.png"
-      },
-   ]
-}
+   html_theme_options = {
+      "favicons": [
+         {
+            "rel": "icon",
+            "sizes": "16x16",
+            "href": "https://secure.example.com/favicon/favicon-16x16.png",
+         },
+         {
+            "rel": "icon",
+            "sizes": "32x32",
+            "href": "https://secure.example.com/favicon/favicon-32x32.png",
+         },
+         {
+            "rel": "apple-touch-icon",
+            "sizes": "180x180",
+            "href": "https://secure.example.com/favicon/apple-touch-icon-180x180.png"
+         },
+      ]
+   }
 
 ``pydata_sphinx_theme`` will add ``link`` tags to your document's ``head``
 section, following this pattern:
