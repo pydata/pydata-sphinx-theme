@@ -361,7 +361,7 @@ could do this with the following steps:
 .. note::
 
    Generally speaking, navbar menu items will be **right-aligned**. However, the
-   ``navbar-menu-nav.html`` template any anything that comes before it will
+   ``navbar-menu-nav.html`` template and anything that comes before it will
    be **left-aligned**.
 
 Configure navbar menu item alignment
