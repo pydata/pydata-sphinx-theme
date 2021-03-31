@@ -331,7 +331,7 @@ By default, the following configuration is used:
    html_theme_options = {
    ...
    "navbar_left": ["navbar-logo.html"],
-   "navbar_menu": ["navbar-menu-nav.html", "navbar-menu-search.html", "navbar-menu-buttons.html"],
+   "navbar_menu": ["navbar-menu-nav.html", "navbar-menu-buttons.html"],
    ...
    }
 
