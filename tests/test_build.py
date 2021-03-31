@@ -163,7 +163,6 @@ def test_sidebars_captions(sphinx_build_factory, file_regression):
 
     # Sidebar structure
     sidebar = subindex_html.select("nav#bd-docs-nav")[0]
-    # TODO this should include the captions
     file_regression.check(sidebar.prettify(), extension=".html")
 
 

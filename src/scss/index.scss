@@ -285,6 +285,23 @@ table.field-list {
   }
 }
 
+nav.bd-links {
+
+  p.caption {
+      font-size: 0.9em;
+      text-transform: uppercase;
+      font-weight: bold;
+      position: relative;
+      margin-top: 1.25em;
+      margin-bottom: 0.5em;
+      padding: 0 1.5rem;
+      color: rgba(var(--pst-color-sidebar-caption), 1);
+      &:first-child {
+          margin-top: 0;
+      }
+  }
+}
+
 .bd-sidebar .nav {
   ul {
     list-style: none;
