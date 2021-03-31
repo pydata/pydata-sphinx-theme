@@ -161,7 +161,17 @@ def test_sidebars_captions(sphinx_build_factory, file_regression):
 
     subindex_html = sphinx_build.html_tree("section1/index.html")
 
-    # Sidebar structure
+    # Sidebar structure with caption
+    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    file_regression.check(sidebar.prettify(), extension=".html")
+
+
+def test_sidebars_nested_page(sphinx_build_factory, file_regression):
+    sphinx_build = sphinx_build_factory("sidebars").build()
+
+    subindex_html = sphinx_build.html_tree("section1/subsection1/page1.html")
+
+    # For nested (uncollapsed) page, the label included `checked=""`
     sidebar = subindex_html.select("nav#bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
