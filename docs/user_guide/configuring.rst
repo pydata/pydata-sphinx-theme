@@ -130,7 +130,9 @@ using ``html_favicon``.
 
 Additionally, ``pydata_sphinx_theme`` allows you to add any number of
 browser- or device-specific favicons of any size. To define arbitrary favicons,
-use the ``favicons`` configuration key:
+use the ``favicons`` configuration key. The ``href`` value can be either an
+absolute URL (beginning with ``http``) or a local path relative to your
+``html_static_path``:
 
 .. code-block:: python
 
@@ -144,12 +146,12 @@ use the ``favicons`` configuration key:
          {
             "rel": "icon",
             "sizes": "32x32",
-            "href": "https://secure.example.com/favicon/favicon-32x32.png",
+            "href": "favicon-32x32.png",
          },
          {
             "rel": "apple-touch-icon",
             "sizes": "180x180",
-            "href": "https://secure.example.com/favicon/apple-touch-icon-180x180.png"
+            "href": "apple-touch-icon-180x180.png"
          },
       ]
    }
