@@ -41,7 +41,13 @@
       {% endif %}
 
       {%- block icon_links -%}
-      {%- include "icon-links.html" with context -%}
+        {%- include "icon-links.html" with context -%}
       {%- endblock %}
+
+      {% if theme_use_version_switch == true %} 
+        {%- include "version-switcher.html" %}
+      {% endif %}
+        </li>
+      </ul>
     </div>
 </div>
