@@ -5,6 +5,9 @@ import os
 
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
+from sphinx.environment.adapters.toctree import TocTree
+from sphinx import addnodes
+
 from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
@@ -51,24 +54,16 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         HTML string (if kind in ["navbar", "sidebar"])
         or BeautifulSoup object (if kind == "raw")
         """
-        toc_sphinx = context["toctree"](**kwargs)
-        soup = bs(toc_sphinx, "html.parser")
-
         if startdepth is None:
             startdepth = 1 if kind == "sidebar" else 0
 
-        # select the "active" subset of the navigation tree for the sidebar
-        if startdepth > 0:
-            selector = " ".join(
-                [
-                    "li.current.toctree-l{} ul".format(i)
-                    for i in range(1, startdepth + 1)
-                ]
-            )
-            subset = soup.select(selector)
-            if not subset:
-                return ""
-            soup = bs(str(subset[0]), "html.parser")
+        if startdepth == 0:
+            toc_sphinx = context["toctree"](**kwargs)
+        else:
+            # select the "active" subset of the navigation tree for the sidebar
+            toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
+
+        soup = bs(toc_sphinx, "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
@@ -94,6 +89,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
+
+            # Add icons and labels for collapsible nested sections
+            _add_collapse_checkboxes(soup)
 
             out = soup.prettify()
 
@@ -218,6 +216,122 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
     context["navbar_align_class"] = navbar_align_class
+
+
+def _add_collapse_checkboxes(soup):
+    # based on https://github.com/pradyunsg/furo
+
+    toctree_checkbox_count = 0
+
+    for element in soup.find_all("li", recursive=True):
+        # We check all "li" elements, to add a "current-page" to the correct li.
+        classes = element.get("class", [])
+
+        # Nothing more to do, unless this has "children"
+        if not element.find("ul"):
+            continue
+
+        # Add a class to indicate that this has children.
+        element["class"] = classes + ["has-children"]
+
+        # We're gonna add a checkbox.
+        toctree_checkbox_count += 1
+        checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
+
+        # Add the "label" for the checkbox which will get filled.
+        if soup.new_tag is None:
+            continue
+        label = soup.new_tag("label", attrs={"for": checkbox_name})
+        label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+        element.insert(1, label)
+
+        # Add the checkbox that's used to store expanded/collapsed state.
+        checkbox = soup.new_tag(
+            "input",
+            attrs={
+                "type": "checkbox",
+                "class": ["toctree-checkbox"],
+                "id": checkbox_name,
+                "name": checkbox_name,
+            },
+        )
+        # if this has a "current" class, be expanded by default
+        # (by checking the checkbox)
+        if "current" in classes:
+            checkbox.attrs["checked"] = ""
+
+        element.insert(1, checkbox)
+
+
+def _get_local_toctree_for(
+    self: TocTree, indexname: str, docname: str, builder, collapse: bool, **kwargs
+):
+    """Return the "local" TOC nodetree (relative to `indexname`)."""
+    # this is a copy of `TocTree.get_toctree_for`, but where the sphinx version
+    # always uses the "master" doctree:
+    #     doctree = self.env.get_doctree(self.env.config.master_doc)
+    # we here use the `indexname` additional argument to be able to use a subset
+    # of the doctree (e.g. starting at a second level for the sidebar):
+    #     doctree = app.env.tocs[indexname].deepcopy()
+
+    doctree = self.env.tocs[indexname].deepcopy()
+
+    toctrees = []
+    if "includehidden" not in kwargs:
+        kwargs["includehidden"] = True
+    if "maxdepth" not in kwargs or not kwargs["maxdepth"]:
+        kwargs["maxdepth"] = 0
+    else:
+        kwargs["maxdepth"] = int(kwargs["maxdepth"])
+    kwargs["collapse"] = collapse
+
+    for toctreenode in doctree.traverse(addnodes.toctree):
+        toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwargs)
+        if toctree:
+            toctrees.append(toctree)
+    if not toctrees:
+        return None
+    result = toctrees[0]
+    for toctree in toctrees[1:]:
+        result.extend(toctree.children)
+    return result
+
+
+def index_toctree(app, pagename: str, startdepth: int, collapse: bool = True, **kwargs):
+    """
+    Returns the "local" (starting at `startdepth`) TOC tree containing the
+    current page, rendered as HTML bullet lists.
+
+    This is the equivalent of `context["toctree"](**kwargs)` in sphinx
+    templating, but using the startdepth-local instead of global TOC tree.
+    """
+    # this is a variant of the function stored in `context["toctree"]`, which is
+    # defined as `lambda **kwargs: self._get_local_toctree(pagename, **kwargs)`
+    # with `self` being the HMTLBuilder and the `_get_local_toctree` basically
+    # returning:
+    #     return self.render_partial(TocTree(self.env).get_toctree_for(
+    #         pagename, self, collapse, **kwargs))['fragment']
+
+    if "includehidden" not in kwargs:
+        kwargs["includehidden"] = False
+    if kwargs.get("maxdepth") == "":
+        kwargs.pop("maxdepth")
+
+    toctree = TocTree(app.env)
+    ancestors = toctree.get_toctree_ancestors(pagename)
+    try:
+        indexname = ancestors[-startdepth]
+    except IndexError:
+        # eg for index.rst, but also special pages such as genindex, py-modindex, search
+        # those pages don't have a "current" element in the toctree, so we can
+        # directly return an emtpy string instead of using the default sphinx
+        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
+        return ""
+
+    toctree_element = _get_local_toctree_for(
+        toctree, indexname, pagename, app.builder, collapse, **kwargs
+    )
+    return app.builder.render_partial(toctree_element)["fragment"]
 
 
 def soup_to_python(soup, only_pages=False):
