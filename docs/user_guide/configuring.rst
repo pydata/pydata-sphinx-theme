@@ -205,7 +205,7 @@ following configuration:
 .. code:: python
 
    html_theme_options = {
-       "navbar_menu": ["navbar-menu-nav.html", "navbar-menu-buttons.html", "search-field.html"]
+       "navbar_right": ["navbar-menu-buttons.html", "search-field.html"]
    }
 
 
@@ -313,15 +313,16 @@ in which they appear.
 
 Each menu item is a *template* in Sphinx, and you may
 add any template you wish to your navbar menu via configuring ``conf.py``.
-There are two navbar sections, corresponding to the following configuration
+There are three navbar sections, corresponding to the following configuration
 values:
 
 .. code-block:: python
 
    html_theme_options = {
    ...
-   "navbar_left": ["list", "of", "templates"]  # Populates the left navbar
-   "navbar_menu": ["list", "of", "templates"]  # Populates the rest of the navbar
+   "navbar_left": ["list", "of", "templates"]  # Populates the left of the navbar
+   "navbar_menu": ["list", "of", "templates"]  # Populates the middle menu of the navbar
+   "navbar_right": ["list", "of", "templates"]  # Populates the right of the navbar
    }
 
 By default, the following configuration is used:
@@ -331,9 +332,11 @@ By default, the following configuration is used:
    html_theme_options = {
    ...
    "navbar_left": ["navbar-logo.html"],
-   "navbar_menu": ["navbar-menu-nav.html", "navbar-menu-buttons.html"],
+   "navbar_menu": ["navbar-menu-nav.html"],
+   "navbar_right": ["navbar-menu-buttons.html"]
    ...
    }
+
 
 If you'd like to add your own custom template to this list, you
 could do this with the following steps:

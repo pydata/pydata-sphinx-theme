@@ -21,11 +21,9 @@ project = "PyData Sphinx Theme"
 copyright = "2019, PyData Community"
 author = "PyData Community"
 
-from pathlib import Path
+import pydata_sphinx_theme
 
-for ii in Path("../pydata_sphinx_theme/__init__.py").read_text().split("\n"):
-    if ii.startswith("__version__"):
-        version = release = ii.split("= ")[-1].strip('"').replace("dev0", "")
+version = pydata_sphinx_theme.__version__
 
 # -- General configuration ---------------------------------------------------
 
@@ -79,8 +77,11 @@ html_theme_options = {
     ],
     "use_edit_page_button": True,
     "show_toc_level": 1,
+    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     "navbar_left": ["navbar-logo.html", "navbar-version.html"],
+    # "navbar_menu": ["navbar-menu-nav.html", "navbar-version.html"],  # Just for testing
+    # "navbar_right": ["navbar-menu-buttons.html", "navbar-version.html"]  # Just for testing
 }
 
 

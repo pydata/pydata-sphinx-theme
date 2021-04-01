@@ -4,11 +4,24 @@ Bootstrap-based sphinx theme from the PyData community
 import os
 
 from sphinx.errors import ExtensionError
+from sphinx.util import logging
 from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
 __version__ = "0.5.3dev0"
+
+logger = logging.getLogger(__name__)
+
+
+def update_config(app, env, docnames):
+    if app.config["html_theme_options"].get("search_bar_position") == "navbar":
+        logger.warn(
+            (
+                "Deprecated config `search_bar_position` used."
+                "Use `search-field.html` in `navbar_right` template list instead."
+            )
+        )
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -331,6 +344,7 @@ def setup(app):
     # our custom HTML builder
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
+    app.connect("env-before-read-docs", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
 

@@ -14,13 +14,17 @@
   <div id="navbar-collapsible" class="{{ navbar_class }} collapse navbar-collapse">
     <div id="navbar-menu" class="{{ navbar_align }}">
       {% for navbar_item in theme_navbar_menu %}
-      {% include navbar_item %}
+      <div class="navbar-menu-item">
+        {% include navbar_item %}
+      </div>
       {% endfor %}
     </div>
 
     <div id="navbar-right">
       {% for navbar_item in theme_navbar_right %}
-      {% include navbar_item %}
+      <div class="navbar-right-item">
+        {% include navbar_item %}
+      </div>
       {% endfor %}
     </div>
   </div>
