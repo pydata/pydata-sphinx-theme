@@ -23,7 +23,7 @@ author = "PyData Community"
 
 import pydata_sphinx_theme
 
-version = pydata_sphinx_theme.__version__
+version = pydata_sphinx_theme.__version__.replace("dev0", "")
 
 # -- General configuration ---------------------------------------------------
 
