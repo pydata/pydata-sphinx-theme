@@ -305,7 +305,7 @@ nav.bd-links {
 .bd-sidebar .nav {
   ul {
     list-style: none;
-    padding: 0 1.5rem;
+    padding: 0 0 0 1.5rem;
   }
 
   li > a {
@@ -480,4 +480,76 @@ nav.bd-links {
 // xarray output display in bootstrap
 .xr-wrap[hidden] {
   display: block !important;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Togglable expand/collapse
+////////////////////////////////////////////////////////////////////////////////
+
+
+.toctree-checkbox {
+  position: absolute;
+  display: none;
+}
+
+.toctree-checkbox {
+  ~ ul {
+    display: none;
+  }
+  ~ label i {
+    transform: rotate(0deg);
+  }
+}
+.toctree-checkbox:checked {
+  ~ ul {
+    display: block;
+  }
+  ~ label i {
+    transform: rotate(180deg);
+  }
+}
+
+
+.bd-sidebar {
+
+  li {
+    position: relative;
+  }
+  label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    // height: var(--sidebar-item-height);
+    height: 30px;
+    width: 30px;
+    // width: var(--sidebar-expander-width);
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background: rgba(var(--pst-color-sidebar-expander-background-hover), 1);
+    }
+
+    i {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-align: center;
+      &:hover {
+        color: rgba(var(--pst-color-sidebar-link-hover), 1);
+      }
+    }
+  }
+
+  // If it has children, add a bit more padding to wrap the content to avoid
+  // overlapping with the <label>
+  li.has-children {
+    > .reference {
+      padding-right: 30px;
+    }
+  }
 }
