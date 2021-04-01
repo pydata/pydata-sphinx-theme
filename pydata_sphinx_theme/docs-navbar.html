@@ -6,14 +6,22 @@
     {% endfor %}
   </div>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   {% set navbar_class, navbar_align = navbar_align_class() %}
-  <div id="navbar-menu" class="{{ navbar_class }} collapse navbar-collapse">
-    {% for navbar_item in theme_navbar_menu %}
-    {% include navbar_item %}
-    {% endfor %}
+  <div id="navbar-collapsible" class="{{ navbar_class }} collapse navbar-collapse">
+    <div id="navbar-menu" class="{{ navbar_align }}">
+      {% for navbar_item in theme_navbar_menu %}
+      {% include navbar_item %}
+      {% endfor %}
+    </div>
+
+    <div id="navbar-right">
+      {% for navbar_item in theme_navbar_right %}
+      {% include navbar_item %}
+      {% endfor %}
+    </div>
   </div>
 </div>
