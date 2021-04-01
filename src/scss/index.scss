@@ -531,6 +531,10 @@ nav.bd-links {
     justify-content: center;
     align-items: center;
 
+    &:hover {
+      background: rgba(var(--pst-color-sidebar-expander-background-hover), 1);
+    }
+
     i {
       display: inline-block;
       font-size: 0.75rem;
