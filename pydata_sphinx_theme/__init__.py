@@ -17,14 +17,31 @@ __version__ = "0.5.3dev0"
 logger = logging.getLogger(__name__)
 
 
-def update_config(app, env, docnames):
-    if app.config["html_theme_options"].get("search_bar_position") == "navbar":
+def update_config(app, env):
+    theme_options = app.config["html_theme_options"]
+    if theme_options.get("search_bar_position") == "navbar":
         logger.warn(
             (
                 "Deprecated config `search_bar_position` used."
                 "Use `search-field.html` in `navbar_right` template list instead."
             )
         )
+
+    # Append .html to templates that don't have an extension
+    template_configs = [
+        "navbar_left",
+        "navbar_menu",
+        "navbar_right",
+        "footer_items",
+        "toc_items",
+    ]
+    for config in template_configs:
+        section_config = theme_options.get(config)
+        if section_config:
+            for ii, template in enumerate(section_config):
+                if not os.path.splitext(template)[1]:
+                    section_config[ii] = template + ".html"
+            print(section_config)
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -458,7 +475,7 @@ def setup(app):
     # our custom HTML builder
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
-    app.connect("env-before-read-docs", update_config)
+    app.connect("env-updated", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
 

@@ -79,9 +79,10 @@ html_theme_options = {
     "show_toc_level": 1,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    "navbar_left": ["navbar-logo.html", "navbar-version.html"],
-    # "navbar_menu": ["navbar-menu-nav.html", "navbar-version.html"],  # Just for testing
-    # "navbar_right": ["navbar-menu-buttons.html", "navbar-version.html"]  # Just for testing
+    # "navbar_left": ["navbar-logo", "navbar-version"],
+    # "navbar_menu": ["navbar-menu-nav", "navbar-version"],  # Just for testing
+    # "navbar_right": ["navbar-menu-buttons", "navbar-version"]  # Just for testing
+    # "footer_items": ["copyright", "sphinx-version", ""]
 }
 
 
