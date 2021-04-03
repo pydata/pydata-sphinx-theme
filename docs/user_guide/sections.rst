@@ -42,14 +42,30 @@ The left sidebar
 ================
 
 The left sidebar is just to the left of a page's main content.
-Configuring it is supported natively in Sphinx, via the ``html_sidebars``
+Configuring it is a bit different from configuring the other sections, because
+configuring the sidebar is natively supported in Sphinx, via the ``html_sidebars``
 configuration variable.
 
-By default, it has the following templates:
+For the left sidebar only, you can configure templates so that they only show
+up on certain pages. You do so via a configuration like so in ``conf.py``:
 
 .. code-block:: python
 
-    html_sidebars = ["search-field", "sidebar-nav-bs", "sidebar-ethical-ads"]
+    html_sidebars = {
+        "<page_pattern>": ["list", "of", "templates"]
+    }
+
+Any pages that match ``<page_pattern>`` will have their respective templates
+inserted. You can also ``*`` to do ``glob``-style matching, and may use ``**``
+to match all pages.
+
+By default, it has the following configuration:
+
+.. code-block:: python
+
+    html_sidebars = {
+        "**": ["search-field", "sidebar-nav-bs", "sidebar-ethical-ads"]
+    }
 
 
 The right in-page sidebar
