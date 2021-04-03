@@ -48,7 +48,7 @@ setup(
     include_package_data=True,
     # See http://www.sphinx-doc.org/en/stable/theming.html#distribute-your-theme-as-a-python-package
     entry_points={"sphinx.html_themes": ["pydata_sphinx_theme = pydata_sphinx_theme"]},
-    install_requires=["sphinx", "beautifulsoup4"],
+    install_requires=["sphinx", "beautifulsoup4", "docutils<0.17"],
     extras_require={
         "test": tests_require,
         "coverage": ["pytest-cov", "codecov", *tests_require],
