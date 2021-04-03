@@ -19,6 +19,7 @@ the left sidebar to see how various elements look on this theme.
     mult_headers
     subpages/index
     subpages2/index
+    Link to an external site <https://jupyterbook.org/>
 
 .. toctree::
     :maxdepth: 3
