@@ -27,21 +27,29 @@ def update_config(app, env):
             )
         )
 
-    # Append .html to templates that don't have an extension
-    template_configs = [
-        "navbar_left",
-        "navbar_menu",
-        "navbar_right",
-        "footer_items",
-        "toc_items",
+
+def update_templates(app, pagename, templatename, context, doctree):
+    """Update template names for page build."""
+    template_sections = [
+        "theme_navbar_left",
+        "theme_navbar_menu",
+        "theme_navbar_right",
+        "theme_footer_items",
+        "theme_right_sidebar_items",
+        "sidebars",
     ]
-    for config in template_configs:
-        section_config = theme_options.get(config)
-        if section_config:
-            for ii, template in enumerate(section_config):
+    for section in template_sections:
+        if context.get(section):
+            # Break apart `,` separated strings so we can use , in the defaults
+            if isinstance(context.get(section), str):
+                context[section] = [
+                    ii.strip() for ii in context.get(section).split(",")
+                ]
+
+            # Add `.html` to templates with no suffix
+            for ii, template in enumerate(context.get(section)):
                 if not os.path.splitext(template)[1]:
-                    section_config[ii] = template + ".html"
-            print(section_config)
+                    context[section][ii] = template + ".html"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -478,6 +486,7 @@ def setup(app):
     app.connect("env-updated", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
+    app.connect("html-page-context", update_templates)
 
     # Update templates for sidebar
     pkgdir = os.path.abspath(os.path.dirname(__file__))

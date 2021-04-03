@@ -305,68 +305,6 @@ use this pattern:
 For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
 
 
-Configure the navbar items
-==========================
-
-You can choose which items show up in your navbar, as well as the order
-in which they appear. 
-
-Each menu item is a *template* in Sphinx, and you may
-add any template you wish to your navbar menu via configuring ``conf.py``.
-There are three navbar sections, corresponding to the following configuration
-values:
-
-.. code-block:: python
-
-   html_theme_options = {
-   ...
-   "navbar_left": ["list", "of", "templates"]  # Populates the left of the navbar
-   "navbar_menu": ["list", "of", "templates"]  # Populates the middle menu of the navbar
-   "navbar_right": ["list", "of", "templates"]  # Populates the right of the navbar
-   }
-
-By default, the following configuration is used:
-
-.. code-block:: python
-
-   html_theme_options = {
-   ...
-   "navbar_left": ["navbar-logo.html"],
-   "navbar_menu": ["navbar-menu-nav.html"],
-   "navbar_right": ["navbar-menu-buttons.html"]
-   ...
-   }
-
-
-If you'd like to add your own custom template to this list, you
-could do this with the following steps:
-
-1. Create an HTML file in a folder called ``_templates``. For example, if
-   you wanted to display the version of your documentation using a Jinja
-   template, you could create a file: ``_templates/version.html`` and put the
-   following in it:
-
-   .. code-block:: html
-
-      <!-- This will display the version of the docs -->
-      {{ version }}
-
-1. Now add the file to your menu items. For example:
-   
-   .. code-block:: python
-
-      html_theme_options = {
-      ...
-      "navbar_left": ["version.html", "menu-logo.html"],
-      ...
-      }
-
-.. note::
-
-   Generally speaking, navbar menu items will be **right-aligned**. However, the
-   ``navbar-menu-nav.html`` template and anything that comes before it will
-   be **left-aligned**.
-
 Configure navbar menu item alignment
 ====================================
 
