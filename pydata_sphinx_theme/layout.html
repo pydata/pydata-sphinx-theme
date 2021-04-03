@@ -67,7 +67,7 @@
           {% block docs_toc %}
           <div class="d-none d-xl-block col-xl-2 bd-toc">
             {% if not (meta is not none and 'notoc' in meta) %}
-              {% for toc_item in theme_right_sidebar_items %}
+              {% for toc_item in theme_page_sidebar_items %}
               <div class="toc-item">
                 {% include toc_item %}
               </div>

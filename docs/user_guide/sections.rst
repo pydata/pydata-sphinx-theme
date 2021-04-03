@@ -52,11 +52,11 @@ By default, it has the following templates:
     html_sidebars = ["search-field", "sidebar-nav-bs", "sidebar-ethical-ads"]
 
 
-The right sidebar
-=================
+The right in-page sidebar
+=========================
 
-The right sidebar is just to the right of a page's main content, and is
-configured in ``conf.py`` with ``html_theme_options['right_sidebar_items']``.
+The in-page sidebar is just to the right of a page's main content, and is
+configured in ``conf.py`` with ``html_theme_options['page_sidebar_items']``.
 
 By default, it has the following templates:
 
@@ -64,7 +64,7 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "right_sidebar_items": ["page-toc", "edit-this-page"],
+      "page_sidebar_items": ["page-toc", "edit-this-page"],
       ...
     }
 

@@ -35,7 +35,7 @@ def update_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_menu",
         "theme_navbar_right",
         "theme_footer_items",
-        "theme_right_sidebar_items",
+        "theme_page_sidebar_items",
         "sidebars",
     ]
     for section in template_sections:
