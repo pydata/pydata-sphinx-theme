@@ -121,6 +121,49 @@ an external site. You can add external links to the nav bar like so:
      ]
    }
 
+Adding favicons
+===============
+
+``pydata_sphinx_theme`` supports the
+`standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_,
+using ``html_favicon``.
+
+Additionally, ``pydata_sphinx_theme`` allows you to add any number of
+browser- or device-specific favicons of any size. To define arbitrary favicons,
+use the ``favicons`` configuration key. The ``href`` value can be either an
+absolute URL (beginning with ``http``) or a local path relative to your
+``html_static_path``:
+
+.. code-block:: python
+
+   html_theme_options = {
+      "favicons": [
+         {
+            "rel": "icon",
+            "sizes": "16x16",
+            "href": "https://secure.example.com/favicon/favicon-16x16.png",
+         },
+         {
+            "rel": "icon",
+            "sizes": "32x32",
+            "href": "favicon-32x32.png",
+         },
+         {
+            "rel": "apple-touch-icon",
+            "sizes": "180x180",
+            "href": "apple-touch-icon-180x180.png"
+         },
+      ]
+   }
+
+``pydata_sphinx_theme`` will add ``link`` tags to your document's ``head``
+section, following this pattern:
+
+.. code-block:: html+jinja
+
+   <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}">
+
+
 .. _configure-sidebar:
 
 Configure the sidebar

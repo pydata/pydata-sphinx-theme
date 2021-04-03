@@ -113,6 +113,47 @@ def test_logo_name(sphinx_build_factory):
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
 
 
+def test_favicons(sphinx_build_factory):
+    """Test that arbitrary favicons are included."""
+    html_theme_options_favicons = {
+        "favicons": [
+            {
+                "rel": "icon",
+                "sizes": "16x16",
+                "href": "https://secure.example.com/favicon/favicon-16x16.png",
+            },
+            {
+                "rel": "icon",
+                "sizes": "32x32",
+                "href": "favicon-32x32.png",
+            },
+            {
+                "rel": "apple-touch-icon",
+                "sizes": "180x180",
+                "href": "apple-touch-icon-180x180.png",
+            },
+        ]
+    }
+    confoverrides = {"html_theme_options": html_theme_options_favicons}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+    index_html = sphinx_build.html_tree("index.html")
+
+    icon_16 = (
+        '<link href="https://secure.example.com/favicon/favicon-16x16.png" '
+        'rel="icon" sizes="16x16"/>'
+    )
+    icon_32 = '<link href="_static/favicon-32x32.png" rel="icon" sizes="32x32"/>'
+    icon_180 = (
+        '<link href="_static/apple-touch-icon-180x180.png" '
+        'rel="apple-touch-icon" sizes="180x180"/>'
+    )
+
+    assert icon_16 in str(index_html.select("head")[0])
+    assert icon_32 in str(index_html.select("head")[0])
+    assert icon_180 in str(index_html.select("head")[0])
+
+
 def test_sidebar_default(sphinx_build_factory):
     """The sidebar is shrunk when no sidebars specified in html_sidebars."""
     sphinx_build = sphinx_build_factory("base").build()
