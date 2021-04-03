@@ -288,7 +288,7 @@ table.field-list {
 nav.bd-links {
 
   p.caption {
-      font-size: 0.9em;
+      font-size: var(--pst-sidebar-caption-font-size);
       text-transform: uppercase;
       font-weight: bold;
       position: relative;
@@ -303,6 +303,9 @@ nav.bd-links {
 }
 
 .bd-sidebar .nav {
+
+  font-size: var(--pst-sidebar-font-size);
+
   ul {
     list-style: none;
     padding: 0 0 0 1.5rem;
@@ -311,7 +314,6 @@ nav.bd-links {
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
-    font-size: 0.9em;
     color: rgba(var(--pst-color-sidebar-link), 1);
 
     &:hover {
