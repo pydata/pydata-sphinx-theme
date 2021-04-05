@@ -438,7 +438,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         doc_context.update(doc_path=doc_path, file_name=file_name)
 
         for attrs, url_template in edit_url_attrs.items():
-            if all(doc_context.get(attr) is not None for attr in attrs):
+            if all(doc_context.get(attr) not in [None, "None"] for attr in attrs):
                 return jinja2.Template(url_template).render(**doc_context)
 
         raise ExtensionError(
