@@ -395,7 +395,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             doc_path = f"{doc_path}/"
 
         default_provider_urls = {
-            "bitbucket_url": "https://bitbucket.com",
+            "bitbucket_url": "https://bitbucket.org",
             "github_url": "https://github.com",
             "gitlab_url": "https://gitlab.org",
         }
