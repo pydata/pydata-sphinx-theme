@@ -3,7 +3,6 @@ Bootstrap-based sphinx theme from the PyData community
 """
 import os
 
-import docutils
 from sphinx.errors import ExtensionError
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx import addnodes
