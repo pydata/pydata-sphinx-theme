@@ -90,6 +90,7 @@ release in favor of ``icon_links``:
        ...
        "github_url": "https://github.com/<your-org>/<your-repo>",
        "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
+       "bitbucket_url": "https://bitbucket.org/<your-org>/<your-repo>",
        "twitter_url": "https://twitter.com/<your-handle>",
        ...
    }
@@ -197,30 +198,7 @@ Add an Edit this Page button
 You can add a button to each page that will allow users to edit the page text
 directly and submit a pull request to update the documentation. To include this
 button in the right sidebar of each page, add the following configuration to
-your ``conf.py`` file:
-
-.. code:: python
-
-   html_context = {
-       "github_user": "<your-github-org>",
-       "github_repo": "<your-github-repo>",
-       "github_version": "<your-branch>",
-       "doc_path": "<path-from-root-to-your-docs>",
-   }
-
-Bitbucket configuration
-
-.. code:: python
-
-   html_context = {
-       "display_bitbucket": True,
-       "bitbucket_user": "<your-bitbucket-org>",
-       "bitbucket_repo": "<your-bitbucket-repo>",
-       "bitbucket_version": "<your-branch>",
-       "doc_path": "<path-from-root-to-your-docs>",
-   }
-
-You should also enable the edit option in your 'html_theme_options':
+your ``conf.py`` file in 'html_theme_options':
 
 .. code:: python
 
@@ -228,26 +206,66 @@ You should also enable the edit option in your 'html_theme_options':
        "use_edit_page_button": True,
    }
 
-if you have a self-hosted Bitbucket instance, you can
-configure a custom url.
-This option defaults to 'https://bitbucket.org',
-and you do not need to specify it if you wish to use the default.
+A number of providers are available for building *Edit this Page* links, including
+GitHub, GitLab, and Bitbucket. For each, the default public instance URL can be
+replaced with a self-hosted instance.
+
+
+GitHub
+------
 
 .. code:: python
 
    html_context = {
-       "bitbucket_url": "<your-bitbucket-url>",
+       # "github_url": "https://github.com", # or your GitHub Enterprise interprise
+       "github_user": "<your-github-org>",
+       "github_repo": "<your-github-repo>",
+       "github_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
    }
 
 
-Optionally, if you have a self-hosted Github Enterprise instance, you can
-configure a custom url. This option defaults to 'https://github.com',
-and you do not need to specify it if you wish to use the default.
+GitLab
+------
 
 .. code:: python
 
    html_context = {
-       "github_url": "<your-github-url>",
+       # "gitlab_url": "https://gitlab.org", # or your self-hosted GitLab
+       "gitlab_user": "<your-gitlab-org>",
+       "gitlab_repo": "<your-gitlab-repo>",
+       "gitlab_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }
+
+
+Bitbucket
+---------
+
+.. code:: python
+
+   html_context = {
+       # "bitbucket_url": "https://bitbucket.org", # or your self-hosted Bitbucket
+       "bitbucket_user": "<your-bitbucket-org>",
+       "bitbucket_repo": "<your-bitbucket-repo>",
+       "bitbucket_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }
+
+
+Custom Edit URL
+---------------
+
+For a fully-customized *Edit this Page* URL, provide ``edit_page_url_template``,
+a jinja2 template string which must contain ``{{ file_name }}``, and may reference
+any other context values.
+
+.. code:: python
+
+   html_context = {
+       "edit_page_url_template": "{{ my_vcs_site }}{{ file_name }}{{ some_other_arg }}",
+       "my_vcs_site": "https://example.com",
+       "some_other_arg": "?some-other-arg"
    }
 
 
