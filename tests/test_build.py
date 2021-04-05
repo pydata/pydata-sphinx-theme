@@ -283,7 +283,7 @@ good_edits = [
             "bitbucket_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://bitbucket.com/foo/bar/src/HEAD/docs/index.rst?mode=edit",
+        "https://bitbucket.org/foo/bar/src/HEAD/docs/index.rst?mode=edit",
     ],
 ]
 
