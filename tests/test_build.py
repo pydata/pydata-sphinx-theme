@@ -310,7 +310,9 @@ bad_edits = [
 good_custom = [
     [
         {
-            "edit_page_url_template": "https://dvcs.example.com/foo/bar/edit/HEAD/{{ file_name }}"
+            "edit_page_url_template": (
+                "https://dvcs.example.com/foo/bar/edit/HEAD/{{ file_name }}"
+            )
         },
         "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst",
     ]
