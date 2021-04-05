@@ -438,9 +438,8 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         doc_context.update(doc_path=doc_path, file_name=file_name)
 
         for attrs, url_template in edit_url_attrs.items():
-            if not all(map(doc_context.get, attrs)):
-                continue
-            return jinja2.Template(url_template).render(**doc_context)
+            if all(doc_context.get(attr) is not None for attr in attrs):
+                return jinja2.Template(url_template).render(**doc_context)
 
         raise ExtensionError(
             "Missing required value for `use_edit_page_button`. "
