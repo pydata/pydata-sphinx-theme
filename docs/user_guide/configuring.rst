@@ -231,7 +231,7 @@ GitLab
 .. code:: python
 
    html_context = {
-       # "gitlab_url": "https://gitlab.org", # or your self-hosted GitLab
+       # "gitlab_url": "https://gitlab.com", # or your self-hosted GitLab
        "gitlab_user": "<your-gitlab-org>",
        "gitlab_repo": "<your-gitlab-repo>",
        "gitlab_version": "<your-branch>",

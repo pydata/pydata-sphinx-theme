@@ -274,7 +274,7 @@ good_edits = [
             "gitlab_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://gitlab.org/foo/bar/edit/HEAD/docs/index.rst",
+        "https://gitlab.com/foo/bar/-/edit/HEAD/docs/index.rst",
     ],
     [
         {

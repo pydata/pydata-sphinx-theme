@@ -397,7 +397,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         default_provider_urls = {
             "bitbucket_url": "https://bitbucket.org",
             "github_url": "https://github.com",
-            "gitlab_url": "https://gitlab.org",
+            "gitlab_url": "https://gitlab.com",
         }
 
         edit_url_attrs = {}
@@ -428,7 +428,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                 ),
                 ("gitlab_user", "gitlab_repo", "gitlab_version"): (
                     "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
-                    "/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
+                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
                 ),
             }
         )
