@@ -388,7 +388,6 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
     def get_edit_url():
         """Return a URL for an "edit this page" link."""
-
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -405,10 +404,17 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         edit_url_attrs = {}
 
         # ensure custom URL is checked first, if given
-        if "edit_page_url_template" in context:
-            edit_url_attrs[("edit_page_url_template",)] = context[
-                "edit_page_url_template"
-            ]
+        url_template = context.get("edit_page_url_template")
+
+        if url_template is not None:
+            if "file_name" not in url_template:
+                raise ExtensionError(
+                    "Missing required value for `use_edit_page_button`. "
+                    "Ensure `file_name` appears in `edit_page_url_template`: "
+                    f"{url_template}"
+                )
+
+            edit_url_attrs[("edit_page_url_template",)] = url_template
 
         edit_url_attrs.update(
             {
@@ -423,8 +429,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                 ),
                 ("gitlab_user", "gitlab_repo", "gitlab_version"): (
                     "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
-                    "/src/{{ gitlab_version }}"
-                    "/{{ doc_path }}{{ file_name }}?mode=edit"
+                    "/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
                 ),
             }
         )
@@ -441,7 +446,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         raise ExtensionError(
             "Missing required value for `use_edit_page_button`. "
             "Ensure one set of the following in your `html_context` "
-            "configuration: %s" % edit_url_attrs.keys()
+            f"configuration: {sorted(edit_url_attrs.keys())}"
         )
 
     context["get_edit_url"] = get_edit_url
