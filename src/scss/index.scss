@@ -321,6 +321,16 @@ nav.bd-links {
       text-decoration: none;
       background-color: transparent;
     }
+
+    &.reference.external {
+      &:after {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        content: '\f35d';
+        font-size: .75em;
+        margin-left: 0.3em
+      }
+    }
   }
 
   .active {
