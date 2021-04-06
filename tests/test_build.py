@@ -257,6 +257,9 @@ def test_included_toc(sphinx_build_factory):
     assert included_page_html is not None
 
 
+# html contexts for `show_edit_button`
+
+# these are "good" context fragements that should yield a working link
 good_edits = [
     [
         {
@@ -287,26 +290,53 @@ good_edits = [
     ],
 ]
 
+
+# copy the "good" ones, ensure `doc_path` is agnostic to trailing slashes
 slash_edits = [
-    [{k: f"{v}/" if k == "doc_path" else v for k, v in ctx.items()}, url]
-    for ctx, url in good_edits
+    [
+        {
+            # add slashes to doc_path:
+            key: f"{value}/" if key == "doc_path" else value
+            for key, value in html_context.items()
+        },
+        # the URL does not change
+        url,
+    ]
+    for html_context, url in good_edits
 ]
 
+# copy the "good" ones, provide a `<whatever>_url` based off the default
 providers = [
     [
-        dict(**ctx, **{f"{provider}_url": f"https://{provider}.example.com"}),
+        dict(
+            # copy all the values
+            **html_context,
+            # add a provider url
+            **{f"{provider}_url": f"https://{provider}.example.com"},
+        ),
         f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}""",
     ]
-    for ctx, url in good_edits
+    for html_context, url in good_edits
     for provider in ["gitlab", "bitbucket", "github"]
     if provider in url
 ]
 
+# missing any of the values should fail
 bad_edits = [
-    [{k: v for k, v in ctx.items() if "version" not in k}, None]
-    for ctx, url in good_edits
+    [
+        {
+            # copy all the values
+            key: value
+            for key, value in html_context.items()
+            # but not `<provider>_version`
+            if "_version" not in key
+        },
+        None,
+    ]
+    for html_context, url in good_edits
 ]
 
+# a good custom URL template
 good_custom = [
     [
         {
@@ -318,7 +348,14 @@ good_custom = [
     ]
 ]
 
-bad_custom = [[{"edit_page_url_template": "http://has-no-file-name"}, None]]
+# a bad custom URL template
+bad_custom = [
+    [
+        # it's missing a reference to {{ file_name }}
+        {"edit_page_url_template": "http://has-no-file-name"},
+        None,
+    ]
+]
 
 all_edits = [
     *good_edits,
