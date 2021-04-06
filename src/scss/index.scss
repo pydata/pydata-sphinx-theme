@@ -208,7 +208,7 @@ table.field-list {
       position: sticky;
       top: calc(var(--pst-header-height) + 20px);
       z-index: 1000;
-      height: calc(100vh - 4rem);
+      height: calc(100vh - var(--pst-header-height) - 20px);
     }
   }
 
@@ -227,7 +227,7 @@ table.field-list {
     display: block !important;
 
     @supports (position: -webkit-sticky) or (position: sticky) {
-      max-height: calc(100vh - 9rem);
+      max-height: calc(100vh - 11rem);
       overflow-y: auto;
     }
   }
