@@ -248,7 +248,7 @@ following configuration:
 .. code:: python
 
    html_theme_options = {
-       "navbar_right": ["navbar-menu-buttons.html", "search-field.html"]
+       "navbar_end": ["navbar-icon-links.html", "search-field.html"]
    }
 
 

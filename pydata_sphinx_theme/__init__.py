@@ -23,7 +23,7 @@ def update_config(app, env):
         logger.warn(
             (
                 "Deprecated config `search_bar_position` used."
-                "Use `search-field.html` in `navbar_right` template list instead."
+                "Use `search-field.html` in `navbar_end` template list instead."
             )
         )
 
@@ -31,13 +31,14 @@ def update_config(app, env):
 def update_templates(app, pagename, templatename, context, doctree):
     """Update template names for page build."""
     template_sections = [
-        "theme_navbar_left",
-        "theme_navbar_menu",
-        "theme_navbar_right",
+        "theme_navbar_start",
+        "theme_navbar_center",
+        "theme_navbar_end",
         "theme_footer_items",
         "theme_page_sidebar_items",
         "sidebars",
     ]
+
     for section in template_sections:
         if context.get(section):
             # Break apart `,` separated strings so we can use , in the defaults
@@ -457,11 +458,6 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
     # Ensure that the max TOC level is an integer
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
-
-    # Make sure the navbar menu items are a list
-    for section in ["theme_navbar_left", "theme_navbar_menu", "theme_navbar_right"]:
-        if isinstance(context[section], str):
-            context[section] = [ii.strip() for ii in context[section].split(",")]
 
 
 # -----------------------------------------------------------------------------

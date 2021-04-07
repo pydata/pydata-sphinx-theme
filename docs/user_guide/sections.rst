@@ -1,5 +1,4 @@
-
-
+====================================
 Add/Remove items from theme sections
 ====================================
 
@@ -22,9 +21,9 @@ The navbar items
 The navbar is at the top of the page, and is broken up into three sections.
 Each section is configured in ``conf.py`` with the following configuration:
 
-- Left section: ``html_theme_options['navbar_left']``
-- Middle menu: ``html_theme_options['navbar_menu']``
-- Right section: ``html_theme_options['navbar_right']``
+- Left section: ``html_theme_options['navbar_start']``
+- Middle menu: ``html_theme_options['navbar_center']``
+- Right section: ``html_theme_options['navbar_end']``
 
 By default, the following configuration is used:
 
@@ -32,9 +31,9 @@ By default, the following configuration is used:
 
    html_theme_options = {
    ...
-   "navbar_left": ["navbar-logo"],
-   "navbar_menu": ["navbar-menu-nav"],
-   "navbar_right": ["navbar-menu-buttons"]
+   "navbar_start": ["navbar-logo"],
+   "navbar_center": ["navbar-center-nav"],
+   "navbar_end": ["navbar-icon-links"]
    ...
    }
 
@@ -122,6 +121,6 @@ could do so with the following steps:
 
       html_theme_options = {
       ...
-      "navbar_left": ["version", "menu-logo"],
+      "navbar_start": ["version", "menu-logo"],
       ...
       }
