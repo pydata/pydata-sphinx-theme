@@ -99,6 +99,26 @@ By default, it has the following templates:
       ...
     }
 
+A list of built-in templates you can insert into sections
+=========================================================
+
+Below is a list of build-in templates that you can insert into any section.
+Note that some of them may have CSS rules that assume a specific section (and
+will be named accordingly).
+
+- ``icon-links.html``
+- ``search-field.html``
+- ``copyright.html``
+- ``edit-this-page.html``
+- ``last-updated.html``
+- ``navbar-icon-links.html``
+- ``navbar-logo.html``
+- ``navbar-nav.html``
+- ``page-toc.html``
+- ``sidebar-ethical-ads.html``
+- ``sidebar-nav-bs.html``
+- ``sphinx-version.html``
+
 Add your own HTML templates to theme sections
 =============================================
 
