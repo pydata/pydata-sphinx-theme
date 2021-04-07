@@ -9,13 +9,13 @@
   }
 
   @include media-breakpoint-up(md) {
-    // Anything in navbar menu should be left-justified (e.g. links)
+    // Anything in navbar center should be left-justified (e.g. links)
     #navbar-center > .navbar-center-item {
       float: left;
     }
 
-    // Anything in right part of the navbar should be right-justified (e.g. icons)
-    #navbar-right > .navbar-right-item {
+    // Anything in end part of the navbar should be right-justified (e.g. icons)
+    #navbar-end > .navbar-end-item {
       float: right;
     }
   }

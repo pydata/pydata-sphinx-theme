@@ -242,7 +242,7 @@ the sidebar templates like so:
         "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
     }
 
-If instead you'd like to put the search bar in the top-right navbar, use the
+If instead you'd like to put the search bar in the top navbar, use the
 following configuration:
 
 .. code:: python
@@ -348,10 +348,10 @@ use this pattern:
 For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
 
 
-Configure navbar menu item alignment
-====================================
+Configure the navbar center alignment
+=====================================
 
-By default, the navigation bar menu items will align with the content on your
+By default, the navigation bar center area will align with the content on your
 page. This equals the following default configuration:
 
 .. code-block:: python
