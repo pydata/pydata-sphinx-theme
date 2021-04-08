@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.6.0"
+__version__ = "0.6.1dev0"
 
 logger = logging.getLogger(__name__)
 
