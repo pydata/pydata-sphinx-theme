@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 from sphinx.testing.util import SphinxTestApp
 from sphinx.testing.path import path as sphinx_path
+import sphinx.errors
 
 import pytest
 
@@ -254,3 +255,133 @@ def test_included_toc(sphinx_build_factory):
     sphinx_build = sphinx_build_factory("test_included_toc").build()
     included_page_html = sphinx_build.html_tree("included-page.html")
     assert included_page_html is not None
+
+
+# html contexts for `show_edit_button`
+
+# these are "good" context fragements that should yield a working link
+good_edits = [
+    [
+        {
+            "github_user": "foo",
+            "github_repo": "bar",
+            "github_version": "HEAD",
+            "doc_path": "docs",
+        },
+        "https://github.com/foo/bar/edit/HEAD/docs/index.rst",
+    ],
+    [
+        {
+            "gitlab_user": "foo",
+            "gitlab_repo": "bar",
+            "gitlab_version": "HEAD",
+            "doc_path": "docs",
+        },
+        "https://gitlab.com/foo/bar/-/edit/HEAD/docs/index.rst",
+    ],
+    [
+        {
+            "bitbucket_user": "foo",
+            "bitbucket_repo": "bar",
+            "bitbucket_version": "HEAD",
+            "doc_path": "docs",
+        },
+        "https://bitbucket.org/foo/bar/src/HEAD/docs/index.rst?mode=edit",
+    ],
+]
+
+
+# copy the "good" ones, ensure `doc_path` is agnostic to trailing slashes
+slash_edits = [
+    [
+        {
+            # add slashes to doc_path:
+            key: f"{value}/" if key == "doc_path" else value
+            for key, value in html_context.items()
+        },
+        # the URL does not change
+        url,
+    ]
+    for html_context, url in good_edits
+]
+
+# copy the "good" ones, provide a `<whatever>_url` based off the default
+providers = [
+    [
+        dict(
+            # copy all the values
+            **html_context,
+            # add a provider url
+            **{f"{provider}_url": f"https://{provider}.example.com"},
+        ),
+        f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}""",
+    ]
+    for html_context, url in good_edits
+    for provider in ["gitlab", "bitbucket", "github"]
+    if provider in url
+]
+
+# missing any of the values should fail
+bad_edits = [
+    [
+        {
+            # copy all the values
+            key: value
+            for key, value in html_context.items()
+            # but not `<provider>_version`
+            if "_version" not in key
+        },
+        None,
+    ]
+    for html_context, url in good_edits
+]
+
+# a good custom URL template
+good_custom = [
+    [
+        {
+            "edit_page_url_template": (
+                "https://dvcs.example.com/foo/bar/edit/HEAD/{{ file_name }}"
+            )
+        },
+        "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst",
+    ]
+]
+
+# a bad custom URL template
+bad_custom = [
+    [
+        # it's missing a reference to {{ file_name }}
+        {"edit_page_url_template": "http://has-no-file-name"},
+        None,
+    ]
+]
+
+all_edits = [
+    *good_edits,
+    *slash_edits,
+    *bad_edits,
+    *good_custom,
+    *bad_custom,
+    *providers,
+]
+
+
+@pytest.mark.parametrize("html_context,edit_url", all_edits)
+def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
+    confoverrides = {
+        "html_theme_options.use_edit_page_button": True,
+        "html_context": html_context,
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
+
+    if edit_url is None:
+        with pytest.raises(sphinx.errors.ThemeError):
+            sphinx_build.build()
+        return
+
+    sphinx_build.build()
+    index_html = sphinx_build.html_tree("index.html")
+    edit_link = index_html.select(".editthispage a")
+    assert edit_link, "no edit link found"
+    assert edit_link[0].attrs["href"] == edit_url, f"edit link didn't match {edit_link}"

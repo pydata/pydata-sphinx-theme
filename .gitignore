@@ -104,3 +104,4 @@ envs/
 
 node_modules/
 .vscode
+.idea

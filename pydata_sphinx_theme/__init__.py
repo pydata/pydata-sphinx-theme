@@ -8,6 +8,8 @@ from sphinx.util import logging
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx import addnodes
 
+import jinja2
+
 from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
@@ -424,22 +426,6 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
     def get_edit_url():
         """Return a URL for an "edit this page" link."""
-        required_values = ["github_user", "github_repo", "github_version"]
-        for val in required_values:
-            if not context.get(val):
-                raise ExtensionError(
-                    "Missing required value for `edit this page` button. "
-                    "Add %s to your `html_context` configuration" % val
-                )
-
-        # Enable optional custom github url for self-hosted github instances
-        github_url = "https://github.com"
-        if context.get("github_url"):
-            github_url = context["github_url"]
-
-        github_user = context["github_user"]
-        github_repo = context["github_repo"]
-        github_version = context["github_version"]
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -447,12 +433,58 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         if doc_path and not doc_path.endswith("/"):
             doc_path = f"{doc_path}/"
 
-        # Build the URL for "edit this button"
-        url_edit = (
-            f"{github_url}/{github_user}/{github_repo}"
-            f"/edit/{github_version}/{doc_path}{file_name}"
+        default_provider_urls = {
+            "bitbucket_url": "https://bitbucket.org",
+            "github_url": "https://github.com",
+            "gitlab_url": "https://gitlab.com",
+        }
+
+        edit_url_attrs = {}
+
+        # ensure custom URL is checked first, if given
+        url_template = context.get("edit_page_url_template")
+
+        if url_template is not None:
+            if "file_name" not in url_template:
+                raise ExtensionError(
+                    "Missing required value for `use_edit_page_button`. "
+                    "Ensure `file_name` appears in `edit_page_url_template`: "
+                    f"{url_template}"
+                )
+
+            edit_url_attrs[("edit_page_url_template",)] = url_template
+
+        edit_url_attrs.update(
+            {
+                ("bitbucket_user", "bitbucket_repo", "bitbucket_version"): (
+                    "{{ bitbucket_url }}/{{ bitbucket_user }}/{{ bitbucket_repo }}"
+                    "/src/{{ bitbucket_version }}"
+                    "/{{ doc_path }}{{ file_name }}?mode=edit"
+                ),
+                ("github_user", "github_repo", "github_version"): (
+                    "{{ github_url }}/{{ github_user }}/{{ github_repo }}"
+                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}"
+                ),
+                ("gitlab_user", "gitlab_repo", "gitlab_version"): (
+                    "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
+                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
+                ),
+            }
         )
-        return url_edit
+
+        doc_context = dict(default_provider_urls)
+        doc_context.update(context)
+        doc_context.update(doc_path=doc_path, file_name=file_name)
+
+        for attrs, url_template in edit_url_attrs.items():
+            if all(doc_context.get(attr) not in [None, "None"] for attr in attrs):
+                return jinja2.Template(url_template).render(**doc_context)
+
+        raise ExtensionError(
+            "Missing required value for `use_edit_page_button`. "
+            "Ensure one set of the following in your `html_context` "
+            f"configuration: {sorted(edit_url_attrs.keys())}"
+        )
 
     context["get_edit_url"] = get_edit_url
 
