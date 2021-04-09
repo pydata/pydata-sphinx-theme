@@ -43,6 +43,9 @@
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
 {%- endblock %}
 {%- block content %}
+    {# Added to support a banner with an alert #}
+    <div class="container-fluid" id="banner"></div>
+
     {% block docs_navbar %}
     <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
       {%- include "docs-navbar.html" %}
@@ -99,6 +102,7 @@
       </div>
     </div>
 
+  {%- block scripts_end %}
     {{ _webpack.body_post() }}
 
     {% if theme_google_analytics_id %}
@@ -112,6 +116,7 @@
     <script async src='https://www.google-analytics.com/analytics.js'></script>
     <!-- End Google Analytics -->
     {% endif %}
+  {%- endblock %}
 
 {%- endblock %}
 
