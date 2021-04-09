@@ -66,7 +66,7 @@ def test_build_html(sphinx_build_factory, file_regression):
     subpage_html = sphinx_build.html_tree("section1/index.html")
 
     # Navbar structure
-    navbar = index_html.select("div#navbar-menu")[0]
+    navbar = index_html.select("div#navbar-center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebar structure
@@ -174,7 +174,7 @@ def test_navbar_align_default(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
     sphinx_build = sphinx_build_factory("base").build()
     index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" in index_html.select("div#navbar-menu")[0].attrs["class"]
+    assert "col-lg-9" in index_html.select("div#navbar-collapsible")[0].attrs["class"]
 
 
 def test_navbar_align_right(sphinx_build_factory):
@@ -184,8 +184,8 @@ def test_navbar_align_right(sphinx_build_factory):
 
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" not in index_html.select("div#navbar-menu")[0].attrs["class"]
-    assert "ml-auto" in index_html.select("ul#navbar-main-elements")[0].attrs["class"]
+    assert "col-lg-9" not in index_html.select("div#navbar-center")[0].attrs["class"]
+    assert "ml-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
