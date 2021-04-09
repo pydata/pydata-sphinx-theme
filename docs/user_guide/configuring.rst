@@ -173,7 +173,7 @@ Configure the sidebar
 ``pydata_sphinx_theme`` provides two new sidebar items by default:
 
 - ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section
-- ``sidebar-search-bs.html`` - a bootstrap-friendly search bar
+- ``search-field.html`` - a bootstrap-friendly search bar
 
 By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
@@ -272,17 +272,33 @@ any other context values.
 Configure the search bar position
 =================================
 
-To modify the position of the search bar, change the following variable in
-your configuration file ``conf.py``. Possible options are 'navbar' and 'sidebar'.
+To modify the position of the search bar, add the ``search-field.html``
+template to your **sidebar**, or to one of the **navbar** positions, depending
+on where you want it to be placed.
 
-By default the search bar is positioned in the sidebar since this is more
-suitable for large navigation bars.
+For example, if you'd like the search field to be in your side-bar, add it to
+the sidebar templates like so:
 
 .. code:: python
 
-    html_theme_options = {
-        "search_bar_position": "navbar"
+    html_sidebars = {
+        "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
     }
+
+If instead you'd like to put the search bar in the top navbar, use the
+following configuration:
+
+.. code:: python
+
+   html_theme_options = {
+       "navbar_end": ["navbar-icon-links.html", "search-field.html"]
+   }
+
+
+.. note::
+   
+   By default the search bar is positioned in the sidebar since this is more
+   suitable for large navigation bars.
 
 Configure the search bar text
 =============================
@@ -375,10 +391,10 @@ use this pattern:
 For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
 
 
-Configure navbar menu item alignment
-====================================
+Configure the navbar center alignment
+=====================================
 
-By default, the navigation bar menu items will align with the content on your
+By default, the navigation bar center area will align with the content on your
 page. This equals the following default configuration:
 
 .. code-block:: python
@@ -408,4 +424,23 @@ If you'd like these items to snap to the right of the page, use this configurati
       ...
       "navbar_align": "right"
       ...
+   }
+
+
+Adding ethical advertisements to your sidebar in ReadTheDocs
+============================================================
+
+If you're hosting your documentation on ReadTheDocs, you should consider
+adding an explicit placement for their **ethical advertisements**. These are
+non-tracking advertisements from ethical companies, and they help ReadTheDocs
+sustain themselves and their free service.
+
+Ethical advertisements are added to your sidebar by default. To ensure they are
+there if you manually update your sidebar, ensure that the ``sidebar-ethical-ads.html``
+template is added to your list. For example:
+
+.. code:: python
+
+   html_sidebars = {
+       "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
    }

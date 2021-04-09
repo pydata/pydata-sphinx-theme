@@ -7,6 +7,18 @@
   .container-xl {
     height: 100%;
   }
+
+  @include media-breakpoint-up(md) {
+    // Anything in navbar center should be left-justified (e.g. links)
+    #navbar-center > .navbar-center-item {
+      float: left;
+    }
+
+    // Anything in end part of the navbar should be right-justified (e.g. icons)
+    #navbar-end > .navbar-end-item {
+      float: right;
+    }
+  }
 }
 
 .navbar-brand {

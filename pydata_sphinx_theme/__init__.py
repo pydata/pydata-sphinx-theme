@@ -4,6 +4,7 @@ Bootstrap-based sphinx theme from the PyData community
 import os
 
 from sphinx.errors import ExtensionError
+from sphinx.util import logging
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx import addnodes
 
@@ -14,6 +15,44 @@ from bs4 import BeautifulSoup as bs
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
 __version__ = "0.5.3dev0"
+
+logger = logging.getLogger(__name__)
+
+
+def update_config(app, env):
+    theme_options = app.config["html_theme_options"]
+    if theme_options.get("search_bar_position") == "navbar":
+        logger.warn(
+            (
+                "Deprecated config `search_bar_position` used."
+                "Use `search-field.html` in `navbar_end` template list instead."
+            )
+        )
+
+
+def update_templates(app, pagename, templatename, context, doctree):
+    """Update template names for page build."""
+    template_sections = [
+        "theme_navbar_start",
+        "theme_navbar_center",
+        "theme_navbar_end",
+        "theme_footer_items",
+        "theme_page_sidebar_items",
+        "sidebars",
+    ]
+
+    for section in template_sections:
+        if context.get(section):
+            # Break apart `,` separated strings so we can use , in the defaults
+            if isinstance(context.get(section), str):
+                context[section] = [
+                    ii.strip() for ii in context.get(section).split(",")
+                ]
+
+            # Add `.html` to templates with no suffix
+            for ii, template in enumerate(context.get(section)):
+                if not os.path.splitext(template)[1]:
+                    context[section][ii] = template + ".html"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -472,8 +511,10 @@ def setup(app):
     # our custom HTML builder
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
+    app.connect("env-updated", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
+    app.connect("html-page-context", update_templates)
 
     # Update templates for sidebar
     pkgdir = os.path.abspath(os.path.dirname(__file__))
