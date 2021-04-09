@@ -177,6 +177,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         else:
             return soup
 
+    # TODO: Deprecate in v0.7.0
     def get_nav_object(maxdepth=None, collapse=True, includehidden=True, **kwargs):
         """Return a list of nav links that can be accessed from Jinja.
 
@@ -190,6 +191,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         kwargs: key/val pairs
             Passed to the `toctree` Sphinx method
         """
+        if context["master_doc"] == pagename:
+            logger.warn("`get_nav_object` is deprecated and will be removed in v0.7.0")
+
         toc_sphinx = context["toctree"](
             maxdepth=maxdepth, collapse=collapse, includehidden=includehidden, **kwargs
         )
@@ -200,10 +204,17 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         #     return []
 
         nav_object = soup_to_python(soup, only_pages=True)
+
         return nav_object
 
+    # TODO: Deprecate in v0.7.0
     def get_page_toc_object():
         """Return a list of within-page TOC links that can be accessed from Jinja."""
+
+        if context["master_doc"] == pagename:
+            logger.warn(
+                ("`get_page_toc_object` is deprecated and will be " "removed in v0.7.0")
+            )
 
         if "toc" not in context:
             return ""
