@@ -32,7 +32,7 @@ By default, the following configuration is used:
    html_theme_options = {
    ...
    "navbar_start": ["navbar-logo"],
-   "navbar_center": ["navbar-center-nav"],
+   "navbar_center": ["navbar-nav"],
    "navbar_end": ["navbar-icon-links"]
    ...
    }
@@ -141,6 +141,6 @@ could do so with the following steps:
 
       html_theme_options = {
       ...
-      "navbar_start": ["version", "menu-logo"],
+      "navbar_start": ["navbar-logo", "version"],
       ...
       }
