@@ -579,9 +579,9 @@ nav.bd-links {
 table.highlighttable td.linenos,
 span.linenos,
 div.doctest > div.highlight span.gp {  /* gp: Generic.Prompt */
-  user-select: none;
-  -webkit-user-select: text; /* Safari fallback only */
-  -webkit-user-select: none; /* Chrome/Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+ */
+  user-select: none !important;
+  -webkit-user-select: text !important; /* Safari fallback only */
+  -webkit-user-select: none !important; /* Chrome/Safari */
+  -moz-user-select: none !important; /* Firefox */
+  -ms-user-select: none !important; /* IE10+ */
 }
