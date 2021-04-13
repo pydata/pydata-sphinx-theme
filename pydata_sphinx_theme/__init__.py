@@ -18,6 +18,17 @@ __version__ = "0.6.1dev0"
 
 logger = logging.getLogger(__name__)
 
+# by default, use the stdlib html parser
+BS4_PARSER = "html.parser"
+
+try:
+    # but prefer lxml
+    import lxml
+    BS4_PARSER = "lxml"
+    logger.info("Using lxml for HTML parsing")
+except ImportError:
+    logger.warning("Using stdlib HTML parser: install lxml for improved performance")
+
 
 def update_config(app, env):
     theme_options = app.config["html_theme_options"]
@@ -91,7 +102,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             # select the "active" subset of the navigation tree for the sidebar
             toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
 
-        soup = bs(toc_sphinx, "html.parser")
+        soup = bs(toc_sphinx, BS4_PARSER)
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
@@ -134,7 +145,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         if "toc" not in context:
             return ""
 
-        soup = bs(context["toc"], "html.parser")
+        soup = bs(context["toc"], BS4_PARSER)
 
         # Add toc-hN + visible classes
         def add_header_level_recursive(ul, level):
@@ -197,7 +208,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         toc_sphinx = context["toctree"](
             maxdepth=maxdepth, collapse=collapse, includehidden=includehidden, **kwargs
         )
-        soup = bs(toc_sphinx, "html.parser")
+        soup = bs(toc_sphinx, BS4_PARSER)
 
         # # If no toctree is defined (AKA a single-page site), skip this
         # if toctree is None:
@@ -219,7 +230,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         if "toc" not in context:
             return ""
 
-        soup = bs(context["toc"], "html.parser")
+        soup = bs(context["toc"], BS4_PARSER)
 
         try:
             toc_object = soup_to_python(soup, only_pages=False)

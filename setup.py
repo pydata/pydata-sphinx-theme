@@ -27,11 +27,14 @@ def find_version(*file_paths):
 with open(os.path.join(HERE, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-tests_require = [
+lxml_requires = ["lxml"]
+
+tests_require = lxml_requires + [
     line.strip()
     for line in read("docs", "requirements.txt").splitlines()
     if not line.strip().startswith("#")
 ]
+
 
 setup(
     name="pydata-sphinx-theme",
@@ -50,6 +53,7 @@ setup(
     entry_points={"sphinx.html_themes": ["pydata_sphinx_theme = pydata_sphinx_theme"]},
     install_requires=["sphinx", "beautifulsoup4", "docutils<0.17"],
     extras_require={
+        "lxml": lxml_requires,
         "test": tests_require,
         "coverage": ["pytest-cov", "codecov", *tests_require],
     },

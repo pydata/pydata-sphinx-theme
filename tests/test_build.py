@@ -10,6 +10,7 @@ import sphinx.errors
 
 import pytest
 
+from .. import BS4_PARSER
 
 path_tests = Path(__file__).parent
 
