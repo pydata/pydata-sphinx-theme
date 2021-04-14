@@ -185,7 +185,9 @@ Configure the navigation depth and collapsing of the sidebar
 
 By default, this theme enables to expand/collapse subsections in the left
 sidebar navigation (without actually navigating to the page itself), and this
-up to 4 levels deep.
+up to 4 levels deep:
+
+.. image:: /_static/demo-expandable-navigation.gif
 
 When having a site with many files and/or many levels, this can cause a long
 build time and larger HTML file sizes. Therefore, it is possible to turn off
