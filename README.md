@@ -21,6 +21,7 @@ Sites that are using this theme:
 - CuPy: https://docs.cupy.dev/en/latest/
 - MegEngine: https://megengine.org.cn/doc/stable/zh/
 - Fairlearn: https://fairlearn.github.io/main/quickstart.html
+- NetworkX: https://networkx.org/documentation/latest/
 
 
 ## Installation and usage
