@@ -179,6 +179,38 @@ By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
 `Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
+
+Configure the navigation depth and collapsing of the sidebar
+============================================================
+
+By default, this theme enables to expand/collapse subsections in the left
+sidebar navigation (without actually navigating to the page itself), and this extends
+up to 4 levels deep:
+
+.. image:: /_static/demo-expandable-navigation.gif
+
+When having a site with many files and/or many levels, this can cause a long
+build time and larger HTML file sizes. Therefore, it is possible to turn off
+the expandable navigation by setting the `collapse_navigation` config option
+to True:
+
+.. code:: python
+
+   html_theme_options = {
+     "collapse_navigation": True
+   }
+
+In addition, you can also control how many levels of the navigation are shown
+in the sidebar (with a default of 4):
+
+.. code:: python
+
+   html_theme_options = {
+     "navigation_depth": 2
+   }
+
+
+
 Hiding the previous and next buttons
 ====================================
 
