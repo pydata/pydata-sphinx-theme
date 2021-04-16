@@ -8,15 +8,10 @@
     height: 100%;
   }
 
-  @include media-breakpoint-up(md) {
-    // Anything in navbar center should be left-justified (e.g. links)
-    #navbar-center > .navbar-center-item {
-      float: left;
-    }
-
-    // Anything in end part of the navbar should be right-justified (e.g. icons)
+  @include media-breakpoint-up(lg) {
+    // navbar-end-items should be on one line if possible
     #navbar-end > .navbar-end-item {
-      float: right;
+        display: inline-block;
     }
   }
 }
