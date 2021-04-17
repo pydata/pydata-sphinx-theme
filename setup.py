@@ -3,7 +3,7 @@ import codecs
 import os
 import re
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 # from https://packaging.python.org/guides/single-sourcing-package-version/
@@ -43,8 +43,7 @@ setup(
     license="BSD",
     maintainer="Joris Van den Bossche",
     maintainer_email="jorisvandenbossche@gmail.com",
-    #
-    packages=["pydata_sphinx_theme"],
+    packages=find_packages(),
     include_package_data=True,
     # See http://www.sphinx-doc.org/en/stable/theming.html#distribute-your-theme-as-a-python-package
     entry_points={"sphinx.html_themes": ["pydata_sphinx_theme = pydata_sphinx_theme"]},

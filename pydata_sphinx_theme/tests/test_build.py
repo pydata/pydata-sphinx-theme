@@ -25,7 +25,7 @@ class SphinxBuild:
         return self
 
     @property
-    def status(self):
+    def status(self):  # pragma: no cover
         return self.app._status.getvalue()
 
     @property
@@ -38,7 +38,7 @@ class SphinxBuild:
 
     def html_tree(self, *path):
         path_page = self.outdir.joinpath(*path)
-        if not path_page.exists():
+        if not path_page.exists():  # pragma: no cover
             raise ValueError(f"{path_page} does not exist")
         return BeautifulSoup(path_page.read_text("utf8"), "html.parser")
 
