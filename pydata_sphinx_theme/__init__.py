@@ -249,9 +249,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             )
         return align_options[align]
 
-    def generate_google_analytics_script(kind, **kwargs):
+    def generate_google_analytics_script(id):
         """Handle the two types of google analytics id."""
-        id = kwargs.get("id")
         if id:
             if "G-" in id:
                 script = (
