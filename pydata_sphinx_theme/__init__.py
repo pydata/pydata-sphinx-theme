@@ -253,28 +253,32 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         """Handle the two types of google analytics id."""
         if id:
             if "G-" in id:
-                script = (
-                    f"<script async "
-                    "src='https://www.googletagmanager.com/gtag/js?id={id}'></script>\n"
-                    "<script>\n"
-                    "    window.dataLayer = window.dataLayer || [];\n"
-                    "    function gtag() { dataLayer.push(arguments);\n"
-                    f"    gtag('config', '{id}');\n"
-                    "</script>"
-                )
+                script = f"""
+                <script
+                    async
+                    src='https://www.googletagmanager.com/gtag/js?id={id}'
+                ></script>
+                <script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){{ dataLayer.push(arguments); }}
+                    gtag('config', '{id}');
+                </script>
+                """
             else:
-                script = (
-                    "<script async "
-                    "src='https://www.google-analytics.com/analytics.js'></script>\n"
-                    "<script>\n"
-                    "    window.ga = window.ga || "
-                    "function () { (ga.q = ga.q || []).push(arguments) }; "
-                    "ga.l = +new Date;\n"
-                    f"    ga('create', '{id}', 'auto');\n"
-                    "    ga('set', 'anonymizeIp', true);\n"
-                    "    ga('send', 'pageview');\n"
-                    "</script>"
-                )
+                script = f"""
+                    <script
+                        async
+                        src='https://www.google-analytics.com/analytics.js'
+                    ></script>
+                    <script>
+                        window.ga = window.ga || function () {{
+                            (ga.q = ga.q || []).push(arguments) }};
+                        ga.l = +new Date;
+                        ga('create', '{id}', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+                """
             soup = bs(script, "html.parser")
             return soup
 

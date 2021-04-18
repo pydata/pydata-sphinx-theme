@@ -405,5 +405,6 @@ def test_old_google_analytics_id(sphinx_build_factory):
     # This text makes the assumption that the google analytics will always be
     # the one before last script tag found in the document.
     script_tag = index_html.select("script")[-1]
+
     assert "ga" in script_tag.string
     assert "UA-XXXXX" in script_tag.string
