@@ -9,7 +9,6 @@ from sphinx.environment.adapters.toctree import TocTree
 from sphinx import addnodes
 
 import jinja2
-
 from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
@@ -250,11 +249,42 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             )
         return align_options[align]
 
+    def generate_google_analytics_script(kind, **kwargs):
+        """Handle the two types of google analytics id."""
+        id = kwargs.get("id")
+        if id:
+            if "G-" in id:
+                script = (
+                    f"<script async "
+                    "src='https://www.googletagmanager.com/gtag/js?id={id}'></script>\n"
+                    "<script>\n"
+                    "    window.dataLayer = window.dataLayer || [];\n"
+                    "    function gtag() { dataLayer.push(arguments);\n"
+                    f"    gtag('config', '{id}');\n"
+                    "</script>"
+                )
+            else:
+                script = (
+                    "<script async "
+                    "src='https://www.google-analytics.com/analytics.js'></script>\n"
+                    "<script>\n"
+                    "    window.ga = window.ga || "
+                    "function () { (ga.q = ga.q || []).push(arguments) }; "
+                    "ga.l = +new Date;\n"
+                    f"    ga('create', '{id}', 'auto');\n"
+                    "    ga('set', 'anonymizeIp', true);\n"
+                    "    ga('send', 'pageview');\n"
+                    "</script>"
+                )
+            soup = bs(script, "html.parser")
+            return soup
+
     context["generate_nav_html"] = generate_nav_html
     context["generate_toc_html"] = generate_toc_html
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
     context["navbar_align_class"] = navbar_align_class
+    context["generate_google_analytics_script"] = generate_google_analytics_script
 
 
 def _add_collapse_checkboxes(soup):
