@@ -529,7 +529,7 @@ def setup(app):
 
     # Update templates for sidebar
     pkgdir = os.path.abspath(os.path.dirname(__file__))
-    path_templates = os.path.join(pkgdir, "_templates")
+    path_templates = os.path.join(pkgdir, "templates")
     app.config.templates_path.append(path_templates)
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}
