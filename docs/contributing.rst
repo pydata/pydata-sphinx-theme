@@ -284,6 +284,32 @@ is required. The steps are roughly:
 - potentially remove the font being replaced from ``package.json`` and re-run ``yarn``
 - commit all of the changed files
 
+Translating the theme
+=====================
+
+If any strings to be translated are added or changed, maintainers update the POT file:
+
+.. code-block:: bash
+
+   python setup.py extract_messages
+
+and then update the PO files:
+
+.. code-block:: bash
+
+   python setup.py update_catalog
+
+To add a new language, add a PO file (replace ``LANGUAGE_CODE`` with the two-letter lowercase ISO 639-1 language code):
+
+.. code-block:: bash
+
+   python setup.py init_catalog -l LANGUAGE_CODE
+
+After updating the PO files, update the MO files:
+
+.. code-block:: bash
+
+   python setup.py compile_catalog
 
 Contributing changes
 ====================
