@@ -517,6 +517,9 @@ def setup(app):
     app.add_html_theme("pydata_sphinx_theme", theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
 
+    # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
+    app.add_message_catalog("sphinx", os.path.join(theme_path, "locale"))
+
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
     # uses a special "dirhtml" builder so we need to replace these both with
     # our custom HTML builder
