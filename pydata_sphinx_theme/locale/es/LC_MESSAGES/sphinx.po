@@ -21,63 +21,63 @@ msgstr ""
 
 #: pydata_sphinx_theme/docs-navbar.html:9
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Alternar navegación"
 
 #: pydata_sphinx_theme/icon-links.html:14
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #: pydata_sphinx_theme/icon-links.html:15
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 #: pydata_sphinx_theme/icon-links.html:16
 msgid "Bitbucket"
-msgstr ""
+msgstr "Bitbucket"
 
 #: pydata_sphinx_theme/icon-links.html:17
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: pydata_sphinx_theme/layout.html:7
 msgid "previous page"
-msgstr ""
+msgstr "página anterior"
 
 #: pydata_sphinx_theme/layout.html:10
 msgid "next page"
-msgstr ""
+msgstr "siguiente página"
 
 #: pydata_sphinx_theme/templates/copyright.html:3
 #, python-format
 msgid "&copy; <a href=\"%(path)s\">Copyright</a> %(copyright)s."
-msgstr ""
+msgstr "&copy; <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 
 #: pydata_sphinx_theme/templates/copyright.html:5
 #, python-format
 msgid "&copy; Copyright %(copyright)s."
-msgstr ""
+msgstr "&copy; Copyright %(copyright)s."
 
 #: pydata_sphinx_theme/templates/edit-this-page.html:5
 msgid "Edit this page"
-msgstr ""
+msgstr "Editar esta página"
 
 #: pydata_sphinx_theme/templates/last-updated.html:2
 #, python-format
 msgid "Last updated on %(last_updated)s."
-msgstr ""
+msgstr "Última actualización el %(last_updated)s"
 
 #: pydata_sphinx_theme/templates/page-toc.html:5
 msgid "On this page"
-msgstr ""
+msgstr "En esta página"
 
 #: pydata_sphinx_theme/templates/sidebar-nav-bs.html:1
 msgid "Main navigation"
-msgstr ""
+msgstr "Navegación principal"
 
 #: pydata_sphinx_theme/templates/sphinx-version.html:2
 #, python-format
 msgid ""
 "Created using <a href=\"http://sphinx-doc.org/\">Sphinx</a> "
 "%(sphinx_version)s."
-msgstr ""
-
+msgstr "Creado con <a href=\"http://sphinx-doc.org/\">Sphinx</a> "
+"%(sphinx_version)s."

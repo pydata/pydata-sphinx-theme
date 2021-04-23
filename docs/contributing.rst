@@ -287,7 +287,7 @@ is required. The steps are roughly:
 Translating the theme
 =====================
 
-If any strings to be translated are added or changed, maintainers update the POT file:
+If any strings to be translated are added or changed, update the POT file:
 
 .. code-block:: bash
 
@@ -305,7 +305,7 @@ To add a new language, add a PO file (replace ``LANGUAGE_CODE`` with the two-let
 
    python setup.py init_catalog -l LANGUAGE_CODE
 
-After updating the PO files, update the MO files:
+If any PO files are updated, update the MO files:
 
 .. code-block:: bash
 
