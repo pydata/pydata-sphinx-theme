@@ -10,3 +10,4 @@ User Guide
    configuring
    sections
    customizing
+   i18n

@@ -284,6 +284,8 @@ is required. The steps are roughly:
 - potentially remove the font being replaced from ``package.json`` and re-run ``yarn``
 - commit all of the changed files
 
+.. _translating-the-theme:
+
 Translating the theme
 =====================
 
