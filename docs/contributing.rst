@@ -284,30 +284,75 @@ is required. The steps are roughly:
 - potentially remove the font being replaced from ``package.json`` and re-run ``yarn``
 - commit all of the changed files
 
+Internationalization
+====================
+
+.. note::
+
+   Internationalization (I18N) and localization (L10N) is performed using `Gettext <https://docs.python.org/3/library/gettext.html>`__. Gettext reads a program's source and extracts text that has been marked as translatable, known as "source strings." Gettext uses three types of files:
+
+   PO file (``.po``)
+     A `Portable Object (PO) file <https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`__ is made up of many entries, each entry holding the relation between a source string and its translation. The source string is introduced by the keyword ``msgid``, and the translation, by ``msgstr``. In a given PO file, all translations are expressed in a single target language. PO files are also known as message catalogs.
+   POT file (``.pot``)
+     A Portable Object Template (POT) file is the same as a PO file, except the translations are empty, so that it can be used as a template for new languages.
+   MO file (``.mo``)
+     A Machine Object (MO) file is a binary version of a PO file. PO files are compiled to MO files, which are required by Gettext.
+
+   I18N and L10N are deep topics. Here, we only cover the bare minimum needed to fulfill basics technical tasks. You might like:
+
+   -  `Internationalis(z)ing Code <https://www.youtube.com/watch?v=0j74jcxSunY>`__ by Computerphile on YouTube
+   -  `Falsehoods Programmers Believe About Language <http://garbled.benhamill.com/2017/04/18/falsehoods-programmers-believe-about-language>`__ by Ben Hamill
+
+.. _adding-natural-language-text:
+
+Adding natural language text
+----------------------------
+
+All natural language text must be marked as translatable, so that it can be extracted by Gettext and translated.
+
+Jinja2 provides a ``trans`` block and a ``_()`` function to mark text as translatable. `Please refer to the Jinja2 documentation <https://jinja.palletsprojects.com/en/2.11.x/templates/#i18n>`__. Remember to `manually escape <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ variables if needed.
+
+Then, complete the steps for :ref:`changing-natural-language-text`.
+
+.. note::
+
+   When a variable is used in a source string (for example, ``{% trans %}Hello, {{ user }}!{% endtrans %}``), the value of the variable is not translated. If ``user`` is "John", it will be substituted as "John", not as "Иван" or "约翰". In other words, don't do ``{{ _(theme_search_bar_text) }}``.
+
+.. _changing-natural-language-text:
+
+Changing natural language text
+------------------------------
+
+#. Edit the natural language text as desired.
+
+#. Update the message catalog template (POT file):
+
+   .. code-block:: bash
+
+      python setup.py extract_messages
+
+#. Update the message catalogs (PO files):
+
+   .. code-block:: bash
+
+      python setup.py update_catalog
+
 .. _translating-the-theme:
 
 Translating the theme
-=====================
+---------------------
 
-If any strings to be translated are added or changed, update the POT file:
+These steps use the Spanish language as an example. To translate the theme to another language, replace ``es`` with the language's two-letter lowercase `ISO 639-1 code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`__.
 
-.. code-block:: bash
+#. If the language's code matches no sub-directory of the `pydata_sphinx_theme/locale <https://github.com/pydata/pydata-sphinx-theme/tree/master/pydata_sphinx_theme/locale>`__ directory, initialize the language's message catalog:
 
-   python setup.py extract_messages
+   .. code-block:: bash
 
-and then update the PO files:
+      python setup.py init_catalog -l es
 
-.. code-block:: bash
+#. Edit the language's message catalog at ``pydata_sphinx_theme/locale/es/LC_MESSAGES/sphinx.po``. For each source string introduced by the ``msgid`` keyword, add its translation after the ``msgstr`` keyword.
 
-   python setup.py update_catalog
-
-To add a new language, add a PO file (replace ``LANGUAGE_CODE`` with the two-letter lowercase ISO 639-1 language code):
-
-.. code-block:: bash
-
-   python setup.py init_catalog -l LANGUAGE_CODE
-
-If any PO files are updated, update the MO files:
+#. Compile the message catalogs of every language:
 
 .. code-block:: bash
 
