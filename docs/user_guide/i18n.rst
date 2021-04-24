@@ -3,11 +3,11 @@ Internationalization
 
 This theme contains translatable strings. Most strings will automatically be translated if the language is `supported <https://github.com/pydata/pydata-sphinx-theme/tree/master/pydata_sphinx_theme/locale>`__. To add another language, see :ref:`translating-the-theme`.
 
-The theme's :doc:`options<configuring>` also contain translatable strings, which require a different process. The following instructions assume that you store your translations in a ``locale`` directory under your documentation directory, and that you want to use ``theme`` as the name the message catalog for these strings.
+The theme's :doc:`options<configuring>` also contain translatable strings, which require a different process. The following instructions assume that you store your translations in a ``locale`` directory under your documentation directory, and that you want to use ``theme`` as the name of the message catalog for these strings.
 
 #. In your ``conf.py`` file:
 
-   .. code-block:: rst
+   .. code-block:: python
 
       import os.path
       from sphinx.locale import get_translation
