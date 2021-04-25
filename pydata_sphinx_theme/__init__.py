@@ -32,7 +32,7 @@ def update_config(app, env):
         raise ExtensionError(
             (
                 "`icon_links` must be a list of dictionaries, you provided "
-                f"type {type(theme_options.get("icon_links"))}."
+                f"type {type(theme_options.get('icon_links'))}."
             )
         )
 
