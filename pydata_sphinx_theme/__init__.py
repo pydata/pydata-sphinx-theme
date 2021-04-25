@@ -28,6 +28,13 @@ def update_config(app, env):
                 "Use `search-field.html` in `navbar_end` template list instead."
             )
         )
+    if not isinstance(theme_options.get("icon_links", []), list):
+        raise ExtensionError(
+            (
+                "`icon_links` must be a list of dictionaries, you provided "
+                f"type {type(theme_options.get('icon_links'))}."
+            )
+        )
 
 
 def update_templates(app, pagename, templatename, context, doctree):
