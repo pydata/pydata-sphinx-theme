@@ -2,14 +2,11 @@ import os
 from pathlib import Path
 from shutil import copytree
 
-from bs4 import BeautifulSoup
-
-from sphinx.testing.util import SphinxTestApp
-from sphinx.testing.path import path as sphinx_path
-import sphinx.errors
-
 import pytest
-
+import sphinx.errors
+from bs4 import BeautifulSoup
+from sphinx.testing.path import path as sphinx_path
+from sphinx.testing.util import SphinxTestApp
 
 path_tests = Path(__file__).parent
 
@@ -385,3 +382,29 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
     edit_link = index_html.select(".editthispage a")
     assert edit_link, "no edit link found"
     assert edit_link[0].attrs["href"] == edit_url, f"edit link didn't match {edit_link}"
+
+
+def test_new_google_analytics_id(sphinx_build_factory):
+    confoverrides = {"html_theme_options.google_analytics_id": "G-XXXXX"}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
+    sphinx_build.build()
+    index_html = sphinx_build.html_tree("index.html")
+    # This text makes the assumption that the google analytics will always be
+    # the last script tag found in the document.
+    script_tag = index_html.select("script")[-1]
+
+    assert "gtag" in script_tag.string
+    assert "G-XXXXX" in script_tag.string
+
+
+def test_old_google_analytics_id(sphinx_build_factory):
+    confoverrides = {"html_theme_options.google_analytics_id": "UA-XXXXX"}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
+    sphinx_build.build()
+    index_html = sphinx_build.html_tree("index.html")
+    # This text makes the assumption that the google analytics will always be
+    # the one before last script tag found in the document.
+    script_tag = index_html.select("script")[-1]
+
+    assert "ga" in script_tag.string
+    assert "UA-XXXXX" in script_tag.string
