@@ -31,8 +31,8 @@ def update_config(app, env):
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
             (
-                "`icon_links` must be a list of dictionaries keyed by "
-                "'name', 'url', and 'icon'."
+                "`icon_links` must be a list of dictionaries, you provided "
+                f"type {type(theme_options.get("icon_links"))}."
             )
         )
 
