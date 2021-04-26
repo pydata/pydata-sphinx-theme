@@ -62,7 +62,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.6, 3.7, 3.8, 3.9]
+        include:
+          python-version: 3.9
+          dev: true
 
     steps:
     - uses: actions/checkout@v2
@@ -85,6 +88,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install -e .[coverage]
+
+    - name: Install pre-release dependencies
+      if: ${{ matrix.dev }}
+      run: pip install --upgrade --pre sphinx jinja2
 
     # Build the docs
     - name: Build docs to store
