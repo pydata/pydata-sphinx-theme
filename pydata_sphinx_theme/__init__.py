@@ -9,7 +9,6 @@ from sphinx.environment.adapters.toctree import TocTree
 from sphinx import addnodes
 
 import jinja2
-
 from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
@@ -26,6 +25,13 @@ def update_config(app, env):
             (
                 "Deprecated config `search_bar_position` used."
                 "Use `search-field.html` in `navbar_end` template list instead."
+            )
+        )
+    if not isinstance(theme_options.get("icon_links", []), list):
+        raise ExtensionError(
+            (
+                "`icon_links` must be a list of dictionaries, you provided "
+                f"type {type(theme_options.get('icon_links'))}."
             )
         )
 
@@ -250,11 +256,45 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             )
         return align_options[align]
 
+    def generate_google_analytics_script(id):
+        """Handle the two types of google analytics id."""
+        if id:
+            if "G-" in id:
+                script = f"""
+                <script
+                    async
+                    src='https://www.googletagmanager.com/gtag/js?id={id}'
+                ></script>
+                <script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){{ dataLayer.push(arguments); }}
+                    gtag('config', '{id}');
+                </script>
+                """
+            else:
+                script = f"""
+                    <script
+                        async
+                        src='https://www.google-analytics.com/analytics.js'
+                    ></script>
+                    <script>
+                        window.ga = window.ga || function () {{
+                            (ga.q = ga.q || []).push(arguments) }};
+                        ga.l = +new Date;
+                        ga('create', '{id}', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+                """
+            soup = bs(script, "html.parser")
+            return soup
+
     context["generate_nav_html"] = generate_nav_html
     context["generate_toc_html"] = generate_toc_html
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
     context["navbar_align_class"] = navbar_align_class
+    context["generate_google_analytics_script"] = generate_google_analytics_script
 
 
 def _add_collapse_checkboxes(soup):
