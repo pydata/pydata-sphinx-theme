@@ -288,6 +288,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 """
             soup = bs(script, "html.parser")
             return soup
+        else:
+            return ""
 
     context["generate_nav_html"] = generate_nav_html
     context["generate_toc_html"] = generate_toc_html
