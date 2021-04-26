@@ -93,11 +93,11 @@ jobs:
       if: ${{ matrix.dev }}
       run: pip install --upgrade --pre sphinx jinja2
 
-    # Build the docs
-    - name: Build docs to store
-      run: |
-        export PATH="$HOME/miniconda/bin:$PATH"
-        sphinx-build -b html docs/ docs/_build/html -W --keep-going
+    # # Build the docs
+    # - name: Build docs to store
+    #   run: |
+    #     export PATH="$HOME/miniconda/bin:$PATH"
+    #     sphinx-build -b html docs/ docs/_build/html -W --keep-going
 
     # Run tests under coverage
     - name: Run the tests
