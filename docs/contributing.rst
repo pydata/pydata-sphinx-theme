@@ -314,10 +314,6 @@ Jinja2 provides a ``trans`` block and a ``_()`` function to mark text as transla
 
 Then, complete the steps for :ref:`changing-natural-language-text`.
 
-.. note::
-
-   When a variable is used in a source string (for example, ``{% trans %}Hello, {{ user }}!{% endtrans %}``), the value of the variable is not translated. If ``user`` is "John", it will be substituted as "John", not as "Иван" or "约翰". In other words, don't do ``{{ _(theme_search_bar_text) }}``.
-
 .. _changing-natural-language-text:
 
 Changing natural language text
