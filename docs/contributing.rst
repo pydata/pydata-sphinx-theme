@@ -287,21 +287,19 @@ is required. The steps are roughly:
 Internationalization
 ====================
 
-.. note::
+Internationalization (I18N) and localization (L10N) is performed using `Gettext <https://docs.python.org/3/library/gettext.html>`__. Gettext reads a program's source and extracts text that has been marked as translatable, known as "source strings." Gettext uses three types of files:
 
-   Internationalization (I18N) and localization (L10N) is performed using `Gettext <https://docs.python.org/3/library/gettext.html>`__. Gettext reads a program's source and extracts text that has been marked as translatable, known as "source strings." Gettext uses three types of files:
+PO file (``.po``)
+  A `Portable Object (PO) file <https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`__ is made up of many entries, each entry holding the relation between a source string and its translation. The source string is introduced by the keyword ``msgid``, and the translation, by ``msgstr``. In a given PO file, all translations are expressed in a single target language. PO files are also known as message catalogs.
+POT file (``.pot``)
+  A Portable Object Template (POT) file is the same as a PO file, except the translations are empty, so that it can be used as a template for new languages.
+MO file (``.mo``)
+  A Machine Object (MO) file is a binary version of a PO file. PO files are compiled to MO files, which are required by Gettext.
 
-   PO file (``.po``)
-     A `Portable Object (PO) file <https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`__ is made up of many entries, each entry holding the relation between a source string and its translation. The source string is introduced by the keyword ``msgid``, and the translation, by ``msgstr``. In a given PO file, all translations are expressed in a single target language. PO files are also known as message catalogs.
-   POT file (``.pot``)
-     A Portable Object Template (POT) file is the same as a PO file, except the translations are empty, so that it can be used as a template for new languages.
-   MO file (``.mo``)
-     A Machine Object (MO) file is a binary version of a PO file. PO files are compiled to MO files, which are required by Gettext.
+I18N and L10N are deep topics. Here, we only cover the bare minimum needed to fulfill basics technical tasks. You might like:
 
-   I18N and L10N are deep topics. Here, we only cover the bare minimum needed to fulfill basics technical tasks. You might like:
-
-   -  `Internationalis(z)ing Code <https://www.youtube.com/watch?v=0j74jcxSunY>`__ by Computerphile on YouTube
-   -  `Falsehoods Programmers Believe About Language <http://garbled.benhamill.com/2017/04/18/falsehoods-programmers-believe-about-language>`__ by Ben Hamill
+-  `Internationalis(z)ing Code <https://www.youtube.com/watch?v=0j74jcxSunY>`__ by Computerphile on YouTube
+-  `Falsehoods Programmers Believe About Language <http://garbled.benhamill.com/2017/04/18/falsehoods-programmers-believe-about-language>`__ by Ben Hamill
 
 .. _adding-natural-language-text:
 
