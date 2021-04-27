@@ -338,7 +338,7 @@ Translating the theme
 
 These steps use the Spanish language as an example. To translate the theme to another language, replace ``es`` with the language's two-letter lowercase `ISO 639-1 code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`__.
 
-#. If the language's code matches no sub-directory of the `pydata_sphinx_theme/locale <https://github.com/pydata/pydata-sphinx-theme/tree/master/pydata_sphinx_theme/locale>`__ directory, initialize the language's message catalog:
+#. If the language's code matches no sub-directory of the `pydata_sphinx_theme/locale <https://github.com/pydata/pydata-sphinx-theme/tree/master/pydata_sphinx_theme/locale>`__ directory, initialize the language's message catalog (PO file):
 
    .. code-block:: bash
 
@@ -346,7 +346,7 @@ These steps use the Spanish language as an example. To translate the theme to an
 
 #. Edit the language's message catalog at ``pydata_sphinx_theme/locale/es/LC_MESSAGES/sphinx.po``. For each source string introduced by the ``msgid`` keyword, add its translation after the ``msgstr`` keyword.
 
-#. Compile the message catalogs of every language:
+#. Compile the message catalogs of every language. This creates or updates the MO files:
 
 .. code-block:: bash
 
