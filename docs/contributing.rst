@@ -291,6 +291,8 @@ Internationalization (I18N) and localization (L10N) is performed using `Gettext 
 
 PO file (``.po``)
   A `Portable Object (PO) file <https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`__ is made up of many entries, each entry holding the relation between a source string and its translation. The source string is introduced by the keyword ``msgid``, and the translation, by ``msgstr``. In a given PO file, all translations are expressed in a single target language. PO files are also known as message catalogs.
+
+  Entries begin with comments, on lines all starting with the character ``#``. Comments are created and maintained by Gettext. Comment lines starting with ``#:`` contain references to the program's source. These references allow a human translator to find the source strings in their original context. Comment lines starting with ``#,`` contain flags like ``python-format``, which indicates that the source string contains placeholders like ``%(copyright)s``.
 POT file (``.pot``)
   A Portable Object Template (POT) file is the same as a PO file, except the translations are empty, so that it can be used as a template for new languages.
 MO file (``.mo``)
@@ -306,7 +308,7 @@ I18N and L10N are deep topics. Here, we only cover the bare minimum needed to fu
 Adding natural language text
 ----------------------------
 
-All natural language text must be marked as translatable, so that it can be extracted by Gettext and translated.
+All natural language text must be marked as translatable, so that it can be extracted by Gettext and translated by humans.
 
 Jinja2 provides a ``trans`` block and a ``_()`` function to mark text as translatable. `Please refer to the Jinja2 documentation <https://jinja.palletsprojects.com/en/2.11.x/templates/#i18n>`__. Remember to `manually escape <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ variables if needed.
 
