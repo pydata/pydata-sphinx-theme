@@ -22,6 +22,7 @@ Sites that are using this theme:
 - MegEngine: https://megengine.org.cn/doc/stable/zh/
 - Fairlearn: https://fairlearn.github.io/main/quickstart.html
 - NetworkX: https://networkx.org/documentation/latest/
+- MNE-Python: https://mne.tools/stable/index.html
 
 
 ## Installation and usage
