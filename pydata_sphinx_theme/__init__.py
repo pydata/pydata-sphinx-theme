@@ -559,6 +559,9 @@ def setup(app):
     app.add_html_theme("pydata_sphinx_theme", theme_path)
     app.set_translator("html", BootstrapHTML5Translator)
 
+    # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
+    app.add_message_catalog("sphinx", os.path.join(theme_path, "locale"))
+
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
     # uses a special "dirhtml" builder so we need to replace these both with
     # our custom HTML builder
@@ -571,7 +574,7 @@ def setup(app):
 
     # Update templates for sidebar
     pkgdir = os.path.abspath(os.path.dirname(__file__))
-    path_templates = os.path.join(pkgdir, "_templates")
+    path_templates = os.path.join(pkgdir, "templates")
     app.config.templates_path.append(path_templates)
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}

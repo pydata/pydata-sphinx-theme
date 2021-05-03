@@ -1,0 +1,82 @@
+# Translations template for pydata-sphinx-theme.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the pydata-sphinx-theme
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: pydata-sphinx-theme 0.6.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-04-22 16:46-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: pydata_sphinx_theme/docs-navbar.html:9
+msgid "Toggle navigation"
+msgstr ""
+
+#: pydata_sphinx_theme/icon-links.html:14
+msgid "GitHub"
+msgstr ""
+
+#: pydata_sphinx_theme/icon-links.html:15
+msgid "GitLab"
+msgstr ""
+
+#: pydata_sphinx_theme/icon-links.html:16
+msgid "Bitbucket"
+msgstr ""
+
+#: pydata_sphinx_theme/icon-links.html:17
+msgid "Twitter"
+msgstr ""
+
+#: pydata_sphinx_theme/layout.html:7
+msgid "previous page"
+msgstr ""
+
+#: pydata_sphinx_theme/layout.html:10
+msgid "next page"
+msgstr ""
+
+#: pydata_sphinx_theme/templates/copyright.html:3
+#, python-format
+msgid "&copy; <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+msgstr ""
+
+#: pydata_sphinx_theme/templates/copyright.html:5
+#, python-format
+msgid "&copy; Copyright %(copyright)s."
+msgstr ""
+
+#: pydata_sphinx_theme/templates/edit-this-page.html:5
+msgid "Edit this page"
+msgstr ""
+
+#: pydata_sphinx_theme/templates/last-updated.html:2
+#, python-format
+msgid "Last updated on %(last_updated)s."
+msgstr ""
+
+#: pydata_sphinx_theme/templates/page-toc.html:5
+msgid "On this page"
+msgstr ""
+
+#: pydata_sphinx_theme/templates/sidebar-nav-bs.html:1
+msgid "Main navigation"
+msgstr ""
+
+#: pydata_sphinx_theme/templates/sphinx-version.html:2
+#, python-format
+msgid ""
+"Created using <a href=\"http://sphinx-doc.org/\">Sphinx</a> "
+"%(sphinx_version)s."
+msgstr ""
+
