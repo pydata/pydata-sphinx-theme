@@ -431,6 +431,10 @@ Admonitions
 .. WARNING:: Strong prose may provoke extreme mental exertion.
    Reader discretion is strongly advised.
 
+.. note::
+
+   .. tip:: You can embed admonitions!
+
 .. admonition:: And, by the way...
 
    You can make up your own admonition too.
