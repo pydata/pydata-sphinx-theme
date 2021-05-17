@@ -139,12 +139,12 @@ def test_favicons(sphinx_build_factory):
 
     icon_16 = (
         '<link href="https://secure.example.com/favicon/favicon-16x16.png" '
-        'rel="icon" sizes="16x16">'
+        'rel="icon" sizes="16x16"/>'
     )
-    icon_32 = '<link href="_static/favicon-32x32.png" rel="icon" sizes="32x32">'
+    icon_32 = '<link href="_static/favicon-32x32.png" rel="icon" sizes="32x32"/>'
     icon_180 = (
         '<link href="_static/apple-touch-icon-180x180.png" '
-        'rel="apple-touch-icon" sizes="180x180">'
+        'rel="apple-touch-icon" sizes="180x180"/>'
     )
 
     assert icon_16 in str(index_html.select("head")[0])
