@@ -1,0 +1,36 @@
+<script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "{{pagename}}.html",
+      versionJsonUrl: "{{theme_version_switch_json_url}}",
+      enableLocaleSupport: "{{theme_version_switch_enable_locale}}" === "True",
+      // TODO read from "{{theme_version_switch_locales}}"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
