@@ -23,6 +23,7 @@ Sites that are using this theme:
 - Fairlearn: https://fairlearn.github.io/main/quickstart.html
 - NetworkX: https://networkx.org/documentation/latest/
 - MNE-Python: https://mne.tools/stable/index.html
+- PyVista: https://docs.pyvista.org
 
 
 ## Installation and usage
