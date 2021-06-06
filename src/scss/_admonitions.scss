@@ -28,7 +28,7 @@
   }
 
   // Defaults for all admonitions
-  .admonition-title {
+  > .admonition-title {
     position: relative;
     margin: 0 -0.6rem !important;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
@@ -54,7 +54,7 @@
 
   &.attention {
     border-color: rgba(var(--pst-color-admonition-attention), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-attention), 0.1);
 
       &:before {
@@ -66,7 +66,7 @@
 
   &.caution {
     border-color: rgba(var(--pst-color-admonition-caution), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-caution), 0.1);
 
       &:before {
@@ -78,7 +78,7 @@
 
   &.warning {
     border-color: rgba(var(--pst-color-admonition-warning), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-warning), 0.1);
 
       &:before {
@@ -90,7 +90,7 @@
 
   &.danger {
     border-color: rgba(var(--pst-color-admonition-danger), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-danger), 0.1);
 
       &:before {
@@ -102,7 +102,7 @@
 
   &.error {
     border-color: rgba(var(--pst-color-admonition-error), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-error), 0.1);
 
       &:before {
@@ -114,7 +114,7 @@
 
   &.hint {
     border-color: rgba(var(--pst-color-admonition-hint), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-hint), 0.1);
 
       &:before {
@@ -126,7 +126,7 @@
 
   &.tip {
     border-color: rgba(var(--pst-color-admonition-tip), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-tip), 0.1);
 
       &:before {
@@ -138,7 +138,7 @@
 
   &.important {
     border-color: rgba(var(--pst-color-admonition-important), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-important), 0.1);
 
       &:before {
@@ -150,7 +150,7 @@
 
   &.note {
     border-color: rgba(var(--pst-color-admonition-note), 1);
-    .admonition-title {
+    > .admonition-title {
       background-color: rgba(var(--pst-color-admonition-note), 0.1);
 
       &:before {
