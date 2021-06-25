@@ -7,7 +7,7 @@
   /*****************************************************************************
   * Font size
   **/
-  --pst-font-size-base: 15px; /* base font size - applied at body / html level */
+  --pst-font-size-base: 16px; /* base font size - applied at body / html level */
 
   /* heading font sizes */
   --pst-font-size-h1: 36px;
@@ -38,7 +38,7 @@
 
   /*****************************************************************************
   * Color
-  * 
+  *
   * Colors are defined in rgb string way, "red, green, blue"
   **/
   --pst-color-primary: 19, 6, 84;
