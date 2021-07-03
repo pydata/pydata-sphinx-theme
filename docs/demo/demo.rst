@@ -158,6 +158,12 @@ Code Blocks
     curl -O http://someurl/release-|version|.tar-gz
 
 
+
+.. code-block:: python
+
+    print("Here is a really really really really really really really really long python line!")
+
+
 .. code-block:: json
     :caption: Code Blocks can have captions.
 

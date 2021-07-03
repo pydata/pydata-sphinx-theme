@@ -7,7 +7,6 @@
   /*****************************************************************************
   * Font size
   **/
-  --pst-font-size-base: 16px; /* base font size - applied at body / html level */
 
   /* heading font sizes */
   --pst-font-size-h1: 36px;
