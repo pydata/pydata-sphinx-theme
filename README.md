@@ -20,7 +20,7 @@ Sites that are using this theme:
 - Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
 - CuPy: https://docs.cupy.dev/en/latest/
 - MegEngine: https://megengine.org.cn/doc/stable/zh/
-- Fairlearn: https://fairlearn.github.io/main/quickstart.html
+- Fairlearn: https://fairlearn.org/main/about/
 - NetworkX: https://networkx.org/documentation/latest/
 - MNE-Python: https://mne.tools/stable/index.html
 - PyVista: https://docs.pyvista.org
