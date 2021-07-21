@@ -1,13 +1,13 @@
 <script type="text/javascript">
     (function () {
-      window.versionSwitcher = {
+      window.switcher = {
         pageName: "{{pagename}}.html",
-        enableVersionSupport: "{{theme_use_version_switch}}" === "True",
+        switchers: JSON.parse("{{theme_switchers}}".replaceAll("'", '"')),
       };
       window.configUrl = "{{theme_config_json_url}}";
     })();
 </script>
-{%- if theme_use_version_switch %}
+{%- if 'version' in theme_switchers %}
     <ul class="navbar-nav">
     <li class="nav-item dropdown">
         <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

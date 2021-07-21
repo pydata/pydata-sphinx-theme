@@ -72,11 +72,11 @@ function scrollToActive() {
   });
 }
 
-function parseCurrentURL(config) {
+function parseCurrentURL(switchers_enable) {
   // parseCurrentURL look up current pathname, generate current version locale
 
   let pathname = window.location.pathname;
-  let pageName = window.versionSwitcher.pageName;
+  let pageName = window.switcher.pageName;
 
   // add "index.html" back when browser omit it.
   if (pageName.endsWith("index.html") && pathname.endsWith("/")) {
@@ -87,46 +87,26 @@ function parseCurrentURL(config) {
     throw 'page suffix do not match requirements'
   }
 
-  let parts = pathname.split("/");
-  let versionInfo = {};
-  // find version info
-  if(window.versionSwitcher.enableVersionSupport) {
-    let allPossiableVersions = [];
-    for(const version of config.version.items) {
-      allPossiableVersions.push(version.name);
-      allPossiableVersions.push(version.url);
-      for(const label of version.labels) {
-        allPossiableVersions.push(label)
-      }
-    }
-
-    let versionIndex = 0;
-    for(versionIndex=0; versionIndex<parts.length; versionIndex++) {
-      if(allPossiableVersions.indexOf(parts[versionIndex]) !== -1) {
-        break
-      }
-    }
-    if(versionIndex < parts.length) {
-      versionInfo = {
-        versionHeadURL: parts.slice(0, versionIndex).join("/"),
-        versionURL: parts[versionIndex],
-        versionTailURL: parts.slice(versionIndex+1).join("/")
-      }
+  let baseURL = pathname.slice(0, -(pageName.length + 1));
+  let parts = baseURL.split("/");
+  let switcherInfo = {};
+  // find switcher info
+  for(let switchidx=0; switchidx<switchers_enable.length; switchidx++) {
+    let switchName = switchers_enable[switchidx];
+    switcherInfo[switchName+"HeadURL"] = parts.slice(0,parts.length-switchidx-1).join('/');
+    switcherInfo[switchName+"URL"] = parts[parts.length-switchidx-1];
+    if(switchidx===0) {
+      switcherInfo[switchName+"TailURL"] = pageName
     } else {
-      throw "version info not found from "+pathname
+      switcherInfo[switchName+"TailURL"] = parts.slice(parts.length-switchidx).join('/')+"/"+pageName;
     }
   }
   
-  return versionInfo
+  return switcherInfo
 }
 
 function setupVersionSwitcher(allVersions, versionHeadURL, versionURL, versionTailURL) {
   // Setup Version Switcher
-
-  // Only enable version switcher when window.versionSwitcher is filled by sphinx
-  if (!window.versionSwitcher) {
-    return;
-  }
 
   // version switcher's config should be a (key, value) pair of config.json:
   // 'items' is a list of all versions. `name` and `labels` must be unique.
@@ -213,15 +193,18 @@ function setupVersionSwitcher(allVersions, versionHeadURL, versionURL, versionTa
 }
 
 function applyConfig() {
-  if(!window.versionSwitcher.enableVersionSupport) return;
+  let switchers_enable = window.switcher.switchers;
+
+  if(switchers_enable.length === 0) return;
 
   let configUrl = window.configUrl;
   fetch(configUrl).then((resp) => {
     return resp.json()
   }).then((configs) => {
-    let info = parseCurrentURL(configs);
-
-    if(window.versionSwitcher.enableVersionSupport){
+    let info = parseCurrentURL(switchers_enable);
+    
+    if(switchers_enable.indexOf("version") !== -1) {
+      // enable version switcher
       setupVersionSwitcher(configs["version"], info.versionHeadURL, info.versionURL, info.versionTailURL)
     }
   }).catch((error) => {
