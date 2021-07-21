@@ -13,6 +13,7 @@ import 'popper.js';
 import 'bootstrap';
 
 import './../scss/index.scss';
+import { name, part } from 'file-loader';
 
 function addTOCInteractivity() {
   // TOC sidebar - add "active" class to parent list
@@ -35,7 +36,6 @@ function addTOCInteractivity() {
     });
   });
 }
-
 
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
@@ -72,8 +72,170 @@ function scrollToActive() {
   });
 }
 
+function parseCurrentURL(config) {
+  // parseCurrentURL look up current pathname, generate current version locale
+
+  let pathname = window.location.pathname;
+  let pageName = window.versionSwitcher.pageName;
+
+  // add "index.html" back when browser omit it.
+  if (pageName.endsWith("index.html") && pathname.endsWith("/")) {
+    pathname += "index.html";
+  }
+  if (pathname.slice(-pageName.length) !== pageName) {
+    // Sphinx generated pages should have exactly same suffix
+    throw 'page suffix do not match requirements'
+  }
+
+  let parts = pathname.split("/");
+  let versionInfo = {};
+  // find version info
+  if(window.versionSwitcher.enableVersionSupport) {
+    let allPossiableVersions = [];
+    for(const version of config.version.items) {
+      allPossiableVersions.push(version.name);
+      allPossiableVersions.push(version.url);
+      for(const label of version.labels) {
+        allPossiableVersions.push(label)
+      }
+    }
+
+    let versionIndex = 0;
+    for(versionIndex=0; versionIndex<parts.length; versionIndex++) {
+      if(allPossiableVersions.indexOf(parts[versionIndex]) !== -1) {
+        break
+      }
+    }
+    if(versionIndex < parts.length) {
+      versionInfo = {
+        versionHeadURL: parts.slice(0, versionIndex).join("/"),
+        versionURL: parts[versionIndex],
+        versionTailURL: parts.slice(versionIndex+1).join("/")
+      }
+    } else {
+      throw "version info not found from "+pathname
+    }
+  }
+  
+  return versionInfo
+}
+
+function setupVersionSwitcher(allVersions, versionHeadURL, versionURL, versionTailURL) {
+  // Setup Version Switcher
+
+  // Only enable version switcher when window.versionSwitcher is filled by sphinx
+  if (!window.versionSwitcher) {
+    return;
+  }
+
+  // version switcher's config should be a (key, value) pair of config.json:
+  // 'items' is a list of all versions. `name` and `labels` must be unique.
+  // You should specify a default version(both name and labels are ok).
+  /* 
+      let configs = {
+          "items": [
+              {
+                  "name": "v1.0",
+                  "url": "1.0",
+                  "labels": []
+              },
+              {
+                  "name": "v1.3",
+                  "url": "1.3",
+                  "labels": ["stable"]
+              },
+              {
+                  "name": "v1.4",
+                  "url": "1.4",
+                  "labels": ["latest"]
+              },
+          ],
+          "default": "stable"
+      }
+  */
+  
+
+  // validate Check currentVersion is valid.
+  // Return canonicalVersion: indicate current version's real url
+  function validate(allVersions, versionURL) {
+    for(const version of allVersions.items) {
+      if((version.url === versionURL) || (version.name === versionURL)) {
+        return version
+      }
+      for(const label of version.labels) {
+        if(label === versionURL) {
+          return version
+        }
+      }
+    }
+
+    throw `version '${versionURL}' doesn't exist in remove version mapping`
+  }
+
+  function render(allVersions, info) {
+    function onSwitchVersion(evt) {
+      evt.preventDefault()
+      let selected = evt.currentTarget.getAttribute('key');
+
+      // process with alias problem, e.g. do not jump if target is just an alias of current one.
+      if (selected == info.currentVersion.url) {
+        // Current page is already the target version, ignore
+        return;
+      }
+
+      let new_url = info.versionHeadURL+"/"+selected+"/"+info.versionTailURL;
+      window.location.assign(new_url);
+    }
+
+    // Fill the current version in the dropdown, always show real name instead of alias
+    document.getElementById("version-dropdown").innerText = info.currentVersion.name;
+
+    const menuHTML = (function() {
+      return allVersions.items.map((version) => {
+        let text = version.name;
+        if (version.labels.length > 0) {
+          text = `${version.name} (${version.labels.join(' ')})`
+        }
+
+        return `<button class="dropdown-item" key="${version.url}">${text}</button>`
+      })
+    })().join('')
+    // fill the version menu
+    document.getElementById("version-menu").innerHTML = menuHTML;
+
+    // bind the changes to this menu to trigger the switching function
+    $('#version-menu button').on('click', onSwitchVersion)
+  }
+
+  let currentVersion = validate(allVersions, versionURL);
+  let info = {versionHeadURL, versionURL, versionTailURL, currentVersion}
+  render(allVersions, info)
+}
+
+function applyConfig() {
+  if(!window.versionSwitcher.enableVersionSupport) return;
+
+  let configUrl = window.configUrl;
+  fetch(configUrl).then((resp) => {
+    return resp.json()
+  }).then((configs) => {
+    let info = parseCurrentURL(configs);
+
+    if(window.versionSwitcher.enableVersionSupport){
+      setupVersionSwitcher(configs["version"], info.versionHeadURL, info.versionURL, info.versionTailURL)
+    }
+  }).catch((error) => {
+    throwBtnError("version-dropdown", error)
+  })
+}
+
+function throwBtnError(btnID, errMsg) {
+  $("#"+btnID).addClass("btn-danger").prop("disabled", true).text("Error!!!");
+  throw errMsg
+}
 
 $(document).ready(() => {
   scrollToActive();
   addTOCInteractivity();
+  applyConfig();
 });
