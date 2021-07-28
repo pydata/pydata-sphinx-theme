@@ -24,7 +24,8 @@ author = "PyData Community"
 
 import pydata_sphinx_theme
 
-version = pydata_sphinx_theme.__version__.replace("dev0", "")
+release = pydata_sphinx_theme.__version__
+version = release.replace("dev0", "")
 
 # -- General configuration ---------------------------------------------------
 
@@ -96,7 +97,7 @@ html_theme_options = {
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     # "navbar_start": ["navbar-logo", "navbar-version"],
     # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
-    # "navbar_end": ["navbar-icon-links", "navbar-version"]  # Just for testing
+    "navbar_end": ["switcher", "navbar-icon-links"],
     # "footer_items": ["copyright", "sphinx-version", ""]
 }
 
@@ -106,6 +107,8 @@ html_context = {
     "github_repo": "pydata-sphinx-theme",
     "github_version": "master",
     "doc_path": "docs",
+    "switcher_json_url": "/_static/switcher.json",
+    "switcher_template_url": "https://pydata-sphinx-theme.readthedocs.io/{language}/{version}/",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
