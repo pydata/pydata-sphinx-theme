@@ -1,6 +1,6 @@
 <div class="dropdown">
     <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="switcher_button" data-toggle="dropdown">
-        {{ switcher_prefix }}{{ release }}
+        {{ release }}
         <span class="caret"></span>
     </button>
     <div id="switcher" class="dropdown-menu list-group-flush py-0" aria-labelledby="switcher_button">
@@ -11,7 +11,6 @@
 <script type="text/javascript">
 // Function to construct the target URL from the JSON components
 function buildURL(template, entry) {
-    //
     var parts = template.split(/[\{\}]/);
     version_ix = parts.indexOf("version");
     language_ix = parts.indexOf("language");
@@ -25,7 +24,6 @@ function buildURL(template, entry) {
 }
 // Function to populate the (release, language) version switcher
 (function () {
-    // get JSON config
     $.getJSON("{{ switcher_json_url }}", function(data, textStatus, jqXHR) {
         // create the nodes first (before AJAX calls) to ensure the order is
         // correct (for now, links will go to doc version homepage)
