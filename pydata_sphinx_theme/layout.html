@@ -31,6 +31,9 @@
       <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ pathto('_static/' + favicon.href, 1) }}">
       {% endif %}
     {% endfor %}
+
+    <!-- Moved gtag to header -->
+    {{ generate_google_analytics_script(id=theme_google_analytics_id) }}
 {%- endblock %}
 
 {# Silence the sidebar's, relbar's #}
@@ -105,7 +108,7 @@
 
   {%- block scripts_end %}
   {{ _webpack.body_post() }}
-  {{ generate_google_analytics_script(id=theme_google_analytics_id) }}
+  
   {%- endblock %}
 
 {%- endblock %}
