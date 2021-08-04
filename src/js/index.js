@@ -136,16 +136,13 @@ function setupVersionSwitcher(allVersions, versionHeadURL, versionURL, versionTa
   
 
   // validate Check currentVersion is valid.
-  // Return canonicalVersion: indicate current version's real url
+  // Return version's name
   function validate(allVersions, versionURL) {
-    for(const version of allVersions.items) {
-      if((version.url === versionURL) || (version.name === versionURL)) {
+    for(const version of allVersions) {
+      if((typeof version === "string") && (version === versionURL)) {
         return version
-      }
-      for(const label of version.labels) {
-        if(label === versionURL) {
-          return version
-        }
+      } else if(typeof version === "object" && ((version.name === versionURL) || (version.label === versionURL))) {
+        return version.name
       }
     }
 
@@ -164,20 +161,33 @@ function setupVersionSwitcher(allVersions, versionHeadURL, versionURL, versionTa
       }
 
       let new_url = info.versionHeadURL+"/"+selected+"/"+info.versionTailURL;
-      window.location.assign(new_url);
+      $.ajax({
+        url: new_url,
+        success: function () {
+          window.location.assign(new_url);
+        },
+        error: function () {
+          new_url = info.versionHeadURL+"/"+selected+"/";
+          window.location.assign(new_url);
+        }
+      });
     }
-
+  
     // Fill the current version in the dropdown, always show real name instead of alias
-    document.getElementById("version-dropdown").innerText = info.currentVersion.name;
+    document.getElementById("version-dropdown").innerText = info.currentVersion;
 
     const menuHTML = (function() {
-      return allVersions.items.map((version) => {
-        let text = version.name;
-        if (version.labels.length > 0) {
-          text = `${version.name} (${version.labels.join(' ')})`
+      return allVersions.map((version) => {
+        let name = '';
+        let label = '';
+        if(typeof version === 'string') {
+          name = version
+        } else {
+          name = version.name
+          label = '('+version.label+')'
         }
 
-        return `<button class="dropdown-item" key="${version.url}">${text}</button>`
+        return `<button class="dropdown-item" key="${name}">${name+label}</button>`
       })
     })().join('')
     // fill the version menu
