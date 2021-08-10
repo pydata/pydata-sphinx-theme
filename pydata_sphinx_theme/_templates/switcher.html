@@ -31,6 +31,9 @@ function buildURL(template, entry) {
         // correct (for now, links will go to doc version homepage)
         $.each(data, function(index, entry) {
             entry.url = buildURL("{{ switcher_template_url }}", entry);
+            if (!("name" in entry)) {
+                entry.name = entry.version;
+            }
             $("#switcher").append(`<a class="list-group-item list-group-item-action py-1" href="${entry.url}">${entry.name}</a>`);
         });
         // see if the current page exists in the other versions of the docs
