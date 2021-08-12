@@ -298,10 +298,7 @@ of:
 - work through code review
 
 For each pull request, the demo site is built and deployed to make it easier to review
-the changes in the PR. To access this, click on "Details" of the "build_docs artifact"
-job of Circle CI:
-
-.. image:: _static/pull-request-preview-link.png
+the changes in the PR. To access this, click on the "ReadTheDocs" preview in the CI/CD jobs.
 
 
 Ensuring correct commits
