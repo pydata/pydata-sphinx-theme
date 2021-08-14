@@ -32,7 +32,7 @@
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .navbar-light {
-  background: #fff !important;
+  background: #fff;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
 
   .navbar-nav {

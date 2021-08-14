@@ -1,8 +1,8 @@
 // Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
 
-.admonition {
+div.admonition, .admonition{
   margin: 1.5625em auto;
-  padding: 0 0.6rem 0.8rem 0.6rem !important;
+  padding: 0 0.6rem 0.8rem 0.6rem;
   overflow: hidden;
   page-break-inside: avoid;
   border-left: 0.2rem solid;
@@ -30,7 +30,7 @@
   // Defaults for all admonitions
   > .admonition-title {
     position: relative;
-    margin: 0 -0.6rem !important;
+    margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: 700;
     background-color: rgba(var(--pst-color-admonition-default), 0.1);
