@@ -108,7 +108,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['**/*', '!css', '!css/theme.css'],
+      cleanOnceBeforeBuildPatterns: ['**/*', '!css', '!css/theme.css', '!css/blank.css'],
     }),
     new HtmlWebpackPlugin({
       filename: resolve(staticPath, 'webpack-macros.html'),
