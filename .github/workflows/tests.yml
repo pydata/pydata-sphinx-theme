@@ -121,6 +121,7 @@ jobs:
       HOST: 127.0.0.1
       # the base url
       URL: http://127.0.0.1:8000
+      PA11Y_BUILD: /tmp/pa11y/pa11y-${{ github.run_number }}
 
     steps:
     - uses: actions/checkout@v2
@@ -189,13 +190,6 @@ jobs:
         outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
         verbose: true
 
-    # Store the audit
-    - name: Upload Lighthouse Reports
-      uses: actions/upload-artifact@v2
-      with:
-        name: Lighthouse Report ${{ github.run_number }}
-        path: /tmp/lighthouse
-
     - name: Run the accessibility audit
       run: python docs/a11y.py --no-serve
 
@@ -216,8 +210,8 @@ jobs:
       with:
         name: Pa11y and Lighthouse ${{ github.run_number }}
         path: |
-          docs/_build/pa11y
-          docs/_build/lighthouse
+          /tmp/pa11y
+          /tmp/lighthouse
       if: always()
 
   publish:

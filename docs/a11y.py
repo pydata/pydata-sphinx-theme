@@ -15,7 +15,7 @@ from yaml import safe_dump
 HERE = Path(__file__).parent.resolve()
 ROOT = HERE.parent
 BUILD = HERE / "_build"
-PA11Y_BUILD = BUILD / "pa11y"
+PA11Y_BUILD = Path(os.environ.get("PA11Y_BUILD", BUILD / "pa11y"))
 PA11Y_JSON = PA11Y_BUILD / "pa11y-ci-results.json"
 PA11Y_ROADMAP = HERE / "a11y-roadmap.txt"
 YARN = [shutil.which("yarn"), "--silent"]
