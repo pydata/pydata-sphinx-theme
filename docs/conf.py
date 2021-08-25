@@ -22,9 +22,9 @@ project = "PyData Sphinx Theme"
 copyright = "2019, PyData Community"
 author = "PyData Community"
 
-# The full version, including alpha/beta/rc tags
-release = "0.0.1dev0"
+import pydata_sphinx_theme
 
+version = pydata_sphinx_theme.__version__.replace("dev0", "")
 
 # -- General configuration ---------------------------------------------------
 
@@ -64,7 +64,7 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_sidebars = {
-    "contributing": ["sidebar-search-bs.html", "custom-template.html"],
+    "contributing": ["search-field", "custom-template"],
     "changelog": [],
 }
 
@@ -91,8 +91,14 @@ html_theme_options = {
     ],
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    # "navbar_align": "right",  # For testing that the navbar items align properly
+    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
+    # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
+    # "navbar_start": ["navbar-logo", "navbar-version"],
+    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
+    # "navbar_end": ["navbar-icon-links", "navbar-version"]  # Just for testing
+    # "footer_items": ["copyright", "sphinx-version", ""]
 }
+
 
 html_context = {
     "github_user": "pandas-dev",

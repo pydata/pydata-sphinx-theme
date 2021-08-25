@@ -117,10 +117,15 @@ table.field-list {
  * Footer
  */
 
-.footer {
+footer {
+
   width: 100%;
   border-top: 1px solid #ccc;
-  padding-top: 10px;
+  padding: 10px;
+
+  .footer-item p {
+    margin-bottom: 0;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -208,7 +213,7 @@ table.field-list {
       position: sticky;
       top: calc(var(--pst-header-height) + 20px);
       z-index: 1000;
-      height: calc(100vh - 4rem);
+      height: calc(100vh - var(--pst-header-height) - 20px);
     }
   }
 
@@ -224,10 +229,10 @@ table.field-list {
   margin-left: -15px;
 
   @include media-breakpoint-up(md) {
-    display: block !important;
+    display: block;
 
     @supports (position: -webkit-sticky) or (position: sticky) {
-      max-height: calc(100vh - 9rem);
+      max-height: calc(100vh - 11rem);
       overflow-y: auto;
     }
   }
@@ -285,22 +290,51 @@ table.field-list {
   }
 }
 
+nav.bd-links {
+
+  p.caption {
+      font-size: var(--pst-sidebar-caption-font-size);
+      text-transform: uppercase;
+      font-weight: bold;
+      position: relative;
+      margin-top: 1.25em;
+      margin-bottom: 0.5em;
+      padding: 0 1.5rem;
+      color: rgba(var(--pst-color-sidebar-caption), 1);
+      &:first-child {
+          margin-top: 0;
+      }
+  }
+}
+
 .bd-sidebar .nav {
+
+  font-size: var(--pst-sidebar-font-size);
+
   ul {
     list-style: none;
-    padding: 0 1.5rem;
+    padding: 0 0 0 1.5rem;
   }
 
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
-    font-size: 0.9em;
     color: rgba(var(--pst-color-sidebar-link), 1);
 
     &:hover {
       color: rgba(var(--pst-color-sidebar-link-hover), 1);
       text-decoration: none;
       background-color: transparent;
+    }
+
+    &.reference.external {
+      &:after {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        content: '\f35d';
+        font-size: .75em;
+        margin-left: 0.3em
+      }
     }
   }
 
@@ -434,6 +468,10 @@ table.field-list {
     &.fa-gitlab:before {
       color: #548
     }
+
+    &.fa-bitbucket:before {
+      color: #0052cc;
+    }
   }
 }
 
@@ -454,7 +492,7 @@ table.field-list {
   padding-top: 2rem;
 
   a {
-    color: #130754;
+    color: var(--pst-color-sidebar-link-active);
   }
 }
 
@@ -462,5 +500,88 @@ table.field-list {
 
 // xarray output display in bootstrap
 .xr-wrap[hidden] {
-  display: block !important;
+  display: block;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Togglable expand/collapse
+////////////////////////////////////////////////////////////////////////////////
+
+
+.toctree-checkbox {
+  position: absolute;
+  display: none;
+}
+
+.toctree-checkbox {
+  ~ ul {
+    display: none;
+  }
+  ~ label i {
+    transform: rotate(0deg);
+  }
+}
+.toctree-checkbox:checked {
+  ~ ul {
+    display: block;
+  }
+  ~ label i {
+    transform: rotate(180deg);
+  }
+}
+
+
+.bd-sidebar {
+
+  li {
+    position: relative;
+  }
+  label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    // height: var(--sidebar-item-height);
+    height: 30px;
+    width: 30px;
+    // width: var(--sidebar-expander-width);
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background: rgba(var(--pst-color-sidebar-expander-background-hover), 1);
+    }
+
+    i {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-align: center;
+      &:hover {
+        color: rgba(var(--pst-color-sidebar-link-hover), 1);
+      }
+    }
+  }
+
+  // If it has children, add a bit more padding to wrap the content to avoid
+  // overlapping with the <label>
+  li.has-children {
+    > .reference {
+      padding-right: 30px;
+    }
+  }
+}
+
+// From https://stackoverflow.com/a/34372191
+table.highlighttable td.linenos,
+span.linenos,
+div.doctest > div.highlight span.gp {  /* gp: Generic.Prompt */
+  user-select: none;
+  -webkit-user-select: text; /* Safari fallback only */
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }

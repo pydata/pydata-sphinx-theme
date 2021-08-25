@@ -4,11 +4,61 @@ Bootstrap-based sphinx theme from the PyData community
 import os
 
 from sphinx.errors import ExtensionError
+from sphinx.util import logging
+from sphinx.environment.adapters.toctree import TocTree
+from sphinx import addnodes
+
+import jinja2
 from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.5.3dev0"
+__version__ = "0.6.3"
+
+logger = logging.getLogger(__name__)
+
+
+def update_config(app, env):
+    theme_options = app.config["html_theme_options"]
+    if theme_options.get("search_bar_position") == "navbar":
+        logger.warn(
+            (
+                "Deprecated config `search_bar_position` used."
+                "Use `search-field.html` in `navbar_end` template list instead."
+            )
+        )
+    if not isinstance(theme_options.get("icon_links", []), list):
+        raise ExtensionError(
+            (
+                "`icon_links` must be a list of dictionaries, you provided "
+                f"type {type(theme_options.get('icon_links'))}."
+            )
+        )
+
+
+def update_templates(app, pagename, templatename, context, doctree):
+    """Update template names for page build."""
+    template_sections = [
+        "theme_navbar_start",
+        "theme_navbar_center",
+        "theme_navbar_end",
+        "theme_footer_items",
+        "theme_page_sidebar_items",
+        "sidebars",
+    ]
+
+    for section in template_sections:
+        if context.get(section):
+            # Break apart `,` separated strings so we can use , in the defaults
+            if isinstance(context.get(section), str):
+                context[section] = [
+                    ii.strip() for ii in context.get(section).split(",")
+                ]
+
+            # Add `.html` to templates with no suffix
+            for ii, template in enumerate(context.get(section)):
+                if not os.path.splitext(template)[1]:
+                    context[section][ii] = template + ".html"
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -38,24 +88,16 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         HTML string (if kind in ["navbar", "sidebar"])
         or BeautifulSoup object (if kind == "raw")
         """
-        toc_sphinx = context["toctree"](**kwargs)
-        soup = bs(toc_sphinx, "html.parser")
-
         if startdepth is None:
             startdepth = 1 if kind == "sidebar" else 0
 
-        # select the "active" subset of the navigation tree for the sidebar
-        if startdepth > 0:
-            selector = " ".join(
-                [
-                    "li.current.toctree-l{} ul".format(i)
-                    for i in range(1, startdepth + 1)
-                ]
-            )
-            subset = soup.select(selector)
-            if not subset:
-                return ""
-            soup = bs(str(subset[0]), "html.parser")
+        if startdepth == 0:
+            toc_sphinx = context["toctree"](**kwargs)
+        else:
+            # select the "active" subset of the navigation tree for the sidebar
+            toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
+
+        soup = bs(toc_sphinx, "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
@@ -81,6 +123,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
+
+            # Add icons and labels for collapsible nested sections
+            _add_collapse_checkboxes(soup)
 
             out = soup.prettify()
 
@@ -138,6 +183,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         else:
             return soup
 
+    # TODO: Deprecate in v0.7.0
     def get_nav_object(maxdepth=None, collapse=True, includehidden=True, **kwargs):
         """Return a list of nav links that can be accessed from Jinja.
 
@@ -151,6 +197,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         kwargs: key/val pairs
             Passed to the `toctree` Sphinx method
         """
+        if context["master_doc"] == pagename:
+            logger.warn("`get_nav_object` is deprecated and will be removed in v0.7.0")
+
         toc_sphinx = context["toctree"](
             maxdepth=maxdepth, collapse=collapse, includehidden=includehidden, **kwargs
         )
@@ -161,10 +210,17 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         #     return []
 
         nav_object = soup_to_python(soup, only_pages=True)
+
         return nav_object
 
+    # TODO: Deprecate in v0.7.0
     def get_page_toc_object():
         """Return a list of within-page TOC links that can be accessed from Jinja."""
+
+        if context["master_doc"] == pagename:
+            logger.warn(
+                ("`get_page_toc_object` is deprecated and will be " "removed in v0.7.0")
+            )
 
         if "toc" not in context:
             return ""
@@ -200,11 +256,163 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             )
         return align_options[align]
 
+    def generate_google_analytics_script(id):
+        """Handle the two types of google analytics id."""
+        if id:
+            if "G-" in id:
+                script = f"""
+                <script
+                    async
+                    src='https://www.googletagmanager.com/gtag/js?id={id}'
+                ></script>
+                <script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){{ dataLayer.push(arguments); }}
+                    gtag('config', '{id}');
+                </script>
+                """
+            else:
+                script = f"""
+                    <script
+                        async
+                        src='https://www.google-analytics.com/analytics.js'
+                    ></script>
+                    <script>
+                        window.ga = window.ga || function () {{
+                            (ga.q = ga.q || []).push(arguments) }};
+                        ga.l = +new Date;
+                        ga('create', '{id}', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+                """
+            soup = bs(script, "html.parser")
+            return soup
+        else:
+            return ""
+
     context["generate_nav_html"] = generate_nav_html
     context["generate_toc_html"] = generate_toc_html
     context["get_nav_object"] = get_nav_object
     context["get_page_toc_object"] = get_page_toc_object
     context["navbar_align_class"] = navbar_align_class
+    context["generate_google_analytics_script"] = generate_google_analytics_script
+
+
+def _add_collapse_checkboxes(soup):
+    # based on https://github.com/pradyunsg/furo
+
+    toctree_checkbox_count = 0
+
+    for element in soup.find_all("li", recursive=True):
+        # We check all "li" elements, to add a "current-page" to the correct li.
+        classes = element.get("class", [])
+
+        # Nothing more to do, unless this has "children"
+        if not element.find("ul"):
+            continue
+
+        # Add a class to indicate that this has children.
+        element["class"] = classes + ["has-children"]
+
+        # We're gonna add a checkbox.
+        toctree_checkbox_count += 1
+        checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
+
+        # Add the "label" for the checkbox which will get filled.
+        if soup.new_tag is None:
+            continue
+        label = soup.new_tag("label", attrs={"for": checkbox_name})
+        label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+        element.insert(1, label)
+
+        # Add the checkbox that's used to store expanded/collapsed state.
+        checkbox = soup.new_tag(
+            "input",
+            attrs={
+                "type": "checkbox",
+                "class": ["toctree-checkbox"],
+                "id": checkbox_name,
+                "name": checkbox_name,
+            },
+        )
+        # if this has a "current" class, be expanded by default
+        # (by checking the checkbox)
+        if "current" in classes:
+            checkbox.attrs["checked"] = ""
+
+        element.insert(1, checkbox)
+
+
+def _get_local_toctree_for(
+    self: TocTree, indexname: str, docname: str, builder, collapse: bool, **kwargs
+):
+    """Return the "local" TOC nodetree (relative to `indexname`)."""
+    # this is a copy of `TocTree.get_toctree_for`, but where the sphinx version
+    # always uses the "master" doctree:
+    #     doctree = self.env.get_doctree(self.env.config.master_doc)
+    # we here use the `indexname` additional argument to be able to use a subset
+    # of the doctree (e.g. starting at a second level for the sidebar):
+    #     doctree = app.env.tocs[indexname].deepcopy()
+
+    doctree = self.env.tocs[indexname].deepcopy()
+
+    toctrees = []
+    if "includehidden" not in kwargs:
+        kwargs["includehidden"] = True
+    if "maxdepth" not in kwargs or not kwargs["maxdepth"]:
+        kwargs["maxdepth"] = 0
+    else:
+        kwargs["maxdepth"] = int(kwargs["maxdepth"])
+    kwargs["collapse"] = collapse
+
+    for toctreenode in doctree.traverse(addnodes.toctree):
+        toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwargs)
+        if toctree:
+            toctrees.append(toctree)
+    if not toctrees:
+        return None
+    result = toctrees[0]
+    for toctree in toctrees[1:]:
+        result.extend(toctree.children)
+    return result
+
+
+def index_toctree(app, pagename: str, startdepth: int, collapse: bool = True, **kwargs):
+    """
+    Returns the "local" (starting at `startdepth`) TOC tree containing the
+    current page, rendered as HTML bullet lists.
+
+    This is the equivalent of `context["toctree"](**kwargs)` in sphinx
+    templating, but using the startdepth-local instead of global TOC tree.
+    """
+    # this is a variant of the function stored in `context["toctree"]`, which is
+    # defined as `lambda **kwargs: self._get_local_toctree(pagename, **kwargs)`
+    # with `self` being the HMTLBuilder and the `_get_local_toctree` basically
+    # returning:
+    #     return self.render_partial(TocTree(self.env).get_toctree_for(
+    #         pagename, self, collapse, **kwargs))['fragment']
+
+    if "includehidden" not in kwargs:
+        kwargs["includehidden"] = False
+    if kwargs.get("maxdepth") == "":
+        kwargs.pop("maxdepth")
+
+    toctree = TocTree(app.env)
+    ancestors = toctree.get_toctree_ancestors(pagename)
+    try:
+        indexname = ancestors[-startdepth]
+    except IndexError:
+        # eg for index.rst, but also special pages such as genindex, py-modindex, search
+        # those pages don't have a "current" element in the toctree, so we can
+        # directly return an emtpy string instead of using the default sphinx
+        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
+        return ""
+
+    toctree_element = _get_local_toctree_for(
+        toctree, indexname, pagename, app.builder, collapse, **kwargs
+    )
+    return app.builder.render_partial(toctree_element)["fragment"]
 
 
 def soup_to_python(soup, only_pages=False):
@@ -271,22 +479,6 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
     def get_edit_url():
         """Return a URL for an "edit this page" link."""
-        required_values = ["github_user", "github_repo", "github_version"]
-        for val in required_values:
-            if not context.get(val):
-                raise ExtensionError(
-                    "Missing required value for `edit this page` button. "
-                    "Add %s to your `html_context` configuration" % val
-                )
-
-        # Enable optional custom github url for self-hosted github instances
-        github_url = "https://github.com"
-        if context.get("github_url"):
-            github_url = context["github_url"]
-
-        github_user = context["github_user"]
-        github_repo = context["github_repo"]
-        github_version = context["github_version"]
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -294,12 +486,58 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         if doc_path and not doc_path.endswith("/"):
             doc_path = f"{doc_path}/"
 
-        # Build the URL for "edit this button"
-        url_edit = (
-            f"{github_url}/{github_user}/{github_repo}"
-            f"/edit/{github_version}/{doc_path}{file_name}"
+        default_provider_urls = {
+            "bitbucket_url": "https://bitbucket.org",
+            "github_url": "https://github.com",
+            "gitlab_url": "https://gitlab.com",
+        }
+
+        edit_url_attrs = {}
+
+        # ensure custom URL is checked first, if given
+        url_template = context.get("edit_page_url_template")
+
+        if url_template is not None:
+            if "file_name" not in url_template:
+                raise ExtensionError(
+                    "Missing required value for `use_edit_page_button`. "
+                    "Ensure `file_name` appears in `edit_page_url_template`: "
+                    f"{url_template}"
+                )
+
+            edit_url_attrs[("edit_page_url_template",)] = url_template
+
+        edit_url_attrs.update(
+            {
+                ("bitbucket_user", "bitbucket_repo", "bitbucket_version"): (
+                    "{{ bitbucket_url }}/{{ bitbucket_user }}/{{ bitbucket_repo }}"
+                    "/src/{{ bitbucket_version }}"
+                    "/{{ doc_path }}{{ file_name }}?mode=edit"
+                ),
+                ("github_user", "github_repo", "github_version"): (
+                    "{{ github_url }}/{{ github_user }}/{{ github_repo }}"
+                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}"
+                ),
+                ("gitlab_user", "gitlab_repo", "gitlab_version"): (
+                    "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
+                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
+                ),
+            }
         )
-        return url_edit
+
+        doc_context = dict(default_provider_urls)
+        doc_context.update(context)
+        doc_context.update(doc_path=doc_path, file_name=file_name)
+
+        for attrs, url_template in edit_url_attrs.items():
+            if all(doc_context.get(attr) not in [None, "None"] for attr in attrs):
+                return jinja2.Template(url_template).render(**doc_context)
+
+        raise ExtensionError(
+            "Missing required value for `use_edit_page_button`. "
+            "Ensure one set of the following in your `html_context` "
+            f"configuration: {sorted(edit_url_attrs.keys())}"
+        )
 
     context["get_edit_url"] = get_edit_url
 
@@ -326,8 +564,10 @@ def setup(app):
     # our custom HTML builder
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
+    app.connect("env-updated", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
+    app.connect("html-page-context", update_templates)
 
     # Update templates for sidebar
     pkgdir = os.path.abspath(os.path.dirname(__file__))

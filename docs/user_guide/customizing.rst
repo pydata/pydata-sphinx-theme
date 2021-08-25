@@ -54,14 +54,17 @@ In order to change a variable, follow these steps:
            --pst-font-size-base: 17px;
        }
 
-For a complete list of the theme variables that you may override, see the
-`theme variables defaults CSS file <pydata-css-variables_>`_.
-
 .. important::
 
    Note that these are `CSS variables <css-variable-help_>`_ and not
    `SASS variables <https://sass-lang.com/documentation/variables>`_.
    The theme is defined with CSS variables, not SASS variables!
+
+For a complete list of the theme variables that you may override, see the
+`theme variables defaults CSS file <pydata-css-variables_>`_:
+
+.. literalinclude:: ../../pydata_sphinx_theme/static/css/theme.css
+  :language: CSS
 
 
 Replacing/Removing Fonts

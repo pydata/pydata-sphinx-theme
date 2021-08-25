@@ -105,3 +105,4 @@ envs/
 node_modules/
 .vscode
 .yarn-packages
+.idea

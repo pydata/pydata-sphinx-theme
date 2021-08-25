@@ -107,6 +107,10 @@ samp {
   font-family: var(--pst-font-family-monospace);
 }
 
+code {
+  color: rgba(var(--pst-color-inline-code), 1);
+}
+
 pre {
   margin: 1.5em 0 1.5em 0;
   padding: 10px;

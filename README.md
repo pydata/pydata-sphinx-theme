@@ -1,5 +1,7 @@
 # pydata-sphinx-theme
 
+![pypi](https://img.shields.io/pypi/v/pydata-sphinx-theme) [![conda-forge](https://img.shields.io/conda/vn/conda-forge/pydata-sphinx-theme.svg)](https://anaconda.org/conda-forge/pydata-sphinx-theme) [![continuous-integration](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml/badge.svg)](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml) [![docs](https://readthedocs.org/projects/pydata-sphinx-theme/badge/)](https://readthedocs.org/projects/pydata-sphinx-theme/builds/) [![codecov](https://codecov.io/gh/pydata/pydata-sphinx-theme/branch/master/graph/badge.svg?token=NwOObjYacn)](https://codecov.io/gh/pydata/pydata-sphinx-theme)
+
 A Bootstrap-based Sphinx theme from the PyData community.
 
 Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
@@ -12,11 +14,16 @@ Sites that are using this theme:
 
 - Pandas: https://pandas.pydata.org/docs/
 - NumPy: https://numpy.org/devdocs/
-- CuPy: https://docs.cupy.dev/en/latest/
+- SciPy: https://scipy.github.io/devdocs/
 - Bokeh: https://docs.bokeh.org/en/dev/
 - JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
 - Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
-- Fairlearn: https://fairlearn.github.io/main/quickstart.html
+- CuPy: https://docs.cupy.dev/en/latest/
+- MegEngine: https://megengine.org.cn/doc/stable/zh/
+- Fairlearn: https://fairlearn.org/main/about/
+- NetworkX: https://networkx.org/documentation/latest/
+- MNE-Python: https://mne.tools/stable/index.html
+- PyVista: https://docs.pyvista.org
 
 
 ## Installation and usage

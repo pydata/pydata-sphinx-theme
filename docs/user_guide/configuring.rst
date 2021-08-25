@@ -90,6 +90,7 @@ release in favor of ``icon_links``:
        ...
        "github_url": "https://github.com/<your-org>/<your-repo>",
        "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
+       "bitbucket_url": "https://bitbucket.org/<your-org>/<your-repo>",
        "twitter_url": "https://twitter.com/<your-handle>",
        ...
    }
@@ -121,6 +122,49 @@ an external site. You can add external links to the nav bar like so:
      ]
    }
 
+Adding favicons
+===============
+
+``pydata_sphinx_theme`` supports the
+`standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_,
+using ``html_favicon``.
+
+Additionally, ``pydata_sphinx_theme`` allows you to add any number of
+browser- or device-specific favicons of any size. To define arbitrary favicons,
+use the ``favicons`` configuration key. The ``href`` value can be either an
+absolute URL (beginning with ``http``) or a local path relative to your
+``html_static_path``:
+
+.. code-block:: python
+
+   html_theme_options = {
+      "favicons": [
+         {
+            "rel": "icon",
+            "sizes": "16x16",
+            "href": "https://secure.example.com/favicon/favicon-16x16.png",
+         },
+         {
+            "rel": "icon",
+            "sizes": "32x32",
+            "href": "favicon-32x32.png",
+         },
+         {
+            "rel": "apple-touch-icon",
+            "sizes": "180x180",
+            "href": "apple-touch-icon-180x180.png"
+         },
+      ]
+   }
+
+``pydata_sphinx_theme`` will add ``link`` tags to your document's ``head``
+section, following this pattern:
+
+.. code-block:: html+jinja
+
+   <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}">
+
+
 .. _configure-sidebar:
 
 Configure the sidebar
@@ -129,11 +173,43 @@ Configure the sidebar
 ``pydata_sphinx_theme`` provides two new sidebar items by default:
 
 - ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section
-- ``sidebar-search-bs.html`` - a bootstrap-friendly search bar
+- ``search-field.html`` - a bootstrap-friendly search bar
 
 By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
 `Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
+
+
+Configure the navigation depth and collapsing of the sidebar
+============================================================
+
+By default, this theme enables to expand/collapse subsections in the left
+sidebar navigation (without actually navigating to the page itself), and this extends
+up to 4 levels deep:
+
+.. image:: /_static/demo-expandable-navigation.gif
+
+When having a site with many files and/or many levels, this can cause a long
+build time and larger HTML file sizes. Therefore, it is possible to turn off
+the expandable navigation by setting the `collapse_navigation` config option
+to True:
+
+.. code:: python
+
+   html_theme_options = {
+     "collapse_navigation": True
+   }
+
+In addition, you can also control how many levels of the navigation are shown
+in the sidebar (with a default of 4):
+
+.. code:: python
+
+   html_theme_options = {
+     "navigation_depth": 2
+   }
+
+
 
 Hiding the previous and next buttons
 ====================================
@@ -154,18 +230,7 @@ Add an Edit this Page button
 You can add a button to each page that will allow users to edit the page text
 directly and submit a pull request to update the documentation. To include this
 button in the right sidebar of each page, add the following configuration to
-your ``conf.py`` file:
-
-.. code:: python
-
-   html_context = {
-       "github_user": "<your-github-org>",
-       "github_repo": "<your-github-repo>",
-       "github_version": "<your-branch>",
-       "doc_path": "<path-from-root-to-your-docs>",
-   }
-
-You should also enable the edit option in your 'html_theme_options':
+your ``conf.py`` file in 'html_theme_options':
 
 .. code:: python
 
@@ -173,30 +238,99 @@ You should also enable the edit option in your 'html_theme_options':
        "use_edit_page_button": True,
    }
 
-Optionally, if you have a self-hosted Github Enterprise instance, you can
-configure a custom url. This option defaults to 'https://github.com',
-and you do not need to specify it if you wish to use the default.
+A number of providers are available for building *Edit this Page* links, including
+GitHub, GitLab, and Bitbucket. For each, the default public instance URL can be
+replaced with a self-hosted instance.
+
+
+GitHub
+------
 
 .. code:: python
 
    html_context = {
-       "github_url": "<your-github-url>",
+       # "github_url": "https://github.com", # or your GitHub Enterprise interprise
+       "github_user": "<your-github-org>",
+       "github_repo": "<your-github-repo>",
+       "github_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
    }
+
+
+GitLab
+------
+
+.. code:: python
+
+   html_context = {
+       # "gitlab_url": "https://gitlab.com", # or your self-hosted GitLab
+       "gitlab_user": "<your-gitlab-org>",
+       "gitlab_repo": "<your-gitlab-repo>",
+       "gitlab_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }
+
+
+Bitbucket
+---------
+
+.. code:: python
+
+   html_context = {
+       # "bitbucket_url": "https://bitbucket.org", # or your self-hosted Bitbucket
+       "bitbucket_user": "<your-bitbucket-org>",
+       "bitbucket_repo": "<your-bitbucket-repo>",
+       "bitbucket_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }
+
+
+Custom Edit URL
+---------------
+
+For a fully-customized *Edit this Page* URL, provide ``edit_page_url_template``,
+a jinja2 template string which must contain ``{{ file_name }}``, and may reference
+any other context values.
+
+.. code:: python
+
+   html_context = {
+       "edit_page_url_template": "{{ my_vcs_site }}{{ file_name }}{{ some_other_arg }}",
+       "my_vcs_site": "https://example.com",
+       "some_other_arg": "?some-other-arg"
+   }
+
 
 Configure the search bar position
 =================================
 
-To modify the position of the search bar, change the following variable in
-your configuration file ``conf.py``. Possible options are 'navbar' and 'sidebar'.
+To modify the position of the search bar, add the ``search-field.html``
+template to your **sidebar**, or to one of the **navbar** positions, depending
+on where you want it to be placed.
 
-By default the search bar is positioned in the sidebar since this is more
-suitable for large navigation bars.
+For example, if you'd like the search field to be in your side-bar, add it to
+the sidebar templates like so:
 
 .. code:: python
 
-    html_theme_options = {
-        "search_bar_position": "navbar"
+    html_sidebars = {
+        "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
     }
+
+If instead you'd like to put the search bar in the top navbar, use the
+following configuration:
+
+.. code:: python
+
+   html_theme_options = {
+       "navbar_end": ["navbar-icon-links.html", "search-field.html"]
+   }
+
+
+.. note::
+
+   By default the search bar is positioned in the sidebar since this is more
+   suitable for large navigation bars.
 
 Configure the search bar text
 =============================
@@ -289,10 +423,10 @@ use this pattern:
 For information about configuring the sidebar's contents, see :ref:`configure-sidebar`.
 
 
-Configure navbar menu item alignment
-====================================
+Configure the navbar center alignment
+=====================================
 
-By default, the navigation bar menu items will align with the content on your
+By default, the navigation bar center area will align with the content on your
 page. This equals the following default configuration:
 
 .. code-block:: python
@@ -324,6 +458,25 @@ If you'd like these items to snap to the right of the page, use this configurati
       ...
    }
 
+Adding ethical advertisements to your sidebar in ReadTheDocs
+============================================================
+
+If you're hosting your documentation on ReadTheDocs, you should consider
+adding an explicit placement for their **ethical advertisements**. These are
+non-tracking advertisements from ethical companies, and they help ReadTheDocs
+sustain themselves and their free service.
+
+Ethical advertisements are added to your sidebar by default. To ensure they are
+there if you manually update your sidebar, ensure that the ``sidebar-ethical-ads.html``
+template is added to your list. For example:
+
+.. code:: python
+
+   html_sidebars = {
+       "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
+   }
+
+
 .. meta::
-    :description lang=en:
-        Configuration options for pydata-sphinx-theme
+   :description lang=en:
+       Configuration options for pydata-sphinx-theme
