@@ -130,6 +130,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Set up Node/yarn
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
     - name: Cache python wheels
       uses: actions/cache@v2
       with:
@@ -140,10 +145,18 @@ jobs:
           ${{ runner.os }}-pip-${{ matrix.python-version }}-
           ${{ runner.os }}-pip-
 
+    - name: Cache node_modules
+      uses: actions/cache@v2
+      with:
+        path: 'node_modules'
+        key: |
+          ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools
         python -m pip install -e .[coverage]
+        yarn --frozen-lockfile
 
     # Build the docs
     - name: Build docs to store
