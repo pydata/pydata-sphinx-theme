@@ -64,7 +64,7 @@ it's handy to generate a `sitemap.xml` locally or in CI with a tool like
 
         extensions += ["sphinx_sitemap"]
 
-        html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://127.0.0.1:8080/")
+        html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://127.0.0.1:8000/")
         sitemap_locales = [None]
         sitemap_url_scheme = "{link}"
 

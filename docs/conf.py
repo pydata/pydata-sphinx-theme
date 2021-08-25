@@ -49,7 +49,7 @@ if not os.environ.get("READTHEDOCS"):
     extensions += ["sphinx_sitemap"]
 
     # -- Sitemap -------------------------------------------------------------
-    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8080/")
+    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
     sitemap_locales = [None]
     sitemap_url_scheme = "{link}"
 

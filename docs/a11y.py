@@ -19,7 +19,7 @@ PA11Y_BUILD = BUILD / "pa11y"
 PA11Y_JSON = PA11Y_BUILD / "pa11y-ci-results.json"
 PA11Y_ROADMAP = HERE / "a11y-roadmap.txt"
 YARN = [shutil.which("yarn"), "--silent"]
-SITEMAP = "http://127.0.0.1:8080/sitemap.xml"
+SITEMAP = "http://127.0.0.1:8000/sitemap.xml"
 REPORT_INDEX_URL = (PA11Y_BUILD / "index.html").as_uri()
 
 
