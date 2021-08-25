@@ -31,7 +31,7 @@ Natural Language
 ----------------
 
 If not using a more robust `internationalization approach <https://www.sphinx-doc.org/en/master/usage/advanced/intl.html>`__ ,
-speciying at least the baseline natural language will help assistive technology
+specifying at least the baseline natural language will help assistive technology
 identify if the content is in a language the reader understands.
 
 .. Hint::
