@@ -66,7 +66,6 @@ def add_missing_aria_level(soup, fallback_level="2"):
 
     for heading in soup(role="heading"):
         heading["aria-level"] = heading.attrs.get("aria-level", fallback_level)
-        print(heading)
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
