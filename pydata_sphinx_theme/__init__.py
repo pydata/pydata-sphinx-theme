@@ -61,13 +61,6 @@ def update_templates(app, pagename, templatename, context, doctree):
                     context[section][ii] = template + ".html"
 
 
-def add_missing_aria_level(soup, fallback_level="2"):
-    """ensure _some_ heading level is explicitly provided"""
-
-    for heading in soup(role="heading"):
-        heading["aria-level"] = heading.attrs.get("aria-level", fallback_level)
-
-
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
@@ -105,8 +98,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
 
         soup = bs(toc_sphinx, "html.parser")
-
-        add_missing_aria_level(soup)
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
@@ -150,8 +141,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             return ""
 
         soup = bs(context["toc"], "html.parser")
-
-        add_missing_aria_level(soup)
 
         # Add toc-hN + visible classes
         def add_header_level_recursive(ul, level):
