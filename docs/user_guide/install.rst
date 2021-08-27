@@ -33,3 +33,7 @@ or in a conda environment yml file, you can add:
 
     - pip:
       - git+https://github.com/pydata/pydata-sphinx-theme.git@master
+
+.. meta::
+    :description lang=en:
+        Detailed instructions for installing pydata-sphinx-theme.

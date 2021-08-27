@@ -1,0 +1,9 @@
+# These are the pa11y error codes we'd like to fix. PRs welcome!
+
+WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable
+WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63
+WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired
+WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail
+WCAG2AA.Principle3.Guideline3_2.3_2_2.H32.2
+WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId
+WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.NoContent

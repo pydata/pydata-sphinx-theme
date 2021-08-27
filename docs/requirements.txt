@@ -5,6 +5,7 @@ pandas
 pytest
 pytest-regressions
 beautifulsoup4
+sphinx-sitemap
 # For demo examples
 jupyter_sphinx
 plotly

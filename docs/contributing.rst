@@ -164,7 +164,7 @@ To preview the frontend assets, from the root of this repo, run:
 
     yarn build:dev
 
-This launches a development server at http://localhost:1919. When working
+This launches a development server at http://127.0.0.1:1919. When working
 on the theme, saving changes to any of:
 
 - ``src/js/index.js``
@@ -331,8 +331,66 @@ Note that if needed, you can skip these checks with:
     git commit --no-verify
 
 
+Finding accessibility problems
+==============================
+
+The accessibility checking tools can find a number of common HTML patterns which
+assistive technology can't help users understand.
+
+In addition to `Lighthouse <https://developers.google.com/web/tools/lighthouse>`__
+in CI, the ``pa11y`` stack is installed as part of the development environment.
+
+The key components are:
+
+- `pa11y <https://github.com/pa11y/pa11y>`__ which uses a headless browser to analyze
+  an HTML page with a configurable set of rules based on publish standards
+- `Pa11y-CI <https://github.com/pa11y/pa11y-ci>`__ runs ``pa11y`` on multiple pages
+- `pa11y-reporter-html <https://github.com/pa11y/pa11y-reporter-html>`__ generates
+  some nice HTML reports, suitable for review
+
+.. Note::
+
+    Presently, the *default* ``pa11y`` ruleset, ``WCAG2AA`` is used, a subset of
+    the `Web Content Accessibility Guidelines <https://www.w3.org/TR/WCAG21>`__.
+    The `Quick Reference <https://www.w3.org/WAI/WCAG21/quickref>`__ may provide
+    lighter reading.
+
+To run the accessibility problem finder locally:
+
+.. code-block:: bash
+
+    yarn build:production
+    cd docs
+    make html
+    python a11y.py
+
+The output of the last command includes:
+
+- a short summary of the current state of the accessibility rules we are trying to maintain
+- local paths to JSON and HTML reports which contain all of the issues found
+
+
+Fixing accessibility errors
+---------------------------
+
+Start by checking for issues on the
+`accessibility roadmap <https://github.com/pandas-dev/pydata-sphinx-theme/blob/master/docs/a11y-roadmap.txt>`__.
+These are issues which are currently flagged by the toolset, but that have not yet
+been fixed. If that file is empty (or just comments), hooray!
+
+To start working on one of the accessibility roadmap items, comment out one of the
+lines in `docs/a11y-roadmap.txt`, and re-run the audit to establish a baseline.
+
+Then, fix the issue in either the HTML templates, CSS, or python code, and re-run
+the audit until it is fixed.
+
+
 Make a release
 ==============
 
 This theme uses GitHub tags and releases to automatically push new releases to
 PyPI. For information on this process, see `the release checklist <https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist#release-instructions>`_.
+
+.. meta::
+    :description lang=en:
+        How to become a contributor to the pydata-sphinx-theme.

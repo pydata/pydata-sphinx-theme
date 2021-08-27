@@ -212,3 +212,8 @@ Submenu 5
 ---------
 
 Just a place holder...
+
+
+.. meta::
+    :description lang=en:
+        Examples of long submenus in pydata-sphinx-theme.

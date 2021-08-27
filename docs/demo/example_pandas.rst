@@ -1185,3 +1185,8 @@ This will **not** work at all, and so should be avoided:
    The chained assignment warnings / exceptions are aiming to inform the user of a possibly invalid
    assignment. There may be false positives; situations where a chained assignment is inadvertently
    reported.
+
+.. meta::
+    :description lang=en:
+        An example of a long HTML page, as is comming in the pandas documentation
+        in pydata-sphinx-theme.
