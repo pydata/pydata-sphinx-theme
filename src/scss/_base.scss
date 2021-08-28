@@ -120,3 +120,10 @@ pre {
   border: 1px solid rgb(201, 201, 201);
   box-shadow: 1px 1px 1px #d8d8d8;
 }
+
+// Override bootstrap by restoring the basic theme default.
+dd {
+    margin-top: 3px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+}
