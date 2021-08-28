@@ -4,6 +4,8 @@ include README.md
 include setup.py
 include docs/requirements.txt
 
+recursive-include tests *
+
 graft pydata_sphinx_theme
 
 # Patterns to exclude from any directory
