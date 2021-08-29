@@ -15,12 +15,18 @@ class BootstrapHTML5Translator(HTML5Translator):
     """Custom HTML Translator for a Bootstrap-ified Sphinx layout
     This is a specialization of the HTML5 Translator of sphinx.
     Only a couple of functions have been overridden to produce valid HTML to be
-    directly styled with Bootstrap.
+    directly styled with Bootstrap, and fulfill acessibility best practices.
     """
 
     def __init__(self, *args, **kwds):
         super().__init__(*args, **kwds)
         self.settings.table_style = "table"
+
+    def starttag(self, *args, **kwargs):
+        """ensure an aria-level is set for any heading role"""
+        if kwargs.get("ROLE") == "heading" and "ARIA-LEVEL" not in kwargs:
+            kwargs["ARIA-LEVEL"] = "2"
+        return super().starttag(*args, **kwargs)
 
     def visit_table(self, node):
         # type: (nodes.Element) -> None
