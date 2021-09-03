@@ -2,58 +2,87 @@
     {
         "name": "v0.6.3 (latest)",
         "version": "v0.6.3",
-        "language": "en"
+        "languages": {
+            "en": "English",
+            "zh": "中文"
+        }
     },
     {
         "version": "v0.6.2",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.6.1",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.6.0",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.5.2",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.5.1",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.5.0",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.4.3",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.4.2",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.4.1",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.4.0",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.3.2",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.3.1",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     },
     {
         "version": "v0.3.0",
-        "language": "en"
+        "languages": {
+            "en": "English"
+        }
     }
 ]
