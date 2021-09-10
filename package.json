@@ -18,7 +18,7 @@
     "html-webpack-plugin": "^4.3.0",
     "imports-loader": "^0.8.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^6.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "pa11y-ci-reporter-html": "^2.1.2",
     "pa11y-ci": "^2.4.0",
