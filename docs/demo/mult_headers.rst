@@ -55,3 +55,8 @@ example, they have a page structure like:
 
    My second header
    ----------------
+
+
+.. meta::
+    :description lang=en:
+        Examples of multiple headers in pydata-sphinx-theme.

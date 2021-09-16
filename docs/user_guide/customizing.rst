@@ -47,7 +47,7 @@ In order to change a variable, follow these steps:
 1. :ref:`Add a custom CSS stylesheet <custom-css>`. This is where we'll configure the variables.
 2. Underneath a ``:root`` section, add the variables you wish to update. For example, to update
    the base font size, you might add this to ``custom.css``:
-  
+
    .. code-block:: none
 
        :root {
@@ -72,7 +72,7 @@ Replacing/Removing Fonts
 
 The theme includes the `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__
 icon font (the ``.fa, .far, .fas`` styles, which are used for
-:ref:`icon links <icon-links>` and admonitions). 
+:ref:`icon links <icon-links>` and admonitions).
 This is the only `vendored` font, and otherwise the theme by default relies on
 available system fonts for normal body text and headers.
 
@@ -126,4 +126,8 @@ The default body and header fonts can be changed as follows:
     before waiting for the CSS to be parsed, but should be used with care.
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/pydata_sphinx_theme/static/css/theme.css
-.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties 
+.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+
+.. meta::
+    :description lang=en:
+        Advanced customization of pydata-sphinx-theme's HTML and CSS.

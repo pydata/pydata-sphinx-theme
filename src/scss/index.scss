@@ -229,7 +229,7 @@ footer {
   margin-left: -15px;
 
   @include media-breakpoint-up(md) {
-    display: block !important;
+    display: block;
 
     @supports (position: -webkit-sticky) or (position: sticky) {
       max-height: calc(100vh - 11rem);
@@ -492,7 +492,7 @@ nav.bd-links {
   padding-top: 2rem;
 
   a {
-    color: #130754;
+    color: var(--pst-color-sidebar-link-active);
   }
 }
 
@@ -500,7 +500,7 @@ nav.bd-links {
 
 // xarray output display in bootstrap
 .xr-wrap[hidden] {
-  display: block !important;
+  display: block!important;
 }
 
 
@@ -579,9 +579,9 @@ nav.bd-links {
 table.highlighttable td.linenos,
 span.linenos,
 div.doctest > div.highlight span.gp {  /* gp: Generic.Prompt */
-  user-select: none !important;
-  -webkit-user-select: text !important; /* Safari fallback only */
-  -webkit-user-select: none !important; /* Chrome/Safari */
-  -moz-user-select: none !important; /* Firefox */
-  -ms-user-select: none !important; /* IE10+ */
+  user-select: none;
+  -webkit-user-select: text; /* Safari fallback only */
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }

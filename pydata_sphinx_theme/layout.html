@@ -22,8 +22,8 @@
 {%- endblock %}
 
 {%- block extrahead %}
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="{{ language }}">
     {% for favicon in theme_favicons %}
       {% if favicon.href[:4] == 'http'%}
       <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}">

@@ -6,9 +6,9 @@
 from pathlib import Path
 from tornado import ioloop, web, options
 
-options.define("port", default=8080, help="port to listen on")
+options.define("port", default=8000, help="port to listen on")
 options.define(
-    "host", default="localhost", help="host interface to connect on (0.0.0.0 is all)"
+    "host", default="127.0.0.1", help="host interface to connect on (0.0.0.0 is all)"
 )
 
 SETTINGS = dict(

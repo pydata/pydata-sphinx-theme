@@ -69,6 +69,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -120,13 +121,20 @@ jobs:
       HOST: 127.0.0.1
       # the base url
       URL: http://127.0.0.1:8000
+      PA11Y_BUILD: /tmp/pa11y/pa11y-${{ github.run_number }}
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Set up Node/yarn
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
 
     - name: Cache python wheels
       uses: actions/cache@v2
@@ -138,10 +146,18 @@ jobs:
           ${{ runner.os }}-pip-${{ matrix.python-version }}-
           ${{ runner.os }}-pip-
 
+    - name: Cache node_modules
+      uses: actions/cache@v2
+      with:
+        path: 'node_modules'
+        key: |
+          ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip wheel setuptools
         python -m pip install -e .[coverage]
+        yarn --frozen-lockfile
 
     # Build the docs
     - name: Build docs to store
@@ -159,6 +175,7 @@ jobs:
     # TODO: use the hosted API with a secret? would allow for comparison over time...
     - name: Make folder for Lighthouse reports
       run: mkdir -p /tmp/lighthouse/lighthouse-${{ github.run_number }}
+
     - name: Run Lighthouse on Site
       id: lighthouse
       uses: foo-software/lighthouse-check-action@v2.0.0
@@ -168,16 +185,13 @@ jobs:
           ${{ env.URL }}/index.html,
           ${{ env.URL }}/demo/api.html,
           ${{ env.URL }}/demo/demo.html,
-          ${{ env.URL }}/demo/example_pandas.html
+          ${{ env.URL }}/demo/example_pandas.html,
+          ${{ env.URL }}/user_guide/accessibility.html
         outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
         verbose: true
 
-    # Store the audit
-    - name: Upload Lighthouse Reports
-      uses: actions/upload-artifact@v2
-      with:
-        name: Lighthouse Report ${{ github.run_number }}
-        path: /tmp/lighthouse
+    - name: Run the accessibility audit
+      run: python docs/a11y.py --no-serve
 
     # Check the audit for threshold values
     # TODO: write this someplace after a PR is merged, and load?
@@ -189,6 +203,16 @@ jobs:
         minBestPracticesScore: "85"
         minPerformanceScore: "10"
         minSeoScore: "80"
+      if: always()
+
+    - name: Publish Audit reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: Pa11y and Lighthouse ${{ github.run_number }}
+        path: |
+          /tmp/pa11y
+          /tmp/lighthouse
+      if: always()
 
   publish:
 

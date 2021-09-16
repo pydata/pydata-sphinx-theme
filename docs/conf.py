@@ -10,7 +10,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
+import os
+
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -38,6 +39,19 @@ extensions = [
     "recommonmark",
     "jupyter_sphinx",
 ]
+
+# -- Internationalization ------------------------------------------------
+# specifying the natural language populates some key tags
+language = "en"
+
+# ReadTheDocs has its own way of generating sitemaps, etc.
+if not os.environ.get("READTHEDOCS"):
+    extensions += ["sphinx_sitemap"]
+
+    # -- Sitemap -------------------------------------------------------------
+    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
+    sitemap_locales = [None]
+    sitemap_url_scheme = "{link}"
 
 autosummary_generate = True
 
@@ -99,7 +113,7 @@ html_context = {
 html_static_path = ["_static"]
 
 
-# -- Auto-convert markdown pages to demo --------------------------------------
+# -- Auto-convert markdown pages to demo -------------------------------------
 import recommonmark
 from recommonmark.transform import AutoStructify
 

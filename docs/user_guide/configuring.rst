@@ -328,7 +328,7 @@ following configuration:
 
 
 .. note::
-   
+
    By default the search bar is positioned in the sidebar since this is more
    suitable for large navigation bars.
 
@@ -458,7 +458,6 @@ If you'd like these items to snap to the right of the page, use this configurati
       ...
    }
 
-
 Adding ethical advertisements to your sidebar in ReadTheDocs
 ============================================================
 
@@ -476,3 +475,8 @@ template is added to your list. For example:
    html_sidebars = {
        "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
    }
+
+
+.. meta::
+   :description lang=en:
+       Configuration options for pydata-sphinx-theme
