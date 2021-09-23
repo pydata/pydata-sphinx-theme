@@ -399,7 +399,7 @@ nav.bd-links {
 
 /* Previous / Next buttons */
 
-.prev-next-bottom {
+.prev-next-area {
   margin: 20px 0px;
 
   p {
@@ -407,7 +407,7 @@ nav.bd-links {
   }
 
   i {
-    font-size: 1.3em;
+    font-size: 1.5em;
   }
 
   a {
@@ -420,13 +420,28 @@ nav.bd-links {
     overflow-x: hidden;
     color: rgba(0, 0, 0, 0.65);
 
+    p.prev-next-title {
+      color: rgba(var(--pst-color-link), 1);
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    .prev-next-info {
+      flex-direction: column;
+      margin: 0 .5em;
+    }
+
     &.left-prev {
       float: left;
     }
 
     &.right-next {
       float: right;
-    }
+      
+      div.prev-next-info {
+        text-align: right;
+      }
+    }    
   }
 }
 
