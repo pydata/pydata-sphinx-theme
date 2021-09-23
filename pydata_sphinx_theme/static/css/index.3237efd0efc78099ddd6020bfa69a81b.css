@@ -7399,6 +7399,10 @@ blockquote {
 dt.label > span.brackets:not(:only-child):before {
   content: "["; }
 
+a.footnote-reference {
+  vertical-align: super;
+  font-size: small; }
+
 dt.label > span.brackets:not(:only-child):after {
   content: "]"; }
 
