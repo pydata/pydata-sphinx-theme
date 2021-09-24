@@ -407,7 +407,7 @@ nav.bd-links {
   }
 
   i {
-    font-size: 1.5em;
+    font-size: 1.2em;
   }
 
   a {
@@ -425,6 +425,7 @@ nav.bd-links {
       color: rgba(var(--pst-color-link), 1);
       font-weight: 600;
       font-size: 1.1em;
+      line-height: 1.3em;
     }
 
     &:hover p.prev-next-title {
