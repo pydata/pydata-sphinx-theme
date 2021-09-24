@@ -422,34 +422,55 @@ nav.bd-links {
 
 /* Previous / Next buttons */
 
-.prev-next-bottom {
+.prev-next-area {
   margin: 20px 0px;
 
+  p {
+    margin: 0 0.3em;
+    line-height: 1.3em;
+  }
+
+  i {
+    font-size: 1.2em;
+  }
+
   a {
-    &.left-prev,
-    &.right-next {
-      padding: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      max-width: 45%;
-      overflow-x: hidden;
-      color: rgba(0, 0, 0, 0.65);
+    // So that buttons align with icons
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 10px;
+    max-width: 45%;
+    overflow-x: hidden;
+    color: rgba(0, 0, 0, 0.65);
+    text-decoration: none;
+
+    p.prev-next-title {
+      color: rgba(var(--pst-color-link), 1);
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    &:hover p.prev-next-title {
+      text-decoration: underline;
+    }
+
+    .prev-next-info {
+      flex-direction: column;
+      margin: 0 .5em;
     }
 
     &.left-prev {
       float: left;
-
-      &:before {
-        content: '<< ';
-      }
     }
 
     &.right-next {
       float: right;
-
-      &:after {
-        content: ' >>';
+      
+      div.prev-next-info {
+        text-align: right;
       }
-    }
+    }    
   }
 }
 
