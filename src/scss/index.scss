@@ -404,6 +404,7 @@ nav.bd-links {
 
   p {
     margin: 0 0.3em;
+    line-height: 1.3em;
   }
 
   i {
@@ -425,7 +426,6 @@ nav.bd-links {
       color: rgba(var(--pst-color-link), 1);
       font-weight: 600;
       font-size: 1.1em;
-      line-height: 1.3em;
     }
 
     &:hover p.prev-next-title {
