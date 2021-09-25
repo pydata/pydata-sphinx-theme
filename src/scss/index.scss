@@ -25,6 +25,29 @@ $grid-breakpoints: (
 @import './api';
 
 // Custom css, TODO: to be refactored in different partials
+// GitHub blockquote style
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+// For consistency, add bracket around footnotes/citations which are
+// cited more than once. E.g. [Newton](1,2) instead of Newton(1,2)
+dt.label > span.brackets:not(:only-child):before {
+  content: "[";
+}
+
+dt.label > span.brackets:not(:only-child):after {
+  content: "]";
+}
+
+// Make footnote as a supercript
+a.footnote-reference {
+  vertical-align: super;
+  font-size: small;
+}
+
 div.deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
