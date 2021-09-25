@@ -41,6 +41,12 @@ dt.label > span.brackets:not(:only-child):after {
   content: "]";
 }
 
+// Make footnote as a supercript
+a.footnote-reference {
+  vertical-align: super;
+  font-size: small;
+}
+
 div.deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
