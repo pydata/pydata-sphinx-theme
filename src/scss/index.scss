@@ -22,6 +22,7 @@ $grid-breakpoints: (
 @import './base';
 @import './navbar';
 @import './admonitions';
+@import './api';
 
 // Custom css, TODO: to be refactored in different partials
 // GitHub blockquote style
@@ -88,52 +89,6 @@ span.guilabel {
   border-radius: 4px;
   padding: 2.4px 6px;
   margin: auto 2px;
-}
-
-/**
- * Styling for field lists
- */
-
-/* grey highlighting of 'parameter' and 'returns' field */
-table.field-list {
-  border-collapse: separate;
-  border-spacing: 10px;
-  margin-left: 1px;
-
-  th.field-name {
-    padding: 1px 8px 1px 5px;
-    white-space: nowrap;
-    background-color: rgb(238, 238, 238);
-  }
-
-  /* italic font for parameter types */
-  td.field-body {
-    p {
-      font-style: italic;
-
-      > strong {
-        font-style: normal;
-      }
-    }
-
-    /* reduced space around parameter description */
-    blockquote {
-      border-left: none;
-      margin: 0em 0em 0.3em;
-      padding-left: 30px;
-    }
-  }
-}
-
-/**
- * Styling for autosummary tables
- */
-
-.table.autosummary {
-  // The first column (with the signature) should not wrap
-  td:first-child {
-    white-space: nowrap;
-  }
 }
 
 /**
