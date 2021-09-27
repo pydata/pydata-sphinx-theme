@@ -1,5 +1,5 @@
-Top-level headers and the TOC
-=============================
+Multiple top-level headers
+==========================
 
 Your right table of contents will behave slightly differently depending on
 whether your page has one top-level header, or multiple top-level headers. See

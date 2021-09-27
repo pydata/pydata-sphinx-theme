@@ -10,15 +10,10 @@ the left sidebar to see how various elements look on this theme.
     :maxdepth: 2
     :caption: Demo Documentation
 
-    structure
-    demo
+    kitchen-sink/index
     api
-    lists_tables
-    markdown
     example_pandas
     mult_headers
-    subpages/index
-    subpages2/index
     Link to an external site <https://jupyterbook.org/>
 
 .. toctree::
