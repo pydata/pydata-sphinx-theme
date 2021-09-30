@@ -584,3 +584,11 @@ div.doctest > div.highlight span.gp {  /* gp: Generic.Prompt */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
 }
+
+// Bootstrap adds margin to their general container class. However, sphinx/docutils
+// can also generate output with the container class, but in those cases we should
+// not add the margin from bootstrap.
+.docutils.container {
+  padding-left: unset;
+  padding-right: unset;
+}
