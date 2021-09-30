@@ -22,8 +22,32 @@ $grid-breakpoints: (
 @import './base';
 @import './navbar';
 @import './admonitions';
+@import './api';
 
 // Custom css, TODO: to be refactored in different partials
+// GitHub blockquote style
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+// For consistency, add bracket around footnotes/citations which are
+// cited more than once. E.g. [Newton](1,2) instead of Newton(1,2)
+dt.label > span.brackets:not(:only-child):before {
+  content: "[";
+}
+
+dt.label > span.brackets:not(:only-child):after {
+  content: "]";
+}
+
+// Make footnote as a supercript
+a.footnote-reference {
+  vertical-align: super;
+  font-size: small;
+}
+
 div.deprecated {
   margin-bottom: 10px;
   margin-top: 10px;
@@ -65,52 +89,6 @@ span.guilabel {
   border-radius: 4px;
   padding: 2.4px 6px;
   margin: auto 2px;
-}
-
-/**
- * Styling for field lists
- */
-
-/* grey highlighting of 'parameter' and 'returns' field */
-table.field-list {
-  border-collapse: separate;
-  border-spacing: 10px;
-  margin-left: 1px;
-
-  th.field-name {
-    padding: 1px 8px 1px 5px;
-    white-space: nowrap;
-    background-color: rgb(238, 238, 238);
-  }
-
-  /* italic font for parameter types */
-  td.field-body {
-    p {
-      font-style: italic;
-
-      > strong {
-        font-style: normal;
-      }
-    }
-
-    /* reduced space around parameter description */
-    blockquote {
-      border-left: none;
-      margin: 0em 0em 0.3em;
-      padding-left: 30px;
-    }
-  }
-}
-
-/**
- * Styling for autosummary tables
- */
-
-.table.autosummary {
-  // The first column (with the signature) should not wrap
-  td:first-child {
-    white-space: nowrap;
-  }
 }
 
 /**
@@ -399,34 +377,55 @@ nav.bd-links {
 
 /* Previous / Next buttons */
 
-.prev-next-bottom {
+.prev-next-area {
   margin: 20px 0px;
 
+  p {
+    margin: 0 0.3em;
+    line-height: 1.3em;
+  }
+
+  i {
+    font-size: 1.2em;
+  }
+
   a {
-    &.left-prev,
-    &.right-next {
-      padding: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      max-width: 45%;
-      overflow-x: hidden;
-      color: rgba(0, 0, 0, 0.65);
+    // So that buttons align with icons
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 10px;
+    max-width: 45%;
+    overflow-x: hidden;
+    color: rgba(0, 0, 0, 0.65);
+    text-decoration: none;
+
+    p.prev-next-title {
+      color: rgba(var(--pst-color-link), 1);
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    &:hover p.prev-next-title {
+      text-decoration: underline;
+    }
+
+    .prev-next-info {
+      flex-direction: column;
+      margin: 0 .5em;
     }
 
     &.left-prev {
       float: left;
-
-      &:before {
-        content: '<< ';
-      }
     }
 
     &.right-next {
       float: right;
-
-      &:after {
-        content: ' >>';
+      
+      div.prev-next-info {
+        text-align: right;
       }
-    }
+    }    
   }
 }
 
