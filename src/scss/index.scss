@@ -413,6 +413,10 @@ nav.bd-links {
     .prev-next-info {
       flex-direction: column;
       margin: 0 .5em;
+
+      .prev-next-subtitle {
+        text-transform: capitalize;
+      }
     }
 
     &.left-prev {
