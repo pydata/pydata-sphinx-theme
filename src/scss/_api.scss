@@ -46,3 +46,43 @@ table.field-list {
       white-space: nowrap;
   }
 }
+
+
+/* overriding basic.css to use our own monospace font */
+.sig {
+	font-family: var(--pst-font-family-monospace);
+}
+
+
+/* C++ specific styling - overriding the basic.css to avoid custom colors*/
+
+.sig-inline.c-texpr,
+.sig-inline.cpp-texpr {
+	font-family: unset;
+}
+
+.sig.c   .k, .sig.c   .kt,
+.sig.cpp .k, .sig.cpp .kt {
+	color: rgba(var(--pst-color-text-base), 1);
+}
+
+.sig.c   .m,
+.sig.cpp .m {
+	color: rgba(var(--pst-color-text-base), 1);
+}
+
+.sig.c   .s, .sig.c   .sc,
+.sig.cpp .s, .sig.cpp .sc {
+	color: rgba(var(--pst-color-text-base), 1);
+}
+
+// addition
+
+// .sig.c .sig-name .n,
+// .sig.cpp .sig-name .n {
+//   color: rgba(var(--pst-color-inline-code), 1);
+// }
+
+.sig-name {
+  color: rgba(var(--pst-color-inline-code), 1);
+}
