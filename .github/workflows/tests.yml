@@ -25,7 +25,7 @@ jobs:
     - name: Set up Node/yarn
       uses: actions/setup-node@v1
       with:
-        node-version: '10.x'
+        node-version: '16.x'
 
     - name: Cache python wheels
       uses: actions/cache@v2
@@ -134,7 +134,7 @@ jobs:
     - name: Set up Node/yarn
       uses: actions/setup-node@v1
       with:
-        node-version: '10.x'
+        node-version: '16.x'
 
     - name: Cache python wheels
       uses: actions/cache@v2
