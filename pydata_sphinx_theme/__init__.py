@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup as bs
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.6.3"
+__version__ = "0.7.1"
 
 logger = logging.getLogger(__name__)
 
@@ -268,6 +268,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 <script>
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){{ dataLayer.push(arguments); }}
+                    gtag('js', new Date());
                     gtag('config', '{id}');
                 </script>
                 """

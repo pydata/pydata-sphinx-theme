@@ -390,8 +390,8 @@ def test_new_google_analytics_id(sphinx_build_factory):
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
     # This text makes the assumption that the google analytics will always be
-    # the last script tag found in the document.
-    script_tag = index_html.select("script")[-1]
+    # the second last script tag found in the document (last is the theme js).
+    script_tag = index_html.select("script")[-2]
 
     assert "gtag" in script_tag.string
     assert "G-XXXXX" in script_tag.string
@@ -403,8 +403,8 @@ def test_old_google_analytics_id(sphinx_build_factory):
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
     # This text makes the assumption that the google analytics will always be
-    # the one before last script tag found in the document.
-    script_tag = index_html.select("script")[-1]
+    # the second last script tag found in the document (last is the theme js).
+    script_tag = index_html.select("script")[-2]
 
     assert "ga" in script_tag.string
     assert "UA-XXXXX" in script_tag.string

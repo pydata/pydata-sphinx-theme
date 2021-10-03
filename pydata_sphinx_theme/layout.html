@@ -1,16 +1,6 @@
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}
 
-{# prev/next buttons #}
-{% macro prev_next(prev, next, prev_title='', next_title='') %}
- {%- if prev %}
-    <a class='left-prev' id="prev-link" href="{{ prev.link|e }}" title="{{ _('previous page')}}">{{ prev_title or prev.title }}</a>
- {%- endif %}
- {%- if next %}
-    <a class='right-next' id="next-link" href="{{ next.link|e }}" title="{{ _('next page')}}">{{ next_title or next.title }}</a>
- {%- endif %}
-{% endmacro %}
-
 {%- block css %}
     {{ _webpack.head_pre_bootstrap() }}
     {{ _webpack.head_pre_icons() }}
@@ -31,6 +21,9 @@
       <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ pathto('_static/' + favicon.href, 1) }}">
       {% endif %}
     {% endfor %}
+
+    <!-- Google Analytics -->
+    {{ generate_google_analytics_script(id=theme_google_analytics_id) }}
 {%- endblock %}
 
 {# Silence the sidebar's, relbar's #}
@@ -92,9 +85,7 @@
               </div>
               {% endblock %}
               {% if theme_show_prev_next %}
-              <div class='prev-next-bottom'>
-                {{ prev_next(prev, next) }}
-              </div>
+              {% include "prev-next.html" %}
               {% endif %}
           </main>
           {% endblock %}
@@ -105,7 +96,6 @@
 
   {%- block scripts_end %}
   {{ _webpack.body_post() }}
-  {{ generate_google_analytics_script(id=theme_google_analytics_id) }}
   {%- endblock %}
 
 {%- endblock %}
