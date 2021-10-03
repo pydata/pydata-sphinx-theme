@@ -22,7 +22,8 @@ def build(session):
 def docs(session):
     _install_environment(session)
     session.run("yarn", "--frozen-lockfile")
-    session.run("make", "html", cwd="docs")
+    session.cd("docs")
+    session.run("make", "html")
 
 
 @nox.session(name="docs-live", venv_backend="conda")
@@ -39,8 +40,8 @@ def tests(session):
 
 
 def _install_environment(session):
-    for conda_pkg in conda:
-        session.conda_install(conda_pkg)
+    """Install the JS and Python environment needed to develop the theme."""
+    session.conda_install("--channel", "conda-forge", *conda)
     for pkg in requirements:
         # We split each line in case there's a space for `-r`
         session.install(*pkg.split())
