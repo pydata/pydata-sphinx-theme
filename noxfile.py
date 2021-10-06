@@ -33,7 +33,7 @@ def docs_live(session):
     session.run("yarn", "build:dev")
 
 
-@nox.session(name="docs-live", venv_backend="conda")
+@nox.session(name="test", venv_backend="conda")
 def tests(session):
     _install_environment(session)
     session.run("pytest")
