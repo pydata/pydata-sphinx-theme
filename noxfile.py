@@ -14,14 +14,12 @@ build_command = ["-b", "html", "docs", "docs/_build/html"]
 @nox.session(venv_backend="conda")
 def build(session):
     _install_environment(session)
-    session.run("yarn", "--frozen-lockfile")
     session.run("yarn", "build")
 
 
 @nox.session(venv_backend="conda")
 def docs(session):
     _install_environment(session)
-    session.run("yarn", "--frozen-lockfile")
     session.cd("docs")
     session.run("make", "html")
 
@@ -29,20 +27,29 @@ def docs(session):
 @nox.session(name="docs-live", venv_backend="conda")
 def docs_live(session):
     _install_environment(session)
-    session.run("yarn", "--frozen-lockfile")
     session.run("yarn", "build:dev")
 
 
 @nox.session(name="test", venv_backend="conda")
 def tests(session):
-    _install_environment(session)
+    _install_environment(session, yarn=False)
     session.run("pytest")
 
 
-def _install_environment(session):
+def _install_environment(session, yarn=True):
     """Install the JS and Python environment needed to develop the theme."""
+    # Assume that if sphinx is already installed, we don't need to re-install
+    bin = Path(session.bin)
+    if bin.rglob("sphinx-build") and "reinstall" not in session.posargs:
+        return
+
+    # Install JS and Python dependencies
     session.conda_install("--channel", "conda-forge", *conda)
     for pkg in requirements:
         # We split each line in case there's a space for `-r`
         session.install(*pkg.split())
     session.install("-e", ".")
+
+    # Build JS packages
+    if yarn:
+        session.run("yarn", "--frozen-lockfile")
