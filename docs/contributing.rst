@@ -4,52 +4,54 @@ Contributing
 
 The documentation for this theme (what you are looking at now) also serves
 as a demo site for the theme.
+These sections describe how to get set up with a development environment, and begin contributing.
 
-.. Hint::
+.. _basic-environment:
 
-    The top-level `Demo site` section includes
-    more pages with typical Sphinx content and structural elements.
+Set up a basic development environment
+======================================
 
+We automate many development tasks with these two tools:
 
-Installing Python dependencies
-==============================
+- `nox <https://nox.thea.codes/>`_, for automating common development tasks
+- `pre-commit <https://pre-commit.com/>`_ for automatically enforcing code standards
 
-To run the demo site, first install the Python dependencies, for example with ``pip``
-or ``conda``:
+At a minimum, set up your local environment with these two tools by running the following command:
 
-.. code-block:: bash
+.. code-block:: console
 
-    # with pip
-    python -m pip install -r docs/requirements.txt
-    # or with conda
-    conda install -c conda-forge --file docs/requirements.txt
+    $ pip install .[dev]
 
+Then, activate ``pre-commit`` locally with the following command:
 
-Installing this theme
-=====================
+.. code-block:: console
 
-Next, install this theme itself, a python package.
-When developing, it is recommended to install in "development" or "editable" mode,
-allowing changes in the repo to be directly tested with this documentation suite.
+    $ pre-commit install
 
-To install the package, from the root of this repo, run:
-
-.. code-block:: bash
-
-    python -m pip install --editable .
+Most sections below use ``nox`` to automate tasks and environments.
+This allows you to run jobs in a contained environment so that you know what tools are installed.
+There's also a section below that describes how to manually set up your environment.
 
 
-Building the demo site
-======================
+Build the documentation
+=======================
 
-For a traditional Sphinx build of the demo site, navigate to the ``docs/`` directory,
-and run:
+Building the documentation will use ``sphinx`` to generate the latest documentation in ``docs/`` and place them in a ``docs/_build/html`` folder.
+If the docs have already been built, it will only build new pages that have been updated.
 
-.. code-block:: bash
+To build the documentation with ``nox``, first follow :ref:`basic-environment`,
+then run the following command:
 
-    make html
+.. code-block:: console
 
-Sphinx will build the HTML version of the site in the ``docs/_build/html`` directory.
+    $ nox -s docs
+
+If you've :ref:`manually set up your environment <manual-environment>`, you can build them with:
+
+.. code-block:: console
+
+    $ cd docs
+    $ make html
 
 .. Note::
 
@@ -58,9 +60,161 @@ Sphinx will build the HTML version of the site in the ``docs/_build/html`` direc
     extra steps are required. The next section covers the full workflow, from
     changing the source files, to seeing the updated site.
 
+Build the CSS/JS assets
+=======================
 
-Developing the theme CSS and JS
-===============================
+The source files for CSS and JS assets are in ``src/``.
+These are then built and bundled with the theme (e.g., ``scss`` is turned into ``css``).
+Building the CSS/JS assets requires a javascript development stack (``yarn``, ``webpack``, and anything in ``yarn.lock``).
+
+To build the CSS/JS assets with ``nox``, first follow :ref:`basic-environment`,
+then run the following command:
+
+.. code-block:: console
+
+    $ nox -s build
+
+If you've :ref:`manually set up your environment <manual-environment>`, you can build them with:
+
+.. code-block:: console
+
+    $ yarn build:production
+
+
+Run a development server
+========================
+
+You can run a development server so that changes to make to ``src/`` are automatically bundled with the package, and the documentation is immediately reloaded in a live preview window.
+
+When working on the theme, saving changes to any of these directories:
+
+- ``src/js/index.js``
+- ``src/scss/index.scss``
+- ``docs/**/*.rst``
+- ``docs/**/*.py``
+
+will cause the development server to do the followin:
+
+- bundle/copy the CSS, JS, and vendored fonts
+- regenerate the Jinja2 macros
+- re-run Sphinx
+
+To run the development server with ``nox``, first follow :ref:`basic-environment`,
+then run the following command:
+
+.. code-block:: console
+
+    $ nox -s docs-live
+
+If you've :ref:`manually set up your environment <manual-environment>`, you can build them with:
+
+.. code-block:: console
+
+    $ yarn build:dev
+
+Run the tests
+=============
+
+This theme uses ``pytest`` for its testing, with a lightweight fixture defined
+in the ``test_build.py`` script that makes it easy to run a Sphinx build using
+this theme and inspect the results.
+
+In addition, we use `pytest-regressions <https://pytest-regressions.readthedocs.io/en/latest/>`_
+to ensure that the HTML generated by the theme is what we'd expect. This module
+provides a ``file_regression`` fixture that will check the contents of an object
+against a reference file on disk. If the structure of the two differs, then the
+test will fail. If we *expect* the structure to differ, then delete the file on
+disk and run the test. A new file will be created, and subsequent tests will pass.
+
+To run the tests with ``nox``, first follow :ref:`basic-environment`,
+then run the following command:
+
+.. code-block:: console
+
+    $ nox -s test
+
+If you've :ref:`manually set up your environment <manual-environment>`, you can build them with:
+
+.. code-block:: console
+
+    $ pytest
+
+.. _manual-environment:
+
+Manually set up a development environment
+=========================================
+
+To set up your development environment, you'll need to set up both a Python and a Javascript environment.
+As a convenience, this environment is described in the file at ``environment.yml``.
+However, the sections below cover how to install it manually.
+
+Install python development dependencies
+---------------------------------------
+
+To install this theme locally, along with the dependencies needed to develop it, take the following steps:
+
+1. **Clone the repository locally**. Run this command:
+
+   .. code-block:: console
+
+       $ git clone https://github.com/pydata/pydata-sphinx-theme
+       $ cd pydata-sphinx-theme
+
+2. **Install the theme with dev dependencies**. Run this command:
+
+   .. code-block:: console
+
+       $ pip install -e .[dev,test]
+
+Install javascript development dependencies
+-------------------------------------------
+
+The javascript development workflow relies primarily on `the yarn package managed <https://yarnpkg.com/>`__.
+This will be used to install a number of javascript dependencies defined originally in ``package.json``, and with specific versions pinned in ``yarn.lock``.
+The easiest way to accomplish this is using `conda-forge <https://conda-forge.org/>`_, which these instructions cover below.
+
+1. **Install yarn**:
+
+   .. code-block:: console
+
+       $ conda install -c conda-forge yarn nodejs>=14,<15
+
+   Re recommend using node 14 as it is the latest LTS release of ``nodejs``.
+
+2. **Initialize your yarn environment**:
+   
+   .. code-block:: console
+
+       $ yarn --frozen-lockfile
+
+   This will install all of the dependencies defined in ``yarn.lock`` and place them in a folder at ``node_modules/``.
+   
+   .. note::
+
+       If you do not include ``--frozen-lockfile``, then yarn will update all of the frozen dependency versions in ``yarn.lock``.
+       If you accidentally do this, revert the changes to ``yarn.lock`` and re-run the command with ``--frozen-lockfile``.
+
+
+Update JS dependencies and their versions
+=========================================
+
+The javascript dependencies for this package are defined in ``package.json``, and broken down into a few categories like ``dependencies`` and ``devDependencies``.
+While ``package.json`` defines files versions loosely, explicit versions are "frozen" into a file called ``yarn.lock``.
+
+If you wish to update the versions of this theme's JS dependencies, follow these steps:
+
+1. Update packages in ``packages.json``.
+2. Run the ``yarn`` command **without** ``--frozen-lockfile``.
+
+   .. code-block:: console
+
+       $ yarn
+
+3. Commit changes to ``yarn.lock`` and ``package.json``. It's important that both of these are changed together to ensure our builds are reproducible.
+
+
+Location and structure of CSS/JS assets
+=======================================
 
 The CSS and JS for this theme are built for the browser from ``src/*`` with
 `webpack <https://webpack.js.org/>`__. The main entrypoints are:
@@ -106,126 +260,13 @@ runtime.
     Theme development was inspired by the
     `ReadTheDocs Sphinx theme <https://github.com/readthedocs/sphinx_rtd_theme>`__.
 
-
-Steps to develop the theme
---------------------------
-
-1. Install ``yarn``
-2. Install theme dependencies
-3. Run development server
-4. Build production assets
-5. Install the testing infrastructure
-
-.. Attention::
-
-    In order to commit changes to the theme, ensure you run
-    ``yarn build:production`` so all built assets will be bundled, copied, or
-    generated into ``pydata_sphinx_theme/static/``.
-
-
-Installing ``yarn``
-^^^^^^^^^^^^^^^^^^^
-
-`Yarn <https://yarnpkg.com>`__ is a package manager for JS and CSS dependencies.
-Yarn itself can be installed with a number of
-`package managers <https://classic.yarnpkg.com/en/docs/install>`__, including
-``conda``:
-
-.. code-block:: bash
-
-    conda install -c conda-forge yarn
-
-
-Installing JS dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To install theme-related ``dependencies`` and ``devDependencies`` from ``package.json``,
-from the root of this repo, run:
-
-.. code-block:: bash
-
-    yarn
-
-After adding/updating dependencies with ``yarn add``, or manually changing ``package.json``
-and re-running ``yarn``, the ``yarn.lock`` and ``package.json`` files will likely change.
-
-.. Important::
-
-    If changed, commit ``package.json`` and ``yarn.lock`` together to ensure
-    reproducible builds.
-
-
-Running the development server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To preview the frontend assets, from the root of this repo, run:
-
-.. code-block:: bash
-
-    yarn build:dev
-
-This launches a development server at http://127.0.0.1:1919. When working
-on the theme, saving changes to any of:
-
-- ``src/js/index.js``
-- ``src/scss/index.scss``
-- ``docs/**/*.rst``
-- ``docs/**/*.py``
-
-...causes the development server to reload:
-
-- bundle/copy the CSS, JS, and vendored fonts
-- regenerate the Jinja2 macros
-- re-run Sphinx
-
-
-Building the production assets
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To build the new theme assets into the python package, from the root of this repo,
-run:
-
-.. code-block:: bash
-
-    yarn build:production
-
-
-Install the test infrastructure
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This theme uses ``pytest`` for its testing, with a lightweight fixture defined
-in the ``test_build.py`` script that makes it easy to run a Sphinx build using
-this theme and inspect the results.
-
-In addition, we use `pytest-regressions <https://pytest-regressions.readthedocs.io/en/latest/>`_
-to ensure that the HTML generated by the theme is what we'd expect. This module
-provides a ``file_regression`` fixture that will check the contents of an object
-against a reference file on disk. If the structure of the two differs, then the
-test will fail. If we *expect* the structure to differ, then delete the file on
-disk and run the test. A new file will be created, and subsequent tests will pass.
-
-Install the testing dependencies with:
-
-.. code-block:: bash
-
-   pip install pytest pytest-regressions
-
-Then run the tests by calling ``pytest`` from the repository root.
-
-Changing fonts
---------------
+Change fonts
+============
 
 Three "styles" of the `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__
 icon font are used for :ref:`icon links <icon-links>` and admonitions, and is
 the only `vendored` font. Further font choices are described in the :ref:`customizing`
 section of the user guide, and require some knowledge of HTML and CSS.
-
-.. Attention::
-
-    Previously-included fonts like `Lato` have been removed, preferring
-    the most common default system fonts of the reader's computer. This provides
-    both better performance, and better script/glyph coverage than custom fonts,
-    and is recommended in most cases.
 
 The remaining vendored font selection is:
 
@@ -249,8 +290,8 @@ The remaining vendored font selection is:
     ensure the most recent icons
 
 
-Upgrading a font
-^^^^^^^^^^^^^^^^
+Upgrade a font
+--------------
 
 If *only* the version of the `existing` font must change, for example to enable
 new icons, run:
@@ -264,8 +305,8 @@ It *may* also be necessary to clear out old font versions from
 ``pydata_sphinx_theme/static/vendor/`` before committing.
 
 
-Changing a font
-^^^^^^^^^^^^^^^
+Change a font
+-------------
 
 If the above doesn't work, for example if file names for an existing font change,
 or a new font variant altogether is being added, hand-editing of ``webpack.common.js``
@@ -285,8 +326,8 @@ is required. The steps are roughly:
 - commit all of the changed files
 
 
-Contributing changes
-====================
+Workflow for contributing changes
+=================================
 
 We follow a `typical GitHub workflow <https://guides.github.com/introduction/flow/>`__
 of:
@@ -301,38 +342,29 @@ For each pull request, the demo site is built and deployed to make it easier to 
 the changes in the PR. To access this, click on the "ReadTheDocs" preview in the CI/CD jobs.
 
 
-Ensuring correct commits
-========================
+Automate code standards with pre-commit
+=======================================
 
-To ensure all source files have been correctly built, a `pre-commit <https://pre-commit.com/>`__
-hook is available.
+To ensure all source files have been correctly built, a `pre-commit <https://pre-commit.com/>`__ hook is available.
 
-To set this up, first install the ``pre-commit`` package:
+Pre-commit should be installed automatically by following the instructions in :ref:`basic-environment`.
 
-.. code-block:: bash
+After running ``pre-commit install``, the pre-commit checks will be run every time you make a commit to the repository.
 
-    # with pip
-    pip install pre-commit
-    # or with conda
-    conda install -c conda-forge pre-commit
+- **To skip the pre-commit checks**, run the following command:
 
-Then, from the root of this repo, run:
+  .. code-block:: bash
 
-.. code-block:: bash
+      git commit --no-verify
 
-    pre-commit install
+- **To run pre-commit on all files**, run the following command:
 
-Now all of the checks will be run each time you commit changes.
+  .. code-block:: bash
 
-Note that if needed, you can skip these checks with:
+      pre-commit run --all-files
 
-.. code-block:: bash
-
-    git commit --no-verify
-
-
-Finding accessibility problems
-==============================
+Accessibility checks
+====================
 
 The accessibility checking tools can find a number of common HTML patterns which
 assistive technology can't help users understand.

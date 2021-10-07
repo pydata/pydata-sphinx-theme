@@ -52,6 +52,7 @@ setup(
     extras_require={
         "test": tests_require,
         "coverage": ["pytest-cov", "codecov", *tests_require],
+        "dev": ["pyyaml", "pre-commit", "nox"],
     },
     python_requires=">=3.5",
     classifiers=[
