@@ -189,16 +189,28 @@ up to 4 levels deep:
 
 .. image:: /_static/demo-expandable-navigation.gif
 
-When having a site with many files and/or many levels, this can cause a long
-build time and larger HTML file sizes. Therefore, it is possible to turn off
-the expandable navigation by setting the `collapse_navigation` config option
-to True:
+Sites that have a lot of pages (such as API documentation with a lot of items)
+take much longer to build and will have large output sizes
+because of all the toctree links.
+
+Here are a few suggestions if you run into this problem:
+
+Remove reveal buttons for sidebar items
+---------------------------------------
+
+It is possible to turn off the expandable navigation entirely by setting
+the `collapse_navigation` config option to True:
 
 .. code:: python
 
    html_theme_options = {
      "collapse_navigation": True
    }
+
+.. _navigation-levels:
+
+Control the number of navigation levels
+---------------------------------------
 
 In addition, you can also control how many levels of the navigation are shown
 in the sidebar (with a default of 4):
@@ -209,20 +221,24 @@ in the sidebar (with a default of 4):
      "navigation_depth": 2
    }
 
-.. warning::
+.. _remove_toctrees:
 
-   If your documentation has a lot of pages, or has API documentation that
-   generates many pages in your ``toctree``, your site may take a long time to
-   build. This is because Sphinx must resolve all of the links that your site
-   uses in the navigation section for every page.
+Prevent pages from generating sidebar children
+----------------------------------------------
 
-   If you run into this error, here are a few things to try:
-   
-   - Reduce the number of levels that are shown in the navigation bar with
-     ``navigation_depth``.
-   - If you are generating API documentation such as ``.. autosummary::``,
-     **do not use** the ``:toctree:`` argument. This generates many sub-pages
-     which slows things down considerably.
+You can prevent pages from generating items in the navigation bar.
+This is useful if you have some pages that have many children (for example,
+API documentation).
+
+To prevent pages from generating items in the navigation, add them to a
+``remove_toctrees_from`` list like so:
+
+
+.. code:: python
+
+   html_theme_options = {
+     "remove_toctrees_from": ["page1.rst", "path/to/page2.rst"]
+   }
 
 
 Hiding the previous and next buttons

@@ -472,6 +472,21 @@ def soup_to_python(soup, only_pages=False):
     return navs
 
 
+def remove_toctrees(app, doctree, docname):
+    """Remove toctrees from pages a user provides.
+
+    This happens at the end of the build process, so even though the toctrees
+    are removed, it won't raise sphinx warnings about un-referenced pages.
+    """
+    pages = app.config.html_theme_options.get("remove_toctrees_from", [])
+    if isinstance(pages, str):
+        pages = [pages]
+    for pagename in pages:
+        pagename = os.path.splitext(pagename)[0]
+        for toctree in app.env.tocs[pagename].traverse(addnodes.toctree):
+            toctree.parent.remove(toctree)
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -566,6 +581,7 @@ def setup(app):
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
     app.connect("env-updated", update_config)
+    app.connect("doctree-resolved", remove_toctrees)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)
