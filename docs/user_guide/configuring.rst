@@ -180,8 +180,8 @@ override this behavior and control the sidebar on a per-page basis, use the
 `Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
 
-Configure the navigation depth and collapsing of the sidebar
-============================================================
+Navigation depth and collapsing of the sidebar
+==============================================
 
 By default, this theme enables to expand/collapse subsections in the left
 sidebar navigation (without actually navigating to the page itself), and this extends
@@ -209,6 +209,20 @@ in the sidebar (with a default of 4):
      "navigation_depth": 2
    }
 
+.. warning::
+
+   If your documentation has a lot of pages, or has API documentation that
+   generates many pages in your ``toctree``, your site may take a long time to
+   build. This is because Sphinx must resolve all of the links that your site
+   uses in the navigation section for every page.
+
+   If you run into this error, here are a few things to try:
+   
+   - Reduce the number of levels that are shown in the navigation bar with
+     ``navigation_depth``.
+   - If you are generating API documentation such as ``.. autosummary::``,
+     **do not use** the ``:toctree:`` argument. This generates many sub-pages
+     which slows things down considerably.
 
 
 Hiding the previous and next buttons

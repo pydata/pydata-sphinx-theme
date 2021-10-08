@@ -9,13 +9,11 @@ Autosummary table and API stub pages
 ====================================
 
 .. autosummary::
-   :toctree: generated/
 
    pandas.DataFrame.drop
    pandas.DataFrame.groupby
 
 .. autosummary::
-   :toctree: generated/
 
    pandas.Series.array
 
