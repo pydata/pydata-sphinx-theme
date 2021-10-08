@@ -31,9 +31,10 @@ def docs_live(session):
 
 
 @nox.session(name="test", venv_backend="conda")
-def tests(session):
+def test(session):
     _install_environment(session, yarn=False)
-    session.run("pytest")
+    session.install(".[test]")
+    session.run("pytest", *session.posargs)
 
 
 def _install_environment(session, yarn=True):

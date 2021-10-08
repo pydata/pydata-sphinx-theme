@@ -64,7 +64,7 @@ def update_templates(app, pagename, templatename, context, doctree):
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
-    def generate_nav_html(kind, startdepth=None, **kwargs):
+    def generate_nav_html(kind, startdepth=None, show_nav_level=1, **kwargs):
         """
         Return the navigation link structure in HTML. Arguments are passed
         to Sphinx "toctree" function (context["toctree"] below).
@@ -81,6 +81,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             The level of the toctree at which to start. By default, for
             the navbar uses the normal toctree (`startdepth=0`), and for
             the sidebar starts from the second level (`startdepth=1`).
+        show_nav_level : int
+            The level of the navigation bar to toggle as visible on page load.
+            By default, this level is 1, and only top-level pages are shown,
+            with drop-boxes to reveal children. Increasing `show_nav_level`
+            will show child levels as well.
+
         kwargs: passed to the Sphinx `toctree` template function.
 
         Returns
@@ -127,6 +133,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             # Add icons and labels for collapsible nested sections
             _add_collapse_checkboxes(soup)
 
+            # Open the navbar to the proper depth
+            for ii in range(int(show_nav_level)):
+                for checkbox in soup.select(
+                    f"li.toctree-l{ii} > input.toctree-checkbox"
+                ):
+                    checkbox.attrs["checked"] = None
             out = soup.prettify()
 
         elif kind == "raw":

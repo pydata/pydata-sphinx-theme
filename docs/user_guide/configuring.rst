@@ -200,6 +200,7 @@ to True:
      "collapse_navigation": True
    }
 
+
 In addition, you can also control how many levels of the navigation are shown
 in the sidebar (with a default of 4):
 
@@ -210,6 +211,19 @@ in the sidebar (with a default of 4):
    }
 
 
+Finally, you can control how many navigation levels are shown when a page is
+loaded. By default, this level is 1, and only top-level pages are shown,
+with drop-boxes to reveal their children. To make their children show up by
+default, you can use the following configuration in ``conf.py``:
+
+.. code:: python
+
+   html_theme_options = {
+     "show_nav_level": 2
+   }
+
+This will make the first two navigations show up by default (AKA, top-level
+pages and their immediate children).
 
 Hiding the previous and next buttons
 ====================================

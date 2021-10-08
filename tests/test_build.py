@@ -408,3 +408,15 @@ def test_old_google_analytics_id(sphinx_build_factory):
 
     assert "ga" in script_tag.string
     assert "UA-XXXXX" in script_tag.string
+
+
+def test_show_nav_level(sphinx_build_factory):
+    """The navbar items align with the proper part of the page."""
+    confoverrides = {"html_theme_options.show_nav_level": 2}
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
+
+    # Both the column alignment and the margin should be changed
+    index_html = sphinx_build.html_tree("section1/index.html")
+
+    for checkbox in index_html.select("li.toctree-l1.has-children > input"):
+        assert "checked" in checkbox.attrs
