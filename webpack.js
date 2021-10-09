@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const staticPath = resolve(__dirname, 'pydata_sphinx_theme', 'static');
 
@@ -70,12 +72,16 @@ function macroTemplate({ compilation }) {
 }
 
 module.exports = {
+  mode: "production",
   entry: {
     index: ['./src/js/index.js'],
   },
   output: {
     filename: 'js/[name].[hash].js',
     path: staticPath,
+  },
+  optimization: {
+    minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})]
   },
   externals: {
     // Define jQuery as external, this way Sphinx related javascript
