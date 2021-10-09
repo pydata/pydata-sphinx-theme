@@ -124,11 +124,10 @@ pre {
 
 // Override bootstrap by restoring the basic theme default.
 dd {
-    margin-top: 3px;
-    margin-bottom: 10px;
-    margin-left: 30px;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  margin-left: 30px;
 }
-
 
 // Bootstrap adds margin to their general container class. However, sphinx/docutils
 // can also generate output with the container class, but in those cases we should
@@ -138,13 +137,12 @@ dd {
   padding-right: unset;
 }
 
-
 // Custom css, TODO: to be refactored in different partials
 // GitHub blockquote style
 blockquote {
   padding: 0 1em;
   color: #6a737d;
-  border-left: .25em solid #dfe2e5;
+  border-left: 0.25em solid #dfe2e5;
 }
 
 // For consistency, add bracket around footnotes/citations which are
@@ -206,11 +204,11 @@ span.guilabel {
   margin: auto 2px;
 }
 
-
 // From https://stackoverflow.com/a/34372191
 table.highlighttable td.linenos,
 span.linenos,
-div.doctest > div.highlight span.gp {  /* gp: Generic.Prompt */
+div.doctest > div.highlight span.gp {
+  /* gp: Generic.Prompt */
   user-select: none;
   -webkit-user-select: text; /* Safari fallback only */
   -webkit-user-select: none; /* Chrome/Safari */

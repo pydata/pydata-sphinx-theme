@@ -19,7 +19,6 @@
   border-left: 2px solid rgba(var(--pst-color-toc-link-active), 1);
 }
 
-
 .toc-entry {
   display: block;
 
@@ -67,7 +66,6 @@
   }
 }
 
-
 .section-nav {
   padding-left: 0;
   border-left: 1px solid #eee;
@@ -77,8 +75,6 @@
     padding-left: 1rem;
   }
 }
-
-
 
 /* TOC section headers */
 
@@ -99,8 +95,6 @@
     color: var(--pst-color-sidebar-link-active);
   }
 }
-
-
 
 /* minimal copy paste from bootstrap docs css to get sidebars working */
 

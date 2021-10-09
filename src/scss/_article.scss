@@ -1,4 +1,3 @@
-
 .bd-content {
   display: flex;
   flex-direction: column;
@@ -14,7 +13,6 @@
     }
   }
 }
-
 
 /* Previous / Next buttons */
 
@@ -54,7 +52,7 @@
 
     .prev-next-info {
       flex-direction: column;
-      margin: 0 .5em;
+      margin: 0 0.5em;
 
       .prev-next-subtitle {
         text-transform: capitalize;
@@ -67,18 +65,17 @@
 
     &.right-next {
       float: right;
-      
+
       div.prev-next-info {
         text-align: right;
       }
-    }    
+    }
   }
 }
-
 
 /* Special-case over-rides */
 
 // xarray output display in bootstrap
 .xr-wrap[hidden] {
-  display: block!important;
+  display: block !important;
 }

@@ -11,7 +11,7 @@
   @include media-breakpoint-up(lg) {
     // navbar-end-items should be on one line if possible
     #navbar-end > .navbar-end-item {
-        display: inline-block;
+      display: inline-block;
     }
   }
 }
@@ -32,12 +32,12 @@
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .navbar-light {
-  background: #fff!important; // Overrides bootstrap
+  background: #fff !important; // Overrides bootstrap
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
     li a.nav-link {
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
       color: rgba(var(--pst-color-navbar-link), 1);
 
       &:hover {
@@ -56,8 +56,6 @@
   padding: 0 15px;
 }
 
-
-
 /* Icon Links */
 
 #navbar-icon-links {
@@ -65,7 +63,7 @@
     &.fa,
     &.fab,
     &.far,
-    &.fas{
+    &.fas {
       vertical-align: middle;
       font-style: normal;
       font-size: 1.5rem;
@@ -82,7 +80,7 @@
     }
 
     &.fa-gitlab:before {
-      color: #548
+      color: #548;
     }
 
     &.fa-bitbucket:before {

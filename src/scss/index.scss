@@ -17,14 +17,14 @@ $grid-breakpoints: (
 );
 
 // Import Bootstrap core
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
 // Theme sections
-@import './base';
-@import './navbar';
-@import './sidebar-primary';
-@import './sidebar-secondary';
-@import './article';
-@import './footer';
-@import './admonitions';
-@import './api';
+@import "./base";
+@import "./navbar";
+@import "./sidebar-primary";
+@import "./sidebar-secondary";
+@import "./article";
+@import "./footer";
+@import "./admonitions";
+@import "./api";
