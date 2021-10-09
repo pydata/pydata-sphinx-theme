@@ -40,7 +40,7 @@ def _install_environment(session, yarn=True):
     """Install the JS and Python environment needed to develop the theme."""
     # Assume that if sphinx is already installed, we don't need to re-install
     bin = Path(session.bin)
-    if bin.rglob("sphinx-build") and "reinstall" not in session.posargs:
+    if list(bin.rglob("sphinx-build")) and "reinstall" not in session.posargs:
         return
 
     # Install JS and Python dependencies
