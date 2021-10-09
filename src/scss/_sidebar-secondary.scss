@@ -1,0 +1,125 @@
+/* adjust toc font sizes to improve overview */
+.toc-h2 {
+  font-size: 0.85rem;
+}
+
+.toc-h3 {
+  font-size: 0.75rem;
+}
+
+.toc-h4 {
+  font-size: 0.65rem;
+}
+
+.toc-entry > .nav-link.active {
+  font-weight: 600;
+  color: #130654;
+  color: rgba(var(--pst-color-toc-link-active), 1);
+  background-color: transparent;
+  border-left: 2px solid rgba(var(--pst-color-toc-link-active), 1);
+}
+
+
+.toc-entry {
+  display: block;
+
+  a {
+    display: block;
+    padding: 0.125rem 1.5rem;
+    color: rgba(var(--pst-color-toc-link), 1);
+
+    @include media-breakpoint-up(xl) {
+      padding-right: 0;
+    }
+
+    &:hover {
+      color: rgba(var(--pst-color-toc-link-hover), 1);
+      text-decoration: none;
+    }
+  }
+}
+
+.nav-link:hover {
+  border-style: none;
+}
+
+#navbar-main-elements li.nav-item i {
+  font-size: 0.7rem;
+  padding-left: 2px;
+  vertical-align: middle;
+}
+
+/* Collapsing of the TOC sidebar while scrolling */
+
+/* Nav: hide second level (shown on .active) */
+.bd-toc .nav {
+  .nav {
+    display: none;
+
+    // So we can manually specify a level as visible in the config
+    &.visible {
+      display: block;
+    }
+  }
+
+  > .active > ul {
+    display: block;
+  }
+}
+
+
+.section-nav {
+  padding-left: 0;
+  border-left: 1px solid #eee;
+  border-bottom: none;
+
+  ul {
+    padding-left: 1rem;
+  }
+}
+
+
+
+/* TOC section headers */
+
+.tocsection {
+  padding-left: 10px;
+  border-left: 1px solid #eee;
+  padding: 0.3rem 1.5rem;
+
+  i {
+    padding-right: 0.5rem;
+  }
+}
+
+.editthispage {
+  padding-top: 2rem;
+
+  a {
+    color: var(--pst-color-sidebar-link-active);
+  }
+}
+
+
+
+/* minimal copy paste from bootstrap docs css to get sidebars working */
+
+.bd-toc {
+  -ms-flex-order: 2;
+  order: 2;
+
+  height: calc(100vh - 2rem);
+  overflow-y: auto;
+
+  @supports (position: -webkit-sticky) or (position: sticky) {
+    position: -webkit-sticky;
+    position: sticky;
+    top: calc(var(--pst-header-height) + 20px);
+    height: calc(100vh - 5rem);
+    overflow-y: auto;
+  }
+
+  .onthispage {
+    color: #a4a6a7;
+  }
+}

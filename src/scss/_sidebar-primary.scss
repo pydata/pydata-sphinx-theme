@@ -1,0 +1,223 @@
+.bd-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1em;
+
+  @include media-breakpoint-up(md) {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    @supports (position: -webkit-sticky) or (position: sticky) {
+      position: -webkit-sticky;
+      position: sticky;
+      top: calc(var(--pst-header-height) + 20px);
+      z-index: 1000;
+      height: calc(100vh - var(--pst-header-height) - 20px);
+    }
+  }
+
+  &.no-sidebar {
+    border-right: 0;
+  }
+}
+
+
+.bd-sidenav {
+  display: none;
+}
+
+
+.bd-links {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-right: -15px;
+  margin-left: -15px;
+
+  @include media-breakpoint-up(md) {
+    display: block;
+
+    @supports (position: -webkit-sticky) or (position: sticky) {
+      max-height: calc(100vh - 11rem);
+      overflow-y: auto;
+    }
+  }
+}
+
+
+.bd-toc-item.active {
+  margin-bottom: 1rem;
+
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+
+  > {
+    .bd-toc-link {
+      color: rgba(0, 0, 0, 0.85);
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    .bd-sidenav {
+      display: block;
+    }
+  }
+}
+
+nav.bd-links {
+
+  p.caption {
+      font-size: var(--pst-sidebar-caption-font-size);
+      text-transform: uppercase;
+      font-weight: bold;
+      position: relative;
+      margin-top: 1.25em;
+      margin-bottom: 0.5em;
+      padding: 0 1.5rem;
+      color: rgba(var(--pst-color-sidebar-caption), 1);
+      &:first-child {
+          margin-top: 0;
+      }
+  }
+}
+
+.bd-sidebar .nav {
+
+  font-size: var(--pst-sidebar-font-size);
+
+  ul {
+    list-style: none;
+    padding: 0 0 0 1.5rem;
+  }
+
+  li > a {
+    display: block;
+    padding: 0.25rem 1.5rem;
+    color: rgba(var(--pst-color-sidebar-link), 1);
+
+    &:hover {
+      color: rgba(var(--pst-color-sidebar-link-hover), 1);
+      text-decoration: none;
+      background-color: transparent;
+    }
+
+    &.reference.external {
+      &:after {
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        content: '\f35d';
+        font-size: .75em;
+        margin-left: 0.3em
+      }
+    }
+  }
+
+  .active {
+    > a,
+    &:hover > a {
+      font-weight: 600;
+      color: rgba(var(--pst-color-sidebar-link-active), 1);
+    }
+  }
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Togglable expand/collapse
+////////////////////////////////////////////////////////////////////////////////
+
+
+.toctree-checkbox {
+  position: absolute;
+  display: none;
+}
+
+.toctree-checkbox {
+  ~ ul {
+    display: none;
+  }
+  ~ label i {
+    transform: rotate(0deg);
+  }
+}
+.toctree-checkbox:checked {
+  ~ ul {
+    display: block;
+  }
+  ~ label i {
+    transform: rotate(180deg);
+  }
+}
+
+
+.bd-sidebar {
+
+  li {
+    position: relative;
+  }
+  label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    // height: var(--sidebar-item-height);
+    height: 30px;
+    width: 30px;
+    // width: var(--sidebar-expander-width);
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background: rgba(var(--pst-color-sidebar-expander-background-hover), 1);
+    }
+
+    i {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-align: center;
+      &:hover {
+        color: rgba(var(--pst-color-sidebar-link-hover), 1);
+      }
+    }
+  }
+
+  // If it has children, add a bit more padding to wrap the content to avoid
+  // overlapping with the <label>
+  li.has-children {
+    > .reference {
+      padding-right: 30px;
+    }
+  }
+}
+
+
+.bd-search {
+  position: relative;
+  padding: 1rem 15px;
+  margin-right: -15px;
+  margin-left: -15px;
+
+  .icon {
+    position: absolute;
+    color: #a4a6a7;
+    left: 25px;
+    top: 25px;
+  }
+
+  input {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+    padding-left: 35px;
+  }
+}
+
+// RTD ads should snap to the bottom
+div#ethical-ad-placement {
+  margin-top: auto;
+}

@@ -128,3 +128,92 @@ dd {
     margin-bottom: 10px;
     margin-left: 30px;
 }
+
+
+// Bootstrap adds margin to their general container class. However, sphinx/docutils
+// can also generate output with the container class, but in those cases we should
+// not add the margin from bootstrap.
+.docutils.container {
+  padding-left: unset;
+  padding-right: unset;
+}
+
+
+// Custom css, TODO: to be refactored in different partials
+// GitHub blockquote style
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+}
+
+// For consistency, add bracket around footnotes/citations which are
+// cited more than once. E.g. [Newton](1,2) instead of Newton(1,2)
+dt.label > span.brackets:not(:only-child):before {
+  content: "[";
+}
+
+dt.label > span.brackets:not(:only-child):after {
+  content: "]";
+}
+
+// Make footnote as a supercript
+a.footnote-reference {
+  vertical-align: super;
+  font-size: small;
+}
+
+div.deprecated {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 7px;
+  background-color: #f3e5e5;
+  border: 1px solid #eed3d7;
+  border-radius: 0.5rem;
+
+  p {
+    color: #b94a48;
+    display: inline;
+  }
+}
+
+.topic {
+  background-color: #eee;
+}
+
+.seealso dd {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.viewcode-back {
+  font-family: var(--pst-font-family-base);
+}
+
+.viewcode-block:target {
+  background-color: #f4debf;
+  border-top: 1px solid #ac9;
+  border-bottom: 1px solid #ac9;
+}
+
+span.guilabel {
+  border: 1px solid #7fbbe3;
+  background: #e7f2fa;
+  font-size: 80%;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2.4px 6px;
+  margin: auto 2px;
+}
+
+
+// From https://stackoverflow.com/a/34372191
+table.highlighttable td.linenos,
+span.linenos,
+div.doctest > div.highlight span.gp {  /* gp: Generic.Prompt */
+  user-select: none;
+  -webkit-user-select: text; /* Safari fallback only */
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}

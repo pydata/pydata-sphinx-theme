@@ -96,8 +96,7 @@ To this end, this package includes:
 
 - A [`BootstrapHTML5Translator`](./pydata_sphinx_theme/bootstrap_html_translator.py),
   subclassing sphinx' translator, but overriding certain elements to generate
-  Bootstrap-compatible html. Currently, this includes: converting admonitions to
-  Bootstrap "alert" classes, and updating the classes used for html tables.
+  Bootstrap-compatible html. Currently, this only converts HTML tables.
 - A [sphinx event](./pydata_sphinx_theme/__init__.py) to add navigation
   objects into the html context which is available in the html (jinja2)
   templates. This allows to put the structure of the navigation elements in the

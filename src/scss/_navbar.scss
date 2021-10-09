@@ -55,3 +55,38 @@
 .navbar-header a {
   padding: 0 15px;
 }
+
+
+
+/* Icon Links */
+
+#navbar-icon-links {
+  i {
+    &.fa,
+    &.fab,
+    &.far,
+    &.fas{
+      vertical-align: middle;
+      font-style: normal;
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+
+    /* Social media buttons */
+    &.fa-github-square:before {
+      color: #333;
+    }
+
+    &.fa-twitter-square:before {
+      color: #55acee;
+    }
+
+    &.fa-gitlab:before {
+      color: #548
+    }
+
+    &.fa-bitbucket:before {
+      color: #0052cc;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{% block docs_sidebar %}
+  {% if sidebars %}
+  <!-- Only show if we have sidebars configured, else just a small margin  -->
+  <div class="col-12 col-md-3 bd-sidebar">
+      {%- for sidebartemplate in sidebars %}
+      {%- include sidebartemplate %}
+      {%- endfor %}
+  </div>
+  {% else %}
+  <div class="col-12 col-md-1 col-xl-2 bd-sidebar no-sidebar"></div>
+  {% endif %}
+{% endblock %}

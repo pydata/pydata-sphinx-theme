@@ -1,0 +1,84 @@
+
+.bd-content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+
+  .section {
+    max-width: 100%;
+
+    // make every overflowing elements in main content scrollable
+    table {
+      display: block;
+      overflow: auto;
+    }
+  }
+}
+
+
+/* Previous / Next buttons */
+
+.prev-next-area {
+  margin: auto 0px 20px 0px;
+  padding-top: 20px;
+
+  p {
+    margin: 0 0.3em;
+    line-height: 1.3em;
+  }
+
+  i {
+    font-size: 1.2em;
+  }
+
+  a {
+    // So that buttons align with icons
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 10px;
+    max-width: 45%;
+    overflow-x: hidden;
+    color: rgba(0, 0, 0, 0.65);
+    text-decoration: none;
+
+    p.prev-next-title {
+      color: rgba(var(--pst-color-link), 1);
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    &:hover p.prev-next-title {
+      text-decoration: underline;
+    }
+
+    .prev-next-info {
+      flex-direction: column;
+      margin: 0 .5em;
+
+      .prev-next-subtitle {
+        text-transform: capitalize;
+      }
+    }
+
+    &.left-prev {
+      float: left;
+    }
+
+    &.right-next {
+      float: right;
+      
+      div.prev-next-info {
+        text-align: right;
+      }
+    }    
+  }
+}
+
+
+/* Special-case over-rides */
+
+// xarray output display in bootstrap
+.xr-wrap[hidden] {
+  display: block!important;
+}
