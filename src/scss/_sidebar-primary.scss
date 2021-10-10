@@ -1,6 +1,4 @@
 .bd-sidebar {
-  display: flex;
-  flex-direction: column;
   padding-top: 1em;
 
   @include media-breakpoint-up(md) {
@@ -20,9 +18,11 @@
   }
 }
 
+
 .bd-sidenav {
   display: none;
 }
+
 
 .bd-links {
   padding-top: 1rem;
@@ -39,6 +39,7 @@
     }
   }
 }
+
 
 .bd-toc-item.active {
   margin-bottom: 1rem;
@@ -63,22 +64,24 @@
 }
 
 nav.bd-links {
+
   p.caption {
-    font-size: var(--pst-sidebar-caption-font-size);
-    text-transform: uppercase;
-    font-weight: bold;
-    position: relative;
-    margin-top: 1.25em;
-    margin-bottom: 0.5em;
-    padding: 0 1.5rem;
-    color: rgba(var(--pst-color-sidebar-caption), 1);
-    &:first-child {
-      margin-top: 0;
-    }
+      font-size: var(--pst-sidebar-caption-font-size);
+      text-transform: uppercase;
+      font-weight: bold;
+      position: relative;
+      margin-top: 1.25em;
+      margin-bottom: 0.5em;
+      padding: 0 1.5rem;
+      color: rgba(var(--pst-color-sidebar-caption), 1);
+      &:first-child {
+          margin-top: 0;
+      }
   }
 }
 
 .bd-sidebar .nav {
+
   font-size: var(--pst-sidebar-font-size);
 
   ul {
@@ -99,11 +102,11 @@ nav.bd-links {
 
     &.reference.external {
       &:after {
-        font-family: "Font Awesome 5 Free";
+        font-family: 'Font Awesome 5 Free';
         font-weight: 900;
-        content: "\f35d";
-        font-size: 0.75em;
-        margin-left: 0.3em;
+        content: '\f35d';
+        font-size: .75em;
+        margin-left: 0.3em
       }
     }
   }
@@ -117,9 +120,12 @@ nav.bd-links {
   }
 }
 
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // Togglable expand/collapse
 ////////////////////////////////////////////////////////////////////////////////
+
 
 .toctree-checkbox {
   position: absolute;
@@ -143,7 +149,9 @@ nav.bd-links {
   }
 }
 
+
 .bd-sidebar {
+
   li {
     position: relative;
   }
@@ -185,6 +193,7 @@ nav.bd-links {
   }
 }
 
+
 .bd-search {
   position: relative;
   padding: 1rem 15px;
@@ -204,9 +213,4 @@ nav.bd-links {
     border-bottom: 1px solid #e5e5e5;
     padding-left: 35px;
   }
-}
-
-// RTD ads should snap to the bottom
-div#ethical-ad-placement {
-  margin-top: auto;
 }
