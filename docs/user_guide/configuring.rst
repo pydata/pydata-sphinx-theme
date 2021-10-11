@@ -193,19 +193,28 @@ Sites that have a lot of pages (such as API documentation with a lot of items)
 take much longer to build and will have large output sizes
 because of all the toctree links.
 
-Here are a few suggestions if you run into this problem:
+Here are a few suggestions if you run into this problem, ordered from least-to-most drastic:
 
-Remove reveal buttons for sidebar items
----------------------------------------
+.. _remove_toctrees:
 
-It is possible to turn off the expandable navigation entirely by setting
-the `collapse_navigation` config option to True:
+Selectively remove pages from your sidebar
+------------------------------------------
 
-.. code:: python
+You can prevent pages from showing up in the navigation bar using a Sphinx
+extension called [`sphinx-remove-toctrees`](https://github.com/executablebooks/sphinx-remove-toctrees).
+This is useful if your documentation generates lots of "stub pages" in a folder,
+which is common with API documentation.
 
-   html_theme_options = {
-     "collapse_navigation": True
-   }
+This lets you add a configuration like so:
+
+.. code-block::
+
+   remove_toctrees_from = ["folder_one/generated/*"]
+
+and any pages that are inside of ``folder_one/generated/`` will not show up in the sidebar.
+
+Check out the [`sphinx-remove-toctrees` documentation](https://github.com/executablebooks/sphinx-remove-toctrees#install)
+for information about how to install and use this extension.
 
 .. _navigation-levels:
 
@@ -221,23 +230,17 @@ in the sidebar (with a default of 4):
      "navigation_depth": 2
    }
 
-.. _remove_toctrees:
 
-Prevent pages from generating sidebar children
-----------------------------------------------
+Remove reveal buttons for sidebar items
+---------------------------------------
 
-You can prevent pages from generating items in the navigation bar.
-This is useful if you have some pages that have many children (for example,
-API documentation).
-
-To prevent pages from generating items in the navigation, add them to a
-``remove_toctrees_from`` list like so:
-
+It is possible to turn off the expandable navigation entirely by setting
+the `collapse_navigation` config option to True:
 
 .. code:: python
 
    html_theme_options = {
-     "remove_toctrees_from": ["page1.rst", "path/to/page2.rst"]
+     "collapse_navigation": True
    }
 
 
