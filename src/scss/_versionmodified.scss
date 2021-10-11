@@ -37,6 +37,7 @@ span.versionmodified {
   font-weight: 700;
     
   &:before {
+    font-style: normal;
     margin-right: 0.6rem;
     color: rgba(var(--pst-color-versionmodified-default), 1);
     font-family: 'Font Awesome 5 Free';
