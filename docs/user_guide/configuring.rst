@@ -179,7 +179,7 @@ By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
 `Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
-.. navigation-depth:
+.. _navigation-depth:
 
 Navigation depth and collapsing of the sidebar
 ==============================================
