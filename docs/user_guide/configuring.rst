@@ -179,6 +179,7 @@ By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
 `Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
+.. navigation-depth:
 
 Navigation depth and collapsing of the sidebar
 ==============================================
@@ -513,3 +514,14 @@ template is added to your list. For example:
 .. meta::
    :description lang=en:
        Configuration options for pydata-sphinx-theme
+
+Improve build speed and performance
+===================================
+
+By default this theme includes all of your documentation links in a collapsible sidebar.
+However, this may slow down your documentation builds considerably if you have
+a lot of documentation pages. This is most common with documentation for projects
+with a large API, which use the ``.. autosummary::`` directive to generate
+API documentation.
+
+To improve the performance of your builds in these cases, see :ref:`navigation-depth`.
