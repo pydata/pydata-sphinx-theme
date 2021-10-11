@@ -202,7 +202,7 @@ Selectively remove pages from your sidebar
 ------------------------------------------
 
 You can prevent pages from showing up in the navigation bar using a Sphinx
-extension called [`sphinx-remove-toctrees`](https://github.com/executablebooks/sphinx-remove-toctrees).
+extension called `sphinx-remove-toctrees <https://github.com/executablebooks/sphinx-remove-toctrees>`_.
 This is useful if your documentation generates lots of "stub pages" in a folder,
 which is common with API documentation.
 
@@ -214,7 +214,7 @@ This lets you add a configuration like so:
 
 and any pages that are inside of ``folder_one/generated/`` will not show up in the sidebar.
 
-Check out the [`sphinx-remove-toctrees` documentation](https://github.com/executablebooks/sphinx-remove-toctrees#install)
+Check out the `sphinx-remove-toctrees documentation <https://github.com/executablebooks/sphinx-remove-toctrees#install>`_
 for information about how to install and use this extension.
 
 .. _navigation-levels:
