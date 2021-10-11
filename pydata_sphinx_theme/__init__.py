@@ -471,6 +471,7 @@ def soup_to_python(soup, only_pages=False):
         extract_level_recursive(ul, navs)
     return navs
 
+
 # -----------------------------------------------------------------------------
 
 
