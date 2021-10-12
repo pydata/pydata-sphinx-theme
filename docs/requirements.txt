@@ -1,6 +1,6 @@
 sphinx
 numpydoc
-recommonmark
+myst-parser
 pandas
 pytest
 pytest-regressions
