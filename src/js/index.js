@@ -78,10 +78,30 @@ function themeSwitch() {
   var switch_btn = document.getElementById('theme-switch')
   
   // extract the base name of the files
+  var checkbox = document.getElementById('chk')
   var colors_css = document.getElementById('colors-css')
   var pygment_css = document.getElementById('pygment-css')
   var css_basename = colors_css.href.split('/').slice(0,-1).join('/')
   var light = true;
+  var manually_set = false;
+  
+  var dark_color = window.matchMedia("(prefers-color-scheme: dark)");
+  
+  dark_color.onchange = (e) => {
+    if (manually_set) {
+      light = light;
+    } else if (e.matches) {
+      light = false;
+    } else if (!e.matches) {
+      light = true;
+    }
+    
+    // update the values
+    var new_theme = light ? 'light' : 'dark';
+    pygment_css.href = `${css_basename}/${new_theme}-pygment.css`
+    colors_css.href = `${css_basename}/${new_theme}-theme.css`
+    checkbox.checked = !light;
+  };
   
   switch_btn.addEventListener("change", () => {
     
@@ -93,6 +113,9 @@ function themeSwitch() {
     
     // change the status 
     light = !light;
+    
+    // tell the rest of the code that the color scheme has been manually set
+    manually_set = true;
     
   });
   
