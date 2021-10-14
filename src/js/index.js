@@ -81,20 +81,18 @@ function themeSwitch() {
   var colors_css = document.getElementById('colors-css')
   var pygment_css = document.getElementById('pygment-css')
   var css_basename = colors_css.href.split('/').slice(0,-1).join('/')
+  var light = true;
   
-  switch_btn.addEventListener("click", function (e) {
-    
-    // get the current status 
-    var i_tag = switch_btn.getElementsByTagName('i')[0];
-    var light = i_tag.classList.contains('fa-sun');
+  switch_btn.addEventListener("change", () => {
     
     // toggle the theme
     var new_theme = light ? 'dark' : 'light';
-  
-    i_tag.classList.toggle('fa-sun')
-    i_tag.classList.toggle('fa-moon')
+    
     pygment_css.href = `${css_basename}/${new_theme}-pygment.css`
     colors_css.href = `${css_basename}/${new_theme}-theme.css`
+    
+    // change the status 
+    light = !light;
     
   });
   
