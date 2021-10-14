@@ -1,4 +1,7 @@
 <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="nav-item">
+      <a id="theme-switch" class="nav-link"><i class="fas fa-sun"></i></a>
+    </li>
     {{ generate_nav_html("navbar", maxdepth=1, collapse=True, includehidden=True, titles_only=True) }}
     {% for external_link in theme_external_links %}
     <li class="nav-item">

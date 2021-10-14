@@ -12,19 +12,19 @@
 {% endmacro %}
 
 {% macro head_pre_bootstrap() %}
-  <link href="{{ pathto('_static/css/dark-theme.css', 1) }}" rel="stylesheet">
+  <link id="colors-css" href="{{ pathto('_static/css/light-theme.css', 1) }}" rel="stylesheet">
   <link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet">
-  <link href="{{ pathto('_static/css/index.ed17ea5e146a5950720d7591966e09fb.css', 1) }}" rel="stylesheet">
+  <link href="{{ pathto('_static/css/index.1c2426af3e5a386768d095205832fea6.css', 1) }}" rel="stylesheet">
 {% endmacro %}
 
 {% macro head_js_preload() %}
-  <link rel="preload" as="script" href="{{ pathto('_static/js/index.7dc5ab4a70a8571d75fd.js', 1) }}">
+  <link rel="preload" as="script" href="{{ pathto('_static/js/index.a403091fdece12edd456.js', 1) }}">
 {% endmacro %}
 
 {% macro body_post() %}
-  <script src="{{ pathto('_static/js/index.7dc5ab4a70a8571d75fd.js', 1) }}"></script>
+  <script src="{{ pathto('_static/js/index.a403091fdece12edd456.js', 1) }}"></script>
 {% endmacro %}
   
 {% macro head_post() %}
-  <link href="{{ pathto('_static/css/dark-pygment.css', 1) }}" rel="stylesheet">
+  <link id="pygment-css" href="{{ pathto('_static/css/light-pygment.css', 1) }}" rel="stylesheet">
 {% endmacro %}

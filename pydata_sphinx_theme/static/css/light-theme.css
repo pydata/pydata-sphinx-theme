@@ -14,7 +14,7 @@
   --pst-color-warning: 255, 193, 7;
   --pst-color-danger: 220, 53, 69;
   --pst-color-text-base: 51, 51, 51;
-  --pst-color-background: 0, 0, 0;
+  --pst-color-background: 255, 255, 255;
   --pst-color-title: var(--pst-color-text-base);
   --pst-color-background-up: var(--pst-color-background);
   
@@ -47,8 +47,8 @@
   --pst-color-admonition-important: var(--pst-color-success);
   --pst-color-admonition-background: var(--pst-color-background);
   
-  --pst-color-guilabel-background: 127, 187, 227;
-  --pst-color-guilabel-border: 231, 242, 250;
+  --pst-color-guilabel-background: 231, 242, 250; 
+  --pst-color-guilabel-border: 127, 187, 227;
   --pst-color-guilabel-text: var(--pst-color-guilabel-border);
   
   --pst-color-kbd-text: 255, 255, 255;
