@@ -69,8 +69,9 @@ a.footnote-reference {
 }
 
 span.guilabel {
-  border: 1px solid #7fbbe3;
-  background: #e7f2fa;
+  border: 1px solid rgba(var(--pst-color-guilabel-border), 1);
+  background: rgba(var(--pst-color-guilabel-background), 1);
+  color: rgba(var(--pst-color-guilabel-text), 1);
   font-size: 80%;
   font-weight: 700;
   border-radius: 4px;
@@ -83,7 +84,7 @@ span.guilabel {
  */
 
 footer {
-
+  background: rgba(var(--pst-color-background-up), 1);
   width: 100%;
   border-top: 1px solid #ccc;
   padding: 10px;
@@ -96,6 +97,7 @@ footer {
 /* -------------------------------------------------------------------------- */
 
 .bd-search {
+  background: rgba(var(--pst-color-background), 1);
   position: relative;
   padding: 1rem 15px;
   margin-right: -15px;
@@ -103,7 +105,7 @@ footer {
 
   .icon {
     position: absolute;
-    color: #a4a6a7;
+    color: rgba(var(--pst-color-deactive-navigation), 1);
     left: 25px;
     top: 25px;
   }
@@ -111,7 +113,7 @@ footer {
   input {
     border-radius: 0;
     border: 0;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid rgba(var(--pst-color-toc-link), 1);
     padding-left: 35px;
   }
 }
@@ -149,6 +151,7 @@ footer {
 }
 
 .toc-entry {
+  z-index: 0;
   display: block;
 
   a {
@@ -326,6 +329,7 @@ nav.bd-links {
 }
 
 .toc-entry > .nav-link.active {
+  z-index: 1;
   font-weight: 600;
   color: #130654;
   color: rgba(var(--pst-color-toc-link-active), 1);

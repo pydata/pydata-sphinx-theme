@@ -1,0 +1,56 @@
+/*****************************************************************************
+* Light theme config
+**/
+:root {
+  
+  /*****************************************************************************
+  * Color
+  * 
+  * Colors are defined in rgb string way, "red, green, blue"
+  **/
+  --pst-color-primary: 19, 6, 84;
+  --pst-color-success: 40, 167, 69;
+  --pst-color-info: 0, 123, 255;  /*23, 162, 184;*/
+  --pst-color-warning: 255, 193, 7;
+  --pst-color-danger: 220, 53, 69;
+  --pst-color-text-base: 51, 51, 51;
+  --pst-color-background: 0, 0, 0;
+  --pst-color-title: var(--pst-color-text-base);
+  --pst-color-background-up: var(--pst-color-background);
+  
+  --pst-color-link: 0, 91, 129;
+  --pst-color-link-hover: 227, 46, 0;
+  --pst-color-headerlink: 198, 15, 15;
+  --pst-color-headerlink-hover: 255, 255, 255;
+  --pst-color-toc-link: 119, 117, 122;
+  --pst-color-sidebar-expander-background-hover: 244, 244, 244;
+  
+  --pst-color-active-navigation: var(--pst-color-primary);
+  --pst-color-deactive-navigation: 77, 77, 77;
+  --pst-color-sidebar-caption: var(--pst-color-deactive-navigation);
+  
+  --pst-color-preformatted-text: 34, 34, 34;
+  --pst-color-preformatted-border: 201, 201, 201;
+  --pst-color-preformatted-background: 250, 250, 250;
+  --pst-color-preformatted-shadow: 216, 216, 216;
+  --pst-color-inline-code: 232, 62, 140;
+  
+  --pst-color-admonition-default: var(--pst-color-info);
+  --pst-color-admonition-note: var(--pst-color-info);
+  --pst-color-admonition-attention: var(--pst-color-warning);
+  --pst-color-admonition-caution: var(--pst-color-warning);
+  --pst-color-admonition-warning: var(--pst-color-warning);
+  --pst-color-admonition-danger: var(--pst-color-danger);
+  --pst-color-admonition-error: var(--pst-color-danger);
+  --pst-color-admonition-hint: var(--pst-color-success);
+  --pst-color-admonition-tip: var(--pst-color-success);
+  --pst-color-admonition-important: var(--pst-color-success);
+  --pst-color-admonition-background: var(--pst-color-background);
+  
+  --pst-color-guilabel-background: 127, 187, 227;
+  --pst-color-guilabel-border: 231, 242, 250;
+  --pst-color-guilabel-text: var(--pst-color-guilabel-border);
+  
+  --pst-color-kbd-text: 255, 255, 255;
+  --pst-color-kbd-background: 33, 37, 41;
+}

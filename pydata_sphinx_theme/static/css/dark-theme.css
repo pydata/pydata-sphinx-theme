@@ -1,0 +1,66 @@
+/*****************************************************************************
+* Dark theme config
+**/
+:root {
+  
+  /*****************************************************************************
+  * Color
+  * 
+  * Colors are defined in rgb string way, "red, green, blue"
+  **/
+  --pst-color-primary: 213, 142, 72;
+  --pst-color-success: 72, 135, 87;
+  --pst-color-info: 64, 125, 191;
+  --pst-color-warning: 193, 162, 69;
+  --pst-color-danger: 203, 70, 83;
+  --pst-color-text-base: 245, 245, 245;
+  --pst-color-background: 18, 18, 18;
+  --pst-color-title: 250, 250, 250;
+  --pst-color-background-up: 22, 22, 22;
+  
+  --pst-color-link: 64, 64, 191;
+  --pst-color-link-hover: 170, 103, 196;
+  --pst-color-headerlink: 152, 61, 61;
+  --pst-color-headerlink-hover: 255, 255, 255;
+  --pst-color-toc-link: 119, 117, 122;
+  --pst-color-sidebar-expander-background-hover: 244, 244, 244;
+  
+  --pst-color-active-navigation: var(--pst-color-primary);
+  --pst-color-deactive-navigation: 77, 77, 77;
+  --pst-color-sidebar-caption: 110, 110, 110;
+  
+  --pst-color-preformatted-text: 210, 210, 210;
+  --pst-color-preformatted-border: 57, 57, 57;
+  --pst-color-preformatted-shadow: var(--pst-color-background);
+  --pst-color-preformatted-background: var(--pst-color-background-up);
+  --pst-color-inline-code: 91, 188, 101;
+  
+  --pst-color-admonition-default: var(--pst-color-info);
+  --pst-color-admonition-note: var(--pst-color-info);
+  --pst-color-admonition-attention: var(--pst-color-warning);
+  --pst-color-admonition-caution: var(--pst-color-warning);
+  --pst-color-admonition-warning: var(--pst-color-warning);
+  --pst-color-admonition-danger: var(--pst-color-danger);
+  --pst-color-admonition-error: var(--pst-color-danger);
+  --pst-color-admonition-hint: var(--pst-color-success);
+  --pst-color-admonition-tip: var(--pst-color-success);
+  --pst-color-admonition-important: var(--pst-color-success);
+  --pst-color-admonition-background: var(--pst-color-background-up);
+  
+  --pst-color-guilabel-background: 242, 196, 166;
+  --pst-color-guilabel-border: 141, 95, 65;
+  --pst-color-guilabel-text: var(--pst-color-guilabel-border);
+
+  --pst-color-kbd-text: 33, 37, 41;
+  --pst-color-kbd-background: 245, 245, 245;
+}
+
+/*****************************************************************************
+* Images
+* 
+* Decrease the brightness and contrast of images a bit so that it looks 
+* comfortable to the eyes when it’s against a dark background
+**/
+img {
+  filter: brightness(.8) contrast(1.2);
+}

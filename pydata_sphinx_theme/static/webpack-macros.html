@@ -12,14 +12,19 @@
 {% endmacro %}
 
 {% macro head_pre_bootstrap() %}
+  <link href="{{ pathto('_static/css/dark-theme.css', 1) }}" rel="stylesheet">
   <link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet">
-  <link href="{{ pathto('_static/css/index.9639d9d9adffa9baf100883c376b3e71.css', 1) }}" rel="stylesheet">
+  <link href="{{ pathto('_static/css/index.ed17ea5e146a5950720d7591966e09fb.css', 1) }}" rel="stylesheet">
 {% endmacro %}
 
 {% macro head_js_preload() %}
-  <link rel="preload" as="script" href="{{ pathto('_static/js/index.e5c66028f5a0af3a71e2.js', 1) }}">
+  <link rel="preload" as="script" href="{{ pathto('_static/js/index.7dc5ab4a70a8571d75fd.js', 1) }}">
 {% endmacro %}
 
 {% macro body_post() %}
-  <script src="{{ pathto('_static/js/index.e5c66028f5a0af3a71e2.js', 1) }}"></script>
+  <script src="{{ pathto('_static/js/index.7dc5ab4a70a8571d75fd.js', 1) }}"></script>
+{% endmacro %}
+  
+{% macro head_post() %}
+  <link href="{{ pathto('_static/css/dark-pygment.css', 1) }}" rel="stylesheet">
 {% endmacro %}

@@ -1,12 +1,14 @@
 html {
   font-size: var(--pst-font-size-base);
   scroll-padding-top: calc(var(--pst-header-height) + 12px);
+  background: rgba(var(--pst-color-background), 1);
+  
 }
 
 body {
   padding-top: calc(var(--pst-header-height) + 20px);
-
-  background-color: white;
+  
+  background-color: rgba(var(--pst-color-background), 1);
   font-family: var(--pst-font-family-base);
   font-weight: 400;
   line-height: 1.65;
@@ -107,6 +109,11 @@ samp {
   font-family: var(--pst-font-family-monospace);
 }
 
+kbd {
+  color: rgba(var(--pst-color-kbd-text), 1);
+  background: rgba(var(--pst-color-kbd-background), 1);
+}
+
 code {
   color: rgba(var(--pst-color-inline-code), 1);
 }
@@ -114,12 +121,12 @@ code {
 pre {
   margin: 1.5em 0 1.5em 0;
   padding: 10px;
-  background-color: rgba(var(--pst-color-preformatted-background), 1);
+  background-color: rgba(var(--pst-color-preformatted-background), 1) !important; /* to overwrite the jupyter-sphinx one */
   color: rgba(var(--pst-color-preformatted-text), 1);
   line-height: 1.2em;
-  border: 1px solid rgb(201, 201, 201);
+  border: 1px solid rgba(var(--pst-color-preformatted-border), 1);
   border-radius: 0.2rem;
-  box-shadow: 1px 1px 1px #d8d8d8;
+  box-shadow: 1px 1px 1px rgba(var(--pst-color-preformatted-shadow), 1);
 }
 
 // Override bootstrap by restoring the basic theme default.
