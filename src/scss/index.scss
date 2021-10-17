@@ -169,6 +169,7 @@ footer {
 
 .bd-sidebar {
   padding-top: 1em;
+  overflow-y: auto;
 
   @include media-breakpoint-up(md) {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -196,10 +197,6 @@ footer {
   @include media-breakpoint-up(md) {
     display: block;
 
-    @supports (position: -webkit-sticky) or (position: sticky) {
-      max-height: calc(100vh - 11rem);
-      overflow-y: auto;
-    }
   }
 }
 
@@ -412,11 +409,11 @@ nav.bd-links {
 
     &.right-next {
       float: right;
-      
+
       div.prev-next-info {
         text-align: right;
       }
-    }    
+    }
   }
 }
 
