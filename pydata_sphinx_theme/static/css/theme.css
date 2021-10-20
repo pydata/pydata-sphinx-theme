@@ -116,5 +116,19 @@
   --pst-icon-admonition-hint: var(--pst-icon-lightbulb);
   --pst-icon-admonition-tip: var(--pst-icon-lightbulb);
   --pst-icon-admonition-important: var(--pst-icon-exclamation-circle);
+    
+  /*****************************************************************************
+  * versionmodified
+  **/
+    
+  --pst-color-versionmodified-default: var(--pst-color-info);
+  --pst-color-versionmodified-added: var(--pst-color-success);
+  --pst-color-versionmodified-changed: var(--pst-color-warning);
+  --pst-color-versionmodified-deprecated: var(--pst-color-danger);
+  
+  --pst-icon-versionmodified-default: var(--pst-icon-exclamation-circle);
+  --pst-icon-versionmodified-added: var(--pst-icon-exclamation-circle);
+  --pst-icon-versionmodified-changed: var(--pst-icon-exclamation-circle);
+  --pst-icon-versionmodified-deprecated: var(--pst-icon-exclamation-circle);
 
 }
