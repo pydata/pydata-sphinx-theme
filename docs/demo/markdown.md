@@ -1,35 +1,29 @@
-# Markdown pages
+# Markdown syntax
 
-Sphinx can also generate pages from Markdown, using the Recommonmark package.
-This page demonstrates that this is possible! Note that in order for your
-in-page table of contents to work properly, in-page Markdown headings (except for
-the title) should have at least two `#` symbols.
+Sphinx can also generate pages from Markdown, using the [MyST Parser](https://myst-parser.readthedocs.io).
+This page shows a few markdown-specific pieces of syntax.
+For a description of other markdown syntax that you can use with Sphinx, see [the `myst-parser` reference](https://myst-parser.readthedocs.io/en/latest/syntax/reference.html). 
 
-## A markdown section
+## Horizontal rules
 
-This section was created with `## A markdown section` - note that this is ATX-style
-heading, which rST usually does not support. However, with recommonmark it is possible!
+Here's a horizontal rule:
 
-## First top-level
+---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed sapien et sem scelerisque bibendum sed eget velit. Duis ut ultricies enim, vitae ultricies neque. Proin in purus eget orci posuere consequat sit amet ac augue. Aliquam dolor turpis, ultricies ac dui vel, maximus eleifend enim. Suspendisse eleifend orci non lectus mattis, pharetra blandit eros feugiat. Maecenas sed orci eget orci pharetra posuere id vel enim. Aenean ac lobortis lorem. Sed malesuada urna non consectetur condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+It separates major sections of content.
 
-### First second-level
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed sapien et sem scelerisque bibendum sed eget velit. Duis ut ultricies enim, vitae ultricies neque. Proin in purus eget orci posuere consequat sit amet ac augue. Aliquam dolor turpis, ultricies ac dui vel, maximus eleifend enim. Suspendisse eleifend orci non lectus mattis, pharetra blandit eros feugiat. Maecenas sed orci eget orci pharetra posuere id vel enim. Aenean ac lobortis lorem. Sed malesuada urna non consectetur condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
-## Second top-level
+## Footnotes
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed sapien et sem scelerisque bibendum sed eget velit. Duis ut ultricies enim, vitae ultricies neque. Proin in purus eget orci posuere consequat sit amet ac augue. Aliquam dolor turpis, ultricies ac dui vel, maximus eleifend enim. Suspendisse eleifend orci non lectus mattis, pharetra blandit eros feugiat. Maecenas sed orci eget orci pharetra posuere id vel enim. Aenean ac lobortis lorem. Sed malesuada urna non consectetur condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+Here's a footnote [^myfootnote]. And it should show up at the bottom!
 
-### Second second-level
+[^myfootnote]: Here's the text for the footnote!
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed sapien et sem scelerisque bibendum sed eget velit. Duis ut ultricies enim, vitae ultricies neque. Proin in purus eget orci posuere consequat sit amet ac augue. Aliquam dolor turpis, ultricies ac dui vel, maximus eleifend enim. Suspendisse eleifend orci non lectus mattis, pharetra blandit eros feugiat. Maecenas sed orci eget orci pharetra posuere id vel enim. Aenean ac lobortis lorem. Sed malesuada urna non consectetur condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
-## Third top-level
+## Tables
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed sapien et sem scelerisque bibendum sed eget velit. Duis ut ultricies enim, vitae ultricies neque. Proin in purus eget orci posuere consequat sit amet ac augue. Aliquam dolor turpis, ultricies ac dui vel, maximus eleifend enim. Suspendisse eleifend orci non lectus mattis, pharetra blandit eros feugiat. Maecenas sed orci eget orci pharetra posuere id vel enim. Aenean ac lobortis lorem. Sed malesuada urna non consectetur condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-
-### Third second-level
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed sapien et sem scelerisque bibendum sed eget velit. Duis ut ultricies enim, vitae ultricies neque. Proin in purus eget orci posuere consequat sit amet ac augue. Aliquam dolor turpis, ultricies ac dui vel, maximus eleifend enim. Suspendisse eleifend orci non lectus mattis, pharetra blandit eros feugiat. Maecenas sed orci eget orci pharetra posuere id vel enim. Aenean ac lobortis lorem. Sed malesuada urna non consectetur condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
