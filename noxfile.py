@@ -42,7 +42,7 @@ def _install_environment(session, yarn=True):
     try:
         bin = Path(session.bin)
     except ValueError:
-        # we are in a pass-through environment, just return an not install anything
+        # we are in a pass-through environment, just return and not install anything
         return
 
     if list(bin.rglob("sphinx-build")) and "reinstall" not in session.posargs:
