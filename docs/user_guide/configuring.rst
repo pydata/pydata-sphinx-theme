@@ -179,9 +179,10 @@ By default, this theme's sidebar has these two elements in it. If you'd like to
 override this behavior and control the sidebar on a per-page basis, use the
 `Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
+.. _navigation-depth:
 
-Configure the navigation depth and collapsing of the sidebar
-============================================================
+Navigation depth and collapsing of the sidebar
+==============================================
 
 By default, this theme enables to expand/collapse subsections in the left
 sidebar navigation (without actually navigating to the page itself), and this extends
@@ -189,29 +190,11 @@ up to 4 levels deep:
 
 .. image:: /_static/demo-expandable-navigation.gif
 
-When having a site with many files and/or many levels, this can cause a long
-build time and larger HTML file sizes. Therefore, it is possible to turn off
-the expandable navigation by setting the `collapse_navigation` config option
-to True:
 
-.. code:: python
+Control how many navigation levels are shown by default
+-------------------------------------------------------
 
-   html_theme_options = {
-     "collapse_navigation": True
-   }
-
-
-In addition, you can also control how many levels of the navigation are shown
-in the sidebar (with a default of 4):
-
-.. code:: python
-
-   html_theme_options = {
-     "navigation_depth": 2
-   }
-
-
-Finally, you can control how many navigation levels are shown when a page is
+You can control how many navigation levels are shown when a page is
 loaded. By default, this level is 1, and only top-level pages are shown,
 with drop-boxes to reveal their children. To make their children show up by
 default, you can use the following configuration in ``conf.py``:
@@ -224,6 +207,62 @@ default, you can use the following configuration in ``conf.py``:
 
 This will make the first two navigations show up by default (AKA, top-level
 pages and their immediate children).
+
+.. _remove_toctrees:
+
+Selectively remove pages from your sidebar
+------------------------------------------
+
+.. note::
+
+   This and the following sections are useful for sites that have a lot of pages (such as API
+   documentation with a lot of items). These take much longer to build and will have large
+   output sizes because of all the toctree links. These sections help with this problem,
+   ordered from least-to-most drastic.
+
+You can prevent pages from showing up in the navigation bar using a Sphinx
+extension called `sphinx-remove-toctrees <https://github.com/executablebooks/sphinx-remove-toctrees>`_.
+This is useful if your documentation generates lots of "stub pages" in a folder,
+which is common with API documentation.
+
+This lets you add a configuration like so:
+
+.. code-block::
+
+   remove_from_toctrees = ["folder_one/generated/*"]
+
+and any pages that are inside of ``folder_one/generated/`` will not show up in the sidebar.
+
+Check out the `sphinx-remove-toctrees documentation <https://github.com/executablebooks/sphinx-remove-toctrees#install>`_
+for information about how to install and use this extension.
+
+.. _navigation-levels:
+
+Control the number of navigation levels
+---------------------------------------
+
+In addition, you can also control how many levels of the navigation are shown
+in the sidebar (with a default of 4):
+
+.. code:: python
+
+   html_theme_options = {
+     "navigation_depth": 2
+   }
+
+
+Remove reveal buttons for sidebar items
+---------------------------------------
+
+It is possible to turn off the expandable navigation entirely by setting
+the `collapse_navigation` config option to True:
+
+.. code:: python
+
+   html_theme_options = {
+     "collapse_navigation": True
+   }
+
 
 Hiding the previous and next buttons
 ====================================
@@ -494,3 +533,14 @@ template is added to your list. For example:
 .. meta::
    :description lang=en:
        Configuration options for pydata-sphinx-theme
+
+Improve build speed and performance
+===================================
+
+By default this theme includes all of your documentation links in a collapsible sidebar.
+However, this may slow down your documentation builds considerably if you have
+a lot of documentation pages. This is most common with documentation for projects
+with a large API, which use the ``.. autosummary::`` directive to generate
+API documentation.
+
+To improve the performance of your builds in these cases, see :ref:`navigation-depth`.

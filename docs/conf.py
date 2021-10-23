@@ -36,7 +36,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "numpydoc",
-    "recommonmark",
+    "myst_parser",
     "jupyter_sphinx",
 ]
 
@@ -112,12 +112,3 @@ html_context = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-
-
-# -- Auto-convert markdown pages to demo -------------------------------------
-import recommonmark
-from recommonmark.transform import AutoStructify
-
-
-def setup(app):
-    app.add_transform(AutoStructify)
