@@ -36,7 +36,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "numpydoc",
-    "recommonmark",
+    "myst_parser",
     "jupyter_sphinx",
 ]
 
@@ -91,6 +91,7 @@ html_theme_options = {
     ],
     "use_edit_page_button": True,
     "show_toc_level": 1,
+    # "show_nav_level": 2,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     # "navbar_start": ["navbar-logo", "navbar-version"],
@@ -111,12 +112,3 @@ html_context = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-
-
-# -- Auto-convert markdown pages to demo -------------------------------------
-import recommonmark
-from recommonmark.transform import AutoStructify
-
-
-def setup(app):
-    app.add_transform(AutoStructify)

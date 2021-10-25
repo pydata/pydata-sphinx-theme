@@ -23,6 +23,8 @@ $grid-breakpoints: (
 @import './navbar';
 @import './admonitions';
 @import './api';
+@import './markdown';
+@import './versionmodified';
 
 // Custom css, TODO: to be refactored in different partials
 // GitHub blockquote style
@@ -46,20 +48,6 @@ dt.label > span.brackets:not(:only-child):after {
 a.footnote-reference {
   vertical-align: super;
   font-size: small;
-}
-
-div.deprecated {
-  margin-bottom: 10px;
-  margin-top: 10px;
-  padding: 7px;
-  background-color: #f3e5e5;
-  border: 1px solid #eed3d7;
-  border-radius: 0.5rem;
-
-  p {
-    color: #b94a48;
-    display: inline;
-  }
 }
 
 .topic {
@@ -182,6 +170,7 @@ footer {
 
 .bd-sidebar {
   padding-top: 1em;
+  overflow-y: auto;
 
   @include media-breakpoint-up(md) {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -209,10 +198,6 @@ footer {
   @include media-breakpoint-up(md) {
     display: block;
 
-    @supports (position: -webkit-sticky) or (position: sticky) {
-      max-height: calc(100vh - 11rem);
-      overflow-y: auto;
-    }
   }
 }
 
@@ -425,11 +410,11 @@ nav.bd-links {
 
     &.right-next {
       float: right;
-      
+
       div.prev-next-info {
         text-align: right;
       }
-    }    
+    }
   }
 }
 

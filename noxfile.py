@@ -45,15 +45,21 @@ def docs_live(session):
 
 
 @nox.session(name="test", venv_backend="conda")
-def tests(session):
+def test(session):
     _install_environment(session, yarn=False)
-    session.run("pytest")
+    session.install(".[test]")
+    session.run("pytest", *session.posargs)
 
 
 def _install_environment(session, yarn=True):
     """Install the JS and Python environment needed to develop the theme."""
     # Assume that if sphinx is already installed, we don't need to re-install
-    bin = Path(session.bin)
+    try:
+        bin = Path(session.bin)
+    except ValueError:
+        # we are in a pass-through environment, just return and not install anything
+        return
+
     if list(bin.rglob("sphinx-build")) and "reinstall" not in session.posargs:
         return
 

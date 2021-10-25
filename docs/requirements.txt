@@ -1,6 +1,6 @@
 sphinx
 numpydoc
-recommonmark
+myst-parser
 pandas
 pytest
 pytest-regressions
@@ -12,4 +12,3 @@ jupyter_sphinx
 plotly
 numpy
 xarray
-docutils==0.16  # temporary pin (0.17 broke captions)

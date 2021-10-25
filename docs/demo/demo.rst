@@ -463,8 +463,17 @@ Admonitions
       error
       hint
 
-Deprecated
-----------
+Version change
+--------------
+
+You can write in your documentation when something has been changed, 
+added or deprecated from one version to another.
+
+.. versionadded:: 0.1.1
+   Something is new, use it from now.
+
+.. versionchanged:: 0.1.1
+   Something is modified, check your version number.
 
 .. deprecated:: 0.1.1
    Something is deprecated, use something else instead.

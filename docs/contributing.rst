@@ -201,7 +201,7 @@ The easiest way to accomplish this is using `conda-forge <https://conda-forge.or
 
    .. code-block:: console
 
-       $ conda install -c conda-forge yarn nodejs>=14,<15
+       $ conda install -c conda-forge yarn "nodejs>=14,<15"
 
    Re recommend using node 14 as it is the latest LTS release of ``nodejs``.
 
