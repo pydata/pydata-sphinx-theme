@@ -1,6 +1,12 @@
 [
     {
-        "name": "v0.6.3 (latest)",
+        "name": "latest",
+        "version": "v0.7.1"
+    },
+    {
+        "version": "v0.7.0"
+    },
+    {
         "version": "v0.6.3"
     },
     {
