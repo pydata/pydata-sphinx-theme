@@ -190,16 +190,35 @@ up to 4 levels deep:
 
 .. image:: /_static/demo-expandable-navigation.gif
 
-Sites that have a lot of pages (such as API documentation with a lot of items)
-take much longer to build and will have large output sizes
-because of all the toctree links.
 
-Here are a few suggestions if you run into this problem, ordered from least-to-most drastic:
+Control how many navigation levels are shown by default
+-------------------------------------------------------
+
+You can control how many navigation levels are shown when a page is
+loaded. By default, this level is 1, and only top-level pages are shown,
+with drop-boxes to reveal their children. To make their children show up by
+default, you can use the following configuration in ``conf.py``:
+
+.. code:: python
+
+   html_theme_options = {
+     "show_nav_level": 2
+   }
+
+This will make the first two navigations show up by default (AKA, top-level
+pages and their immediate children).
 
 .. _remove_toctrees:
 
 Selectively remove pages from your sidebar
 ------------------------------------------
+
+.. note::
+
+   This and the following sections are useful for sites that have a lot of pages (such as API
+   documentation with a lot of items). These take much longer to build and will have large
+   output sizes because of all the toctree links. These sections help with this problem,
+   ordered from least-to-most drastic.
 
 You can prevent pages from showing up in the navigation bar using a Sphinx
 extension called `sphinx-remove-toctrees <https://github.com/executablebooks/sphinx-remove-toctrees>`_.
@@ -210,7 +229,7 @@ This lets you add a configuration like so:
 
 .. code-block::
 
-   remove_toctrees_from = ["folder_one/generated/*"]
+   remove_from_toctrees = ["folder_one/generated/*"]
 
 and any pages that are inside of ``folder_one/generated/`` will not show up in the sidebar.
 
