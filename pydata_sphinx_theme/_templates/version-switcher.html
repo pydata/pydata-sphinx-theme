@@ -16,6 +16,24 @@ function buildURL(entry) {
     return template;
 }
 
+// Function to check if corresponding page path exists in other version of docs
+// and, if so, go there instead of the homepage of the other docs version
+function checkPageExistsAndRedirect(event) {
+    const currentFilePath = "{{ pagename }}.html",
+          otherDocsHomepage = event.target.getAttribute("data-href");
+    let tryUrl = `${otherDocsHomepage}${currentFilePath}`;
+    $.ajax({
+        type: 'HEAD',
+        url: tryUrl,
+        // if the page exists, go there
+        success: function() {
+            location.href = tryUrl;
+        }
+    }).fail(function() {
+        location.href = otherDocsHomepage;
+    });
+}
+
 // Function to populate the version switcher
 (function () {
     // get JSON config
@@ -29,21 +47,12 @@ function buildURL(entry) {
             }
             // construct the appropriate URL, and add it to the dropdown
             entry.url = buildURL(entry);
-            $("#version_switcher").append(`<a class="list-group-item list-group-item-action py-1" href="${entry.url}">${entry.name}</a>`);
-        });
-        // see if the current page exists in the other versions of the docs
-        const filePath = "{{ pagename }}.html",
-              version_items = $("#version_switcher").children();
-        $.each(version_items, function(index, node) {
-            let newUrl = `${node.href}${filePath}`;
-            $.ajax({
-                type: 'HEAD',
-                url: newUrl,
-                // update the target URL if it exists
-                success: function() {
-                    node.setAttribute("href", newUrl);
-                }
-            });
+            const node = document.createElement("a");
+            node.setAttribute("class", "list-group-item list-group-item-action py-1");
+            node.setAttribute("data-href", `${entry.url}`);
+            node.textContent = `${entry.name}`;
+            node.onclick = checkPageExistsAndRedirect;
+            $("#version_switcher").append(node);
         });
     });
 })();
