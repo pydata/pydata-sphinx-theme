@@ -27,7 +27,21 @@ def docs(session):
 @nox.session(name="docs-live", venv_backend="conda")
 def docs_live(session):
     _install_environment(session)
-    session.run("yarn", "build:dev")
+    # fmt: off
+    session.run(
+        "sphinx-autobuild",
+        "--watch", "pydata_sphinx_theme",
+        "--watch", "src",
+        "--pre-build", "yarn build",
+        "--re-ignore", "pydata_sphinx_theme/static/.*",
+        "--re-ignore", "pydata_sphinx_theme/static/theme.conf",
+        "--re-ignore", "_build/.*",
+        "--delay", "2",
+        "--port", "0",
+        "--open-browser",
+        "-n", "-b", "html", "docs/", "docs/_build/html"
+    )
+    # fmt: on
 
 
 @nox.session(name="test", venv_backend="conda")

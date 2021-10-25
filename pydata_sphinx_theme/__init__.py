@@ -195,62 +195,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         else:
             return soup
 
-    # TODO: Deprecate in v0.7.0
-    def get_nav_object(maxdepth=None, collapse=True, includehidden=True, **kwargs):
-        """Return a list of nav links that can be accessed from Jinja.
-
-        Parameters
-        ----------
-        maxdepth: int
-            How many layers of TocTree will be returned
-        collapse: bool
-            Whether to only include sub-pages of the currently-active page,
-            instead of sub-pages of all top-level pages of the site.
-        kwargs: key/val pairs
-            Passed to the `toctree` Sphinx method
-        """
-        if context["master_doc"] == pagename:
-            logger.warn("`get_nav_object` is deprecated and will be removed in v0.7.0")
-
-        toc_sphinx = context["toctree"](
-            maxdepth=maxdepth, collapse=collapse, includehidden=includehidden, **kwargs
-        )
-        soup = bs(toc_sphinx, "html.parser")
-
-        # # If no toctree is defined (AKA a single-page site), skip this
-        # if toctree is None:
-        #     return []
-
-        nav_object = soup_to_python(soup, only_pages=True)
-
-        return nav_object
-
-    # TODO: Deprecate in v0.7.0
-    def get_page_toc_object():
-        """Return a list of within-page TOC links that can be accessed from Jinja."""
-
-        if context["master_doc"] == pagename:
-            logger.warn(
-                ("`get_page_toc_object` is deprecated and will be " "removed in v0.7.0")
-            )
-
-        if "toc" not in context:
-            return ""
-
-        soup = bs(context["toc"], "html.parser")
-
-        try:
-            toc_object = soup_to_python(soup, only_pages=False)
-        except Exception:
-            return []
-
-        # If there's only one child, assume we have a single "title" as top header
-        # so start the TOC at the first item's children (AKA, level 2 headers)
-        if len(toc_object) == 1:
-            return toc_object[0]["children"]
-        else:
-            return toc_object
-
     def navbar_align_class():
         """Return the class that aligns the navbar based on config."""
         align = context.get("theme_navbar_align", "content")
@@ -306,8 +250,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
     context["generate_nav_html"] = generate_nav_html
     context["generate_toc_html"] = generate_toc_html
-    context["get_nav_object"] = get_nav_object
-    context["get_page_toc_object"] = get_page_toc_object
     context["navbar_align_class"] = navbar_align_class
     context["generate_google_analytics_script"] = generate_google_analytics_script
 

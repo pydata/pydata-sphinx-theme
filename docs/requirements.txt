@@ -6,6 +6,7 @@ pytest
 pytest-regressions
 beautifulsoup4
 sphinx-sitemap
+sphinx-autobuild
 # For demo examples
 jupyter_sphinx
 plotly
