@@ -9,68 +9,28 @@
 </div>
 
 <script type="text/javascript">
-// Function to discover the current language from the window URL
-function getLanguage() {
-    var language,
-        url = window.location;
-    const template = "{{ switcher_template_url }}",  // filled in by jinja
-          template_parts = template.split(/[\{\}]/),
-          version_ix = template_parts.indexOf("version"),
-          language_ix = template_parts.indexOf("language");
-    // find corresponding location in current page's URL
-    for (let ix = 0; ix < template_parts.length; ix++) {
-        // remove non-template URL parts
-        if (ix !== language_ix && ix !== version_ix) {
-            url = url.replace(template_parts[ix], "");
-        }
-        // remove the version too, if we encounter it before we find language
-        else if (ix == version_ix) {
-            version = url.substr(0, url.indexOf(template_parts[ix + 1]));
-            url = url.replace(version, "");
-        } else {
-            // we've found the language, extract it and return
-            language = url.substr(0, url.indexOf(template_parts[ix + 1]));
-            break;
-        }
-    }
-    return language;
-}
-
 // Function to construct the target URL from the JSON components
 function buildURL(entry) {
     var template = "{{ switcher_template_url }}";  // supplied by jinja
     template = template.replace("{version}", entry.version);
-    template = template.replace("{language}", entry.language);
     return template;
 }
 
 // Function to populate the version switcher
 (function () {
-    const language = getLanguage();
     // get JSON config
     $.getJSON("{{ switcher_json_url }}", function(data, textStatus, jqXHR) {
         // create the nodes first (before AJAX calls) to ensure the order is
         // correct (for now, links will go to doc version homepage)
         $.each(data, function(index, entry) {
-            // only include entries that match the current language
-            if (language.length && "languages" in entry) {
-                if (language in entry.languages) {
-                    entry.language = language;
-                } else {  // this version unavailable in current language
-                    continue;
-                }
-            }
-
             // if no custom name specified (e.g., "latest"), use version string
             if (!("name" in entry)) {
                 entry.name = entry.version;
             }
-
             // construct the appropriate URL, and add it to the dropdown
             entry.url = buildURL(entry);
             $("#version_switcher").append(`<a class="list-group-item list-group-item-action py-1" href="${entry.url}">${entry.name}</a>`);
         });
-
         // see if the current page exists in the other versions of the docs
         const filePath = "{{ pagename }}.html",
               version_items = $("#version_switcher").children();
