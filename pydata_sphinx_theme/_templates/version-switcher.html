@@ -1,6 +1,6 @@
 <div class="dropdown">
     <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
-        {{ release }}
+        {{ release }}  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div id="version_switcher" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
@@ -59,6 +59,11 @@ function checkPageExistsAndRedirect(event) {
             // that version of the docs.
             node.onclick = checkPageExistsAndRedirect;
             $("#version_switcher").append(node);
+            // replace the dropdown button text with the preferred display name
+            // of this version, rather than using the {{ release }} variable
+            if (entry.version == "{{ release }}") {
+                $("#version_switcher_button").text(entry.name);
+            }
         });
     });
 })();
