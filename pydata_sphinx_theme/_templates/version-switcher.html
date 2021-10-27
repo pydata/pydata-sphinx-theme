@@ -32,12 +32,13 @@ function checkPageExistsAndRedirect(event) {
     }).fail(function() {
         location.href = otherDocsHomepage;
     });
+    // this prevents the browser from following the href of the clicked node
+    // (which is fine because this function takes care of redirecting)
     return false;
 }
 
-// Function to populate the version switcher
+// Function to populate the version switcher from the JSON config file
 (function () {
-    // get JSON config
     $.getJSON("{{ switcher_json_url }}", function(data, textStatus, jqXHR) {
         // create the nodes first (before AJAX calls) to ensure the order is
         // correct (for now, links will go to doc version homepage)
@@ -52,6 +53,10 @@ function checkPageExistsAndRedirect(event) {
             node.setAttribute("class", "list-group-item list-group-item-action py-1");
             node.setAttribute("href", `${entry.url}`);
             node.textContent = `${entry.name}`;
+            // on click, AJAX calls will check if the page corresponding to the
+            // current page exists in the requested other docs version, and if
+            // so, will redirect to that page rather than the "homepage" for
+            // that version of the docs.
             node.onclick = checkPageExistsAndRedirect;
             $("#version_switcher").append(node);
         });
