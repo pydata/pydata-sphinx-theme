@@ -20,8 +20,8 @@ function buildURL(entry) {
 // and, if so, go there instead of the homepage of the other docs version
 function checkPageExistsAndRedirect(event) {
     const currentFilePath = "{{ pagename }}.html",
-          otherDocsHomepage = event.target.getAttribute("href");
-    let tryUrl = `${otherDocsHomepage}${currentFilePath}`;
+          tryUrl = event.target.getAttribute("href");
+    let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
     $.ajax({
         type: 'HEAD',
         url: tryUrl,
@@ -40,23 +40,24 @@ function checkPageExistsAndRedirect(event) {
 // Function to populate the version switcher from the JSON config file
 (function () {
     $.getJSON("{{ switcher_json_url }}", function(data, textStatus, jqXHR) {
-        // create the nodes first (before AJAX calls) to ensure the order is
-        // correct (for now, links will go to doc version homepage)
+        const currentFilePath = "{{ pagename }}.html";
+        // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
             // if no custom name specified (e.g., "latest"), use version string
             if (!("name" in entry)) {
                 entry.name = entry.version;
             }
-            // construct the appropriate URL, and add it to the dropdown
-            entry.url = buildURL(entry);
+            // create the node
             const node = document.createElement("a");
             node.setAttribute("class", "list-group-item list-group-item-action py-1");
-            node.setAttribute("href", `${entry.url}`);
             node.textContent = `${entry.name}`;
-            // on click, AJAX calls will check if the page corresponding to the
-            // current page exists in the requested other docs version, and if
-            // so, will redirect to that page rather than the "homepage" for
-            // that version of the docs.
+            // get the base URL for that doc version, add the current page's
+            // path to it, and set as `href`
+            entry.url = buildURL(entry);
+            node.setAttribute("href", `${entry.url}${currentFilePath}`);
+            // on click, AJAX calls will check if the linked page exists before
+            // trying to redirect, and if not, will redirect to the homepage
+            // for that version of the docs.
             node.onclick = checkPageExistsAndRedirect;
             $("#version_switcher").append(node);
             // replace the dropdown button text with the preferred display name
