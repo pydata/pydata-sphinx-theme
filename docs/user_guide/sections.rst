@@ -11,7 +11,7 @@ You can choose which templates show up in each section, as well as the order in
 which they appear. This page describes the major areas that you can customize.
 
 .. note::
-    
+
    When configuring templates in each section, you may omit the ``.html``
    suffix after each template if you wish.
 
@@ -118,6 +118,7 @@ will be named accordingly).
 - ``sidebar-ethical-ads.html``
 - ``sidebar-nav-bs.html``
 - ``sphinx-version.html``
+- ``version-switcher.html``
 
 Add your own HTML templates to theme sections
 =============================================
@@ -136,7 +137,7 @@ could do so with the following steps:
       {{ version }}
 
 1. Now add the file to your menu items for one of the sections above. For example:
-   
+
    .. code-block:: python
 
       html_theme_options = {

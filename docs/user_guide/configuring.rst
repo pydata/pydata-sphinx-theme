@@ -277,6 +277,81 @@ at the bottom. You can hide these buttons with the following configuration:
    }
 
 
+Add a dropdown to switch between docs versions
+==============================================
+
+You can add a button to your site's navbar or sidebars that allows users to
+switch between versions of the documentation. The versions shown in the
+dropdown are populated from a JSON file containing a list of mappings, where
+each mapping contains a key ``"version"`` mapped to a string value representing
+the version number. Each mapping may optionally contain a key ``"name"`` mapped
+to a name for that version (e.g., "latest", "stable", "dev", etc). Here is an
+example:
+
+.. code:: json
+
+    [
+        {
+            "name": "v2.1 (stable)",
+            "version": "2.1"
+        },
+        {
+            "version": "2.0"
+        },
+        {
+            "version": "1.1"
+        },
+    ]
+
+The location of this JSON file should be included in ``conf.py`` as the
+``switcher_json_url`` value within the ``html_context`` dictionary.
+Additionally, you must provide a *template URL* that will yield the correct
+address for the doc versions once the version string is inserted into the
+template in place of the ``{version}`` placeholder. For example:
+
+.. code:: python
+
+    html_context = {
+        "switcher_json_url": "https://mysite.org/en/latest/_static/switcher.json",
+        "switcher_template_url": "https://mysite.org/en/v{version}/",
+    }
+
+.. note::
+    The JSON file must be available at page load time. Best practice is to use
+    a stable URL that is not relative to the sphinx root of the current doc
+    build, so that as new versions are added to the JSON file all the older
+    versions of the docs will gain menu entries linking to the new versions.
+
+    The stable URL could be one that is always associated with the most recent
+    documentation build (as above, where it points to a location in version
+    "latest"); in this case the JSON is versioned alongside the rest of the
+    docs but only the most recent version is ever loaded. Alternatively the
+    JSON could be outside the doc build trees (e.g.,
+    ``https://mysite.org/switcher.json``) and you can add new versions to it as
+    part of your release process.
+
+With those settings in place, all that is left is to tell the theme where you
+want the version switcher to appear. For example, you could add the
+dropdown to the navbar by including the following setting in ``conf.py``:
+
+.. code:: python
+
+   html_theme_options = {
+        "navbar_end": ["version-switcher"]
+    }
+
+
+Switcher behavior
+-----------------
+
+The links in the version switcher will differ depending on which page of the
+docs is being viewed. For example, on the page
+``https://mysite.org/en/v2.0/changelog.html``, the switcher links will go to
+``changelog.html`` in the other versions of the docs. However, when clicked it
+will check for the existence of that page, and if it doesn't exist, redirect to
+the homepage of that doc version instead.
+
+
 Add an Edit this Page button
 ============================
 
