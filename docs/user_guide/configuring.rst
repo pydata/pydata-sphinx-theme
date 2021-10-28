@@ -307,28 +307,35 @@ The location of this JSON file should be included in ``conf.py`` as the
 ``switcher_json_url`` value within the ``html_context`` dictionary.
 Additionally, you must provide a *template URL* that will yield the correct
 address for the doc versions once the version string is inserted into the
-template in place of the ``{version}`` placeholder. For example:
+template in place of the ``{version}`` placeholder. Finally, specify in
+``switcher_version_match`` a value that the version entries in the JSON file
+will be matched against (typically this will be the sphinx variable ``version``
+or ``release`` depending on how granular your docs versioning is; see
+`the Sphinx documentation <https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information>`__
+for more info). An example configuration would be:
 
 .. code:: python
 
+    version = my_package_name.__version__.replace("dev0", "")  # may differ
     html_context = {
         "switcher_json_url": "https://mysite.org/en/latest/_static/switcher.json",
         "switcher_template_url": "https://mysite.org/en/v{version}/",
+        "switcher_version_match": version,
     }
 
 .. note::
-    The JSON file must be available at page load time. Best practice is to use
-    a stable URL that is not relative to the sphinx root of the current doc
-    build, so that as new versions are added to the JSON file all the older
-    versions of the docs will gain menu entries linking to the new versions.
+    Best practice for the JSON file is to use a stable URL that is not relative
+    to the sphinx root of the current doc build, so that as new versions are
+    added to the JSON file all the older versions of the docs will gain menu
+    entries linking to the new versions.
 
     The stable URL could be one that is always associated with the most recent
-    documentation build (as above, where it points to a location in version
-    "latest"); in this case the JSON is versioned alongside the rest of the
-    docs but only the most recent version is ever loaded. Alternatively the
-    JSON could be outside the doc build trees (e.g.,
-    ``https://mysite.org/switcher.json``) and you can add new versions to it as
-    part of your release process.
+    documentation build (as above, where it points to a location in the build
+    tree of version "latest"); in this case the JSON is versioned alongside the
+    rest of the docs pages but only the most recent version is ever loaded.
+    Alternatively the JSON could be outside the doc build trees (e.g.,
+    ``https://mysite.org/switcher.json``) and you can add new version entries
+    to it as part of your release process.
 
 With those settings in place, all that is left is to tell the theme where you
 want the version switcher to appear. For example, you could add the
@@ -343,6 +350,11 @@ dropdown to the navbar by including the following setting in ``conf.py``:
 
 Switcher behavior
 -----------------
+
+The switcher button text is initially set to the value of the
+``switcher_version_match`` variable from ``conf.py`` (see above), but will be
+replaced by the ``name`` value of the JSON entry that matches the current
+version (if ``name`` is defined for that version).
 
 The links in the version switcher will differ depending on which page of the
 docs is being viewed. For example, on the page

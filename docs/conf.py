@@ -109,6 +109,7 @@ html_context = {
     "doc_path": "docs",
     "switcher_json_url": "/_static/switcher.json",
     "switcher_template_url": "https://pydata-sphinx-theme.readthedocs.io/en/v{version}/",
+    "switcher_version_match": version,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
