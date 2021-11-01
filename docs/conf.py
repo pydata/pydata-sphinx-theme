@@ -99,6 +99,10 @@ html_theme_options = {
     # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
     "navbar_end": ["version-switcher", "navbar-icon-links"],
     # "footer_items": ["copyright", "sphinx-version", ""]
+    "switcher_json_url": "/_static/switcher.json",
+    # "switcher_json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
+    "switcher_url_template": "https://pydata-sphinx-theme.readthedocs.io/en/v{version}/",
+    "switcher_version_match": version,
 }
 
 
@@ -107,10 +111,6 @@ html_context = {
     "github_repo": "pydata-sphinx-theme",
     "github_version": "master",
     "doc_path": "docs",
-    # "switcher_json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
-    "switcher_json_url": "/_static/switcher.json",
-    "switcher_url_template": "https://pydata-sphinx-theme.readthedocs.io/en/v{version}/",
-    "switcher_version_match": version,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

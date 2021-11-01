@@ -293,7 +293,8 @@ The switcher requires the following configuration steps:
 1. Add a JSON file containing a list of the documentation versions that the
    switcher should show on each page.
 
-2. Add three configuration keys to the ``html_context`` dict in ``conf.py``:
+2. Add three configuration keys to the ``html_theme_options`` dict in
+   ``conf.py``:
 
    - ``switcher_json_url``: the persistent location of the JSON file described
      above.
@@ -361,7 +362,7 @@ a few different ways:
 
   .. code:: python
 
-      html_context = {
+      html_theme_options = {
           ...,
           "switcher_json_url": "https://mysite.org/en/latest/_static/switcher.json",
       }
@@ -381,7 +382,7 @@ a few different ways:
 
   .. code:: python
 
-      html_context = {
+      html_theme_options = {
           ...,
           "switcher_json_url": "https://mysite.org/switcher.json",
       }
@@ -397,7 +398,7 @@ The switcher's links to other versions of your docs are made by combining the
 
 .. code:: python
 
-    html_context = {
+    html_theme_options = {
         ...,
         "switcher_url_template": "https://mysite.org/en/version-{version}/",
     }
@@ -425,7 +426,7 @@ for more information). Example:
 .. code:: python
 
     version = my_package_name.__version__.replace("dev0", "")  # may differ
-    html_context = {
+    html_theme_options = {
         ...,
         "switcher_version_match": version,
     }
