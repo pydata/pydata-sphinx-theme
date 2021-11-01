@@ -454,7 +454,7 @@ version switcher in a sidebar. For example, you could define
 
 .. code:: jinja
 
-    {%- include 'homepage.html' -%}
+    {%- include 'version-switcher.html' -%}
     {{ super() }}
 
 to insert a version switcher at the top of the left sidebar, while still
