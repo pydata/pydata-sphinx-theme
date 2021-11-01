@@ -15,7 +15,7 @@
 -->
 
 <script type="text/javascript">
-// Function to construct the target URL from the JSON components
+// Construct the target URL from the JSON components
 function buildURL(entry) {
     var template = "{{ theme_switcher_url_template }}";  // supplied by jinja
     template = template.replace("{version}", entry.version);
@@ -67,7 +67,9 @@ function checkPageExistsAndRedirect(event) {
             node.onclick = checkPageExistsAndRedirect;
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
-            // this version, rather than using sphinx's {{ version }} variable
+            // this version, rather than using sphinx's {{ version }} variable.
+            // also highlight the dropdown entry for the currently-viewed
+            // version's entry
             if (entry.version == "{{ theme_switcher_version_match }}") {
                 node.classList.add("active");
                 $("#version_switcher_button").text(entry.name);
