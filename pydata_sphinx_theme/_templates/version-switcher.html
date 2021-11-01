@@ -11,12 +11,12 @@
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
      variables {{ pagename }}, {{ switcher_json_url }},
-     {{ switcher_template_url }}, and {{ switcher_version_match }}. -->
+     {{ switcher_url_template }}, and {{ switcher_version_match }}. -->
 
 <script type="text/javascript">
 // Function to construct the target URL from the JSON components
 function buildURL(entry) {
-    var template = "{{ switcher_template_url }}";  // supplied by jinja
+    var template = "{{ switcher_url_template }}";  // supplied by jinja
     template = template.replace("{version}", entry.version);
     return template;
 }
@@ -68,6 +68,7 @@ function checkPageExistsAndRedirect(event) {
             // replace dropdown button text with the preferred display name of
             // this version, rather than using sphinx's {{ version }} variable
             if (entry.version == "{{ switcher_version_match }}") {
+                node.classList.add("active");
                 $("#version_switcher_button").text(entry.name);
             }
         });
