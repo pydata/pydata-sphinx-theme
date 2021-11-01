@@ -281,12 +281,32 @@ Add a dropdown to switch between docs versions
 ==============================================
 
 You can add a button to your site's navbar or sidebars that allows users to
-switch between versions of the documentation. The versions shown in the
-dropdown are populated from a JSON file containing a list of mappings, where
-each mapping contains a key ``"version"`` mapped to a string value representing
-the version number. Each mapping may optionally contain a key ``"name"`` mapped
-to a name for that version (e.g., "latest", "stable", "dev", etc). Here is an
-example:
+switch between versions of the documentation.
+The links in the version switcher will differ depending on which page of the
+docs is being viewed. For example, on the page
+``https://mysite.org/en/v2.0/changelog.html``, the switcher links will go to
+``changelog.html``. When clicked, the switcher will check for the existence of that page, and if it doesn't exist, redirect to the homepage of that doc version instead.
+
+This is accomplished via the following configuration keys:
+
+- A JSON file that is a list the documentation versions that should be available on each page.
+- A ``json_url`` configuration that defines the persistent location of the file above, so that documentation from older docs versions have their switcher options defined by this single source.
+- A ``template_url`` configuration that defines how your documentation versions should be inserted into URLs to create links to other versions of your documentation.
+- A ``version_match`` configuration that tells the switcher the version of the documentation that is currently being browsed.
+
+Below is a more in-depth description of each of these configuration options, and steps to add a switcher to your documentation.
+
+Add a JSON file to define your switcher's versions
+--------------------------------------------------
+
+First, you must define a JSON file that acts as the single source of truth for what versions should be available to switch between. This file contains a list of entries that have two fields:
+
+- ``version``: a version number, as defined by the ``version_match`` key (see below)
+- ``name``: an optional name to display in the dropdown, instead of the version number. (e.g., "latest", "stable", "dev", etc).
+
+**You must include this file with your documentation's build**. For example, by adding it to a folder that is listed under your site's ``html_static_path`` configuration (see `the Sphinx static path documentation <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_static_path>`_ for more information.
+
+Here is an example of what this file should look like:
 
 .. code:: json
 
@@ -303,16 +323,27 @@ example:
         },
     ]
 
-The location of this JSON file should be included in ``conf.py`` as the
-``switcher_json_url`` value within the ``html_context`` dictionary.
-Additionally, you must provide a *template URL* that will yield the correct
-address for the doc versions once the version string is inserted into the
-template in place of the ``{version}`` placeholder. Finally, specify in
-``switcher_version_match`` a value that the version entries in the JSON file
-will be matched against (typically this will be the sphinx variable ``version``
-or ``release`` depending on how granular your docs versioning is; see
-`the Sphinx documentation <https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information>`__
-for more info). An example configuration would be:
+
+Configure Sphinx to use this file to populate the switcher
+----------------------------------------------------------
+
+You must next configure your documentation to use this file, and to properly create URLs for other documentation versions using the variables stored within it.
+
+To do so, you must add the following configuration variables to the ``html_context`` key in your ``conf.py`` file:
+
+- ``switcher_json_url``:  The **persistent** URL of the switcher configuration that serves as the "source of truth". Each version of your documentation should point to the same value, so that they all have the same database of switcher versions to use. This should be a fully-resolved URL, like ``http://mydocumentation.readthedocs.org/en/latest/_static/switcher.json``.
+
+  .. note::
+
+     As a general rule, a good choice is to use a URL that is always associated with the most 
+     recent documentation build (as above, where it points to a location in the build
+     tree of version "latest").  Alternatively the JSON could be hosted in a persistent place 
+     outside of any one documentation build (e.g., ``https://mysite.org/switcher.json``).
+- ``switcher_template_url``: A *template URL* that has a field where the version value should be inserted. This is used to create the URL that the switcher links will point to. For example, if your ``switcher_template_url`` is ``"https://mysite.org/en/version-{version}/"`` then the switcher link for version ``1.1`` will be ``"https://mysite.org/en/version-1.1/"``
+- ``switcher_version_match``: A string that defines the version of the *current* documentation. This is used to tell the switcher which version of the documentation is currently open. It is best if you make this value match the ``version`` or ``release`` value of your package, by automatically loading it as a variable from your package (see the example below, and see
+`the Sphinx documentation <https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information>`__ for more info).
+
+Below is an example configuration that automatically loads the version from a package, and defines a switcher URL template that follows the ``ReadTheDocs`` pattern.
 
 .. code:: python
 
@@ -323,46 +354,19 @@ for more info). An example configuration would be:
         "switcher_version_match": version,
     }
 
-.. note::
-    Best practice for the JSON file is to use a stable URL that is not relative
-    to the sphinx root of the current doc build, so that as new versions are
-    added to the JSON file all the older versions of the docs will gain menu
-    entries linking to the new versions.
+Add the switcher template to your sidebar or navbar
+---------------------------------------------------
 
-    The stable URL could be one that is always associated with the most recent
-    documentation build (as above, where it points to a location in the build
-    tree of version "latest"); in this case the JSON is versioned alongside the
-    rest of the docs pages but only the most recent version is ever loaded.
-    Alternatively the JSON could be outside the doc build trees (e.g.,
-    ``https://mysite.org/switcher.json``) and you can add new version entries
-    to it as part of your release process.
-
-With those settings in place, all that is left is to tell the theme where you
-want the version switcher to appear. For example, you could add the
-dropdown to the navbar by including the following setting in ``conf.py``:
+Finally, you can insert the switcher into either the navigation bar or sidebar of your documentation by including its template in one of your navigation locations.
+For example, you could add the dropdown to the navbar by including the following setting in ``conf.py``:
 
 .. code:: python
 
    html_theme_options = {
         "navbar_end": ["version-switcher"]
     }
-
-
-Switcher behavior
------------------
-
-The switcher button text is initially set to the value of the
-``switcher_version_match`` variable from ``conf.py`` (see above), but will be
-replaced by the ``name`` value of the JSON entry that matches the current
-version (if ``name`` is defined for that version).
-
-The links in the version switcher will differ depending on which page of the
-docs is being viewed. For example, on the page
-``https://mysite.org/en/v2.0/changelog.html``, the switcher links will go to
-``changelog.html`` in the other versions of the docs. However, when clicked it
-will check for the existence of that page, and if it doesn't exist, redirect to
-the homepage of that doc version instead.
-
+    
+See :doc:`sections` for more information.
 
 Add an Edit this Page button
 ============================

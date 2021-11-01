@@ -21,7 +21,7 @@ function buildURL(entry) {
     return template;
 }
 
-// Function to check if corresponding page path exists in other version of docs
+// Check if corresponding page path exists in other version of docs
 // and, if so, go there instead of the homepage of the other docs version
 function checkPageExistsAndRedirect(event) {
     const currentFilePath = "{{ pagename }}.html",
@@ -42,7 +42,7 @@ function checkPageExistsAndRedirect(event) {
     return false;
 }
 
-// Function to populate the version switcher from the JSON config file
+// Populate the version switcher from the JSON config file
 (function () {
     $.getJSON("{{ switcher_json_url }}", function(data, textStatus, jqXHR) {
         const currentFilePath = "{{ pagename }}.html";
