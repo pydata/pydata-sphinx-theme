@@ -280,7 +280,7 @@ at the bottom. You can hide these buttons with the following configuration:
 Add a dropdown to switch between docs versions
 ==============================================
 
-You can add a button to your site's navbar or sidebars that allows users to
+You can add a button to your site that allows users to
 switch between versions of your documentation. The links in the version
 switcher will differ depending on which page of the docs is being viewed. For
 example, on the page ``https://mysite.org/en/v2.0/changelog.html``, the
@@ -403,7 +403,7 @@ The switcher's links to other versions of your docs are made by combining the
     }
 
 The example above will result in a link to
-``"https://mysite.org/en/version-1.0/"`` for the JSON entry for version
+``https://mysite.org/en/version-1.0/`` for the JSON entry for version
 ``"1.0"``.
 
 
