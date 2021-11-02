@@ -293,15 +293,14 @@ The switcher requires the following configuration steps:
 1. Add a JSON file containing a list of the documentation versions that the
    switcher should show on each page.
 
-2. Add three configuration keys to the ``html_theme_options`` dict in
-   ``conf.py``:
+2. Add a configuration dictionary called ``switcher`` to the
+   ``html_theme_options`` dict in ``conf.py``. ``switcher`` should have 3 keys:
 
-   - ``switcher_json_url``: the persistent location of the JSON file described
-     above.
-   - ``switcher_url_template``: a template string used to generate the correct
-     URLs for the different documentation versions.
-   - ``switcher_version_match``: a string stating the version of the
-     documentation that is currently being browsed.
+   - ``json_url``: the persistent location of the JSON file described above.
+   - ``url_template``: a template string used to generate the correct URLs for
+     the different documentation versions.
+   - ``version_match``: a string stating the version of the documentation that
+     is currently being browsed.
 
 3. Specify where to place the switcher in your page layout. For example, add
    the ``"version-switcher"`` template to one of the layout lists in
@@ -317,9 +316,9 @@ First, write a JSON file stating which versions of your docs will be listed in
 the switcher's dropdown menu. That file should contain a list of entries that
 each have one or two fields:
 
-- ``version``: a version string. This will be inserted into the
-  ``switcher_url_template`` to create the links to other docs versions, and
-  also checked against ``switcher_version_match`` to provide styling to the
+- ``version``: a version string. This will be inserted into
+  ``switcher['url_template']`` to create the links to other docs versions, and
+  also checked against ``switcher['version_match']`` to provide styling to the
   switcher.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
@@ -341,12 +340,12 @@ Here is an example JSON file:
         },
     ]
 
-See the discussion of ``switcher_json_url`` (below) for options of where to
+See the discussion of ``switcher['json_url']`` (below) for options of where to
 save the JSON file.
 
 
-Configure ``switcher_json_url``
--------------------------------
+Configure ``switcher['json_url']``
+----------------------------------
 
 The JSON file needs to be at a stable, persistent, fully-resolved URL (i.e.,
 not specified as a path relative to the sphinx root of the current doc build).
@@ -364,7 +363,9 @@ a few different ways:
 
       html_theme_options = {
           ...,
-          "switcher_json_url": "https://mysite.org/en/latest/_static/switcher.json",
+          "switcher": {
+              "json_url": "https://mysite.org/en/latest/_static/switcher.json",
+          }
       }
 
   In this case the JSON is versioned alongside the rest of the docs pages but
@@ -384,23 +385,27 @@ a few different ways:
 
       html_theme_options = {
           ...,
-          "switcher_json_url": "https://mysite.org/switcher.json",
+          "switcher": {
+              "json_url": "https://mysite.org/switcher.json",
+          }
       }
 
 
-Configure ``switcher_url_template``
------------------------------------
+Configure ``switcher['url_template']``
+--------------------------------------
 
 The switcher's links to other versions of your docs are made by combining the
 *version strings* from the JSON file with a *template string* you provide in
-``switcher_url_template``. The template string must contain a placeholder
+``switcher['url_template']``. The template string must contain a placeholder
 ``{version}`` and otherwise be a fully-resolved URL. For example:
 
 .. code:: python
 
     html_theme_options = {
         ...,
-        "switcher_url_template": "https://mysite.org/en/version-{version}/",
+        "switcher": {
+            "url_template": "https://mysite.org/en/version-{version}/",
+        }
     }
 
 The example above will result in a link to
@@ -408,8 +413,8 @@ The example above will result in a link to
 ``"1.0"``.
 
 
-Configure ``switcher_version_match``
-------------------------------------
+Configure ``switcher['version_match']``
+---------------------------------------
 
 This configuration value tells the switcher what docs version is currently
 being viewed, and is used to style the switcher (i.e., to highlight the current
@@ -417,7 +422,7 @@ docs version in the switcher's dropdown menu, and to change the text displayed
 on the switcher button).
 
 Typically you can re-use one of the sphinx variables ``version``
-or ``release`` as the value of ``switcher_version_match``; which one you use
+or ``release`` as the value of ``switcher['version_match']``; which one you use
 depends on how granular your docs versioning is. See
 `the Sphinx "project info" documentation
 <https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information>`__
@@ -428,7 +433,9 @@ for more information). Example:
     version = my_package_name.__version__.replace("dev0", "")  # may differ
     html_theme_options = {
         ...,
-        "switcher_version_match": version,
+        "switcher": {
+            "version_match": version,
+        }
     }
 
 

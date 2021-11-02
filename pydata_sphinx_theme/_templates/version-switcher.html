@@ -1,6 +1,6 @@
 <div class="dropdown" id="version_switcher">
     <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
-        {{ theme_switcher_version_match }}  <!-- this text may get changed later by javascript -->
+        {{ theme_switcher.get('version_match') }}  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div id="version_switcher_menu" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
@@ -10,14 +10,13 @@
 
 <!-- NOTE: this JS must live here (not in our global JS file) because it relies
      on being processed by Jinja before it is run (specifically for replacing
-     variables {{ pagename }}, {{ theme_switcher_json_url }},
-     {{ theme_switcher_url_template }}, and {{ theme_switcher_version_match }}.
+     variables {{ pagename }} and {{ theme_switcher }}.
 -->
 
 <script type="text/javascript">
 // Construct the target URL from the JSON components
 function buildURL(entry) {
-    var template = "{{ theme_switcher_url_template }}";  // supplied by jinja
+    var template = "{{ theme_switcher.get('url_template') }}";  // supplied by jinja
     template = template.replace("{version}", entry.version);
     return template;
 }
@@ -45,7 +44,7 @@ function checkPageExistsAndRedirect(event) {
 
 // Populate the version switcher from the JSON config file
 (function () {
-    $.getJSON("{{ theme_switcher_json_url }}", function(data, textStatus, jqXHR) {
+    $.getJSON("{{ theme_switcher.get('json_url') }}", function(data, textStatus, jqXHR) {
         const currentFilePath = "{{ pagename }}.html";
         // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
@@ -70,7 +69,7 @@ function checkPageExistsAndRedirect(event) {
             // this version, rather than using sphinx's {{ version }} variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
-            if (entry.version == "{{ theme_switcher_version_match }}") {
+            if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
                 $("#version_switcher_button").text(entry.name);
             }
