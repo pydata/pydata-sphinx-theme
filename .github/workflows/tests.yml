@@ -65,11 +65,11 @@ jobs:
         python-version: [3.6, 3.7, 3.8, 3.9]
         include:
           - python-version: 3.6
-            sphinx-version: =2
+            sphinx-version: ==2
           - python-version: 3.7
-            sphinx-version: =3
+            sphinx-version: ==3
           - python-version: 3.8
-            sphinx-version: =4
+            sphinx-version: ==4
           - python-version: 3.9
             sphinx-version: ""
             dev: true
