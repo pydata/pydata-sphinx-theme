@@ -64,7 +64,14 @@ jobs:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
         include:
+          - python-version: 3.6
+            sphinx-version: =2
+          - python-version: 3.7
+            sphinx-version: =3
+          - python-version: 3.8
+            sphinx-version: =4
           - python-version: 3.9
+            sphinx-version: ""
             dev: true
 
     steps:
@@ -88,7 +95,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        python -m pip install -e .[coverage]
+        python -m pip install -e .[coverage] "sphinx${{ matrix.sphinx-version }}"
 
     - name: Install pre-release dependencies
       if: ${{ matrix.dev }}
