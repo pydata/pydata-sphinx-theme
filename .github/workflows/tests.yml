@@ -87,8 +87,9 @@ jobs:
       with:
         path: ~/.cache/pip
         key: |
-          ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ matrix.sphinx-version }}-${{ hashFiles('setup.py', 'docs/requirements.txt') }}
         restore-keys: |
+          ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ matrix.sphinx-version }}-
           ${{ runner.os }}-pip-${{ matrix.python-version }}-
           ${{ runner.os }}-pip-
 
