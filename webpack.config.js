@@ -1,13 +1,22 @@
+// Webpack configuration for pydata-sphinx-theme.
+//
+// There's a decent amount of complexity here, arising from the fact that we
+// have a fairly non-standard "JS application" here.
+
 const { resolve } = require("path");
-const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
-const staticPath = resolve(__dirname, "pydata_sphinx_theme", "static");
-
+//
+// Paths for various assets (sources and destinations)
+//
+const staticPath = resolve(
+  __dirname,
+  "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static"
+);
 const vendor = resolve(staticPath, "vendor");
 const vendorVersions = {
   fontAwesome: require("@fortawesome/fontawesome-free/package.json").version,
@@ -16,18 +25,20 @@ const vendorPaths = {
   fontAwesome: resolve(vendor, "fontawesome", vendorVersions.fontAwesome),
 };
 
-// generates cache-busting templates to be used in `layout.html` without knowing versions
+//
+// Cache-busting Jinja2 macros (`webpack-macros.html`) used in `layout.html`
+//
 function macroTemplate({ compilation }) {
+  console.log(Object.keys(compilation.assets));
   const indexes = Object.keys(compilation.assets).filter(
-    (file) => file.indexOf("/index.") != -1
+    (file) => file.indexOf("/pydata-sphinx-theme.") != -1
   );
-
   const css = indexes.filter((file) => file.endsWith(".css"));
   const js = indexes.filter((file) => file.endsWith(".js"));
 
   const stylesheet = (css) => {
     return `\
-<link href="{{ pathto('_static/css/theme.css', 1) }}" rel="stylesheet">
+<link href="{{ pathto('_static/styles/theme.css', 1) }}" rel="stylesheet">
   <link href="{{ pathto('_static/${css}', 1) }}" rel="stylesheet">`;
   };
 
@@ -74,10 +85,12 @@ function macroTemplate({ compilation }) {
 module.exports = {
   mode: "production",
   entry: {
-    index: ["./src/js/index.js"],
+    "pydata-sphinx-theme": [
+      "./src/pydata_sphinx_theme/assets/scripts/index.js",
+    ],
   },
   output: {
-    filename: "js/[name].[hash].js",
+    filename: "scripts/[name].js",
     path: staticPath,
   },
   optimization: {
@@ -96,7 +109,7 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "css/[name].[hash].css",
+              name: "styles/pydata-sphinx-theme.css",
             },
           },
           {
@@ -113,14 +126,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
-        "**/*",
-        "!css",
-        "!css/theme.css",
-        "!css/blank.css",
-      ],
-    }),
     new HtmlWebpackPlugin({
       filename: resolve(staticPath, "webpack-macros.html"),
       inject: false,

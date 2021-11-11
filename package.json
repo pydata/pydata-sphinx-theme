@@ -1,11 +1,8 @@
 {
   "name": "pydata_sphinx_theme",
-  "version": "0.0.1",
-  "main": "js/index.js",
   "repository": "https://github.com/pydata/pydata-sphinx-theme",
   "scripts": {
-    "build": "yarn build:production",
-    "build:production": "webpack --config webpack.js"
+    "build": "webpack"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",

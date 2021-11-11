@@ -1,10 +1,5 @@
-/**
- * This file should be edited in ./src/js/index.js. After bundling the resulting file in ./pydata_sphinx_theme/static/js/index.js should never be manually changed.
- * Edit ./src/js/index.js and run yarn build:production.
- */
-
 /* Sphinx injects the html output with jquery and other javascript files.
- * To enable Popper.js (and other jQuery plugins) to hook into the same instancce of jQuery,
+ * To enable Popper.js (and other jQuery plugins) to hook into the same instance of jQuery,
  * jQuery is defined as a Webpack external, thus this import uses the externally defined jquery dependency.
  */
 import "jquery";
@@ -12,7 +7,7 @@ import "jquery";
 import "popper.js";
 import "bootstrap";
 
-import "./../scss/index.scss";
+import "../styles/index.scss";
 
 function addTOCInteractivity() {
   // TOC sidebar - add "active" class to parent list
