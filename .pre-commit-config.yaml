@@ -1,3 +1,6 @@
+# Exclude the generated static assets.
+exclude: .+(/static/).+|github_deploy_key_pandas_dev_pandas_sphinx_theme\.enc
+
 repos:
   - repo: local
     hooks:
@@ -17,3 +20,14 @@ repos:
     rev: 3.8.3
     hooks:
       - id: flake8
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace

@@ -11,4 +11,3 @@ Sidebar depth variations
    :caption: Caption 2
 
    section2/index
-

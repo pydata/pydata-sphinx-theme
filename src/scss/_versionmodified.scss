@@ -10,12 +10,12 @@ div.versionadded, div.versionchanged, div.deprecated {
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05), 0 0 0.0625rem rgba(0, 0, 0, 0.1);
   transition: color 250ms, background-color 250ms, border-color 250ms;
   background-color: rgba(var(--pst-color-admonition-default), 0.1);
-  
+
   > p {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
   }
-  
+
 }
 
 div.versionadded {
@@ -32,10 +32,10 @@ div.deprecated {
   border-color: rgba(var(--pst-color-versionmodified-deprecated), 1);
   background-color: rgba(var(--pst-color-versionmodified-deprecated), 0.1);
 }
-  
+
 span.versionmodified {
   font-weight: 700;
-    
+
   &:before {
     font-style: normal;
     margin-right: 0.6rem;
@@ -45,7 +45,7 @@ span.versionmodified {
     content: var(--pst-icon-versionmodified-default);
   }
 }
-  
+
 span.versionmodified.added {
   &:before {
     color: rgba(var(--pst-color-versionmodified-added), 1);
