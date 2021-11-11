@@ -116,6 +116,7 @@ module.exports = {
             loader: "extract-loader",
           },
           {
+            // Use the css-loader with url()-inlining turned off.
             loader: "css-loader?-url",
           },
           {
