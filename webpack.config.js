@@ -84,6 +84,7 @@ function macroTemplate({ compilation }) {
 
 module.exports = {
   mode: "production",
+  devtool: "source-map",
   entry: {
     "pydata-sphinx-theme": [
       "./src/pydata_sphinx_theme/assets/scripts/index.js",
