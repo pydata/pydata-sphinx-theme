@@ -25,7 +25,6 @@ Sites that are using this theme:
 - MNE-Python: https://mne.tools/stable/index.html
 - PyVista: https://docs.pyvista.org
 
-
 ## Installation and usage
 
 The theme is available on PyPI and conda-forge. You can install
@@ -61,7 +60,6 @@ more detail in the contributing section of the documentation:
 
 - [Contributing source files](docs/contributing.md)
 - [Contributing rendered docs](https://pydata-sphinx-theme.readthedocs.io/en/latest/contributing.html)
-
 
 ## How is this theme working?
 

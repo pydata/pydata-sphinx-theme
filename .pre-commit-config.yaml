@@ -10,6 +10,13 @@ repos:
         entry: bash -c "yarn build:production"
         files: ^src/*
 
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.4.1
+    hooks:
+      - id: prettier
+        # Exclude the HTML, since it doesn't understand Jinja2
+        exclude: .+((\.html)|index\.(.+)\.css)$
+
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:

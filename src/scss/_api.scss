@@ -1,6 +1,5 @@
 // Style API docs from sphinx' autodoc / autosummary
 
-
 /**
  * Styling for field lists
  */
@@ -41,39 +40,41 @@ table.field-list {
 */
 
 .table.autosummary {
-// The first column (with the signature) should not wrap
+  // The first column (with the signature) should not wrap
   td:first-child {
-      white-space: nowrap;
+    white-space: nowrap;
   }
 }
 
-
 /* overriding basic.css to use our own monospace font */
 .sig {
-	font-family: var(--pst-font-family-monospace);
+  font-family: var(--pst-font-family-monospace);
 }
-
 
 /* C++ specific styling - overriding the basic.css to avoid custom colors*/
 
 .sig-inline.c-texpr,
 .sig-inline.cpp-texpr {
-	font-family: unset;
+  font-family: unset;
 }
 
-.sig.c   .k, .sig.c   .kt,
-.sig.cpp .k, .sig.cpp .kt {
-	color: rgba(var(--pst-color-text-base), 1);
+.sig.c .k,
+.sig.c .kt,
+.sig.cpp .k,
+.sig.cpp .kt {
+  color: rgba(var(--pst-color-text-base), 1);
 }
 
-.sig.c   .m,
+.sig.c .m,
 .sig.cpp .m {
-	color: rgba(var(--pst-color-text-base), 1);
+  color: rgba(var(--pst-color-text-base), 1);
 }
 
-.sig.c   .s, .sig.c   .sc,
-.sig.cpp .s, .sig.cpp .sc {
-	color: rgba(var(--pst-color-text-base), 1);
+.sig.c .s,
+.sig.c .sc,
+.sig.cpp .s,
+.sig.cpp .sc {
+  color: rgba(var(--pst-color-text-base), 1);
 }
 
 // addition

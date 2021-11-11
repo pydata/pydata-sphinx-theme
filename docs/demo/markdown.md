@@ -12,18 +12,15 @@ Here's a horizontal rule:
 
 It separates major sections of content.
 
-
-
 ## Footnotes
 
 Here's a footnote [^myfootnote]. And it should show up at the bottom!
 
 [^myfootnote]: Here's the text for the footnote!
 
-
 ## Tables
 
-| Syntax      | Description | Test Text     |
-| :---        |    :----:   |          ---: |
-| Header      | Title       | Here's this   |
-| Paragraph   | Text        | And more      |
+| Syntax    | Description |   Test Text |
+| :-------- | :---------: | ----------: |
+| Header    |    Title    | Here's this |
+| Paragraph |    Text     |    And more |
