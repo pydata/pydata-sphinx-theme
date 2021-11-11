@@ -2,7 +2,7 @@
 
 Sphinx can also generate pages from Markdown, using the [MyST Parser](https://myst-parser.readthedocs.io).
 This page shows a few markdown-specific pieces of syntax.
-For a description of other markdown syntax that you can use with Sphinx, see [the `myst-parser` reference](https://myst-parser.readthedocs.io/en/latest/syntax/reference.html). 
+For a description of other markdown syntax that you can use with Sphinx, see [the `myst-parser` reference](https://myst-parser.readthedocs.io/en/latest/syntax/reference.html).
 
 ## Horizontal rules
 
