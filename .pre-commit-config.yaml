@@ -1,15 +1,7 @@
-# Exclude the generated static assets.
-exclude: .+(/static/).+|github_deploy_key_pandas_dev_pandas_sphinx_theme\.enc
+# Exclude the encrypted file.
+exclude: github_deploy_key_pandas_dev_pandas_sphinx_theme\.enc
 
 repos:
-  - repo: local
-    hooks:
-      - id: yarn-build-production
-        name: Build src files
-        language: system
-        entry: bash -c "yarn build:production"
-        files: ^src/*
-
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.4.1
     hooks:

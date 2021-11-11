@@ -2,14 +2,14 @@
 Bootstrap-based sphinx theme from the PyData community
 """
 import os
-
-from sphinx.errors import ExtensionError
-from sphinx.util import logging
-from sphinx.environment.adapters.toctree import TocTree
-from sphinx import addnodes
+from pathlib import Path
 
 import jinja2
 from bs4 import BeautifulSoup as bs
+from sphinx import addnodes
+from sphinx.environment.adapters.toctree import TocTree
+from sphinx.errors import ExtensionError
+from sphinx.util import logging
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -503,30 +503,25 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 # -----------------------------------------------------------------------------
 
 
-def get_html_theme_path():
-    """Return list of HTML theme paths."""
-    theme_path = os.path.abspath(os.path.dirname(__file__))
-    return [theme_path]
-
-
 def setup(app):
-    theme_path = get_html_theme_path()[0]
-    app.add_html_theme("pydata_sphinx_theme", theme_path)
-    app.set_translator("html", BootstrapHTML5Translator)
+    here = Path(__file__).parent.resolve()
+    theme_path = here / "theme" / "pydata_sphinx_theme"
 
+    app.add_html_theme("pydata_sphinx_theme", theme_path)
+
+    app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
     # uses a special "dirhtml" builder so we need to replace these both with
     # our custom HTML builder
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
+
     app.connect("env-updated", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)
 
-    # Update templates for sidebar
-    pkgdir = os.path.abspath(os.path.dirname(__file__))
-    path_templates = os.path.join(pkgdir, "_templates")
-    app.config.templates_path.append(path_templates)
+    # Include templates for sidebar
+    app.config.templates_path.append(os.fsdecode(theme_path / "_templates"))
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}

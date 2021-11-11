@@ -63,7 +63,7 @@ In order to change a variable, follow these steps:
 For a complete list of the theme variables that you may override, see the
 `theme variables defaults CSS file <pydata-css-variables_>`_:
 
-.. literalinclude:: ../../pydata_sphinx_theme/static/css/theme.css
+.. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
   :language: CSS
 
 
@@ -125,7 +125,7 @@ The default body and header fonts can be changed as follows:
     specifically the binary font files. This ensure the files will be loaded
     before waiting for the CSS to be parsed, but should be used with care.
 
-.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/pydata_sphinx_theme/static/css/theme.css
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 .. meta::

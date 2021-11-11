@@ -188,7 +188,7 @@ To install this theme locally, along with the dependencies needed to develop it,
 
    .. code-block:: console
 
-       $ pip install -e .[dev,test]
+       $ pip install -e .[dev]
 
 Install javascript development dependencies
 -------------------------------------------
