@@ -1,29 +1,29 @@
-const { resolve } = require('path');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+const { resolve } = require("path");
+const webpack = require("webpack");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
-const staticPath = resolve(__dirname, 'pydata_sphinx_theme', 'static');
+const staticPath = resolve(__dirname, "pydata_sphinx_theme", "static");
 
-const vendor = resolve(staticPath, 'vendor');
+const vendor = resolve(staticPath, "vendor");
 const vendorVersions = {
-  fontAwesome: require('@fortawesome/fontawesome-free/package.json').version,
+  fontAwesome: require("@fortawesome/fontawesome-free/package.json").version,
 };
 const vendorPaths = {
-  fontAwesome: resolve(vendor, 'fontawesome', vendorVersions.fontAwesome),
+  fontAwesome: resolve(vendor, "fontawesome", vendorVersions.fontAwesome),
 };
 
 // generates cache-busting templates to be used in `layout.html` without knowing versions
 function macroTemplate({ compilation }) {
   const indexes = Object.keys(compilation.assets).filter(
-    (file) => file.indexOf('/index.') != -1
+    (file) => file.indexOf("/index.") != -1
   );
 
-  const css = indexes.filter((file) => file.endsWith('.css'));
-  const js = indexes.filter((file) => file.endsWith('.js'));
+  const css = indexes.filter((file) => file.endsWith(".css"));
+  const js = indexes.filter((file) => file.endsWith(".js"));
 
   const stylesheet = (css) => {
     return `\
@@ -59,34 +59,34 @@ function macroTemplate({ compilation }) {
 {% endmacro %}
 
 {% macro head_pre_bootstrap() %}
-  ${css.map(stylesheet).join('\n')}
+  ${css.map(stylesheet).join("\n")}
 {% endmacro %}
 
 {% macro head_js_preload() %}
-  ${js.map(preload).join('\n')}
+  ${js.map(preload).join("\n")}
 {% endmacro %}
 
 {% macro body_post() %}
-  ${js.map(script).join('\n')}
+  ${js.map(script).join("\n")}
 {% endmacro %}`;
 }
 
 module.exports = {
   mode: "production",
   entry: {
-    index: ['./src/js/index.js'],
+    index: ["./src/js/index.js"],
   },
   output: {
-    filename: 'js/[name].[hash].js',
+    filename: "js/[name].[hash].js",
     path: staticPath,
   },
   optimization: {
-    minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})]
+    minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})],
   },
   externals: {
     // Define jQuery as external, this way Sphinx related javascript
     // and custom javascript like popper.js can hook into jQuery.
-    jquery: 'jQuery',
+    jquery: "jQuery",
   },
   module: {
     rules: [
@@ -94,19 +94,19 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: 'css/[name].[hash].css',
+              name: "css/[name].[hash].css",
             },
           },
           {
-            loader: 'extract-loader',
+            loader: "extract-loader",
           },
           {
-            loader: 'css-loader?-url',
+            loader: "css-loader?-url",
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
           },
         ],
       },
@@ -114,10 +114,15 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['**/*', '!css', '!css/theme.css', '!css/blank.css'],
+      cleanOnceBeforeBuildPatterns: [
+        "**/*",
+        "!css",
+        "!css/theme.css",
+        "!css/blank.css",
+      ],
     }),
     new HtmlWebpackPlugin({
-      filename: resolve(staticPath, 'webpack-macros.html'),
+      filename: resolve(staticPath, "webpack-macros.html"),
       inject: false,
       minify: false,
       css: true,
@@ -126,19 +131,19 @@ module.exports = {
     new CopyPlugin([
       // fontawesome
       {
-        context: './node_modules/@fortawesome/fontawesome-free',
-        from: 'LICENSE.txt',
-        to: resolve(vendorPaths.fontAwesome, 'LICENSE.txt'),
+        context: "./node_modules/@fortawesome/fontawesome-free",
+        from: "LICENSE.txt",
+        to: resolve(vendorPaths.fontAwesome, "LICENSE.txt"),
       },
       {
-        context: './node_modules/@fortawesome/fontawesome-free/css',
-        from: 'all.min.css',
-        to: resolve(vendorPaths.fontAwesome, 'css'),
+        context: "./node_modules/@fortawesome/fontawesome-free/css",
+        from: "all.min.css",
+        to: resolve(vendorPaths.fontAwesome, "css"),
       },
       {
-        context: './node_modules/@fortawesome/fontawesome-free',
-        from: 'webfonts',
-        to: resolve(vendorPaths.fontAwesome, 'webfonts'),
+        context: "./node_modules/@fortawesome/fontawesome-free",
+        from: "webfonts",
+        to: resolve(vendorPaths.fontAwesome, "webfonts"),
       },
     ]),
   ],

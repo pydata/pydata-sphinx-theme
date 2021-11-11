@@ -1,6 +1,7 @@
 // Rules that are unique to MyST markdown parsing / outputs
 
-th, td {
+th,
+td {
   &.text-align\:left {
     text-align: left;
   }

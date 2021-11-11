@@ -1,6 +1,7 @@
 // Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
 
-div.admonition, .admonition{
+div.admonition,
+.admonition {
   margin: 1.5625em auto;
   padding: 0 0.6rem 0.8rem 0.6rem;
   overflow: hidden;
@@ -8,7 +9,8 @@ div.admonition, .admonition{
   border-left: 0.2rem solid;
   border-color: rgba(var(--pst-color-admonition-default), 1);
   border-radius: 0.2rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05), 0 0 0.0625rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
+    0 0 0.0625rem rgba(0, 0, 0, 0.1);
   transition: color 250ms, background-color 250ms, border-color 250ms;
 
   // Last item should have no spacing since we'll control that w/ padding
@@ -22,8 +24,9 @@ div.admonition, .admonition{
   }
 
   // Lists need to have left margin so they don't spill into it
-  > ol, > ul {
-      margin-left: 1em;
+  > ol,
+  > ul {
+    margin-left: 1em;
   }
 
   // Defaults for all admonitions
@@ -40,7 +43,7 @@ div.admonition, .admonition{
       width: 1rem;
       height: 1rem;
       color: rgba(var(--pst-color-admonition-default), 1);
-      font-family: 'Font Awesome 5 Free';
+      font-family: "Font Awesome 5 Free";
       font-weight: 900;
       content: var(--pst-icon-admonition-default);
     }
