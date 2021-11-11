@@ -4,6 +4,7 @@ channels:
 dependencies:
 - yarn
 - nodejs>=14,<15  # We should use whatever the LTS is at https://nodejs.org/en/
+- "python=3.10"
 - pip
 - pip:
   - -r docs/requirements.txt
