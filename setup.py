@@ -5,7 +5,6 @@ import re
 
 from setuptools import setup
 
-
 # from https://packaging.python.org/guides/single-sourcing-package-version/
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -54,7 +53,7 @@ setup(
         "coverage": ["pytest-cov", "codecov", *tests_require],
         "dev": ["pyyaml", "pre-commit", "nox"],
     },
-    python_requires=">=3.5",
+    python_requires=">=3.7",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3",
