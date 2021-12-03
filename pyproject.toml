@@ -16,7 +16,7 @@ description = "Bootstrap-based Sphinx theme from the PyData community"
 dynamic = ["version"]
 readme = "README.md"
 
-requires-python = ">=3.5"
+requires-python = ">=3.6"
 dependencies = [
   "sphinx",
   "beautifulsoup4",
