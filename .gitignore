@@ -103,7 +103,11 @@ envs/
 # mypy
 .mypy_cache/
 
-node_modules/
-.vscode
+# nodejs
+.nodeenv/
 .yarn-packages
+node_modules/
+
+# Editors
+.vscode
 .idea

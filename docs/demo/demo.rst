@@ -466,7 +466,7 @@ Admonitions
 Version change
 --------------
 
-You can write in your documentation when something has been changed, 
+You can write in your documentation when something has been changed,
 added or deprecated from one version to another.
 
 .. versionadded:: 0.1.1

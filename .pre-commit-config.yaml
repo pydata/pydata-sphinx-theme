@@ -1,17 +1,32 @@
+# Exclude the encrypted file.
+exclude: github_deploy_key_pandas_dev_pandas_sphinx_theme\.enc
+
 repos:
--   repo: local
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.4.1
     hooks:
-    -   id: yarn-build-production
-        name: Build src files
-        language: system
-        entry: bash -c "yarn build:production"
-        files: ^src/*
--   repo: https://github.com/psf/black
+      - id: prettier
+        # Exclude the HTML, since it doesn't understand Jinja2
+        exclude: .+((\.html)|index\.(.+)\.css)$
+
+  - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:
-    -   id: black
+      - id: black
         language_version: python3
--   repo: https://gitlab.com/pycqa/flake8
+
+  - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.3
     hooks:
-    -   id: flake8
+      - id: flake8
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace

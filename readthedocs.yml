@@ -1,10 +1,9 @@
 version: 2
 formats:
-    - htmlzip
+  - htmlzip
 
 python:
-    version: 3
-    install:
-        - requirements: docs/requirements.txt
-        - method: pip
-          path: .
+  version: 3
+  install:
+    - method: pip
+      path: .[doc]

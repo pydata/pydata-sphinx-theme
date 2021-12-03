@@ -1,0 +1,70 @@
+div.versionadded,
+div.versionchanged,
+div.deprecated {
+  vertical-align: middle;
+  margin: 1.5625em auto;
+  padding: 0 0.6rem 0 0.6rem;
+  overflow: hidden;
+  page-break-inside: avoid;
+  border-left: 0.2rem solid;
+  border-color: rgba(var(--pst-color-versionmodified-default), 1);
+  border-radius: 0.2rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
+    0 0 0.0625rem rgba(0, 0, 0, 0.1);
+  transition: color 250ms, background-color 250ms, border-color 250ms;
+  background-color: rgba(var(--pst-color-admonition-default), 0.1);
+
+  > p {
+    margin-bottom: 0.6rem;
+    margin-top: 0.6rem;
+  }
+}
+
+div.versionadded {
+  border-color: rgba(var(--pst-color-versionmodified-added), 1);
+  background-color: rgba(var(--pst-color-versionmodified-added), 0.1);
+}
+
+div.versionchanged {
+  border-color: rgba(var(--pst-color-versionmodified-changed), 1);
+  background-color: rgba(var(--pst-color-versionmodified-changed), 0.1);
+}
+
+div.deprecated {
+  border-color: rgba(var(--pst-color-versionmodified-deprecated), 1);
+  background-color: rgba(var(--pst-color-versionmodified-deprecated), 0.1);
+}
+
+span.versionmodified {
+  font-weight: 700;
+
+  &:before {
+    font-style: normal;
+    margin-right: 0.6rem;
+    color: rgba(var(--pst-color-versionmodified-default), 1);
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: var(--pst-icon-versionmodified-default);
+  }
+}
+
+span.versionmodified.added {
+  &:before {
+    color: rgba(var(--pst-color-versionmodified-added), 1);
+    content: var(--pst-icon-versionmodified-added);
+  }
+}
+
+span.versionmodified.changed {
+  &:before {
+    color: rgba(var(--pst-color-versionmodified-changed), 1);
+    content: var(--pst-icon-versionmodified-changed);
+  }
+}
+
+span.versionmodified.deprecated {
+  &:before {
+    color: rgba(var(--pst-color-versionmodified-deprecated), 1);
+    content: var(--pst-icon-versionmodified-deprecated);
+  }
+}
