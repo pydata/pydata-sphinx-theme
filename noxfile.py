@@ -11,6 +11,7 @@ def docs(session):
 
 @nox.session(name="docs-live")
 def docs_live(session):
+    session.install(".[doc]")
     session.install("sphinx-theme-builder[cli]")
     session.run("stb", "serve", "docs", "--open-browser")
 
