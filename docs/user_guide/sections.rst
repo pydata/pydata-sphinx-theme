@@ -118,6 +118,7 @@ will be named accordingly).
 - ``sidebar-ethical-ads.html``
 - ``sidebar-nav-bs.html``
 - ``sphinx-version.html``
+- ``version-switcher.html``
 
 Add your own HTML templates to theme sections
 =============================================

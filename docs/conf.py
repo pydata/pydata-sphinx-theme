@@ -24,7 +24,8 @@ author = "PyData Community"
 
 import pydata_sphinx_theme
 
-version = pydata_sphinx_theme.__version__.replace("dev0", "")
+release = pydata_sphinx_theme.__version__
+version = release.replace("dev0", "")
 
 # -- General configuration ---------------------------------------------------
 
@@ -96,8 +97,14 @@ html_theme_options = {
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     # "navbar_start": ["navbar-logo", "navbar-version"],
     # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
-    # "navbar_end": ["navbar-icon-links", "navbar-version"]  # Just for testing
+    "navbar_end": ["version-switcher", "navbar-icon-links"],
     # "footer_items": ["copyright", "sphinx-version", ""]
+    "switcher": {
+        # "json_url": "/_static/switcher.json",
+        "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
+        "url_template": "https://pydata-sphinx-theme.readthedocs.io/en/v{version}/",
+        "version_match": version,
+    },
 }
 
 
