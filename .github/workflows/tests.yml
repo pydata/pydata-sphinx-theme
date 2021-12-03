@@ -191,7 +191,7 @@ jobs:
         with:
           name: sdist and wheel
           path: |
-            /dist/*
+            dist/*
       # - name: Publish
       #   uses: pypa/gh-action-pypi-publish@v1.1.0
       #   with:
