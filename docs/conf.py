@@ -100,8 +100,8 @@ html_theme_options = {
     "navbar_end": ["version-switcher", "navbar-icon-links"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {
-        "json_url": "/_static/switcher.json",
-        # "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
+        # "json_url": "/_static/switcher.json",
+        "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
         "url_template": "https://pydata-sphinx-theme.readthedocs.io/en/v{version}/",
         "version_match": version,
     },
