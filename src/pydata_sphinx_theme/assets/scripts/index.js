@@ -33,7 +33,8 @@ function addTOCInteractivity() {
 
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
-  var sidebar = document.getElementById("bd-docs-nav");
+  var sidebar = document.querySelector("div.bd-sidebar");
+  var sidebarNav = document.getElementById("bd-docs-nav");
 
   // Remember the sidebar scroll position between page loads
   // Inspired on source of revealjs.com
@@ -45,7 +46,7 @@ function scrollToActive() {
   if (!isNaN(storedScrollTop)) {
     sidebar.scrollTop = storedScrollTop;
   } else {
-    var active_pages = sidebar.querySelectorAll(".active");
+    var active_pages = sidebarNav.querySelectorAll(".active");
     var offset = 0;
     var i;
     for (i = active_pages.length - 1; i > 0; i--) {
@@ -68,7 +69,7 @@ function scrollToActive() {
   });
 }
 
-$(document).ready(() => {
-  scrollToActive();
-  addTOCInteractivity();
-});
+// This is equivalent to the .ready() function as described in
+// https://api.jquery.com/ready/
+$(scrollToActive());
+$(addTOCInteractivity());
