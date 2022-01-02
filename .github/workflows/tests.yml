@@ -42,8 +42,8 @@ jobs:
 
       # Sphinx-theme-builder nodejs install doesn't work on Windows
       # This manually installs the right version as a special case
-      - name: Install node on windows
-        if: matrix.os == "windows-latest"
+      - if: matrix.os == 'windows-latest'
+        name: Install node on windows
         uses: actions/setup-node@v2
         with:
           node-version: '16.13.0'
