@@ -44,22 +44,18 @@ function scrollToActive() {
   );
 
   if (!isNaN(storedScrollTop)) {
+    // If we've got a saved scroll position, just use that
     sidebar.scrollTop = storedScrollTop;
   } else {
+    // Otherwise, calculate a position to scroll to based on the lowest `active` link
     var active_pages = sidebarNav.querySelectorAll(".active");
-    var offset = 0;
-    var i;
-    for (i = active_pages.length - 1; i > 0; i--) {
-      var active_page = active_pages[i];
-      if (active_page !== undefined) {
-        offset += active_page.offsetTop;
+    if (active_pages.length > 0) {
+      // Use the last active page as the offset since it's the page we're on
+      var offset = active_pages[active_pages.length - 1].offsetTop;
+      // Only scroll the navbar if the active link is lower than 50% of the page
+      if (offset > sidebar.clientHeight * 0.5) {
+        sidebar.scrollTop = offset - sidebar.clientHeight * 0.2;
       }
-    }
-    offset -= sidebar.offsetTop;
-
-    // Only scroll the navbar if the active link is lower than 50% of the page
-    if (active_page !== undefined && offset > sidebar.clientHeight * 0.5) {
-      sidebar.scrollTop = offset - sidebar.clientHeight * 0.2;
     }
   }
 
