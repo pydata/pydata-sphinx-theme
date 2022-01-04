@@ -95,7 +95,11 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         or BeautifulSoup object (if kind == "raw")
         """
         if startdepth is None:
-            startdepth = 1 if kind == "sidebar" else 0
+            if kind == "sidebar" and pagename != context["root_doc"]:
+                # Start at the second level if we're not on the landing page
+                startdepth = 1
+            else:
+                startdepth = 0
 
         if startdepth == 0:
             toc_sphinx = context["toctree"](**kwargs)
