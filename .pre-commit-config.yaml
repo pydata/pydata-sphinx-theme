@@ -30,3 +30,8 @@ repos:
       - id: debug-statements
       - id: end-of-file-fixer
       - id: trailing-whitespace
+
+ci:
+  # Disable auto-fixing PRs. To trigger a pre-commit fix,
+  # Add this comment to the PR: pre-commit.ci autofix
+  autofix_prs: false
