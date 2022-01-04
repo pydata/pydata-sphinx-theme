@@ -387,6 +387,18 @@ After running ``pre-commit install``, the pre-commit checks will be run every ti
 
       pre-commit run --all-files
 
+.. admonition:: Using pre-commit in our CI/CD
+
+    Our repository is connected to the CI/CD service
+    `pre-commit.ci/ <https://pre-commit.ci/>`_. This service will
+    apply the necessary changes to make our pre-commit pass in a PR.
+    Normally it runs automatically, but we have disabled this. Instead,
+    to make ``pre-commit.ci`` update your PR, add this comment to the PR:
+
+    .. code-block::
+
+        pre-commit.ci autofix
+
 Accessibility checks
 ====================
 
