@@ -9,6 +9,10 @@ import "bootstrap";
 
 import "../styles/index.scss";
 
+////////////////////////////////////////////////////////////////////////////////
+// TOC interactivity
+////////////////////////////////////////////////////////////////////////////////
+
 function addTOCInteractivity() {
   // TOC sidebar - add "active" class to parent list
   //
@@ -30,6 +34,10 @@ function addTOCInteractivity() {
     });
   });
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// Scroll
+////////////////////////////////////////////////////////////////////////////////
 
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
@@ -68,7 +76,71 @@ function scrollToActive() {
   });
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// Theme interaction
+////////////////////////////////////////////////////////////////////////////////
+
+function setTheme(mode) {
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  if (mode !== "light" && mode !== "dark" && mode !== "auto") {
+    console.error(`Got invalid theme mode: ${mode}. Resetting to auto.`);
+    mode = "auto";
+  }
+
+  // change mode
+  var theme = mode;
+  if (mode == "auto") {
+    theme = prefersDark ? "dark" : "light";
+  }
+  document.body.dataset.theme = theme;
+
+  // save mode
+  localStorage.setItem("theme", mode);
+  console.log(`Changed to ${mode} mode.`);
+
+  // change btn visibillity
+  const btnList = document.getElementsByClassName("theme-switch");
+  Array.from(btnList).forEach((btn) => {
+    btn.style.display = btn.dataset.mode == mode ? "block" : "none";
+  });
+}
+
+function cycleThemeOnce() {
+  const currentTheme = localStorage.getItem("theme") || "auto";
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  if (prefersDark) {
+    // Auto (dark) -> Light -> Dark
+    if (currentTheme === "auto") {
+      setTheme("light");
+    } else if (currentTheme == "light") {
+      setTheme("dark");
+    } else {
+      setTheme("auto");
+    }
+  } else {
+    // Auto (light) -> Dark -> Light
+    if (currentTheme === "auto") {
+      setTheme("dark");
+    } else if (currentTheme == "dark") {
+      setTheme("light");
+    } else {
+      setTheme("auto");
+    }
+  }
+}
+
+function setupTheme() {
+  // Attach event handlers for toggling themes
+  const btnList = document.getElementsByClassName("theme-switch");
+  Array.from(btnList).forEach((btn) => {
+    btn.addEventListener("click", cycleThemeOnce);
+  });
+}
+
 $(document).ready(() => {
+  setupTheme();
   scrollToActive();
   addTOCInteractivity();
 });
