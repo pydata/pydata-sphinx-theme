@@ -1,0 +1,13 @@
+///////////
+// light theme
+/////
+body[data-theme="light"] {
+  --pst-color-background: 255, 255, 255;
+}
+
+///////////
+// dark theme
+/////
+body[data-theme="dark"] {
+  --pst-color-background: 18, 18, 18;
+}

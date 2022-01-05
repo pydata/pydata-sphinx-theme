@@ -6,7 +6,7 @@ html {
 body {
   padding-top: calc(var(--pst-header-height) + 20px);
 
-  background-color: white;
+  background-color: rgba(var(--pst-color-background), 1);
   font-family: var(--pst-font-family-base);
   font-weight: 400;
   line-height: 1.65;

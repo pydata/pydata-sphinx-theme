@@ -64,3 +64,14 @@
 .navbar-header a {
   padding: 0 15px;
 }
+
+// the icons for theme change
+#theme-switch a {
+  display: none;
+}
+
+// I want one to be by default visible
+// js will change visibility according to theme selection
+#theme-switch:first-child {
+  display: block;
+}

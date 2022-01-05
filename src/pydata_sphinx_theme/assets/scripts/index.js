@@ -79,21 +79,21 @@ function scrollToActive() {
 ////////////////////////////////////////////////////////////////////////////////
 // Theme interaction
 ////////////////////////////////////////////////////////////////////////////////
+var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+function autoTheme(e) {
+  document.body.dataset.theme = prefersDark.matches ? "dark" : "light";
+}
 
 function setTheme(mode) {
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
   if (mode !== "light" && mode !== "dark" && mode !== "auto") {
     console.error(`Got invalid theme mode: ${mode}. Resetting to auto.`);
     mode = "auto";
   }
 
-  // change mode
-  var theme = mode;
-  if (mode == "auto") {
-    theme = prefersDark ? "dark" : "light";
-  }
-  document.body.dataset.theme = theme;
+  // get the theme
+  var colorScheme = prefersDark.matches ? "dark" : "light";
+  document.body.dataset.theme = mode == "auto" ? colorScheme : mode;
 
   // save mode
   localStorage.setItem("theme", mode);
@@ -104,13 +104,15 @@ function setTheme(mode) {
   Array.from(btnList).forEach((btn) => {
     btn.style.display = btn.dataset.mode == mode ? "block" : "none";
   });
+
+  // add a listener if set on auto
+  prefersDark.onchange = mode == "auto" ? autoTheme : "";
 }
 
-function cycleThemeOnce() {
+function cycleTheme() {
   const currentTheme = localStorage.getItem("theme") || "auto";
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-  if (prefersDark) {
+  if (prefersDark.matches) {
     // Auto (dark) -> Light -> Dark
     if (currentTheme === "auto") {
       setTheme("light");
@@ -132,10 +134,14 @@ function cycleThemeOnce() {
 }
 
 function setupTheme() {
+  // setup at least one time
+  const currentTheme = localStorage.getItem("theme") || "auto";
+  setTheme(currentTheme);
+
   // Attach event handlers for toggling themes
   const btnList = document.getElementsByClassName("theme-switch");
   Array.from(btnList).forEach((btn) => {
-    btn.addEventListener("click", cycleThemeOnce);
+    btn.addEventListener("click", cycleTheme);
   });
 }
 
