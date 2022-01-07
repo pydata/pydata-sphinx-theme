@@ -13,7 +13,7 @@ table.field-list {
   th.field-name {
     padding: 1px 8px 1px 5px;
     white-space: nowrap;
-    background-color: rgb(238, 238, 238);
+    background-color: rgba(var(--pst-color-background-up), 1);
   }
 
   /* italic font for parameter types */

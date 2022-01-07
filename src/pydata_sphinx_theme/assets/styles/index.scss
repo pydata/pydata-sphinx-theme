@@ -71,8 +71,9 @@ a.footnote-reference {
 }
 
 span.guilabel {
-  border: 1px solid #7fbbe3;
-  background: #e7f2fa;
+  border: 1px solid rgba(var(--pst-color-guilabel-border), 1);
+  background: rgba(var(--pst-color-guilabel-background), 1);
+  color: rgba(var(--pst-color-guilabel-text), 1);
   font-size: 80%;
   font-weight: 700;
   border-radius: 4px;
@@ -86,7 +87,7 @@ span.guilabel {
 
 footer {
   width: 100%;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid rgba(var(--pst-color-footer-border), 1);
   padding: 10px;
 
   .footer-item p {
@@ -104,15 +105,16 @@ footer {
 
   .icon {
     position: absolute;
-    color: #a4a6a7;
+    color: rgba(var(--pst-color-search), 1);
     left: 25px;
     top: 25px;
   }
 
   input {
+    background-color: rgba(var(--pst-color-search-background), 1);
     border-radius: 0;
     border: 0;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid rgba(var(--pst-color-search-border), 1);
     padding-left: 35px;
   }
 }
@@ -135,13 +137,13 @@ footer {
   }
 
   .onthispage {
-    color: #a4a6a7;
+    color: rgba(var(--pst-color-text-base), 1);
   }
 }
 
 .section-nav {
   padding-left: 0;
-  border-left: 1px solid #eee;
+  border-left: 1px solid rgba(var(--pst-color-toc-link), 1);
   border-bottom: none;
 
   ul {
@@ -173,7 +175,7 @@ footer {
   overflow-y: auto;
 
   @include media-breakpoint-up(md) {
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(var(--pst-color-sidebar-border), 1);
 
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
@@ -322,7 +324,6 @@ nav.bd-links {
 
 .toc-entry > .nav-link.active {
   font-weight: 600;
-  color: #130654;
   color: rgba(var(--pst-color-toc-link-active), 1);
   background-color: transparent;
   border-left: 2px solid rgba(var(--pst-color-toc-link-active), 1);
@@ -379,11 +380,11 @@ nav.bd-links {
     padding: 10px;
     max-width: 45%;
     overflow-x: hidden;
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba(var(--pst-color-prev-next-btn), 1);
     text-decoration: none;
 
     p.prev-next-title {
-      color: rgba(var(--pst-color-link), 1);
+      color: rgba(var(--pst-color-prev-next), 1);
       font-weight: 600;
       font-size: 1.1em;
     }
@@ -424,7 +425,7 @@ nav.bd-links {
 
 .alert-info a {
   /* higher contrast for links in info boxes. */
-  color: #e83e8c;
+  color: rgba(var(--pst-color-alert-link), 1);
 }
 
 /* Icon Links */
@@ -464,7 +465,7 @@ nav.bd-links {
 
 .tocsection {
   padding-left: 10px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid rgba(var(--pst-color-toc-border), 1);
   padding: 0.3rem 1.5rem;
 
   i {

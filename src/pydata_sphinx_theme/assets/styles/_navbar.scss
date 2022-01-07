@@ -41,7 +41,10 @@
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .navbar-light {
-  background: #fff !important; // Overrides bootstrap
+  background: rgba(
+    var(--pst-color-navbar-background),
+    1
+  ) !important; // Overrides bootstrap
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
@@ -67,11 +70,16 @@
 
 // the icons for theme change
 #theme-switch a {
+  color: rgba(var(--pst-color-navbar-link-hover), 1);
   display: none;
 }
 
-// I want one to be by default visible
-// js will change visibility according to theme selection
-#theme-switch:first-child {
+body[data-mode="auto"] #theme-switch a[data-mode="auto"] {
+  display: block;
+}
+body[data-mode="light"] #theme-switch a[data-mode="light"] {
+  display: block;
+}
+body[data-mode="dark"] #theme-switch a[data-mode="dark"] {
   display: block;
 }

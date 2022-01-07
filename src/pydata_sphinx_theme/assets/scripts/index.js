@@ -93,17 +93,12 @@ function setTheme(mode) {
 
   // get the theme
   var colorScheme = prefersDark.matches ? "dark" : "light";
+  document.body.dataset.mode = mode;
   document.body.dataset.theme = mode == "auto" ? colorScheme : mode;
 
   // save mode
   localStorage.setItem("theme", mode);
   console.log(`Changed to ${mode} mode.`);
-
-  // change btn visibillity
-  const btnList = document.getElementsByClassName("theme-switch");
-  Array.from(btnList).forEach((btn) => {
-    btn.style.display = btn.dataset.mode == mode ? "block" : "none";
-  });
 
   // add a listener if set on auto
   prefersDark.onchange = mode == "auto" ? autoTheme : "";

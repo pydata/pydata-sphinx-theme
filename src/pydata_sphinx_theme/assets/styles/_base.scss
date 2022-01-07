@@ -20,7 +20,7 @@ p {
 
   /* section header in docstring pages */
   &.rubric {
-    border-bottom: 1px solid rgb(201, 201, 201);
+    border-bottom: 1px solid rgba(var(--pst-color-border), 1);
   }
 }
 
@@ -97,7 +97,7 @@ small,
 
 hr {
   border: 0;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid rgba(var(pst-color-border), 1);
 }
 
 pre,
@@ -117,9 +117,9 @@ pre {
   background-color: rgba(var(--pst-color-preformatted-background), 1);
   color: rgba(var(--pst-color-preformatted-text), 1);
   line-height: 1.2em;
-  border: 1px solid rgb(201, 201, 201);
+  border: 1px solid rgba(var(--pst-color-preformatted-border), 1);
   border-radius: 0.2rem;
-  box-shadow: 1px 1px 1px #d8d8d8;
+  box-shadow: 1px 1px 1px rgba(var(--pst-color-preformatted-shadow), 1);
 }
 
 // Override bootstrap by restoring the basic theme default.
