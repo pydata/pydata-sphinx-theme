@@ -10,6 +10,7 @@ from sphinx import addnodes
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
+from pygments.formatters import HtmlFormatter
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -501,6 +502,50 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
 
 # -----------------------------------------------------------------------------
+# handle pygment css
+# -----------------------------------------------------------------------------
+def _get_styles(formatter, prefix):
+    """
+    Get styles out of a formatter, where everything has the correct prefix.
+    """
+
+    for line in formatter.get_linenos_style_defs():
+        yield f"{prefix} {line}"
+    yield from formatter.get_background_style_defs(prefix)
+    yield from formatter.get_token_style_defs(prefix)
+
+
+def get_pygments_stylesheet():
+    """
+    Generate the theme-specific pygments.css.
+    There is no way to tell Sphinx how the theme handles modes
+    """
+    light_formatter = HtmlFormatter(style="tango")
+    dark_formatter = HtmlFormatter(style="native")
+
+    lines = []
+
+    light_prefix = 'body[data-theme="light"] .highlight'
+    lines.extend(_get_styles(light_formatter, prefix=light_prefix))
+
+    dark_prefix = 'body[data-theme="dark"] .highlight'
+    lines.extend(_get_styles(dark_formatter, prefix=dark_prefix))
+
+    return "\n".join(lines)
+
+
+# cannot deal with pygments and modes so weoverwrite the pygment css file
+def _overwrite_pygments_css(app, exception=None):
+
+    if exception is not None:
+        return
+
+    assert app.builder
+    with open(os.path.join(app.builder.outdir, "_static", "pygments.css"), "w") as f:
+        f.write(get_pygments_stylesheet())
+
+
+# -----------------------------------------------------------------------------
 
 
 def setup(app):
@@ -520,6 +565,7 @@ def setup(app):
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)
+    app.connect("build-finished", _overwrite_pygments_css)
 
     # Include templates for sidebar
     app.config.templates_path.append(os.fsdecode(theme_path / "_templates"))

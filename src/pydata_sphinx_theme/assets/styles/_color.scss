@@ -85,7 +85,7 @@ body[data-theme="light"] {
   // preformatted
   --pst-color-preformatted-text: 34, 34, 34;
   --pst-color-preformatted-border: var(--pst-color-border);
-  --pst-color-preformatted-background: 250, 250, 250;
+  --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
 
   //////////////////////////////////////////////////////////////////////
@@ -212,7 +212,7 @@ body[data-theme="dark"] {
 
   // preformatted
   --pst-color-preformatted-text: 210, 210, 210;
-  --pst-color-preformatted-border: var(--pst-color-border);
+  --pst-color-preformatted-border: 83, 83, 83;
   --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
 
