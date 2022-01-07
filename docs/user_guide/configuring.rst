@@ -10,7 +10,7 @@ in your ``conf.py`` file. This is a dictionary with ``key: val`` pairs that
 you can configure in various ways. This page describes the options available to you.
 
 Configure project logo
-==============================
+======================
 
 To add a logo that's placed at the left of your nav bar, put a logo file under your
 doc path's _static folder, and use the following configuration:
@@ -30,6 +30,18 @@ If you'd like it to link to another page or use an external link instead, use th
 
 
 .. _icon-links:
+
+Configure default theme
+=======================
+
+The theme mode can be changed by the user. By default landing on the documentation will switch the mode to ``auto``. You can specified this value to be one of ``auto``, ``dark``, ``light``.
+
+.. code-block:: python
+
+   html_context= {
+      ...
+      "default_mode": "auto"
+   }
 
 Configure icon links
 ====================

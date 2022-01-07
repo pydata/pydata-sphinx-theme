@@ -30,6 +30,33 @@ To add a custom stylesheet, follow these steps:
 
 When you build your documentation, this stylesheet should now be activated.
 
+.. _manage-themes:
+
+Manage themes
+=============
+
+Pydata sphinx theme embed 3 different theming mode:
+
+- ``auto``: the documentation theme will follow the one provided by your computer
+- ``dark```: the documentation is displayed with the dark theme
+- ``light``: the documentation is displayed with the light theme
+
+In order to customize the display of any of the theme element you need to encaspulate your modifications in the approriate css rules:
+
+.. code-block:: css
+
+    // anything related to the light theme
+    body[data-theme="light"] {
+
+        // whatever you want to change
+    }
+
+    // anything related to the dark theme
+    body[data-theme="dark"] {
+
+        // whatever you want to change
+    }
+
 .. _css-variables:
 
 CSS Theme variables
@@ -58,7 +85,8 @@ In order to change a variable, follow these steps:
 
    Note that these are `CSS variables <css-variable-help_>`_ and not
    `SASS variables <https://sass-lang.com/documentation/variables>`_.
-   The theme is defined with CSS variables, not SASS variables!
+   The theme is defined with CSS variables, not SASS variables! refer to the previous section if
+   you desire a differnet behaviour between the light and dark theme
 
 For a complete list of the theme variables that you may override, see the
 `theme variables defaults CSS file <pydata-css-variables_>`_:
