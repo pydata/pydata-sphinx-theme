@@ -108,9 +108,9 @@ dt:target {
 .ethical-sidebar,
 .ethical-footer {
   background-color: rgba(var(--pst-color-add-background), 1);
-  border: 1px solid rgba(var(--pst-color-add-border));
+  border: 1px solid rgba(var(--pst-color-add-border), 1);
   border-radius: 5px;
-  color: rgba(var(--pst-color-add-text));
+  color: rgba(var(--pst-color-add-text), 1);
   font-size: 14px;
   line-height: 20px;
 }
