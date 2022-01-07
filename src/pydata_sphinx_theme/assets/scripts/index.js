@@ -105,7 +105,8 @@ function setTheme(mode) {
 }
 
 function cycleTheme() {
-  const currentTheme = localStorage.getItem("theme") || "auto";
+  const defaultMode = document.body.dataset.defaultMode || "auto";
+  const currentTheme = localStorage.getItem("theme") || defaultMode;
 
   if (prefersDark.matches) {
     // Auto (dark) -> Light -> Dark
@@ -130,7 +131,8 @@ function cycleTheme() {
 
 function setupTheme() {
   // setup at least one time
-  const currentTheme = localStorage.getItem("theme") || "auto";
+  const defaultMode = document.body.dataset.defaultMode || "auto";
+  const currentTheme = localStorage.getItem("theme") || defaultMode;
   setTheme(currentTheme);
 
   // Attach event handlers for toggling themes
