@@ -33,6 +33,7 @@ body[data-theme="light"] {
   // links
   --pst-color-link: 0, 91, 129;
   --pst-color-link-hover: 227, 46, 0;
+  --pst-color-target: 251, 229, 78;
 
   // headerlinks (the anchors at the end of titles)
   --pst-color-headerlink: 198, 15, 15;
@@ -126,6 +127,11 @@ body[data-theme="light"] {
   --pst-color-search-background: var(--pst-color-background);
   --pst-color-search: var(--pst-color-border);
   --pst-color-search-border: var(--pst-color-border);
+
+  // ethical add
+  --pst-color-add-text: var(--pst-color-text-base);
+  --pst-color-add-background: var(--pst-color-background);
+  --pst-color-add-border: var(--pst-color-border);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -161,6 +167,7 @@ body[data-theme="dark"] {
   // links
   --pst-color-link: 64, 64, 191;
   --pst-color-link-hover: 170, 103, 196;
+  --pst-color-target: 117, 148, 195;
 
   // headerlinks (the anchors at the end of titles)
   --pst-color-headerlink: 152, 61, 61;
@@ -254,6 +261,11 @@ body[data-theme="dark"] {
   --pst-color-search-background: var(--pst-color-background);
   --pst-color-search: var(--pst-color-border);
   --pst-color-search-border: var(--pst-color-border);
+
+  // ethical add
+  --pst-color-add-text: var(--pst-color-text-base);
+  --pst-color-add-background: var(--pst-color-background);
+  --pst-color-add-border: var(--pst-color-border);
 
   // specific brighness applied on images
   img {
