@@ -10,24 +10,19 @@ the left sidebar to see how various elements look on this theme.
     :maxdepth: 2
     :caption: Demo Documentation
 
-    structure
-    demo
+    kitchen-sink/index
+    theme-elements
     api
-    lists_tables
-    markdown
     example_pandas
-    mult_headers
-    subpages/index
-    subpages2/index
     Link to an external site <https://jupyterbook.org/>
 
 .. toctree::
     :maxdepth: 3
     :numbered:
-    :caption: This is an incredibly long caption for a long menu
+    :caption: This is an incredibly long caption for a long menu. Here are some more subpages to show off deep nested pages.
 
-    long
-
+    mult_headers
+    subpages/index
 
 .. meta::
     :description lang=en:
