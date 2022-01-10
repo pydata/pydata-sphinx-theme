@@ -65,8 +65,7 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_sidebars = {
-    "contributing": ["search-field", "custom-template"],
-    "changelog": [],
+    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
 }
 
 # -- Options for HTML output -------------------------------------------------
