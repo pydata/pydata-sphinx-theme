@@ -43,7 +43,7 @@ $ pip install nox
 ```
 
 You can call `nox` from the command line in order to perform common actions that are needed in building the theme.
-`nox` operates with isolated environments, so each action has its own packages installed in a local director (`.nox`).
+`nox` operates with isolated environments, so each action has its own packages installed in a local directory (`.nox`).
 For common development actions, you'll simply need to use `nox` and won't need to set up any other packages.
 
 ### Setup `pre-commit`
@@ -88,7 +88,7 @@ You can open one of the HTML files there to preview the documentation locally.
 Alternatively, you can invoke the built-in Python [http.server](https://docs.python.org/3/library/http.server.html#module-http.server) with:
 
 ```console
-$ python -m http.server -d _build/html/
+$ python -m http.server -d docs/_build/html/
 ```
 
 This will print a local URL that you can open in a browser to explore the HTML files.
