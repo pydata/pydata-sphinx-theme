@@ -64,11 +64,11 @@ jobs:
           unexpected = [ii for ii in text.split("\n") if "kitchen-sink" not in ii]
           assert len(unexpected) == 0
 
-      - name: Save the HTML as an artifact so we can check it with lighthouse later
+      - name: Upload HTML artifacts for later use
         if: matrix.python-version == '3.9'
         uses: actions/upload-artifact@v2
         with:
-          name: Built site ${{ github.run_number }}
+          name: html-site-files
           path: ./docs/_build/html
           if-no-files-found: error
 
@@ -99,7 +99,7 @@ jobs:
       - name: Fetch built site
         uses: actions/download-artifact@v2
         with:
-          name: Built site ${{ github.run_number }}
+          name: html-site-files
           path: ./docs/_build/html
 
       # Serve the docs and wait to be ready
