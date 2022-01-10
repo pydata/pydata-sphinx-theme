@@ -21,6 +21,7 @@ def _should_install(session):
         session.log("Installing fresh environment...")
     else:
         session.log("Skipping environment install...")
+    return should_install
 
 
 @nox.session
