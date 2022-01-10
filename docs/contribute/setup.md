@@ -43,7 +43,7 @@ $ pip install nox
 ```
 
 You can call `nox` from the command line in order to perform common actions that are needed in building the theme.
-`nox` operates with isolated environments, so each action has its own packages installed in a local director (`.nox`).
+`nox` operates with isolated environments, so each action has its own packages installed in a local directory (`.nox`).
 For common development actions, you'll simply need to use `nox` and won't need to set up any other packages.
 
 ### Setup `pre-commit`
