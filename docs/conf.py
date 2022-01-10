@@ -75,7 +75,7 @@ html_sidebars = {
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-# html_logo = "_static/pandas.svg"
+# html_logo = "_static/pandas.svg"  # For testing
 
 html_theme_options = {
     "external_links": [
