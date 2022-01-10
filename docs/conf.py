@@ -88,7 +88,13 @@ html_theme_options = {
             "name": "PyPI",
             "url": "https://pypi.org/project/pydata-sphinx-theme",
             "icon": "fas fa-box",
-        }
+        },
+        {
+            "name": "Pandas",
+            "url": "https://pandas.pydata.org",
+            "icon": "_static/pandas-square.svg",
+            "type": "local",
+        },
     ],
     "use_edit_page_button": True,
     "show_toc_level": 1,
