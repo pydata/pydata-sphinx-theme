@@ -80,6 +80,14 @@ They will be placed in a `docs/_build/html` folder.
 If the docs have already been built, it will only build new pages that have been updated.
 You can open one of the HTML files there to preview the documentation locally.
 
+Alternatively, you can invoke the built-in Python [http.server](https://docs.python.org/3/library/http.server.html#module-http.server) with:
+
+```console
+python -m http.server
+```
+
+and navigate to the `index.html` page under `docs/_build/html` folder.
+
 ### Change content and re-build
 
 Now that you've built the documentation, edit one of the source files to see how the documentation updates with new builds.
