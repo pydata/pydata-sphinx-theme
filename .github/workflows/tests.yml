@@ -83,6 +83,7 @@ jobs:
   # Run local Lighthouse audit against built site
   audit:
     runs-on: ubuntu-latest
+    needs: tests
     strategy:
       matrix:
         python-version: [3.8]
