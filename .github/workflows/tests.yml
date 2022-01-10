@@ -102,61 +102,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
-          yarn --frozen-lockfile
 
       # Build the docs
-      - name: Build docs to store
+      - name: Build docs to audit
         run: |
-          sphinx-build -b html docs/ docs/_build/html -W --keep-going
+          sphinx-build -b html docs/ docs/_build/html
 
-      # Serve the docs and wait to be ready
-      - name: Serve the built site
-        run: |
-          nohup python docs/serve.py --port=${PORT} --host=${HOST} &
-          curl --retry 10 --retry-connrefused --retry-max-time 60 ${URL}/index.html
-
-      # Run the audit
-      # TODO: use the hosted API with a secret? would allow for comparison over time...
-      - name: Make folder for Lighthouse reports
-        run: mkdir -p /tmp/lighthouse/lighthouse-${{ github.run_number }}
-
-      - name: Run Lighthouse on Site
-        id: lighthouse
-        uses: foo-software/lighthouse-check-action@v2.0.0
+      - name: Audit with Lighthouse
+        uses: treosh/lighthouse-ci-action@v8
         with:
-          # TODO: generate this list to audit all html pages
-          urls: >-
-            ${{ env.URL }}/index.html,
-            ${{ env.URL }}/demo/api.html,
-            ${{ env.URL }}/demo/demo.html,
-            ${{ env.URL }}/demo/example_pandas.html,
-            ${{ env.URL }}/user_guide/accessibility.html
-          outputDirectory: /tmp/lighthouse/lighthouse-${{ github.run_number }}
-          verbose: true
-
-      - name: Run the accessibility audit
-        run: python docs/a11y.py --no-serve
-
-      # Check the audit for threshold values
-      # TODO: write this someplace after a PR is merged, and load?
-      - name: Assess Lighthouse Check results
-        uses: foo-software/lighthouse-check-status-action@v1.0.1
-        with:
-          lighthouseCheckResults: ${{ steps.lighthouse.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "96"
-          minBestPracticesScore: "85"
-          minPerformanceScore: "10"
-          minSeoScore: "80"
-        if: always()
-
-      - name: Publish Audit reports
-        uses: actions/upload-artifact@v2
-        with:
-          name: Pa11y and Lighthouse ${{ github.run_number }}
-          path: |
-            /tmp/pa11y
-            /tmp/lighthouse
-        if: always()
+          configPath: ".github/workflows/lighthouserc.json"
+          temporaryPublicStorage: true
+          uploadArtifacts: true
 
   publish:
     name: Publish to PyPI
