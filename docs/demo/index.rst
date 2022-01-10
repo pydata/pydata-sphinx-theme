@@ -22,7 +22,6 @@ the left sidebar to see how various elements look on this theme.
     :caption: This is an incredibly long caption for a long menu. Here are some more subpages to show off deep nested pages.
 
     no-sidebar
-    custom-sidebar
     mult_headers
     subpages/index
 
