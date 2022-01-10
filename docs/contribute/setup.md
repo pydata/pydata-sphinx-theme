@@ -83,10 +83,10 @@ You can open one of the HTML files there to preview the documentation locally.
 Alternatively, you can invoke the built-in Python [http.server](https://docs.python.org/3/library/http.server.html#module-http.server) with:
 
 ```console
-python -m http.server
+$ python -m http.server -d _build/html/
 ```
 
-and navigate to the `index.html` page under `docs/_build/html` folder.
+This will print a local URL that you can open in a browser to explore the HTML files.
 
 ### Change content and re-build
 
