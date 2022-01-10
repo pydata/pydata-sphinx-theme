@@ -65,6 +65,11 @@ $ pre-commit install
 
 This will install the necessary dependencies to run `pre-commit` every time you make a commit with Git.
 
+:::{note}
+Your `pre-commit` dependencies will be installed in the environment from which you're calling `pre-commit`, `nox`, etc.
+They will not be installed in the isolated environments used by `nox`.
+:::
+
 ## Build the documentation
 
 Now that you have `nox` installed and cloned the repository, you should be able to build the documentation locally.

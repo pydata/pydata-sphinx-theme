@@ -2,7 +2,8 @@
 
 # Set up a manual development environment
 
-If you prefer not to use automation tools like `nox`, you may also manually set up a development environment locally.
+If you prefer not to use automation tools like `nox`, or want to have more control over the specific version of packages that you'd like like installed, you may also manually set up a development environment locally.
+
 To do so, follow the instructions on this page.
 
 ## Create a new development environment

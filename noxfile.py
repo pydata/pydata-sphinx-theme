@@ -13,6 +13,9 @@ def _should_install(session):
     We assume that if `sphinx-build` is in the bin/ path, the environment is
     installed.
     """
+    if session.bin_paths is None:
+        session.log("Running with `--no-venv` so don't install anything...")
+        return False
     bin_files = list(Path(session.bin).glob("*"))
     sphinx_is_installed = any("sphinx-build" in ii.name for ii in bin_files)
     force_reinstall = "reinstall" in session.posargs

@@ -18,6 +18,10 @@ The next time you build the documentation (either with `nox` or with `stb`), the
 
 Here are a few extra tips for using `nox`.
 
+:::{seealso}
+The [`nox` command line documentation](https://nox.thea.codes/en/stable/usage.html) has a lot of helpful tips for extra functionality you can enable with the CLI.
+:::
+
 ### Re-install dependencies
 
 To re-execute the installation commands, use this pattern:
@@ -40,7 +44,7 @@ If you'd like to use `nox` with your **global** environment (the one from which 
 $ nox --force-venv-backend none
 
 # alternatively:
-$ nox -fb none
+$ nox --no-venv
 ```
 
 Using `none` will re-use your current global environment.

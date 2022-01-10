@@ -107,6 +107,13 @@ html_theme_options = {
     },
 }
 
+html_sidebars = {
+    "contributing": [
+        "search-field",
+        "custom-template",
+    ],  # This ensures we test for custom sidebars
+}
+
 
 html_context = {
     "github_user": "pandas-dev",

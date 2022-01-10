@@ -29,24 +29,24 @@ The content is written in a combination of reStructuredText and MyST Markdown.
 
 ## Location and structure of CSS/JS assets
 
-The CSS and JS for this theme are built for the browser from `src/*` with
+The CSS and JS for this theme are built for the browser from `src/pydata_sphinx_theme/assets/*` with
 [webpack](https://webpack.js.org/). The main entrypoints are:
 
-- CSS: `src/scss/index.scss`
+- CSS: `src/pydata_sphinx_theme/assets/styles/index.scss`
 
   - the main part of the theme assets
   - customizes [Bootstrap](https://getbootstrap.com/) with [Sass](https://sass-lang.com)
   - points to the `font-face` of vendored web fonts, but does not include their
     CSS `@font-face` declaration
 
-- JS: `src/js/index.js`
+- JS: `src/pydata_sphinx_theme/assets/scripts/index.js`
 
   - provides add-on Bootstrap features, as well as some custom navigation behavior
 
 - webpack: `webpack.config.js`
 
   - captures the techniques for transforming the JS and CSS source files in
-    `src/` into the production assets in `pydata_sphinx_theme/static/`
+    `src/pydata_sphinx_theme/assets/*` into the production assets in `src/theme/pydata_sphinx_theme/static/`
 
 **For more information** about developing this theme, see the sections below and in the left sidebar.
 
