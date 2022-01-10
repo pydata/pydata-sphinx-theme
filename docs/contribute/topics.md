@@ -128,7 +128,7 @@ The output of the last command includes:
 ### Fix accessibility errors
 
 Start by checking for issues on the
-[accessibility roadmap](https://github.com/pandas-dev/pydata-sphinx-theme/blob/master/docs/a11y-roadmap.txt).
+[accessibility roadmap](https://github.com/pydata/pydata-sphinx-theme/blob/master/docs/a11y-roadmap.txt).
 These are issues which are currently flagged by the toolset, but that have not yet
 been fixed. If that file is empty (or just comments), hooray!
 
