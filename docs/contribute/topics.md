@@ -114,6 +114,48 @@ The [Quick Reference](https://www.w3.org/WAI/WCAG21/quickref) may provide
 lighter reading.
 :::
 
+### Errors in CI/CD and what to do
+
+We have a list of **known accessibility problems** in the file `docs/scripts/a11y-roadmap.txt`.
+This contains a list of errors that we aim to fix in the future, and that **do not cause tests to fail**.
+
+When a pa11y accessibility audit is run in our CI/CD, it checks for any errors that are _not_ on this list, and if it finds them it will cause the job to error.
+
+When you see an error in your CI/CD job, look at the logs under the `Run accessibility audit` job.
+You should see an output that looks like this:
+
+```
+JSON: /tmp/pa11y/pa11y-864/pa11y-ci-results.json
+Roadmap: /home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/a11y-roadmap.txt
+not on roadmap:
+  WCAG2AA.Principle2.Guideline2_4.2_4_1.G1,G123,G124.NoSuchID: 4
+on roadmap:
+  WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable: 1
+  WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63: 1
+  WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired: 1
+  WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail: 1828
+  WCAG2AA.Principle3.Guideline3_2.3_2_2.H32.2: 48
+  WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId: 9
+passed: false
+total errors: 1892
+```
+
+The problems that caused an error are in the `not on roadmap` section.
+Anything that is "not on the roadmap" is an error we have unexpectedly introduced in the PR.
+These should be identified and fixed.
+
+### Fix accessibility errors
+
+We keep a list of **known accessibility issues** in the {download}`accessibility roadmap <../scripts/a11y-roadmap.txt>`.
+These are issues which are currently flagged by the toolset, but that have not yet
+been fixed.
+
+To start working on one of the accessibility roadmap items, comment out one of the
+lines in `docs/a11y-roadmap.txt`, and re-run the audit to establish a baseline.
+
+Then, fix the issue in either the HTML templates, CSS, or python code, and re-run
+the audit until it is fixed.
+
 ### Run an accessibility audit locally
 
 To run the accessibility problem finder locally:
@@ -128,19 +170,6 @@ The output of the last command includes:
 
 - a short summary of the current state of the accessibility rules we are trying to maintain
 - local paths to JSON and HTML reports which contain all of the issues found
-
-### Fix accessibility errors
-
-Start by checking for issues on the
-[accessibility roadmap](https://github.com/pydata/pydata-sphinx-theme/blob/master/docs/a11y-roadmap.txt).
-These are issues which are currently flagged by the toolset, but that have not yet
-been fixed. If that file is empty (or just comments), hooray!
-
-To start working on one of the accessibility roadmap items, comment out one of the
-lines in `docs/a11y-roadmap.txt`, and re-run the audit to establish a baseline.
-
-Then, fix the issue in either the HTML templates, CSS, or python code, and re-run
-the audit until it is fixed.
 
 ## Change fonts
 

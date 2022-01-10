@@ -108,8 +108,9 @@ html_theme_options = {
 }
 
 html_sidebars = {
-    "contributing": [
+    "contributing/index": [
         "search-field",
+        "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
 }
