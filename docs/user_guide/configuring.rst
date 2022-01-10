@@ -48,7 +48,7 @@ These links take the following form:
                "name": "GitHub",
                # URL where the link will redirect
                "url": "https://github.com/<your-org>/<your-repo>",  # required
-               # Icon class (if type=='fontawesome'), or path to local image (if type=='local')
+               # Icon class (if "type": "fontawesome"), or path to local image (if "type": "local")
                "icon": "fab fa-github-square",
                # Whether icon should be a FontAwesome class, or a local file
                "type": "fontawesome OR local",  # Default is fontawesome
@@ -65,7 +65,7 @@ FontAwesome icons
 commonly used in websites. They include both generic shape icons (e.g., "arrow-down"),
 as well as brand-specific icons (e.g. "github").
 
-You can use FontAwesome icons by specifying ``type=="fontawesome"``, and
+You can use FontAwesome icons by specifying ``"type": "fontawesome"``, and
 specifying a FontAwesome class in the ``icon`` value.
 The value of ``icon`` can be any full
 `FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__ icon.
@@ -95,7 +95,7 @@ Here are several examples:
                "name": "Twitter",
                "url": "https://twitter.com/<your-handle>",
                "icon": "fab fa-twitter-square",
-               # The default for `type` is `fontawesome` so it is not required here
+               # The default for `type` is `fontawesome` so it is not actually required in any of the above examples as it is shown here
            },
        ],
        ...
@@ -119,7 +119,7 @@ Local image icons
 
 If you'd like to display an icon image that is not in the FontAwesome icons library,
 you may instead specify a path to a local image that will be used for the icon.
-To do so, use ``type=="local"``, and add a path to an image
+To do so, use ``"type": "local"``, and add a path to an image
 **relative to your documentation root** in the ``icon`` value.
 Here is an example:
 
