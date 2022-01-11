@@ -34,7 +34,6 @@ function addTOCInteractivity() {
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
   var sidebar = document.querySelector("div.bd-sidebar");
-  var sidebarNav = document.getElementById("bd-docs-nav");
 
   // Remember the sidebar scroll position between page loads
   // Inspired on source of revealjs.com
@@ -49,7 +48,9 @@ function scrollToActive() {
     console.log("[PST]: Scrolled sidebar using stored browser position...");
   } else {
     // Otherwise, calculate a position to scroll to based on the lowest `active` link
+    var sidebarNav = document.getElementById("bd-docs-nav");
     var active_pages = sidebarNav.querySelectorAll(".active");
+    debugger;
     if (active_pages.length > 0) {
       // Use the last active page as the offset since it's the page we're on
       var latest_active = active_pages[active_pages.length - 1];
@@ -58,7 +59,7 @@ function scrollToActive() {
         sidebar.getBoundingClientRect().y;
       // Only scroll the navbar if the active link is lower than 50% of the page
       if (offset > sidebar.clientHeight * 0.5) {
-        sidebar.scrollTop = offset - sidebar.clientHeight * 0.2;
+        sidebar.scrollTop = offset - sidebar.clientHeight * 0.1;
         console.log("[PST]: Scrolled sidebar using last active link...");
       }
     }
