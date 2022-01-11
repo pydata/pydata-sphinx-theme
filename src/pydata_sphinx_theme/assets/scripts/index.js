@@ -50,7 +50,6 @@ function scrollToActive() {
     // Otherwise, calculate a position to scroll to based on the lowest `active` link
     var sidebarNav = document.getElementById("bd-docs-nav");
     var active_pages = sidebarNav.querySelectorAll(".active");
-    debugger;
     if (active_pages.length > 0) {
       // Use the last active page as the offset since it's the page we're on
       var latest_active = active_pages[active_pages.length - 1];
