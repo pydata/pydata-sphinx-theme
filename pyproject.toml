@@ -39,13 +39,12 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
-  "sphinx",
   "numpydoc",
   "myst-parser",
   "pandas",
   "pytest",
   "pytest-regressions",
-  "beautifulsoup4",
+  "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
   "jupyter_sphinx",

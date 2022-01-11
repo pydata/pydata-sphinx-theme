@@ -23,14 +23,13 @@ Other sites that are using this theme:
    :maxdepth: 2
 
    user_guide/index
-   contributing
+   contribute/index
 
 .. toctree::
    :maxdepth: 2
    :hidden:
 
    demo/index
-   changelog
 
 
 .. meta::

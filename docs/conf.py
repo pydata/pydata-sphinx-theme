@@ -34,11 +34,12 @@ version = release.replace("dev0", "")
 # ones.
 
 extensions = [
+    "jupyter_sphinx",
+    "myst_parser",
+    "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
-    "numpydoc",
-    "myst_parser",
-    "jupyter_sphinx",
+    "sphinxext.rediraffe",
 ]
 
 # -- Internationalization ------------------------------------------------
@@ -64,21 +65,21 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-html_sidebars = {
-    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
-}
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-# html_logo = "_static/pandas.svg"
+# html_logo = "_static/pandas.svg"  # For testing
 
 html_theme_options = {
     "external_links": [
-        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"}
+        {
+            "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
+            "name": "Changelog",
+        },
+        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"},
     ],
     "github_url": "https://github.com/pydata/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
@@ -87,7 +88,13 @@ html_theme_options = {
             "name": "PyPI",
             "url": "https://pypi.org/project/pydata-sphinx-theme",
             "icon": "fas fa-box",
-        }
+        },
+        {
+            "name": "Pandas",
+            "url": "https://pandas.pydata.org",
+            "icon": "_static/pandas-square.svg",
+            "type": "local",
+        },
     ],
     "use_edit_page_button": True,
     "show_toc_level": 1,
@@ -97,6 +104,7 @@ html_theme_options = {
     # "navbar_start": ["navbar-logo", "navbar-version"],
     # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
     "navbar_end": ["version-switcher", "navbar-icon-links"],
+    # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {
         # "json_url": "/_static/switcher.json",
@@ -106,12 +114,25 @@ html_theme_options = {
     },
 }
 
+html_sidebars = {
+    "contribute/index": [
+        "search-field",
+        "sidebar-nav-bs",
+        "custom-template",
+    ],  # This ensures we test for custom sidebars
+    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
+}
+
 
 html_context = {
     "github_user": "pandas-dev",
     "github_repo": "pydata-sphinx-theme",
     "github_version": "master",
     "doc_path": "docs",
+}
+
+rediraffe_redirects = {
+    "contributing.rst": "contribute/index.rst",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

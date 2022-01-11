@@ -66,6 +66,25 @@ By default, it has the following configuration:
         "**": ["search-field", "sidebar-nav-bs", "sidebar-ethical-ads"]
     }
 
+Left sidebar end sections
+=========================
+
+There is a special ``<div>`` within the left sidebar that appears at the
+bottom of the page, regardless of the content that is above it.
+
+To control the HTML templates that are within this div, use
+``html_theme_options['left_sidebar_end']`` in ``conf.py``.
+
+By default, it has the following templates:
+
+.. code-block:: python
+
+    html_theme_options = {
+      ...
+      "left_sidebar_end": ["sidebar-ethical-ads"],
+      ...
+    }
+
 
 The right in-page sidebar
 =========================
@@ -136,7 +155,7 @@ could do so with the following steps:
       <!-- This will display the version of the docs -->
       {{ version }}
 
-1. Now add the file to your menu items for one of the sections above. For example:
+2. Now add the file to your menu items for one of the sections above. For example:
 
    .. code-block:: python
 

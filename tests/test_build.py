@@ -91,6 +91,46 @@ def test_toc_visibility(sphinx_build_factory):
     assert "visible" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
 
 
+def test_icon_links(sphinx_build_factory, file_regression):
+    html_theme_options_icon_links = {
+        "icon_links": [
+            {
+                "name": "FONTAWESOME",
+                "url": "https://site1.org",
+                "icon": "FACLASS",
+                "type": "fontawesome",
+            },
+            {
+                "name": "FONTAWESOME DEFAULT",
+                "url": "https://site2.org",
+                "icon": "FADEFAULTCLASS",
+                # No type so we can test that the default is fontawesome
+            },
+            {
+                "name": "LOCAL FILE",
+                "url": "https://site3.org",
+                "icon": "emptylogo.png",  # Logo is our only test site img
+                "type": "local",
+            },
+            {
+                "name": "WRONG TYPE",
+                "url": "https://site4.org",
+                "icon": "WRONG TYPE",
+                # Because the type is inccorect, this should output an error `span`
+                "type": "incorrecttype",
+            },
+        ]
+    }
+    confoverrides = {"html_theme_options": html_theme_options_icon_links}
+
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    # Navbar should have the right icons
+    icon_links = sphinx_build.html_tree("index.html").select("#navbar-icon-links")[0]
+    file_regression.check(
+        icon_links.prettify(), basename="navbar_icon_links", extension=".html"
+    )
+
+
 def test_logo(sphinx_build_factory):
     """Test that the logo is shown by default, project title if no logo."""
     sphinx_build = sphinx_build_factory("base").build()

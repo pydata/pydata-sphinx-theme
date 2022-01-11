@@ -44,6 +44,7 @@ def update_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_end",
         "theme_footer_items",
         "theme_page_sidebar_items",
+        "theme_left_sidebar_end",
         "sidebars",
     ]
 

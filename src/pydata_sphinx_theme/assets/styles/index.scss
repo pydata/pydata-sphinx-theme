@@ -170,6 +170,8 @@ footer {
 .bd-sidebar {
   padding-top: 1em;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 
   @include media-breakpoint-up(md) {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -185,6 +187,11 @@ footer {
 
   &.no-sidebar {
     border-right: 0;
+  }
+
+  .sidebar-end-items {
+    margin-top: auto;
+    margin-bottom: 1em;
   }
 }
 
@@ -456,6 +463,10 @@ nav.bd-links {
     &.fa-bitbucket:before {
       color: #0052cc;
     }
+  }
+
+  img.icon-link-image {
+    height: 1.5em;
   }
 }
 
