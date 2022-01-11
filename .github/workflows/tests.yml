@@ -135,7 +135,7 @@ jobs:
           verbose: true
 
       - name: Run the accessibility audit
-        run: python docs/a11y.py --no-serve
+        run: python docs/scripts/a11y.py --no-serve
 
       # Check the audit for threshold values
       # TODO: write this someplace after a PR is merged, and load?

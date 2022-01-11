@@ -34,11 +34,12 @@ version = release.replace("dev0", "")
 # ones.
 
 extensions = [
+    "jupyter_sphinx",
+    "myst_parser",
+    "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
-    "numpydoc",
-    "myst_parser",
-    "jupyter_sphinx",
+    "sphinxext.rediraffe",
 ]
 
 # -- Internationalization ------------------------------------------------
@@ -64,11 +65,6 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-html_sidebars = {
-    "contributing": ["search-field", "custom-template"],
-    "changelog": [],
-}
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -79,7 +75,11 @@ html_theme = "pydata_sphinx_theme"
 
 html_theme_options = {
     "external_links": [
-        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"}
+        {
+            "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
+            "name": "Changelog",
+        },
+        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"},
     ],
     "github_url": "https://github.com/pydata/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/pandas_dev",
@@ -113,12 +113,24 @@ html_theme_options = {
     },
 }
 
+html_sidebars = {
+    "contribute/index": [
+        "search-field",
+        "sidebar-nav-bs",
+        "custom-template",
+    ],  # This ensures we test for custom sidebars
+}
+
 
 html_context = {
     "github_user": "pandas-dev",
     "github_repo": "pydata-sphinx-theme",
     "github_version": "master",
     "doc_path": "docs",
+}
+
+rediraffe_redirects = {
+    "contributing.rst": "contribute/index.rst",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
