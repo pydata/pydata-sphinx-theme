@@ -59,7 +59,7 @@ function scrollToActive() {
         sidebar.getBoundingClientRect().y;
       // Only scroll the navbar if the active link is lower than 50% of the page
       if (offset > sidebar.clientHeight * 0.5) {
-        sidebar.scrollTop = offset - sidebar.clientHeight * 0.1;
+        sidebar.scrollTop = offset - sidebar.clientHeight * 0.3;
         console.log("[PST]: Scrolled sidebar using last active link...");
       }
     }
