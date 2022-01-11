@@ -108,7 +108,7 @@ html_theme_options = {
 }
 
 html_sidebars = {
-    "contributing/index": [
+    "contribute/index": [
         "search-field",
         "sidebar-nav-bs",
         "custom-template",
