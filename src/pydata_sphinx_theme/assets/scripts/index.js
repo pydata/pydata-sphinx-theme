@@ -73,5 +73,5 @@ function scrollToActive() {
 
 // This is equivalent to the .ready() function as described in
 // https://api.jquery.com/ready/
-$(scrollToActive());
-$(addTOCInteractivity());
+$(scrollToActive);
+$(addTOCInteractivity);
