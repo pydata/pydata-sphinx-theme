@@ -65,6 +65,13 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+# -- Extension options -------------------------------------------------------
+
+myst_enable_extensions = [
+    # This allows us to use ::: to denote directives, useful for admonitions
+    "colon_fence",
+]
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
