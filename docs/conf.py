@@ -127,6 +127,7 @@ html_sidebars = {
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
+    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
 }
 
 

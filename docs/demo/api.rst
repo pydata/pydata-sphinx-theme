@@ -1,6 +1,6 @@
-***************************************
-API documentation and generated content
-***************************************
+************************************************
+Advanced API documentation and generated content
+************************************************
 
 This page contains general code elements that are common
 for package documentation.
