@@ -13,7 +13,7 @@ from sphinx.util import logging
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.7.1"
+__version__ = "0.8.0"
 
 logger = logging.getLogger(__name__)
 
