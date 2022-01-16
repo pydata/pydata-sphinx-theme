@@ -10,6 +10,7 @@ Other sites that are using this theme:
 
 - Pandas: https://pandas.pydata.org/docs/
 - NumPy: https://numpy.org/doc/stable/
+- Matplotlib: https://matplotlib.org/stable/
 - SciPy: https://scipy.github.io/devdocs/
 - NetworkX: https://networkx.org/documentation/latest/
 - Bokeh: https://docs.bokeh.org/en/latest/
