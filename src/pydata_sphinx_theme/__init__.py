@@ -508,7 +508,7 @@ def setup(app):
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
-    app.add_html_theme("pydata_sphinx_theme", theme_path)
+    app.add_html_theme("pydata_sphinx_theme", os.fsdecode(theme_path))
 
     app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
