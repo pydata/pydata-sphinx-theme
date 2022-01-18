@@ -3,7 +3,7 @@ requires = ["sphinx-theme-builder >= 0.2.0a7"]
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
-node-version = "14.18.1"
+node-version = "16.13.2"
 theme-name = "pydata_sphinx_theme"
 additional-compiled-static-assets = [
   "webpack-macros.html",
@@ -39,13 +39,12 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
-  "sphinx",
   "numpydoc",
   "myst-parser",
   "pandas",
   "pytest",
   "pytest-regressions",
-  "beautifulsoup4",
+  "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
   "jupyter_sphinx",

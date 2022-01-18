@@ -14,7 +14,7 @@ from pygments.formatters import HtmlFormatter
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.7.1"
+__version__ = "0.8.0"
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +45,7 @@ def update_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_end",
         "theme_footer_items",
         "theme_page_sidebar_items",
+        "theme_left_sidebar_end",
         "sidebars",
     ]
 
@@ -552,7 +553,7 @@ def setup(app):
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
-    app.add_html_theme("pydata_sphinx_theme", theme_path)
+    app.add_html_theme("pydata_sphinx_theme", os.fsdecode(theme_path))
 
     app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also

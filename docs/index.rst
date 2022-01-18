@@ -8,11 +8,17 @@ elements.
 
 Other sites that are using this theme:
 
-- Pandas: https://pandas.pydata.org/docs/
-- NumPy: https://numpy.org/doc/stable/
-- SciPy: https://scipy.github.io/devdocs/
-- NetworkX: https://networkx.org/documentation/latest/
+.. SORTED ALPHABETICALLY
+
+- Binder: https://docs.mybinder.org/
 - Bokeh: https://docs.bokeh.org/en/latest/
+- JupyterLab: https://jupyterlab.readthedocs.io/en/latest/
+- JupyterHub: https://jupyterhub.readthedocs.io/en/latest/
+- Matplotlib: https://matplotlib.org/stable/
+- NetworkX: https://networkx.org/documentation/latest/
+- NumPy: https://numpy.org/doc/stable/
+- Pandas: https://pandas.pydata.org/docs/
+- SciPy: https://scipy.github.io/devdocs/
 - JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
 - Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
 - Fairlearn: https://fairlearn.org/main/about/
@@ -23,14 +29,13 @@ Other sites that are using this theme:
    :maxdepth: 2
 
    user_guide/index
-   contributing
+   contribute/index
 
 .. toctree::
    :maxdepth: 2
    :hidden:
 
    demo/index
-   changelog
 
 
 .. meta::

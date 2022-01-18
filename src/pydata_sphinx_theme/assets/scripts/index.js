@@ -41,7 +41,7 @@ function addTOCInteractivity() {
 
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
-  var sidebar = document.getElementById("bd-docs-nav");
+  var sidebar = document.querySelector("div.bd-sidebar");
 
   // Remember the sidebar scroll position between page loads
   // Inspired on source of revealjs.com
@@ -51,22 +51,25 @@ function scrollToActive() {
   );
 
   if (!isNaN(storedScrollTop)) {
+    // If we've got a saved scroll position, just use that
     sidebar.scrollTop = storedScrollTop;
+    console.log("[PST]: Scrolled sidebar using stored browser position...");
   } else {
-    var active_pages = sidebar.querySelectorAll(".active");
-    var offset = 0;
-    var i;
-    for (i = active_pages.length - 1; i > 0; i--) {
-      var active_page = active_pages[i];
-      if (active_page !== undefined) {
-        offset += active_page.offsetTop;
+    // Otherwise, calculate a position to scroll to based on the lowest `active` link
+    var sidebarNav = document.getElementById("bd-docs-nav");
+    var active_pages = sidebarNav.querySelectorAll(".active");
+    if (active_pages.length > 0) {
+      // Use the last active page as the offset since it's the page we're on
+      var latest_active = active_pages[active_pages.length - 1];
+      var offset =
+        latest_active.getBoundingClientRect().y -
+        sidebar.getBoundingClientRect().y;
+      // Only scroll the navbar if the active link is lower than 50% of the page
+      if (latest_active.getBoundingClientRect().y > window.innerHeight * 0.5) {
+        let buffer = 0.25; // Buffer so we have some space above the scrolled item
+        sidebar.scrollTop = offset - sidebar.clientHeight * buffer;
+        console.log("[PST]: Scrolled sidebar using last active link...");
       }
-    }
-    offset -= sidebar.offsetTop;
-
-    // Only scroll the navbar if the active link is lower than 50% of the page
-    if (active_page !== undefined && offset > sidebar.clientHeight * 0.5) {
-      sidebar.scrollTop = offset - sidebar.clientHeight * 0.2;
     }
   }
 
@@ -142,8 +145,8 @@ function setupTheme() {
   });
 }
 
-$(document).ready(() => {
-  setupTheme();
-  scrollToActive();
-  addTOCInteractivity();
-});
+// This is equivalent to the .ready() function as described in
+// https://api.jquery.com/ready/
+$(setupTheme);
+$(scrollToActive);
+$(addTOCInteractivity);

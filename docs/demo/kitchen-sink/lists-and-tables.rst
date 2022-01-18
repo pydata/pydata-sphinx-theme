@@ -1,4 +1,4 @@
-
+.. DOWNLOADED FROM sphinx-themes.org, DO NOT MANUALLY EDIT
 **************
 Lists & Tables
 **************
@@ -47,6 +47,18 @@ Term : classifier
 Term
     Definition
 
+I have no clue why the definition list below is classified as a different style
+of definition list than the one above.
+
+Is it the spaces in the term?
+    Maybe it was the multiple line paragraph
+    in the line below that caused this?
+
+Is it the paragraph above the list maybe?
+    I guess a lot of these lists don't have leading paragraphs?
+
+Is it everything all at once?
+    Who knows?!
 
 Option Lists
 ------------
@@ -116,6 +128,28 @@ Field list
 Bullet Lists
 ------------
 
+..
+    Docutils supports two types of lists, "simple" and "complex". Complex lists
+    have item margins, simple lists do not.
+    https://docutils.sourceforge.io/sandbox/html4strict/data/simple-lists.html
+
+Simple
+^^^^^^
+
+- A simple list.
+- There are no margins between list items.
+- Simple lists do not contain multiple paragraphs. That's a complex list.
+- In the case of a nested list
+
+  - There are no margins between elements
+
+    - Still no margins
+
+      - Still no margins
+
+Complex
+^^^^^^^
+
 - A bullet list
 
   + Nested bullet list.
@@ -136,6 +170,13 @@ Bullet Lists
 - ``inline literall``
 - ``inline literall``
 - ``inline literall``
+- This item has multiple paragraphs.
+
+  This item has multiple paragraphs.
+- This item has multiple paragraphs.
+
+  This item has multiple paragraphs.
+
 
 Second list level
 ^^^^^^^^^^^^^^^^^
@@ -151,13 +192,18 @@ Second list level
 
       heh heh. child. try to beat this embed:
 
-      .. literalinclude:: test_py_module/test.py
-          :language: python
+      .. literalinclude:: api.rst
+          :language: rst
           :linenos:
-          :lines: 1-10
+
   - and another. `yahoo <http://www.yahoo.com>`_
   - `yahoo <http://www.yahoo.com>`_
   - ``hi``
+- how about an admonition?
+
+  .. note::
+      This is a note nested in a list.
+
 - and hehe
 
 But deeper down the rabbit hole
@@ -192,11 +238,11 @@ Hlists
 .. hlist::
     :columns: 2
 
-    - .. figure:: static/yi_jing_01_chien.jpg
+    - .. figure:: https://source.unsplash.com/200x200/daily?cute+animals
 
          This is a short caption for a figure.
 
-    - .. figure:: static/yi_jing_01_chien.jpg
+    - .. figure:: https://source.unsplash.com/200x200/daily?cute+animals
 
          This is a long caption for a figure. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
          Donec porttitor dolor in odio posuere, vitae ornare libero mattis. In lobortis justo vestibulum nibh aliquet, non.
@@ -290,15 +336,11 @@ List Tables
 
 .. list-table:: This is a list table with images in it.
 
-    * - .. figure:: static/yi_jing_01_chien.jpg
+    * - .. figure:: https://source.unsplash.com/200x200/daily?cute+animals
 
            This is a short caption for a figure.
 
-      - .. figure:: static/yi_jing_01_chien.jpg
+      - .. figure:: https://source.unsplash.com/200x200/daily?cute+animals
 
            This is a long caption for a figure. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
            Donec porttitor dolor in odio posuere, vitae ornare libero mattis. In lobortis justo vestibulum nibh aliquet, non.
-
-.. meta::
-    :description lang=en:
-        Examples of table features in pydata-sphinx-theme.

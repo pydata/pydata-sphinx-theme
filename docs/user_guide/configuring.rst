@@ -46,8 +46,45 @@ The theme mode can be changed by the user. By default landing on the documentati
 Configure icon links
 ====================
 
-If you'd like icon links to show up to the right of your main navigation bar, use the
-following configuration:
+You can add icon links to show up to the right of your main navigation bar.
+
+These links take the following form:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               # Label for this link
+               "name": "GitHub",
+               # URL where the link will redirect
+               "url": "https://github.com/<your-org>/<your-repo>",  # required
+               # Icon class (if "type": "fontawesome"), or path to local image (if "type": "local")
+               "icon": "fab fa-github-square",
+               # Whether icon should be a FontAwesome class, or a local file
+               "type": "fontawesome OR local",  # Default is fontawesome
+           }
+      ]
+   }
+
+There are two kinds of icons you can use, described below:
+
+FontAwesome icons
+-----------------
+
+`FontAwesome <https://fontawesome.com/>`_ is a collection of icons that are
+commonly used in websites. They include both generic shape icons (e.g., "arrow-down"),
+as well as brand-specific icons (e.g. "github").
+
+You can use FontAwesome icons by specifying ``"type": "fontawesome"``, and
+specifying a FontAwesome class in the ``icon`` value.
+The value of ``icon`` can be any full
+`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__ icon.
+In addition to the main icon class, e.g. ``fa-cat``, the "style" class must
+also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
+
+Here are several examples:
 
 .. code:: python
 
@@ -58,27 +95,23 @@ following configuration:
                "name": "GitHub",
                "url": "https://github.com/<your-org>/<your-repo>",
                "icon": "fab fa-github-square",
+               "type": "fontawesome",
            },
            {
                "name": "GitLab",
                "url": "https://gitlab.com/<your-org>/<your-repo>",
                "icon": "fab fa-gitlab",
+               "type": "fontawesome",
            },
            {
                "name": "Twitter",
                "url": "https://twitter.com/<your-handle>",
                "icon": "fab fa-twitter-square",
+               # The default for `type` is `fontawesome` so it is not actually required in any of the above examples as it is shown here
            },
        ],
        ...
    }
-
-
-The value of ``icon`` can be any full
-`FontAwesome 5 Free <https://fontawesome.com/icons?d=gallery&m=free>`__ icon.
-In addition to the main icon class, e.g. ``fa-cat``, the "style" class must
-also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
-
 
 .. Hint::
 
@@ -93,8 +126,39 @@ also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
 
    This has already been added for the brands that have *shortcuts*.
 
-The below are shortcuts for commonly-used services, but may be removed in a future
-release in favor of ``icon_links``:
+Local image icons
+-----------------
+
+If you'd like to display an icon image that is not in the FontAwesome icons library,
+you may instead specify a path to a local image that will be used for the icon.
+To do so, use ``"type": "local"``, and add a path to an image
+**relative to your documentation root** in the ``icon`` value.
+Here is an example:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               "name": "PyData",
+               "url": "https://pydata.org",
+               "icon": "_static/pydata-logo-square.png",
+               "type": "local",
+           },
+       ],
+       ...
+   }
+
+.. tip::
+
+   Use ``.svg`` images for a higher-resolution output that behaves similarly across screen sizes.
+
+Icon Link Shortcuts
+-------------------
+
+There are a few shortcuts supported to minimize configuration for commonly-used services.
+These may be removed in a future release in favor of ``icon_links``:
 
 .. code:: python
 

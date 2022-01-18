@@ -21,7 +21,8 @@ div.admonition,
 
   // Items after the title should be indented
   p.admonition-title ~ * {
-    padding: 0 1.4rem;
+    margin-left: 1.4rem;
+    margin-right: 1.4rem;
   }
 
   // Lists need to have left margin so they don't spill into it
