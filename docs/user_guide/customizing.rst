@@ -45,16 +45,18 @@ In order to customize the display of any of the theme element you need to encasp
 
 .. code-block:: css
 
-    // anything related to the light theme
+    /* anything related to the light theme */
     body[data-theme="light"] {
 
-        // whatever you want to change
+        /* whatever you want to change */
+        background: white;
     }
 
-    // anything related to the dark theme
+    /* anything related to the dark theme */
     body[data-theme="dark"] {
 
-        // whatever you want to change
+        /* whatever you want to change */
+        background: black;
     }
 
 .. _css-variables:
