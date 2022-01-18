@@ -106,6 +106,19 @@ jobs:
         run: |
           sphinx-build -b html docs/ docs/_build/html
 
+      # The lighthouse audit runs directly on the HTML files, no serving needed
+      - name: Audit with Lighthouse
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          configPath: ".github/workflows/lighthouserc.json"
+          temporaryPublicStorage: true
+          uploadArtifacts: true
+          runs: 3 # Multiple runs to reduce variance
+          urls: |
+            demo/kitchen-sink/paragraph-markup.html
+            demo/example_pandas.html
+            demo/theme-elements.html
+
       # Serve the docs and wait to be ready
       - name: Serve the built site
         run: |
@@ -135,25 +148,12 @@ jobs:
       - name: Run the accessibility audit
         run: python docs/scripts/a11y.py --no-serve
 
-      # Check the audit for threshold values
-      # TODO: write this someplace after a PR is merged, and load?
-      - name: Assess Lighthouse Check results
-        uses: foo-software/lighthouse-check-status-action@v1.0.1
-        with:
-          lighthouseCheckResults: ${{ steps.lighthouse.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "96"
-          minBestPracticesScore: "85"
-          minPerformanceScore: "10"
-          minSeoScore: "80"
-        if: always()
-
       - name: Publish Audit reports
         uses: actions/upload-artifact@v2
         with:
-          name: Pa11y and Lighthouse ${{ github.run_number }}
+          name: Pa11y ${{ github.run_number }}
           path: |
             /tmp/pa11y
-            /tmp/lighthouse
         if: always()
 
   publish:
