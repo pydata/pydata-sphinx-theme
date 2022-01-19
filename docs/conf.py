@@ -80,6 +80,11 @@ myst_enable_extensions = [
 html_theme = "pydata_sphinx_theme"
 # html_logo = "_static/pandas.svg"  # For testing
 
+if "dev" in release:
+    version_match = "dev"
+else:
+    version_match = "v" + release
+
 html_theme_options = {
     "external_links": [
         {
@@ -117,7 +122,7 @@ html_theme_options = {
         # "json_url": "/_static/switcher.json",
         "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
         "url_template": "https://pydata-sphinx-theme.readthedocs.io/en/{version}/",
-        "version_match": "v" + version,
+        "version_match": version_match,
     },
 }
 
