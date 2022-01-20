@@ -386,6 +386,8 @@ each have one or two fields:
   switcher.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
+- ``extra_classes``: an optional list of classes to add to a version
+  (e.g., ``["dev", "hide"]``).
 
 Here is an example JSON file:
 
