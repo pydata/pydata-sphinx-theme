@@ -65,13 +65,6 @@ function checkPageExistsAndRedirect(event) {
             // for that version of the docs.
             node.onclick = checkPageExistsAndRedirect;
             $("#version_switcher_menu").append(node);
-            // Add extra class to entries. Can be combined with "active"
-            // if it's only for styling the active version
-            if ("extra_classes" in entry) {
-                $.each(entry.extra_classes, function(index, extra_class) {
-                  node.classList.add(extra_class);
-                });
-            }
             // replace dropdown button text with the preferred display name of
             // this version, rather than using sphinx's {{ version }} variable.
             // also highlight the dropdown entry for the currently-viewed
@@ -79,6 +72,12 @@ function checkPageExistsAndRedirect(event) {
             if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
                 $("#version_switcher_button").text(entry.name);
+                // Add extra class to the entry
+                if ("extra_classes" in entry) {
+                    $.each(entry.extra_classes, function(index, extra_class) {
+                      node.classList.add(extra_class);
+                    });
+                }
             }
         });
     });
