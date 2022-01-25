@@ -386,9 +386,9 @@ each have one or two fields:
   switcher.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
-- ``extra_classes``: an optional list of classes to add to a version
-  (e.g., ``["dev", "hide"]``). These classes are only added when the version
-  is active.
+- ``extra_classes``: an optional list of classes to add to the switcher
+  button for a given version (e.g., ``["dev", "rc"]``). These classes are only
+  added when the version is active.
 
 Here is an example JSON file:
 
@@ -398,6 +398,10 @@ Here is an example JSON file:
         {
             "name": "v2.1 (stable)",
             "version": "2.1"
+        },
+        {
+            "version": "2.1rc1",
+            "extra_classes": ["dev", "rc"]
         },
         {
             "version": "2.0"
