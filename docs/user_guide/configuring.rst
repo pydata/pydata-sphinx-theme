@@ -402,8 +402,9 @@ Here is an example JSON file:
             "version": "2.0"
         },
         {
-            "version": "1.0"
-        },
+            "version": "1.0",
+            "url": "https://mysite.org/en/1.0/index.html"
+        }
     ]
 
 See the discussion of ``switcher['json_url']`` (below) for options of where to
