@@ -128,7 +128,7 @@ footer {
   @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
-    top: calc(var(--pst-header-height) + 20px);
+    top: var(--pst-header-height);
     height: calc(100vh - 5rem);
     overflow-y: auto;
   }
@@ -179,9 +179,9 @@ footer {
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
       position: sticky;
-      top: calc(var(--pst-header-height) + 20px);
+      top: var(--pst-header-height);
       z-index: 1000;
-      height: calc(100vh - var(--pst-header-height) - 20px);
+      height: calc(100vh - var(--pst-header-height));
     }
   }
 
