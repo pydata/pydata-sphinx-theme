@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  padding-top: calc(var(--pst-header-height) + 20px);
+  padding-top: var(--pst-header-height);
 
   background-color: white;
   font-family: var(--pst-font-family-base);
