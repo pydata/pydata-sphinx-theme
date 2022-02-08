@@ -387,7 +387,7 @@ each can have the following fields:
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
 - ``url``: an optional URL. If provided, it links the version to ``url``
-  not taking into account ``switcher['url_template']``.
+  instead of ``switcher['url_template']``.
 
 Here is an example JSON file:
 
