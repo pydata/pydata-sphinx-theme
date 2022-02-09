@@ -74,6 +74,10 @@ function checkPageExistsAndRedirect(event) {
             if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
                 $("#version_switcher_button").text(entry.name);
+                // Add extra class to the button for the selected entry
+                if ("extra_classes" in entry) {
+                    $("#version_switcher_menu").classList.add(...entry.extra_classes);
+                }
             }
         });
     });
