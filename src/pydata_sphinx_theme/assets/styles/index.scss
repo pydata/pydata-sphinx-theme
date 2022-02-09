@@ -105,13 +105,11 @@ footer {
     position: absolute;
     color: #a4a6a7;
     left: 25px;
-    top: 25px;
   }
 
   input {
-    border-radius: 0;
-    border: 0;
-    border-bottom: 1px solid #e5e5e5;
+    border-radius: 0.2rem;
+    border: 1px solid #e5e5e5;
     padding-left: 35px;
   }
 }
@@ -128,7 +126,7 @@ footer {
   @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
-    top: calc(var(--pst-header-height) + 20px);
+    top: var(--pst-header-height);
     height: calc(100vh - 5rem);
     overflow-y: auto;
   }
@@ -179,9 +177,9 @@ footer {
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
       position: sticky;
-      top: calc(var(--pst-header-height) + 20px);
+      top: var(--pst-header-height);
       z-index: 1000;
-      height: calc(100vh - var(--pst-header-height) - 20px);
+      height: calc(100vh - var(--pst-header-height));
     }
   }
 
