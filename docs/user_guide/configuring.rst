@@ -645,11 +645,12 @@ following configuration:
        "navbar_end": ["navbar-icon-links.html", "search-field.html"]
    }
 
-
 .. note::
 
    By default the search bar is positioned in the sidebar since this is more
-   suitable for large navigation bars.
+   suitable for large navigation bars.  
+   Thus, if you plan to move it to the nabvar, rember to initialize the sidebar
+   without such template to avoid duplication.
 
 Configure the search bar text
 =============================
