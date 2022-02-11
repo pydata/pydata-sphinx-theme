@@ -535,7 +535,7 @@ def get_pygments_stylesheet():
     return "\n".join(lines)
 
 
-# cannot deal with pygments and modes so weoverwrite the pygment css file
+# cannot deal with pygments and modes so we overwrite the pygment css file
 def _overwrite_pygments_css(app, exception=None):
 
     if exception is not None:
