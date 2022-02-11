@@ -79,8 +79,27 @@
 }
 
 // the icons for theme change
+#theme-switch {
+  border-color: rgba(var(--pst-color-navbar-link-hover), 1);
+  a {
+    color: rgba(var(--pst-color-navbar-link-hover), 1);
+  }
+}
+
+#theme-switch:hover {
+  border-color: rgba(var(--pst-color-navbar-link), 1);
+  background-color: rgba(var(--pst-color-navbar-link-hover), 1);
+  a {
+    color: rgba(var(--pst-color-navbar-link), 1);
+  }
+}
+
 #theme-switch a {
-  color: rgba(var(--pst-color-navbar-link-hover), 1);
+  display: none;
+}
+
+#theme-switch a:hover {
+  color: rgba(var(--pst-color-navbar-link), 1);
   display: none;
 }
 
