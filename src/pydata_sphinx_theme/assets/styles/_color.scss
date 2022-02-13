@@ -1,22 +1,20 @@
-// Colors are defined in rgb string way, "red, green, blue"
-
 // light theme
 body[data-theme="light"] {
 
   // === colors === 
 
   // main colors
-  --pst-color-primary: 19, 6, 84;
-  --pst-color-success: 40, 167, 69;
-  --pst-color-info: 0, 123, 255; /*23, 162, 184;*/
-  --pst-color-warning: 255, 193, 7;
-  --pst-color-danger: 220, 53, 69;
-  --pst-color-text-base: 51, 51, 51;
-  --pst-color-background: 255, 255, 255;
-  --pst-color-background-up: 240, 240, 240; // for 3D effects
-  --pst-color-deactivate: 77, 77, 77;
-  --pst-color-border: 201, 201, 201;
-  --pst-color-shadow: 216, 216, 216;
+  --pst-color-primary: rgb(19, 6, 84);
+  --pst-color-success: rgb(40, 167, 69);
+  --pst-color-info: rgb(0, 123, 255); /*23, 162, 184;*/
+  --pst-color-warning: rgb(255, 193, 7);
+  --pst-color-danger: rgb(220, 53, 69);
+  --pst-color-text-base: rgb(51, 51, 51);
+  --pst-color-background: rgb(255, 255, 255);
+  --pst-color-background-up: rgb(240, 240, 240); // for 3D effects
+  --pst-color-deactivate: rgb(77, 77, 77);
+  --pst-color-border: rgb(201, 201, 201);
+  --pst-color-shadow: rgb(216, 216, 216);
 
   // headers
   --pst-color-h1: var(--pst-color-primary);
@@ -28,12 +26,12 @@ body[data-theme="light"] {
   --pst-color-paragraph: var(--pst-color-text-base);
 
   // links
-  --pst-color-link: 0, 91, 129;
-  --pst-color-link-hover: 227, 46, 0;
-  --pst-color-target: 251, 229, 78;
+  --pst-color-link: rgb(0, 91, 129);
+  --pst-color-link-hover: rgb(227, 46, 0);
+  --pst-color-target: rgb(251, 229, 78);
 
   // headerlinks (the anchors at the end of titles)
-  --pst-color-headerlink: 198, 15, 15;
+  --pst-color-headerlink: rgb(198, 15, 15);
   --pst-color-headerlink-hover: var(--pst-color-background);
 
   // navigation
@@ -43,16 +41,16 @@ body[data-theme="light"] {
   // === roles ===
 
   // inline code
-  --pst-color-inline-code: 232, 62, 140;
+  --pst-color-inline-code: rgb(232, 62, 140);
 
   // guilabel
-  --pst-color-guilabel-background: 231, 242, 250;
-  --pst-color-guilabel-border: 127, 187, 227;
+  --pst-color-guilabel-background: rgb(231, 242, 250);
+  --pst-color-guilabel-border: rgb(127, 187, 227);
   --pst-color-guilabel-text: var(--pst-color-guilabel-border);
 
   // kbd
-  --pst-color-kbd-text: 255, 255, 255;
-  --pst-color-kbd-background: 33, 37, 41;
+  --pst-color-kbd-text: rgb(255, 255, 255);
+  --pst-color-kbd-background: rgb(33, 37, 41);
 
   // === directives ===
 
@@ -77,7 +75,7 @@ body[data-theme="light"] {
   --pst-color-versionmodified-deprecated: var(--pst-color-danger);
 
   // preformatted
-  --pst-color-preformatted-text: 34, 34, 34;
+  --pst-color-preformatted-text: rgb(34, 34, 34);
   --pst-color-preformatted-border: var(--pst-color-border);
   --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
@@ -108,7 +106,7 @@ body[data-theme="light"] {
   --pst-color-footer-border: var(--pst-color-border);
 
   // alert
-  --pst-color-alert-link: 232, 62, 140; // higher contrast of links in info boxes
+  --pst-color-alert-link: rgb(232, 62, 140); // higher contrast of links in info boxes
 
   // prev-next
   --pst-color-prev-next: var(--pst-color-primary);
@@ -132,16 +130,16 @@ body[data-theme="dark"] {
   // === theme colors ===
 
   // main colors
-  --pst-color-primary: 213, 142, 72;
-  --pst-color-success: 72, 135, 87;
-  --pst-color-info: 64, 125, 191; /*23, 162, 184;*/
-  --pst-color-warning: 193, 162, 69;
-  --pst-color-danger: 203, 70, 83;
-  --pst-color-text-base: 245, 245, 245;
-  --pst-color-background: 18, 18, 18;
-  --pst-color-background-up: 22, 22, 22; // for 3D effect in dark theme
-  --pst-color-deactivate: 101, 101, 101;
-  --pst-color-border: 140, 140, 140;
+  --pst-color-primary: rgb(213, 142, 72);
+  --pst-color-success: rgb(72, 135, 87);
+  --pst-color-info: rgb(64, 125, 191); /*23, 162, 184;*/
+  --pst-color-warning: rgb(193, 162, 69);
+  --pst-color-danger: rgb(203, 70, 83);
+  --pst-color-text-base: rgb(245, 245, 245);
+  --pst-color-background: rgb(18, 18, 18);
+  --pst-color-background-up: rgb(22, 22, 22); // for 3D effect in dark theme
+  --pst-color-deactivate: rgb(101, 101, 101);
+  --pst-color-border: rgb(140, 140, 140);
   --pst-color-shadow: var(--pst-color-background);
 
   // headers
@@ -154,12 +152,12 @@ body[data-theme="dark"] {
   --pst-color-paragraph: var(--pst-color-text-base);
 
   // links
-  --pst-color-link: 64, 64, 191;
-  --pst-color-link-hover: 170, 103, 196;
-  --pst-color-target: 117, 148, 195;
+  --pst-color-link: rgb(64, 64, 191);
+  --pst-color-link-hover: rgb(170, 103, 196);
+  --pst-color-target: rgb(117, 148, 195);
 
   // headerlinks (the anchors at the end of titles)
-  --pst-color-headerlink: 152, 61, 61;
+  --pst-color-headerlink: rgb(152, 61, 61);
   --pst-color-headerlink-hover: var(--pst-color-background);
 
   // navigation
@@ -169,16 +167,16 @@ body[data-theme="dark"] {
   // === roles ===
 
   // inline code
-  --pst-color-inline-code: 91, 188, 101;
+  --pst-color-inline-code: rgb(91, 188, 101);
 
   // guilabel
-  --pst-color-guilabel-background: 242, 196, 166;
-  --pst-color-guilabel-border: 141, 95, 65;
+  --pst-color-guilabel-background: rgb(242, 196, 166);
+  --pst-color-guilabel-border: rgb(141, 95, 65);
   --pst-color-guilabel-text: var(--pst-color-guilabel-border);
 
   // kbd
-  --pst-color-kbd-text: 33, 37, 41;
-  --pst-color-kbd-background: 245, 245, 245;
+  --pst-color-kbd-text: rgb(33, 37, 41);
+  --pst-color-kbd-background: rgb(245, 245, 245);
 
   // === directives ===
 
@@ -203,8 +201,8 @@ body[data-theme="dark"] {
   --pst-color-versionmodified-deprecated: var(--pst-color-danger);
 
   // preformatted
-  --pst-color-preformatted-text: 210, 210, 210;
-  --pst-color-preformatted-border: 83, 83, 83;
+  --pst-color-preformatted-text: rgb(210, 210, 210);
+  --pst-color-preformatted-border: rgb(83, 83, 83);
   --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
 
@@ -234,7 +232,7 @@ body[data-theme="dark"] {
   --pst-color-footer-border: var(--pst-color-border);
 
   // alert
-  --pst-color-alert-link: 232, 62, 140; // higher contrast of links in info boxes
+  --pst-color-alert-link: rgb(232, 62, 140); // higher contrast of links in info boxes
 
   // prev-next
   --pst-color-prev-next: var(--pst-color-link);

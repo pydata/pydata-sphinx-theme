@@ -6,42 +6,42 @@ html {
 body {
   padding-top: calc(var(--pst-header-height) + 20px);
 
-  background-color: rgba(var(--pst-color-background), 1);
+  background-color: var(--pst-color-background);
   font-family: var(--pst-font-family-base);
   font-weight: 400;
   line-height: 1.65;
-  color: rgba(var(--pst-color-text-base), 1);
+  color: var(--pst-color-text-base);
 }
 
 p {
   margin-bottom: 1.15rem;
   font-size: 1em;
-  color: rgba(var(--pst-color-paragraph), 1);
+  color: var(--pst-color-paragraph);
 
   /* section header in docstring pages */
   &.rubric {
-    border-bottom: 1px solid rgba(var(--pst-color-border), 1);
+    border-bottom: 1px solid var(--pst-color-border);
   }
 }
 
 a {
-  color: rgba(var(--pst-color-link), 1);
+  color: var(--pst-color-link);
   text-decoration: none;
 
   &:hover {
-    color: rgba(var(--pst-color-link-hover), 1);
+    color: var(--pst-color-link-hover);
     text-decoration: underline;
   }
 
   &.headerlink {
-    color: rgba(var(--pst-color-headerlink), 1);
+    color: var(--pst-color-headerlink);
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
 
     &:hover {
-      background-color: rgba(var(--pst-color-headerlink), 1);
-      color: rgba(var(--pst-color-headerlink-hover), 1);
+      background-color: var(--pst-color-headerlink);
+      color: var(--pst-color-headerlink-hover);
     }
   }
 }
@@ -57,37 +57,37 @@ h1 {
   @extend .heading-style;
   margin-top: 0;
   font-size: var(--pst-font-size-h1);
-  color: rgba(var(--pst-color-h1), 1);
+  color: var(--pst-color-h1);
 }
 
 h2 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h2);
-  color: rgba(var(--pst-color-h2), 1);
+  color: var(--pst-color-h2);
 }
 
 h3 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h3);
-  color: rgba(var(--pst-color-h3), 1);
+  color: var(--pst-color-h3);
 }
 
 h4 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h4);
-  color: rgba(var(--pst-color-h4), 1);
+  color: var(--pst-color-h4);
 }
 
 h5 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h5);
-  color: rgba(var(--pst-color-h5), 1);
+  color: var(--pst-color-h5);
 }
 
 h6 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h6);
-  color: rgba(var(--pst-color-h6), 1);
+  color: var(--pst-color-h6);
 }
 
 small,
@@ -97,7 +97,7 @@ small,
 
 hr {
   border: 0;
-  border-top: 1px solid rgba(var(pst-color-border), 1);
+  border-top: 1px solid var(pst-color-border);
 }
 
 pre,
@@ -108,18 +108,18 @@ samp {
 }
 
 code {
-  color: rgba(var(--pst-color-inline-code), 1);
+  color: var(--pst-color-inline-code);
 }
 
 pre {
   margin: 1.5em 0 1.5em 0;
   padding: 10px;
-  background-color: rgba(var(--pst-color-preformatted-background), 1);
-  color: rgba(var(--pst-color-preformatted-text), 1);
+  background-color: var(--pst-color-preformatted-background);
+  color: var(--pst-color-preformatted-text);
   line-height: 1.2em;
-  border: 1px solid rgba(var(--pst-color-preformatted-border), 1);
+  border: 1px solid var(--pst-color-preformatted-border);
   border-radius: 0.2rem;
-  box-shadow: 1px 1px 1px rgba(var(--pst-color-preformatted-shadow), 1);
+  box-shadow: 1px 1px 1px var(--pst-color-preformatted-shadow);
 }
 
 // Override bootstrap by restoring the basic theme default.

@@ -13,7 +13,7 @@ table.field-list {
   th.field-name {
     padding: 1px 8px 1px 5px;
     white-space: nowrap;
-    background-color: rgba(var(--pst-color-background-up), 1);
+    background-color: var(--pst-color-background-up);
   }
 
   /* italic font for parameter types */
@@ -62,35 +62,35 @@ table.field-list {
 .sig.c .kt,
 .sig.cpp .k,
 .sig.cpp .kt {
-  color: rgba(var(--pst-color-text-base), 1);
+  color: var(--pst-color-text-base);
 }
 
 .sig.c .m,
 .sig.cpp .m {
-  color: rgba(var(--pst-color-text-base), 1);
+  color: var(--pst-color-text-base);
 }
 
 .sig.c .s,
 .sig.c .sc,
 .sig.cpp .s,
 .sig.cpp .sc {
-  color: rgba(var(--pst-color-text-base), 1);
+  color: var(--pst-color-text-base);
 }
 
 // addition
 
 // .sig.c .sig-name .n,
 // .sig.cpp .sig-name .n {
-//   color: rgba(var(--pst-color-inline-code), 1);
+//   color: var(--pst-color-inline-code);
 // }
 
 .sig-name {
-  color: rgba(var(--pst-color-inline-code), 1);
+  color: var(--pst-color-inline-code);
 }
 
 // change target color for dark theme
 dt:target {
-  background-color: rgba(var(--pst-color-target), 1);
+  background-color: var(--pst-color-target);
 }
 
 // adapt ethical add to the theme
@@ -102,15 +102,15 @@ dt:target {
 .ethical-footer a:visited,
 .ethical-footer a:hover,
 .ethical-footer a:active {
-  color: rgba(var(--pst-color-add-text), 1);
+  color: var(--pst-color-add-text);
 }
 
 .ethical-sidebar,
 .ethical-footer {
-  background-color: rgba(var(--pst-color-add-background), 1);
-  border: 1px solid rgba(var(--pst-color-add-border), 1);
+  background-color: var(--pst-color-add-background);
+  border: 1px solid var(--pst-color-add-border);
   border-radius: 5px;
-  color: rgba(var(--pst-color-add-text), 1);
+  color: var(--pst-color-add-text);
   font-size: 14px;
   line-height: 20px;
 }

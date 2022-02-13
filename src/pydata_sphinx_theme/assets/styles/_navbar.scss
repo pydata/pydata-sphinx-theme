@@ -51,25 +51,22 @@
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .navbar-light {
-  background: rgba(
-    var(--pst-color-navbar-background),
-    1
-  ) !important; // Overrides bootstrap
+  background: var(--pst-color-navbar-background) !important; // Overrides bootstrap
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
     li a.nav-link {
       padding: 0 0.5rem;
-      color: rgba(var(--pst-color-navbar-link), 1);
+      color: var(--pst-color-navbar-link);
 
       &:hover {
-        color: rgba(var(--pst-color-navbar-link-hover), 1);
+        color: var(--pst-color-navbar-link-hover);
       }
     }
 
     > .active > .nav-link {
       font-weight: 600;
-      color: rgba(var(--pst-color-navbar-link-active), 1);
+      color: var(--pst-color-navbar-link-active);
     }
   }
 }
@@ -80,17 +77,17 @@
 
 // the icons for theme change
 #theme-switch {
-  border-color: rgba(var(--pst-color-navbar-link-hover), 1);
+  border-color: var(--pst-color-navbar-link-hover);
   a {
-    color: rgba(var(--pst-color-navbar-link-hover), 1);
+    color: var(--pst-color-navbar-link-hover);
   }
 }
 
 #theme-switch:hover {
-  border-color: rgba(var(--pst-color-navbar-link), 1);
-  background-color: rgba(var(--pst-color-navbar-link-hover), 1);
+  border-color: var(--pst-color-navbar-link);
+  background-color: var(--pst-color-navbar-link-hover);
   a {
-    color: rgba(var(--pst-color-navbar-link), 1);
+    color: var(--pst-color-navbar-link);
   }
 }
 
@@ -99,7 +96,7 @@
 }
 
 #theme-switch a:hover {
-  color: rgba(var(--pst-color-navbar-link), 1);
+  color: var(--pst-color-navbar-link);
   display: none;
 }
 
