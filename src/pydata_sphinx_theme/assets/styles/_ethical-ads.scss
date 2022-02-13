@@ -1,0 +1,21 @@
+// adapt ethical add to the theme
+.ethical-sidebar a,
+.ethical-sidebar a:visited,
+.ethical-sidebar a:hover,
+.ethical-sidebar a:active,
+.ethical-footer a,
+.ethical-footer a:visited,
+.ethical-footer a:hover,
+.ethical-footer a:active {
+  color: var(--pst-color-add-text);
+}
+
+.ethical-sidebar,
+.ethical-footer {
+  background-color: var(--pst-color-add-background);
+  border: 1px solid var(--pst-color-add-border);
+  border-radius: 5px;
+  color: var(--pst-color-add-text);
+  font-size: 14px;
+  line-height: 20px;
+}
