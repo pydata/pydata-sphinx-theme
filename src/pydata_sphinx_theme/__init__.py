@@ -505,6 +505,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 # -----------------------------------------------------------------------------
 # handle pygment css
 # -----------------------------------------------------------------------------
+ 
 def _get_styles(formatter, prefix):
     """
     Get styles out of a formatter, where everything has the correct prefix.
@@ -535,8 +536,16 @@ def get_pygments_stylesheet():
     return "\n".join(lines)
 
 
-# cannot deal with pygments and modes so we overwrite the pygment css file
 def _overwrite_pygments_css(app, exception=None):
+    """
+    Sphinx is not build to host multiple sphinx formatter and there is no way to tell
+    which one to use and when.
+    So yes, at build time we overwrite the pygment.css file so that it embeds 2 versions, 
+    - the light theme prefixed with "[data-theme="light"]" using tango 
+    - the dark theme prefixed with "[data-theme="dark"]" using native
+    
+    When the theme is switched, Pygments will be using one of the preset css style.
+    """
 
     if exception is not None:
         return
