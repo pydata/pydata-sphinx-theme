@@ -84,10 +84,10 @@
 }
 
 #theme-switch:hover {
-  border-color: var(--pst-color-navbar-link);
+  border-color: var(--pst-color-navbar-background);
   background-color: var(--pst-color-navbar-link-hover);
   a {
-    color: var(--pst-color-navbar-link);
+    color: var(--pst-color-navbar-background);
   }
 }
 
@@ -96,7 +96,7 @@
 }
 
 #theme-switch a:hover {
-  color: var(--pst-color-navbar-link);
+  color: var(--pst-color-navbar-background);
   display: none;
 }
 
