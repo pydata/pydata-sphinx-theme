@@ -11,6 +11,7 @@ from sphinx.environment.adapters.toctree import TocTree
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
+from pygments.styles import get_all_styles
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -517,13 +518,13 @@ def _get_styles(formatter, prefix):
     yield from formatter.get_token_style_defs(prefix)
 
 
-def get_pygments_stylesheet():
+def get_pygments_stylesheet(light_style, dark_style):
     """
     Generate the theme-specific pygments.css.
     There is no way to tell Sphinx how the theme handles modes
     """
-    light_formatter = HtmlFormatter(style="tango")
-    dark_formatter = HtmlFormatter(style="native")
+    light_formatter = HtmlFormatter(style=light_style)
+    dark_formatter = HtmlFormatter(style=dark_style)
 
     lines = []
 
@@ -549,10 +550,24 @@ def _overwrite_pygments_css(app, exception=None):
 
     if exception is not None:
         return
-
+    
     assert app.builder
-    with open(os.path.join(app.builder.outdir, "_static", "pygments.css"), "w") as f:
-        f.write(get_pygments_stylesheet())
+    
+    # check the theme specified in the theme options
+    theme_options = app.config["html_theme_options"]
+    pygments_styles = list(get_all_styles())
+    light_theme = theme_options.get("pygment_light_style")
+    if not light_theme in pygments_styles:
+        logger.warn(f'{light_theme}, is not part of the available pygments style, defaulting to "tango".')
+        light_theme = "tango"
+    dark_theme = theme_options.get("pygment_dark_style")
+    if not dark_theme in pygments_styles:
+        logger.warn(f'{dark_theme}, is not part of the available pygments style, defaulting to "native".')
+        dark_theme = "native"
+    
+    pygment_css = Path(app.builder.outdir)/ "_static" / "pygments.css"
+    with pygment_css.open("w") as f:
+        f.write(get_pygments_stylesheet(light_theme, dark_theme))
 
 
 # -----------------------------------------------------------------------------

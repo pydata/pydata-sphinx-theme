@@ -38,9 +38,22 @@ The theme mode can be changed by the user. By default landing on the documentati
 
 .. code-block:: python
 
-   html_context= {
+   html_context = {
       ...
       "default_mode": "auto"
+   }
+
+Configure pygment theme
+=======================
+
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the `pygment_light_style`and `pygment_style_style`. You can check available Pygments colors on this `page <https://help.farbox.com/pygments.html>`__.
+
+.. code-block:: python
+
+   html_contexts = {
+      ...
+      "pygment_light_style": "tango",
+      "pygment_dark_style": "native"
    }
 
 Configure icon links
