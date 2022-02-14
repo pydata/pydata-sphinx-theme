@@ -56,6 +56,10 @@ As the Sphinx theme supports multiple modes, the code highlighting colors can be
       "pygment_dark_style": "native"
    }
 
+.. danger:: 
+
+   The native Sphinx option `pygments_style` will be overwritten by this theme.
+
 Configure icon links
 ====================
 
