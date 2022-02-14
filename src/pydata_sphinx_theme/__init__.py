@@ -528,10 +528,10 @@ def get_pygments_stylesheet(light_style, dark_style):
 
     lines = []
 
-    light_prefix = 'body[data-theme="light"] .highlight'
+    light_prefix = 'html[data-theme="light"] .highlight'
     lines.extend(_get_styles(light_formatter, prefix=light_prefix))
 
-    dark_prefix = 'body[data-theme="dark"] .highlight'
+    dark_prefix = 'html[data-theme="dark"] .highlight'
     lines.extend(_get_styles(dark_formatter, prefix=dark_prefix))
 
     return "\n".join(lines)
@@ -547,6 +547,8 @@ def _overwrite_pygments_css(app, exception=None):
     
     When the theme is switched, Pygments will be using one of the preset css style.
     """
+    default_light_theme = "tango"
+    default_dark_theme = "native"
 
     if exception is not None:
         return
@@ -556,14 +558,14 @@ def _overwrite_pygments_css(app, exception=None):
     # check the theme specified in the theme options
     theme_options = app.config["html_theme_options"]
     pygments_styles = list(get_all_styles())
-    light_theme = theme_options.get("pygment_light_style")
+    light_theme = theme_options.get("pygment_light_style", default_light_theme)
     if not light_theme in pygments_styles:
-        logger.warn(f'{light_theme}, is not part of the available pygments style, defaulting to "tango".')
-        light_theme = "tango"
-    dark_theme = theme_options.get("pygment_dark_style")
+        logger.warn(f'{light_theme}, is not part of the available pygments style, defaulting to "{default_light_theme}".')
+        light_theme = default_light_theme
+    dark_theme = theme_options.get("pygment_dark_style", default_dark_theme)
     if not dark_theme in pygments_styles:
-        logger.warn(f'{dark_theme}, is not part of the available pygments style, defaulting to "native".')
-        dark_theme = "native"
+        logger.warn(f'{dark_theme}, is not part of the available pygments style, defaulting to "{default_dark_theme}".')
+        dark_theme = default_dark_theme
     
     pygment_css = Path(app.builder.outdir)/ "_static" / "pygments.css"
     with pygment_css.open("w") as f:

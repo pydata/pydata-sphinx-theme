@@ -9,7 +9,92 @@ import "bootstrap";
 
 import "../styles/index.scss";
 
+/*******************************************************************************
+ * Theme interaction
+ */
+
+var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+
 /**
+* set the the body theme to the one specified by the user browser
+* @param {event} e 
+*/
+function autoTheme(e) {
+  document.documentElement.dataset.theme = prefersDark.matches ? "dark" : "light";
+}
+
+
+/**
+* Set the theme using the specified mode. 
+* It can be one of ["auto", "dark", "light"]
+* @param {str} mode 
+*/
+function setTheme(mode) {
+  if (mode !== "light" && mode !== "dark" && mode !== "auto") {
+    console.error(`Got invalid theme mode: ${mode}. Resetting to auto.`);
+    mode = "auto";
+  }
+
+  // get the theme
+  var colorScheme = prefersDark.matches ? "dark" : "light";
+  document.documentElement.dataset.mode = mode;
+  var theme = mode == "auto" ? colorScheme : mode;
+  document.documentElement.dataset.theme = theme;
+
+  // save mode and theme
+  localStorage.setItem("mode", mode);
+  localStorage.setItem("theme", theme);
+  console.log(`Changed to ${mode} mode using the ${theme} theme.`);
+
+
+  // add a listener if set on auto
+  prefersDark.onchange = mode == "auto" ? autoTheme : "";
+}
+
+
+/**
+* Change the theme option order so that clicking on the btn is always a change
+* from "auto"
+*/
+function cycleMode() {
+  const defaultMode = document.documentElement.dataset.defaultMode || "auto";
+  const currentMode = localStorage.getItem("mode") || defaultMode;
+
+  var loopArray = (arr, current) => {
+    var nextPosition = arr.indexOf(current) + 1;
+    if (nextPosition === arr.length) {
+      nextPosition = 0;
+    }
+    return arr[nextPosition];
+  };
+
+  // make sure the next theme after auto is always a change
+  var modeList = prefersDark.matches ? ["auto", "light", "dark"] : ["auto", "dark", "light"] 
+  var newMode = loopArray(modeList, currentMode);
+  setTheme(newMode);
+
+} 
+
+
+/**
+* add the theme listener on the btns of the navbar
+*/
+function addModeListener(){
+
+  // the theme was set a first time using the initial mini-script 
+  // running setMode will ensure the use of the dark mode if auto is selected
+  setTheme(document.documentElement.dataset.mode)
+
+  // Attach event handlers for toggling themes colors
+  const btnList = document.getElementsByClassName("theme-switch");
+  Array.from(btnList).forEach((btn) => {
+    btn.addEventListener("click", cycleMode);
+  });
+}
+
+
+/*******************************************************************************
  * TOC interactivity
  */
 
@@ -35,9 +120,9 @@ function addTOCInteractivity() {
   });
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Scroll
-////////////////////////////////////////////////////////////////////////////////
+/*******************************************************************************
+ * Scroll
+ */
 
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
@@ -79,86 +164,8 @@ function scrollToActive() {
   });
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Theme interaction
-////////////////////////////////////////////////////////////////////////////////
-var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-/**
- * set the the body theme to the one specified by the user browser
- * @param {event} e 
- */
-function autoTheme(e) {
-  document.body.dataset.theme = prefersDark.matches ? "dark" : "light";
-}
-
-
-/**
- * Set the theme to the specified mode. 
- * It can be one of ["auto", "dark", "light"]
- * @param {str} mode 
- */
-function setTheme(mode) {
-  if (mode !== "light" && mode !== "dark" && mode !== "auto") {
-    console.error(`Got invalid theme mode: ${mode}. Resetting to auto.`);
-    mode = "auto";
-  }
-
-  // get the theme
-  var colorScheme = prefersDark.matches ? "dark" : "light";
-  document.body.dataset.mode = mode;
-  document.body.dataset.theme = mode == "auto" ? colorScheme : mode;
-
-  // save mode
-  localStorage.setItem("theme", mode);
-  console.log(`Changed to ${mode} mode.`);
-
-  // add a listener if set on auto
-  prefersDark.onchange = mode == "auto" ? autoTheme : "";
-}
-
-/**
- * Change the theme option order so that clicking on the btn is always a change
- * from "auto"
- */
-function cycleTheme() {
-  const defaultMode = document.body.dataset.defaultMode || "auto";
-  const currentTheme = localStorage.getItem("theme") || defaultMode;
-
-  var loopArray = (arr, current) => {
-    var nextPosition = arr.indexOf(current) + 1;
-    if (nextPosition === arr.length) {
-      nextPosition = 0;
-    }
-    return arr[nextPosition];
-  };
-
-  // make sure the nex theme after auto is always a change
-  var modeList = prefersDark.matches ? ["auto", "light", "dark"] : ["auto", "dark", "light"] 
-  var newTheme = loopArray(modeList, currentTheme);
-  setTheme(newTheme);
-
-}
-
-/**
- * setup the theme color based on the prefered mode and the browser options
- * should be called when entering the doc to fill localStorage
- */
-function setupTheme() {
-  // setup at least one time
-  const defaultMode = document.body.dataset.defaultMode || "auto";
-  const currentTheme = localStorage.getItem("theme") || defaultMode;
-  setTheme(currentTheme);
-
-  // Attach event handlers for toggling themes
-  const btnList = document.getElementsByClassName("theme-switch");
-  Array.from(btnList).forEach((btn) => {
-    btn.addEventListener("click", cycleTheme);
-  });
-}
-
 // This is equivalent to the .ready() function as described in
 // https://api.jquery.com/ready/
-$(setupTheme);
+$(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);

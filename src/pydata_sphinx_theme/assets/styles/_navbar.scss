@@ -100,12 +100,12 @@
   display: none;
 }
 
-body[data-mode="auto"] #theme-switch a[data-mode="auto"] {
+html[data-mode="auto"] #theme-switch a[data-mode="auto"] {
   display: block;
 }
-body[data-mode="light"] #theme-switch a[data-mode="light"] {
+html[data-mode="light"] #theme-switch a[data-mode="light"] {
   display: block;
 }
-body[data-mode="dark"] #theme-switch a[data-mode="dark"] {
+html[data-mode="dark"] #theme-switch a[data-mode="dark"] {
   display: block;
 }

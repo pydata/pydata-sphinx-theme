@@ -1,7 +1,13 @@
-// light theme
-body[data-theme="light"] {
+/*******************************************************************************
+* light theme
+*
+* all the variables used for light theme coloring
+*/
+html[data-theme="light"] {
 
-  // === colors === 
+  /*****************************************************************************
+  * colors
+  */ 
 
   // main colors
   --pst-color-primary: rgb(19, 6, 84);
@@ -38,7 +44,9 @@ body[data-theme="light"] {
   --pst-color-active-navigation: var(--pst-color-primary);
   --pst-color-deactive-navigation: var(--pst-color-deactivate);
 
-  // === roles ===
+  /*****************************************************************************
+  * roles
+  */
 
   // inline code
   --pst-color-inline-code: rgb(232, 62, 140);
@@ -52,7 +60,9 @@ body[data-theme="light"] {
   --pst-color-kbd-text: rgb(255, 255, 255);
   --pst-color-kbd-background: rgb(33, 37, 41);
 
-  // === directives ===
+  /*****************************************************************************
+  * directives
+  */
 
   // admonitions
   --pst-color-admonition-default: var(--pst-color-info);
@@ -80,7 +90,9 @@ body[data-theme="light"] {
   --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
 
-  // === layout ===
+  /*****************************************************************************
+  * layout
+  */
 
   // navbar
   --pst-color-navbar-background: var(--pst-color-background);
@@ -124,10 +136,16 @@ body[data-theme="light"] {
 }
 
 
-// === dark theme ===
-body[data-theme="dark"] {
+/*******************************************************************************
+* dark theme
+*
+* all the variables used for dark theme coloring
+*/
+html[data-theme="dark"] {
   
-  // === theme colors ===
+  /*****************************************************************************
+  * theme colors
+  */
 
   // main colors
   --pst-color-primary: rgb(213, 142, 72);
@@ -164,7 +182,9 @@ body[data-theme="dark"] {
   --pst-color-active-navigation: var(--pst-color-primary);
   --pst-color-deactive-navigation: var(--pst-color-deactivate);
 
-  // === roles ===
+  /*****************************************************************************
+  * roles
+  */
 
   // inline code
   --pst-color-inline-code: rgb(91, 188, 101);
@@ -178,7 +198,9 @@ body[data-theme="dark"] {
   --pst-color-kbd-text: rgb(33, 37, 41);
   --pst-color-kbd-background: rgb(245, 245, 245);
 
-  // === directives ===
+  /*****************************************************************************
+  * directives
+  */
 
   // admonitions
   --pst-color-admonition-default: var(--pst-color-info);
@@ -206,7 +228,9 @@ body[data-theme="dark"] {
   --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
 
-  // === layout ===
+  /*****************************************************************************
+  * layout
+  */
 
   // navbar
   --pst-color-navbar-background: var(--pst-color-background-up);
