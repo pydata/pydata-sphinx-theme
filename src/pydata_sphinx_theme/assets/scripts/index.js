@@ -84,10 +84,20 @@ function scrollToActive() {
 ////////////////////////////////////////////////////////////////////////////////
 var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
+/**
+ * set the the body theme to the one specified by the user browser
+ * @param {event} e 
+ */
 function autoTheme(e) {
   document.body.dataset.theme = prefersDark.matches ? "dark" : "light";
 }
 
+
+/**
+ * Set the theme to the specified mode. 
+ * It can be one of ["auto", "dark", "light"]
+ * @param {str} mode 
+ */
 function setTheme(mode) {
   if (mode !== "light" && mode !== "dark" && mode !== "auto") {
     console.error(`Got invalid theme mode: ${mode}. Resetting to auto.`);
@@ -107,6 +117,10 @@ function setTheme(mode) {
   prefersDark.onchange = mode == "auto" ? autoTheme : "";
 }
 
+/**
+ * Change the theme option order so that clicking on the btn is always a change
+ * from "auto"
+ */
 function cycleTheme() {
   const defaultMode = document.body.dataset.defaultMode || "auto";
   const currentTheme = localStorage.getItem("theme") || defaultMode;
@@ -132,6 +146,10 @@ function cycleTheme() {
   }
 }
 
+/**
+ * setup the theme color based on the prefered mode and the browser options
+ * should be called when entering the doc to fill localStorage
+ */
 function setupTheme() {
   // setup at least one time
   const defaultMode = document.body.dataset.defaultMode || "auto";
