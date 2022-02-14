@@ -125,25 +125,19 @@ function cycleTheme() {
   const defaultMode = document.body.dataset.defaultMode || "auto";
   const currentTheme = localStorage.getItem("theme") || defaultMode;
 
-  if (prefersDark.matches) {
-    // Auto (dark) -> Light -> Dark
-    if (currentTheme === "auto") {
-      setTheme("light");
-    } else if (currentTheme == "light") {
-      setTheme("dark");
-    } else {
-      setTheme("auto");
+  var loopArray = (arr, current) => {
+    var nextPosition = arr.indexOf(current) + 1;
+    if (nextPosition === arr.length) {
+      nextPosition = 0;
     }
-  } else {
-    // Auto (light) -> Dark -> Light
-    if (currentTheme === "auto") {
-      setTheme("dark");
-    } else if (currentTheme == "dark") {
-      setTheme("light");
-    } else {
-      setTheme("auto");
-    }
-  }
+    return arr[nextPosition];
+  };
+
+  // make sure the nex theme after auto is always a change
+  var modeList = prefersDark.matches ? ["auto", "light", "dark"] : ["auto", "dark", "light"] 
+  var newTheme = loopArray(modeList, currentTheme);
+  setTheme(newTheme);
+
 }
 
 /**
