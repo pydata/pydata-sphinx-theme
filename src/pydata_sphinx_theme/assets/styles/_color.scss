@@ -4,10 +4,9 @@
 * all the variables used for light theme coloring
 */
 html[data-theme="light"] {
-
   /*****************************************************************************
   * colors
-  */ 
+  */
 
   // main colors
   --pst-color-primary: rgb(19, 6, 84);
@@ -118,7 +117,11 @@ html[data-theme="light"] {
   --pst-color-footer-border: var(--pst-color-border);
 
   // alert
-  --pst-color-alert-link: rgb(232, 62, 140); // higher contrast of links in info boxes
+  --pst-color-alert-link: rgb(
+    232,
+    62,
+    140
+  ); // higher contrast of links in info boxes
 
   // prev-next
   --pst-color-prev-next: var(--pst-color-primary);
@@ -135,14 +138,12 @@ html[data-theme="light"] {
   --pst-color-add-border: var(--pst-color-border);
 }
 
-
 /*******************************************************************************
 * dark theme
 *
 * all the variables used for dark theme coloring
 */
 html[data-theme="dark"] {
-  
   /*****************************************************************************
   * theme colors
   */
@@ -256,7 +257,7 @@ html[data-theme="dark"] {
   --pst-color-footer-border: var(--pst-color-border);
 
   // alert
-  --pst-color-alert-link: rgb(232, 62, 140); // higher contrast of links in info boxes
+  --pst-color-alert-link: rgb(232, 62, 140); // higher contrast of links
 
   // prev-next
   --pst-color-prev-next: var(--pst-color-link);

@@ -506,7 +506,8 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 # -----------------------------------------------------------------------------
 # handle pygment css
 # -----------------------------------------------------------------------------
- 
+
+
 def _get_styles(formatter, prefix):
     """
     Get styles out of a formatter, where everything has the correct prefix.
@@ -539,35 +540,43 @@ def get_pygments_stylesheet(light_style, dark_style):
 
 def _overwrite_pygments_css(app, exception=None):
     """
-    Sphinx is not build to host multiple sphinx formatter and there is no way to tell
-    which one to use and when.
-    So yes, at build time we overwrite the pygment.css file so that it embeds 2 versions, 
-    - the light theme prefixed with "[data-theme="light"]" using tango 
+    Sphinx is not build to host multiple sphinx formatter and there is no way
+    to tell which one to use and when.
+    So yes, at build time we overwrite the pygment.css file so that it embeds
+    2 versions:
+    - the light theme prefixed with "[data-theme="light"]" using tango
     - the dark theme prefixed with "[data-theme="dark"]" using native
-    
-    When the theme is switched, Pygments will be using one of the preset css style.
+
+    When the theme is switched, Pygments will be using one of the preset css
+    style.
     """
     default_light_theme = "tango"
     default_dark_theme = "native"
 
     if exception is not None:
         return
-    
+
     assert app.builder
-    
+
     # check the theme specified in the theme options
     theme_options = app.config["html_theme_options"]
     pygments_styles = list(get_all_styles())
     light_theme = theme_options.get("pygment_light_style", default_light_theme)
-    if not light_theme in pygments_styles:
-        logger.warn(f'{light_theme}, is not part of the available pygments style, defaulting to "{default_light_theme}".')
+    if light_theme not in pygments_styles:
+        logger.warn(
+            f"{light_theme}, is not part of the available pygments style,"
+            f' defaulting to "{default_light_theme}".'
+        )
         light_theme = default_light_theme
     dark_theme = theme_options.get("pygment_dark_style", default_dark_theme)
-    if not dark_theme in pygments_styles:
-        logger.warn(f'{dark_theme}, is not part of the available pygments style, defaulting to "{default_dark_theme}".')
+    if dark_theme not in pygments_styles:
+        logger.warn(
+            f"{dark_theme}, is not part of the available pygments style,"
+            f' defaulting to "{default_dark_theme}".'
+        )
         dark_theme = default_dark_theme
-    
-    pygment_css = Path(app.builder.outdir)/ "_static" / "pygments.css"
+
+    pygment_css = Path(app.builder.outdir) / "_static" / "pygments.css"
     with pygment_css.open("w") as f:
         f.write(get_pygments_stylesheet(light_theme, dark_theme))
 

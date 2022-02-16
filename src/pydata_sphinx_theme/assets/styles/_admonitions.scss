@@ -72,9 +72,8 @@ div.admonition,
   &.attention {
     border-color: var(--pst-color-admonition-attention);
     > .admonition-title {
-
       &:after {
-      background-color: var(--pst-color-admonition-attention);
+        background-color: var(--pst-color-admonition-attention);
       }
 
       &:before {
@@ -87,7 +86,6 @@ div.admonition,
   &.caution {
     border-color: var(--pst-color-admonition-caution);
     > .admonition-title {
-
       &:after {
         background-color: var(--pst-color-admonition-caution);
       }
@@ -102,7 +100,6 @@ div.admonition,
   &.warning {
     border-color: var(--pst-color-admonition-warning);
     > .admonition-title {
-
       &:after {
         background-color: var(--pst-color-admonition-warning);
       }
@@ -117,7 +114,6 @@ div.admonition,
   &.danger {
     border-color: var(--pst-color-admonition-danger);
     > .admonition-title {
-      
       &:after {
         background-color: var(--pst-color-admonition-danger);
       }
@@ -132,7 +128,6 @@ div.admonition,
   &.error {
     border-color: var(--pst-color-admonition-error);
     > .admonition-title {
-      
       &:after {
         background-color: var(--pst-color-admonition-error);
       }
@@ -147,7 +142,6 @@ div.admonition,
   &.hint {
     border-color: var(--pst-color-admonition-hint);
     > .admonition-title {
-      
       &:after {
         background-color: var(--pst-color-admonition-hint);
       }
@@ -162,7 +156,6 @@ div.admonition,
   &.tip {
     border-color: var(--pst-color-admonition-tip);
     > .admonition-title {
-      
       &:after {
         background-color: var(--pst-color-admonition-tip);
       }
@@ -177,7 +170,6 @@ div.admonition,
   &.important {
     border-color: var(--pst-color-admonition-important);
     > .admonition-title {
-
       &:after {
         background-color: var(--pst-color-admonition-important);
       }
@@ -192,7 +184,6 @@ div.admonition,
   &.note {
     border-color: var(--pst-color-admonition-note);
     > .admonition-title {
-      
       &:after {
         background-color: var(--pst-color-admonition-note);
       }

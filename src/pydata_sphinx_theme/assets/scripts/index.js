@@ -15,21 +15,21 @@ import "../styles/index.scss";
 
 var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-
 /**
-* set the the body theme to the one specified by the user browser
-* @param {event} e 
-*/
+ * set the the body theme to the one specified by the user browser
+ * @param {event} e
+ */
 function autoTheme(e) {
-  document.documentElement.dataset.theme = prefersDark.matches ? "dark" : "light";
+  document.documentElement.dataset.theme = prefersDark.matches
+    ? "dark"
+    : "light";
 }
 
-
 /**
-* Set the theme using the specified mode. 
-* It can be one of ["auto", "dark", "light"]
-* @param {str} mode 
-*/
+ * Set the theme using the specified mode.
+ * It can be one of ["auto", "dark", "light"]
+ * @param {str} mode
+ */
 function setTheme(mode) {
   if (mode !== "light" && mode !== "dark" && mode !== "auto") {
     console.error(`Got invalid theme mode: ${mode}. Resetting to auto.`);
@@ -47,16 +47,14 @@ function setTheme(mode) {
   localStorage.setItem("theme", theme);
   console.log(`Changed to ${mode} mode using the ${theme} theme.`);
 
-
   // add a listener if set on auto
   prefersDark.onchange = mode == "auto" ? autoTheme : "";
 }
 
-
 /**
-* Change the theme option order so that clicking on the btn is always a change
-* from "auto"
-*/
+ * Change the theme option order so that clicking on the btn is always a change
+ * from "auto"
+ */
 function cycleMode() {
   const defaultMode = document.documentElement.dataset.defaultMode || "auto";
   const currentMode = localStorage.getItem("mode") || defaultMode;
@@ -70,21 +68,20 @@ function cycleMode() {
   };
 
   // make sure the next theme after auto is always a change
-  var modeList = prefersDark.matches ? ["auto", "light", "dark"] : ["auto", "dark", "light"] 
+  var modeList = prefersDark.matches
+    ? ["auto", "light", "dark"]
+    : ["auto", "dark", "light"];
   var newMode = loopArray(modeList, currentMode);
   setTheme(newMode);
-
-} 
-
+}
 
 /**
-* add the theme listener on the btns of the navbar
-*/
-function addModeListener(){
-
-  // the theme was set a first time using the initial mini-script 
+ * add the theme listener on the btns of the navbar
+ */
+function addModeListener() {
+  // the theme was set a first time using the initial mini-script
   // running setMode will ensure the use of the dark mode if auto is selected
-  setTheme(document.documentElement.dataset.mode)
+  setTheme(document.documentElement.dataset.mode);
 
   // Attach event handlers for toggling themes colors
   const btnList = document.getElementsByClassName("theme-switch");
@@ -92,7 +89,6 @@ function addModeListener(){
     btn.addEventListener("click", cycleMode);
   });
 }
-
 
 /*******************************************************************************
  * TOC interactivity
