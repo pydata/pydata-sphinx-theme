@@ -407,7 +407,7 @@ Add a JSON file to define your switcher's versions
 
 First, write a JSON file stating which versions of your docs will be listed in
 the switcher's dropdown menu. That file should contain a list of entries that
-each have one or two fields:
+each can have the following fields:
 
 - ``version``: a version string. This will be inserted into
   ``switcher['url_template']`` to create the links to other docs versions, and
@@ -415,6 +415,11 @@ each have one or two fields:
   switcher.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
+- ``extra_classes``: an optional list of classes to add to the switcher
+  button for a given version (e.g., ``["dev", "rc"]``). These classes are only
+  added when the version is active.
+- ``url``: an optional URL. If provided, it links the version to ``url``
+  instead of ``switcher['url_template']``.
 
 Here is an example JSON file:
 
@@ -426,11 +431,16 @@ Here is an example JSON file:
             "version": "2.1"
         },
         {
+            "version": "2.1rc1",
+            "extra_classes": ["dev", "rc"]
+        },
+        {
             "version": "2.0"
         },
         {
-            "version": "1.0"
-        },
+            "version": "1.0",
+            "url": "https://mysite.org/en/1.0/index.html"
+        }
     ]
 
 See the discussion of ``switcher['json_url']`` (below) for options of where to

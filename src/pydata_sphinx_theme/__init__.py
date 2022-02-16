@@ -579,7 +579,7 @@ def setup(app):
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
-    app.add_html_theme("pydata_sphinx_theme", os.fsdecode(theme_path))
+    app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
     app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
@@ -595,6 +595,6 @@ def setup(app):
     app.connect("build-finished", _overwrite_pygments_css)
 
     # Include templates for sidebar
-    app.config.templates_path.append(os.fsdecode(theme_path / "_templates"))
+    app.config.templates_path.append(str(theme_path / "_templates"))
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}
