@@ -58,7 +58,9 @@ function checkPageExistsAndRedirect(event) {
             node.textContent = `${entry.name}`;
             // get the base URL for that doc version, add the current page's
             // path to it, and set as `href`
-            entry.url = buildURL(entry);
+            if (!("url" in entry)) {
+                entry.url = buildURL(entry);
+            }
             node.setAttribute("href", `${entry.url}${currentFilePath}`);
             // on click, AJAX calls will check if the linked page exists before
             // trying to redirect, and if not, will redirect to the homepage
@@ -72,6 +74,10 @@ function checkPageExistsAndRedirect(event) {
             if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
                 $("#version_switcher_button").text(entry.name);
+                // Add extra class to the button for the selected entry
+                if ("extra_classes" in entry) {
+                    $("#version_switcher_menu").classList.add(...entry.extra_classes);
+                }
             }
         });
     });

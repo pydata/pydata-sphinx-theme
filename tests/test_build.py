@@ -460,3 +460,29 @@ def test_show_nav_level(sphinx_build_factory):
 
     for checkbox in index_html.select("li.toctree-l1.has-children > input"):
         assert "checked" in checkbox.attrs
+
+
+def test_version_switcher(sphinx_build_factory, file_regression):
+    """Regression test the version switcher dropdown HTML.
+
+    Note that a lot of the switcher HTML gets populated by JavaScript,
+    so we will not test the final behavior. This just tests for the basic
+    structure.
+
+    TODO: Find a way to test Javascript's behavior in populating the HTML.
+    """
+    confoverrides = {
+        "html_theme_options": {
+            "navbar_end": ["version-switcher"],
+            "switcher": {
+                "json_url": "switcher.json",
+                "url_template": "https://foo.readthedocs.io/en/v{version}/",
+                "version_match": "0.7.1",
+            },
+        }
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    switcher = sphinx_build.html_tree("index.html").select("#version_switcher")[0]
+    file_regression.check(
+        switcher.prettify(), basename="navbar_switcher", extension=".html"
+    )
