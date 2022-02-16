@@ -50,6 +50,8 @@ div.admonition,
       opacity: 1;
     }
 
+    // This is a hack to control the opacity for admonitions with our color variables
+    // ref: https://stackoverflow.com/a/56951626/6734243
     &:after {
       content: "";
       width: 100%;
