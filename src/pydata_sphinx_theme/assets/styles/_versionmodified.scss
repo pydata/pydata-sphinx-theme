@@ -18,6 +18,8 @@ div.deprecated {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
 
+    // This is a hack to control the opacity for admonitions with our color variables
+    // ref: https://stackoverflow.com/a/56951626/6734243
     &:before {
       content: "";
       width: 100%;
