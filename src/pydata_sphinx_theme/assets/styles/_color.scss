@@ -137,6 +137,9 @@ html[data-theme="light"] {
   --pst-color-add-text: var(--pst-color-text-base);
   --pst-color-add-background: var(--pst-color-background);
   --pst-color-add-border: var(--pst-color-border);
+
+  // navbar-toogler
+  --pst-color-navbar-toggler: var(--pst-color-deactivate);
 }
 
 /*******************************************************************************
@@ -274,6 +277,9 @@ html[data-theme="dark"] {
   --pst-color-add-text: var(--pst-color-text-base);
   --pst-color-add-background: var(--pst-color-background);
   --pst-color-add-border: var(--pst-color-border);
+
+  // navbar-toogler
+  --pst-color-navbar-toggler: var(--pst-color-deactivate);
 
   // specific brighness applied on images
   img {
