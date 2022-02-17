@@ -17,6 +17,7 @@ html[data-theme="light"] {
   --pst-color-text-base: rgb(51, 51, 51);
   --pst-color-background: rgb(255, 255, 255);
   --pst-color-background-up: rgb(240, 240, 240); // for 3D effects
+  --pst-color-background-up-up: rgb(255, 255, 238); // for 3D effects
   --pst-color-deactivate: rgb(77, 77, 77);
   --pst-color-border: rgb(201, 201, 201);
   --pst-color-shadow: rgb(216, 216, 216);
@@ -157,6 +158,7 @@ html[data-theme="dark"] {
   --pst-color-text-base: rgb(245, 245, 245);
   --pst-color-background: rgb(18, 18, 18);
   --pst-color-background-up: rgb(22, 22, 22); // for 3D effect in dark theme
+  --pst-color-background-up-up: rgb(55, 55, 55); // for 3D effects
   --pst-color-deactivate: rgb(121, 121, 121);
   --pst-color-border: rgb(140, 140, 140);
   --pst-color-shadow: var(--pst-color-background);
