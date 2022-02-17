@@ -43,12 +43,18 @@ div.versionadded {
 
 div.versionchanged {
   border-color: var(--pst-color-versionmodified-changed);
-  background-color: var(--pst-color-versionmodified-changed);
+
+  p:before {
+    background-color: var(--pst-color-versionmodified-changed);
+  }
 }
 
 div.deprecated {
   border-color: var(--pst-color-versionmodified-deprecated);
-  background-color: var(--pst-color-versionmodified-deprecated);
+
+  p:before {
+    background-color: var(--pst-color-versionmodified-deprecated);
+  }
 }
 
 span.versionmodified {
