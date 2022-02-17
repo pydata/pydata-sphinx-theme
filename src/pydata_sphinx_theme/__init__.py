@@ -503,9 +503,12 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
 
 
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # handle pygment css
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+# inspired by the Furo theme
+# https://github.com/pradyunsg/furo/blob/main/src/furo/__init__.py
 
 
 def _get_styles(formatter, prefix):
