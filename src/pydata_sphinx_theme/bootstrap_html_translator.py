@@ -1,6 +1,6 @@
 """A custom Sphinx HTML Translator for Bootstrap layout
 """
-from distutils.version import LooseVersion
+from packaging.version import Version
 from docutils import nodes
 
 import sphinx
@@ -34,10 +34,10 @@ class BootstrapHTML5Translator(HTML5Translator):
         # but add 'table' class
 
         # generate_targets_for_table is deprecated in 4.0
-        if LooseVersion(sphinx.__version__) < LooseVersion("4.0"):
+        if Version(sphinx.__version__) < Version("4.0"):
             self.generate_targets_for_table(node)
 
-        if LooseVersion(sphinx.__version__) < LooseVersion("4.3"):
+        if Version(sphinx.__version__) < Version("4.3"):
             self._table_row_index = 0
         else:
             self._table_row_indices.append(0)
