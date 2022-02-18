@@ -66,6 +66,10 @@
       &:hover {
         color: var(--pst-color-navbar-link-hover);
       }
+
+      &:focus {
+        color: var(--pst-color-navbar-link-hover);
+      }
     }
 
     > .active > .nav-link {
