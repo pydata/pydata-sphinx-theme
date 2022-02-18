@@ -89,26 +89,20 @@
 // the icons for theme change
 #theme-switch {
   border-color: var(--pst-color-navbar-link-hover);
+
   a {
     color: var(--pst-color-navbar-link-hover);
+    display: none;
   }
-}
 
-#theme-switch:hover {
-  border-color: var(--pst-color-navbar-background);
-  background-color: var(--pst-color-navbar-link-hover);
-  a {
-    color: var(--pst-color-navbar-background);
+  &:hover {
+    border-color: var(--pst-color-navbar-background);
+    background-color: var(--pst-color-navbar-link-hover);
+
+    a {
+      color: var(--pst-color-navbar-background);
+    }
   }
-}
-
-#theme-switch a {
-  display: none;
-}
-
-#theme-switch a:hover {
-  color: var(--pst-color-navbar-background);
-  display: none;
 }
 
 html[data-mode="auto"] #theme-switch a[data-mode="auto"] {
@@ -119,4 +113,12 @@ html[data-mode="light"] #theme-switch a[data-mode="light"] {
 }
 html[data-mode="dark"] #theme-switch a[data-mode="dark"] {
   display: block;
+}
+
+#version_switcher_button {
+  background-color: var(--pst-color-active-navigation);
+
+  &:hover {
+    background-color: var(--pst-color-active-navigation);
+  }
 }
