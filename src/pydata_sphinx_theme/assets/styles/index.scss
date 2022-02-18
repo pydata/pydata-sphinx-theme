@@ -32,8 +32,8 @@ $grid-breakpoints: (
 // GitHub blockquote style
 blockquote {
   padding: 0 1em;
-  color: #6a737d;
-  border-left: 0.25em solid #dfe2e5;
+  color: var(--pst-color-deactivate);
+  border-left: 0.25em solid var(--pst-color-blockquote-border);
 }
 
 // For consistency, add bracket around footnotes/citations which are

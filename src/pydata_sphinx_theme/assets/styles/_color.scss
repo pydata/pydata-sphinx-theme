@@ -118,11 +118,8 @@ html[data-theme="light"] {
   --pst-color-footer-border: var(--pst-color-border);
 
   // alert
-  --pst-color-alert-link: rgb(
-    232,
-    62,
-    140
-  ); // higher contrast of links in info boxes
+  // higher contrast of links in info boxes
+  --pst-color-alert-link: rgb(232, 62, 140);
 
   // prev-next
   --pst-color-prev-next: var(--pst-color-primary);
@@ -140,6 +137,9 @@ html[data-theme="light"] {
 
   // navbar-toogler
   --pst-color-navbar-toggler: var(--pst-color-deactivate);
+
+  // blockquote
+  --pst-color-blockquote-border: rgb(221, 221, 221);
 }
 
 /*******************************************************************************
@@ -280,6 +280,9 @@ html[data-theme="dark"] {
 
   // navbar-toogler
   --pst-color-navbar-toggler: var(--pst-color-deactivate);
+
+  // blockquote
+  --pst-color-blockquote-border: rgb(117, 117, 117);
 
   // specific brighness applied on images
   img {
