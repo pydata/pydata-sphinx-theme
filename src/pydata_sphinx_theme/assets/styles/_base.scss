@@ -35,13 +35,15 @@ a {
 
   &.headerlink {
     color: rgba(var(--pst-color-headerlink), 1);
+    opacity: 0.4;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
+    margin-left: 0.2em;
     text-decoration: none;
+    transition: all 0.3s ease-out;
 
     &:hover {
-      background-color: rgba(var(--pst-color-headerlink), 1);
-      color: rgba(var(--pst-color-headerlink-hover), 1);
+      opacity: 1;
     }
   }
 }
