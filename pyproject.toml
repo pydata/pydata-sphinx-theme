@@ -20,7 +20,8 @@ requires-python = ">=3.7"
 dependencies = [
   "sphinx",
   "beautifulsoup4",
-  "docutils!=0.17.0"
+  "docutils!=0.17.0",
+  "importlib_metadata>=1.4"  # match at least features in py3.8. Drop once 3.8
 ]
 
 license = { file = "LICENSE" }
