@@ -137,7 +137,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
                 for caption in partcaptions:
                     for sibling in caption.next_siblings:
-                        if sibling.name == 'ul':
+                        if sibling.name == "ul":
                             toclist = sibling
                             break
                     li = soup.new_tag("li", attrs={"class": "toctree-l0"})
@@ -151,11 +151,15 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             _add_collapse_checkboxes(new_soup)
 
             # Open the navbar to the proper depth
-            for ii in range(int(show_nav_level)):
+            ii = 0
+            while True:
+                ii += 1
                 for checkbox in new_soup.select(
                     f"li.toctree-l{ii} > input.toctree-checkbox"
                 ):
                     checkbox.attrs["checked"] = None
+                if ii >= int(show_nav_level):
+                    break
             out = new_soup.prettify()
 
         elif kind == "raw":
@@ -314,6 +318,7 @@ def _add_collapse_checkboxes(soup):
             checkbox.attrs["checked"] = ""
 
         element.insert(1, checkbox)
+
 
 def _get_local_toctree_for(
     self: TocTree, indexname: str, docname: str, builder, collapse: bool, **kwargs

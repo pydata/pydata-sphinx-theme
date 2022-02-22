@@ -318,7 +318,8 @@ nav.bd-links {
 
 /* Nav: hide second level (shown on .active) */
 
-.bd-toc .nav, .list-caption {
+.bd-toc .nav,
+.list-caption {
   .nav {
     display: none;
 
