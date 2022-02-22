@@ -106,28 +106,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         soup = bs(toc_sphinx, "html.parser")
 
-        # restructing html to handle part collapsing
-        partcaptions = soup.find_all("p", attrs={"class": "caption"})
-        if len(partcaptions):
-            new_soup = soup.new_tag("div")
-            for caption in partcaptions:
-                for sibling in caption.next_siblings:
-                    if sibling.name == 'ul':
-                        toclist = sibling
-                        break
-                div = soup.new_tag("div", attrs={"class": "toctree-l0"})
-                div.append(caption)
-                div.append(toclist)
-                new_soup.append(div)
-        else:
-            new_soup = soup
-
         # pair "current" with "active" since that's what we use w/ bootstrap
-        for li in new_soup("li", {"class": "current"}):
+        for li in soup("li", {"class": "current"}):
             li["class"].append("active")
 
         # Remove navbar/sidebar links to sub-headers on the page
-        for li in new_soup.select("li"):
+        for li in soup.select("li"):
             # Remove
             if li.find("a"):
                 href = li.find("a")["href"]
@@ -136,16 +120,32 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         if kind == "navbar":
             # Add CSS for bootstrap
-            for li in new_soup("li"):
+            for li in soup("li"):
                 li["class"].append("nav-item")
                 li.find("a")["class"].append("nav-link")
             # only select li items (not eg captions)
-            out = "\n".join([ii.prettify() for ii in new_soup.find_all("li")])
+            out = "\n".join([ii.prettify() for ii in soup.find_all("li")])
 
         elif kind == "sidebar":
             # Add bootstrap classes for first `ul` items
-            for ul in new_soup("ul", recursive=False):
+            for ul in soup("ul", recursive=False):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
+
+            # restructing html to handle part collapsing
+            partcaptions = soup.find_all("p", attrs={"class": "caption"})
+            if len(partcaptions):
+                new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
+                for caption in partcaptions:
+                    for sibling in caption.next_siblings:
+                        if sibling.name == 'ul':
+                            toclist = sibling
+                            break
+                    li = soup.new_tag("li", attrs={"class": "toctree-l0"})
+                    li.append(caption)
+                    li.append(toclist)
+                    new_soup.ul.append(li)
+            else:
+                new_soup = soup
 
             # Add icons and labels for collapsible nested sections
             _add_collapse_checkboxes(new_soup, context['theme_collapse_parts'])
@@ -281,38 +281,38 @@ def _add_collapse_checkboxes(soup, collapse_parts):
 
     toctree_checkbox_count = 0
 
-    if collapse_parts:
-        for elem in soup.find_all('p'):
-            classes = elem.get("class", [])
+    # if collapse_parts:
+    #     for elem in soup.find_all('p'):
+    #         classes = elem.get("class", [])
 
-            if not "caption" in classes:
-                return
+    #         if not "caption" in classes:
+    #             return
             
-            # Add toctree class
-            elem["class"] = classes + ["toctree-l0"]
-            toctree_checkbox_count += 1
-            checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
+    #         # Add toctree class
+    #         elem["class"] = classes + ["toctree-l0"]
+    #         toctree_checkbox_count += 1
+    #         checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
 
-            if soup.new_tag is None:
-                continue
-            label = soup.new_tag("label", attrs={"for": checkbox_name})
-            label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
-            elem.insert(1, label)
+    #         if soup.new_tag is None:
+    #             continue
+    #         label = soup.new_tag("label", attrs={"for": checkbox_name})
+    #         label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+    #         elem.insert(1, label)
 
-            # Add the checkbox that's used to store expanded/collapsed state.
-            checkbox = soup.new_tag(
-                "input",
-                attrs={
-                    "type": "checkbox",
-                    "class": ["toctree-checkbox"],
-                    "id": checkbox_name,
-                    "name": checkbox_name,
-                },
-            )
+    #         # Add the checkbox that's used to store expanded/collapsed state.
+    #         checkbox = soup.new_tag(
+    #             "input",
+    #             attrs={
+    #                 "type": "checkbox",
+    #                 "class": ["toctree-checkbox"],
+    #                 "id": checkbox_name,
+    #                 "name": checkbox_name,
+    #             },
+    #         )
 
-            if "current" in classes:
-                checkbox.attrs["checked"] = ""
-            elem.insert_before(checkbox)
+    #         if "current" in classes:
+    #             checkbox.attrs["checked"] = ""
+    #         elem.insert_before(checkbox)
 
     for element in soup.find_all("li", recursive=True):
         # We check all "li" elements, to add a "current-page" to the correct li.
@@ -352,7 +352,6 @@ def _add_collapse_checkboxes(soup, collapse_parts):
             checkbox.attrs["checked"] = ""
 
         element.insert(1, checkbox)
-
 
 def _get_local_toctree_for(
     self: TocTree, indexname: str, docname: str, builder, collapse: bool, **kwargs

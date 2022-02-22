@@ -165,34 +165,6 @@ footer {
   }
 }
 
-.bd-sidebar {
-  padding-top: 1em;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-
-  @include media-breakpoint-up(md) {
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
-
-    @supports (position: -webkit-sticky) or (position: sticky) {
-      position: -webkit-sticky;
-      position: sticky;
-      top: var(--pst-header-height);
-      z-index: 1000;
-      height: calc(100vh - var(--pst-header-height));
-    }
-  }
-
-  &.no-sidebar {
-    border-right: 0;
-  }
-
-  .sidebar-end-items {
-    margin-top: auto;
-    margin-bottom: 1em;
-  }
-}
-
 .bd-links {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -522,8 +494,44 @@ nav.bd-links {
 }
 
 .bd-sidebar {
+  padding-top: 1em;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(md) {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    @supports (position: -webkit-sticky) or (position: sticky) {
+      position: -webkit-sticky;
+      position: sticky;
+      top: var(--pst-header-height);
+      z-index: 1000;
+      height: calc(100vh - var(--pst-header-height));
+    }
+  }
+
+  &.no-sidebar {
+    border-right: 0;
+  }
+
+  .sidebar-end-items {
+    margin-top: auto;
+    margin-bottom: 1em;
+  }
+  .list-caption {
+    list-style: none;
+    padding-left: 0px;
+  }
   li {
     position: relative;
+    // If it has children, add a bit more padding to wrap the content to avoid
+    // overlapping with the <label>
+    &.has-children {
+      > .reference {
+        padding-right: 30px;
+      }
+    }
   }
   label {
     position: absolute;
@@ -551,14 +559,6 @@ nav.bd-links {
       &:hover {
         color: rgba(var(--pst-color-sidebar-link-hover), 1);
       }
-    }
-  }
-
-  // If it has children, add a bit more padding to wrap the content to avoid
-  // overlapping with the <label>
-  li.has-children {
-    > .reference {
-      padding-right: 30px;
     }
   }
 }
