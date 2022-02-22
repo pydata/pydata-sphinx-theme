@@ -151,11 +151,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             _add_collapse_checkboxes(new_soup, context['theme_collapse_parts'])
 
             # Open the navbar to the proper depth
-            # if not int(show_nav_level):
-            #     for tocl in new_soup.select(".toctree-l0"):
-            #         checkbox = tocl.previous_sibling
-            #         checkbox.attrs["checked"] = None
-            # else:
             for ii in range(int(show_nav_level)):
                 for checkbox in new_soup.select(
                     f"li.toctree-l{ii} > input.toctree-checkbox"
@@ -280,39 +275,6 @@ def _add_collapse_checkboxes(soup, collapse_parts):
     # based on https://github.com/pradyunsg/furo
 
     toctree_checkbox_count = 0
-
-    # if collapse_parts:
-    #     for elem in soup.find_all('p'):
-    #         classes = elem.get("class", [])
-
-    #         if not "caption" in classes:
-    #             return
-            
-    #         # Add toctree class
-    #         elem["class"] = classes + ["toctree-l0"]
-    #         toctree_checkbox_count += 1
-    #         checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
-
-    #         if soup.new_tag is None:
-    #             continue
-    #         label = soup.new_tag("label", attrs={"for": checkbox_name})
-    #         label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
-    #         elem.insert(1, label)
-
-    #         # Add the checkbox that's used to store expanded/collapsed state.
-    #         checkbox = soup.new_tag(
-    #             "input",
-    #             attrs={
-    #                 "type": "checkbox",
-    #                 "class": ["toctree-checkbox"],
-    #                 "id": checkbox_name,
-    #                 "name": checkbox_name,
-    #             },
-    #         )
-
-    #         if "current" in classes:
-    #             checkbox.attrs["checked"] = ""
-    #         elem.insert_before(checkbox)
 
     for element in soup.find_all("li", recursive=True):
         # We check all "li" elements, to add a "current-page" to the correct li.
