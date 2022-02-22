@@ -148,7 +148,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 new_soup = soup
 
             # Add icons and labels for collapsible nested sections
-            _add_collapse_checkboxes(new_soup, context['theme_collapse_parts'])
+            _add_collapse_checkboxes(new_soup)
 
             # Open the navbar to the proper depth
             for ii in range(int(show_nav_level)):
@@ -271,7 +271,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     context["generate_google_analytics_script"] = generate_google_analytics_script
 
 
-def _add_collapse_checkboxes(soup, collapse_parts):
+def _add_collapse_checkboxes(soup):
     # based on https://github.com/pradyunsg/furo
 
     toctree_checkbox_count = 0
