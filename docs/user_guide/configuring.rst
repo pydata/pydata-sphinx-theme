@@ -647,9 +647,9 @@ following configuration:
 
 .. note::
 
-   By default the search bar is positioned in the sidebar since this is more
-   suitable for large navigation bars.  
-   Thus, if you plan to move it to the nabvar, rember to initialize the sidebar
+   | By default the search bar is positioned in the sidebar since this is more
+   suitable for large navigation bars.
+   | If you plan to move it to the nabvar, rember to initialize the sidebar
    without such template to avoid duplication.
 
 Configure the search bar text
