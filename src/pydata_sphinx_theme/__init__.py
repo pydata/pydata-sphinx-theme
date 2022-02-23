@@ -280,14 +280,13 @@ def _add_collapse_checkboxes(soup):
         # We check all "li" elements, to add a "current-page" to the correct li.
         classes = element.get("class", [])
 
-        
         # expanding the parent part explicitly, if present
         if "current" in classes:
             parentli = element.find_parent("li", class_="toctree-l0")
             if parentli:
                 caption = parentli.find("p", class_="caption")
                 caption.find_next_sibling("input").attrs["checked"] = ""
-                
+
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
             continue
