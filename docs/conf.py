@@ -79,10 +79,10 @@ html_theme = "pydata_sphinx_theme"
 # html_logo = "_static/pandas.svg"  # For testing
 
 # Define the version we use for matching in the version switcher.
-if os.environ.get("READTHEDOCS_VERSION"):
-    # If we detect a READTHEDOCS version, just use this.
-    version_match = os.environ.get("READTHEDOCS_VERSION")
-else:
+version_match = os.environ.get("READTHEDOCS_VERSION")
+# If READTHEDOCS_VERSION doesn't exist, we're not on RTD
+# If it is an integer, we're in a PR build and the version isn't correct.
+if not version_match or version_match.isdigit():
     # For local development, infer the version to match from the package.
     release = pydata_sphinx_theme.__version__
     if "dev" in release:
