@@ -1,11 +1,13 @@
 [
   {
     "name": "dev",
-    "version": "latest"
+    "version": "latest",
+    "extra_classes": ["dev"]
   },
   {
     "name": "0.8.0 (stable)",
-    "version": "stable"
+    "version": "stable",
+    "extra_classes": ["stable"]
   },
   {
     "name": "0.8.0",
