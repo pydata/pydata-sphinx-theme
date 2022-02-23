@@ -151,15 +151,11 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             _add_collapse_checkboxes(new_soup)
 
             # Open the navbar to the proper depth
-            ii = 0
-            while True:
-                ii += 1
-                for checkbox in new_soup.select(
+            for ii in range(int(show_nav_level)):
+                for checkbox in soup.select(
                     f"li.toctree-l{ii} > input.toctree-checkbox"
                 ):
                     checkbox.attrs["checked"] = None
-                if ii >= int(show_nav_level):
-                    break
             out = new_soup.prettify()
 
         elif kind == "raw":
@@ -284,6 +280,14 @@ def _add_collapse_checkboxes(soup):
         # We check all "li" elements, to add a "current-page" to the correct li.
         classes = element.get("class", [])
 
+        
+        # expanding the parent part explicitly, if present
+        if "current" in classes:
+            parentli = element.find_parent("li", class_="toctree-l0")
+            if parentli:
+                caption = parentli.find("p", class_="caption")
+                caption.find_next_sibling("input").attrs["checked"] = ""
+                
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
             continue
@@ -312,6 +316,7 @@ def _add_collapse_checkboxes(soup):
                 "name": checkbox_name,
             },
         )
+
         # if this has a "current" class, be expanded by default
         # (by checking the checkbox)
         if "current" in classes:
