@@ -152,7 +152,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
             # Open the navbar to the proper depth
             for ii in range(int(show_nav_level)):
-                for checkbox in soup.select(
+                for checkbox in new_soup.select(
                     f"li.toctree-l{ii} > input.toctree-checkbox"
                 ):
                     checkbox.attrs["checked"] = None
