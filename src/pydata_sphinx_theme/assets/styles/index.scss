@@ -562,6 +562,16 @@ nav.bd-links {
       }
     }
   }
+  .label-parts {
+    width: 100%;
+    justify-content: right;
+    &:hover {
+      background: none;
+    }
+    i {
+      width: 30px;
+    }
+  }
 }
 
 // From https://stackoverflow.com/a/34372191

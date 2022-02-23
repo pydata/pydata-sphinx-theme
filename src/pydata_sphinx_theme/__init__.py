@@ -286,7 +286,7 @@ def _add_collapse_checkboxes(soup):
             parentli = element.find_parent("li", class_="toctree-l0")
             if parentli:
                 caption = parentli.find("p", class_="caption")
-                caption.find_next_sibling("input").attrs["checked"] = ""
+-               caption.find_next_sibling("input").attrs["checked"] = ""
                 
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
@@ -302,8 +302,12 @@ def _add_collapse_checkboxes(soup):
         # Add the "label" for the checkbox which will get filled.
         if soup.new_tag is None:
             continue
+
         label = soup.new_tag("label", attrs={"for": checkbox_name})
         label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+        if "toctree-l0" in classes:
+            # making label cover the whole caption text with css
+            label["class"] = "label-parts"
         element.insert(1, label)
 
         # Add the checkbox that's used to store expanded/collapsed state.
