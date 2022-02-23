@@ -24,8 +24,6 @@ author = "PyData Community"
 
 import pydata_sphinx_theme
 
-release = pydata_sphinx_theme.__version__
-version = release.replace("dev0", "")
 
 # -- General configuration ---------------------------------------------------
 
@@ -80,10 +78,17 @@ myst_enable_extensions = [
 html_theme = "pydata_sphinx_theme"
 # html_logo = "_static/pandas.svg"  # For testing
 
-if "dev" in release:
-    version_match = "dev"
+# Define the version we use for matching in the version switcher.
+if os.environ.get("READTHEDOCS_VERSION"):
+    # If we detect a READTHEDOCS version, just use this.
+    version_match = os.environ.get("READTHEDOCS_VERSION")
 else:
-    version_match = "v" + release
+    # For local development, infer the version to match from the package.
+    release = pydata_sphinx_theme.__version__
+    if "dev" in release:
+        version_match = "latest"
+    else:
+        version_match = "v" + release
 
 html_theme_options = {
     "external_links": [
