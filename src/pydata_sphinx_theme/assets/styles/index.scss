@@ -565,6 +565,7 @@ nav.bd-links {
   .label-parts {
     width: 100%;
     justify-content: right;
+    top: -0.25em; // aligning chevron with text
     &:hover {
       background: none;
     }
