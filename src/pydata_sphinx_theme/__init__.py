@@ -20,6 +20,8 @@ logger = logging.getLogger(__name__)
 
 def update_config(app, env):
     theme_options = app.config["html_theme_options"]
+
+    # DEPRECATE after v0.9
     if theme_options.get("search_bar_position") == "navbar":
         logger.warn(
             (
@@ -27,6 +29,8 @@ def update_config(app, env):
                 "Use `search-field.html` in `navbar_end` template list instead."
             )
         )
+
+    # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
             (
@@ -34,6 +38,10 @@ def update_config(app, env):
                 f"type {type(theme_options.get('icon_links'))}."
             )
         )
+
+    # Update the anchor link (it's a tuple, so need to overwrite the whole thing)
+    icon_default = app.config.values["html_permalinks_icon"]
+    app.config.values["html_permalinks_icon"] = ("#", *icon_default[1:])
 
 
 def update_templates(app, pagename, templatename, context, doctree):
