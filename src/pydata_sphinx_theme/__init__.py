@@ -131,20 +131,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             for ul in soup("ul", recursive=False):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
 
-            # Add collapse boxes for parts/captions
-
-            partcaptions = soup.find_all("p", attrs={"class": "caption"})
-            if len(partcaptions):
-                new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
-                for caption in partcaptions:
-                    for sibling in caption.next_siblings:
-                        if sibling.name == "ul":
-                            toclist = sibling
-                            break
-                    li = soup.new_tag("li", attrs={"class": "toctree-l0"})
-                    li.append(caption)
-                    li.append(toclist)
-                    new_soup.ul.append(li)
+            # Add collapse boxes for parts/captions.
+            # show_nav_level: 0 means make parts collapsible.
+            if not show_nav_level:
+                partcaptions = soup.find_all("p", attrs={"class": "caption"})
+                if len(partcaptions):
+                    new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
+                    for caption in partcaptions:
+                        for sibling in caption.next_siblings:
+                            if sibling.name == "ul":
+                                toclist = sibling
+                                break
+                        li = soup.new_tag("li", attrs={"class": "toctree-l0"})
+                        li.append(caption)
+                        li.append(toclist)
+                        new_soup.ul.append(li)
+                else:
+                    new_soup = soup
             else:
                 new_soup = soup
 
