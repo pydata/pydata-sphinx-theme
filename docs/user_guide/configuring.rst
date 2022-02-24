@@ -272,6 +272,20 @@ default, you can use the following configuration in ``conf.py``:
 This will make the first two navigations show up by default (AKA, top-level
 pages and their immediate children).
 
+If your pages are divided into parts, you can also hide the pages
+and make only the caption text of parts visible by using:
+
+.. code:: python
+
+   html_theme_options = {
+      "show_nav_level": 0
+   }
+
+.. note::
+
+   `"show_nav_level": 0` only works for parts and will behave the same as the
+   default value `1`, if the pages are not divided into parts.
+
 .. _remove_toctrees:
 
 Selectively remove pages from your sidebar

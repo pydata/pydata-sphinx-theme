@@ -132,6 +132,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
 
             # Add collapse boxes for parts/captions
+
             partcaptions = soup.find_all("p", attrs={"class": "caption"})
             if len(partcaptions):
                 new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
