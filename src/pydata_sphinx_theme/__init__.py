@@ -45,7 +45,8 @@ def update_config(app, env):
 
 
 def update_templates(app, pagename, templatename, context, doctree):
-    """Update template names for page build."""
+    """Update template names and assets for page build."""
+    # Allow for more flexibility in template names
     template_sections = [
         "theme_navbar_start",
         "theme_navbar_center",
@@ -55,7 +56,6 @@ def update_templates(app, pagename, templatename, context, doctree):
         "theme_left_sidebar_end",
         "sidebars",
     ]
-
     for section in template_sections:
         if context.get(section):
             # Break apart `,` separated strings so we can use , in the defaults
@@ -68,6 +68,14 @@ def update_templates(app, pagename, templatename, context, doctree):
             for ii, template in enumerate(context.get(section)):
                 if not os.path.splitext(template)[1]:
                     context[section][ii] = template + ".html"
+
+    # Remove a duplicate entry of the theme CSS. This is because it is in both:
+    # - theme.conf
+    # - manually linked in `webpack-macros.html`
+    if "css_files" in context:
+        theme_css_name = "_static/styles/pydata-sphinx-theme.css"
+        if theme_css_name in context["css_files"]:
+            context["css_files"].remove(theme_css_name)
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
