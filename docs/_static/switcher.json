@@ -1,8 +1,7 @@
 [
   {
     "name": "dev",
-    "version": "latest",
-    "extra_classes": ["dev"]
+    "version": "latest"
   },
   {
     "name": "0.8.0 (stable)",

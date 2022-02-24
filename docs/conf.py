@@ -140,6 +140,7 @@ html_sidebars = {
     "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
 }
 
+myst_heading_anchors = 2
 
 html_context = {
     "github_user": "pandas-dev",
@@ -156,3 +157,7 @@ rediraffe_redirects = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+
+def setup(app):
+    app.add_css_file("custom.css")

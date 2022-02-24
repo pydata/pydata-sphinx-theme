@@ -1,0 +1,3 @@
+#version_switcher a[data-version-name*="stable"] {
+  background-color: #e2ffe2;
+}
