@@ -2,11 +2,8 @@
 {%- import "static/webpack-macros.html" as _webpack with context %}
 
 {%- block css %}
-    {{ _webpack.head_pre_bootstrap() }}
+    {{ _webpack.head_pre_assets() }}
     {{ _webpack.head_pre_icons() }}
-    {% block fonts %}
-      {{ _webpack.head_pre_fonts() }}
-    {% endblock %}
     {{- css() }}
     {{ _webpack.head_js_preload() }}
 {%- endblock %}
