@@ -3,7 +3,7 @@
  *
  * This script does a few primary things:
  *
- * - Genreates a `webpack-macros.html` file that defines macros used
+ * - Generates a `webpack-macros.html` file that defines macros used
  *   to insert CSS / JS at various places in the main `layout.html` template.
  * - Compiles our SCSS and JS and places them in the _static/ folder
  * - Downloads and links FontAwesome and some JS libraries (Bootstra, jquery, etc)
