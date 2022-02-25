@@ -581,8 +581,8 @@ version, you could use the following CSS selector:
 .. code-block:: scss
 
    // If the active version has the name "dev", style it red
-   #version_switcher_button[data-version-name*="dev"] {
-      background-color: green;
+   #version_switcher_button[data-active-version-name*="dev"] {
+      background-color: red;
    }
 
 .. seealso::
