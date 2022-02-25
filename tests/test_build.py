@@ -281,6 +281,28 @@ def test_sidebars_level2(sphinx_build_factory, file_regression):
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
+def test_sidebars_show_nav_level0_index(sphinx_build_factory, file_regression):
+    """"""
+    confoverrides = {"html_theme_options.show_nav_level": 0}
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
+
+    # Both the column alignment and the margin should be changed
+    index_html = sphinx_build.html_tree("section1/index.html")
+    sidebar = index_html.select("nav#bd-docs-nav")[0]
+    file_regression.check(sidebar.prettify(), extension=".html")
+
+
+def test_sidebars_show_nav_level0_subsection(sphinx_build_factory, file_regression):
+    """"""
+    confoverrides = {"html_theme_options.show_nav_level": 0}
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
+
+    # Both the column alignment and the margin should be changed
+    index_html = sphinx_build.html_tree("section1/subsection1/index.html")
+    sidebar = index_html.select("nav#bd-docs-nav")[0]
+    file_regression.check(sidebar.prettify(), extension=".html")
+
+
 def test_included_toc(sphinx_build_factory):
     """Test that Sphinx project containing TOC (.. toctree::) included
     via .. include:: can be successfully built.
