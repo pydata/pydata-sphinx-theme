@@ -124,8 +124,8 @@ html_theme_options = {
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {
-        # "json_url": "/_static/switcher.json",
-        "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
+        "json_url": "/_static/switcher.json",
+        # "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
         "url_template": "https://pydata-sphinx-theme.readthedocs.io/en/{version}/",
         "version_match": version_match,
     },

@@ -1,3 +1,8 @@
 #version_switcher a[data-version-name*="stable"] {
   background-color: #e2ffe2;
 }
+
+#version_switcher
+  a:not([data-version-name*="stable"]):not([data-version-name="dev"]) {
+  color: #ff8282;
+}
