@@ -272,8 +272,8 @@ default, you can use the following configuration in ``conf.py``:
 This will make the first two navigations show up by default (AKA, top-level
 pages and their immediate children).
 
-If your pages are divided into parts, you can also hide the pages
-and make only the caption text of parts visible by using:
+If your pages are divided into parts, you can also hide all the pages by default
+and make only the part captions visible by using:
 
 .. code:: python
 
@@ -281,10 +281,12 @@ and make only the caption text of parts visible by using:
       "show_nav_level": 0
    }
 
+The part captions then become togglable using drop-boxes.
+
 .. note::
 
-   `"show_nav_level": 0` only works for parts and will behave the same as the
-   default value `1`, if the pages are not divided into parts.
+   ``"show_nav_level": 0`` only works when parts are present, and will behave the same as the
+   default value ``1``, if the pages are not divided into parts.
 
 .. _remove_toctrees:
 
