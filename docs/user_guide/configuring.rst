@@ -272,6 +272,9 @@ default, you can use the following configuration in ``conf.py``:
 This will make the first two navigations show up by default (AKA, top-level
 pages and their immediate children).
 
+Collapse parts / captions
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
 If your pages are divided into parts, you can also hide all the pages by default
 and make only the part captions visible by using:
 
