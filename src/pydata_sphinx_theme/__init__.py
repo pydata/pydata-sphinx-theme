@@ -133,7 +133,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
             # Add collapse boxes for parts/captions.
             # show_nav_level: 0 means make parts collapsible.
-            if not show_nav_level:
+            if show_nav_level == 0:
                 partcaptions = soup.find_all("p", attrs={"class": "caption"})
                 if len(partcaptions):
                     new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
