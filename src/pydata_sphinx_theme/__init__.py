@@ -139,10 +139,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 if len(partcaptions):
                     new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
                     for caption in partcaptions:
-                        for sibling in caption.next_siblings:
-                            if sibling.name == "ul":
-                                toclist = sibling
-                                break
+                        # Assume that the next <ul> element is the TOC list for this part
+                        toclist = caption.select("~ ul")
                         li = soup.new_tag("li", attrs={"class": "toctree-l0"})
                         li.extend([caption, toclist])
                         new_soup.ul.append(li)
