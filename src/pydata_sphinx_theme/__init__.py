@@ -144,8 +144,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                                 toclist = sibling
                                 break
                         li = soup.new_tag("li", attrs={"class": "toctree-l0"})
-                        li.append(caption)
-                        li.append(toclist)
+                        li.extend([caption, toclist])
                         new_soup.ul.append(li)
                 else:
                     new_soup = soup
