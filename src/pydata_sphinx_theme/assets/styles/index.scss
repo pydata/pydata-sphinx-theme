@@ -564,13 +564,15 @@ nav.bd-links {
   }
   .label-parts {
     width: 100%;
-    justify-content: right;
-    top: -0.25em; // aligning chevron with text
+    height: 100%;
     &:hover {
       background: none;
     }
     i {
       width: 30px;
+      position: absolute;
+      top: 0.3em; // aligning chevron with text
+      right: 0em; // aligning chevron to the right
     }
   }
 }
