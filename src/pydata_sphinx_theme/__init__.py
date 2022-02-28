@@ -132,6 +132,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
 
             # Add collapse boxes for parts/captions.
+            # Wraps the TOC part in an extra <ul> to behave like chapters with toggles
             # show_nav_level: 0 means make parts collapsible.
             if show_nav_level == 0:
                 partcaptions = soup.find_all("p", attrs={"class": "caption"})
