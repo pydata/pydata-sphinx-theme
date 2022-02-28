@@ -286,8 +286,7 @@ def _add_collapse_checkboxes(soup):
         if "current" in classes:
             parentli = element.find_parent("li", class_="toctree-l0")
             if parentli:
-                caption = parentli.find("p", class_="caption")
-                caption.find_next_sibling("input").attrs["checked"] = ""
+                caption = parentli.select("p.caption ~ input").attrs["checked"] = ""
 
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
