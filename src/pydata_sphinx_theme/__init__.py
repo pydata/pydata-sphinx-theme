@@ -139,29 +139,30 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 if len(partcaptions):
                     new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
                     for caption in partcaptions:
-                        # Assume that the next <ul> element is the TOC list for this part
-                        toclist = caption.select("~ ul")
+                        # Assume that the next <ul> element is the TOC list
+                        # for this part
+                        for sibling in caption.next_siblings:
+                            if sibling.name == "ul":
+                                toclist = sibling
+                                break
                         li = soup.new_tag("li", attrs={"class": "toctree-l0"})
                         li.extend([caption, toclist])
                         new_soup.ul.append(li)
-                else:
-                    new_soup = soup
-            else:
-                new_soup = soup
+                    soup = new_soup
 
             # Add icons and labels for collapsible nested sections
-            _add_collapse_checkboxes(new_soup)
+            _add_collapse_checkboxes(soup)
 
             # Open the navbar to the proper depth
             for ii in range(int(show_nav_level)):
-                for checkbox in new_soup.select(
+                for checkbox in soup.select(
                     f"li.toctree-l{ii} > input.toctree-checkbox"
                 ):
                     checkbox.attrs["checked"] = None
-            out = new_soup.prettify()
+            out = soup.prettify()
 
         elif kind == "raw":
-            out = new_soup
+            out = soup
 
         return out
 
@@ -286,7 +287,7 @@ def _add_collapse_checkboxes(soup):
         if "current" in classes:
             parentli = element.find_parent("li", class_="toctree-l0")
             if parentli:
-                caption = parentli.select("p.caption ~ input").attrs["checked"] = ""
+                parentli.select("p.caption ~ input")[0].attrs["checked"] = ""
 
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):

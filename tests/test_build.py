@@ -281,26 +281,44 @@ def test_sidebars_level2(sphinx_build_factory, file_regression):
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
-def test_sidebars_show_nav_level0_index(sphinx_build_factory, file_regression):
-    """"""
+def test_sidebars_show_nav_level0(sphinx_build_factory, file_regression):
+    """
+    Regression test for show_nav_level:0 when the toc is divided into parts.
+    Testing both home page and a subsection page for correct elements.
+    """
     confoverrides = {"html_theme_options.show_nav_level": 0}
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
-    # Both the column alignment and the margin should be changed
+    # 1. Home Page
     index_html = sphinx_build.html_tree("section1/index.html")
     sidebar = index_html.select("nav#bd-docs-nav")[0]
-    file_regression.check(sidebar.prettify(), extension=".html")
 
+    # check if top-level ul is present
+    ul = sidebar.find("ul")
+    assert "list-caption" in ul.attrs["class"]
 
-def test_sidebars_show_nav_level0_subsection(sphinx_build_factory, file_regression):
-    """"""
-    confoverrides = {"html_theme_options.show_nav_level": 0}
-    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
+    # get all li elements
+    li = ul.select("li")
 
-    # Both the column alignment and the margin should be changed
-    index_html = sphinx_build.html_tree("section1/subsection1/index.html")
-    sidebar = index_html.select("nav#bd-docs-nav")[0]
-    file_regression.check(sidebar.prettify(), extension=".html")
+    # part li
+    assert "toctree-l0 has-children" in " ".join(li[0].attrs["class"])
+    assert "caption-text" in li[0].select("p span")[0].attrs["class"]
+    assert "label-parts" in li[0].find("label").attrs["class"]
+
+    # basic checks on other levels
+    assert "toctree-l1 has-children" in " ".join(li[1].attrs["class"])
+    assert "toctree-l2" in li[2].attrs["class"]
+
+    # 2. Subsection Page
+    subsection_html = sphinx_build.html_tree("section1/subsection1/index.html")
+    sidebar = subsection_html.select("nav#bd-docs-nav")[0]
+
+    # get all input elements
+    input_elem = sidebar.select("input")
+
+    # all input elements should be collapsed in this page
+    for ii in input_elem:
+        assert "checked" in ii.attrs
 
 
 def test_included_toc(sphinx_build_factory):
