@@ -78,6 +78,9 @@ myst_enable_extensions = [
 html_theme = "pydata_sphinx_theme"
 # html_logo = "_static/pandas.svg"  # For testing
 
+# Define the json_url for our version switcher.
+json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
+
 # Define the version we use for matching in the version switcher.
 version_match = os.environ.get("READTHEDOCS_VERSION")
 # If READTHEDOCS_VERSION doesn't exist, we're not on RTD
@@ -87,6 +90,9 @@ if not version_match or version_match.isdigit():
     release = pydata_sphinx_theme.__version__
     if "dev" in release:
         version_match = "latest"
+        # We want to keep the relative reference if we are in dev mode
+        # but we want the whole url if we are effectively in a released version
+        json_url = "/_static/switcher.json"
     else:
         version_match = "v" + release
 
@@ -124,8 +130,7 @@ html_theme_options = {
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {
-        # "json_url": "/_static/switcher.json",
-        "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
+        "json_url": json_url,
         "url_template": "https://pydata-sphinx-theme.readthedocs.io/en/{version}/",
         "version_match": version_match,
     },
