@@ -121,7 +121,7 @@ the only `vendored` font.
 - It is managed as a dependency in `package.json`
 - Copied directly into the site statics at compilation, including licenses
 - Partially preloaded to reduce flicker and artifacts of early icon renders
-- Configured in `webpack.js`
+- Configured in `webpack.config.js`
 
 ### Jinja macros
 
