@@ -64,7 +64,7 @@ function checkPageExistsAndRedirect(event) {
                 $("#version_switcher_button").text(entry.name);
                 // Add extra class to the button for the selected entry
                 if ("extra_classes" in entry) {
-                    $("#version_switcher_menu").classList.add(...entry.extra_classes);
+                    $("#version_switcher_menu")[0].classList.add(...entry.extra_classes);
                 }
             }
         });
