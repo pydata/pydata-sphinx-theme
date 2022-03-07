@@ -391,13 +391,16 @@ Here is an example JSON file:
     [
         {
             "name": "v2.1 (stable)",
-            "version": "2.1"
+            "version": "2.1",
+            "url": "https://mysite.org/en/2.1/index.html"
         },
         {
             "version": "2.1rc1",
+            "url": "https://mysite.org/en/2.1rc1/index.html"
         },
         {
-            "version": "2.0"
+            "version": "2.0",
+            "url": "https://mysite.org/en/2.0/index.html"
         },
         {
             "version": "1.0",
