@@ -2,14 +2,12 @@
   {
     "name": "dev",
     "version": "latest",
-    "url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/",
-    "extra_classes": ["dev"]
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/"
   },
   {
     "name": "0.8.0 (stable)",
     "version": "stable",
-    "url": "https://pydata-sphinx-theme.readthedocs.io/en/stable/",
-    "extra_classes": ["stable"]
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/stable/"
   },
   {
     "name": "0.8.0",
