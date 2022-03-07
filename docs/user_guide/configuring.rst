@@ -386,9 +386,6 @@ each can have the following fields:
   switcher.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
-- ``extra_classes``: an optional list of classes to add to the switcher
-  button for a given version (e.g., ``["dev", "rc"]``). These classes are only
-  added when the version is active.
 - ``url``: an optional URL. If provided, it links the version to ``url``
   instead of ``switcher['url_template']``.
 
@@ -403,7 +400,6 @@ Here is an example JSON file:
         },
         {
             "version": "2.1rc1",
-            "extra_classes": ["dev", "rc"]
         },
         {
             "version": "2.0"
@@ -542,6 +538,57 @@ to insert a version switcher at the top of the left sidebar, while still
 keeping the default navigation below it. See :doc:`sections` for more
 information.
 
+Style the switcher buttons
+--------------------------
+
+You may apply styles via CSS to any of the switcher buttons to control their look and feel.
+Each button has two `HTML dataset entries <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset>`_
+that you can use to apply CSS rules to subsets of buttons. These entries are:
+
+.. code-block::
+
+   data-version
+   data-version-name
+
+For example, the link for an entry with ``version="0.2"``,
+and ``name="My version"`` would have metadata like so:
+
+.. code-block:: html
+
+   <a data-version-name="My version" data-version="0.2" class="<classes...>">
+
+You can create CSS rules that select this metadata like so:
+
+.. code-block:: scss
+
+   // Style all links with a specific subset of versions
+   #version_switcher a[data-version="0.2"],
+   #version_switcher a[data-version="0.3"] {
+      background-color: red;
+   }
+   // Style all links with `stable` in the version name
+   #version_switcher a[data-version-name*="stable"] {
+      background-color: green;
+   }
+
+In addition, the parent button of the dropdown list contains similar metadata
+about the **current version**. This could be used to style the entire dropdown
+a certain color based on the active version.
+
+For example, if you wanted to style the dropdown button orange if it was a ``dev``
+version, you could use the following CSS selector:
+
+.. code-block:: scss
+
+   // If the active version has the name "dev", style it orange
+   #version_switcher_button[data-active-version-name*="dev"] {
+      background-color: rgb(255 138 62);
+   }
+
+.. seealso::
+
+   See the `MDN documentation on dataset properties <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset>`_
+   for more information on using and styling with these properties.
 
 Add an Edit this Page button
 ============================

@@ -66,6 +66,11 @@ function checkPageExistsAndRedirect(event) {
             // trying to redirect, and if not, will redirect to the homepage
             // for that version of the docs.
             node.onclick = checkPageExistsAndRedirect;
+            // Add dataset values for the version and name in case people want
+            // to apply CSS styling based on this information.
+            node.dataset["versionName"] = entry.name;
+            node.dataset["version"] = entry.version;
+
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
             // this version, rather than using sphinx's {{ version }} variable.
@@ -73,11 +78,9 @@ function checkPageExistsAndRedirect(event) {
             // version's entry
             if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
-                $("#version_switcher_button").text(entry.name);
-                // Add extra class to the button for the selected entry
-                if ("extra_classes" in entry) {
-                    $("#version_switcher_menu")[0].classList.add(...entry.extra_classes);
-                }
+                let btn = document.getElementById("version_switcher_button");
+                btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+                btn.dataset["activeVersion"] = entry.version;
             }
         });
     });
