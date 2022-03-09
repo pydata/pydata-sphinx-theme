@@ -87,7 +87,7 @@ In order to change a variable, follow these steps:
 
    Note that these are `CSS variables <css-variable-help_>`_ and not
    `SASS variables <https://sass-lang.com/documentation/variables>`_.
-   The theme is defined with CSS variables, not SASS variables! refer to the previous section if
+   The theme is defined with CSS variables, not SASS variables! Refer to the previous section if
    you desire a differnet behaviour between the light and dark theme
 
 For a complete list of the theme variables that you may override, see the
