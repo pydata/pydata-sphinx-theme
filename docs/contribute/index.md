@@ -36,8 +36,6 @@ The CSS and JS for this theme are built for the browser from `src/pydata_sphinx_
 
   - the main part of the theme assets
   - customizes [Bootstrap](https://getbootstrap.com/) with [Sass](https://sass-lang.com)
-  - points to the `font-face` of vendored web fonts, but does not include their
-    CSS `@font-face` declaration
 
 - JS: `src/pydata_sphinx_theme/assets/scripts/index.js`
 
