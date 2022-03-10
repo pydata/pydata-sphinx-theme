@@ -131,7 +131,6 @@ html_theme_options = {
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {
         "json_url": json_url,
-        "url_template": "https://pydata-sphinx-theme.readthedocs.io/en/{version}/",
         "version_match": version_match,
     },
 }

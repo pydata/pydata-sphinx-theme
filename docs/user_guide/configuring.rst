@@ -361,8 +361,6 @@ The switcher requires the following configuration steps:
    ``html_theme_options`` dict in ``conf.py``. ``switcher`` should have 3 keys:
 
    - ``json_url``: the persistent location of the JSON file described above.
-   - ``url_template``: a template string used to generate the correct URLs for
-     the different documentation versions.
    - ``version_match``: a string stating the version of the documentation that
      is currently being browsed.
 
@@ -380,14 +378,11 @@ First, write a JSON file stating which versions of your docs will be listed in
 the switcher's dropdown menu. That file should contain a list of entries that
 each can have the following fields:
 
-- ``version``: a version string. This will be inserted into
-  ``switcher['url_template']`` to create the links to other docs versions, and
-  also checked against ``switcher['version_match']`` to provide styling to the
-  switcher.
+- ``version``: a version string. This is checked against
+  ``switcher['version_match']`` to provide styling to the switcher.
+- ``url``: the URL for this version.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
-- ``url``: an optional URL. If provided, it links the version to ``url``
-  instead of ``switcher['url_template']``.
 
 Here is an example JSON file:
 
@@ -396,13 +391,16 @@ Here is an example JSON file:
     [
         {
             "name": "v2.1 (stable)",
-            "version": "2.1"
+            "version": "2.1",
+            "url": "https://mysite.org/en/2.1/index.html"
         },
         {
             "version": "2.1rc1",
+            "url": "https://mysite.org/en/2.1rc1/index.html"
         },
         {
-            "version": "2.0"
+            "version": "2.0",
+            "url": "https://mysite.org/en/2.0/index.html"
         },
         {
             "version": "1.0",
@@ -459,28 +457,6 @@ a few different ways:
               "json_url": "https://mysite.org/switcher.json",
           }
       }
-
-
-Configure ``switcher['url_template']``
---------------------------------------
-
-The switcher's links to other versions of your docs are made by combining the
-*version strings* from the JSON file with a *template string* you provide in
-``switcher['url_template']``. The template string must contain a placeholder
-``{version}`` and otherwise be a fully-resolved URL. For example:
-
-.. code:: python
-
-    html_theme_options = {
-        ...,
-        "switcher": {
-            "url_template": "https://mysite.org/en/version-{version}/",
-        }
-    }
-
-The example above will result in a link to
-``https://mysite.org/en/version-1.0/`` for the JSON entry for version
-``"1.0"``.
 
 
 Configure ``switcher['version_match']``

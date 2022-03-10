@@ -1,35 +1,42 @@
 [
   {
     "name": "dev",
-    "version": "latest"
+    "version": "latest",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/"
   },
   {
     "name": "0.8.0 (stable)",
     "version": "stable",
-    "extra_classes": ["stable"]
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/stable/"
   },
   {
     "name": "0.8.0",
-    "version": "v0.8.0"
+    "version": "v0.8.0",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.8.0/"
   },
   {
     "name": "0.7.2",
-    "version": "v0.7.2"
+    "version": "v0.7.2",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.7.2/"
   },
   {
     "name": "0.6.3",
-    "version": "v0.6.3"
+    "version": "v0.6.3",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.6.3/"
   },
   {
     "name": "0.5.2",
-    "version": "v0.5.2"
+    "version": "v0.5.2",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.5.2/"
   },
   {
     "name": "0.4.3",
-    "version": "v0.4.3"
+    "version": "v0.4.3",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.4.3/"
   },
   {
     "name": "0.3.2",
-    "version": "v0.3.2"
+    "version": "v0.3.2",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.3.2/"
   }
 ]
