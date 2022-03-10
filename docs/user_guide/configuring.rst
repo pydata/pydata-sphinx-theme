@@ -272,11 +272,14 @@ default, you can use the following configuration in ``conf.py``:
 This will make the first two navigations show up by default (AKA, top-level
 pages and their immediate children).
 
-Collapse parts / captions
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Collapse toctree captions / parts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your pages are divided into parts, you can also hide all the pages by default
-and make only the part captions visible by using:
+If your ``toctree`` elements have captions assigned to them (with ``:caption:``), you may
+collapse navigation items so that only the caption is visible. Clicking on the
+caption will display the items below.
+
+To enable this behavior, set the ``show_nav_level`` value to 0, like below:
 
 .. code:: python
 
@@ -284,12 +287,14 @@ and make only the part captions visible by using:
       "show_nav_level": 0
    }
 
-The part captions then become togglable using drop-boxes.
+
 
 .. note::
-
-   ``"show_nav_level": 0`` only works when parts are present, and will behave the same as the
-   default value ``1``, if the pages are not divided into parts.
+   
+   You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
+   If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
+   (the same as the default theme behavior). See `the toctree documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree>`_
+   for more details.
 
 .. _remove_toctrees:
 
