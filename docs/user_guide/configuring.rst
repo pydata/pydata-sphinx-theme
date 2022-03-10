@@ -289,12 +289,16 @@ To enable this behavior, set the ``show_nav_level`` value to 0, like below:
 
 
 
+  
+You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
+If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
+(the same as the default theme behavior). See `the toctree documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree>`_
+for more details.
+
 .. note::
-   
-   You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
-   If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
-   (the same as the default theme behavior). See `the toctree documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree>`_
-   for more details.
+
+   In some Sphinx sites, the top-level ``toctree`` groupings make up "parts" in the documentation, with
+   each page beneath making up a "chapter".
 
 .. _remove_toctrees:
 
