@@ -147,6 +147,25 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             for ul in soup("ul", recursive=False):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
 
+            # Add collapse boxes for parts/captions.
+            # Wraps the TOC part in an extra <ul> to behave like chapters with toggles
+            # show_nav_level: 0 means make parts collapsible.
+            if show_nav_level == 0:
+                partcaptions = soup.find_all("p", attrs={"class": "caption"})
+                if len(partcaptions):
+                    new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
+                    for caption in partcaptions:
+                        # Assume that the next <ul> element is the TOC list
+                        # for this part
+                        for sibling in caption.next_siblings:
+                            if sibling.name == "ul":
+                                toclist = sibling
+                                break
+                        li = soup.new_tag("li", attrs={"class": "toctree-l0"})
+                        li.extend([caption, toclist])
+                        new_soup.ul.append(li)
+                    soup = new_soup
+
             # Add icons and labels for collapsible nested sections
             _add_collapse_checkboxes(soup)
 
@@ -280,6 +299,12 @@ def _add_collapse_checkboxes(soup):
         # We check all "li" elements, to add a "current-page" to the correct li.
         classes = element.get("class", [])
 
+        # expanding the parent part explicitly, if present
+        if "current" in classes:
+            parentli = element.find_parent("li", class_="toctree-l0")
+            if parentli:
+                parentli.select("p.caption ~ input")[0].attrs["checked"] = ""
+
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
             continue
@@ -294,8 +319,12 @@ def _add_collapse_checkboxes(soup):
         # Add the "label" for the checkbox which will get filled.
         if soup.new_tag is None:
             continue
+
         label = soup.new_tag("label", attrs={"for": checkbox_name})
         label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+        if "toctree-l0" in classes:
+            # making label cover the whole caption text with css
+            label["class"] = "label-parts"
         element.insert(1, label)
 
         # Add the checkbox that's used to store expanded/collapsed state.
@@ -308,6 +337,7 @@ def _add_collapse_checkboxes(soup):
                 "name": checkbox_name,
             },
         )
+
         # if this has a "current" class, be expanded by default
         # (by checking the checkbox)
         if "current" in classes:

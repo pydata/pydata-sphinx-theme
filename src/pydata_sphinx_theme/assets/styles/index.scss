@@ -165,34 +165,6 @@ footer {
   }
 }
 
-.bd-sidebar {
-  padding-top: 1em;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-
-  @include media-breakpoint-up(md) {
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
-
-    @supports (position: -webkit-sticky) or (position: sticky) {
-      position: -webkit-sticky;
-      position: sticky;
-      top: var(--pst-header-height);
-      z-index: 1000;
-      height: calc(100vh - var(--pst-header-height));
-    }
-  }
-
-  &.no-sidebar {
-    border-right: 0;
-  }
-
-  .sidebar-end-items {
-    margin-top: auto;
-    margin-bottom: 1em;
-  }
-}
-
 .bd-links {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -346,7 +318,8 @@ nav.bd-links {
 
 /* Nav: hide second level (shown on .active) */
 
-.bd-toc .nav {
+.bd-toc .nav,
+.list-caption {
   .nav {
     display: none;
 
@@ -522,8 +495,44 @@ nav.bd-links {
 }
 
 .bd-sidebar {
+  padding-top: 1em;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(md) {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    @supports (position: -webkit-sticky) or (position: sticky) {
+      position: -webkit-sticky;
+      position: sticky;
+      top: var(--pst-header-height);
+      z-index: 1000;
+      height: calc(100vh - var(--pst-header-height));
+    }
+  }
+
+  &.no-sidebar {
+    border-right: 0;
+  }
+
+  .sidebar-end-items {
+    margin-top: auto;
+    margin-bottom: 1em;
+  }
+  .list-caption {
+    list-style: none;
+    padding-left: 0px;
+  }
   li {
     position: relative;
+    // If it has children, add a bit more padding to wrap the content to avoid
+    // overlapping with the <label>
+    &.has-children {
+      > .reference {
+        padding-right: 30px;
+      }
+    }
   }
   label {
     position: absolute;
@@ -553,12 +562,17 @@ nav.bd-links {
       }
     }
   }
-
-  // If it has children, add a bit more padding to wrap the content to avoid
-  // overlapping with the <label>
-  li.has-children {
-    > .reference {
-      padding-right: 30px;
+  .label-parts {
+    width: 100%;
+    height: 100%;
+    &:hover {
+      background: none;
+    }
+    i {
+      width: 30px;
+      position: absolute;
+      top: 0.3em; // aligning chevron with text
+      right: 0em; // aligning chevron to the right
     }
   }
 }

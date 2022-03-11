@@ -245,8 +245,8 @@ override this behavior and control the sidebar on a per-page basis, use the
 
 .. _navigation-depth:
 
-Navigation depth and collapsing of the sidebar
-==============================================
+Navigation depth and collapsing the sidebar
+===========================================
 
 By default, this theme enables to expand/collapse subsections in the left
 sidebar navigation (without actually navigating to the page itself), and this extends
@@ -271,6 +271,34 @@ default, you can use the following configuration in ``conf.py``:
 
 This will make the first two navigations show up by default (AKA, top-level
 pages and their immediate children).
+
+Collapse entire toctree captions / parts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your ``toctree`` elements have captions assigned to them (with ``:caption:``), you may
+collapse navigation items so that only the caption is visible. Clicking on the
+caption will display the items below.
+
+To enable this behavior, set the ``show_nav_level`` value to 0, like below:
+
+.. code:: python
+
+   html_theme_options = {
+      "show_nav_level": 0
+   }
+
+
+
+
+You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
+If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
+(the same as the default theme behavior). See `the toctree documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree>`_
+for more details.
+
+.. note::
+
+   In some Sphinx sites, the top-level ``toctree`` groupings make up "parts" in the documentation, with
+   each page beneath making up a "chapter".
 
 .. _remove_toctrees:
 
