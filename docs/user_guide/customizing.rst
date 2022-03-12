@@ -63,7 +63,7 @@ In order to customize the display of any of the theme element you need to encasp
         background: black;
     }
 
-A complete list of the used colors for this theme can be found in the `pydata default css colors file <_pydata-css-colors_>`__.
+A complete list of the used colors for this theme can be found in the `pydata default css colors file <pydata-css-colors_>`__.
 
 .. _css-variables:
 
