@@ -66,7 +66,7 @@ jobs:
 
       # Run tests under coverage
       - name: Run the tests
-        run: pytest --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
 
       - name: Upload coverage
         if: ${{ always() }}
