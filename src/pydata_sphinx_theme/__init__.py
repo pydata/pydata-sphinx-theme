@@ -15,13 +15,15 @@ from pygments.styles import get_all_styles
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.8.0"
+__version__ = "0.9.0.dev0"
 
 logger = logging.getLogger(__name__)
 
 
 def update_config(app, env):
     theme_options = app.config["html_theme_options"]
+
+    # DEPRECATE after v0.9
     if theme_options.get("search_bar_position") == "navbar":
         logger.warn(
             (
@@ -29,6 +31,8 @@ def update_config(app, env):
                 "Use `search-field.html` in `navbar_end` template list instead."
             )
         )
+
+    # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
             (
@@ -37,9 +41,14 @@ def update_config(app, env):
             )
         )
 
+    # Update the anchor link (it's a tuple, so need to overwrite the whole thing)
+    icon_default = app.config.values["html_permalinks_icon"]
+    app.config.values["html_permalinks_icon"] = ("#", *icon_default[1:])
+
 
 def update_templates(app, pagename, templatename, context, doctree):
-    """Update template names for page build."""
+    """Update template names and assets for page build."""
+    # Allow for more flexibility in template names
     template_sections = [
         "theme_navbar_start",
         "theme_navbar_center",
@@ -49,7 +58,6 @@ def update_templates(app, pagename, templatename, context, doctree):
         "theme_left_sidebar_end",
         "sidebars",
     ]
-
     for section in template_sections:
         if context.get(section):
             # Break apart `,` separated strings so we can use , in the defaults
@@ -62,6 +70,14 @@ def update_templates(app, pagename, templatename, context, doctree):
             for ii, template in enumerate(context.get(section)):
                 if not os.path.splitext(template)[1]:
                     context[section][ii] = template + ".html"
+
+    # Remove a duplicate entry of the theme CSS. This is because it is in both:
+    # - theme.conf
+    # - manually linked in `webpack-macros.html`
+    if "css_files" in context:
+        theme_css_name = "_static/styles/pydata-sphinx-theme.css"
+        if theme_css_name in context["css_files"]:
+            context["css_files"].remove(theme_css_name)
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -132,6 +148,25 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
                 ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
+
+            # Add collapse boxes for parts/captions.
+            # Wraps the TOC part in an extra <ul> to behave like chapters with toggles
+            # show_nav_level: 0 means make parts collapsible.
+            if show_nav_level == 0:
+                partcaptions = soup.find_all("p", attrs={"class": "caption"})
+                if len(partcaptions):
+                    new_soup = bs("<ul class='list-caption'></ul>", "html.parser")
+                    for caption in partcaptions:
+                        # Assume that the next <ul> element is the TOC list
+                        # for this part
+                        for sibling in caption.next_siblings:
+                            if sibling.name == "ul":
+                                toclist = sibling
+                                break
+                        li = soup.new_tag("li", attrs={"class": "toctree-l0"})
+                        li.extend([caption, toclist])
+                        new_soup.ul.append(li)
+                    soup = new_soup
 
             # Add icons and labels for collapsible nested sections
             _add_collapse_checkboxes(soup)
@@ -266,6 +301,12 @@ def _add_collapse_checkboxes(soup):
         # We check all "li" elements, to add a "current-page" to the correct li.
         classes = element.get("class", [])
 
+        # expanding the parent part explicitly, if present
+        if "current" in classes:
+            parentli = element.find_parent("li", class_="toctree-l0")
+            if parentli:
+                parentli.select("p.caption ~ input")[0].attrs["checked"] = ""
+
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
             continue
@@ -280,8 +321,12 @@ def _add_collapse_checkboxes(soup):
         # Add the "label" for the checkbox which will get filled.
         if soup.new_tag is None:
             continue
+
         label = soup.new_tag("label", attrs={"for": checkbox_name})
         label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+        if "toctree-l0" in classes:
+            # making label cover the whole caption text with css
+            label["class"] = "label-parts"
         element.insert(1, label)
 
         # Add the checkbox that's used to store expanded/collapsed state.
@@ -294,6 +339,7 @@ def _add_collapse_checkboxes(soup):
                 "name": checkbox_name,
             },
         )
+
         # if this has a "current" class, be expanded by default
         # (by checking the checkbox)
         if "current" in classes:

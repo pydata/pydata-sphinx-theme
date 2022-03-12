@@ -14,13 +14,6 @@
 -->
 
 <script type="text/javascript">
-// Construct the target URL from the JSON components
-function buildURL(entry) {
-    var template = "{{ theme_switcher.get('url_template') }}";  // supplied by jinja
-    template = template.replace("{version}", entry.version);
-    return template;
-}
-
 // Check if corresponding page path exists in other version of docs
 // and, if so, go there instead of the homepage of the other docs version
 function checkPageExistsAndRedirect(event) {
@@ -56,16 +49,16 @@ function checkPageExistsAndRedirect(event) {
             const node = document.createElement("a");
             node.setAttribute("class", "list-group-item list-group-item-action py-1");
             node.textContent = `${entry.name}`;
-            // get the base URL for that doc version, add the current page's
-            // path to it, and set as `href`
-            if (!("url" in entry)) {
-                entry.url = buildURL(entry);
-            }
             node.setAttribute("href", `${entry.url}${currentFilePath}`);
             // on click, AJAX calls will check if the linked page exists before
             // trying to redirect, and if not, will redirect to the homepage
             // for that version of the docs.
             node.onclick = checkPageExistsAndRedirect;
+            // Add dataset values for the version and name in case people want
+            // to apply CSS styling based on this information.
+            node.dataset["versionName"] = entry.name;
+            node.dataset["version"] = entry.version;
+
             $("#version_switcher_menu").append(node);
             // replace dropdown button text with the preferred display name of
             // this version, rather than using sphinx's {{ version }} variable.
@@ -73,11 +66,9 @@ function checkPageExistsAndRedirect(event) {
             // version's entry
             if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
-                $("#version_switcher_button").text(entry.name);
-                // Add extra class to the button for the selected entry
-                if ("extra_classes" in entry) {
-                    $("#version_switcher_menu").classList.add(...entry.extra_classes);
-                }
+                let btn = document.getElementById("version_switcher_button");
+                btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+                btn.dataset["activeVersion"] = entry.version;
             }
         });
     });

@@ -30,7 +30,7 @@ def _should_install(session):
 @nox.session
 def compile(session):
     if _should_install(session):
-        session.install(".")
+        session.install("-e", ".")
         session.install("sphinx-theme-builder[cli]")
     session.run("stb", "compile")
 
@@ -38,14 +38,14 @@ def compile(session):
 @nox.session
 def docs(session):
     if _should_install(session):
-        session.install(".[doc]")
+        session.install("-e", ".[doc]")
     session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html")
 
 
 @nox.session(name="docs-live")
 def docs_live(session):
     if _should_install(session):
-        session.install(".[doc]")
+        session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
     session.run("stb", "serve", "docs", "--open-browser")
 

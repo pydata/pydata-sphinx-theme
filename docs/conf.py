@@ -24,8 +24,6 @@ author = "PyData Community"
 
 import pydata_sphinx_theme
 
-release = pydata_sphinx_theme.__version__
-version = release.replace("dev0", "")
 
 # -- General configuration ---------------------------------------------------
 
@@ -80,6 +78,24 @@ myst_enable_extensions = [
 html_theme = "pydata_sphinx_theme"
 # html_logo = "_static/pandas.svg"  # For testing
 
+# Define the json_url for our version switcher.
+json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
+
+# Define the version we use for matching in the version switcher.
+version_match = os.environ.get("READTHEDOCS_VERSION")
+# If READTHEDOCS_VERSION doesn't exist, we're not on RTD
+# If it is an integer, we're in a PR build and the version isn't correct.
+if not version_match or version_match.isdigit():
+    # For local development, infer the version to match from the package.
+    release = pydata_sphinx_theme.__version__
+    if "dev" in release:
+        version_match = "latest"
+        # We want to keep the relative reference if we are in dev mode
+        # but we want the whole url if we are effectively in a released version
+        json_url = "/_static/switcher.json"
+    else:
+        version_match = "v" + release
+
 html_theme_options = {
     "external_links": [
         {
@@ -114,10 +130,8 @@ html_theme_options = {
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {
-        # "json_url": "/_static/switcher.json",
-        "json_url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json",
-        "url_template": "https://pydata-sphinx-theme.readthedocs.io/en/v{version}/",
-        "version_match": version,
+        "json_url": json_url,
+        "version_match": version_match,
     },
 }
 
@@ -130,6 +144,7 @@ html_sidebars = {
     "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
 }
 
+myst_heading_anchors = 2
 
 html_context = {
     "github_user": "pandas-dev",
@@ -146,3 +161,7 @@ rediraffe_redirects = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+
+def setup(app):
+    app.add_css_file("custom.css")

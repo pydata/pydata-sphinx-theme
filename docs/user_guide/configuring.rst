@@ -274,8 +274,8 @@ override this behavior and control the sidebar on a per-page basis, use the
 
 .. _navigation-depth:
 
-Navigation depth and collapsing of the sidebar
-==============================================
+Navigation depth and collapsing the sidebar
+===========================================
 
 By default, this theme enables to expand/collapse subsections in the left
 sidebar navigation (without actually navigating to the page itself), and this extends
@@ -300,6 +300,34 @@ default, you can use the following configuration in ``conf.py``:
 
 This will make the first two navigations show up by default (AKA, top-level
 pages and their immediate children).
+
+Collapse entire toctree captions / parts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your ``toctree`` elements have captions assigned to them (with ``:caption:``), you may
+collapse navigation items so that only the caption is visible. Clicking on the
+caption will display the items below.
+
+To enable this behavior, set the ``show_nav_level`` value to 0, like below:
+
+.. code:: python
+
+   html_theme_options = {
+      "show_nav_level": 0
+   }
+
+
+
+
+You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
+If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
+(the same as the default theme behavior). See `the toctree documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree>`_
+for more details.
+
+.. note::
+
+   In some Sphinx sites, the top-level ``toctree`` groupings make up "parts" in the documentation, with
+   each page beneath making up a "chapter".
 
 .. _remove_toctrees:
 
@@ -390,8 +418,6 @@ The switcher requires the following configuration steps:
    ``html_theme_options`` dict in ``conf.py``. ``switcher`` should have 3 keys:
 
    - ``json_url``: the persistent location of the JSON file described above.
-   - ``url_template``: a template string used to generate the correct URLs for
-     the different documentation versions.
    - ``version_match``: a string stating the version of the documentation that
      is currently being browsed.
 
@@ -409,17 +435,11 @@ First, write a JSON file stating which versions of your docs will be listed in
 the switcher's dropdown menu. That file should contain a list of entries that
 each can have the following fields:
 
-- ``version``: a version string. This will be inserted into
-  ``switcher['url_template']`` to create the links to other docs versions, and
-  also checked against ``switcher['version_match']`` to provide styling to the
-  switcher.
+- ``version``: a version string. This is checked against
+  ``switcher['version_match']`` to provide styling to the switcher.
+- ``url``: the URL for this version.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
-- ``extra_classes``: an optional list of classes to add to the switcher
-  button for a given version (e.g., ``["dev", "rc"]``). These classes are only
-  added when the version is active.
-- ``url``: an optional URL. If provided, it links the version to ``url``
-  instead of ``switcher['url_template']``.
 
 Here is an example JSON file:
 
@@ -428,14 +448,16 @@ Here is an example JSON file:
     [
         {
             "name": "v2.1 (stable)",
-            "version": "2.1"
+            "version": "2.1",
+            "url": "https://mysite.org/en/2.1/index.html"
         },
         {
             "version": "2.1rc1",
-            "extra_classes": ["dev", "rc"]
+            "url": "https://mysite.org/en/2.1rc1/index.html"
         },
         {
-            "version": "2.0"
+            "version": "2.0",
+            "url": "https://mysite.org/en/2.0/index.html"
         },
         {
             "version": "1.0",
@@ -494,28 +516,6 @@ a few different ways:
       }
 
 
-Configure ``switcher['url_template']``
---------------------------------------
-
-The switcher's links to other versions of your docs are made by combining the
-*version strings* from the JSON file with a *template string* you provide in
-``switcher['url_template']``. The template string must contain a placeholder
-``{version}`` and otherwise be a fully-resolved URL. For example:
-
-.. code:: python
-
-    html_theme_options = {
-        ...,
-        "switcher": {
-            "url_template": "https://mysite.org/en/version-{version}/",
-        }
-    }
-
-The example above will result in a link to
-``https://mysite.org/en/version-1.0/`` for the JSON entry for version
-``"1.0"``.
-
-
 Configure ``switcher['version_match']``
 ---------------------------------------
 
@@ -571,6 +571,57 @@ to insert a version switcher at the top of the left sidebar, while still
 keeping the default navigation below it. See :doc:`sections` for more
 information.
 
+Style the switcher buttons
+--------------------------
+
+You may apply styles via CSS to any of the switcher buttons to control their look and feel.
+Each button has two `HTML dataset entries <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset>`_
+that you can use to apply CSS rules to subsets of buttons. These entries are:
+
+.. code-block::
+
+   data-version
+   data-version-name
+
+For example, the link for an entry with ``version="0.2"``,
+and ``name="My version"`` would have metadata like so:
+
+.. code-block:: html
+
+   <a data-version-name="My version" data-version="0.2" class="<classes...>">
+
+You can create CSS rules that select this metadata like so:
+
+.. code-block:: scss
+
+   // Style all links with a specific subset of versions
+   #version_switcher a[data-version="0.2"],
+   #version_switcher a[data-version="0.3"] {
+      background-color: red;
+   }
+   // Style all links with `stable` in the version name
+   #version_switcher a[data-version-name*="stable"] {
+      background-color: green;
+   }
+
+In addition, the parent button of the dropdown list contains similar metadata
+about the **current version**. This could be used to style the entire dropdown
+a certain color based on the active version.
+
+For example, if you wanted to style the dropdown button orange if it was a ``dev``
+version, you could use the following CSS selector:
+
+.. code-block:: scss
+
+   // If the active version has the name "dev", style it orange
+   #version_switcher_button[data-active-version-name*="dev"] {
+      background-color: rgb(255 138 62);
+   }
+
+.. seealso::
+
+   See the `MDN documentation on dataset properties <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset>`_
+   for more information on using and styling with these properties.
 
 Add an Edit this Page button
 ============================
@@ -674,11 +725,10 @@ following configuration:
        "navbar_end": ["navbar-icon-links.html", "search-field.html"]
    }
 
-
 .. note::
 
-   By default the search bar is positioned in the sidebar since this is more
-   suitable for large navigation bars.
+   By default the search bar is placed in the sidebar. If you wish to move it to the navbar,
+   explicitly define a list of sidebar templates in `html_sidebars` and omit the `search-field.html` entry.
 
 Configure the search bar text
 =============================
