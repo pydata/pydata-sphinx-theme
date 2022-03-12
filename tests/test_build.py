@@ -528,10 +528,10 @@ def test_version_switcher(sphinx_build_factory, file_regression):
     )
 
 
-def test_theme_switcher(sphin_build_factory, file_regression):
+def test_theme_switcher(sphinx_build_factory, file_regression):
     """Regression test the theme switcher btn HTML"""
 
-    sphinx_build = sphin_build_factory("base").build()
+    sphinx_build = sphinx_build_factory("base").build()
     switcher = sphinx_build.html_tree("index.html").select("#theme-switch")[0]
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extention=".html"
