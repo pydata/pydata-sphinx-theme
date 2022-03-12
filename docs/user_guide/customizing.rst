@@ -35,10 +35,14 @@ When you build your documentation, this stylesheet should now be activated.
 Manage themes
 =============
 
+.. danger::
+
+    Theming is still a beta feature so the variables related to the theme switch are likely to change in the future. No backward compatibily is guaranteed when customization is done.
+
 Pydata sphinx theme embed 3 different theming mode:
 
 - ``auto``: the documentation theme will follow the one provided by your computer
-- ``dark```: the documentation is displayed with the dark theme
+- ``dark``: the documentation is displayed with the dark theme
 - ``light``: the documentation is displayed with the light theme
 
 In order to customize the display of any of the theme element you need to encaspulate your modifications in the approriate css rules:
@@ -58,6 +62,8 @@ In order to customize the display of any of the theme element you need to encasp
         /* whatever you want to change */
         background: black;
     }
+
+A complete list of the used colors for this theme can be found in the `pydata default css colors file <_pydata-css-colors_>`__.
 
 .. _css-variables:
 
@@ -156,6 +162,7 @@ The default body and header fonts can be changed as follows:
     before waiting for the CSS to be parsed, but should be used with care.
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
+.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/assets/style/color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 .. meta::
