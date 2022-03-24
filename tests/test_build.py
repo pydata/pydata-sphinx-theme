@@ -336,7 +336,7 @@ def test_included_toc(sphinx_build_factory):
 
 # html contexts for `show_edit_button`
 
-# these are "good" context fragements that should yield a working link
+# these are "good" context fragments that should yield a working link
 good_edits = [
     [
         {
