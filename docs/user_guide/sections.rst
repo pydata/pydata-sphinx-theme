@@ -121,7 +121,7 @@ By default, it has the following templates:
 A list of built-in templates you can insert into sections
 =========================================================
 
-Below is a list of build-in templates that you can insert into any section.
+Below is a list of built-in templates that you can insert into any section.
 Note that some of them may have CSS rules that assume a specific section (and
 will be named accordingly).
 

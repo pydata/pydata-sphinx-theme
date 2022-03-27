@@ -114,10 +114,6 @@ jobs:
           temporaryPublicStorage: true
           uploadArtifacts: true
           runs: 3 # Multiple runs to reduce variance
-          urls: |
-            demo/kitchen-sink/paragraph-markup.html
-            demo/example_pandas.html
-            demo/theme-elements.html
 
       # Serve the docs for auditing with pa11y
       - name: Serve the built site

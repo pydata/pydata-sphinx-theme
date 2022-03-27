@@ -1188,5 +1188,5 @@ This will **not** work at all, and so should be avoided:
 
 .. meta::
     :description lang=en:
-        An example of a long HTML page, as is comming in the pandas documentation
+        An example of a long HTML page, as is coming in the pandas documentation
         in pydata-sphinx-theme.

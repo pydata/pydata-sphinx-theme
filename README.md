@@ -65,7 +65,7 @@ more detail in the contributing section of the documentation:
 
 ### The html layout
 
-The "layout" included in this theme is originally mainly targetted towards
+The "layout" included in this theme is originally mainly targeted towards
 documentation sites with many pages, and where putting all navigation in a
 single sidebar can therefore get unwieldy.
 
