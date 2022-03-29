@@ -38,7 +38,6 @@ html[data-theme="light"] {
 
   // headerlinks (the anchors at the end of titles)
   --pst-color-headerlink: rgb(198, 15, 15);
-  --pst-color-headerlink-hover: var(--pst-color-background);
 
   // navigation
   --pst-color-active-navigation: var(--pst-color-primary);
@@ -153,17 +152,17 @@ html[data-theme="dark"] {
   */
 
   // main colors
-  --pst-color-primary: rgb(100, 87, 161);
+  --pst-color-primary: rgb(76, 145, 219);
   --pst-color-success: rgb(72, 135, 87);
-  --pst-color-info: rgb(64, 125, 191); /*23, 162, 184;*/
+  --pst-color-info: rgb(64, 125, 191);
   --pst-color-warning: rgb(193, 162, 69);
   --pst-color-danger: rgb(203, 70, 83);
-  --pst-color-text-base: rgb(245, 245, 245);
+  --pst-color-text-base: rgb(201, 209, 217);
   --pst-color-background: rgb(18, 18, 18);
   --pst-color-background-up: rgb(22, 22, 22); // for 3D effect in dark theme
   --pst-color-background-up-up: rgb(55, 55, 55); // for 3D effects
-  --pst-color-deactivate: rgb(121, 121, 121);
-  --pst-color-border: rgb(140, 140, 140);
+  --pst-color-deactivate: rgb(192, 192, 192);
+  --pst-color-border: var(--pst-color-deactivate);
   --pst-color-shadow: var(--pst-color-background);
 
   // headers
@@ -176,13 +175,12 @@ html[data-theme="dark"] {
   --pst-color-paragraph: var(--pst-color-text-base);
 
   // links
-  --pst-color-link: rgb(64, 98, 191);
+  --pst-color-link: var(--pst-color-primary);
   --pst-color-link-hover: rgb(170, 103, 196);
   --pst-color-target: rgb(117, 148, 195);
 
   // headerlinks (the anchors at the end of titles)
-  --pst-color-headerlink: rgb(152, 61, 61);
-  --pst-color-headerlink-hover: var(--pst-color-background);
+  --pst-color-headerlink: rgb(221, 90, 90);
 
   // navigation
   --pst-color-active-navigation: var(--pst-color-primary);
@@ -193,11 +191,11 @@ html[data-theme="dark"] {
   */
 
   // inline code
-  --pst-color-inline-code: rgb(175, 61, 126);
+  --pst-color-inline-code: rgb(221, 158, 194);
 
   // guilabel
   --pst-color-guilabel-background: rgb(242, 196, 166);
-  --pst-color-guilabel-border: rgb(141, 95, 65);
+  --pst-color-guilabel-border: rgb(83, 56, 38);
   --pst-color-guilabel-text: var(--pst-color-guilabel-border);
 
   // kbd
