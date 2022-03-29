@@ -7,6 +7,13 @@ Customizing the theme
 In addition to the configuration options detailed at :ref:`configuration`, it
 is also possible to customize the HTML layout and CSS style of the theme.
 
+.. danger::
+
+    This theme is still under active development, and we make no promises
+    about the stability of any specific HTML structure, CSS variables, etc.
+    Make these customizations at your own risk, and pin versions if you're
+    worried about breaking changes!
+
 .. _custom-css:
 
 Custom CSS Stylesheets
