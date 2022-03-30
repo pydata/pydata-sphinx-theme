@@ -119,9 +119,19 @@ footer {
   input {
     background-color: var(--pst-color-search-background);
     border-radius: 0.2rem;
-    border: 0;
-    border-bottom: 1px solid var(--pst-color-search-border);
+    border: 1px solid var(--pst-color-search-border);
     padding-left: 35px;
+
+    // Inner-text of the search bar
+    &::placeholder {
+      color: var(--pst-color-search);
+    }
+
+    // Background should always be same color regardless of active or nor
+    &:active,
+    &:focus {
+      background-color: var(--pst-color-search-background);
+    }
   }
 }
 
@@ -149,7 +159,7 @@ footer {
 
 .section-nav {
   padding-left: 0;
-  border-left: 1px solid var(--pst-color-toc-link);
+  border-left: 1px solid var(--pst-color-toc-border);
   border-bottom: none;
 
   ul {
@@ -457,10 +467,6 @@ nav.bd-links {
     }
 
     /* Social media buttons */
-    &.fa-github-square:before {
-      color: #333;
-    }
-
     &.fa-twitter-square:before {
       color: #55acee;
     }
