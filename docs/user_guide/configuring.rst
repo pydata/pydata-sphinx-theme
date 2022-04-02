@@ -56,7 +56,7 @@ These links take the following form:
       ]
    }
 
-There are two kinds of icons you can use, described below:
+There are three kinds of icons you can use, described below:
 
 FontAwesome icons
 -----------------
@@ -141,6 +141,27 @@ Here is an example:
 .. tip::
 
    Use ``.svg`` images for a higher-resolution output that behaves similarly across screen sizes.
+
+URL image icons
+---------------
+
+You can alternatively have image icons that are fetched from the web
+by using ``"type": "url"`` and declaring a URL to an image:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               "name": "PyData",
+               "url": "https://pydata.org",
+               "icon": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/master/docs/_static/pandas-square.svg",
+               "type": "url",
+           },
+       ],
+       ...
+   }
 
 Icon Link Shortcuts
 -------------------
