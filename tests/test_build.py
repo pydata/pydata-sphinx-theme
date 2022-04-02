@@ -119,6 +119,12 @@ def test_icon_links(sphinx_build_factory, file_regression):
                 # Because the type is inccorect, this should output an error `span`
                 "type": "incorrecttype",
             },
+            {
+                "name": "URL",
+                "url": "https://site5.org",
+                "icon": "https://site5.org/image.svg",
+                "type": "url",
+            },
         ]
     }
     confoverrides = {"html_theme_options": html_theme_options_icon_links}
