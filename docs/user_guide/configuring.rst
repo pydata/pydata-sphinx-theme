@@ -56,7 +56,7 @@ These links take the following form:
       ]
    }
 
-There are three kinds of icons you can use, described below:
+There are two kinds of icons you can use, described below:
 
 FontAwesome icons
 -----------------
@@ -114,13 +114,16 @@ Here are several examples:
 
    This has already been added for the brands that have *shortcuts*.
 
-Local image icons
------------------
+Image icons
+-----------
 
 If you'd like to display an icon image that is not in the FontAwesome icons library,
-you may instead specify a path to a local image that will be used for the icon.
-To do so, use ``"type": "local"``, and add a path to an image
+you may instead specify a URL or a path to a local image that will be used for the icon:
+
+- To get your icon from a web location, use ``"type": "url"``, and provide a URL to an image in the ``icon`` value. 
+- To get your icon from a local image, use ``"type": "local"``, and add a path to an image
 **relative to your documentation root** in the ``icon`` value.
+
 Here is an example:
 
 .. code:: python
@@ -134,6 +137,12 @@ Here is an example:
                "icon": "_static/pydata-logo-square.png",
                "type": "local",
            },
+           {
+               "name": "Pandas",
+               "url": "https://pandas.pydata.org",
+               "icon": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/master/docs/_static/pandas-square.svg",
+               "type": "url",
+           },
        ],
        ...
    }
@@ -141,27 +150,6 @@ Here is an example:
 .. tip::
 
    Use ``.svg`` images for a higher-resolution output that behaves similarly across screen sizes.
-
-URL image icons
----------------
-
-You can alternatively have image icons that are fetched from the web
-by using ``"type": "url"`` and declaring a URL to an image:
-
-.. code:: python
-
-   html_theme_options = {
-       ...
-       "icon_links": [
-           {
-               "name": "PyData",
-               "url": "https://pydata.org",
-               "icon": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/master/docs/_static/pandas-square.svg",
-               "type": "url",
-           },
-       ],
-       ...
-   }
 
 Icon Link Shortcuts
 -------------------
