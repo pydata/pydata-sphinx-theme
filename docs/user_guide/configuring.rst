@@ -120,7 +120,7 @@ Image icons
 If you'd like to display an icon image that is not in the FontAwesome icons library,
 you may instead specify a URL or a path to a local image that will be used for the icon:
 
-- To get your icon from a web location, use ``"type": "url"``, and provide a URL to an image in the ``icon`` value. 
+- To get your icon from a web location, use ``"type": "url"``, and provide a URL to an image in the ``icon`` value.
 - To get your icon from a local image, use ``"type": "local"``, and add a path to an image
 **relative to your documentation root** in the ``icon`` value.
 
