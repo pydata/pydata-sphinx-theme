@@ -7,8 +7,10 @@
             <label class="sr-only">{{ _(name) }}</label>
             {%- elif type == "local" -%}
             <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ _(name) }}"/>
+            {%- elif type == "url" -%}
+            <img src="{{ icon }}" class="icon-link-image" alt="{{ _(name) }}"/>
             {%- else %}
-            <span>Incorrectly configured icon link. Type must by `fontawesome` or `local`.</span>
+            <span>Incorrectly configured icon link. Type must be `fontawesome`, `url` or `local`.</span>
             {%- endif -%}
           </a>
         </li>

@@ -50,8 +50,8 @@ These links take the following form:
                "url": "https://github.com/<your-org>/<your-repo>",  # required
                # Icon class (if "type": "fontawesome"), or path to local image (if "type": "local")
                "icon": "fab fa-github-square",
-               # Whether icon should be a FontAwesome class, or a local file
-               "type": "fontawesome OR local",  # Default is fontawesome
+               # The type of image to be used (see below for details)
+               "type": "fontawesome",
            }
       ]
    }
@@ -114,14 +114,34 @@ Here are several examples:
 
    This has already been added for the brands that have *shortcuts*.
 
-Local image icons
------------------
+Image icons
+-----------
 
 If you'd like to display an icon image that is not in the FontAwesome icons library,
-you may instead specify a path to a local image that will be used for the icon.
-To do so, use ``"type": "local"``, and add a path to an image
-**relative to your documentation root** in the ``icon`` value.
-Here is an example:
+you may instead specify a URL or a path to a local image that will be used for the icon.
+
+**To display an image on the web**, use ``"type": "url"``, and provide a URL to an image in the ``icon`` value.
+For example:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               "name": "Pandas",
+               "url": "https://pandas.pydata.org",
+               "icon": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/master/docs/_static/pandas-square.svg",
+               "type": "url",
+           },
+       ],
+       ...
+   }
+
+
+**To display a local image from a file path**, use ``"type": "local"``, and add a path to an image
+relative to your documentation root in the ``icon`` value.
+For example:
 
 .. code:: python
 
