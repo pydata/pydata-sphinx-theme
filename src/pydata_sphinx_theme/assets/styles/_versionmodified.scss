@@ -7,32 +7,54 @@ div.deprecated {
   overflow: hidden;
   page-break-inside: avoid;
   border-left: 0.2rem solid;
-  border-color: rgba(var(--pst-color-versionmodified-default), 1);
+  border-color: var(--pst-color-versionmodified-default);
   border-radius: 0.2rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
     0 0 0.0625rem rgba(0, 0, 0, 0.1);
   transition: color 250ms, background-color 250ms, border-color 250ms;
-  background-color: rgba(var(--pst-color-admonition-default), 0.1);
+  position: relative;
 
   > p {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
+
+    // This is a hack to control the opacity for admonitions with our color variables
+    // ref: https://stackoverflow.com/a/56951626/6734243
+    &:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: var(--pst-color-admonition-default);
+      opacity: 0.1;
+    }
   }
 }
 
 div.versionadded {
-  border-color: rgba(var(--pst-color-versionmodified-added), 1);
-  background-color: rgba(var(--pst-color-versionmodified-added), 0.1);
+  border-color: var(--pst-color-versionmodified-added);
+
+  p:before {
+    background-color: var(--pst-color-versionmodified-added);
+  }
 }
 
 div.versionchanged {
-  border-color: rgba(var(--pst-color-versionmodified-changed), 1);
-  background-color: rgba(var(--pst-color-versionmodified-changed), 0.1);
+  border-color: var(--pst-color-versionmodified-changed);
+
+  p:before {
+    background-color: var(--pst-color-versionmodified-changed);
+  }
 }
 
 div.deprecated {
-  border-color: rgba(var(--pst-color-versionmodified-deprecated), 1);
-  background-color: rgba(var(--pst-color-versionmodified-deprecated), 0.1);
+  border-color: var(--pst-color-versionmodified-deprecated);
+
+  p:before {
+    background-color: var(--pst-color-versionmodified-deprecated);
+  }
 }
 
 span.versionmodified {
@@ -41,7 +63,7 @@ span.versionmodified {
   &:before {
     font-style: normal;
     margin-right: 0.6rem;
-    color: rgba(var(--pst-color-versionmodified-default), 1);
+    color: var(--pst-color-versionmodified-default);
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: var(--pst-icon-versionmodified-default);
@@ -50,21 +72,21 @@ span.versionmodified {
 
 span.versionmodified.added {
   &:before {
-    color: rgba(var(--pst-color-versionmodified-added), 1);
+    color: var(--pst-color-versionmodified-added);
     content: var(--pst-icon-versionmodified-added);
   }
 }
 
 span.versionmodified.changed {
   &:before {
-    color: rgba(var(--pst-color-versionmodified-changed), 1);
+    color: var(--pst-color-versionmodified-changed);
     content: var(--pst-icon-versionmodified-changed);
   }
 }
 
 span.versionmodified.deprecated {
   &:before {
-    color: rgba(var(--pst-color-versionmodified-deprecated), 1);
+    color: var(--pst-color-versionmodified-deprecated);
     content: var(--pst-icon-versionmodified-deprecated);
   }
 }

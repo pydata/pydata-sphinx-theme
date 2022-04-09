@@ -19,19 +19,21 @@ $grid-breakpoints: (
 // Import Bootstrap core
 @import "~bootstrap/scss/bootstrap";
 
+@import "./color";
 @import "./base";
 @import "./navbar";
 @import "./admonitions";
 @import "./api";
 @import "./markdown";
 @import "./versionmodified";
+@import "./ethical-ads";
 
 // Custom css, TODO: to be refactored in different partials
 // GitHub blockquote style
 blockquote {
   padding: 0 1em;
-  color: #6a737d;
-  border-left: 0.25em solid #dfe2e5;
+  color: var(--pst-color-deactivate);
+  border-left: 0.25em solid var(--pst-color-blockquote-border);
 }
 
 // For consistency, add bracket around footnotes/citations which are
@@ -51,7 +53,13 @@ a.footnote-reference {
 }
 
 .topic {
-  background-color: #eee;
+  background-color: var(--pst-color-background-up);
+  border-color: var(--pst-color-border);
+}
+
+aside.sidebar {
+  background-color: var(--pst-color-background-up-up);
+  border-color: var(--pst-color-border);
 }
 
 .seealso dd {
@@ -70,8 +78,9 @@ a.footnote-reference {
 }
 
 span.guilabel {
-  border: 1px solid #7fbbe3;
-  background: #e7f2fa;
+  border: 1px solid var(--pst-color-guilabel-border);
+  background: var(--pst-color-guilabel-background);
+  color: var(--pst-color-guilabel-text);
   font-size: 80%;
   font-weight: 700;
   border-radius: 4px;
@@ -85,7 +94,7 @@ span.guilabel {
 
 footer {
   width: 100%;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--pst-color-footer-border);
   padding: 10px;
 
   .footer-item p {
@@ -103,14 +112,26 @@ footer {
 
   .icon {
     position: absolute;
-    color: #a4a6a7;
+    color: var(--pst-color-search);
     left: 25px;
   }
 
   input {
+    background-color: var(--pst-color-search-background);
     border-radius: 0.2rem;
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--pst-color-search-border);
     padding-left: 35px;
+
+    // Inner-text of the search bar
+    &::placeholder {
+      color: var(--pst-color-search);
+    }
+
+    // Background should always be same color regardless of active or nor
+    &:active,
+    &:focus {
+      background-color: var(--pst-color-search-background);
+    }
   }
 }
 
@@ -132,13 +153,13 @@ footer {
   }
 
   .onthispage {
-    color: #a4a6a7;
+    color: var(--pst-color-text-base);
   }
 }
 
 .section-nav {
   padding-left: 0;
-  border-left: 1px solid #eee;
+  border-left: 1px solid var(--pst-color-toc-border);
   border-bottom: none;
 
   ul {
@@ -152,16 +173,44 @@ footer {
   a {
     display: block;
     padding: 0.125rem 1.5rem;
-    color: rgba(var(--pst-color-toc-link), 1);
+    color: var(--pst-color-toc-link);
 
     @include media-breakpoint-up(xl) {
       padding-right: 0;
     }
 
     &:hover {
-      color: rgba(var(--pst-color-toc-link-hover), 1);
+      color: var(--pst-color-toc-link-hover);
       text-decoration: none;
     }
+  }
+}
+
+.bd-sidebar {
+  padding-top: 1em;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(md) {
+    border-right: 1px solid var(--pst-color-sidebar-border);
+
+    @supports (position: -webkit-sticky) or (position: sticky) {
+      position: -webkit-sticky;
+      position: sticky;
+      top: var(--pst-header-height);
+      z-index: 1000;
+      height: calc(100vh - var(--pst-header-height));
+    }
+  }
+
+  &.no-sidebar {
+    border-right: 0;
+  }
+
+  .sidebar-end-items {
+    margin-top: auto;
+    margin-bottom: 1em;
   }
 }
 
@@ -237,7 +286,7 @@ nav.bd-links {
     margin-top: 1.25em;
     margin-bottom: 0.5em;
     padding: 0 1.5rem;
-    color: rgba(var(--pst-color-sidebar-caption), 1);
+    color: var(--pst-color-sidebar-caption);
     &:first-child {
       margin-top: 0;
     }
@@ -255,10 +304,10 @@ nav.bd-links {
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
-    color: rgba(var(--pst-color-sidebar-link), 1);
+    color: var(--pst-color-sidebar-link);
 
     &:hover {
-      color: rgba(var(--pst-color-sidebar-link-hover), 1);
+      color: var(--pst-color-sidebar-link-hover);
       text-decoration: none;
       background-color: transparent;
     }
@@ -278,7 +327,7 @@ nav.bd-links {
     > a,
     &:hover > a {
       font-weight: 600;
-      color: rgba(var(--pst-color-sidebar-link-active), 1);
+      color: var(--pst-color-sidebar-link-active);
     }
   }
 }
@@ -298,10 +347,9 @@ nav.bd-links {
 
 .toc-entry > .nav-link.active {
   font-weight: 600;
-  color: #130654;
-  color: rgba(var(--pst-color-toc-link-active), 1);
+  color: var(--pst-color-toc-link-active);
   background-color: transparent;
-  border-left: 2px solid rgba(var(--pst-color-toc-link-active), 1);
+  border-left: 2px solid var(--pst-color-toc-link-active);
 }
 
 .nav-link:hover {
@@ -356,11 +404,11 @@ nav.bd-links {
     padding: 10px;
     max-width: 45%;
     overflow-x: hidden;
-    color: rgba(0, 0, 0, 0.65);
+    color: var(--pst-color-prev-next-btn);
     text-decoration: none;
 
     p.prev-next-title {
-      color: rgba(var(--pst-color-link), 1);
+      color: var(--pst-color-prev-next);
       font-weight: 600;
       font-size: 1.1em;
     }
@@ -401,7 +449,7 @@ nav.bd-links {
 
 .alert-info a {
   /* higher contrast for links in info boxes. */
-  color: #e83e8c;
+  color: var(--pst-color-alert-link);
 }
 
 /* Icon Links */
@@ -419,10 +467,6 @@ nav.bd-links {
     }
 
     /* Social media buttons */
-    &.fa-github-square:before {
-      color: #333;
-    }
-
     &.fa-twitter-square:before {
       color: #55acee;
     }
@@ -445,7 +489,7 @@ nav.bd-links {
 
 .tocsection {
   padding-left: 10px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid var(--pst-color-toc-border);
   padding: 0.3rem 1.5rem;
 
   i {
@@ -550,7 +594,7 @@ nav.bd-links {
     align-items: center;
 
     &:hover {
-      background: rgba(var(--pst-color-sidebar-expander-background-hover), 1);
+      background: var(--pst-color-sidebar-expander-background-hover);
     }
 
     i {
@@ -558,7 +602,7 @@ nav.bd-links {
       font-size: 0.75rem;
       text-align: center;
       &:hover {
-        color: rgba(var(--pst-color-sidebar-link-hover), 1);
+        color: var(--pst-color-sidebar-link-hover);
       }
     }
   }

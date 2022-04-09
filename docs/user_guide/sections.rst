@@ -138,6 +138,7 @@ will be named accordingly).
 - ``sidebar-nav-bs.html``
 - ``sphinx-version.html``
 - ``version-switcher.html``
+- ``theme-switcher.html``
 
 Add your own HTML templates to theme sections
 =============================================

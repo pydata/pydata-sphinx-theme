@@ -7,11 +7,12 @@ div.admonition,
   overflow: hidden;
   page-break-inside: avoid;
   border-left: 0.2rem solid;
-  border-color: rgba(var(--pst-color-admonition-default), 1);
+  border-color: var(--pst-color-admonition-default);
   border-radius: 0.2rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
-    0 0 0.0625rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.2rem 0.5rem var(--pst-color-admonition-shadow),
+    0 0 0.0625rem var(--pst-color-admonition-shadow);
   transition: color 250ms, background-color 250ms, border-color 250ms;
+  background-color: var(--pst-color-admonition-background);
 
   // Last item should have no spacing since we'll control that w/ padding
   *:last-child {
@@ -36,17 +37,30 @@ div.admonition,
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: 700;
-    background-color: rgba(var(--pst-color-admonition-default), 0.1);
 
     &:before {
       position: absolute;
       left: 0.6rem;
       width: 1rem;
       height: 1rem;
-      color: rgba(var(--pst-color-admonition-default), 1);
+      color: var(--pst-color-admonition-default);
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
       content: var(--pst-icon-admonition-default);
+      opacity: 1;
+    }
+
+    // This is a hack to control the opacity for admonitions with our color variables
+    // ref: https://stackoverflow.com/a/56951626/6734243
+    &:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: var(--pst-color-admonition-default);
+      opacity: 0.1;
     }
 
     // Next element after title needs some extra upper-space
@@ -56,108 +70,126 @@ div.admonition,
   }
 
   &.attention {
-    border-color: rgba(var(--pst-color-admonition-attention), 1);
+    border-color: var(--pst-color-admonition-attention);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-attention), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-attention);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-attention), 1);
+        color: var(--pst-color-admonition-attention);
         content: var(--pst-icon-admonition-attention);
       }
     }
   }
 
   &.caution {
-    border-color: rgba(var(--pst-color-admonition-caution), 1);
+    border-color: var(--pst-color-admonition-caution);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-caution), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-caution);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-caution), 1);
+        color: var(--pst-color-admonition-caution);
         content: var(--pst-icon-admonition-caution);
       }
     }
   }
 
   &.warning {
-    border-color: rgba(var(--pst-color-admonition-warning), 1);
+    border-color: var(--pst-color-admonition-warning);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-warning), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-warning);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-warning), 1);
+        color: var(--pst-color-admonition-warning);
         content: var(--pst-icon-admonition-warning);
       }
     }
   }
 
   &.danger {
-    border-color: rgba(var(--pst-color-admonition-danger), 1);
+    border-color: var(--pst-color-admonition-danger);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-danger), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-danger);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-danger), 1);
+        color: var(--pst-color-admonition-danger);
         content: var(--pst-icon-admonition-danger);
       }
     }
   }
 
   &.error {
-    border-color: rgba(var(--pst-color-admonition-error), 1);
+    border-color: var(--pst-color-admonition-error);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-error), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-error);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-error), 1);
+        color: var(--pst-color-admonition-error);
         content: var(--pst-icon-admonition-error);
       }
     }
   }
 
   &.hint {
-    border-color: rgba(var(--pst-color-admonition-hint), 1);
+    border-color: var(--pst-color-admonition-hint);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-hint), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-hint);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-hint), 1);
+        color: var(--pst-color-admonition-hint);
         content: var(--pst-icon-admonition-hint);
       }
     }
   }
 
   &.tip {
-    border-color: rgba(var(--pst-color-admonition-tip), 1);
+    border-color: var(--pst-color-admonition-tip);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-tip), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-tip);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-tip), 1);
+        color: var(--pst-color-admonition-tip);
         content: var(--pst-icon-admonition-tip);
       }
     }
   }
 
   &.important {
-    border-color: rgba(var(--pst-color-admonition-important), 1);
+    border-color: var(--pst-color-admonition-important);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-important), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-important);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-important), 1);
+        color: var(--pst-color-admonition-important);
         content: var(--pst-icon-admonition-important);
       }
     }
   }
 
   &.note {
-    border-color: rgba(var(--pst-color-admonition-note), 1);
+    border-color: var(--pst-color-admonition-note);
     > .admonition-title {
-      background-color: rgba(var(--pst-color-admonition-note), 0.1);
+      &:after {
+        background-color: var(--pst-color-admonition-note);
+      }
 
       &:before {
-        color: rgba(var(--pst-color-admonition-note), 1);
+        color: var(--pst-color-admonition-note);
         content: var(--pst-icon-admonition-note);
       }
     }

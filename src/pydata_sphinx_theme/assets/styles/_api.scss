@@ -13,7 +13,7 @@ table.field-list {
   th.field-name {
     padding: 1px 8px 1px 5px;
     white-space: nowrap;
-    background-color: rgb(238, 238, 238);
+    background-color: var(--pst-color-background-up);
   }
 
   /* italic font for parameter types */
@@ -62,28 +62,33 @@ table.field-list {
 .sig.c .kt,
 .sig.cpp .k,
 .sig.cpp .kt {
-  color: rgba(var(--pst-color-text-base), 1);
+  color: var(--pst-color-text-base);
 }
 
 .sig.c .m,
 .sig.cpp .m {
-  color: rgba(var(--pst-color-text-base), 1);
+  color: var(--pst-color-text-base);
 }
 
 .sig.c .s,
 .sig.c .sc,
 .sig.cpp .s,
 .sig.cpp .sc {
-  color: rgba(var(--pst-color-text-base), 1);
+  color: var(--pst-color-text-base);
 }
 
 // addition
 
 // .sig.c .sig-name .n,
 // .sig.cpp .sig-name .n {
-//   color: rgba(var(--pst-color-inline-code), 1);
+//   color: var(--pst-color-inline-code);
 // }
 
 .sig-name {
-  color: rgba(var(--pst-color-inline-code), 1);
+  color: var(--pst-color-inline-code);
+}
+
+// change target color for dark theme
+dt:target {
+  background-color: var(--pst-color-target);
 }

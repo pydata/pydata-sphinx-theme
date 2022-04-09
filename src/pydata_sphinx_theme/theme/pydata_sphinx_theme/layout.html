@@ -2,6 +2,10 @@
 {%- import "static/webpack-macros.html" as _webpack with context %}
 
 {%- block css %}
+    <script>
+      document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
+      document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+    </script>
     {{ _webpack.head_pre_assets() }}
     {{ _webpack.head_pre_icons() }}
     {{- css() }}
@@ -30,7 +34,7 @@
 {% block sidebarsourcelink %}{% endblock %}
 
 {% block body_tag %}
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60" data-default-mode="{{ default_mode }}">
 {%- endblock %}
 {%- block content %}
     {# Added to support a banner with an alert #}

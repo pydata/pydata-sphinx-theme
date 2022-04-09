@@ -10,7 +10,7 @@ in your ``conf.py`` file. This is a dictionary with ``key: val`` pairs that
 you can configure in various ways. This page describes the options available to you.
 
 Configure project logo
-==============================
+======================
 
 To add a logo that's placed at the left of your nav bar, put a logo file under your
 doc path's _static folder, and use the following configuration:
@@ -30,6 +30,35 @@ If you'd like it to link to another page or use an external link instead, use th
 
 
 .. _icon-links:
+
+Configure default theme
+=======================
+
+The theme mode can be changed by the user. By default landing on the documentation will switch the mode to ``auto``. You can specified this value to be one of ``auto``, ``dark``, ``light``.
+
+.. code-block:: python
+
+   html_context = {
+      ...
+      "default_mode": "auto"
+   }
+
+Configure pygment theme
+=======================
+
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the `pygment_light_style`and `pygment_style_style`. You can check available Pygments colors on this `page <https://help.farbox.com/pygments.html>`__.
+
+.. code-block:: python
+
+   html_contexts = {
+      ...
+      "pygment_light_style": "tango",
+      "pygment_dark_style": "native"
+   }
+
+.. danger::
+
+   The native Sphinx option `pygments_style` will be overwritten by this theme.
 
 Configure icon links
 ====================

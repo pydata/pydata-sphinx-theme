@@ -1,0 +1,289 @@
+/*******************************************************************************
+* light theme
+*
+* all the variables used for light theme coloring
+*/
+html[data-theme="light"] {
+  /*****************************************************************************
+  * colors
+  */
+
+  // main colors
+  --pst-color-primary: rgb(19, 6, 84);
+  --pst-color-success: rgb(40, 167, 69);
+  --pst-color-info: rgb(0, 123, 255); /*23, 162, 184;*/
+  --pst-color-warning: rgb(255, 193, 7);
+  --pst-color-danger: rgb(220, 53, 69);
+  --pst-color-text-base: rgb(51, 51, 51);
+  --pst-color-background: rgb(255, 255, 255);
+  --pst-color-background-up: rgb(240, 240, 240); // for 3D effects
+  --pst-color-background-up-up: rgb(255, 255, 238); // for 3D effects
+  --pst-color-deactivate: rgb(77, 77, 77);
+  --pst-color-border: rgb(201, 201, 201);
+  --pst-color-shadow: rgb(216, 216, 216);
+
+  // headers
+  --pst-color-h1: var(--pst-color-primary);
+  --pst-color-h2: var(--pst-color-primary);
+  --pst-color-h3: var(--pst-color-text-base);
+  --pst-color-h4: var(--pst-color-text-base);
+  --pst-color-h5: var(--pst-color-text-base);
+  --pst-color-h6: var(--pst-color-text-base);
+  --pst-color-paragraph: var(--pst-color-text-base);
+
+  // links
+  --pst-color-link: rgb(0, 91, 129);
+  --pst-color-link-hover: rgb(227, 46, 0);
+  --pst-color-target: rgb(251, 229, 78);
+
+  // headerlinks (the anchors at the end of titles)
+  --pst-color-headerlink: rgb(198, 15, 15);
+
+  // navigation
+  --pst-color-active-navigation: var(--pst-color-primary);
+  --pst-color-deactive-navigation: var(--pst-color-deactivate);
+
+  /*****************************************************************************
+  * roles
+  */
+
+  // inline code
+  --pst-color-inline-code: rgb(232, 62, 140);
+
+  // guilabel
+  --pst-color-guilabel-background: rgb(231, 242, 250);
+  --pst-color-guilabel-border: rgb(127, 187, 227);
+  --pst-color-guilabel-text: var(--pst-color-guilabel-border);
+
+  // kbd
+  --pst-color-kbd-text: rgb(255, 255, 255);
+  --pst-color-kbd-background: rgb(33, 37, 41);
+
+  /*****************************************************************************
+  * directives
+  */
+
+  // admonitions
+  --pst-color-admonition-default: var(--pst-color-info);
+  --pst-color-admonition-note: var(--pst-color-info);
+  --pst-color-admonition-attention: var(--pst-color-warning);
+  --pst-color-admonition-caution: var(--pst-color-warning);
+  --pst-color-admonition-warning: var(--pst-color-warning);
+  --pst-color-admonition-danger: var(--pst-color-danger);
+  --pst-color-admonition-error: var(--pst-color-danger);
+  --pst-color-admonition-hint: var(--pst-color-success);
+  --pst-color-admonition-tip: var(--pst-color-success);
+  --pst-color-admonition-important: var(--pst-color-success);
+  --pst-color-admonition-background: var(--pst-color-background);
+  --pst-color-admonition-shadow: var(--pst-color-shadow);
+
+  // viersion modified
+  --pst-color-versionmodified-default: var(--pst-color-info);
+  --pst-color-versionmodified-added: var(--pst-color-success);
+  --pst-color-versionmodified-changed: var(--pst-color-warning);
+  --pst-color-versionmodified-deprecated: var(--pst-color-danger);
+
+  // preformatted
+  --pst-color-preformatted-text: rgb(34, 34, 34);
+  --pst-color-preformatted-border: var(--pst-color-border);
+  --pst-color-preformatted-background: var(--pst-color-background-up);
+  --pst-color-preformatted-shadow: var(--pst-color-shadow);
+
+  /*****************************************************************************
+  * layout
+  */
+
+  // navbar
+  --pst-color-navbar-background: var(--pst-color-background);
+  --pst-color-navbar-link: var(--pst-color-deactivate);
+  --pst-color-navbar-link-hover: var(--pst-color-active-navigation);
+  --pst-color-navbar-link-active: var(--pst-color-active-navigation);
+
+  // toc
+  --pst-color-toc-link: var(--pst-color-deactivate);
+  --pst-color-toc-link-hover: var(--pst-color-active-navigation);
+  --pst-color-toc-link-active: var(--pst-color-active-navigation);
+  --pst-color-toc-border: var(--pst-color-border);
+
+  // sidebar
+  --pst-color-sidebar-link: var(--pst-color-deactivate);
+  --pst-color-sidebar-link-hover: var(--pst-color-active-navigation);
+  --pst-color-sidebar-link-active: var(--pst-color-active-navigation);
+  --pst-color-sidebar-expander-background-hover: var(--pst-color-background-up);
+  --pst-color-sidebar-caption: var(--pst-color-text-base);
+  --pst-color-sidebar-border: var(--pst-color-border);
+
+  // footer
+  --pst-color-footer-border: var(--pst-color-border);
+
+  // alert
+  // higher contrast of links in info boxes
+  --pst-color-alert-link: rgb(232, 62, 140);
+
+  // prev-next
+  --pst-color-prev-next: var(--pst-color-primary);
+  --pst-color-prev-next-btn: var(--pst-color-deactivate);
+
+  // search
+  --pst-color-search-background: var(--pst-color-background);
+  --pst-color-search: var(--pst-color-border);
+  --pst-color-search-border: var(--pst-color-border);
+
+  // ethical add
+  --pst-color-add-text: var(--pst-color-text-base);
+  --pst-color-add-background: var(--pst-color-background);
+  --pst-color-add-border: var(--pst-color-border);
+
+  // navbar-toogler
+  --pst-color-navbar-toggler: var(--pst-color-deactivate);
+
+  // blockquote
+  --pst-color-blockquote-border: rgb(221, 221, 221);
+}
+
+/*******************************************************************************
+* dark theme
+*
+* all the variables used for dark theme coloring
+*/
+html[data-theme="dark"] {
+  /*****************************************************************************
+  * theme colors
+  */
+
+  // main colors
+  --pst-color-primary: rgb(76, 145, 219);
+  --pst-color-success: rgb(72, 135, 87);
+  --pst-color-info: rgb(64, 125, 191);
+  --pst-color-warning: rgb(193, 162, 69);
+  --pst-color-danger: rgb(203, 70, 83);
+  --pst-color-text-base: rgb(201, 209, 217);
+  --pst-color-background: rgb(18, 18, 18);
+  --pst-color-background-up: rgb(22, 22, 22); // for 3D effect in dark theme
+  --pst-color-background-up-up: rgb(55, 55, 55); // for 3D effects
+  --pst-color-deactivate: rgb(192, 192, 192);
+  --pst-color-border: var(--pst-color-deactivate);
+  --pst-color-shadow: var(--pst-color-background);
+
+  // headers
+  --pst-color-h1: var(--pst-color-primary);
+  --pst-color-h2: var(--pst-color-primary);
+  --pst-color-h3: var(--pst-color-text-base);
+  --pst-color-h4: var(--pst-color-text-base);
+  --pst-color-h5: var(--pst-color-text-base);
+  --pst-color-h6: var(--pst-color-text-base);
+  --pst-color-paragraph: var(--pst-color-text-base);
+
+  // links
+  --pst-color-link: var(--pst-color-primary);
+  --pst-color-link-hover: rgb(170, 103, 196);
+  --pst-color-target: rgb(117, 148, 195);
+
+  // headerlinks (the anchors at the end of titles)
+  --pst-color-headerlink: rgb(221, 90, 90);
+
+  // navigation
+  --pst-color-active-navigation: var(--pst-color-primary);
+  --pst-color-deactive-navigation: var(--pst-color-deactivate);
+
+  /*****************************************************************************
+  * roles
+  */
+
+  // inline code
+  --pst-color-inline-code: rgb(221, 158, 194);
+
+  // guilabel
+  --pst-color-guilabel-background: rgb(242, 196, 166);
+  --pst-color-guilabel-border: rgb(83, 56, 38);
+  --pst-color-guilabel-text: var(--pst-color-guilabel-border);
+
+  // kbd
+  --pst-color-kbd-text: rgb(33, 37, 41);
+  --pst-color-kbd-background: rgb(245, 245, 245);
+
+  /*****************************************************************************
+  * directives
+  */
+
+  // admonitions
+  --pst-color-admonition-default: var(--pst-color-info);
+  --pst-color-admonition-note: var(--pst-color-info);
+  --pst-color-admonition-attention: var(--pst-color-warning);
+  --pst-color-admonition-caution: var(--pst-color-warning);
+  --pst-color-admonition-warning: var(--pst-color-warning);
+  --pst-color-admonition-danger: var(--pst-color-danger);
+  --pst-color-admonition-error: var(--pst-color-danger);
+  --pst-color-admonition-hint: var(--pst-color-success);
+  --pst-color-admonition-tip: var(--pst-color-success);
+  --pst-color-admonition-important: var(--pst-color-success);
+  --pst-color-admonition-background: var(--pst-color-background-up);
+  --pst-color-admonition-shadow: var(--pst-color-shadow);
+
+  // viersion modified
+  --pst-color-versionmodified-default: var(--pst-color-info);
+  --pst-color-versionmodified-added: var(--pst-color-success);
+  --pst-color-versionmodified-changed: var(--pst-color-warning);
+  --pst-color-versionmodified-deprecated: var(--pst-color-danger);
+
+  // preformatted
+  --pst-color-preformatted-text: rgb(210, 210, 210);
+  --pst-color-preformatted-border: rgb(83, 83, 83);
+  --pst-color-preformatted-background: var(--pst-color-background-up);
+  --pst-color-preformatted-shadow: var(--pst-color-shadow);
+
+  /*****************************************************************************
+  * layout
+  */
+
+  // navbar
+  --pst-color-navbar-background: var(--pst-color-background-up);
+  --pst-color-navbar-link: var(--pst-color-deactivate);
+  --pst-color-navbar-link-hover: var(--pst-color-active-navigation);
+  --pst-color-navbar-link-active: var(--pst-color-active-navigation);
+
+  // toc
+  --pst-color-toc-link: var(--pst-color-deactivate);
+  --pst-color-toc-link-hover: var(--pst-color-active-navigation);
+  --pst-color-toc-link-active: var(--pst-color-active-navigation);
+  --pst-color-toc-border: var(--pst-color-border);
+
+  // sidebar
+  --pst-color-sidebar-link: var(--pst-color-deactivate);
+  --pst-color-sidebar-link-hover: var(--pst-color-active-navigation);
+  --pst-color-sidebar-link-active: var(--pst-color-active-navigation);
+  --pst-color-sidebar-expander-background-hover: var(--pst-color-background-up);
+  --pst-color-sidebar-caption: var(--pst-color-text-base);
+  --pst-color-sidebar-border: var(--pst-color-border);
+
+  // footer
+  --pst-color-footer-border: var(--pst-color-border);
+
+  // alert
+  --pst-color-alert-link: rgb(232, 62, 140); // higher contrast of links
+
+  // prev-next
+  --pst-color-prev-next: var(--pst-color-link);
+  --pst-color-prev-next-btn: var(--pst-color-deactivate);
+
+  // search
+  --pst-color-search-background: var(--pst-color-background);
+  --pst-color-search: var(--pst-color-border);
+  --pst-color-search-border: var(--pst-color-border);
+
+  // ethical add
+  --pst-color-add-text: var(--pst-color-text-base);
+  --pst-color-add-background: var(--pst-color-background);
+  --pst-color-add-border: var(--pst-color-border);
+
+  // navbar-toogler
+  --pst-color-navbar-toggler: var(--pst-color-deactivate);
+
+  // blockquote
+  --pst-color-blockquote-border: rgb(117, 117, 117);
+
+  // specific brighness applied on images
+  img {
+    filter: brightness(0.8) contrast(1.2);
+  }
+}

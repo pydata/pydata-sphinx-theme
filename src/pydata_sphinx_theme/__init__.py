@@ -10,6 +10,8 @@ from sphinx import addnodes
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
+from pygments.formatters import HtmlFormatter
+from pygments.styles import get_all_styles
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -547,6 +549,87 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
 
 
+# ------------------------------------------------------------------------------
+# handle pygment css
+# ------------------------------------------------------------------------------
+
+# inspired by the Furo theme
+# https://github.com/pradyunsg/furo/blob/main/src/furo/__init__.py
+
+
+def _get_styles(formatter, prefix):
+    """
+    Get styles out of a formatter, where everything has the correct prefix.
+    """
+
+    for line in formatter.get_linenos_style_defs():
+        yield f"{prefix} {line}"
+    yield from formatter.get_background_style_defs(prefix)
+    yield from formatter.get_token_style_defs(prefix)
+
+
+def get_pygments_stylesheet(light_style, dark_style):
+    """
+    Generate the theme-specific pygments.css.
+    There is no way to tell Sphinx how the theme handles modes
+    """
+    light_formatter = HtmlFormatter(style=light_style)
+    dark_formatter = HtmlFormatter(style=dark_style)
+
+    lines = []
+
+    light_prefix = 'html[data-theme="light"] .highlight'
+    lines.extend(_get_styles(light_formatter, prefix=light_prefix))
+
+    dark_prefix = 'html[data-theme="dark"] .highlight'
+    lines.extend(_get_styles(dark_formatter, prefix=dark_prefix))
+
+    return "\n".join(lines)
+
+
+def _overwrite_pygments_css(app, exception=None):
+    """
+    Sphinx is not build to host multiple sphinx formatter and there is no way
+    to tell which one to use and when.
+    So yes, at build time we overwrite the pygment.css file so that it embeds
+    2 versions:
+    - the light theme prefixed with "[data-theme="light"]" using tango
+    - the dark theme prefixed with "[data-theme="dark"]" using native
+
+    When the theme is switched, Pygments will be using one of the preset css
+    style.
+    """
+    default_light_theme = "tango"
+    default_dark_theme = "native"
+
+    if exception is not None:
+        return
+
+    assert app.builder
+
+    # check the theme specified in the theme options
+    theme_options = app.config["html_theme_options"]
+    pygments_styles = list(get_all_styles())
+    light_theme = theme_options.get("pygment_light_style", default_light_theme)
+    if light_theme not in pygments_styles:
+        logger.warn(
+            f"{light_theme}, is not part of the available pygments style,"
+            f' defaulting to "{default_light_theme}".'
+        )
+        light_theme = default_light_theme
+    dark_theme = theme_options.get("pygment_dark_style", default_dark_theme)
+    if dark_theme not in pygments_styles:
+        logger.warn(
+            f"{dark_theme}, is not part of the available pygments style,"
+            f' defaulting to "{default_dark_theme}".'
+        )
+        dark_theme = default_dark_theme
+
+    pygment_css = Path(app.builder.outdir) / "_static" / "pygments.css"
+    with pygment_css.open("w") as f:
+        f.write(get_pygments_stylesheet(light_theme, dark_theme))
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -567,6 +650,7 @@ def setup(app):
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)
+    app.connect("build-finished", _overwrite_pygments_css)
 
     # Include templates for sidebar
     app.config.templates_path.append(str(theme_path / "_templates"))

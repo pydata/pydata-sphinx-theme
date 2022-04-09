@@ -16,6 +16,8 @@
 
     button.navbar-toggler {
       margin-right: 1em;
+      border-color: var(--pst-color-navbar-toggler);
+      color: var(--pst-color-navbar-toggler);
     }
   }
 
@@ -51,26 +53,74 @@
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .navbar-light {
-  background: #fff !important; // Overrides bootstrap
+  background: var(
+    --pst-color-navbar-background
+  ) !important; // Overrides bootstrap
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
     li a.nav-link {
       padding: 0 0.5rem;
-      color: rgba(var(--pst-color-navbar-link), 1);
+      color: var(--pst-color-navbar-link);
 
       &:hover {
-        color: rgba(var(--pst-color-navbar-link-hover), 1);
+        color: var(--pst-color-navbar-link-hover);
+      }
+
+      &:focus {
+        color: var(--pst-color-navbar-link-hover);
       }
     }
 
     > .active > .nav-link {
       font-weight: 600;
-      color: rgba(var(--pst-color-navbar-link-active), 1);
+      color: var(--pst-color-navbar-link-active);
     }
   }
 }
 
 .navbar-header a {
   padding: 0 15px;
+}
+
+// inline the element in the navbar as long as they fit and use display block when colapsing
+@media (min-width: 768px) {
+  .navbar-center-item {
+    display: inline-block;
+  }
+}
+
+// the icons for theme change
+#theme-switch {
+  border-color: var(--pst-color-navbar-link-hover);
+  margin-right: 0.4rem;
+
+  a {
+    color: var(--pst-color-navbar-link-hover);
+    display: none;
+  }
+
+  &:hover {
+    border-color: var(--pst-color-navbar-background);
+    background-color: var(--pst-color-navbar-link-hover);
+
+    a {
+      color: var(--pst-color-navbar-background);
+    }
+  }
+}
+
+html[data-mode="auto"] #theme-switch a[data-mode="auto"] {
+  display: block;
+}
+html[data-mode="light"] #theme-switch a[data-mode="light"] {
+  display: block;
+}
+html[data-mode="dark"] #theme-switch a[data-mode="dark"] {
+  display: block;
+}
+
+#version_switcher_button {
+  background-color: var(--pst-color-active-navigation);
+  border-color: var(--pst-color-active-navigation);
 }
