@@ -90,37 +90,19 @@
   }
 }
 
-// the icons for theme change
-#theme-switch {
-  border-color: var(--pst-color-navbar-link-hover);
-  margin-right: 0.4rem;
-
-  a {
-    color: var(--pst-color-navbar-link-hover);
-    display: none;
-  }
-
-  &:hover {
-    border-color: var(--pst-color-navbar-background);
-    background-color: var(--pst-color-navbar-link-hover);
-
-    a {
-      color: var(--pst-color-navbar-background);
-    }
-  }
+.toc-entry > .nav-link.active {
+  font-weight: 600;
+  color: var(--pst-color-toc-link-active);
+  background-color: transparent;
+  border-left: 2px solid var(--pst-color-toc-link-active);
 }
 
-html[data-mode="auto"] #theme-switch a[data-mode="auto"] {
-  display: block;
-}
-html[data-mode="light"] #theme-switch a[data-mode="light"] {
-  display: block;
-}
-html[data-mode="dark"] #theme-switch a[data-mode="dark"] {
-  display: block;
+.nav-link:hover {
+  border-style: none;
 }
 
-#version_switcher_button {
-  background-color: var(--pst-color-active-navigation);
-  border-color: var(--pst-color-active-navigation);
+#navbar-main-elements li.nav-item i {
+  font-size: 0.7rem;
+  padding-left: 2px;
+  vertical-align: middle;
 }

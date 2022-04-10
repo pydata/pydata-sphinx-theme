@@ -92,3 +92,13 @@ table.field-list {
 dt:target {
   background-color: var(--pst-color-target);
 }
+
+.viewcode-back {
+  font-family: var(--pst-font-family-base);
+}
+
+.viewcode-block:target {
+  background-color: #f4debf;
+  border-top: 1px solid #ac9;
+  border-bottom: 1px solid #ac9;
+}

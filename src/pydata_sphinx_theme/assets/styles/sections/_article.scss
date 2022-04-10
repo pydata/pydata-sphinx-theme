@@ -1,0 +1,16 @@
+/**
+ * Main content area
+ */
+.bd-content {
+  padding-top: 20px;
+
+  .section {
+    max-width: 100%;
+
+    // make every overflowing elements in main content scrollable
+    table {
+      display: block;
+      overflow: auto;
+    }
+  }
+}
