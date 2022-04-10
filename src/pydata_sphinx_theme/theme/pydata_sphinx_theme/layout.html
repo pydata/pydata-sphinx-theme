@@ -76,7 +76,7 @@
           {% else %}
             {#- No sidebar, so show the TOC on md screens and use more width for content. -#}
             {% set content_xl_width = "col-xl-8" %}
-            {% set toc_show_width = "xl" %}
+            {% set toc_show_width = "md" %}
           {%- endif -%}
 
           <div class="d-none d-{{ toc_show_width }}-block col-{{ toc_show_width }}-2 bd-toc">          
