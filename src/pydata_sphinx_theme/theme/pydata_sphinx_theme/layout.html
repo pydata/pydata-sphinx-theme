@@ -68,13 +68,14 @@
           {% endblock %}
 
           {% block docs_toc %}
-          {#- if there's a sidebar, we have less horizontal space. -#}
-          {#- so only show the TOC on xl screens and use narrower width for content. -#}
+          {# Define content / TOC behavior depending on whether we have sidebars #}
           {%- if sidebars -%}
+            {#- Sidebar == less horizontal space, so only show TOC on xl screens and use narrower width for content. -#}
             {% set content_xl_width = "col-xl-7" %}
             {% set toc_show_width = "xl" %}
           {% else %}
-            {% set content_xl_width = "col-xl-7" %}
+            {#- No sidebar, so show the TOC on md screens and use more width for content. -#}
+            {% set content_xl_width = "col-xl-8" %}
             {% set toc_show_width = "xl" %}
           {%- endif -%}
 
