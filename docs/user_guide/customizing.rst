@@ -72,6 +72,23 @@ In order to customize the display of any of the theme element you need to encasp
 
 A complete list of the used colors for this theme can be found in the `pydata default css colors file <pydata-css-colors_>`__.
 
+If you need to react to theme changes, you can do so with JavaScript. For example, to change an image source (e.g., logo) whenever
+the ``data-theme`` changes, a snippet like this can be used:
+
+.. code-block:: html
+
+    <script type="text/javascript">
+      var observer = new MutationObserver(function(mutations) {
+        const dark = document.documentElement.dataset.theme == 'dark';
+        document.getElementById('logo')[0].src = dark ? '_static/my_logo_dark.svg' : "_static/my_logo_light.svg";
+      })
+      observer.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+    </script>
+    <link rel="preload" href="_static/my_logo_dark.svg" as="image">
+    <img src="_static/my_logo_light.svg" id="logo">
+
+The JavaScript reacts to ``data-theme`` changes to alter ``img``, and the ``link`` is used to preload the dark image.
+
 .. _css-variables:
 
 CSS Theme variables
