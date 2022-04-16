@@ -545,7 +545,7 @@ nav.bd-links {
   flex-direction: column;
 
   @include media-breakpoint-up(md) {
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid var(--pst-color-sidebar-border);
 
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
