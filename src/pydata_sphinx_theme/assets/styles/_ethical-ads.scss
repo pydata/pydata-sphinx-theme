@@ -1,21 +1,23 @@
 // adapt ethical ad to the theme
-.ethical-sidebar a,
-.ethical-sidebar a:visited,
-.ethical-sidebar a:hover,
-.ethical-sidebar a:active,
-.ethical-footer a,
-.ethical-footer a:visited,
-.ethical-footer a:hover,
-.ethical-footer a:active {
-  color: var(--pst-color-ad-text);
-}
+#ethical-ad-placement {
+  .ethical-sidebar a,
+  .ethical-sidebar a:visited,
+  .ethical-sidebar a:hover,
+  .ethical-sidebar a:active,
+  .ethical-footer a,
+  .ethical-footer a:visited,
+  .ethical-footer a:hover,
+  .ethical-footer a:active {
+    color: var(--pst-color-ad-text);
+  }
 
-.ethical-sidebar,
-.ethical-footer {
-  background-color: var(--pst-color-ad-background);
-  border: 1px solid var(--pst-color-ad-border);
-  border-radius: 5px;
-  color: var(--pst-color-ad-text);
-  font-size: 14px;
-  line-height: 20px;
+  .ethical-sidebar,
+  .ethical-footer {
+    background-color: var(--pst-color-ad-background);
+    border: 1px solid var(--pst-color-ad-border);
+    border-radius: 5px;
+    color: var(--pst-color-ad-text);
+    font-size: 14px;
+    line-height: 20px;
+  }
 }
