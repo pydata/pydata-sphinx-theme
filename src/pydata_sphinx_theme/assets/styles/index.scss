@@ -121,6 +121,7 @@ footer {
     border-radius: 0.2rem;
     border: 1px solid var(--pst-color-search-border);
     padding-left: 35px;
+    color: var(--pst-color-text-base);
 
     // Inner-text of the search bar
     &::placeholder {
@@ -131,6 +132,7 @@ footer {
     &:active,
     &:focus {
       background-color: var(--pst-color-search-background);
+      color: var(--pst-color-search);
     }
   }
 }
