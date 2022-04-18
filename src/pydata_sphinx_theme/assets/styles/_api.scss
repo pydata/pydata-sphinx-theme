@@ -89,6 +89,7 @@ table.field-list {
 }
 
 // change target color for dark theme
-dt:target {
+dt:target,
+span.highlighted {
   background-color: var(--pst-color-target);
 }
