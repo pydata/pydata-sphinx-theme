@@ -100,6 +100,16 @@ footer {
   .footer-item p {
     margin-bottom: 0;
   }
+  
+  .footer-item {
+    display: inline-block;
+  }
+
+  .footer-item:not(:last-child) {
+    border-right: 1px solid var(--pst-color-footer-border);
+    margin-right: .5em;
+    padding-right: .5em;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
