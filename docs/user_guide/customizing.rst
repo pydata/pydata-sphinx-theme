@@ -85,17 +85,23 @@ You can define a JavaScript event hook that will run your code any time the them
 This is useful if you need to change elements of your page that cannot be defined by CSS rules.
 For example, to change an image source (e.g., logo) whenever the ``data-theme`` changes, a snippet like this can be used:
 
-.. code-block:: html
+.. code-block:: rst
+
+  .. raw:: html
 
     <script type="text/javascript">
       var observer = new MutationObserver(function(mutations) {
         const dark = document.documentElement.dataset.theme == 'dark';
-        document.getElementById('logo')[0].src = dark ? '_static/my_logo_dark.svg' : "_static/my_logo_light.svg";
+        document.getElementsByClassName('mainlogo')[0].src = dark ? '_static/my_logo_dark.svg' : "_static/my_logo_light.svg";
       })
       observer.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
     </script>
     <link rel="preload" href="_static/my_logo_dark.svg" as="image">
-    <img src="_static/my_logo_light.svg" id="logo">
+
+  .. image:: _static/my_logo_light.svg
+     :alt: My Logo
+     :class: logo, mainlogo
+     :align: center
 
 The JavaScript reacts to ``data-theme`` changes to alter ``img``, and the ``link`` is used to preload the dark image.
 See the `MutationObserver documentation <https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver>`_ for more information.
