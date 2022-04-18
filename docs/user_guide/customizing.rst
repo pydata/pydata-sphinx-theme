@@ -39,20 +39,26 @@ When you build your documentation, this stylesheet should now be activated.
 
 .. _manage-themes:
 
-Manage themes
-=============
+Manage light and dark themes
+============================
+
+You can change the major background / foreground colors of this theme according to "dark" and "light" modes.
+These are controlled by a button in the navigation header, with the following options:
+
+- A ``light`` theme with a bright background and dark text / UI elements
+- A ``dark`` theme with a dark background and light text / UI elements
+- ``auto``: the documentation theme will follow the system default that you have set
+
+Customize the CSS of light and dark themes
+------------------------------------------
 
 .. danger::
 
     Theming is still a beta feature so the variables related to the theme switch are likely to change in the future. No backward compatibily is guaranteed when customization is done.
 
-Pydata sphinx theme embed 3 different theming mode:
 
-- ``auto``: the documentation theme will follow the one provided by your computer
-- ``dark``: the documentation is displayed with the dark theme
-- ``light``: the documentation is displayed with the light theme
-
-In order to customize the display of any of the theme element you need to encaspulate your modifications in the approriate css rules:
+To customize the CSS of page elements in a theme-dependent manner, use the ``html[data-theme='<THEME>']`` CSS selector.
+For example to define a different background color for both the light and dark themes:
 
 .. code-block:: css
 
@@ -72,8 +78,12 @@ In order to customize the display of any of the theme element you need to encasp
 
 A complete list of the used colors for this theme can be found in the `pydata default css colors file <pydata-css-colors_>`__.
 
-If you need to react to theme changes, you can do so with JavaScript. For example, to change an image source (e.g., logo) whenever
-the ``data-theme`` changes, a snippet like this can be used:
+Define custom JavaScript to react to theme changes
+--------------------------------------------------
+
+You can define a JavaScript event hook that will run your code any time the theme changes.
+This is useful if you need to change elements of your page that cannot be defined by CSS rules.
+For example, to change an image source (e.g., logo) whenever the ``data-theme`` changes, a snippet like this can be used:
 
 .. code-block:: html
 
@@ -88,6 +98,7 @@ the ``data-theme`` changes, a snippet like this can be used:
     <img src="_static/my_logo_light.svg" id="logo">
 
 The JavaScript reacts to ``data-theme`` changes to alter ``img``, and the ``link`` is used to preload the dark image.
+See the `MutationObserver documentation <https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver>`_ for more information.
 
 .. _css-variables:
 
