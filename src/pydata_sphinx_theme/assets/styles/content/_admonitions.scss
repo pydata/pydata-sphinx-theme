@@ -195,3 +195,19 @@ div.admonition,
     }
   }
 }
+
+// Similar content blocks that are not technically admonitions.
+.topic {
+  background-color: var(--pst-color-background-up);
+  border-color: var(--pst-color-border);
+}
+
+aside.sidebar {
+  background-color: var(--pst-color-background-up-up);
+  border-color: var(--pst-color-border);
+}
+
+.seealso dd {
+  margin-top: 0;
+  margin-bottom: 0;
+}
