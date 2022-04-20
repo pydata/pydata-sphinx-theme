@@ -43,6 +43,8 @@ The theme mode can be changed by the user. By default landing on the documentati
       "default_mode": "auto"
    }
 
+For more information, see :ref:`manage-themes`.
+
 Configure pygment theme
 =======================
 
@@ -50,7 +52,7 @@ As the Sphinx theme supports multiple modes, the code highlighting colors can be
 
 .. code-block:: python
 
-   html_contexts = {
+   html_context = {
       ...
       "pygment_light_style": "tango",
       "pygment_dark_style": "native"
