@@ -69,7 +69,18 @@
           {% endblock %}
 
           {% block docs_toc %}
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
+          {# Define content / TOC behavior depending on whether we have sidebars #}
+          {%- if sidebars -%}
+            {#- Sidebar == less horizontal space, so only show TOC on xl screens and use narrower width for content. -#}
+            {% set content_xl_width = "col-xl-7" %}
+            {% set toc_show_width = "xl" %}
+          {% else %}
+            {#- No sidebar, so show the TOC on md screens and use more width for content. -#}
+            {% set content_xl_width = "col-xl-8" %}
+            {% set toc_show_width = "md" %}
+          {%- endif -%}
+
+          <div class="d-none d-{{ toc_show_width }}-block col-{{ toc_show_width }}-2 bd-toc">
             {% if meta is defined and not (meta is not none and 'notoc' in meta) %}
               {% for toc_item in theme_page_sidebar_items %}
               <div class="toc-item">
@@ -81,12 +92,7 @@
           {% endblock %}
 
           {% block docs_main %}
-          {% if sidebars %}
-            {% set content_col_class = "col-md-9 col-xl-7" %}
-          {% else %}
-            {% set content_col_class = "col-md-11 col-xl-8" %}
-          {% endif %}
-          <main class="col-12 {{ content_col_class }} py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <main class="col-12 col-md-9 {{ content_xl_width }} py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
               {% block docs_body %}
               <div>
                 {% block body %} {% endblock %}
