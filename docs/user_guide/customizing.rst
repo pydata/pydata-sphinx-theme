@@ -146,23 +146,28 @@ For a complete list of the theme variables that you may override, see the
 Change footer display
 =====================
 
-By design, the footer of pydata-sphynx-theme is displayed as blocks to make it as customizable as possible.
-You can add in your custom .css new styling rules to change it. In this example, the footer will be displayed inlined with a pipe ("|") between each widget.
+Each footer element is wrapped in a ``<div>`` with a ``footer-item`` class, allowing you to style the structure of these items with custom CSS.
+
+For example, by default the footer items are displayed as blocks that stack vertically.
+To change this behavior so that they stack **horizontally**, add a rule like the following in your custom ``.css`` file.
 
 .. code-block:: css
 
-  /*********************************************************************************
-   *  make the footer inlined
-   *
-   **/
-  .footer-item {
-    display: inline-block;
-  }
-  .footer-item:not(:last-child) {
-    border-right: 1px solid var(--pst-color-text-base);
-    margin-right: .5em;
-    padding-right: .5em;
-  }
+   /*********************************************************************************
+    *  make the footer inline
+    *
+    */
+   // Make each footer item in-line so they stack horizontally instead of vertically
+   .footer-item {
+     display: inline-block;
+   }
+ 
+   // Add a separating border line for all but the last item
+   .footer-item:not(:last-child) {
+     border-right: 1px solid var(--pst-color-text-base);
+     margin-right: .5em;
+     padding-right: .5em;
+   }
 
 Replacing/Removing Fonts
 ========================
