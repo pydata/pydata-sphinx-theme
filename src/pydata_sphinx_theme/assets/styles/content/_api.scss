@@ -99,7 +99,7 @@ span.highlighted {
 }
 
 .viewcode-block:target {
-  background-color: #f4debf;
-  border-top: 1px solid #ac9;
-  border-bottom: 1px solid #ac9;
+  background-color: var(--pst-color-viewcode-target-background);
+  border-top: 1px solid var(--pst-color-viewcode-target-border);
+  border-bottom: 1px solid var(--pst-color-viewcode-target-border);
 }
