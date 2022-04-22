@@ -18,6 +18,9 @@ $grid-breakpoints: (
 );
 @import "~bootstrap/scss/bootstrap";
 
+// Variables and re-usable SCSS functions
+@import "abstracts/mixins";
+
 // Basic styling applied throughout site
 @import "./base/base";
 @import "./base/color";
