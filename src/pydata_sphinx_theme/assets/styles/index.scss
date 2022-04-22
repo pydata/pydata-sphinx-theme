@@ -24,7 +24,6 @@ $grid-breakpoints: (
 // Basic styling applied throughout site
 @import "./base/base";
 @import "./base/color";
-@import "./base/mixins";
 
 // Major theme layout, skeleton, and whitespace
 @import "./sections/article";
