@@ -89,6 +89,10 @@ html[data-theme="light"] {
   --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
 
+  // targeted viewcode
+  --pst-color-viewcode-target-border: rgb(170, 204, 153);
+  --pst-color-viewcode-target-background: rgb(244, 222, 191);
+
   /*****************************************************************************
   * layout
   */
@@ -231,6 +235,10 @@ html[data-theme="dark"] {
   --pst-color-preformatted-border: rgb(83, 83, 83);
   --pst-color-preformatted-background: var(--pst-color-background-up);
   --pst-color-preformatted-shadow: var(--pst-color-shadow);
+
+  // targeted viewcode
+  --pst-color-viewcode-target-border: rgb(170, 204, 153);
+  --pst-color-viewcode-target-background: rgb(35, 55, 83);
 
   /*****************************************************************************
   * layout
