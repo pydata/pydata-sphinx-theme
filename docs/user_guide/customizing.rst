@@ -143,6 +143,26 @@ For a complete list of the theme variables that you may override, see the
 .. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
   :language: CSS
 
+Change footer display
+=====================
+
+By design, the footer of pydata-sphynx-theme is displayed as blocks to make it as customizable as possible.
+You can add in your custom .css new styling rules to change it. In this example, the footer will be displayed inlined with a pipe ("|") between each widget.
+
+.. code-block:: css
+
+  /*********************************************************************************
+   *  make the footer inlined
+   *
+   **/
+  .footer-item {
+    display: inline-block;
+  }
+  .footer-item:not(:last-child) {
+    border-right: 1px solid var(--pst-color-text-base);
+    margin-right: .5em;
+    padding-right: .5em;
+  }
 
 Replacing/Removing Fonts
 ========================
