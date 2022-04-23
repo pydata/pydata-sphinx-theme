@@ -1,4 +1,5 @@
 .card {
+  background-color: var(--pst-color-background-up);
   border: 1px solid var(--pst-color-border);
 
   // important to overrride the one from panel lib (which is already important
