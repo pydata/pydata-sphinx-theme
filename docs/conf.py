@@ -38,7 +38,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinxext.rediraffe",
-    "sphinx_panels",
+    "sphinx_design",
     "sphinx.ext.viewcode",
 ]
 

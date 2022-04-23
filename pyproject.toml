@@ -52,7 +52,7 @@ doc = [
   "plotly",
   "numpy",
   "xarray",
-  "sphinx-panels",
+  "sphinx-design",
 ]
 test = [
   "pytest",

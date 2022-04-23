@@ -1,100 +1,94 @@
-.. INSPIRED FROM sphinx-panel documentation
+.. INSPIRED FROM sphinx-design documentation
 
-sphinx-Panels
+sphinx-design
 =============
 
 .. danger::
 
-    Panels are a key functionality in many documentations depending on pydata-sphinx-theme.
-    We overrided some of their fonctionalities to make them compatible with our supported themes. To use panels in your documentation, please refer to the `lib documentation <https://sphinx-panels.readthedocs.io/en/latest/#>`__.
+    Cards are a key functionality in many documentations depending on pydata-sphinx-theme.
+    We overrided some of their fonctionalities to make them compatible with our supported themes. To use panels in your documentation, please refer to the `lib documentation <https://sphinx-design.readthedocs.io/en/sbt-theme/index.html>`__.
 
-Here you can find some examples of the **panels** and **tabs** created by the :code:`sphinx-panel` extention.
+Here you can find some examples of the **cards** and **tabs** created by the :code:`sphinx-panel` extention.
 
-Panels
-------
+Cards
+-----
 
-.. panels::
+.. grid::
 
-    Content of the top-left panel
+    .. grid-item-card:: Content of the top-left card
 
-    ---
+    .. grid-item-card:: Content of the top-right card
 
-    Content of the top-right panel
+        :badge:`example,badge-primary`
 
-    :badge:`example,badge-primary`
+    .. grid-item-card::
 
-    ---
+        .. dropdown:: :fa:`eye,mr-1` Bottom-left card
 
-    .. dropdown:: :fa:`eye,mr-1` Bottom-left panel
+            Hidden content
 
-        Hidden content
+    .. grid-item-card:: Clickable Card
+        :link: https://example.com
 
-    ---
+.. grid::
 
-    .. link-button:: https://example.com
-        :text: Clickable Panel
-        :classes: stretched-link
+    .. grid-item-card::
 
-.. panels::
+        panel 1 header
+        ^^^^^^^^^^^^^^
+        panel 1 content
+        more content
+        ++++++++++++++
+        panel 1 footer
 
-    panel 1 header
-    ^^^^^^^^^^^^^^
+    .. grid-item-card::
 
-    panel 1 content
-
-    more content
-
-    ++++++++++++++
-    panel 1 footer
-
-    ---
-
-    panel 2 header
-    ^^^^^^^^^^^^^^
-
-    panel 2 content
-
-    ++++++++++++++
-    panel 2 footer
+        panel 2 header
+        ^^^^^^^^^^^^^^
+        panel 2 content
+        ++++++++++++++
+        panel 2 footer
 
 
 Tabs
 ----
 
-.. tabbed:: c++
+.. tab-set::
 
-    .. code-block:: c++
+    .. tab-item:: c++
 
-        int main(const int argc, const char **argv) {
-          return 0;
-        }
+        .. code-block:: c++
 
-.. tabbed:: python
-
-    .. code-block:: python
-
-        def main():
-            return
-
-.. tabbed:: java
-
-    .. code-block:: java
-
-        class Main {
-            public static void main(String[] args) {
+            int main(const int argc, const char **argv) {
+                return 0;
             }
-        }
 
-.. tabbed:: julia
+    .. tab-item:: python
 
-    .. code-block:: julia
+        .. code-block:: python
 
-        function main()
-        end
+            def main():
+                return
 
-.. tabbed:: fortran
+    .. tab-item:: java
 
-    .. code-block:: fortran
+        .. code-block:: java
 
-        PROGRAM main
-        END PROGRAM main
+            class Main {
+                public static void main(String[] args) {
+                }
+            }
+
+    .. tab-item:: julia
+
+        .. code-block:: julia
+
+            function main()
+            end
+
+    .. tab-item:: fortran
+
+        .. code-block:: fortran
+
+            PROGRAM main
+            END PROGRAM main
