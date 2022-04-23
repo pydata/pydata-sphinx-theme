@@ -1,9 +1,11 @@
 // Tabbed block container
 .tabbed-set {
-  // Active tab label
-  &:checked + label {
-    border-color: var(--pst-color-active-navigation) !important;
-    color: var(--pst-color-active-navigation) !important;
+  > input {
+    // Active tab label
+    &:checked + label {
+      border-color: var(--pst-color-active-navigation) !important;
+      color: var(--pst-color-active-navigation) !important;
+    }
   }
 
   // Tab label
