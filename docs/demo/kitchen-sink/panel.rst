@@ -15,19 +15,19 @@ Cards
 
 .. grid::
 
-    .. grid-item-card:: Content of the top-left card
+    .. grid-item-card:: Content of the first card
 
-    .. grid-item-card:: Content of the top-right card
+    .. grid-item-card:: Content of the second card
 
         :badge:`example,badge-primary`
 
     .. grid-item-card::
 
-        .. dropdown:: :fa:`eye,mr-1` Bottom-left card
+        .. dropdown:: :fa:`eye,mr-1` third card
 
             Hidden content
 
-    .. grid-item-card:: Clickable Card
+    .. grid-item-card:: Clickable  fourth Card
         :link: https://example.com
 
 .. grid::

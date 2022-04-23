@@ -1,21 +1,23 @@
-.card {
+.sd-card {
   border: 1px solid var(--pst-color-border);
 
-  // important to overrride the one from panel lib (which is already important
-  &.shadow {
-    box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
+  &.sd-shadow-xs,
+  .sd-shadow-sm,
+  .sd-shadow-md,
+  .sd-shadow-lg {
+    box-shadow: 0 0.5rem 1rem var(--pst-color-shadow);
   }
 
-  .card-header {
+  .sd-card-header {
     background-color: var(--pst-color-background-up-up);
     border-bottom: 1px solid var(--pst-color-border);
   }
-  .card-footer {
+  .sd-card-footer {
     background-color: var(--pst-color-background-up-up);
     border-top: 1px solid var(--pst-color-border);
   }
 
-  .card-body {
+  .sd-card-body {
     background-color: var(--pst-color-background-up);
   }
 }
