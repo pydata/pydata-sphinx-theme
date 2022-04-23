@@ -153,15 +153,11 @@ To change this behavior so that they stack **horizontally**, add a rule like the
 
 .. code-block:: css
 
-   /*********************************************************************************
-    *  make the footer inline
-    *
-    */
    // Make each footer item in-line so they stack horizontally instead of vertically
    .footer-item {
      display: inline-block;
    }
- 
+
    // Add a separating border line for all but the last item
    .footer-item:not(:last-child) {
      border-right: 1px solid var(--pst-color-text-base);
