@@ -1,0 +1,18 @@
+// Tabbed block container
+.tabbed-set {
+  // Active tab label
+  &:checked + label {
+    border-color: var(--pst-color-active-navigation);
+    color: var(--pst-color-active-navigation);
+  }
+
+  // Tab label
+  > label {
+    color: var(--pst-color-deactive-navigation);
+
+    // Hovered label
+    html &:hover {
+      color: var(--pst-color-active-navigation);
+    }
+  }
+}
