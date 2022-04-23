@@ -1,0 +1,13 @@
+.card {
+  border-color: var(--pst-color-background-up);
+
+  // important to overrride the one from panel lib (which is already important
+  &.shadow {
+    box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
+  }
+
+  .card-header,
+  .card-footer {
+    background-color: var(--pst-color-background-up-up);
+  }
+}
