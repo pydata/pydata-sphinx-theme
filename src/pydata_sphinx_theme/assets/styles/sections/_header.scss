@@ -19,6 +19,17 @@
       border-color: var(--pst-color-navbar-toggler);
       color: var(--pst-color-navbar-toggler);
     }
+
+    #navbar-end {
+      margin-bottom: 0.5em;
+    }
+
+    #navbar-center,
+    #navbar-end {
+      > * {
+        margin-top: 0.5em;
+      }
+    }
   }
 
   @include media-breakpoint-up(lg) {
@@ -84,7 +95,7 @@
 }
 
 // inline the element in the navbar as long as they fit and use display block when colapsing
-@media (min-width: 768px) {
+@include media-breakpoint-up(md) {
   .navbar-center-item {
     display: inline-block;
   }
