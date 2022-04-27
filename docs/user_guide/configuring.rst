@@ -130,7 +130,7 @@ Here are several examples:
            },
            {
                "name": "Mastodon",
-               "url": "<your-handle>",
+               "url": "https://<your-host>@<your-handle>",
                "icon": "fab fa-mastodon",
            },
        ],
@@ -212,7 +212,6 @@ These may be removed in a future release in favor of ``icon_links``:
        "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
        "bitbucket_url": "https://bitbucket.org/<your-org>/<your-repo>",
        "twitter_url": "https://twitter.com/<your-handle>",
-       "mastodon_url": "<your-handle>",
        ...
    }
 
