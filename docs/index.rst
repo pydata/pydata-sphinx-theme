@@ -9,10 +9,15 @@ It puts all top-level pages in your ``toctree`` into the header navigation bar.
 The sidebar will be populated with second-level pages when a top-level page is active.
 This allows you to group your documentation into sub-sections without cluttering the sidebar.
 
+.. seealso::
+
+   If you are looking for a Sphinx theme that puts all of its sub-pages in the sidebar, the `Sphinx Book Theme <https://sphinx-book-theme.readthedocs.io/>`_ has a similar look and feel, and `Furo <https://pradyunsg.me/furo/quickstart/>`_ is another excellent choice.
+
 This site is a guide for using the theme, and a demonstration for how it looks with various
 elements.
 
-Other sites that are using this theme:
+Sites that use this theme
+=========================
 
 .. SORTED ALPHABETICALLY
 
