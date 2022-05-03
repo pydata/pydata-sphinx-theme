@@ -768,13 +768,13 @@ following configuration to your ``conf.py`` file:
 Google Analytics
 ================
 
-If the ``google_analytics_id`` config option is specified (like ``UA-XXXXXXX``),
+If the ``google_analytics_id`` config option is specified (like ``G-XXXXXXXXXX``),
 Google Analytics' javascript is included in the html pages.
 
 .. code:: python
 
    html_theme_options = {
-       "google_analytics_id": "UA-XXXXXXX",
+       "google_analytics_id": "G-XXXXXXXXXX",
    }
 
 
