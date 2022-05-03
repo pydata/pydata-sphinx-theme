@@ -38,6 +38,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinxext.rediraffe",
+    "sphinx.ext.viewcode",
 ]
 
 # -- Internationalization ------------------------------------------------
