@@ -3,7 +3,7 @@
 Web components
 ==============
 
-Cards and tabs are a key functionalities in many documentations depending on pydata-sphinx-theme. Both `sphinx-design <>`__ and `sphinx-panels <>`__ can be used with this theme. We overwrote some of their display features to make them compatible with our supported themes. For usage, please refer to their documentations.
+Cards and tabs are a key functionalities in many documentations depending on pydata-sphinx-theme. Both `sphinx-design <https://sphinx-design.readthedocs.io/en/latest/index.html>`__ and `sphinx-panels <https://sphinx-panels.readthedocs.io/en/latest/>`__ can be used with this theme. We overwrote some of their display features to make them compatible with our supported themes. For usage, please refer to their documentations.
 
 .. danger::
 
