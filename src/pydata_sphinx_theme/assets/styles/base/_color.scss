@@ -94,6 +94,12 @@ html[data-theme="light"] {
   --pst-color-viewcode-target-background: rgb(244, 222, 191);
 
   /*****************************************************************************
+  * extentions
+  */
+
+  --pst-color-panel-background: var(--pst-color-background);
+
+  /*****************************************************************************
   * layout
   */
 
@@ -239,6 +245,12 @@ html[data-theme="dark"] {
   // targeted viewcode
   --pst-color-viewcode-target-border: rgb(170, 204, 153);
   --pst-color-viewcode-target-background: rgb(35, 55, 83);
+
+  /*****************************************************************************
+  * extentions
+  */
+
+  --pst-color-panel-background: var(--pst-color-background-up);
 
   /*****************************************************************************
   * layout

@@ -8,7 +8,7 @@ sphinx-design
     Cards are a key functionality in many documentations depending on pydata-sphinx-theme.
     We overrided some of their fonctionalities to make them compatible with our supported themes. To use panels in your documentation, please refer to the `lib documentation <https://sphinx-design.readthedocs.io/en/sbt-theme/index.html>`__.
 
-Here you can find some examples of the **cards** and **tabs** created by the :code:`sphinx-panel` extention.
+Here you can find some examples of the **cards** and **tabs** created by the :code:`sphinx-design` extention.
 
 Cards
 -----
@@ -19,7 +19,7 @@ Cards
 
     .. grid-item-card:: Content of the second card
 
-        :badge:`example,badge-primary`
+        :bdg-primary:`example`
 
     .. grid-item-card::
 

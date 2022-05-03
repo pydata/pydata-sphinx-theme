@@ -37,8 +37,6 @@ $grid-breakpoints: (
 @import "./components/switcher-version";
 @import "./components/toc-inpage";
 @import "./components/versionmodified";
-@import "./components/panel";
-@import "./components/tab";
 
 // Content blocks in standard Sphinx
 @import "./content/admonitions";
@@ -54,6 +52,7 @@ $grid-breakpoints: (
 @import "./extensions/bootstrap";
 @import "./extensions/ethical-ads";
 @import "./extensions/pydata";
+@import "./extensions/sphinx_design";
 
 // Page-specific CSS
 @import "./pages/search";

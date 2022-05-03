@@ -1,0 +1,61 @@
+/**
+ * Special-cases for the sphinx-design lib
+ * Mainly to make it compatible with the multime themes supported by pydata-sphinx-theme
+ */
+
+/*******************************************************************************
+ * shadows
+ */
+.sd-shadow-xs,
+.sd-shadow-sm,
+.sd-shadow-md,
+.sd-shadow-lg {
+  box-shadow: 0 0.5rem 1rem var(--pst-color-shadow);
+}
+
+/*******************************************************************************
+ * cards
+ */
+
+.sd-card {
+  border: 1px solid var(--pst-color-border) !important;
+
+  .sd-card-header {
+    background-color: var(--pst-color-panel-background);
+    border-bottom: 1px solid var(--pst-color-border);
+  }
+  .sd-card-footer {
+    background-color: var(--pst-color-panel-background);
+    border-top: 1px solid var(--pst-color-border);
+  }
+
+  .sd-card-body {
+    background-color: var(--pst-color-panel-background);
+  }
+}
+
+/*******************************************************************************
+ * tabs
+ */
+
+.sd-tab-set {
+  > input {
+    // Active tab label
+    &:checked + label {
+      border-color: var(--pst-color-active-navigation) !important;
+      color: var(--pst-color-active-navigation) !important;
+    }
+  }
+
+  // Tab label
+  > label {
+    color: var(--pst-color-deactive-navigation) !important;
+
+    // Hovered label
+    html &:hover {
+      color: var(--pst-color-active-navigation) !important;
+      border-color: var(--pst-color-active-navigation) !important;
+      opacity: 0.5;
+    }
+  }
+}
