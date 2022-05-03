@@ -31,6 +31,7 @@ $grid-breakpoints: (
 
 // Re-usable components across the theme
 @import "./components/icon-links";
+@import "./components/header/header-logo";
 @import "./components/prev-next";
 @import "./components/search";
 @import "./components/switcher-theme";
