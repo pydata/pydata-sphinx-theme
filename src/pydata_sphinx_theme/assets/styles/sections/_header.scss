@@ -53,9 +53,6 @@
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .navbar-light {
-  background: var(
-    --pst-color-navbar-background
-  ) !important; // Overrides bootstrap
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
@@ -77,6 +74,11 @@
       color: var(--pst-color-navbar-link-active);
     }
   }
+}
+
+// overwrite bootstrap coloring
+#navbar-main {
+  background-color: var(--pst-color-navbar-background) !important;
 }
 
 .navbar-header a {

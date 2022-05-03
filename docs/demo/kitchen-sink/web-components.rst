@@ -1,14 +1,24 @@
 .. INSPIRED FROM sphinx-design documentation
 
-sphinx-design
-=============
+Web components
+==============
+
+Cards and tabs are a key functionalities in many documentations depending on pydata-sphinx-theme. Both `sphinx-design <>`__ and `sphinx-panels <>`__ can be used with this theme. We overwrote some of their display features to make them compatible with our supported themes. For usage, please refer to their documentations.
 
 .. danger::
 
-    Cards are a key functionality in many documentations depending on pydata-sphinx-theme.
-    We overrided some of their fonctionalities to make them compatible with our supported themes. To use panels in your documentation, please refer to the `lib documentation <https://sphinx-design.readthedocs.io/en/sbt-theme/index.html>`__.
+    To use the :code:`sphinx-panels` extention, you need to integrate theses lines to overwrite the shadows of the panels in your custom :code:`.css` file:
 
-Here you can find some examples of the **cards** and **tabs** created by the :code:`sphinx-design` extention.
+    .. code-block:: css
+
+        /* overwrite panels shadows using pydata-sphinx-theme variable */
+        .shadow {
+            box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
+        }
+
+    This modification is not needed when using the :code:`sphinx-design` extention.
+
+Here you can find some examples of the **cards** and **tabs** created with the :code:`sphinx-design` extention.
 
 Cards
 -----

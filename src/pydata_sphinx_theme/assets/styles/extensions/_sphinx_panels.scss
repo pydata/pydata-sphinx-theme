@@ -1,0 +1,61 @@
+/**
+ * Special-cases for the sphinx-panels lib
+ * Mainly to make it compatible with the multime themes supported by pydata-sphinx-theme
+ */
+
+/*******************************************************************************
+ * sphinx-panels includes Bootstrap 4, which uses .container which can conflict
+ * with docutils' `.. container::` directive.
+ */
+.container[role="main"] {
+  max-width: initial;
+  padding-left: initial;
+  padding-right: initial;
+}
+
+/*******************************************************************************
+ * cards
+ */
+
+.sphinx-bs .card {
+  border: 1px solid var(--pst-color-border);
+  background-color: var(--pst-color-panel-background);
+
+  .card-header {
+    border-bottom: 1px solid var(--pst-color-border);
+  }
+
+  .card-footer {
+    border-top: 1px solid var(--pst-color-border);
+  }
+}
+
+/*******************************************************************************
+ * tabs
+ */
+
+.tabbed-set {
+  > input {
+    // Active tab label
+    &:checked + label {
+      border-color: var(--pst-color-active-navigation) !important;
+      color: var(--pst-color-active-navigation) !important;
+    }
+  }
+
+  // Tab label
+  > label {
+    color: var(--pst-color-deactive-navigation) !important;
+
+    // Hovered label
+    html &:hover {
+      color: var(--pst-color-active-navigation) !important;
+      border-color: var(--pst-color-active-navigation) !important;
+      opacity: 0.5;
+    }
+  }
+
+  > .tabbed-content {
+    border-color: var(pst-color-border) !important;
+  }
+}
