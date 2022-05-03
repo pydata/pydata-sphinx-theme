@@ -11,11 +11,14 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--pst-color-background);
+    background: var(--pst-color-deactivate);
     border-radius: 0.25rem;
+  }
 
+  &::-webkit-scrollbar-track {
     &:hover {
       background: var(--pst-color-deactivate);
+      opacity: 0.3;
     }
   }
 }
