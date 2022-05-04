@@ -7,6 +7,7 @@
 @mixin scrollbar-style() {
   &::-webkit-scrollbar {
     width: 0.3rem;
+    height: 0.3rem;
   }
 
   &::-webkit-scrollbar-thumb {
