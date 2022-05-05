@@ -39,6 +39,9 @@ function checkPageExistsAndRedirect(event) {
 (function () {
     $.getJSON("{{ theme_switcher.get('json_url') }}", function(data, textStatus, jqXHR) {
         const currentFilePath = "{{ pagename }}.html";
+        let btn = document.getElementById("version_switcher_button");
+        btn.dataset["activeVersionName"] = "";
+        btn.dataset["activeVersion"] = "";
         // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
             // if no custom name specified (e.g., "latest"), use version string
@@ -66,7 +69,6 @@ function checkPageExistsAndRedirect(event) {
             // version's entry
             if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
-                let btn = document.getElementById("version_switcher_button");
                 btn.innerText = btn.dataset["activeVersionName"] = entry.name;
                 btn.dataset["activeVersion"] = entry.version;
             }
