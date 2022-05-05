@@ -22,6 +22,10 @@ p {
   &.rubric {
     border-bottom: 1px solid var(--pst-color-border);
   }
+
+  &.centered {
+    text-align: center;
+  }
 }
 
 a {
