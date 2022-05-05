@@ -127,4 +127,9 @@ pre {
   border: 1px solid var(--pst-color-preformatted-border);
   border-radius: 0.2rem;
   box-shadow: 1px 1px 1px var(--pst-color-preformatted-shadow);
+
+  .linenos {
+    opacity: 0.5;
+    padding-right: 10px;
+  }
 }
