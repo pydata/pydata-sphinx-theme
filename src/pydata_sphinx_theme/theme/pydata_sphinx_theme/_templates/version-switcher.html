@@ -40,6 +40,7 @@ function checkPageExistsAndRedirect(event) {
     $.getJSON("{{ theme_switcher.get('json_url') }}", function(data, textStatus, jqXHR) {
         const currentFilePath = "{{ pagename }}.html";
         let btn = document.getElementById("version_switcher_button");
+        // Set empty strings for active button by default so we can demo in developer mode
         btn.dataset["activeVersionName"] = "";
         btn.dataset["activeVersion"] = "";
         // create links to the corresponding page in the other docs versions
