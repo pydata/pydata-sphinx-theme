@@ -30,6 +30,10 @@ p {
   &.rubric {
     border-bottom: 1px solid var(--pst-color-border);
   }
+
+  &.centered {
+    text-align: center;
+  }
 }
 
 a {
@@ -134,4 +138,9 @@ pre {
 
   @include scrollbar-style();
   @include scrollbar-on-hover();
+
+  .linenos {
+    opacity: 0.5;
+    padding-right: 10px;
+  }
 }

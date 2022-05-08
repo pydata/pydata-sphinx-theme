@@ -522,7 +522,6 @@ def test_version_switcher(sphinx_build_factory, file_regression):
             "navbar_end": ["version-switcher"],
             "switcher": {
                 "json_url": "switcher.json",
-                "url_template": "https://foo.readthedocs.io/en/v{version}/",
                 "version_match": "0.7.1",
             },
         }
