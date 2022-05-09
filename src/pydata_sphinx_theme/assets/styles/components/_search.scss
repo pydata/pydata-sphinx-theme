@@ -6,27 +6,27 @@
 
   .icon {
     position: absolute;
-    color: var(--pst-color-search);
+    color: var(--pst-color-border);
     left: 25px;
   }
 
   input {
-    background-color: var(--pst-color-search-background);
+    background-color: var(--pst-color-background);
     border-radius: 0.2rem;
-    border: 1px solid var(--pst-color-search-border);
+    border: 1px solid var(--pst-color-border);
     padding-left: 35px;
     color: var(--pst-color-text-base);
 
     // Inner-text of the search bar
     &::placeholder {
-      color: var(--pst-color-search);
+      color: var(--pst-color-border);
     }
 
     // Background should always be same color regardless of active or nor
     &:active,
     &:focus {
-      background-color: var(--pst-color-search-background);
-      color: var(--pst-color-search);
+      background-color: var(--pst-color-background);
+      color: var(--pst-color-border);
     }
   }
 }

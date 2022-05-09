@@ -7,12 +7,12 @@ div.admonition,
   overflow: hidden;
   page-break-inside: avoid;
   border-left: 0.2rem solid;
-  border-color: var(--pst-color-admonition-default);
+  border-color: var(--pst-color-info);
   border-radius: 0.2rem;
-  box-shadow: 0 0.2rem 0.5rem var(--pst-color-admonition-shadow),
-    0 0 0.0625rem var(--pst-color-admonition-shadow);
+  box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
+    0 0 0.0625rem var(--pst-color-shadow);
   transition: color 250ms, background-color 250ms, border-color 250ms;
-  background-color: var(--pst-color-admonition-background);
+  background-color: var(--pst-color-surface);
 
   // Last item should have no spacing since we'll control that w/ padding
   *:last-child {
@@ -43,7 +43,7 @@ div.admonition,
       left: 0.6rem;
       width: 1rem;
       height: 1rem;
-      color: var(--pst-color-admonition-default);
+      color: var(--pst-color-info);
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
       content: var(--pst-icon-admonition-default);
@@ -59,7 +59,7 @@ div.admonition,
       position: absolute;
       left: 0;
       top: 0;
-      background-color: var(--pst-color-admonition-default);
+      background-color: var(--pst-color-info);
       opacity: 0.1;
     }
 
@@ -70,126 +70,126 @@ div.admonition,
   }
 
   &.attention {
-    border-color: var(--pst-color-admonition-attention);
+    border-color: var(--pst-color-warning);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-attention);
+        background-color: var(--pst-color-warning);
       }
 
       &:before {
-        color: var(--pst-color-admonition-attention);
+        color: var(--pst-color-warning);
         content: var(--pst-icon-admonition-attention);
       }
     }
   }
 
   &.caution {
-    border-color: var(--pst-color-admonition-caution);
+    border-color: var(--pst-color-warning);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-caution);
+        background-color: var(--pst-color-warning);
       }
 
       &:before {
-        color: var(--pst-color-admonition-caution);
+        color: var(--pst-color-warning);
         content: var(--pst-icon-admonition-caution);
       }
     }
   }
 
   &.warning {
-    border-color: var(--pst-color-admonition-warning);
+    border-color: var(--pst-color-warning);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-warning);
+        background-color: var(--pst-color-warning);
       }
 
       &:before {
-        color: var(--pst-color-admonition-warning);
+        color: var(--pst-color-warning);
         content: var(--pst-icon-admonition-warning);
       }
     }
   }
 
   &.danger {
-    border-color: var(--pst-color-admonition-danger);
+    border-color: var(--pst-color-danger);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-danger);
+        background-color: var(--pst-color-danger);
       }
 
       &:before {
-        color: var(--pst-color-admonition-danger);
+        color: var(--pst-color-danger);
         content: var(--pst-icon-admonition-danger);
       }
     }
   }
 
   &.error {
-    border-color: var(--pst-color-admonition-error);
+    border-color: var(--pst-color-danger);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-error);
+        background-color: var(--pst-color-danger);
       }
 
       &:before {
-        color: var(--pst-color-admonition-error);
+        color: var(--pst-color-danger);
         content: var(--pst-icon-admonition-error);
       }
     }
   }
 
   &.hint {
-    border-color: var(--pst-color-admonition-hint);
+    border-color: var(--pst-color-success);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-hint);
+        background-color: var(--pst-color-success);
       }
 
       &:before {
-        color: var(--pst-color-admonition-hint);
+        color: var(--pst-color-success);
         content: var(--pst-icon-admonition-hint);
       }
     }
   }
 
   &.tip {
-    border-color: var(--pst-color-admonition-tip);
+    border-color: var(--pst-color-success);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-tip);
+        background-color: var(--pst-color-success);
       }
 
       &:before {
-        color: var(--pst-color-admonition-tip);
+        color: var(--pst-color-success);
         content: var(--pst-icon-admonition-tip);
       }
     }
   }
 
   &.important {
-    border-color: var(--pst-color-admonition-important);
+    border-color: var(--pst-color-success);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-important);
+        background-color: var(--pst-color-success);
       }
 
       &:before {
-        color: var(--pst-color-admonition-important);
+        color: var(--pst-color-success);
         content: var(--pst-icon-admonition-important);
       }
     }
   }
 
   &.note {
-    border-color: var(--pst-color-admonition-note);
+    border-color: var(--pst-color-info);
     > .admonition-title {
       &:after {
-        background-color: var(--pst-color-admonition-note);
+        background-color: var(--pst-color-info);
       }
 
       &:before {
-        color: var(--pst-color-admonition-note);
+        color: var(--pst-color-info);
         content: var(--pst-icon-admonition-note);
       }
     }
@@ -198,12 +198,12 @@ div.admonition,
 
 // Similar content blocks that are not technically admonitions.
 .topic {
-  background-color: var(--pst-color-background-up);
+  background-color: var(--pst-color-surface);
   border-color: var(--pst-color-border);
 }
 
 aside.sidebar {
-  background-color: var(--pst-color-background-up-up);
+  background-color: var(--pst-color-on-surface);
   border-color: var(--pst-color-border);
 }
 

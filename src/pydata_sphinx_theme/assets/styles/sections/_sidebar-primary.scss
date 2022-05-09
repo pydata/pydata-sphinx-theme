@@ -9,7 +9,7 @@
   flex-direction: column;
 
   @include media-breakpoint-up(md) {
-    border-right: 1px solid var(--pst-color-sidebar-border);
+    border-right: 1px solid var(--pst-color-border);
 
     @supports (position: -webkit-sticky) or (position: sticky) {
       position: -webkit-sticky;
@@ -58,7 +58,7 @@
     align-items: center;
 
     &:hover {
-      background: var(--pst-color-sidebar-expander-background-hover);
+      background: var(--pst-color-surface);
     }
 
     i {
@@ -66,7 +66,7 @@
       font-size: 0.75rem;
       text-align: center;
       &:hover {
-        color: var(--pst-color-sidebar-link-hover);
+        color: var(--pst-color-primary);
       }
     }
   }
@@ -97,10 +97,10 @@ nav.bd-links {
   li > a {
     display: block;
     padding: 0.25rem 1.5rem;
-    color: var(--pst-color-sidebar-link);
+    color: var(--pst-color-text-muted);
 
     &:hover {
-      color: var(--pst-color-sidebar-link-hover);
+      color: var(--pst-color-primary);
       text-decoration: none;
       background-color: transparent;
     }
@@ -120,7 +120,7 @@ nav.bd-links {
     > a,
     &:hover > a {
       font-weight: 600;
-      color: var(--pst-color-sidebar-link-active);
+      color: var(--pst-color-primary);
     }
   }
 
@@ -133,7 +133,7 @@ nav.bd-links {
     margin-top: 1.25em;
     margin-bottom: 0.5em;
     padding: 0 1.5rem;
-    color: var(--pst-color-sidebar-caption);
+    color: var(--pst-color-text-base);
     &:first-child {
       margin-top: 0;
     }

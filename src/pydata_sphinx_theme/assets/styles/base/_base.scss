@@ -16,7 +16,7 @@ body {
 p {
   margin-bottom: 1.15rem;
   font-size: 1em;
-  color: var(--pst-color-paragraph);
+  color: var(--pst-color-text-base);
 
   /* section header in docstring pages */
   &.rubric {
@@ -38,7 +38,7 @@ a {
   }
 
   &.headerlink {
-    color: var(--pst-color-headerlink);
+    color: var(--pst-color-danger);
     opacity: 0.4;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
@@ -64,37 +64,37 @@ h1 {
   @extend .heading-style;
   margin-top: 0;
   font-size: var(--pst-font-size-h1);
-  color: var(--pst-color-h1);
+  color: var(--pst-color-primary);
 }
 
 h2 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h2);
-  color: var(--pst-color-h2);
+  color: var(--pst-color-primary);
 }
 
 h3 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h3);
-  color: var(--pst-color-h3);
+  color: var(--pst-color-text-base);
 }
 
 h4 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h4);
-  color: var(--pst-color-h4);
+  color: var(--pst-color-text-base);
 }
 
 h5 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h5);
-  color: var(--pst-color-h5);
+  color: var(--pst-color-text-base);
 }
 
 h6 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h6);
-  color: var(--pst-color-h6);
+  color: var(--pst-color-text-base);
 }
 
 small,
@@ -114,6 +114,12 @@ samp {
   font-family: var(--pst-font-family-monospace);
 }
 
+kbd {
+  // use theme negative
+  background-color: var(--pst-color-text-base);
+  color: var(--pst-color-background);
+}
+
 code {
   color: var(--pst-color-inline-code);
 }
@@ -121,12 +127,12 @@ code {
 pre {
   margin: 1.5em 0 1.5em 0;
   padding: 10px;
-  background-color: var(--pst-color-preformatted-background);
-  color: var(--pst-color-preformatted-text);
+  background-color: var(--pst-color-surface);
+  color: var(--pst-color-text-base);
   line-height: 1.2em;
-  border: 1px solid var(--pst-color-preformatted-border);
+  border: 1px solid var(--pst-color-border);
   border-radius: 0.2rem;
-  box-shadow: 1px 1px 1px var(--pst-color-preformatted-shadow);
+  box-shadow: 1px 1px 1px var(--pst-color-shadow);
 
   .linenos {
     opacity: 0.5;

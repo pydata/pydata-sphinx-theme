@@ -5,7 +5,7 @@
 // Each TOC item is wrapped in this
 .tocsection {
   padding-left: 10px;
-  border-left: 1px solid var(--pst-color-toc-border);
+  border-left: 1px solid var(--pst-color-border);
   padding: 0.3rem 1.5rem;
 
   i {
@@ -16,7 +16,7 @@
 // The list of in-page TOC
 .section-nav {
   padding-left: 0;
-  border-left: 1px solid var(--pst-color-toc-border);
+  border-left: 1px solid var(--pst-color-border);
   border-bottom: none;
 
   ul {
@@ -51,14 +51,14 @@
   a {
     display: block;
     padding: 0.125rem 1.5rem;
-    color: var(--pst-color-toc-link);
+    color: var(--pst-color-text-muted);
 
     @include media-breakpoint-up(xl) {
       padding-right: 0;
     }
 
     &:hover {
-      color: var(--pst-color-toc-link-hover);
+      color: var(--pst-color-primary);
       text-decoration: none;
     }
   }
@@ -82,6 +82,6 @@
   padding-top: 2rem;
 
   a {
-    color: var(--pst-color-sidebar-link-active);
+    color: var(--pst-color-primary);
   }
 }
