@@ -55,7 +55,7 @@
 .navbar-light {
   // Overrides bootstrap
   background: var(--pst-color-on-background) !important;
-  box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
+  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow); //rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
     li a.nav-link {
