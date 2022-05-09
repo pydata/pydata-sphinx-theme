@@ -99,7 +99,20 @@ span.highlighted {
 }
 
 .viewcode-block:target {
-  background-color: var(--pst-color-viewcode-target-background);
-  border-top: 1px solid var(--pst-color-viewcode-target-border);
-  border-bottom: 1px solid var(--pst-color-viewcode-target-border);
+  border-top: 1px solid var(--pst-color-border);
+  border-bottom: 1px solid var(--pst-color-border);
+  position: relative;
+
+  // This is a hack to control the opacity for admonitions with our color variables
+  // ref: https://stackoverflow.com/a/56951626/6734243
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: var(--pst-color-target);
+    opacity: 0.1;
+  }
 }

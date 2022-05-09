@@ -5,10 +5,9 @@
 */
 html[data-theme="light"] {
   /*****************************************************************************
-  * colors
+  * main colors
   */
 
-  // main colors
   --pst-color-primary: rgb(19, 6, 84);
   --pst-color-success: rgb(40, 167, 69);
   --pst-color-info: rgb(0, 123, 255);
@@ -23,24 +22,19 @@ html[data-theme="light"] {
   --pst-color-border: rgb(201, 201, 201);
   --pst-color-shadow: rgb(216, 216, 216);
 
+  /*****************************************************************************
+  * extra
+  */
+
   // links
   --pst-color-link: rgb(0, 91, 129);
   --pst-color-link-hover: rgb(227, 46, 0);
-  --pst-color-target: rgb(251, 229, 78);
 
   // inline code
   --pst-color-inline-code: rgb(232, 62, 140);
 
-  // targeted viewcode
-  --pst-color-viewcode-target-border: rgb(170, 204, 153);
-  --pst-color-viewcode-target-background: rgb(244, 222, 191);
-
-  // alert
-  // higher contrast of links in info boxes
-  --pst-color-alert-link: rgb(232, 62, 140);
-
-  // blockquote
-  --pst-color-blockquote-border: rgb(221, 221, 221);
+  // targeted content
+  --pst-color-target: rgb(251, 229, 78);
 }
 
 /*******************************************************************************
@@ -50,10 +44,9 @@ html[data-theme="light"] {
 */
 html[data-theme="dark"] {
   /*****************************************************************************
-  * colors
+  * main colors
   */
 
-  // main colors
   --pst-color-primary: rgb(76, 145, 219);
   --pst-color-success: rgb(72, 135, 87);
   --pst-color-info: rgb(64, 125, 191);
@@ -68,24 +61,19 @@ html[data-theme="dark"] {
   --pst-color-border: rgb(192, 192, 192);
   --pst-color-shadow: var(--pst-color-background);
 
+  /*****************************************************************************
+  * extra
+  */
+
   // links
   --pst-color-link: var(--pst-color-primary);
   --pst-color-link-hover: rgb(170, 103, 196);
-  --pst-color-target: rgb(71, 39, 0);
 
   // inline code
   --pst-color-inline-code: rgb(221, 158, 194);
 
-  // targeted viewcode
-  --pst-color-viewcode-target-border: rgb(170, 204, 153);
-  --pst-color-viewcode-target-background: rgb(35, 55, 83);
-
-  // alert
-  // higher contrast of links in info boxes
-  --pst-color-alert-link: rgb(232, 62, 140);
-
-  // blockquote
-  --pst-color-blockquote-border: rgb(117, 117, 117);
+  // targeted content
+  --pst-color-target: rgb(71, 39, 0);
 
   // specific brightness applied on images
   img {
