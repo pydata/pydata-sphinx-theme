@@ -12,7 +12,7 @@ div.admonition,
   box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
     0 0 0.0625rem var(--pst-color-shadow);
   transition: color 250ms, background-color 250ms, border-color 250ms;
-  background-color: var(--pst-color-surface);
+  background-color: var(--pst-color-on-background);
 
   // Last item should have no spacing since we'll control that w/ padding
   *:last-child {
