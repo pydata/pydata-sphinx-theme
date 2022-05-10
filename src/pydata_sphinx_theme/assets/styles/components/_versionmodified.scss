@@ -13,6 +13,7 @@ div.deprecated {
     0 0 0.0625rem var(--pst-color-shadow);
   transition: color 250ms, background-color 250ms, border-color 250ms;
   position: relative;
+  background-color: var(--pst-color-on-background);
 
   > p {
     margin-bottom: 0.6rem;
