@@ -7,7 +7,6 @@ html[data-theme="light"] {
   /*****************************************************************************
   * main colors
   */
-
   --pst-color-primary: rgb(19, 6, 84);
   --pst-color-success: rgb(40, 167, 69);
   --pst-color-info: rgb(0, 123, 255);
@@ -15,12 +14,21 @@ html[data-theme="light"] {
   --pst-color-danger: rgb(220, 53, 69);
   --pst-color-text-base: rgb(51, 51, 51);
   --pst-color-text-muted: rgb(77, 77, 77);
+  --pst-color-border: rgb(201, 201, 201);
+  --pst-color-shadow: rgb(216, 216, 216);
+
+  /*****************************************************************************
+  * depth colors
+  *
+  * background: the more in depth color
+  * on-background: the object directly set on the background, use of shadows in light theme
+  * surface: object set on the background (without shadows)
+  * on_surface: object set on surface object (without shadows)
+  */
   --pst-color-background: rgb(255, 255, 255);
   --pst-color-on-background: rgb(255, 255, 255);
   --pst-color-surface: rgb(240, 240, 240);
   --pst-color-on-surface: rgb(255, 255, 238);
-  --pst-color-border: rgb(201, 201, 201);
-  --pst-color-shadow: rgb(216, 216, 216);
 
   /*****************************************************************************
   * extra
@@ -46,7 +54,6 @@ html[data-theme="dark"] {
   /*****************************************************************************
   * main colors
   */
-
   --pst-color-primary: rgb(76, 145, 219);
   --pst-color-success: rgb(72, 135, 87);
   --pst-color-info: rgb(64, 125, 191);
@@ -54,12 +61,21 @@ html[data-theme="dark"] {
   --pst-color-danger: rgb(203, 70, 83);
   --pst-color-text-base: rgb(201, 209, 217);
   --pst-color-text-muted: rgb(192, 192, 192);
+  --pst-color-border: rgb(192, 192, 192);
+  --pst-color-shadow: var(--pst-color-background);
+
+  /*****************************************************************************
+  * depth colors
+  *
+  * background: the more in depth color
+  * on-background: the object directly set on the background, use of a light grey in dark theme
+  * surface: object set on the background (without shadows)
+  * on_surface: object set on surface object (without shadows)
+  */
   --pst-color-background: rgb(18, 18, 18);
   --pst-color-on-background: rgb(22, 22, 22);
   --pst-color-surface: rgb(22, 22, 22);
   --pst-color-on-surface: rgb(55, 55, 55);
-  --pst-color-border: rgb(192, 192, 192);
-  --pst-color-shadow: var(--pst-color-background);
 
   /*****************************************************************************
   * extra
