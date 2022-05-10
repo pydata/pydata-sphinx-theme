@@ -103,9 +103,9 @@ span.highlighted {
   border-bottom: 1px solid var(--pst-color-border);
   position: relative;
 
-  // This is a hack to control the opacity for admonitions with our color variables
+  // This is a hack to control the opacity for viewcode with our color variables
   // ref: https://stackoverflow.com/a/56951626/6734243
-  &:before {
+  .viewcode-back:before {
     content: "";
     width: 100%;
     height: 100%;
@@ -113,6 +113,6 @@ span.highlighted {
     left: 0;
     top: 0;
     background-color: var(--pst-color-target);
-    opacity: 0.3;
+    opacity: 0.7;
   }
 }
