@@ -128,6 +128,11 @@ Here are several examples:
                "icon": "fab fa-twitter-square",
                # The default for `type` is `fontawesome` so it is not actually required in any of the above examples as it is shown here
            },
+           {
+               "name": "Mastodon",
+               "url": "https://<your-host>@<your-handle>",
+               "icon": "fab fa-mastodon",
+           },
        ],
        ...
    }
