@@ -16,7 +16,7 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 
 .. danger::
 
-    To use the :code:`sphinx-panels` extention, you need to integrate theses lines to overwrite the shadows of the panels in your custom :code:`.css` file:
+    To use the :code:`sphinx-panels` extention, add these lines to your custom CSS to overwrite the shadows of the panels:
 
     .. code-block:: css
 
