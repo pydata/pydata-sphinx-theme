@@ -34,7 +34,9 @@
 {% block sidebarsourcelink %}{% endblock %}
 
 {% block body_tag %}
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60" data-default-mode="{{ default_mode }}">
+  {# set up with scrollspy to update the toc as we scroll #}
+  {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="{{ default_mode }}">
 {%- endblock %}
 {%- block content %}
     {# Added to support a banner with an alert #}
