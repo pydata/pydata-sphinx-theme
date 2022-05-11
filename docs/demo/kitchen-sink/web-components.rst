@@ -8,9 +8,9 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 .. seealso::
 
    For more about how to use these extensions, see `the sphinx-design documentation <https://sphinx-design.readthedocs.io/en/latest/index.html>`_.
-   
+
 .. warning::
-   
+
    ``sphinx-panels`` is no longer maintained and recommend you switch to ``sphinx-design``.
    We will deprecate support for sphinx-panels soon.
 
