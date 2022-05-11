@@ -36,7 +36,7 @@
 
 details {
   &.sd-dropdown:not([open]) > .sd-card-header {
-    border: none;
+    border: none !important;
   }
 }
 /*******************************************************************************
