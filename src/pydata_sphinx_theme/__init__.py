@@ -661,7 +661,7 @@ def setup(app):
     app.connect("html-page-context", update_templates)
     app.connect("build-finished", _overwrite_pygments_css)
 
-    # Include templates for sidebar
-    app.config.templates_path.append(str(theme_path / "_templates"))
+    # Include component templates
+    app.config.templates_path.append(str(theme_path / "components"))
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}
