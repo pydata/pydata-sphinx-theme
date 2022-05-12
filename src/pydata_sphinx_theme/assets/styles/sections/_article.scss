@@ -2,7 +2,7 @@
  * Main content area
  */
 .bd-content {
-  // Give a bit more verticle spacing on the website
+  // Give a bit more verticle spacing on wide screens
   padding: 3rem 1.5rem 2rem 3rem;
   @include media-breakpoint-down(md) {
     padding: 3rem 1rem 1rem 1rem;
