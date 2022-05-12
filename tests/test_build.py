@@ -541,3 +541,23 @@ def test_theme_switcher(sphinx_build_factory, file_regression):
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extension=".html"
     )
+
+
+def test_meta_opengraph(sphinx_build_factory):
+    confoverrides = {
+        "html_baseurl": "http://127.0.0.1:8000/",
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
+    sphinx_build.build()
+    page_html = sphinx_build.html_tree("page1.html")
+
+    expected = {
+        "title": "1. Page 1",
+        "type": "article",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut …",
+        "url": "http://127.0.0.1:8000/page1.html",
+    }
+    for tag, content in expected.items():
+        meta_og = page_html.select(f"meta[property='og:{tag}']")
+        assert meta_og, f"no meta og:{tag} found"
+        assert meta_og[0].attrs["content"] == content
