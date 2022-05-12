@@ -12,6 +12,7 @@ from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
+import string
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -553,6 +554,24 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         )
 
     context["get_edit_url"] = get_edit_url
+
+    def get_plain_page_summary():
+        """Return a short text summary for an OpenGraph description."""
+        try:
+            title = jinja2.filters.do_striptags(context["title"])
+            body = jinja2.filters.do_striptags(context["body"])
+        except KeyError:
+            return context["docstitle"]
+        summary = body
+        # The body starts with the title, no need to repeat it in the description.
+        if body.startswith(title):
+            summary = body[len(title) :].lstrip(string.punctuation + string.whitespace)
+        if len(summary) > 200:
+            summary = summary[:199] + "…"
+
+        return summary
+
+    context["get_plain_page_summary"] = get_plain_page_summary
 
     # Ensure that the max TOC level is an integer
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))

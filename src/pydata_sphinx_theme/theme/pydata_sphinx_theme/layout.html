@@ -23,6 +23,14 @@
       {% endif %}
     {% endfor %}
 
+    <!-- OpenGraph tags -->
+    <meta property="og:title" content="{{ title|striptags|e }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="{{ get_plain_page_summary()|e }}" />
+    {% if pageurl %}
+      <meta property="og:url" content="{{ pageurl }}" />
+    {%endif %}
+
     <!-- Google Analytics -->
     {{ generate_google_analytics_script(id=theme_google_analytics_id) }}
 {%- endblock %}
