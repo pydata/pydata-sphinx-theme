@@ -2,7 +2,11 @@
  * Main content area
  */
 .bd-content {
-  padding-top: 20px;
+  padding: 3rem 1.5rem 1rem 3rem;
+  @include media-breakpoint-down(md) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
   .section {
     max-width: 100%;

@@ -28,6 +28,7 @@ $grid-breakpoints: (
 // Major theme layout, skeleton, and whitespace
 @import "./sections/article";
 @import "./sections/footer";
+@import "./sections/footer-article";
 @import "./sections/header";
 @import "./sections/sidebar-primary";
 @import "./sections/sidebar-secondary";
