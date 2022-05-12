@@ -2,10 +2,10 @@
  * Main content area
  */
 .bd-content {
-  padding: 3rem 1.5rem 1rem 3rem;
+  // Give a bit more verticle spacing on the website
+  padding: 3rem 1.5rem 2rem 3rem;
   @include media-breakpoint-down(md) {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 3rem 1rem 1rem 1rem;
   }
 
   .section {

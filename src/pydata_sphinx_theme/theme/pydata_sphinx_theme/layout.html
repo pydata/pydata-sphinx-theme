@@ -53,11 +53,11 @@
 
           {% block docs_main %}
           {% set content_xl_width = "col-xl-7" if sidebars else "col-xl-8" %}
-          <main class="bd-article bd-content col-12 col-md-9 {{ content_xl_width }}" role="main">
+          <div class="bd-content col-12 col-md-9 {{ content_xl_width }}">
               {% block docs_body %}
-              <div class="bd-article__inner">
+              <article class="bd-article" role="main">
                 {% block body %} {% endblock %}
-              </div>
+              </article>
               {% endblock %}
 
               {% if theme_show_prev_next %}
@@ -65,7 +65,7 @@
                   {% include "sections/footer-article.html" %}
               </footer>
               {% endif %}
-          </main>
+          </div>
           {% endblock %}
       </div>
     </div>
