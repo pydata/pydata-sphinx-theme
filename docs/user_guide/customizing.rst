@@ -279,8 +279,8 @@ The default body and header fonts can be changed as follows:
     specifically the binary font files. This ensure the files will be loaded
     before waiting for the CSS to be parsed, but should be used with care.
 
-.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
-.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/assets/styles/base/_color.scss
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
+.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/base/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 .. meta::

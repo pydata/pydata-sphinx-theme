@@ -167,7 +167,7 @@ For example:
            {
                "name": "Pandas",
                "url": "https://pandas.pydata.org",
-               "icon": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/master/docs/_static/pandas-square.svg",
+               "icon": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_static/pandas-square.svg",
                "type": "url",
            },
        ],
