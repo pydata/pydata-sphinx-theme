@@ -3,7 +3,7 @@ exclude: github_deploy_key_pandas_dev_pandas_sphinx_theme\.enc
 
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.4.1
+    rev: v2.6.2
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
@@ -16,12 +16,12 @@ repos:
         language_version: python3
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.3
+    rev: 4.0.1
     hooks:
       - id: flake8
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.2.0
     hooks:
       - id: check-builtin-literals
       - id: check-case-conflict
