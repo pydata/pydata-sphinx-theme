@@ -9,25 +9,23 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 
    For more about how to use these extensions, see `the sphinx-design documentation <https://sphinx-design.readthedocs.io/en/latest/index.html>`_.
 
-.. warning::
+.. danger::
 
    ``sphinx-panels`` is no longer maintained and recommend you switch to ``sphinx-design``.
    We will deprecate support for sphinx-panels soon.
 
-.. danger::
+   To use the :code:`sphinx-panels` extention, add these lines to your custom CSS to overwrite the shadows of the panels:
 
-    To use the :code:`sphinx-panels` extention, add these lines to your custom CSS to overwrite the shadows of the panels:
+   .. code-block:: css
 
-    .. code-block:: css
+       /* overwrite panels shadows using pydata-sphinx-theme variable */
+       .shadow {
+           box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
+       }
 
-        /* overwrite panels shadows using pydata-sphinx-theme variable */
-        .shadow {
-            box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
-        }
+   This modification is not needed when using the :code:`sphinx-design` extention.
 
-    This modification is not needed when using the :code:`sphinx-design` extention.
-
-Here you can find some examples of the **cards** and **tabs** created with the :code:`sphinx-design` extention.
+Below you can find some examples of the **cards** and **tabs** created with the :code:`sphinx-design` extention.
 
 Cards
 -----
