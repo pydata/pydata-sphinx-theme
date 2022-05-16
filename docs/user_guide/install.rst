@@ -2,6 +2,15 @@
 Installation
 ************
 
+.. note::
+
+   Each pydata-sphinx-theme release has a minimum required Sphinx version,
+   which should be automatically handled by your package installer.
+   It is also tested against newer versions of Sphinx that were available
+   prior to that release of the pydata-sphinx-theme package.
+   If you run into issues when trying to use a more recent version of Sphinx,
+   please open an issue here: https://github.com/pydata/pydata-sphinx-theme/issues
+
 The theme is available on PyPI and conda-forge, and can thus be installed with:
 
 .. code:: console
