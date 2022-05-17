@@ -9,8 +9,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
       - uses: pre-commit/action@v2.0.3
 
   # Build docs on a number of Python versions. In the future this can be
@@ -31,10 +31,10 @@ jobs:
             python-version: "3.9"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -87,10 +87,10 @@ jobs:
       PA11Y_BUILD: /tmp/pa11y/pa11y-${{ github.run_number }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -108,7 +108,7 @@ jobs:
 
       # The lighthouse audit runs directly on the HTML files, no serving needed
       - name: Audit with Lighthouse
-        uses: treosh/lighthouse-ci-action@v8
+        uses: treosh/lighthouse-ci-action@v9
         with:
           configPath: ".github/workflows/lighthouserc.json"
           temporaryPublicStorage: true
@@ -125,7 +125,7 @@ jobs:
         run: python docs/scripts/a11y.py --no-serve
 
       - name: Publish pa11y report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Pa11y ${{ github.run_number }}
           path: |
@@ -139,9 +139,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Python 3.7
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v3
         with:
           python-version: 3.7
       - name: Build package
@@ -149,7 +149,7 @@ jobs:
           python -m pip install -U pip build
           python -m build
       - name: Publish
-        uses: pypa/gh-action-pypi-publish@v1.1.0
+        uses: pypa/gh-action-pypi-publish@v1.5.0
         with:
           user: __token__
           password: ${{ secrets.PYPI_KEY }}
