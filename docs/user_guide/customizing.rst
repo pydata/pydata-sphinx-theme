@@ -143,14 +143,14 @@ For a complete list of the theme variables that you may override, see the
 .. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
   :language: CSS
 
-color variables
+Color variables
 ---------------
 
-In order to change a color variable and customize the rendering of the site, you'll need to update
-the color behaviours in both light and dark theme.
+Each color variable has two values, one corresponding to the "light" and one for the "dark" theme.
+These are used throughout many of the theme elements to define text color, background color, etc.
 
-Underneath 2 ``html`` sections, one with ``light`` and the other with ``dark`` option, set your new color to overwrite.
-For example, to update the primary color, you might add this to ``custom.css``:
+You can control the colors used for these variables for each theme by
+:ref:`adding a custom CSS stylesheet <custom-css>` and adding a structure like so:
 
 .. code-block:: css
 
