@@ -45,6 +45,15 @@ def update_config(app, env):
     icon_default = app.config.values["html_permalinks_icon"]
     app.config.values["html_permalinks_icon"] = ("#", *icon_default[1:])
 
+    # Raise a warning for a deprecated theme switcher config
+    if "url_template" in theme_options.get("switcher", {}):
+        logger.warn(
+            (
+                "html_theme_options['switcher']['url_template'] is no longer supported."
+                " Set version URLs in JSON directly."
+            )
+        )
+
 
 def update_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
@@ -652,7 +661,7 @@ def setup(app):
     app.connect("html-page-context", update_templates)
     app.connect("build-finished", _overwrite_pygments_css)
 
-    # Include templates for sidebar
-    app.config.templates_path.append(str(theme_path / "_templates"))
+    # Include component templates
+    app.config.templates_path.append(str(theme_path / "components"))
 
     return {"parallel_read_safe": True, "parallel_write_safe": True}

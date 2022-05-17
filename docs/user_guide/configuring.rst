@@ -128,6 +128,11 @@ Here are several examples:
                "icon": "fab fa-twitter-square",
                # The default for `type` is `fontawesome` so it is not actually required in any of the above examples as it is shown here
            },
+           {
+               "name": "Mastodon",
+               "url": "https://<your-host>@<your-handle>",
+               "icon": "fab fa-mastodon",
+           },
        ],
        ...
    }
@@ -437,7 +442,7 @@ The switcher requires the following configuration steps:
    switcher should show on each page.
 
 2. Add a configuration dictionary called ``switcher`` to the
-   ``html_theme_options`` dict in ``conf.py``. ``switcher`` should have 3 keys:
+   ``html_theme_options`` dict in ``conf.py``. ``switcher`` should have 2 keys:
 
    - ``json_url``: the persistent location of the JSON file described above.
    - ``version_match``: a string stating the version of the documentation that

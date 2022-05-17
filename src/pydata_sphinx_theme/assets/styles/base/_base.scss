@@ -11,6 +11,14 @@ body {
   font-weight: 400;
   line-height: 1.65;
   color: var(--pst-color-text-base);
+
+  @include scrollbar-style();
+  @include scrollbar-on-hover();
+
+  // hack to avoid the black background on some browser including Safari
+  &::-webkit-scrollbar-track {
+    background: var(--pst-color-background);
+  }
 }
 
 p {
@@ -21,6 +29,10 @@ p {
   /* section header in docstring pages */
   &.rubric {
     border-bottom: 1px solid var(--pst-color-border);
+  }
+
+  &.centered {
+    text-align: center;
   }
 }
 
@@ -123,4 +135,12 @@ pre {
   border: 1px solid var(--pst-color-preformatted-border);
   border-radius: 0.2rem;
   box-shadow: 1px 1px 1px var(--pst-color-preformatted-shadow);
+
+  @include scrollbar-style();
+  @include scrollbar-on-hover();
+
+  .linenos {
+    opacity: 0.5;
+    padding-right: 10px;
+  }
 }
