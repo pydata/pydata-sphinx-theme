@@ -110,7 +110,7 @@ CSS Theme variables
 ===================
 
 This theme defines several `CSS variables <css-variable-help_>`_ that can be
-used to quickly control behavior across your documentation.
+used to quickly control behavior and display across your documentation.
 
 These are based on top of the basic `Bootstrap CSS variables <https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables>`_
 extended with some theme specific variables.
@@ -142,14 +142,14 @@ For a complete list of the theme variables that you may override, see the
 
 .. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
   :language: CSS
-  
+
 color variables
 ---------------
 
 In order to change a color variable and customize the rendering of the site, you'll need to update
-the color behaviours in both light and dark theme. 
-    
-Underneath 2 ``html`` sections, one with ``light`` and the other with ``dark`` option, set your new color to overwrite. 
+the color behaviours in both light and dark theme.
+
+Underneath 2 ``html`` sections, one with ``light`` and the other with ``dark`` option, set your new color to overwrite.
 For example, to update the primary color, you might add this to ``custom.css``:
 
 .. code-block:: css
@@ -157,16 +157,16 @@ For example, to update the primary color, you might add this to ``custom.css``:
     html[data-theme="light"] {
         --pst-color-primary: black;
     }
-    
+
     html[data-theme="dark"] {
         --pst-color-primary: white;
     }
-    
+
 For a complete list of the theme colors that you may override, see the
 `color variables defaults CSS file <pydata-css-colors_>`_:
 
 .. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/base/_color.scss
-  :language: CSS
+  :language: scss
 
 Change footer display
 =====================
