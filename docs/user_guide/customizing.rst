@@ -27,7 +27,7 @@ To add a custom stylesheet, follow these steps:
 1. **Create a CSS stylesheet** in ``_static/css/custom.css``, and add the CSS rules you wish.
 2. **Attach the stylesheet to your Sphinx build**. Add the following to ``conf.py``
 
-   .. code-block:: rst
+   .. code-block:: python
 
        html_static_path = ['_static']
 
