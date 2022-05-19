@@ -18,7 +18,7 @@ readme = "README.md"
 
 requires-python = ">=3.7"
 dependencies = [
-  "sphinx>=3.5.4,<5",
+  "sphinx>=4,<6",
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging"
