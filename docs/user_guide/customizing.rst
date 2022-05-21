@@ -78,6 +78,27 @@ For example to define a different background color for both the light and dark t
 
 A complete list of the used colors for this theme can be found in the `pydata default css colors file <pydata-css-colors_>`__.
 
+Use specific content in each theme
+----------------------------------
+
+It is possible to use different content for light and dark mode, by setting :code:`only-dark` and :code:`only-light` classes on the content.
+This is the easiest approach for handling images with backgrounds.
+
+.. code-block:: rst
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+        :class: only-dark
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+dog
+        :class: only-light
+
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+    :class: only-dark
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+dog
+    :class: only-light
+
 Define custom JavaScript to react to theme changes
 --------------------------------------------------
 

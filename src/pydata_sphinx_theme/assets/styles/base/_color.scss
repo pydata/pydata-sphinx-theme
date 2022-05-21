@@ -143,6 +143,11 @@ html[data-theme="light"] {
 
   // blockquote
   --pst-color-blockquote-border: rgb(221, 221, 221);
+
+  // hide any content that should not be displayed in the light theme
+  .only-dark {
+    display: none !important;
+  }
 }
 
 /*******************************************************************************
@@ -289,6 +294,11 @@ html[data-theme="dark"] {
 
   // blockquote
   --pst-color-blockquote-border: rgb(117, 117, 117);
+
+  // hide any content that should not be displayed in the dark theme
+  .only-light {
+    display: none !important;
+  }
 
   // specific brightness applied on images
   img {
