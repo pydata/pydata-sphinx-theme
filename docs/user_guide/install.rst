@@ -28,6 +28,14 @@ configuration option:
 
     html_theme = "pydata_sphinx_theme"
 
+.. note::
+
+   This theme may not work with the latest major versions of Sphinx, especially
+   if they have only recently been released. Please give us a few months of
+   time to work out any bugs and changes when new releases are made.
+
+Development version
+===================
 
 If you want to track the development version of the theme, you can
 install it from the git repo:
