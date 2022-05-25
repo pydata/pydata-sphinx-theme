@@ -13,7 +13,7 @@ table.field-list {
   th.field-name {
     padding: 1px 8px 1px 5px;
     white-space: nowrap;
-    background-color: var(--pst-color-background-up);
+    background-color: var(--pst-color-surface);
   }
 
   /* italic font for parameter types */
@@ -99,7 +99,8 @@ span.highlighted {
 }
 
 .viewcode-block:target {
-  background-color: var(--pst-color-viewcode-target-background);
-  border-top: 1px solid var(--pst-color-viewcode-target-border);
-  border-bottom: 1px solid var(--pst-color-viewcode-target-border);
+  border-top: 1px solid var(--pst-color-border);
+  border-bottom: 1px solid var(--pst-color-border);
+  position: relative;
+  background-color: var(--pst-color-target);
 }

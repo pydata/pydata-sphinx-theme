@@ -7,18 +7,19 @@ div.deprecated {
   overflow: hidden;
   page-break-inside: avoid;
   border-left: 0.2rem solid;
-  border-color: var(--pst-color-versionmodified-default);
+  border-color: var(--pst-color-info);
   border-radius: 0.2rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.05),
-    0 0 0.0625rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
+    0 0 0.0625rem var(--pst-color-shadow);
   transition: color 250ms, background-color 250ms, border-color 250ms;
   position: relative;
+  background-color: var(--pst-color-on-background);
 
   > p {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
 
-    // This is a hack to control the opacity for admonitions with our color variables
+    // This is a hack to control the opacity for verson tags with our color variables
     // ref: https://stackoverflow.com/a/56951626/6734243
     &:before {
       content: "";
@@ -27,33 +28,33 @@ div.deprecated {
       position: absolute;
       left: 0;
       top: 0;
-      background-color: var(--pst-color-admonition-default);
+      background-color: var(--pst-color-info);
       opacity: 0.1;
     }
   }
 }
 
 div.versionadded {
-  border-color: var(--pst-color-versionmodified-added);
+  border-color: var(--pst-color-success);
 
   p:before {
-    background-color: var(--pst-color-versionmodified-added);
+    background-color: var(--pst-color-success);
   }
 }
 
 div.versionchanged {
-  border-color: var(--pst-color-versionmodified-changed);
+  border-color: var(--pst-color-warning);
 
   p:before {
-    background-color: var(--pst-color-versionmodified-changed);
+    background-color: var(--pst-color-warning);
   }
 }
 
 div.deprecated {
-  border-color: var(--pst-color-versionmodified-deprecated);
+  border-color: var(--pst-color-danger);
 
   p:before {
-    background-color: var(--pst-color-versionmodified-deprecated);
+    background-color: var(--pst-color-danger);
   }
 }
 
@@ -63,7 +64,7 @@ span.versionmodified {
   &:before {
     font-style: normal;
     margin-right: 0.6rem;
-    color: var(--pst-color-versionmodified-default);
+    color: var(--pst-color-info);
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: var(--pst-icon-versionmodified-default);
@@ -72,21 +73,21 @@ span.versionmodified {
 
 span.versionmodified.added {
   &:before {
-    color: var(--pst-color-versionmodified-added);
+    color: var(--pst-color-success);
     content: var(--pst-icon-versionmodified-added);
   }
 }
 
 span.versionmodified.changed {
   &:before {
-    color: var(--pst-color-versionmodified-changed);
+    color: var(--pst-color-warning);
     content: var(--pst-icon-versionmodified-changed);
   }
 }
 
 span.versionmodified.deprecated {
   &:before {
-    color: var(--pst-color-versionmodified-deprecated);
+    color: var(--pst-color-danger);
     content: var(--pst-icon-versionmodified-deprecated);
   }
 }

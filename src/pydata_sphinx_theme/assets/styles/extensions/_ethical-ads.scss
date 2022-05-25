@@ -8,15 +8,15 @@
   .ethical-footer a:visited,
   .ethical-footer a:hover,
   .ethical-footer a:active {
-    color: var(--pst-color-ad-text);
+    color: var(--pst-color-text-base);
   }
 
   .ethical-sidebar,
   .ethical-footer {
-    background-color: var(--pst-color-ad-background);
-    border: 1px solid var(--pst-color-ad-border);
+    background-color: var(--pst-color-background);
+    border: 1px solid var(--pst-color-border);
     border-radius: 5px;
-    color: var(--pst-color-ad-text);
+    color: var(--pst-color-text-base);
     font-size: 14px;
     line-height: 20px;
   }

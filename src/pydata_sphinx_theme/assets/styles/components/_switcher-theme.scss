@@ -1,19 +1,18 @@
 // the icons for theme change
 #theme-switch {
-  border-color: var(--pst-color-navbar-link-hover);
+  border-color: var(--pst-color-primary);
   margin-right: 0.4rem;
 
   a {
-    color: var(--pst-color-navbar-link-hover);
+    color: var(--pst-color-primary);
     display: none;
   }
 
   &:hover {
-    border-color: var(--pst-color-navbar-background);
-    background-color: var(--pst-color-navbar-link-hover);
+    background-color: var(--pst-color-primary);
 
     a {
-      color: var(--pst-color-navbar-background);
+      color: var(--pst-color-on-background);
     }
   }
 }

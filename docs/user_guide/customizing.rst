@@ -27,7 +27,7 @@ To add a custom stylesheet, follow these steps:
 1. **Create a CSS stylesheet** in ``_static/css/custom.css``, and add the CSS rules you wish.
 2. **Attach the stylesheet to your Sphinx build**. Add the following to ``conf.py``
 
-   .. code-block:: rst
+   .. code-block:: python
 
        html_static_path = ['_static']
 
@@ -141,11 +141,13 @@ CSS Theme variables
 ===================
 
 This theme defines several `CSS variables <css-variable-help_>`_ that can be
-used to quickly control behavior across your documentation.
+used to quickly control behavior and display across your documentation.
 
 These are based on top of the basic `Bootstrap CSS variables <https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables>`_
-extended with some theme specific variables. An overview of all variables and
-every default is defined in `the pydata default CSS variables file <pydata-css-variables_>`_.
+extended with some theme specific variables.
+
+base variables
+--------------
 
 In order to change a variable, follow these steps:
 
@@ -153,7 +155,7 @@ In order to change a variable, follow these steps:
 2. Underneath a ``:root`` section, add the variables you wish to update. For example, to update
    the base font size, you might add this to ``custom.css``:
 
-   .. code-block:: none
+   .. code-block:: css
 
        :root {
            --pst-font-size-base: 17px;
@@ -171,6 +173,31 @@ For a complete list of the theme variables that you may override, see the
 
 .. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
   :language: CSS
+
+Color variables
+---------------
+
+Each color variable has two values, one corresponding to the "light" and one for the "dark" theme.
+These are used throughout many of the theme elements to define text color, background color, etc.
+
+You can control the colors used for these variables for each theme by
+:ref:`adding a custom CSS stylesheet <custom-css>` and adding a structure like so:
+
+.. code-block:: css
+
+    html[data-theme="light"] {
+        --pst-color-primary: black;
+    }
+
+    html[data-theme="dark"] {
+        --pst-color-primary: white;
+    }
+
+For a complete list of the theme colors that you may override, see the
+`color variables defaults CSS file <pydata-css-colors_>`_:
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/base/_color.scss
+  :language: scss
 
 Change footer display
 =====================
@@ -253,7 +280,7 @@ The default body and header fonts can be changed as follows:
     before waiting for the CSS to be parsed, but should be used with care.
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
-.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/assets/style/color.scss
+.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/assets/styles/base/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 .. meta::
