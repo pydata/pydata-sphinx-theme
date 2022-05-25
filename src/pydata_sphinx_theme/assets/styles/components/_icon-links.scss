@@ -31,4 +31,13 @@
   img.icon-link-image {
     height: 1.5em;
   }
+
+  // inline the element in the navbar as long as they fit and use display block when colapsing
+  @include media-breakpoint-down(md) {
+    flex-direction: row;
+
+    a {
+      margin-right: 0.1em;
+    }
+  }
 }

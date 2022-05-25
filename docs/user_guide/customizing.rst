@@ -76,6 +76,37 @@ For example to define a different background color for both the light and dark t
         background: black;
     }
 
+A complete list of the used colors for this theme can be found in the `pydata default css colors file <pydata-css-colors_>`__.
+
+Use theme-dependent content
+---------------------------
+
+It is possible to use different content for light and dark mode, so that the content only shows up when a particular theme is active.
+This is useful if your content depends on the theme's style, such as a PNG image with a light or a dark background.
+
+There are **two CSS helper classes** to specify items on the page as theme-specific.
+These are:
+
+- :code:`only-dark`: Only display an element when the dark theme is active.
+- :code:`only-light` Only display an element when the light theme is active.
+
+For example, the following page content defines two images, each of which uses a different one of the classes above.
+Change the theme and a new image should be displayed.
+
+.. code-block:: rst
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+        :class: only-dark
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+dog
+        :class: only-light
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+    :class: only-dark
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+dog
+    :class: only-light
+
 Define custom JavaScript to react to theme changes
 --------------------------------------------------
 

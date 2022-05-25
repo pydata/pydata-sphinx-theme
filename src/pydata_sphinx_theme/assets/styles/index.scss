@@ -28,12 +28,14 @@ $grid-breakpoints: (
 // Major theme layout, skeleton, and whitespace
 @import "./sections/article";
 @import "./sections/footer";
+@import "./sections/footer-article";
 @import "./sections/header";
 @import "./sections/sidebar-primary";
 @import "./sections/sidebar-secondary";
 
 // Re-usable components across the theme
 @import "./components/icon-links";
+@import "./components/header/header-logo";
 @import "./components/prev-next";
 @import "./components/search";
 @import "./components/switcher-theme";
@@ -55,6 +57,8 @@ $grid-breakpoints: (
 @import "./extensions/bootstrap";
 @import "./extensions/ethical-ads";
 @import "./extensions/pydata";
+@import "./extensions/sphinx_design";
+@import "./extensions/sphinx_panels";
 
 // Page-specific CSS
 @import "./pages/search";

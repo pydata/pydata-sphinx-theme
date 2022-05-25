@@ -31,7 +31,13 @@ html[data-theme="light"] {
   --pst-color-on-surface: rgb(255, 255, 238);
 
   /*****************************************************************************
-  * extra
+  * extentions
+  */
+
+  --pst-color-panel-background: var(--pst-color-background);
+
+  /*****************************************************************************
+  * layout
   */
 
   // links
@@ -43,6 +49,11 @@ html[data-theme="light"] {
 
   // targeted content
   --pst-color-target: rgb(251, 229, 78);
+
+  // hide any content that should not be displayed in the light theme
+  .only-dark {
+    display: none !important;
+  }
 }
 
 /*******************************************************************************
@@ -78,7 +89,13 @@ html[data-theme="dark"] {
   --pst-color-on-surface: rgb(55, 55, 55);
 
   /*****************************************************************************
-  * extra
+  * extentions
+  */
+
+  --pst-color-panel-background: var(--pst-color-background-up);
+
+  /*****************************************************************************
+  * layout
   */
 
   // links
@@ -90,6 +107,11 @@ html[data-theme="dark"] {
 
   // targeted content
   --pst-color-target: rgb(71, 39, 0);
+
+  // hide any content that should not be displayed in the dark theme
+  .only-light {
+    display: none !important;
+  }
 
   // specific brightness applied on images
   img {

@@ -15,3 +15,10 @@
     display: block;
   }
 }
+
+.toc-entry > .nav-link.active {
+  font-weight: 600;
+  color: var(--pst-color-toc-link-active);
+  background-color: transparent;
+  border-left: 2px solid var(--pst-color-toc-link-active);
+}
