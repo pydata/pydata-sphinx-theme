@@ -212,6 +212,16 @@ The output of the last command includes:
 - a short summary of the current state of the accessibility rules we are trying to maintain
 - local paths to JSON and HTML reports which contain all of the issues found
 
+## Update support for new Sphinx versions
+
+This theme does not pin the upper version of Sphinx that it supports, but there may be changes that need to happen when Sphinx releases a new version.
+As a general rule, we try to support new major Sphinx versions within 6 months of its release.
+
+Here's a list of things to check when Sphinx releases a new version:
+
+- [Look at the Sphinx Changelog](https://www.sphinx-doc.org/en/master/changes.html) and make sure there are no obvious breaking changes.
+- [Look at the deprecated API changes](https://www.sphinx-doc.org/en/master/extdev/deprecated.html) and make sure there are no obvious breaking changes.
+
 ## Update our kitchen sink documents
 
 The [kitchen sink reference](../demo/kitchen-sink/index.rst) is for demonstrating as much syntax and style for Sphinx builds as possible.
