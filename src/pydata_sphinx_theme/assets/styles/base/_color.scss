@@ -94,6 +94,12 @@ html[data-theme="light"] {
   --pst-color-viewcode-target-background: rgb(244, 222, 191);
 
   /*****************************************************************************
+  * extentions
+  */
+
+  --pst-color-panel-background: var(--pst-color-background);
+
+  /*****************************************************************************
   * layout
   */
 
@@ -143,6 +149,11 @@ html[data-theme="light"] {
 
   // blockquote
   --pst-color-blockquote-border: rgb(221, 221, 221);
+
+  // hide any content that should not be displayed in the light theme
+  .only-dark {
+    display: none !important;
+  }
 }
 
 /*******************************************************************************
@@ -241,6 +252,12 @@ html[data-theme="dark"] {
   --pst-color-viewcode-target-background: rgb(35, 55, 83);
 
   /*****************************************************************************
+  * extentions
+  */
+
+  --pst-color-panel-background: var(--pst-color-background-up);
+
+  /*****************************************************************************
   * layout
   */
 
@@ -289,6 +306,11 @@ html[data-theme="dark"] {
 
   // blockquote
   --pst-color-blockquote-border: rgb(117, 117, 117);
+
+  // hide any content that should not be displayed in the dark theme
+  .only-light {
+    display: none !important;
+  }
 
   // specific brightness applied on images
   img {
