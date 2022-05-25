@@ -54,6 +54,35 @@ def update_config(app, env):
             )
         )
 
+    # Add an analytics ID to the site if provided
+    # Currently only supports the two types of Google Analytics id.
+    gid = theme_options.get("google_analytics_id")
+    if gid:
+        # In this case it is "new-style" google analytics
+        if "G-" in gid:
+            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
+            gid_script = f"""
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){{ dataLayer.push(arguments); }}
+                gtag('js', new Date());
+                gtag('config', '{gid}');
+            """
+        # In this case it is "old-style" google analytics
+        else:
+            gid_js_path = "https://www.google-analytics.com/analytics.js"
+            gid_script = f"""
+                window.ga = window.ga || function () {{
+                    (ga.q = ga.q || []).push(arguments) }};
+                ga.l = +new Date;
+                ga('create', '{gid}', 'auto');
+                ga('set', 'anonymizeIp', true);
+                ga('send', 'pageview');
+            """
+
+        # Link the JS files
+        app.add_js_file(gid_js_path, loading_method="async")
+        app.add_js_file(None, body=gid_script)
+
 
 def update_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
@@ -87,6 +116,17 @@ def update_templates(app, pagename, templatename, context, doctree):
         theme_css_name = "_static/styles/pydata-sphinx-theme.css"
         if theme_css_name in context["css_files"]:
             context["css_files"].remove(theme_css_name)
+
+    # Add links for favicons in the topbar
+    for favicon in context.get("theme_favicons", []):
+        icon_type = Path(favicon["href"]).suffix.strip(".")
+        # Sphinx will auto-resolve href if it's a local file
+        app.add_css_file(
+            favicon["href"],
+            rel=favicon["rel"],
+            sizes=favicon["sizes"],
+            **{"type": f"image/{icon_type}"},
+        )
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -259,46 +299,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             )
         return align_options[align]
 
-    def generate_google_analytics_script(id):
-        """Handle the two types of google analytics id."""
-        if id:
-            if "G-" in id:
-                script = f"""
-                <script
-                    async
-                    src='https://www.googletagmanager.com/gtag/js?id={id}'
-                ></script>
-                <script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){{ dataLayer.push(arguments); }}
-                    gtag('js', new Date());
-                    gtag('config', '{id}');
-                </script>
-                """
-            else:
-                script = f"""
-                    <script
-                        async
-                        src='https://www.google-analytics.com/analytics.js'
-                    ></script>
-                    <script>
-                        window.ga = window.ga || function () {{
-                            (ga.q = ga.q || []).push(arguments) }};
-                        ga.l = +new Date;
-                        ga('create', '{id}', 'auto');
-                        ga('set', 'anonymizeIp', true);
-                        ga('send', 'pageview');
-                    </script>
-                """
-            soup = bs(script, "html.parser")
-            return soup
-        else:
-            return ""
-
     context["generate_nav_html"] = generate_nav_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
-    context["generate_google_analytics_script"] = generate_google_analytics_script
 
 
 def _add_collapse_checkboxes(soup):
