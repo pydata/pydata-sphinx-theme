@@ -19,7 +19,7 @@ doc path's _static folder, and use the following configuration:
 
    html_logo = "_static/logo.png"
 
-The logo links to ``master_doc`` (usually the first page of your documentation) by default.
+The logo links to ``root_doc`` (usually the first page of your documentation) by default.
 If you'd like it to link to another page or use an external link instead, use the following configuration:
 
 .. code:: python

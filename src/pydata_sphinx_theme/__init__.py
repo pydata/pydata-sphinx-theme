@@ -365,8 +365,8 @@ def _get_local_toctree_for(
 ):
     """Return the "local" TOC nodetree (relative to `indexname`)."""
     # this is a copy of `TocTree.get_toctree_for`, but where the sphinx version
-    # always uses the "master" doctree:
-    #     doctree = self.env.get_doctree(self.env.config.master_doc)
+    # always uses the "root" doctree:
+    #     doctree = self.env.get_doctree(self.env.config.root_doc)
     # we here use the `indexname` additional argument to be able to use a subset
     # of the doctree (e.g. starting at a second level for the sidebar):
     #     doctree = app.env.tocs[indexname].deepcopy()
