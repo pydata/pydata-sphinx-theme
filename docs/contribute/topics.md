@@ -212,15 +212,35 @@ The output of the last command includes:
 - a short summary of the current state of the accessibility rules we are trying to maintain
 - local paths to JSON and HTML reports which contain all of the issues found
 
-## Update support for new Sphinx versions
+## Supporting new Python versions
 
-This theme does not pin the upper version of Sphinx that it supports, but there may be changes that need to happen when Sphinx releases a new version.
-As a general rule, we try to support new major Sphinx versions within 6 months of its release.
+For releases of Python, we aim to follow this approach[^1]:
 
-Here's a list of things to check when Sphinx releases a new version:
+> For a new major/minor release of this theme, we support any minor Python versions released in the last 42 months, as defined in [the EOL schedule for Python](https://endoflife.date/python).
 
-- [Look at the Sphinx Changelog](https://www.sphinx-doc.org/en/master/changes.html) and make sure there are no obvious breaking changes.
-- [Look at the deprecated API changes](https://www.sphinx-doc.org/en/master/extdev/deprecated.html) and make sure there are no obvious breaking changes.
+We define "support" as testing against each of these versions, so that users can be assured they will not trigger any bugs.
+
+For example, if we made a minor release tomorrow, we'd [look at the EOL schedule for Python](https://endoflife.date/python) and support all of the versions that fall within a 3.5 year window.
+
+[^1]: Our support for Python versions is inspired by [NEP 029](https://numpy.org/neps/nep-0029-deprecation_policy.html).
+
+## Supporting new Sphinx versions
+
+For supporting versions of Sphinx, we aim to follow this approach:
+
+> We support the latest released version of Sphinx that is **older than 6 months**.
+> We unofficially support earlier released versions of Sphinx, but may increase the lower-bound in our dependency pin without warning if needed.
+
+When a new pre-release of Sphinx is released, we should follow these steps:
+
+- Ensure that our tests are passing. We run our tests with any **pre-releases** of Sphinx, so we can test major errors quickly and make the necessary changes.
+- [Look at the Sphinx Changelog](https://www.sphinx-doc.org/en/master/changes.html) and make sure there are no changes that might break things that aren't captured by our tests.
+- [Look at the deprecated API changes](https://www.sphinx-doc.org/en/master/extdev/deprecated.html) and make sure there are no changes that might break things that aren't captured by our tests.
+
+```{note}
+This theme does not pin the upper version of Sphinx that it supports.
+If a Sphinx release causes major breaking changes for our users, and we do not have the capacity to update our code and release a fix, we may temporarily pin the upper bound of Sphinx we support until this is fixed.
+```
 
 ## Update our kitchen sink documents
 
