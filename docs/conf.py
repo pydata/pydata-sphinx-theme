@@ -149,9 +149,9 @@ html_sidebars = {
 myst_heading_anchors = 2
 
 html_context = {
-    "github_user": "pandas-dev",
+    "github_user": "pydata",
     "github_repo": "pydata-sphinx-theme",
-    "github_version": "master",
+    "github_version": "main",
     "doc_path": "docs",
 }
 

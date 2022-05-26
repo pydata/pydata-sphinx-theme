@@ -4,7 +4,7 @@ project = "PyData Tests"
 copyright = "2020, Pydata community"
 author = "Pydata community"
 
-master_doc = "index"
+root_doc = "index"
 
 # -- General configuration ---------------------------------------------------
 
