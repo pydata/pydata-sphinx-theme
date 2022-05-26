@@ -1,4 +1,4 @@
-# Topic guides and how-tos
+# Contribution guides
 
 These sections cover common operations and topics that are relevant to developing this theme.
 
@@ -216,7 +216,7 @@ The output of the last command includes:
 
 For releases of Python, we aim to follow this approach[^1]:
 
-> For a new major/minor release of this theme, we support any minor Python versions released in the last 42 months, as defined in [the EOL schedule for Python](https://endoflife.date/python).
+> For a new major/minor release of this theme, we support any minor Python versions released in the last 42 months, as defined in [the EOL schedule for Python](https://endoflife.date/python)[^2].
 
 We define "support" as testing against each of these versions, so that users can be assured they will not trigger any bugs.
 
@@ -224,12 +224,14 @@ For example, if we made a minor release tomorrow, we'd [look at the EOL schedule
 
 [^1]: Our support for Python versions is inspired by [NEP 029](https://numpy.org/neps/nep-0029-deprecation_policy.html).
 
+[^2]: These policies are goals, but not promises. We are a volunteer-led community with limited time. Consider these sections to be our intention, but we recognize that we may not always be able to meet these criteria if we do not have capacity to do so. We welcome contributions from others to help us more sustainably meet these goals!
+
 ## Supporting new Sphinx versions
 
 For supporting versions of Sphinx, we aim to follow this approach:
 
 > We support the latest released version of Sphinx that is **older than 6 months**.
-> We unofficially support earlier released versions of Sphinx, but may increase the lower-bound in our dependency pin without warning if needed.
+> We unofficially support earlier released versions of Sphinx, but may increase the lower-bound in our dependency pin without warning if needed[^2].
 
 When a new pre-release of Sphinx is released, we should follow these steps:
 
