@@ -47,7 +47,9 @@ jobs:
 
       - name: Install pre-release dependencies
         if: ${{ matrix.dev }}
-        run: pip install --upgrade --pre sphinx jinja2
+        run: |
+          pip install docutils==0.18.1
+          pip install --upgrade --pre sphinx jinja2
 
       # Build the docs
       - name: Build docs to store
