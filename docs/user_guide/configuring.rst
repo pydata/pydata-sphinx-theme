@@ -52,7 +52,7 @@ As the Sphinx theme supports multiple modes, the code highlighting colors can be
 
 .. code-block:: python
 
-   html_context = {
+   html_theme_options = {
       ...
       "pygment_light_style": "tango",
       "pygment_dark_style": "native"
