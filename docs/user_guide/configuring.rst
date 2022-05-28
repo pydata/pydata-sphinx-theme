@@ -83,6 +83,11 @@ These links take the following form:
                "icon": "fab fa-github-square",
                # The type of image to be used (see below for details)
                "type": "fontawesome",
+               # Add additional attributes to the href link. The defaults of target and rel may be overwritten.
+               "additionalAttributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+               }
            }
       ]
    }
@@ -132,6 +137,10 @@ Here are several examples:
                "name": "Mastodon",
                "url": "https://<your-host>@<your-handle>",
                "icon": "fab fa-mastodon",
+               "additionalAttributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+               }
            },
        ],
        ...
