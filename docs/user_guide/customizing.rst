@@ -171,7 +171,19 @@ In order to change a variable, follow these steps:
 For a complete list of the theme variables that you may override, see the
 `theme variables defaults CSS file <pydata-css-variables_>`_:
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_layout.scss
+  :language: CSS
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_fonts.scss
+  :language: CSS
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_icons.scss
+  :language: CSS
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_admonitions.scss
+  :language: CSS
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_versionmodified.scss
   :language: CSS
 
 Color variables
@@ -196,8 +208,8 @@ You can control the colors used for these variables for each theme by
 For a complete list of the theme colors that you may override, see the
 `color variables defaults CSS file <pydata-css-colors_>`_:
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/base/_color.scss
-  :language: scss
+.. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/assets/styles/variables/_color.scss
+  :language: CSS
 
 Change footer display
 =====================
@@ -279,8 +291,8 @@ The default body and header fonts can be changed as follows:
     specifically the binary font files. This ensure the files will be loaded
     before waiting for the CSS to be parsed, but should be used with care.
 
-.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
-.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/base/_color.scss
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/
+.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 .. meta::
