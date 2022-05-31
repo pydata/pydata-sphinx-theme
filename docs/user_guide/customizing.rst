@@ -208,7 +208,7 @@ You can control the colors used for these variables for each theme by
 For a complete list of the theme colors that you may override, see the
 `color variables defaults CSS file <pydata-css-colors_>`_:
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/assets/styles/variables/_color.scss
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss
   :language: scss
 
 Change footer display
