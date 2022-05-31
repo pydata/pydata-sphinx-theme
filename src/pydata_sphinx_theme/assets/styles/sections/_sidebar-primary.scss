@@ -90,7 +90,7 @@
 
 /* Between-page links and captions */
 nav.bd-links {
-  font-size: var(--pst-sidebar-font-size);
+  font-size: var(--pst-sidebar-primary-font-size);
 
   ul {
     list-style: none;
@@ -129,7 +129,7 @@ nav.bd-links {
 
   // Toctree captions
   p.caption {
-    font-size: var(--pst-sidebar-caption-font-size);
+    font-size: var(--pst-sidebar-primary-caption-font-size);
     text-transform: uppercase;
     font-weight: bold;
     position: relative;
