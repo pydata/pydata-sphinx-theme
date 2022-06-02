@@ -171,8 +171,20 @@ In order to change a variable, follow these steps:
 For a complete list of the theme variables that you may override, see the
 `theme variables defaults CSS file <pydata-css-variables_>`_:
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
-  :language: CSS
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_layout.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_fonts.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_icons.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_admonitions.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_versionmodified.scss
+  :language: scss
 
 Color variables
 ---------------
@@ -196,7 +208,7 @@ You can control the colors used for these variables for each theme by
 For a complete list of the theme colors that you may override, see the
 `color variables defaults CSS file <pydata-css-colors_>`_:
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/base/_color.scss
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss
   :language: scss
 
 Change footer display
@@ -209,12 +221,12 @@ To change this behavior so that they stack **horizontally**, add a rule like the
 
 .. code-block:: css
 
-   // Make each footer item in-line so they stack horizontally instead of vertically
+   /* Make each footer item in-line so they stack horizontally instead of vertically */
    .footer-item {
      display: inline-block;
    }
 
-   // Add a separating border line for all but the last item
+   /* Add a separating border line for all but the last item */
    .footer-item:not(:last-child) {
      border-right: 1px solid var(--pst-color-text-base);
      margin-right: .5em;
@@ -243,7 +255,7 @@ The default body and header fonts can be changed as follows:
   and monospace text. For example, the following can be added to a custom
   css file:
 
-  .. code-block:: none
+  .. code-block:: css
 
       :root {
           --pst-font-family-base: Verdana, var(--pst-font-family-base-system);
@@ -279,8 +291,8 @@ The default body and header fonts can be changed as follows:
     specifically the binary font files. This ensure the files will be loaded
     before waiting for the CSS to be parsed, but should be used with care.
 
-.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
-.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/base/_color.scss
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/
+.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 .. meta::
