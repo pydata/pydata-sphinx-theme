@@ -382,7 +382,9 @@ def _get_local_toctree_for(
         kwargs["maxdepth"] = int(kwargs["maxdepth"])
     kwargs["collapse"] = collapse
 
-    for toctreenode in doctree.traverse(addnodes.toctree):
+    # FIX: Can just use "findall" once docutils 0.18+ is required
+    meth = "findall" if hasattr(doctree, "findall") else "traverse"
+    for toctreenode in getattr(doctree, meth)(addnodes.toctree):
         toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwargs)
         if toctree:
             toctrees.append(toctree)
