@@ -216,7 +216,7 @@ The output of the last command includes:
 
 For releases of Python, we aim to follow this approach[^1]:
 
-> For a new major/minor release of this theme, we support any minor Python versions released in the last 42 months, as defined in [the EOL schedule for Python](https://endoflife.date/python)[^2].
+> For a new major/minor release of this theme, we support any minor Python versions released in the last 3.5 years (42 months), as defined in [the EOL schedule for Python](https://endoflife.date/python)[^2].
 
 We define "support" as testing against each of these versions, so that users can be assured they will not trigger any bugs.
 
@@ -237,6 +237,7 @@ When a new pre-release of Sphinx is released, we should follow these steps:
 - Ensure that our tests are passing. We run our tests with any **pre-releases** of Sphinx, so we can test major errors quickly and make the necessary changes.
 - [Look at the Sphinx Changelog](https://www.sphinx-doc.org/en/master/changes.html) and make sure there are no changes that might break things that aren't captured by our tests.
 - [Look at the deprecated API changes](https://www.sphinx-doc.org/en/master/extdev/deprecated.html) and make sure there are no changes that might break things that aren't captured by our tests.
+- [Look at the docutils changelog](https://docutils.sourceforge.io/RELEASE-NOTES.html) in case there's a new docutils version supported that breaks something.
 
 ```{note}
 This theme does not pin the upper version of Sphinx that it supports.
