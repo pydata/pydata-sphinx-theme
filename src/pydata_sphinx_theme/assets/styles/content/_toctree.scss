@@ -1,0 +1,27 @@
+/**
+ * Style the toctree component
+ */
+
+p.caption {
+  font-size: 1.5em;
+  margin-bottom: 0em;
+}
+
+.toctree-wrapper > ul {
+  padding-left: 0;
+}
+
+li.toctree-l1 {
+  list-style: none;
+  margin-bottom: 0.5em;
+}
+
+li.toctree-l1 > a {
+  list-style: none;
+  font-size: 1.3em;
+}
+
+li.toctree-l1 > ul {
+  padding-inline-start: 1.5em;
+  list-style: none;
+}
