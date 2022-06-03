@@ -12,12 +12,34 @@ you can configure in various ways. This page describes the options available to 
 Configure project logo
 ======================
 
-To add a logo that's placed at the left of your nav bar, put a logo file under your
-doc path's _static folder, and use the following configuration:
+By default the theme will use the name of your project on the left side of the header navbar. This can be replaced by a Logo.
+
+Single logo for light and dark mode
+-----------------------------------
+
+Put a logo file under your doc html static path folder, and use the following configuration:
 
 .. code:: python
 
+   html_static_path = ["_static"]
    html_logo = "_static/logo.png"
+
+Different logo for light and dark mode
+--------------------------------------
+
+If you're project logo is not adapted to a dark theme (light background, not enought contrast etc...), this theme allows you to use a different version of your logo in each available mode (``dark``and ``light``).
+As for single logo, put the 2 files in your html static path and set the ``light_logo``adn ``dark_logo`` in ``html_theme_option`` using the relative path to the static dir:
+
+.. code:: python
+
+   html_static_path = ["_static"]
+   html_theme_options = {
+       "light_logo": "logo-light.png",
+       "dark_logo": "logo-dark.png",
+   }
+
+Customize logo link
+-------------------
 
 The logo links to ``root_doc`` (usually the first page of your documentation) by default.
 If you'd like it to link to another page or use an external link instead, use the following configuration:
@@ -31,8 +53,8 @@ If you'd like it to link to another page or use an external link instead, use th
 
 .. _icon-links:
 
-Configure default theme
-=======================
+Configure default mode
+======================
 
 The theme mode can be changed by the user. By default landing on the documentation will switch the mode to ``auto``. You can specified this value to be one of ``auto``, ``dark``, ``light``.
 
