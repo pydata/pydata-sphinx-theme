@@ -24,10 +24,10 @@ Put a logo file under your doc html static path folder, and use the following co
    html_static_path = ["_static"]
    html_logo = "_static/logo.png"
 
-Different logo for light and dark mode
---------------------------------------
+Different logos for light and dark mode
+---------------------------------------
 
-If you're project logo is not adapted to a dark theme (light background, not enought contrast etc...), this theme allows you to use a different version of your logo in each available mode (``dark``and ``light``).
+If your project logo is not adapted to a dark mode (light background, not enought contrast etc...), this theme allows you to use a different version of your logo in each available mode (``dark``and ``light``).
 As for single logo, put the 2 files in your html static path and set the ``light_logo``adn ``dark_logo`` in ``html_theme_option`` using the relative path to the static dir:
 
 .. code:: python
