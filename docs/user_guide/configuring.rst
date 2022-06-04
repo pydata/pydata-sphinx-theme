@@ -18,7 +18,7 @@ This can be replaced by a Logo image, and optionally a custom `html_title` as we
 Single logo for light and dark mode
 -----------------------------------
 
-Put a logo file under your doc html static path folder, and use the following configuration:
+Put an image in a folder that is in `html_static_path`, and use the following configuration:
 
 .. code:: python
 
