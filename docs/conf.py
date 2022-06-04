@@ -165,12 +165,10 @@ html_css_files = ["custom.css"]
 
 # --- custom gallery of websites -----------------------------------------------
 from pathlib import Path
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.utils import ChromeType
-from selenium.webdriver.chrome.options import Options
 import json
 from shutil import copy
+from playwright.sync_api import sync_playwright
+
 
 gallery_item = (Path(__file__).parent / "_templates/gallery_item.rst").read_text()
 gallery = json.loads((Path(__file__).parent / "_templates/gallery.json").read_text())
@@ -179,15 +177,14 @@ dst = Path(__file__).parent / "user_guide/gallery.rst"
 copy(src, dst)
 
 
-driver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(driver_path, options=chrome_options)
+with dst.open("a") as f, sync_playwright() as p:
 
-with dst.open("a") as f:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+
     for item in gallery:
 
-        driver.get(item["website"])
-        driver.save_screenshot(f"_static/{item['name']}.png")
+        page.goto(item["website"])
+        page.screenshot(path=f"_static/{item['name']}.png")
 
         f.write(gallery_item.format(**item))

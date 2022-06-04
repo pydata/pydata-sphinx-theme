@@ -45,11 +45,6 @@
     "repo": "https://github.com/fairlearn/fairlearn"
   },
   {
-    "name": "MegEngine",
-    "website": "https://www.megengine.org.cn/doc/stable/en/index.html",
-    "repo": "https://github.com/MegEngine/MegEngine"
-  },
-  {
     "name": "Jupyter Book",
     "website": "https://jupyterbook.org/en/stable/intro.html",
     "repo": "https://github.com/executablebooks/jupyter-book"
