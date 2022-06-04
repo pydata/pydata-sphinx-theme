@@ -1,6 +1,6 @@
 {% if not theme_logo_link %}
   {% set href = pathto(root_doc) %}
-{% elif theme_logo_link[:4] == "http" %}
+{% elif theme_logo_link.startswith("http") %}
   {% set href = theme_logo_link %}
 {% else %}
   {% set href = pathto(theme_logo_link) %}
