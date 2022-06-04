@@ -189,6 +189,11 @@ For a complete list of the theme variables that you may override, see the
 Color variables
 ---------------
 
+There are two special color variables for primary and secondary theme colors (``--pst-color-primary`` and ``--pst-color-secondary``, respectively).
+These are meant to complement one another visually across the theme, if you modify these, choose colors that look good when paired with one another.
+
+There are also several other color variables that control color for admonitions, links, menu items, etc.
+
 Each color variable has two values, one corresponding to the "light" and one for the "dark" theme.
 These are used throughout many of the theme elements to define text color, background color, etc.
 
