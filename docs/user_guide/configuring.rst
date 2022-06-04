@@ -47,7 +47,7 @@ For more information, see :ref:`manage-themes`.
 
 .. tip::
 
-   To completely remove the theme management set the default_mode on the one you want to use in your documentation (``light`` or ``dark``) and then remove the theme-switcher from the header navbar:
+   To completely remove the theme management, configure ``default_mode`` to the value you want in your documentation (``light`` or ``dark``) and then remove the theme-switcher from the ``navbar_end`` section of the header navbar configuration:
 
    .. code-block:: python
 
