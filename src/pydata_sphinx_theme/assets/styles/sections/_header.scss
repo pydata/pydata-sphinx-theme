@@ -8,7 +8,9 @@
     height: 100%;
   }
 
-  #navbar-end {
+  #navbar-end,
+  #navbar-center,
+  #navbar-start {
     display: flex;
     align-items: center;
   }
