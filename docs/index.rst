@@ -35,6 +35,16 @@ Sites that use this theme
 - Fairlearn: https://fairlearn.org/main/about/
 - PyVista: https://docs.pyvista.org
 
+Aknowledgment and inspirations
+==============================
+
+To build this theme we drew inspiration from other great projects on the web that we would like to aknowledge here:
+
+- GitBook / Metaflow: https://docs.metaflow.org/introduction/what-is-metaflow
+- Furo: https://pradyunsg.me/furo/quickstart (and we also draw a lot of implementation / code from this)
+- Docker: https://docs.docker.com/engine/docker-overview/
+- PyTorch: https://pytorch.org/docs/stable/notes/autograd.html
+
 
 .. toctree::
    :caption: Theme Documentation
