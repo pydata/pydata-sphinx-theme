@@ -183,8 +183,8 @@ with dst.open("a") as f, sync_playwright() as p:
     page = browser.new_page()
 
     for item in gallery:
-
+        item["id"] = item["name"].lower().remplace(" ", "_")
         page.goto(item["website"])
-        page.screenshot(path=f"_static/gallery/{item['name']}.png")
+        page.screenshot(path=f"_static/gallery/{item['id']}.png")
 
         f.write(gallery_item.format(**item))
