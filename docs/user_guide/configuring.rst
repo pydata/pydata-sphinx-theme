@@ -28,8 +28,10 @@ Put an image in a folder that is in `html_static_path`, and use the following co
 Different logos for light and dark mode
 ---------------------------------------
 
-If your project logo is not adapted to a dark mode (light background, not enought contrast etc...), this theme allows you to use a different version of your logo in each available mode (``dark``and ``light``).
-As for single logo, put the 2 files in your html static path and set the ``light_logo``adn ``dark_logo`` in ``html_theme_option`` using the relative path to the static dir:
+You may specify use a different version of your logo image for "light" and "dark" modes.
+This is useful if your logo image is not adapted to a dark mode (light background, not enough contrast, etc...).
+
+To do so, put the 2 image files in a folder that is in ``html_static_path`` and configure the relative path to each image with ``light_logo`` and ``dark_logo`` in ``html_theme_options``, like so:
 
 .. code-block:: python
 
@@ -41,7 +43,7 @@ As for single logo, put the 2 files in your html static path and set the ``light
 
 .. note::
 
-   The ``light_logo`` and ``dark_logo`` are overriding the initial ``html_logo`` setting. In your doc simply add the ``dark_logo`` and the theme will continue to use the ``html_logo`` for light theme.
+   The ``light_logo`` and ``dark_logo`` override the initial ``html_logo`` setting. If you only specify ``dark_logo`` and not ``light_logo``, the theme will re-use the path of ``html_logo`` for the light theme.
 
 Customize logo link
 -------------------
