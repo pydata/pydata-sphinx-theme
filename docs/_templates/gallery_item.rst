@@ -1,6 +1,6 @@
 
     .. grid-item-card:: {name}
-        :img-top: _static/{name}.png
+        :img-top: ../_static/gallery/{name}.png
 
         .. button-link:: {website}
             :expand:
