@@ -44,7 +44,9 @@ jobs:
 
       - name: Install pre-release dependencies
         if: ${{ matrix.dev }}
-        run: pip install --upgrade --pre sphinx jinja2
+        run: |
+          pip install --upgrade --pre sphinx jinja2
+          playwright install
 
       - name: Build docs to store
         run: |
