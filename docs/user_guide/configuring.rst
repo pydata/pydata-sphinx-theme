@@ -12,7 +12,8 @@ you can configure in various ways. This page describes the options available to 
 Configure project logo
 ======================
 
-By default the theme will use the name of your project on the left side of the header navbar. This can be replaced by a Logo.
+By default the theme will use the value of `project` on the left side of the header navbar.
+This can be replaced by a Logo image, and optionally a custom `html_title` as well.
 
 Single logo for light and dark mode
 -----------------------------------
