@@ -21,6 +21,7 @@ For example, see the links in the sidebar for the other pages in this section.
    sections
    customizing
    accessibility
+   gallery
 
 .. meta::
     :description lang=en:

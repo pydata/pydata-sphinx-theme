@@ -67,10 +67,8 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 # -- Extension options -------------------------------------------------------
 
-myst_enable_extensions = [
-    # This allows us to use ::: to denote directives, useful for admonitions
-    "colon_fence",
-]
+# This allows us to use ::: to denote directives, useful for admonitions
+myst_enable_extensions = ["colon_fence"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -164,3 +162,32 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+
+# --- custom gallery of websites -----------------------------------------------
+from pathlib import Path
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
+from selenium.webdriver.chrome.options import Options
+import json
+from shutil import copy
+
+gallery_item = (Path(__file__).parent / "_templates/gallery_item.rst").read_text()
+gallery = json.loads((Path(__file__).parent / "_templates/gallery.json").read_text())
+src = Path(__file__).parent / "_templates/gallery.rst"
+dst = Path(__file__).parent / "user_guide/gallery.rst"
+copy(src, dst)
+
+
+driver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+driver = webdriver.Chrome(driver_path, options=chrome_options)
+
+with dst.open("a") as f:
+    for item in gallery:
+
+        driver.get(item["website"])
+        driver.save_screenshot(f"_static/{item['name']}.png")
+
+        f.write(gallery_item.format(**item))

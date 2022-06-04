@@ -2,6 +2,14 @@ version: 2
 formats:
   - htmlzip
 
+# build with latest available ubuntu version
+build:
+  os: ubuntu-20.04
+  apt_packages:
+    - chromium-browser
+  tools:
+    python: "3.9"
+
 python:
   version: 3
   install:

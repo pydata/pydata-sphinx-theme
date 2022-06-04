@@ -53,6 +53,7 @@ doc = [
   "numpy",
   "xarray",
   "sphinx-design",
+  "selenium"
 ]
 test = [
   "pytest",
