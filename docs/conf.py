@@ -185,6 +185,6 @@ with dst.open("a") as f, sync_playwright() as p:
     for item in gallery:
 
         page.goto(item["website"])
-        page.screenshot(path=f"_static/{item['name']}.png")
+        page.screenshot(path=f"_static/gallery/{item['name']}.png")
 
         f.write(gallery_item.format(**item))
