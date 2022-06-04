@@ -39,11 +39,23 @@ The theme mode can be changed by the user. By default landing on the documentati
 .. code-block:: python
 
    html_context = {
-      ...
-      "default_mode": "auto"
+      # ...
+      "default_mode": "light"
    }
 
 For more information, see :ref:`manage-themes`.
+
+.. tip::
+
+   To completely remove the theme management, configure ``default_mode`` to the value you want in your documentation (``light`` or ``dark``) and then remove the theme-switcher from the ``navbar_end`` section of the header navbar configuration:
+
+   .. code-block:: python
+
+      html_theme_options {
+          # ...
+          # Note we have omitted `theme-switcher` below
+          "navbar_end": ["navbar-icon-links"]
+      }
 
 Configure pygment theme
 =======================
