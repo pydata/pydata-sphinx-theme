@@ -53,6 +53,7 @@ For more information, see :ref:`manage-themes`.
 
       html_theme_options {
           # ...
+          # Note we have omitted `theme-switcher` below
           "navbar_end": ["navbar-icon-links"]
       }
 
