@@ -13,3 +13,10 @@ td {
     text-align: center;
   }
 }
+
+// customize table caption from bootstrap
+// to display them on top and centered
+table caption {
+  text-align: center;
+  caption-side: top;
+}
