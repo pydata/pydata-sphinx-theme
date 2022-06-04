@@ -33,6 +33,7 @@ $grid-breakpoints: (
 @import "./base/base";
 
 // Major theme layout, skeleton, and whitespace
+@import "./sections/container";
 @import "./sections/article";
 @import "./sections/footer";
 @import "./sections/footer-article";

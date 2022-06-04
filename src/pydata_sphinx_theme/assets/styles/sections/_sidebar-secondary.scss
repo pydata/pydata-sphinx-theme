@@ -27,15 +27,14 @@
 .bd-toc {
   -ms-flex-order: 2;
   order: 2;
-
-  height: calc(100vh - 2rem);
+  max-height: calc(100vh - 2rem);
   overflow-y: auto;
 
   @supports (position: -webkit-sticky) or (position: sticky) {
     position: -webkit-sticky;
     position: sticky;
     top: var(--pst-header-height);
-    height: calc(100vh - 5rem);
+    max-height: calc(100vh - 5rem);
     overflow-y: auto;
   }
 

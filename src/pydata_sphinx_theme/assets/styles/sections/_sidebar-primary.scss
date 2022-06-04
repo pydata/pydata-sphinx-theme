@@ -16,7 +16,7 @@
       position: sticky;
       top: var(--pst-header-height);
       z-index: 1000;
-      height: calc(100vh - var(--pst-header-height));
+      max-height: calc(100vh - var(--pst-header-height));
     }
   }
 
