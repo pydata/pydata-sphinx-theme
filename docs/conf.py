@@ -78,7 +78,7 @@ myst_enable_extensions = [
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-# html_logo = "_static/pandas.svg"  # For testing
+html_logo = "_static/logo.svg"
 
 # Define the json_url for our version switcher.
 json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
@@ -126,9 +126,9 @@ html_theme_options = {
     # "show_nav_level": 2,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    # "navbar_start": ["navbar-logo", "navbar-version"],
+    "navbar_start": ["navbar-logo", "version-switcher"],
     # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
-    "navbar_end": ["theme-switcher", "version-switcher", "navbar-icon-links"],
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {

@@ -581,7 +581,7 @@ of the locations in ``html_theme_options`` (e.g., ``navbar_end``,
 
    html_theme_options = {
       ...,
-      "navbar_end": ["version-switcher"]
+      "navbar_start": ["navbar-logo", "version-switcher"]
    }
 
 

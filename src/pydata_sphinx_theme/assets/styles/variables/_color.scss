@@ -7,7 +7,8 @@ html[data-theme="light"] {
   /*****************************************************************************
   * main colors
   */
-  --pst-color-primary: rgb(19, 6, 84);
+  --pst-color-primary: rgb(86 166 192);
+  --pst-color-secondary: rgb(238 144 64);
   --pst-color-success: rgb(40, 167, 69);
   --pst-color-info: rgb(0, 123, 255);
   --pst-color-warning: rgb(255, 193, 7);
@@ -41,8 +42,8 @@ html[data-theme="light"] {
   */
 
   // links
-  --pst-color-link: rgb(0, 91, 129);
-  --pst-color-link-hover: rgb(227, 46, 0);
+  --pst-color-link: var(--pst-color-primary);
+  --pst-color-link-hover: var(--pst-color-secondary);
 
   // inline code
   --pst-color-inline-code: rgb(232, 62, 140);
@@ -65,7 +66,8 @@ html[data-theme="dark"] {
   /*****************************************************************************
   * main colors
   */
-  --pst-color-primary: rgb(76, 145, 219);
+  --pst-color-primary: rgb(86 166 192);
+  --pst-color-secondary: rgb(238 144 64);
   --pst-color-success: rgb(72, 135, 87);
   --pst-color-info: rgb(64, 125, 191);
   --pst-color-warning: rgb(193, 162, 69);
@@ -100,7 +102,7 @@ html[data-theme="dark"] {
 
   // links
   --pst-color-link: var(--pst-color-primary);
-  --pst-color-link-hover: rgb(170, 103, 196);
+  --pst-color-link-hover: var(--pst-color-secondary);
 
   // inline code
   --pst-color-inline-code: rgb(221, 158, 194);

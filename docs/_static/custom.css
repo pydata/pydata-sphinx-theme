@@ -1,5 +1,6 @@
 :root {
   --sd-color-primary: var(--pst-color-primary);
+  --sd-color-secondary: var(--pst-color-secondary);
 }
 
 /* Background of stsable should be green */
