@@ -45,6 +45,7 @@ To build this theme we drew inspiration from other great projects on the web tha
 - Docker: https://docs.docker.com/engine/docker-overview/
 - PyTorch: https://pytorch.org/docs/stable/notes/autograd.html
 
+Thanks to [@drammock](https://github.com/drammock) for initial design of the theme logo.
 
 .. toctree::
    :caption: Theme Documentation
