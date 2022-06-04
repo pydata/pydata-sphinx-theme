@@ -635,14 +635,14 @@ In addition, the parent button of the dropdown list contains similar metadata
 about the **current version**. This could be used to style the entire dropdown
 a certain color based on the active version.
 
-For example, if you wanted to style the dropdown button orange if it was a ``dev``
+For example, if you wanted to style the dropdown button to use the theme's secondary color (PyData orange by default) if it was a ``dev``
 version, you could use the following CSS selector:
 
 .. code-block:: scss
 
    // If the active version has the name "dev", style it orange
    #version_switcher_button[data-active-version-name*="dev"] {
-      background-color: rgb(255 138 62);
+      background-color: var(--pst-color-secondary);
    }
 
 .. seealso::

@@ -17,6 +17,6 @@
 
 /* If we're on a dev version, make the switcher button orange */
 #version_switcher_button[data-active-version-name*="dev"] {
-  background-color: rgb(255 138 62);
-  border-color: rgb(255 138 62);
+  background-color: var(--pst-color-secondary);
+  border-color: var(--pst-color-secondary);
 }

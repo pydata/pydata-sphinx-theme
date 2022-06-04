@@ -2,3 +2,11 @@
   background-color: var(--pst-color-primary);
   border-color: var(--pst-color-primary);
 }
+
+#version_switcher_menu {
+  // Over-rides Bootstrap default blue
+  a.list-group-item.active {
+    background-color: var(--pst-color-primary);
+    border-color: var(--pst-color-primary);
+  }
+}
