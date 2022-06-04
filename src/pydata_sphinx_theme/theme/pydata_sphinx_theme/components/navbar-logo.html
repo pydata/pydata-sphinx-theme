@@ -6,26 +6,13 @@
   {% set href = pathto(theme_logo_link) %}
 {% endif %}
 
-{% if theme_dark_logo and theme_light_logo %}
-
-  <a class="navbar-brand only-light" href="{{ href }}">
-    <img src="{{ pathto('_static/' + theme_light_logo, 1) }}" class="logo" alt="logo">
-  </a>
-
-  <a class="navbar-brand only-dark" href="{{ href }}">
-    <img src="{{ pathto('_static/' + theme_dark_logo, 1) }}" class="logo" alt="logo">
-  </a>
-
-{% elif logo %}
-
 <a class="navbar-brand" href="{{ href }}">
-  <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
+  {% set is_logo = theme_dark_logo or theme_light_logo or logo %}
+  {% if is_logo %}
+    <img src="{{ pathto('_static/' + theme_light_logo or logo, 1) }}" class="logo only-light" alt="logo">
+    <img src="{{ pathto('_static/' + theme_dark_logo or logo, 1) }}" class="logo only-dark" alt="logo">
+  {% endif %}
+  {% if not is_logo or theme_html_title %}
+    <p class="title">{{ theme_html_title or project }}</p>
+  {% endif %}
 </a>
-
-{% else %}
-
-  <a class="navbar-brand" href="{{ href }}">
-    <p class="title">{{ project }}</p>
-  </a>
-
-{% endif %}
