@@ -30,7 +30,7 @@ Different logos for light and dark mode
 If your project logo is not adapted to a dark mode (light background, not enought contrast etc...), this theme allows you to use a different version of your logo in each available mode (``dark``and ``light``).
 As for single logo, put the 2 files in your html static path and set the ``light_logo``adn ``dark_logo`` in ``html_theme_option`` using the relative path to the static dir:
 
-.. code:: python
+.. code-block:: python
 
    html_static_path = ["_static"]
    html_theme_options = {
@@ -38,16 +38,31 @@ As for single logo, put the 2 files in your html static path and set the ``light
        "dark_logo": "logo-dark.png",
    }
 
+.. note::
+
+   The ``light_logo`` and ``dark_logo`` are overriding the initial ``html_logo`` setting. In your doc simply add the ``dark_logo`` and the theme will continue to use the ``html_logo`` for light theme.
+
 Customize logo link
 -------------------
 
 The logo links to ``root_doc`` (usually the first page of your documentation) by default.
 If you'd like it to link to another page or use an external link instead, use the following configuration:
 
-.. code:: python
+.. code-block:: python
 
    html_theme_options = {
        "logo_link": "<other page or external link>"
+   }
+
+Customize title
+---------------
+
+If you don't have a brand and you want to add a customize title to you documentation, add ``html_title`` to your documentation. If this parameter is set with a logo, the title will appear next to it.
+
+.. code-block:: python
+
+   html_theme_options = {
+       "html_title": "My awesome documentation"
    }
 
 
