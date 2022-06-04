@@ -57,10 +57,11 @@ If you'd like it to link to another page or use an external link instead, use th
        "logo_link": "<other page or external link>"
    }
 
-Customize title
----------------
+Add a logo title
+----------------
 
-If you don't have a brand and you want to add a customize title to you documentation, add ``html_title`` to your documentation. If this parameter is set with a logo, the title will appear next to it.
+To add a title in the brand section of your documentation, define a value for ``html_title``.
+This will appear just after your logo if it is set.
 
 .. code-block:: python
 
