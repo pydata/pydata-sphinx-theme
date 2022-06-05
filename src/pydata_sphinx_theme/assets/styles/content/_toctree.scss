@@ -1,27 +1,33 @@
 /**
- * Style the toctree component
+ * Style the toctree component in pages (avoid modifying the navbars)
  */
+.toctree-wrapper {
+  p.caption {
+    font-size: 1.5em;
+    margin-bottom: 0em;
+  }
 
-p.caption {
-  font-size: 1.5em;
-  margin-bottom: 0em;
-}
+  & > ul {
+    padding-left: 0;
+  }
 
-.toctree-wrapper > ul {
-  padding-left: 0;
-}
+  .toctree-l1,
+  .toctree-l2,
+  .toctree-l3,
+  .toctree-l4,
+  .toctree-l5,
+  .toctree-l6 {
+    list-style: none;
+    margin-bottom: 0.5em;
 
-li.toctree-l1 {
-  list-style: none;
-  margin-bottom: 0.5em;
-}
+    & > a {
+      list-style: none;
+      font-size: 1.3em;
+    }
 
-li.toctree-l1 > a {
-  list-style: none;
-  font-size: 1.3em;
-}
-
-li.toctree-l1 > ul {
-  padding-inline-start: 1.5em;
-  list-style: none;
+    & > ul {
+      list-style: none;
+      padding-inline-start: 1.5em;
+    }
+  }
 }
