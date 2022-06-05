@@ -86,10 +86,9 @@ html_theme_options = {
             "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
             "name": "Changelog",
         },
-        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"},
     ],
     "github_url": "https://github.com/pydata/pydata-sphinx-theme",
-    "twitter_url": "https://twitter.com/pandas_dev",
+    "twitter_url": "https://twitter.com/PyData",
     "icon_links": [
         {
             "name": "PyPI",
@@ -97,9 +96,9 @@ html_theme_options = {
             "icon": "fas fa-box",
         },
         {
-            "name": "Pandas",
-            "url": "https://pandas.pydata.org",
-            "icon": "_static/pandas-square.svg",
+            "name": "PyData",
+            "url": "https://pydata.org",
+            "icon": "_static/pydata-logo.png",
             "type": "local",
         },
     ],
