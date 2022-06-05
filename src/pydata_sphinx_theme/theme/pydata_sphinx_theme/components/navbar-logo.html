@@ -7,14 +7,14 @@
 {% endif %}
 
 <a class="navbar-brand" href="{{ href }}">
-  {% set is_logo = theme_dark_logo or theme_light_logo or logo %}
-  {% if not theme_light_logo %}{% set theme_light_logo = logo %}{% endif %}
-  {% if not theme_dark_logo %}{% set theme_dark_logo = logo %}{% endif %}
+  {% set is_logo = logo or "image_light" in theme_logo or "image_dark" in theme_logo %}
+  {% set image_light = theme_logo.get("image_light", logo) %}
+  {% set image_dark = theme_logo.get("image_dark", logo) %}
   {% if is_logo %}
-    <img src="{{ pathto('_static/' + theme_light_logo, 1) }}" class="logo only-light" alt="logo">
-    <img src="{{ pathto('_static/' + theme_dark_logo, 1) }}" class="logo only-dark" alt="logo">
+    <img src="{{ pathto('_static/' + image_light, 1) }}" class="logo only-light" alt="logo">
+    <img src="{{ pathto('_static/' + image_dark, 1) }}" class="logo only-dark" alt="logo">
   {% endif %}
-  {% if not is_logo or docstitle %}
-    <p class="title">{{ docstitle or project }}</p>
+  {% if not is_logo or "text" in theme_logo %}
+    <p class="title">{{ theme_logo.get("text", docstitle) }}</p>
   {% endif %}
 </a>

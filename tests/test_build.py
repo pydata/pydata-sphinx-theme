@@ -144,17 +144,23 @@ def test_logo(sphinx_build_factory):
     # By default logo is shown
     index_html = sphinx_build.html_tree("index.html")
     assert index_html.select(".navbar-brand img")
+    assert "emptylogo" in index_html.select(".navbar-brand")[0]
     assert not index_html.select(".navbar-brand")[0].text.strip()
 
-
-def test_logo_name(sphinx_build_factory):
-    """Test that the logo is shown by default, project title if no logo."""
+    # Test with no logo specified
     confoverrides = {"html_logo": ""}
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-
-    # if no logo is specified, use project title instead
-    index_html = sphinx_build.html_tree("index.html")
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
+
+    # Test with a specified title and a dark logo
+    confoverrides = {
+        "html_title": "Foo Title",
+        "html_theme_options": {"dark_logo": "emptydarklogo.png"},
+    }
+    index_html = sphinx_build.html_tree("index.html")
+    assert "emptylogo" in index_html.select(".navbar-brand")[0]
+    assert "emptydarklogo" in index_html.select(".navbar-brand")[0]
+    assert "Foo Title" in index_html.select(".navbar-brand")[0].text.strip()
 
 
 def test_favicons(sphinx_build_factory):

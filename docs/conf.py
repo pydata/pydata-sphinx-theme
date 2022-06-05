@@ -61,7 +61,6 @@ myst_enable_extensions = [
 html_theme = "pydata_sphinx_theme"
 html_logo = "_static/logo.svg"
 html_favicon = "_static/logo.svg"
-html_title = "PyData Theme"
 
 # Define the json_url for our version switcher.
 json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
@@ -104,7 +103,10 @@ html_theme_options = {
             "type": "local",
         },
     ],
-    "dark_logo": "logo-dark.svg",
+    "logo": {
+        "text": "PyData Theme",
+        "image_dark": "logo-dark.svg",
+    },
     "use_edit_page_button": True,
     "show_toc_level": 1,
     # "show_nav_level": 2,
