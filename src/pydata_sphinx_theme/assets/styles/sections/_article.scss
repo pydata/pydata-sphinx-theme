@@ -2,6 +2,8 @@
  * Main content area
  */
 .bd-content {
+  display: flex;
+  flex-direction: column;
   // Give a bit more verticle spacing on wide screens
   padding: 3rem 1.5rem 2rem 3rem;
   @include media-breakpoint-down(md) {
