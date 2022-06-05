@@ -104,6 +104,7 @@ html_theme_options = {
             "type": "local",
         },
     ],
+    "dark_logo": "logo-dark.svg",
     "use_edit_page_button": True,
     "show_toc_level": 1,
     # "show_nav_level": 2,
