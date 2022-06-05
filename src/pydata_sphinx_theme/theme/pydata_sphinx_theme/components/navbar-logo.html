@@ -1,19 +1,18 @@
-{% if logo %}
 {% if not theme_logo_link %}
-<a class="navbar-brand" href="{{ pathto(root_doc) }}">
-  <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-</a>
-{% elif theme_logo_link[:4] == 'http' %}
-<a class="navbar-brand" href="{{ theme_logo_link }}">
-  <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-</a>
+  {% set href = pathto(root_doc) %}
+{% elif theme_logo_link.startswith("http") %}
+  {% set href = theme_logo_link %}
 {% else %}
-<a class="navbar-brand" href="{{ pathto(theme_logo_link) }}">
-  <img src="{{ pathto('_static/' + logo, 1) }}" class="logo" alt="logo">
-</a>
+  {% set href = pathto(theme_logo_link) %}
 {% endif %}
-{% else %}
-<a class="navbar-brand" href="{{ pathto(root_doc) }}">
-<p class="title">{{ project }}</p>
+
+<a class="navbar-brand" href="{{ href }}">
+  {% set is_logo = theme_dark_logo or theme_light_logo or logo %}
+  {% if is_logo %}
+    <img src="{{ pathto('_static/' + theme_light_logo or logo, 1) }}" class="logo only-light" alt="logo">
+    <img src="{{ pathto('_static/' + theme_dark_logo or logo, 1) }}" class="logo only-dark" alt="logo">
+  {% endif %}
+  {% if not is_logo or theme_html_title %}
+    <p class="title">{{ theme_html_title or project }}</p>
+  {% endif %}
 </a>
-{% endif %}

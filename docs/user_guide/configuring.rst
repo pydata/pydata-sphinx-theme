@@ -9,30 +9,71 @@ All configuration options are passed with the ``html_theme_options`` variable
 in your ``conf.py`` file. This is a dictionary with ``key: val`` pairs that
 you can configure in various ways. This page describes the options available to you.
 
-Configure project logo
-======================
+Configure project logo and title
+================================
 
-To add a logo that's placed at the left of your nav bar, put a logo file under your
-doc path's _static folder, and use the following configuration:
+By default the theme will use the value of ``project`` on the left side of the header navbar.
+This can be replaced by a Logo image, and optionally a custom ``html_title`` as well.
+
+Single logo for light and dark mode
+-----------------------------------
+
+Put an image in a folder that is in `html_static_path`, and use the following configuration:
 
 .. code:: python
 
+   html_static_path = ["_static"]
    html_logo = "_static/logo.png"
+
+Different logos for light and dark mode
+---------------------------------------
+
+You may specify use a different version of your logo image for "light" and "dark" modes.
+This is useful if your logo image is not adapted to a dark mode (light background, not enough contrast, etc...).
+
+To do so, put the 2 image files in a folder that is in ``html_static_path`` and configure the relative path to each image with ``light_logo`` and ``dark_logo`` in ``html_theme_options``, like so:
+
+.. code-block:: python
+
+   html_static_path = ["_static"]
+   html_theme_options = {
+       "light_logo": "logo-light.png",
+       "dark_logo": "logo-dark.png",
+   }
+
+.. note::
+
+   ``light_logo`` and ``dark_logo`` will override the ``html_logo`` setting. If you only specify one of them, but not the other, then the un-specified setting will re-use ``html_logo``.
+
+Customize logo link
+-------------------
 
 The logo links to ``root_doc`` (usually the first page of your documentation) by default.
 If you'd like it to link to another page or use an external link instead, use the following configuration:
 
-.. code:: python
+.. code-block:: python
 
    html_theme_options = {
        "logo_link": "<other page or external link>"
    }
 
+Add a logo title
+----------------
+
+To add a title in the brand section of your documentation, define a value for ``html_title``.
+This will appear just after your logo if it is set.
+
+.. code-block:: python
+
+   html_theme_options = {
+       "html_title": "My awesome documentation"
+   }
+
 
 .. _icon-links:
 
-Configure default theme
-=======================
+Configure default mode
+======================
 
 The theme mode can be changed by the user. By default landing on the documentation will switch the mode to ``auto``. You can specified this value to be one of ``auto``, ``dark``, ``light``.
 
