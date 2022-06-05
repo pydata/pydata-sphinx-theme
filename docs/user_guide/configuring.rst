@@ -43,7 +43,7 @@ To do so, put the 2 image files in a folder that is in ``html_static_path`` and 
 
 .. note::
 
-   The ``light_logo`` and ``dark_logo`` override the initial ``html_logo`` setting. If you only specify ``dark_logo`` and not ``light_logo``, the theme will re-use the path of ``html_logo`` for the light theme.
+   ``light_logo`` overrides the initial ``html_logo`` setting. If you only specify ``dark_logo`` and not ``light_logo``, the theme will re-use the path of ``html_logo`` for the light theme.
 
 Customize logo link
 -------------------
