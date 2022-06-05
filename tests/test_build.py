@@ -137,21 +137,28 @@ def test_icon_links(sphinx_build_factory, file_regression):
     )
 
 
-def test_logo(sphinx_build_factory):
+def test_logo_basic(sphinx_build_factory):
     """Test that the logo is shown by default, project title if no logo."""
     sphinx_build = sphinx_build_factory("base").build()
 
     # By default logo is shown
     index_html = sphinx_build.html_tree("index.html")
     assert index_html.select(".navbar-brand img")
-    assert "emptylogo" in index_html.select(".navbar-brand")[0]
+    assert "emptylogo" in str(index_html.select(".navbar-brand")[0])
     assert not index_html.select(".navbar-brand")[0].text.strip()
 
-    # Test with no logo specified
+
+def test_logo_no_image(sphinx_build_factory):
+    """Test that the text is shown if no image specified."""
     confoverrides = {"html_logo": ""}
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
+    assert "emptylogo" not in str(index_html.select(".navbar-brand")[0])
 
+
+def test_logo_two_images(sphinx_build_factory):
+    """Test that the logo image / text is correct when both dark / light given."""
     # Test with a specified title and a dark logo
     confoverrides = {
         "html_theme_options": {
@@ -159,10 +166,12 @@ def test_logo(sphinx_build_factory):
             "logo_image_dark": "emptydarklogo.png",
         },
     }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
-    assert "emptylogo" in index_html.select(".navbar-brand")[0]
-    assert "emptydarklogo" in index_html.select(".navbar-brand")[0]
-    assert "Foo Title" in index_html.select(".navbar-brand")[0].text.strip()
+    index_str = str(index_html.select(".navbar-brand")[0])
+    assert "emptylogo" in index_str
+    assert "emptydarklogo" in index_str
+    assert "Foo Title" in index_str
 
 
 def test_favicons(sphinx_build_factory):
