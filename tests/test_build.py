@@ -154,8 +154,10 @@ def test_logo(sphinx_build_factory):
 
     # Test with a specified title and a dark logo
     confoverrides = {
-        "html_title": "Foo Title",
-        "html_theme_options": {"dark_logo": "emptydarklogo.png"},
+        "html_theme_options": {
+            "logo_text": "Foo Title",
+            "logo_image_dark": "emptydarklogo.png",
+        },
     }
     index_html = sphinx_build.html_tree("index.html")
     assert "emptylogo" in index_html.select(".navbar-brand")[0]

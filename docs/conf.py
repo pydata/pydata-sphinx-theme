@@ -103,10 +103,8 @@ html_theme_options = {
             "type": "local",
         },
     ],
-    "logo": {
-        "text": "PyData Theme",
-        "image_dark": "logo-dark.svg",
-    },
+    "logo_text": "PyData Theme",
+    "logo_image_dark": "logo-dark.svg",
     "use_edit_page_button": True,
     "show_toc_level": 1,
     # "show_nav_level": 2,
