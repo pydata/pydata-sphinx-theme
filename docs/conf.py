@@ -197,25 +197,3 @@ with dst.open("a") as f, sync_playwright() as p:
                 copy(default, screen)
 
         f.write(gallery_item.format(**item))
-
-with sync_playwright() as p:
-
-    browser = p.chromium.launch()
-    page = browser.new_page()
-    page.goto("https://colorlib.com/etc/404/colorlib-error-404-3/")
-    page.screenshot(path="404_test.png")
-
-    for item in gallery:
-
-        item["id"] = item["name"].lower().replace(" ", "_")
-        screen = Path(f"_static/gallery/{item['id']}.png")
-        if not screen.is_file():
-
-            try:
-                page.goto(item["website"])
-                page.screenshot(path=screen)
-
-            except TimeoutError:
-                copy(default, screen)
-
-        f.write(gallery_item.format(**item))
