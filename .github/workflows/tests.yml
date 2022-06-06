@@ -136,6 +136,9 @@ jobs:
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
 
+      - name: Install playwright
+        run: playwright install
+
       - name: Build docs to store
         run: |
           sphinx-build -b html docs/ docs/_build/html
