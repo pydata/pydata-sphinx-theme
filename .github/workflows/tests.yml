@@ -43,13 +43,13 @@ jobs:
 
       - name: Install pre-release dependencies
         if: ${{ matrix.dev }}
-        run: |
-          pip install --upgrade --pre sphinx jinja2
+        run: pip install --upgrade --pre sphinx jinja2
+
+      - name: Install playwright
+        run: playwright install
 
       - name: Build docs to store
-        run: |
-          playwright install
-          sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
+        run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
 
       - name: Check that there are no unexpected Sphinx warnings
         if: matrix.python-version == '3.9'
