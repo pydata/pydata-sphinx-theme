@@ -90,6 +90,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade --pre -e .[test]
 
+      - name: Install playwright
+        run: playwright install
+
       - name: Build docs to store
         run: |
           sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
