@@ -180,9 +180,6 @@ copy(src, dst)
 
 with dst.open("a") as f, sync_playwright() as p:
 
-    browser = p.chromium.launch()
-    page = browser.new_page()
-
     for item in gallery:
 
         item["id"] = item["name"].lower().replace(" ", "_")
@@ -190,15 +187,16 @@ with dst.open("a") as f, sync_playwright() as p:
         if not screen.is_file():
 
             try:
+                browser = p.chromium.launch()
+                page = browser.new_page()
                 page.goto(item["website"])
                 page.screenshot(path=screen)
+                browser.close()
 
             except TimeoutError:
                 copy(default, screen)
 
         f.write(gallery_item.format(**item))
-
-    browser.close()
 
 with sync_playwright() as p:
 
