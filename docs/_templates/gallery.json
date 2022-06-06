@@ -58,5 +58,10 @@
     "name": "Jupyter",
     "website": "https://docs.jupyter.org/en/latest/",
     "repo": "https://github.com/jupyter/jupyter"
+  },
+  {
+    "name": "MegEngine",
+    "website": "https://www.megengine.org.cn/doc/stable/en/index.html",
+    "repo": "https://github.com/MegEngine/MegEngine"
   }
 ]
