@@ -174,6 +174,7 @@ gallery_item = (Path(__file__).parent / "_templates/gallery_item.rst").read_text
 gallery = json.loads((Path(__file__).parent / "_templates/gallery.json").read_text())
 src = Path(__file__).parent / "_templates/gallery.rst"
 dst = Path(__file__).parent / "user_guide/gallery.rst"
+default = Path(__file__).parent / "_static/404.png"
 copy(src, dst)
 
 
@@ -184,11 +185,39 @@ with dst.open("a") as f, sync_playwright() as p:
 
     for item in gallery:
 
-        page.goto(item["website"])
+        item["id"] = item["name"].lower().replace(" ", "_")
+        screen = Path(f"_static/gallery/{item['id']}.png")
+        if not screen.is_file():
+
+            try:
+                page.goto(item["website"])
+                page.screenshot(path=screen)
+
+            except TimeoutError:
+                copy(default, screen)
+
+        f.write(gallery_item.format(**item))
+
+    browser.close()
+
+with sync_playwright() as p:
+
+    browser = p.chromium.launch()
+    page = browser.new_page()
+    page.goto("https://colorlib.com/etc/404/colorlib-error-404-3/")
+    page.screenshot(path="404_test.png")
+
+    for item in gallery:
 
         item["id"] = item["name"].lower().replace(" ", "_")
         screen = Path(f"_static/gallery/{item['id']}.png")
         if not screen.is_file():
-            page.screenshot(path=screen)
+
+            try:
+                page.goto(item["website"])
+                page.screenshot(path=screen)
+
+            except TimeoutError:
+                copy(default, screen)
 
         f.write(gallery_item.format(**item))
