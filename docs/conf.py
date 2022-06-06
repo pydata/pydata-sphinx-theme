@@ -168,6 +168,7 @@ from pathlib import Path
 import json
 from shutil import copy
 from playwright.sync_api import sync_playwright
+from playwright.helper import TimeoutError
 
 
 gallery_item = (Path(__file__).parent / "_templates/gallery_item.rst").read_text()
