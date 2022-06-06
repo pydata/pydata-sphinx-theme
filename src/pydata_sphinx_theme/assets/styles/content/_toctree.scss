@@ -11,12 +11,7 @@
     padding-left: 0;
   }
 
-  .toctree-l1,
-  .toctree-l2,
-  .toctree-l3,
-  .toctree-l4,
-  .toctree-l5,
-  .toctree-l6 {
+  li[class^='toctree-l'] {
     list-style: none;
     margin-bottom: 0.5em;
 
