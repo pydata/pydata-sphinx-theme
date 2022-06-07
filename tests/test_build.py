@@ -162,8 +162,10 @@ def test_logo_two_images(sphinx_build_factory):
     # Test with a specified title and a dark logo
     confoverrides = {
         "html_theme_options": {
-            "logo_text": "Foo Title",
-            "logo_image_dark": "emptydarklogo.png",
+            "logo": {
+                "text": "Foo Title",
+                "image_dark": "emptydarklogo.png",
+            }
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
