@@ -1,6 +1,7 @@
 ---
-html_meta:
-  "description lang=en": "How to become a contributor to the pydata-sphinx-theme."
+myst:
+  html_meta:
+    "description lang=en": "How to become a contributor to the pydata-sphinx-theme."
 ---
 
 # Contribute
