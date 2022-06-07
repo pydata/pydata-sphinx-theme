@@ -1,34 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1"
-	 id="svg3893" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 704 608.1"
-	 style="enable-background:new 0 0 704 608.1;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#EE903F;fill-opacity:0.9961;stroke:#1E1E1E;stroke-width:2;}
-	.st1{fill:#459DB9;stroke:#1E1E1E;stroke-width:2;}
-	.st2{fill:#667B83;stroke:#1E1E1E;stroke-width:2;}
-</style>
-<g id="layer1" transform="translate(-4.3299626,-38.553539)">
-	<g id="g1137-2" transform="translate(808.5035,-399.23051)">
-		<path id="path958-2-2" class="st0" d="M-452.2,774.3l0-133.3l115.4,66.7L-452.2,774.3z"/>
-		<path id="path960-9-8" class="st0" d="M-336.7,707.7l0,133.3l-115.4-66.7L-336.7,707.7z"/>
-		<path id="path954-5-7-9" class="st0" d="M-452.2,774.3l0-133.3l-115.4-66.7l0,133.3L-452.2,774.3z"/>
-		<path id="path966-7-9-7" class="st0" d="M-452.2,641l115.4-66.7l-115.4-66.7l-115.4,66.7L-452.2,641z"/>
-		<path id="path962-1-2-3" class="st0" d="M-452.2,907.6l115.4-66.7l-115.4-66.7L-567.6,841L-452.2,907.6z"/>
-	</g>
-	<g id="g995-6" transform="translate(786.6078,-139.43044)">
-		<path id="path946-6-6-1" class="st1" d="M-661.2,647.8l0,133.3l-115.4-66.7l0-133.3L-661.2,647.8z"/>
-		<path id="path948-7-2-2" class="st1" d="M-661.2,514.5l0,133.3l-115.4-66.7l0-133.3L-661.2,514.5z"/>
-		<path id="path950-5-6-9" class="st1" d="M-545.7,447.9l-115.4,66.7l0,133.3l115.4-66.7L-545.7,447.9z"/>
-		<path id="path952-3-1-3" class="st1" d="M-661.2,381.2l-115.4,66.7l115.4,66.7l115.4-66.7L-661.2,381.2z"/>
-		<path id="path954-5-8-1" class="st1" d="M-545.7,447.9l0-133.3l-115.4-66.7l0,133.3L-545.7,447.9z"/>
-	</g>
-	<g id="g3211-5" transform="translate(340.19113,-61.81542)">
-		<path id="path926-9-2" class="st2" d="M131.6,236.9L247,170.3l-115.4-66.7L16.2,170.3L131.6,236.9z"/>
-		<path id="path928-3-5" class="st2" d="M247,303.6l115.4-66.7L247,170.3l-115.4,66.7L247,303.6z"/>
-		<path id="path930-7-4" class="st2" d="M131.6,236.9l0,133.3L247,303.6L131.6,236.9z"/>
-		<path id="path934-4-7" class="st2" d="M247,303.6l-115.4,66.7l0,133.3L247,436.9L247,303.6z"/>
-	</g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="938.69817" height="810.75394" viewBox="0 0 248.36389 214.51198">
+  <g style="fill:#ee903f;fill-opacity:.99607843">
+    <path d="m-679.99162 556.50839-.00006-47.02772 40.72718 23.51391zm40.72712-23.51381.00005 47.02771-40.72717-23.5139zm-40.72713 23.51381-.00005-47.02772-40.72717-23.51391.00005 47.02772zm-.00005-47.02772 40.72756-23.51407-40.72716-23.51391-40.72734 23.51394zm-.00035 94.0557 40.72756-23.51407-40.72716-23.51391-40.72735 23.51394z" style="fill:#ee903f;fill-opacity:.99607843;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(804.17354 -437.78405)"/>
+  </g>
+  <path d="m-739.55062 343.7362.00005 47.0277-40.72716-23.5139-.00006-47.02771z" style="fill:#459db9;fill-opacity:1;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(782.27784 -177.98398)"/>
+  <path d="m-739.55068 296.70847.00005 47.02772-40.72716-23.5139-.00006-47.02773z" style="fill:#459db9;fill-opacity:1;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(782.27784 -177.98398)"/>
+  <path d="m-698.82334 273.19454-40.72734 23.51393.00005 47.02773 40.72712-23.51382z" style="fill:#459db9;fill-opacity:1;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(782.27784 -177.98398)"/>
+  <path d="m-739.55029 249.68049-40.72755 23.51407 40.72716 23.51391 40.72734-23.51393zm40.72717 23.51391-.00005-47.02772-40.72717-23.51391.00005 47.02772z" style="fill:#459db9;fill-opacity:1;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(782.27784 -177.98398)"/>
+  <path d="m-170.95199 148.55164 40.72756-23.51407-40.72716-23.51391-40.72734 23.51394z" style="fill:#667b83;fill-opacity:1;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(335.86117 -100.36896)"/>
+  <path d="m-130.22483 172.06555 40.72756-23.51407-40.72716-23.51391-40.72734 23.51394zm-40.72717-23.51391.00005 47.02772 40.72712-23.51381z" style="fill:#667b83;fill-opacity:1;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(335.86117 -100.36896)"/>
+  <path d="m-130.22504 172.06567-40.72734 23.51394.00005 47.02772 40.72712-23.51381z" style="fill:#667b83;fill-opacity:1;stroke:#000;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stroke-linejoin:round" transform="translate(335.86117 -100.36896)"/>
 </svg>
