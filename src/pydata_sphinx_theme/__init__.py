@@ -103,7 +103,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     if context.get("theme_logo_link"):
         logger.warn(
             (
-                "Config `logo_link` will be deprecated in v0.11. "
+                "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
                 "Use the `logo.link` configuration dictionary instead."
             )
         )
