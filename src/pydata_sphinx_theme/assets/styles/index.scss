@@ -60,6 +60,7 @@ $grid-breakpoints: (
 @import "./content/quotes";
 @import "./content/spans";
 @import "./content/tables";
+@import "./content/toctree";
 
 // Content blocks from Sphinx extensions
 @import "./extensions/bootstrap";
