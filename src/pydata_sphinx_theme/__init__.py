@@ -15,7 +15,7 @@ from pygments.styles import get_all_styles
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.9.0"
+__version__ = "0.9.1rc1.dev0"
 
 logger = logging.getLogger(__name__)
 
