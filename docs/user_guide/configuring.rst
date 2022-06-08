@@ -31,19 +31,21 @@ Different logos for light and dark mode
 You may specify use a different version of your logo image for "light" and "dark" modes.
 This is useful if your logo image is not adapted to a dark mode (light background, not enough contrast, etc...).
 
-To do so, put the 2 image files in a folder that is in ``html_static_path`` and configure the relative path to each image with ``light_logo`` and ``dark_logo`` in ``html_theme_options``, like so:
+To do so, put the 2 image files in a folder that is in ``html_static_path`` and configure the relative path to each image with ``logo.image_light`` and ``logo.image_dark`` in ``html_theme_options``, like so:
 
 .. code-block:: python
 
    html_static_path = ["_static"]
    html_theme_options = {
-       "light_logo": "logo-light.png",
-       "dark_logo": "logo-dark.png",
+      "logo": {
+         "image_light": "logo-light.png",
+         "image_dark": "logo-dark.png",
+      }
    }
 
 .. note::
 
-   ``light_logo`` and ``dark_logo`` will override the ``html_logo`` setting. If you only specify one of them, but not the other, then the un-specified setting will re-use ``html_logo``.
+   ``image_light`` and ``image_dark`` will override the ``html_logo`` setting. If you only specify one of them, but not the other, then the un-specified setting will re-use ``html_logo``.
 
 Customize logo link
 -------------------
@@ -54,20 +56,26 @@ If you'd like it to link to another page or use an external link instead, use th
 .. code-block:: python
 
    html_theme_options = {
-       "logo_link": "<other page or external link>"
+       "logo": {
+           "link": "<other page or external link>",
+       }
    }
 
 Add a logo title
 ----------------
 
-To add a title in the brand section of your documentation, define a value for ``html_title``.
-This will appear just after your logo if it is set.
+To add a title in the brand section of your documentation, define a value for ``html_theme_options.logo["text"]``
+This will appear just after your logo image if it is set.
 
 .. code-block:: python
 
    html_theme_options = {
-       "html_title": "My awesome documentation"
+       "logo": {
+           "text": "My awesome documentation",
+       }
    }
+
+.. note:: The ``html_title`` field will work as well if no logo images are specified.
 
 
 .. _icon-links:
@@ -634,7 +642,7 @@ of the locations in ``html_theme_options`` (e.g., ``navbar_end``,
 
    html_theme_options = {
       ...,
-      "navbar_end": ["version-switcher"]
+      "navbar_start": ["navbar-logo", "version-switcher"]
    }
 
 
@@ -688,14 +696,14 @@ In addition, the parent button of the dropdown list contains similar metadata
 about the **current version**. This could be used to style the entire dropdown
 a certain color based on the active version.
 
-For example, if you wanted to style the dropdown button orange if it was a ``dev``
+For example, if you wanted to style the dropdown button to use the theme's secondary color (PyData orange by default) if it was a ``dev``
 version, you could use the following CSS selector:
 
 .. code-block:: scss
 
    // If the active version has the name "dev", style it orange
    #version_switcher_button[data-active-version-name*="dev"] {
-      background-color: rgb(255 138 62);
+      background-color: var(--pst-color-secondary);
    }
 
 .. seealso::

@@ -21,9 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 def update_config(app, env):
-    theme_options = app.config["html_theme_options"]
+    theme_options = env.config.html_theme_options
 
-    # DEPRECATE after v0.9
+    # DEPRECATE >= v0.10
     if theme_options.get("search_bar_position") == "navbar":
         logger.warn(
             (
@@ -82,6 +82,34 @@ def update_config(app, env):
         # Link the JS files
         app.add_js_file(gid_js_path, loading_method="async")
         app.add_js_file(None, body=gid_script)
+
+
+def prepare_html_config(app, pagename, templatename, context, doctree):
+    """Prepare some configuration values for the HTML build.
+
+    For some reason updating the html_theme_options in an earlier Sphinx
+    event doesn't seem to update the values in context, so we manually update
+    it here with our config.
+    """
+    # Prepare the logo config dictionary
+    theme_logo = context.get("theme_logo")
+    if not theme_logo:
+        # In case theme_logo is an empty string
+        theme_logo = {}
+    if not isinstance(theme_logo, dict):
+        raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
+
+    # DEPRECATE: >= 0.11
+    if context.get("theme_logo_link"):
+        logger.warn(
+            (
+                "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
+                "Use the `logo.link` configuration dictionary instead."
+            )
+        )
+        theme_logo = context.get("theme_logo_link")
+
+    context["theme_logo"] = theme_logo
 
 
 def update_templates(app, pagename, templatename, context, doctree):
@@ -664,6 +692,7 @@ def setup(app):
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)
+    app.connect("html-page-context", prepare_html_config)
     app.connect("build-finished", _overwrite_pygments_css)
 
     # Include component templates

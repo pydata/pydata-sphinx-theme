@@ -1,24 +1,9 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
 # -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
 import os
-
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
 
 # -- Project information -----------------------------------------------------
 
-project = "PyData Sphinx Theme"
+project = "PyData Theme"
 copyright = "2019, PyData Community"
 author = "PyData Community"
 
@@ -26,10 +11,6 @@ import pydata_sphinx_theme
 
 
 # -- General configuration ---------------------------------------------------
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
 
 extensions = [
     "jupyter_sphinx",
@@ -78,7 +59,8 @@ myst_enable_extensions = [
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-# html_logo = "_static/pandas.svg"  # For testing
+html_logo = "_static/logo.svg"
+html_favicon = "_static/logo.svg"
 
 # Define the json_url for our version switcher.
 json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
@@ -104,10 +86,9 @@ html_theme_options = {
             "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
             "name": "Changelog",
         },
-        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"},
     ],
     "github_url": "https://github.com/pydata/pydata-sphinx-theme",
-    "twitter_url": "https://twitter.com/pandas_dev",
+    "twitter_url": "https://twitter.com/PyData",
     "icon_links": [
         {
             "name": "PyPI",
@@ -115,20 +96,24 @@ html_theme_options = {
             "icon": "fas fa-box",
         },
         {
-            "name": "Pandas",
-            "url": "https://pandas.pydata.org",
-            "icon": "_static/pandas-square.svg",
+            "name": "PyData",
+            "url": "https://pydata.org",
+            "icon": "_static/pydata-logo.png",
             "type": "local",
         },
     ],
+    "logo": {
+        "text": "PyData Theme",
+        "image_dark": "logo-dark.svg",
+    },
     "use_edit_page_button": True,
     "show_toc_level": 1,
     # "show_nav_level": 2,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    # "navbar_start": ["navbar-logo", "navbar-version"],
+    "navbar_start": ["navbar-logo", "version-switcher"],
     # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
-    "navbar_end": ["theme-switcher", "version-switcher", "navbar-icon-links"],
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {
