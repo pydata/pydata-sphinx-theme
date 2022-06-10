@@ -16,6 +16,18 @@ This allows you to group your documentation into sub-sections without cluttering
 This site is a guide for using the theme, and a demonstration for how it looks with various
 elements. See our `gallery <user_guide/gallery.html>`_ for more inspiration.
 
+Aknowledgment and inspirations
+==============================
+
+To build this theme we drew inspiration from other great projects on the web that we would like to acknowledge here:
+
+- GitBook / Metaflow: https://docs.metaflow.org/introduction/what-is-metaflow
+- Furo: https://pradyunsg.me/furo/quickstart (and we also draw a lot of implementation / code from this)
+- Docker: https://docs.docker.com/engine/docker-overview/
+- PyTorch: https://pytorch.org/docs/stable/notes/autograd.html
+
+Thanks to `@drammock <https://github.com/drammock>`_ for initial design of the theme logo.
+
 .. toctree::
    :caption: Theme Documentation
    :maxdepth: 2

@@ -5,12 +5,14 @@ html {
 
 body {
   padding-top: var(--pst-header-height);
-
   background-color: var(--pst-color-background);
   font-family: var(--pst-font-family-base);
   font-weight: 400;
   line-height: 1.65;
   color: var(--pst-color-text-base);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   @include scrollbar-style();
   @include scrollbar-on-hover();
@@ -46,7 +48,7 @@ a {
   }
 
   &.headerlink {
-    color: var(--pst-color-danger);
+    color: var(--pst-color-warning);
     opacity: 0.4;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
