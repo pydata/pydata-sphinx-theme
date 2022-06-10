@@ -6,6 +6,8 @@ A Bootstrap-based Sphinx theme from the PyData community.
 
 Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
 
+[![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
+
 Sites that are using this theme:
 
 - Pandas: https://pandas.pydata.org/docs/

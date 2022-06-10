@@ -14,27 +14,7 @@ This allows you to group your documentation into sub-sections without cluttering
    If you are looking for a Sphinx theme that puts all of its sub-pages in the sidebar, the `Sphinx Book Theme <https://sphinx-book-theme.readthedocs.io/>`_ has a similar look and feel, and `Furo <https://pradyunsg.me/furo/quickstart/>`_ is another excellent choice.
 
 This site is a guide for using the theme, and a demonstration for how it looks with various
-elements.
-
-Sites that use this theme
-=========================
-
-.. SORTED ALPHABETICALLY
-
-- Binder: https://docs.mybinder.org/
-- Bokeh: https://docs.bokeh.org/en/latest/
-- JupyterLab: https://jupyterlab.readthedocs.io/en/latest/
-- JupyterHub: https://jupyterhub.readthedocs.io/en/latest/
-- Matplotlib: https://matplotlib.org/stable/
-- NetworkX: https://networkx.org/documentation/latest/
-- NumPy: https://numpy.org/doc/stable/
-- Pandas: https://pandas.pydata.org/docs/
-- SciPy: https://scipy.github.io/devdocs/
-- JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
-- Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
-- Fairlearn: https://fairlearn.org/main/about/
-- PyVista: https://docs.pyvista.org
-
+elements. See our `gallery <user_guide/gallery.html>`_ for more inspiration.
 
 .. toctree::
    :caption: Theme Documentation
