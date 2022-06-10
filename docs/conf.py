@@ -196,4 +196,6 @@ with dst.open("a") as f, sync_playwright() as p:
             except TimeoutError:
                 copy(default, screen)
 
+        item.pop("repo", None)
+
         f.write(gallery_item.format(**item))
