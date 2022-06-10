@@ -8,7 +8,7 @@ Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
 
 [![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
-Sites that are using this theme:
+## Sites that are using this theme:
 
 - Pandas: https://pandas.pydata.org/docs/
 - NumPy: https://numpy.org/devdocs/
