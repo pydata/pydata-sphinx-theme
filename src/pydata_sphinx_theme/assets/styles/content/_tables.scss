@@ -20,3 +20,13 @@ table caption {
   text-align: center;
   caption-side: top;
 }
+
+// ensure table will fit in the article width and make them y-scrollable
+table {
+  display: block;
+  max-width: 100%;
+  overflow: auto;
+
+  @include scrollbar-style();
+  @include scrollbar-on-hover();
+}
