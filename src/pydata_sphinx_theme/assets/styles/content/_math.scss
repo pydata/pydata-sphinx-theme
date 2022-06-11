@@ -4,6 +4,8 @@
 .math {
   align-items: center;
   display: flex;
+  flex-direction: row-reverse;
+  gap: .5em;
   max-width: 100%;
   overflow: auto;
 
