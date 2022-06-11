@@ -1,0 +1,16 @@
+/**
+ * hack the display of equations to make sure they don't overlap on mobile display
+ */
+.math {
+  align-items: center;
+  display: flex;
+  max-width: 100%;
+  overflow: auto;
+
+  @include scrollbar-style();
+  @include scrollbar-on-hover();
+}
+
+span.eqno a.headerlink {
+  position: relative;
+}
