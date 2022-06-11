@@ -5,14 +5,18 @@
   align-items: center;
   display: flex;
   flex-direction: row-reverse;
-  gap: .5em;
+  gap: 0.5em;
   max-width: 100%;
   overflow: auto;
 
   @include scrollbar-style();
   @include scrollbar-on-hover();
-}
 
-span.eqno a.headerlink {
-  position: relative;
+  mjx-container {
+    flex-grow: 1;
+  }
+
+  span.eqno a.headerlink {
+    position: relative;
+  }
 }
