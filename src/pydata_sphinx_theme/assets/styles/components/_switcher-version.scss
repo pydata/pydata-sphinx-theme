@@ -4,7 +4,13 @@
 }
 
 #version_switcher_menu {
-  // Over-rides Bootstrap default blue
+  a.list-group-item {
+    background-color: var(--pst-color-on-surface);
+    color: var(--pst-color-text-base);
+    border-color: var(--pst-color-border);
+  }
+
+  // Over-rides Bootstrap default blue for the current one
   a.list-group-item.active {
     background-color: var(--pst-color-primary);
     border-color: var(--pst-color-primary);
