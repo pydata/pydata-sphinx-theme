@@ -78,8 +78,6 @@ This will appear just after your logo image if it is set.
 .. note:: The ``html_title`` field will work as well if no logo images are specified.
 
 
-.. _icon-links:
-
 Configure default mode
 ======================
 
@@ -122,6 +120,25 @@ As the Sphinx theme supports multiple modes, the code highlighting colors can be
 .. danger::
 
    The native Sphinx option `pygments_style` will be overwritten by this theme.
+
+Announcement banners
+====================
+
+You can add an announcement banner that draws extra attention from your reader.
+It will be displayed at the top of the screen, but will disappear once you start scrolling.
+
+To add an announcement banner, use the ``html_theme_options.announcement`` configuration and provide any HTML to be inserted inside the announcement.
+
+For example, the following configuration adds a simple ``<p>`` with an announcement.
+
+.. code-block:: python
+
+   html_theme_options = {
+      ...
+      "announcement": "<p>Here's a <a href='https://pydata.org'>PyData Announcement!</a></p>",
+   }
+
+.. _icon-links:
 
 Configure icon links
 ====================

@@ -1,2 +1,5 @@
-{# A banner with an alert. #}
-{# Note that this hasn't been optimized yet so may not behave as expected. #}
+{% if theme_announcement %}
+<div class="bd-header-announcement container-fluid" id="header-announcement">
+  <p class="bd-header-announcement__content">{{- theme_announcement -}}</p>
+</div>
+{% endif %}
