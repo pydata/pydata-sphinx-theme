@@ -41,15 +41,16 @@ classifiers = [
 [project.optional-dependencies]
 doc = [
   "numpydoc",
-  "myst-parser",
-  "pandas",
+  "myst-nb",
   "pytest",
   "pytest-regressions",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
   "jupyter_sphinx",
+  "pandas",
   "plotly",
+  "matplotlib",
   "numpy",
   "xarray",
   "sphinx-design",

@@ -12,6 +12,7 @@ the left sidebar to see how various elements look on this theme.
 
     kitchen-sink/index
     theme-elements
+    pydata
     api
     example_pandas
     Link to an external site <https://jupyterbook.org/>

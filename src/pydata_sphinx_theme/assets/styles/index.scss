@@ -18,9 +18,6 @@ $grid-breakpoints: (
 );
 @import "~bootstrap/scss/bootstrap";
 
-// re-usable SCSS functions
-@import "abstracts/mixins";
-
 // Variables
 @import "variables/layout";
 @import "variables/fonts";
@@ -28,6 +25,9 @@ $grid-breakpoints: (
 @import "variables/admonitions";
 @import "variables/versionmodified";
 @import "variables/color";
+
+// re-usable SCSS functions
+@import "abstracts/mixins";
 
 // Basic styling applied throughout site
 @import "./base/base";

@@ -119,4 +119,12 @@ html[data-theme="dark"] {
   img {
     filter: brightness(0.8) contrast(1.2);
   }
+
+  // images within the content area get a light background on dark theme
+  // in case they have transparency and black text
+  // If they have an only-dark class, assume they're already optimized for dark
+  .bd-content img:not(.only-dark) {
+    background: rgb(255, 255, 255);
+    border-radius: 0.25rem;
+  }
 }
