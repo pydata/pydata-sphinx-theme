@@ -262,3 +262,14 @@ Here's a list of our pages and where they come from in `sphinx-themes.org`:
 :::{note}
 To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../demo/theme-elements.md).
 :::
+
+## Update JavaScript dependencies and their versions
+
+There are two kinds of dependency definitions in this theme:
+
+- `package.json` contains the **base dependencies** for this theme. They are broken down into a few categories like `dependencies` and `devDependencies`. It is edited by the maintainers.
+- `package-lock.json` contains the complete **frozen dependency chain** for this theme, including all sub-dependencies of our base dependencies. It is automatically generated.
+
+To update or add JS dependency, modify (or append to) the list of dependencies in `package.json`.
+Then, manually update our `package-lock.json` file with `stb npm install --include=dev`.
+This will update various lines in `package-lock.json`, which you can then commit to the repository.
