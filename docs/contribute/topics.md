@@ -278,4 +278,5 @@ To update or add a JS dependency, follow these steps:
    ```
    stb npm install --include=dev
    ```
+
 3. **Commit both files** to the repository. When new people pull in the latest commits, their `npm` environment will automatically update according to the new lockfile.
