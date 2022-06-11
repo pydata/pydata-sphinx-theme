@@ -8,6 +8,10 @@
   position: relative;
 }
 
+#version_switcher a[data-version-name*="stable"] span {
+  color: var(--pst-color-success);
+}
+
 #version_switcher a[data-version-name*="stable"] span:before {
   content: "";
   width: 100%;
