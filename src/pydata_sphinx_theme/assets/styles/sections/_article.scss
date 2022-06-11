@@ -9,14 +9,4 @@
   @include media-breakpoint-down(md) {
     padding: 3rem 1rem 1rem 1rem;
   }
-
-  .section {
-    max-width: 100%;
-
-    // make every overflowing elements in main content scrollable
-    table {
-      display: block;
-      overflow: auto;
-    }
-  }
 }
