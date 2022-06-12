@@ -24,7 +24,6 @@
   &.collapsing,
   &.collapsing + .col {
     transition: 0.18s linear;
-    z-index: 1050;
     left: -25%;
   }
 

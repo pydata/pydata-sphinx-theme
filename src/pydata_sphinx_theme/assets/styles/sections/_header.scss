@@ -124,7 +124,33 @@
 }
 
 #sidebar-secondary-drawer {
-  @include media-breakpoint-down(lg) {
-    display: inline-block;
+  &.sidebar-sm {
+    @include media-breakpoint-down(sm) {
+      display: inline-block;
+    }
+  }
+
+  &.sidebar-md {
+    @include media-breakpoint-down(md) {
+      display: inline-block;
+    }
+  }
+
+  &.sidebar-lg {
+    @include media-breakpoint-down(lg) {
+      display: inline-block;
+    }
+  }
+
+  &.sidebar-xl {
+    @include media-breakpoint-down(xl) {
+      display: inline-block;
+    }
+  }
+
+  &.sidebar-xxl {
+    @include media-breakpoint-down(xxl) {
+      display: inline-block;
+    }
   }
 }

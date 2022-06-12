@@ -49,15 +49,54 @@
     right: -25%;
   }
 
-  @include media-breakpoint-up(lg) {
-    min-height: none;
-    border-left: none;
-    max-height: calc(100vh - 5rem);
-    position: sticky;
-  }
-
   .onthispage {
     color: var(--pst-color-text-base);
+  }
+
+  // little hack to maintain responsiveness the the toc_show_width parameter
+  &.toc-col-sm {
+    @include media-breakpoint-up(sm) {
+      min-height: none;
+      border-left: none;
+      max-height: calc(100vh - 5rem);
+      position: sticky;
+    }
+  }
+
+  &.toc-col-md {
+    @include media-breakpoint-up(md) {
+      min-height: none;
+      border-left: none;
+      max-height: calc(100vh - 5rem);
+      position: sticky;
+    }
+  }
+
+  &.toc-col-lg {
+    @include media-breakpoint-up(lg) {
+      min-height: none;
+      border-left: none;
+      max-height: calc(100vh - 5rem);
+      position: sticky;
+    }
+  }
+
+  &.toc-col-xl {
+    @include media-breakpoint-up(xl) {
+      min-height: none;
+      border-left: none;
+      max-height: calc(100vh - 5rem);
+      position: sticky;
+    }
+  }
+
+  &.toc-col-xxl {
+    @include media-breakpoint-up(xxl) {
+      min-height: none;
+      border-left: none;
+      max-height: calc(100vh - 5rem);
+      position: sticky;
+    }
   }
 
   @include scrollbar-style();
