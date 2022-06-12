@@ -2,6 +2,7 @@
  * Secondary sidebar on the right.
  * e.g., in-page table of contents.
  */
+
 // Each TOC item is wrapped in this
 .tocsection {
   padding-left: 10px;
@@ -24,13 +25,36 @@
   }
 }
 
-.bd-toc {
+.bd-sidebar-secondary {
+  background-color: var(--pst-color-background);
+  position: fixed;
+  z-index: 1000;
+  min-height: 100vh;
+  border-left: 1px solid var(--pst-color-border);
+  top: var(--pst-header-height);
+  overflow-y: auto;
   -ms-flex-order: 2;
   order: 2;
-  max-height: calc(100vh - 5rem);
-  overflow-y: auto;
-  top: var(--pst-header-height);
-  position: sticky;
+
+  &.collapse.show,
+  &.collapse.show + .col {
+    transition: 0.18s linear;
+    right: 0;
+  }
+
+  &.collapse,
+  &.collapsing,
+  &.collapsing + .col {
+    transition: 0.18s linear;
+    right: -25%;
+  }
+
+  @include media-breakpoint-up(lg) {
+    min-height: none;
+    border-left: none;
+    max-height: calc(100vh - 5rem);
+    position: sticky;
+  }
 
   .onthispage {
     color: var(--pst-color-text-base);

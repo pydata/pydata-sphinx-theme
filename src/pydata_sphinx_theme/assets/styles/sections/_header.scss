@@ -103,12 +103,8 @@
 }
 
 // customize the display of the sidebars btns
-#sidebar-primary-drawer {
+.sidebar-switch {
   display: none;
-
-  @include media-breakpoint-down(md) {
-    display: inline-block;
-  }
 
   a {
     color: var(--pst-color-text-muted);
@@ -118,5 +114,17 @@
     color: var(--pst-color-primary);
     transform: rotate(180deg);
     transition: 0.18s linear;
+  }
+}
+
+#sidebar-primary-drawer {
+  @include media-breakpoint-down(md) {
+    display: inline-block;
+  }
+}
+
+#sidebar-secondary-drawer {
+  @include media-breakpoint-down(lg) {
+    display: inline-block;
   }
 }

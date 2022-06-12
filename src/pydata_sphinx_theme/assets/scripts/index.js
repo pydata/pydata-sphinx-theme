@@ -163,11 +163,11 @@ function scrollToActive() {
 /*******************************************************************************
  *
  */
-function primarySidebar() {
+function sidebarToggle(width, classname) {
   function toogle_bar() {
-    const primarySidebar = document.querySelector(".bd-sidebar-primary");
+    const primarySidebar = document.querySelector(classname);
     //md screen size in bootstrap
-    if (document.body.clientWidth <= 768) {
+    if (document.body.clientWidth <= width) {
       primarySidebar.classList.remove("show");
     } else {
       primarySidebar.classList.add("show");
@@ -186,4 +186,5 @@ function primarySidebar() {
 $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
-$(primarySidebar);
+$(primarySidebar(768, ".bd-sidebar-primary"));
+$(primarySidebar(992, ".bd-sidebar-secondary"));
