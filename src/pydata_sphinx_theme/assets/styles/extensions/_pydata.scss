@@ -20,6 +20,19 @@
   }
 }
 
-// Dark theme special-cases
-html[data-theme="dark"] {
+// customize xarray display 
+.xr-wrap: {
+  
+  xr-section-item input:enabled + label:hover {
+    color: var(--pst-color-text-base);
+  }
+  
+  div[class^="xr-var"], label{
+    background: var(--pst-color-surface);
+    
+    span {
+      background: var(--pst-color-surface);
+    }
+  }
 }
+  
