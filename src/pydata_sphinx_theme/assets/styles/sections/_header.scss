@@ -104,6 +104,12 @@
 
 // customize the display of the sidebars btns
 #sidebar-primary-drawer {
+  display: none;
+
+  @include media-breakpoint-down(md) {
+    display: inline-block;
+  }
+
   a {
     color: var(--pst-color-text-muted);
   }
