@@ -29,4 +29,8 @@ $announcement-height: 3rem;
     content: "";
     z-index: -1; // So it doesn't hover over the content
   }
+
+  &:empty {
+    display: none;
+  }
 }

@@ -26,7 +26,9 @@
 {%- endblock %}
 
 {%- block content %}
-    {% include "sections/announcement.html" %}
+    <div class="bd-header-announcement container-fluid" id="header-announcement">
+      {%- include "sections/announcement.html" -%}
+    </div>
     {% block docs_navbar %}
     <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
       {%- include "sections/header.html" %}

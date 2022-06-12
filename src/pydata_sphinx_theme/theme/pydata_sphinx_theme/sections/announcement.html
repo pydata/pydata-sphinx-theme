@@ -1,5 +1,26 @@
-{% if theme_announcement %}
-<div class="bd-header-announcement container-fluid" id="header-announcement">
-  <p class="bd-header-announcement__content">{{- theme_announcement -}}</p>
-</div>
-{% endif %}
+{%- if theme_announcement -%}
+  {%- if theme_announcement.startswith("http") %}
+    {# Make an HTTP request for the value on page load #}
+    {# theme_announcement should be empty so it doesn't show up until the HTML loads #}
+    {% set announcement_text = "" %}
+    <script>
+    $.ajax({
+      type: 'HEAD',
+      url: {{ theme_announcement }},
+      // if the page exists, go there
+      success: function() {
+          $(".bd-header-announcement__content").html(result);
+      }
+    }).fail(function() {
+      console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}")
+    });
+    </script>
+  {% else %}
+    {% set announcement_text = theme_announcement %}
+  {% endif %}
+
+  <div class="bd-header-announcement__content">
+    {{- announcement_text -}}
+  </div>
+
+{%- endif %}
