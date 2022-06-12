@@ -1,15 +1,15 @@
 {% block docs_sidebar %}
 {% if sidebars %}
 <!-- Only show if we have sidebars configured, else just a small margin  -->
-<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+<div class="bd-sidebar-primary col-6 col-md-3 bd-sidebar navbar-collapse collapse">
   <div class="sidebar-start-items">
     {%- for sidebartemplate in sidebars %}
-    {%- include sidebartemplate %}
+      {%- include sidebartemplate %}
     {%- endfor %}
   </div>
   <div class="sidebar-end-items">
     {%- for leftsidebartemplate in theme_left_sidebar_end %}
-    {%- include leftsidebartemplate %}
+      {%- include leftsidebartemplate %}
     {%- endfor %}
   </div>
 </div>

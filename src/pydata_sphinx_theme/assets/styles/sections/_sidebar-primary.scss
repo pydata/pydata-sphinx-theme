@@ -3,16 +3,34 @@
  * e.g., between-pages navigation.
  */
 .bd-sidebar {
+  background-color: var(--pst-color-background);
   padding-top: 1em;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  position: fixed;
+  z-index: 1000;
+  min-height: 100vh;
+  border-right: 1px solid var(--pst-color-border);
+  top: var(--pst-header-height);
+
+  &.collapse.show,
+  &.collapse.show + .col {
+    transition: 0.18s linear;
+    left: 0;
+  }
+
+  &.collapse,
+  &.collapsing,
+  &.collapsing + .col {
+    transition: 0.18s linear;
+    z-index: 1050;
+    left: -25%;
+  }
 
   @include media-breakpoint-up(md) {
-    border-right: 1px solid var(--pst-color-border);
+    min-height: none;
     position: sticky;
-    top: var(--pst-header-height);
-    z-index: 1000;
     max-height: calc(100vh - var(--pst-header-height));
   }
 

@@ -160,8 +160,30 @@ function scrollToActive() {
   });
 }
 
+/*******************************************************************************
+ *
+ */
+function primarySidebar() {
+  function toogle_bar() {
+    const primarySidebar = document.querySelector(".bd-sidebar-primary");
+    //md screen size in bootstrap
+    if (document.body.clientWidth <= 768) {
+      primarySidebar.classList.remove("show");
+    } else {
+      primarySidebar.classList.add("show");
+    }
+  }
+
+  // toggle at least once on page load
+  toogle_bar();
+
+  // add a listener
+  window.addEventListener("resize", toogle_bar);
+}
+
 // This is equivalent to the .ready() function as described in
 // https://api.jquery.com/ready/
 $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
+$(primarySidebar);
