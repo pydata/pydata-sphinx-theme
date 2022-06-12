@@ -30,6 +30,18 @@ fig, ax = plt.subplots()
 ax.scatter(df["a"], df["b"], c=df["b"], s=3)
 ```
 
+and with the Matplotlib `plot` directive:
+
+```{eval-rst}
+.. plot::
+
+   import matplotlib.pyplot as plt
+   import numpy as np
+   data = np.random.randn(3, 100)
+   fig, ax = plt.subplots()
+   ax.scatter(data[0], data[1], c=data[2], s=3)
+```
+
 ## Plotly
 
 The HTML below shouldn't display, but it uses RequireJS to make sure that all
@@ -70,7 +82,7 @@ This section demonstrates a subset of functionality above to make sure it behave
 import matplotlib.pyplot as plt
 import numpy as np
 
-data = np.random.randn(100, 3)
+data = np.random.randn(3, 100)
 fig, ax = plt.subplots()
 ax.scatter(data[0], data[1], c=data[2], s=3)
 ```
