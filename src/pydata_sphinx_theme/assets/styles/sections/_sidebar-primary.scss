@@ -90,7 +90,11 @@ nav.bd-links {
 
   ul {
     list-style: none;
-    padding: 0 0 0 1.5rem;
+
+    // Reduce padding of nested `ul` items a bit
+    ul {
+      padding: 0 0 0 1rem;
+    }
   }
 
   li > a {
