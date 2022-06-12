@@ -60,3 +60,17 @@ data = xr.DataArray(
       )
 data
 ```
+
+## `jupyter-sphinx`
+
+Another common library is `jupyter-sphinx`.
+This section demonstrates a subset of functionality above to make sure it behaves as expected.
+
+```{jupyter-execute}
+import matplotlib.pyplot as plt
+import numpy as np
+
+data = np.random.randn(100, 3)
+fig, ax = plt.subplots()
+ax.scatter(data[0], data[1], c=data[2], s=3)
+```

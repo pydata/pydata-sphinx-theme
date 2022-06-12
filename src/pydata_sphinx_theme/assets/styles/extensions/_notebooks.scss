@@ -1,0 +1,41 @@
+/**
+ * Styles for various notebook libraries.
+ * For now, where notebooks define output sections, we simply revert their background
+ * to be a "light theme" background. This ensures that inputs/outputs behave similarly,
+ * because the CSS is often controlled by each package.
+ * In the future, we might add dark theme support for specific packages.
+ */
+
+// Dark theme special-cases
+html[data-theme="dark"] {
+  // MyST-NB outputs should have a white background so content behaves the same
+  .bd-content div.cell_output {
+    img,
+    div.text_html {
+      color: var(--pst-color-on-background);
+      background-color: var(--pst-color-text-base);
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+    }
+  }
+
+  // Jupyter Sphinx
+  div.jupyter_container {
+    border: 1px solid var(--pst-color-border);
+    background-color: var(--pst-color-on-background);
+
+    div.highlight {
+      background-color: var(--pst-color-on-background);
+    }
+  }
+}
+
+// Jupyter Sphinx
+div.jupyter_container {
+  border-radius: 0.25rem;
+
+  div.output,
+  div.highlight {
+    border-radius: 0.25rem;
+  }
+}

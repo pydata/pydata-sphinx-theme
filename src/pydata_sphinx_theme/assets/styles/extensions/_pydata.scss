@@ -6,20 +6,3 @@
 .xr-wrap[hidden] {
   display: block !important;
 }
-
-// MyST-NB (uses .bd-content selector to over-ride myst-nb defaults)
-.bd-content div.cell_output table {
-  color: var(--pst-color-text-base);
-
-  tbody tr:nth-child(odd) {
-    background: var(--pst-color-surface);
-  }
-
-  div.cell_output tbody tr:nth-child(odd) {
-    background: #f5f5f5;
-  }
-}
-
-// Dark theme special-cases
-html[data-theme="dark"] {
-}
