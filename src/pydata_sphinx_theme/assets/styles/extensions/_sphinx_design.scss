@@ -18,15 +18,15 @@
  */
 
 .bd-content .sd-card {
-  border: 1px solid var(--pst-color-preformatted-border);
+  border: 1px solid var(--pst-color-border);
 
   .sd-card-header {
     background-color: var(--pst-color-panel-background);
-    border-bottom: 1px solid var(--pst-color-preformatted-border);
+    border-bottom: 1px solid var(--pst-color-border);
   }
   .sd-card-footer {
     background-color: var(--pst-color-panel-background);
-    border-top: 1px solid var(--pst-color-preformatted-border);
+    border-top: 1px solid var(--pst-color-border);
   }
 
   .sd-card-body {
@@ -47,26 +47,26 @@
   > input {
     // Active tab label
     &:checked + label {
-      border-color: var(--pst-color-active-navigation);
-      color: var(--pst-color-active-navigation);
+      border-color: var(--pst-color-primary);
+      color: var(--pst-color-primary);
     }
 
     // hover label
     &:not(:checked) + label:hover {
-      border-color: var(--pst-color-active-navigation);
-      color: var(--pst-color-active-navigation);
+      border-color: var(--pst-color-primary);
+      color: var(--pst-color-primary);
       opacity: 0.5;
     }
   }
 
   // Tab label
   > label {
-    color: var(--pst-color-deactive-navigation);
+    color: var(--pst-color-text-muted);
 
     // Hovered label
     html &:hover {
-      color: var(--pst-color-active-navigation);
-      border-color: var(--pst-color-active-navigation);
+      color: var(--pst-color-primary);
+      border-color: var(--pst-color-primary);
       opacity: 0.5;
     }
   }
