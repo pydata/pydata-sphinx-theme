@@ -21,10 +21,10 @@ html[data-theme="light"] {
   /*****************************************************************************
   * depth colors
   *
-  * background: the more in depth color
-  * on-background: the object directly set on the background, use of shadows in light theme
-  * surface: object set on the background (without shadows)
-  * on_surface: object set on surface object (without shadows)
+  * background: color that defines the furthest back
+  * on-background: provides light contrast against background, use of shadows in light theme
+  * surface: object set above the background (without shadows)
+  * on_surface: object on top of surface object (without shadows)
   */
   --pst-color-background: rgb(255, 255, 255);
   --pst-color-on-background: rgb(255, 255, 255);
@@ -38,7 +38,7 @@ html[data-theme="light"] {
   --pst-color-panel-background: var(--pst-color-background);
 
   /*****************************************************************************
-  * layout
+  * content
   */
 
   // links
@@ -50,6 +50,10 @@ html[data-theme="light"] {
 
   // targeted content
   --pst-color-target: rgb(251, 229, 78);
+
+  /*****************************************************************************
+  * layout
+  */
 
   // hide any content that should not be displayed in the light theme
   .only-dark {
@@ -80,10 +84,7 @@ html[data-theme="dark"] {
   /*****************************************************************************
   * depth colors
   *
-  * background: the more in depth color
-  * on-background: the object directly set on the background, use of a light grey in dark theme
-  * surface: object set on the background (without shadows)
-  * on_surface: object set on surface object (without shadows)
+  * See light theme section for documentation of what variables mean.
   */
   --pst-color-background: rgb(18, 18, 18);
   --pst-color-on-background: rgb(30, 30, 30);
@@ -97,7 +98,7 @@ html[data-theme="dark"] {
   --pst-color-panel-background: var(--pst-color-background-up);
 
   /*****************************************************************************
-  * layout
+  * content
   */
 
   // links
@@ -115,6 +116,10 @@ html[data-theme="dark"] {
     display: none !important;
   }
 
+  /*****************************************************************************
+  * images
+  */
+
   // specific brightness applied on images
   img {
     filter: brightness(0.8) contrast(1.2);
@@ -126,5 +131,14 @@ html[data-theme="dark"] {
   .bd-content img:not(.only-dark) {
     background: rgb(255, 255, 255);
     border-radius: 0.25rem;
+  }
+
+  /*****************************************************************************
+  * math
+  */
+
+  // MathJax SVG outputs should be filled to same color as text.
+  .MathJax_SVG * {
+    fill: var(--pst-color-text-base);
   }
 }
