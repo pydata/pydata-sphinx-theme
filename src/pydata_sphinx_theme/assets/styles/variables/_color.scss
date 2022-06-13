@@ -35,7 +35,7 @@ html[data-theme="light"] {
   * extentions
   */
 
-  --pst-color-panel-background: var(--pst-color-background);
+  --pst-color-panel-background: var(--pst-color-on-background);
 
   /*****************************************************************************
   * layout
@@ -94,7 +94,7 @@ html[data-theme="dark"] {
   * extentions
   */
 
-  --pst-color-panel-background: var(--pst-color-background-up);
+  --pst-color-panel-background: var(--pst-color-on-background);
 
   /*****************************************************************************
   * layout
