@@ -23,7 +23,26 @@ Here is another:
 \frac{1}{r^2 \sin^2\theta} \frac{\partial^2 f}{\partial \phi^2}
 ```
 
-You can add a link to equations like the one above: {eq}`My label`.
+And here is a really long equation with a label!
+
+```{math}
+:label: My label 2
+
+\nabla^2 f =
+\frac{1}{r^2} \frac{\partial}{\partial r}
+\left( r^2 \frac{\partial f}{\partial r} \right) +
+\frac{1}{r^2 \sin \theta} \frac{\partial f}{\partial \theta}
+\left( \sin \theta \, \frac{\partial f}{\partial \theta} \right) +
+\frac{1}{r^2 \sin^2\theta} \frac{\partial^2 f}{\partial \phi^2}
+\nabla^2 f =
+\frac{1}{r^2} \frac{\partial}{\partial r}
+\left( r^2 \frac{\partial f}{\partial r} \right) +
+\frac{1}{r^2 \sin \theta} \frac{\partial f}{\partial \theta}
+\left( \sin \theta \, \frac{\partial f}{\partial \theta} \right) +
+\frac{1}{r^2 \sin^2\theta} \frac{\partial^2 f}{\partial \phi^2}
+```
+
+You can add a link to equations like the one above: {eq}`My label` and {eq}`My label 2`.
 
 ## Code execution
 
