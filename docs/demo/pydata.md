@@ -16,7 +16,8 @@ Below are examples of each that we use as a benchmark for reference.
 import numpy as np
 import pandas as pd
 
-data = np.random.randn(100, 3)
+rng = np.random.default_rng()
+data = rng.standard_normal((100, 3))
 df = pd.DataFrame(data, columns=['a', 'b', 'c'])
 df
 ```
@@ -37,7 +38,8 @@ and with the Matplotlib `plot` directive:
 
    import matplotlib.pyplot as plt
    import numpy as np
-   data = np.random.randn(3, 100)
+   rng = np.random.default_rng()
+   data = rng.standard_normal((3, 100))
    fig, ax = plt.subplots()
    ax.scatter(data[0], data[1], c=data[2], s=3)
 ```
@@ -82,7 +84,8 @@ This section demonstrates a subset of functionality above to make sure it behave
 import matplotlib.pyplot as plt
 import numpy as np
 
-data = np.random.randn(3, 100)
+rng = np.random.default_rng()
+data = rng.standard_normal((3, 100))
 fig, ax = plt.subplots()
 ax.scatter(data[0], data[1], c=data[2], s=3)
 ```
