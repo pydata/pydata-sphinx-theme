@@ -1,6 +1,6 @@
 /**
- * Styles for various notebook libraries.
- * For now, where notebooks define output sections, we simply revert their background
+ * Styles for various Sphinx execution libraries.
+ * For now, where these define output sections, we simply revert their background
  * to be a "light theme" background. This ensures that inputs/outputs behave similarly,
  * because the CSS is often controlled by each package.
  * In the future, we might add dark theme support for specific packages.
