@@ -8,20 +8,8 @@ Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
 
 [![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
-## Sites that are using this theme:
-
-- Pandas: https://pandas.pydata.org/docs/
-- NumPy: https://numpy.org/devdocs/
-- SciPy: https://scipy.github.io/devdocs/
-- Bokeh: https://docs.bokeh.org/en/dev/
-- JupyterHub and Binder: https://docs.mybinder.org/, http://z2jh.jupyter.org/en/latest/, https://repo2docker.readthedocs.io/en/latest/, https://jupyterhub-team-compass.readthedocs.io/en/latest/
-- Jupyter Book beta version uses an extension of this theme: https://beta.jupyterbook.org
-- CuPy: https://docs.cupy.dev/en/latest/
-- MegEngine: https://megengine.org.cn/doc/stable/zh/
-- Fairlearn: https://fairlearn.org/main/about/
-- NetworkX: https://networkx.org/documentation/latest/
-- MNE-Python: https://mne.tools/stable/index.html
-- PyVista: https://docs.pyvista.org
+This site is a guide for using the theme, and a demonstration for how it looks with various
+elements. See our [gallery](https://pydata-sphinx-theme.readthedocs.io/en/latest/user_guide/gallery.html) for more inspiration.
 
 ## Installation and usage
 
