@@ -1,7 +1,7 @@
 {% if not theme_logo.get("link") %}
   {% set href = pathto(root_doc) %}
 {% elif theme_logo.get("link").startswith("http") %}
-  {# Logo link is to external URL}
+  {# Logo link is to external URL #}
   {% set href = theme_logo.get("link") %}
 {% else %}
   {# Logo link is to internal page #}
