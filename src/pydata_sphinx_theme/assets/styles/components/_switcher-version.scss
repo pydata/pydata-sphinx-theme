@@ -10,6 +10,10 @@
     background-color: var(--pst-color-on-background);
     color: var(--pst-color-text-base);
     border-color: var(--pst-color-border);
+
+    &:hover {
+      background-color: var(--pst-color-surface);
+    }
   }
 
   // Over-rides Bootstrap default blue for the current one
