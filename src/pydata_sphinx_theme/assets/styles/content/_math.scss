@@ -18,5 +18,11 @@
 
   span.eqno a.headerlink {
     position: relative;
+    font-size: 1em;
   }
+}
+
+// Special-case for inline math
+span.math {
+  display: inline-flex;
 }

@@ -14,7 +14,8 @@ import pydata_sphinx_theme
 
 extensions = [
     "jupyter_sphinx",
-    "myst_parser",
+    "matplotlib.sphinxext.plot_directive",
+    "myst_nb",
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",

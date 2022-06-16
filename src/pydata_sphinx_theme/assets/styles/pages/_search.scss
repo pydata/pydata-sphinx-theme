@@ -4,9 +4,7 @@
 
 // Turn off the extra search UI at the top of the page
 #search-documentation {
-  display: none;
-  & ~ p,
-  ~ form {
+  & ~ p {
     display: none;
   }
 }
@@ -24,5 +22,25 @@ ul.search {
   li {
     background-image: none;
     padding: 0;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--pst-color-text-muted);
+
+    // First link is the page title, it should be a bit bigger
+    > a {
+      font-size: 1.2em;
+    }
+
+    div.context,
+    p.context {
+      margin: 0.5em 0 0 0;
+
+      // Add a # before page section titles to make it clear they are sections
+      a:before {
+        content: "#";
+        padding-right: 0.2em;
+        color: var(--pst-color-text-muted);
+      }
+    }
   }
 }
