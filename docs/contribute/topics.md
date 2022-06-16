@@ -292,3 +292,11 @@ We store our PyData-specific SCSS in two relevant files, both in the `src/pydata
 
 - `extensions/_execution.scss` - styles for Sphinx libraries that execute and insert code into the documentation. For example, MyST-NB, Jupyter Sphinx, and the Matplotlib `plot` directive. Most PyData support should go here via generic improvements that all packages benefit from.
 - `extensions/_pydata.scss` - styles for specific libraries in the PyData ecosystem. In general we should try to keep this minimal because it is mostly special-casing single library quirks.
+
+## Ignore formatting commits with `git blame`
+
+When making commits that are strictly formatting/style changes (e.g., after running a new version of black or running pyupgrade after dropping an old Python version), add the commit hash to `.git-blame-ignore-revs`, so `git blame` can ignore the change.
+
+For more details, see:
+- https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
+- https://github.com/pydata/pydata-sphinx-theme/pull/713

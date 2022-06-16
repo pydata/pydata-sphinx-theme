@@ -176,6 +176,23 @@ def test_logo_two_images(sphinx_build_factory):
     assert "Foo Title" in index_str
 
 
+def test_logo_external_link(sphinx_build_factory):
+    """Test that the logo link is correct for external URLs."""
+    # Test with a specified external logo link
+    test_url = "https://secure.example.com"
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                "link": test_url,
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    index_str = str(index_html.select(".navbar-brand")[0])
+    assert f'href="{test_url}"' in index_str
+
+
 def test_favicons(sphinx_build_factory):
     """Test that arbitrary favicons are included."""
     html_theme_options_favicons = {
