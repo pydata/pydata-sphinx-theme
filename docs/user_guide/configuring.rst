@@ -133,7 +133,7 @@ There are two ways to use this.
 Provide local HTML in your theme
 --------------------------------
 
-By default, the value of your ``html_theme_options.announcement`` will be inserted directly into your announcement banner as raw HTML.
+By default, the value of your ``html_theme_options["announcement"]`` will be inserted directly into your announcement banner as raw HTML.
 
 For example, the following configuration adds a simple ``<p>`` with an announcement.
 
@@ -151,7 +151,7 @@ You can specify an arbitrary URL that will be used as the HTML source for your a
 When the page is loaded, JavaScript will attempt to fetch this HTML and insert it as-is into the announcement banner.
 This allows you to define a single HTML announcement that you can pull into multiple documentation sites or versions.
 
-If the value of ``html_theme_options.announcement`` begins with **``http``** it will be treated as a URL to remote HTML.
+If the value of ``html_theme_options["announcement"]`` begins with **``http``** it will be treated as a URL to remote HTML.
 
 For example, the following configuration tells the theme to load the ``custom-template.html`` example from this documentation's GitHub repository:
 
