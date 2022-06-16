@@ -127,7 +127,7 @@ Announcement banners
 You can add an announcement banner that draws extra attention from your reader.
 It will be displayed at the top of the screen, but will disappear once you start scrolling.
 
-To add an announcement banner, use the ``html_theme_options.announcement`` configuration.
+To add an announcement banner, use the ``html_theme_options["announcement"]`` configuration.
 There are two ways to use this.
 
 Provide local HTML in your theme
@@ -153,7 +153,7 @@ This allows you to define a single HTML announcement that you can pull into mult
 
 If the value of ``html_theme_options.announcement`` begins with **``http``** it will be treated as a URL to remote HTML.
 
-For example, following configuration tells the theme to load the ``custom-template.html`` example from this documentation's GitHub repository:
+For example, the following configuration tells the theme to load the ``custom-template.html`` example from this documentation's GitHub repository:
 
 .. code-block:: python
 

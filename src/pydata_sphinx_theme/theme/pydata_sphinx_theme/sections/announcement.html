@@ -6,7 +6,6 @@
 {%- if is_remote %}
 <script>
 $.get("{{ theme_announcement }}", success=(data)=>{
-      console.log(data);
       $("#header-announcement").html(`<div class="bd-header-announcement__content">${data}</div>`);
   }).fail(() => {
   console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}")
@@ -16,7 +15,7 @@ $.get("{{ theme_announcement }}", success=(data)=>{
 {% endif %}
 
 <div class="bd-header-announcement container-fluid" id="header-announcement">
-  {#- if we are not remove, populate announcement w/ local content -#}
+  {#- if announcement text is not remote, populate announcement w/ local content -#}
   {%- if not is_remote %}
   <div class="bd-header-announcement__content">{{ theme_announcement }}</div>
   {%- endif -%}
