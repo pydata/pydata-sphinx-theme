@@ -23,6 +23,7 @@ Sites that use this theme
 
 - Binder: https://docs.mybinder.org/
 - Bokeh: https://docs.bokeh.org/en/latest/
+- Feature-engine: https://feature-engine.readthedocs.io/
 - JupyterLab: https://jupyterlab.readthedocs.io/en/latest/
 - JupyterHub: https://jupyterhub.readthedocs.io/en/latest/
 - Matplotlib: https://matplotlib.org/stable/

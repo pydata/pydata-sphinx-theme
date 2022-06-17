@@ -20,6 +20,8 @@ Sites that are using this theme:
 - NetworkX: https://networkx.org/documentation/latest/
 - MNE-Python: https://mne.tools/stable/index.html
 - PyVista: https://docs.pyvista.org
+- Feature-engine: https://feature-engine.readthedocs.io/
+
 
 ## Installation and usage
 
