@@ -35,8 +35,8 @@ Sites that use this theme
 - Fairlearn: https://fairlearn.org/main/about/
 - PyVista: https://docs.pyvista.org
 
-Aknowledgment and inspirations
-==============================
+Acknowledgment and inspirations
+===============================
 
 To build this theme we drew inspiration from other great projects on the web that we would like to acknowledge here:
 
