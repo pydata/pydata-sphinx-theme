@@ -3,6 +3,51 @@
 There are a few elements that are unique or particularly important to this theme.
 This page is a reference for how these look.
 
+## Mathematics
+
+Most Sphinx sites support math, but it is particularly important for scientific computing and so we illustrate support here as well.
+
+This is a test. Here is an equation:
+{math}`X_{0:5} = (X_0, X_1, X_2, X_3, X_4)`.
+
+Here is another:
+
+```{math}
+:label: My label
+
+\nabla^2 f =
+\frac{1}{r^2} \frac{\partial}{\partial r}
+\left( r^2 \frac{\partial f}{\partial r} \right) +
+\frac{1}{r^2 \sin \theta} \frac{\partial f}{\partial \theta}
+\left( \sin \theta \, \frac{\partial f}{\partial \theta} \right) +
+\frac{1}{r^2 \sin^2\theta} \frac{\partial^2 f}{\partial \phi^2}
+```
+
+And here is a really long equation with a label!
+
+```{math}
+:label: My label 2
+
+\nabla^2 f =
+\frac{1}{r^2} \frac{\partial}{\partial r}
+\left( r^2 \frac{\partial f}{\partial r} \right) +
+\frac{1}{r^2 \sin \theta} \frac{\partial f}{\partial \theta}
+\left( \sin \theta \, \frac{\partial f}{\partial \theta} \right) +
+\frac{1}{r^2 \sin^2\theta} \frac{\partial^2 f}{\partial \phi^2}
+\nabla^2 f =
+\frac{1}{r^2} \frac{\partial}{\partial r}
+\left( r^2 \frac{\partial f}{\partial r} \right) +
+\frac{1}{r^2 \sin \theta} \frac{\partial f}{\partial \theta}
+\left( \sin \theta \, \frac{\partial f}{\partial \theta} \right) +
+\frac{1}{r^2 \sin^2\theta} \frac{\partial^2 f}{\partial \phi^2}
+```
+
+You can add a link to equations like the one above: {eq}`My label` and {eq}`My label 2`.
+
+## Code execution
+
+See [](pydata.md).
+
 ## Embedding in admonitions
 
 ````{note}
@@ -33,41 +78,4 @@ Something is modified, check your version number.
 
 ```{deprecated} 0.1.1
 Something is deprecated, use something else instead.
-```
-
-## HTML elements
-
-There are some libraries in the PyData ecosystem that use HTML and require their own styling.
-This section shows a few examples.
-
-### Plotly
-
-The HTML below shouldn't display, but it uses RequireJS to make sure that all
-works as expected. If the widgets don't show up, RequireJS may be broken.
-
-```{jupyter-execute}
-import plotly.io as pio
-import plotly.express as px
-import plotly.offline as py
-
-pio.renderers.default = "notebook"
-
-df = px.data.iris()
-fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", size="sepal_length")
-fig
-```
-
-### Xarray
-
-Here we demonstrate `xarray` to ensure that it shows up properly.
-
-```{jupyter-execute}
-import xarray as xr
-import numpy as np
-data = xr.DataArray(
-        np.random.randn(2, 3),
-        dims=("x", "y"),
-        coords={"x": [10, 20]}, attrs={"foo": "bar"}
-      )
-data
 ```
