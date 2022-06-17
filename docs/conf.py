@@ -111,7 +111,7 @@ html_theme_options = {
     "use_edit_page_button": True,
     "show_toc_level": 1,
     # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
-    "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/header/docs/_templates/custom-template.html",
+    "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     # "show_nav_level": 2,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
