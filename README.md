@@ -22,7 +22,6 @@ Sites that are using this theme:
 - PyVista: https://docs.pyvista.org
 - Feature-engine: https://feature-engine.readthedocs.io/
 
-
 ## Installation and usage
 
 The theme is available on PyPI and conda-forge. You can install
