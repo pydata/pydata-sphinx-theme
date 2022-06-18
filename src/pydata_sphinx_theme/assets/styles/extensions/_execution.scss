@@ -17,10 +17,10 @@
 
 // Dark theme special-cases
 html[data-theme="dark"] .bd-content{
-
   // MyST-NB
   div.cell_output {
-    img, .text_html {
+    img,
+    .text_html {
       @include cell-output-background;
     }
   }
