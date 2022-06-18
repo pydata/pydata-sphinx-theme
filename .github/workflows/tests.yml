@@ -2,12 +2,11 @@ name: continuous-integration
 
 # This prevents workflows from being run twice on PRs
 # ref: https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
-push:
-  branches:
-  - main
-pull_request:
-  branches:
-  - main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 env:
   COVERAGE_THRESHOLD: 60
