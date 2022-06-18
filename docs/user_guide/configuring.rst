@@ -83,7 +83,7 @@ This will appear just after your logo image if it is set.
 Configure default theme mode
 ============================
 
-By default and user landing on the documentation will use the theme mode ``auto``.
+By default, visitors to your documentation will use the theme mode ``auto``.
 This will choose a theme based on the user's system settings, and default to ``light`` if not settings are present.
 
 If you wish to use a different default theme mode, set the ``default_mode`` configuration to one of ``auto``, ``dark``, ``light``.
