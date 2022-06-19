@@ -65,8 +65,10 @@ span.pst-target {
 /* display the overlay structure to the end user */
 
 .overlay-container {
-  --width: 100%;
-  --height: 60%;
+  margin-top: 10%;
+  left: 20%;
+  --width: 80%%;
+  --height: 200px;
   width: var(--width);
   height: var(--height);
   position: relative;
@@ -96,7 +98,7 @@ span.pst-target {
   background-color: var(--pst-color-on-surface);
   width: calc(var(--width) / 3);
   height: calc(var(--height) * 0.66);
-  transform: skew(-45deg) translate(-3rem, -4rem);
+  transform: skew(-45deg) translate(-2rem, -4rem);
   left: calc(var(--width) / 3 * 2);
 }
 
