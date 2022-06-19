@@ -24,6 +24,12 @@
 }
 
 /* the badges to display colors to the end user */
+p span.pst-badge {
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--pst-color-border);
+}
+
 span.pst-primary {
   background-color: var(--pst-color-primary);
 }

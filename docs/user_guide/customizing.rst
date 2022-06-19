@@ -202,17 +202,17 @@ Here is an overview of the colors available in the theme (change theme mode to s
 .. raw:: html
 
     <p>
-      <span class="sd-sphinx-override sd-badge pst-primary">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-secondary">secondary</span>
-      <span class="sd-sphinx-override sd-badge pst-success">success</span>
-      <span class="sd-sphinx-override sd-badge pst-info">info</span>
-      <span class="sd-sphinx-override sd-badge pst-warning">warning</span>
-      <span class="sd-sphinx-override sd-badge pst-danger">danger</span>
-      <span class="sd-sphinx-override sd-badge pst-background">background</span>
-      <span class="sd-sphinx-override sd-badge pst-on-background">on-background</span>
-      <span class="sd-sphinx-override sd-badge pst-surface">surface</span>
-      <span class="sd-sphinx-override sd-badge pst-on-surface">on-surface</span>
-      <span class="sd-sphinx-override sd-badge pst-target">target</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-primary">primary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-secondary">secondary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-success">success</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-info">info</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-warning">warning</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-danger">danger</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-background">background</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-on-background">on-background</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-surface">surface</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-on-surface">on-surface</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-target">target</span>
     </p>
 
 You can control the colors used for these variables for each theme by
