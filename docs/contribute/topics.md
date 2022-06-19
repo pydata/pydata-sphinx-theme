@@ -267,7 +267,16 @@ To demonstrate extra styles and syntax that is not in the Kitchen sink, use the 
 
 This theme's documentation is exhibiting a gallery of differnet sites using this theme for their documentation. The images
 are automatically generated during RDT builds but not on local or test builds to save time. Instead a freezed version of
-these website are stored in the repository. If one want to update the images used in the development gallery, use:
+these website are stored in the repository.
+
+If one want to update the images used in the development gallery first install [playwright](https://playwright.dev/python/):
+
+```
+$ pip install playwright
+$ install playwright
+```
+
+And then execute the gallery generation script:
 
 ```
 $ python ./docs/scripts/generate_gallery_text.py
