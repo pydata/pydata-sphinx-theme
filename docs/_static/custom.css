@@ -3,7 +3,7 @@
   --sd-color-secondary: var(--pst-color-secondary);
 }
 
-/* Background of stsable should be green */
+/* Background of stable should be green */
 #version_switcher a[data-version-name*="stable"] {
   position: relative;
 }
@@ -21,4 +21,39 @@
   top: 0;
   background-color: var(--pst-color-success);
   opacity: 0.1;
+}
+
+/* the badges to display colors to the end user */
+span.pst-primary {
+  background-color: var(--pst-color-primary);
+}
+span.pst-secondary {
+  background-color: var(--pst-color-secondary);
+}
+span.pst-success {
+  background-color: var(--pst-color-success);
+}
+span.pst-info {
+  background-color: var(--pst-color-info);
+}
+span.pst-warning {
+  background-color: var(--pst-color-warning);
+}
+span.pst-danger {
+  background-color: var(--pst-color-danger);
+}
+span.pst-background {
+  background-color: var(--pst-color-background);
+}
+span.pst-on-background {
+  background-color: var(--pst-color-on-background);
+}
+span.pst-surface {
+  background-color: var(--pst-color-surface);
+}
+span.pst-on-surface {
+  background-color: var(--pst-color-on-surface);
+}
+span.pst-target {
+  background-color: var(--pst-color-target);
 }
