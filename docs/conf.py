@@ -14,7 +14,8 @@ import pydata_sphinx_theme
 
 extensions = [
     "jupyter_sphinx",
-    "myst_parser",
+    "matplotlib.sphinxext.plot_directive",
+    "myst_nb",
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -59,6 +60,7 @@ myst_enable_extensions = ["colon_fence"]
 html_theme = "pydata_sphinx_theme"
 html_logo = "_static/logo.svg"
 html_favicon = "_static/logo.svg"
+html_sourcelink_suffix = ""
 
 # Define the json_url for our version switcher.
 json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"

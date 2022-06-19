@@ -16,8 +16,8 @@ This allows you to group your documentation into sub-sections without cluttering
 This site is a guide for using the theme, and a demonstration for how it looks with various
 elements. See our `gallery <user_guide/gallery.html>`_ for more inspiration.
 
-Aknowledgment and inspirations
-==============================
+Acknowledgment and inspirations
+===============================
 
 To build this theme we drew inspiration from other great projects on the web that we would like to acknowledge here:
 

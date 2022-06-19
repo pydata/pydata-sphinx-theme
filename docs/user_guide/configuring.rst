@@ -80,10 +80,14 @@ This will appear just after your logo image if it is set.
 
 .. _icon-links:
 
-Configure default mode
-======================
+Configure default theme mode
+============================
 
-The theme mode can be changed by the user. By default landing on the documentation will switch the mode to ``auto``. You can specified this value to be one of ``auto``, ``dark``, ``light``.
+By default, visitors to your documentation will use the theme mode ``auto``.
+This will choose a theme based on the user's system settings, and default to ``light`` if not settings are present.
+
+If you wish to use a different default theme mode, set the ``default_mode`` configuration to one of ``auto``, ``dark``, ``light``.
+For example:
 
 .. code-block:: python
 
