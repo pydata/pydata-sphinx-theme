@@ -262,3 +262,17 @@ Here's a list of our pages and where they come from in `sphinx-themes.org`:
 :::{note}
 To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../demo/theme-elements.md).
 :::
+
+## Update the example gallery
+
+This theme's documentation is exhibiting a gallery of differnet sites using this theme for their documentation. The images
+are automatically generated during RDT builds but not on local or test builds to save time. Instead a freezed version of
+these website are stored in the repository. If one want to update the images used in the development gallery, use:
+
+```
+$ python ./docs/scripts/generate_gallery_text.py
+```
+
+:::{note}
+The newly generated images will be pushed to the distant repository.
+:::
