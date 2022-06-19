@@ -197,20 +197,22 @@ There are also several other color variables that control color for admonitions,
 Each color variable has two values, one corresponding to the "light" and one for the "dark" theme.
 These are used throughout many of the theme elements to define text color, background color, etc.
 
+Here is an overview of the colors available in the theme (change theme mode to switch from light to dark versions).
+
 .. raw:: html
 
     <p>
       <span class="sd-sphinx-override sd-badge pst-primary">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-secodary">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-success">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-info">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-warning">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-danger">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-background">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-on-background">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-surface">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-on-surface">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-target">primary</span>
+      <span class="sd-sphinx-override sd-badge pst-secondary">secondary</span>
+      <span class="sd-sphinx-override sd-badge pst-success">success</span>
+      <span class="sd-sphinx-override sd-badge pst-info">info</span>
+      <span class="sd-sphinx-override sd-badge pst-warning">warning</span>
+      <span class="sd-sphinx-override sd-badge pst-danger">danger</span>
+      <span class="sd-sphinx-override sd-badge pst-background">background</span>
+      <span class="sd-sphinx-override sd-badge pst-on-background">on-background</span>
+      <span class="sd-sphinx-override sd-badge pst-surface">surface</span>
+      <span class="sd-sphinx-override sd-badge pst-on-surface">on-surface</span>
+      <span class="sd-sphinx-override sd-badge pst-target">target</span>
     </p>
 
 You can control the colors used for these variables for each theme by
