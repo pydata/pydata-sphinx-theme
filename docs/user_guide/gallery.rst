@@ -57,3 +57,7 @@ This is a gallery of documentations built on top of pydata-sphinx-theme. If youâ
     .. grid-item-card:: MegEngine
         :img-bottom: ../_static/gallery/megengine.png
         :link: https://www.megengine.org.cn/doc/stable/en/index.html
+
+    .. grid-item-card:: Feature-engine
+        :img-bottom: ../_static/gallery/feature-engine.png
+        :link: https://feature-engine.readthedocs.io/

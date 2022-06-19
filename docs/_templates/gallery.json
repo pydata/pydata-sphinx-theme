@@ -63,5 +63,9 @@
     "name": "MegEngine",
     "website": "https://www.megengine.org.cn/doc/stable/en/index.html",
     "repo": "https://github.com/MegEngine/MegEngine"
+  },
+  {
+    "name": "Feature-engine",
+    "website": "https://feature-engine.readthedocs.io/"
   }
 ]
