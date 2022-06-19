@@ -8,8 +8,11 @@ build:
   tools:
     python: "3.9"
   jobs:
+    # build the gallery of themes before building the doc
     post_install:
+      - pip install playwright
       - playwright install
+      - python ./docs/scripts/generate_gallery_text.py
 
 python:
   install:
