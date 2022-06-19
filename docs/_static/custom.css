@@ -61,3 +61,54 @@ span.pst-on-surface {
 span.pst-target {
   background-color: var(--pst-color-target);
 }
+
+/* display the overlay structure to the end user */
+
+.overlay-container {
+  --width: 100%;
+  --height: 60%;
+  width: var(--width);
+  height: var(--height);
+  position: relative;
+}
+
+.overlay-container .pst-background {
+  background-color: var(--pst-color-background);
+  width: var(--width);
+  transform: skew(-45deg);
+  height: var(--height);
+}
+
+.overlay-container .pst-on-background {
+  background-color: var(--pst-color-on-background);
+  height: var(--height);
+  width: calc(var(--width) / 3);
+  transform: skew(-45deg) translate(-2rem, -2rem);
+}
+.overlay-container .pst-surface {
+  background-color: var(--pst-color-surface);
+  height: var(--height);
+  width: calc(var(--width) / 3);
+  transform: skew(-45deg) translate(-2rem, -2rem);
+  left: calc(var(--width) / 3 * 2);
+}
+.overlay-container .pst-on-surface {
+  background-color: var(--pst-color-on-surface);
+  width: calc(var(--width) / 3);
+  height: calc(var(--height) * 0.66);
+  transform: skew(-45deg) translate(-3rem, -4rem);
+  left: calc(var(--width) / 3 * 2);
+}
+
+.overlay-container .pst-overlay {
+  position: absolute;
+  border: 2px solid var(--pst-color-border);
+}
+
+.overlay-container .label {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: skew(45deg) translateX(-50%);
+  white-space: nowrap;
+}

@@ -231,11 +231,22 @@ You can control the colors used for these variables for each theme by
 This theme use shadows to convey depth in the light theme mode and opacity in the dark one. It is thus defining a set of 4 colors to help build overlays in your documenation.
 :code:`background` is setting the color the documentation and :code:`on-background` are the elements that are set on top of this background (e.g. the header navbar). :code:`surface` are elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme. :code:`on-surface` defines the elements that will be placed on top of the :code:`surface`` elements. The folowing image should help you understandsour different overlays:
 
-.. image::  ../_static/overlay-light.png
-    :class: only-light
+.. raw:: html
 
-.. image:: ../_static/overlay-dark.png
-    :class: only-dark
+    <div class="overlay-container">
+      <div class="pst-overlay pst-background">
+        <p class="label">background</p>
+      </div>
+      <div class="pst-overlay pst-on-background">
+        <p class="label">on-background</p>
+      </div>
+      <div class="pst-overlay pst-surface">
+        <p class="label">surface</p>
+      </div>
+      <div class="pst-overlay pst-on-surface">
+        <p class="label">on-surface</p>
+      </div>
+    </div>
 
 
 For a complete list of the theme colors that you may override, see the
