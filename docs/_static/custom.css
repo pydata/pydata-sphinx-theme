@@ -67,7 +67,7 @@ span.pst-target {
 .overlay-container {
   margin-top: 10%;
   left: 20%;
-  --width: 80%%;
+  --width: 80%;
   --height: 200px;
   width: var(--width);
   height: var(--height);
