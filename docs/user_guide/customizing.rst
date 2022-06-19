@@ -228,6 +228,16 @@ You can control the colors used for these variables for each theme by
         --pst-color-primary: white;
     }
 
+This theme use shadows to convey depth in the light theme mode and opacity in the dark one. It is thus defining a set of 4 colors to help build overlays in your documenation.
+:code:`background` is setting the color the documentation and :code:`on-background` are the elements that are set on top of this background (e.g. the header navbar). :code:`surface` are elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme. :code:`on-surface` defines the elements that will be placed on top of the :code:`surface`` elements. The folowing image should help you understandsour different overlays:
+
+.. image::  ../_static/overlay-light.png
+    :class: only-light
+
+.. image:: ../_static/overlay-dark.png
+    :class: only-dark
+
+
 For a complete list of the theme colors that you may override, see the
 `color variables defaults CSS file <pydata-css-colors_>`_:
 
