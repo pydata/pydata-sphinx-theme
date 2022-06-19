@@ -39,9 +39,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .[coverage]
 
-      - name: Install playwright
-        run: playwright install
-
       - name: Build docs to store
         run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
 
@@ -83,9 +80,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install --upgrade --pre -e .[test]
-
-      - name: Install playwright
-        run: playwright install
 
       - name: Build docs to store
         run: |
@@ -132,9 +126,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
-
-      - name: Install playwright
-        run: playwright install
 
       - name: Build docs to store
         run: |
