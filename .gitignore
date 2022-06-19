@@ -111,7 +111,3 @@ node_modules/
 # Editors
 .vscode
 .idea
-
-# gallery screenshots
-docs/_static/gallery/*.png
-docs/user_guide/gallery.rst

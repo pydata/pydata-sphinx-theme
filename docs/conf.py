@@ -149,38 +149,3 @@ html_static_path = ["_static"]
 html_css_files = ["custom.css"]
 
 # --- custom gallery of websites -----------------------------------------------
-from pathlib import Path
-import json
-from shutil import copy
-from playwright.sync_api import sync_playwright, TimeoutError
-
-
-gallery_item = (Path(__file__).parent / "_templates/gallery_item.rst").read_text()
-gallery = json.loads((Path(__file__).parent / "_templates/gallery.json").read_text())
-src = Path(__file__).parent / "_templates/gallery.rst"
-dst = Path(__file__).parent / "user_guide/gallery.rst"
-default = Path(__file__).parent / "_static/404.png"
-copy(src, dst)
-
-
-with dst.open("a") as f, sync_playwright() as p:
-
-    for item in gallery:
-
-        item["id"] = item["name"].lower().replace(" ", "_")
-        screen = Path(f"_static/gallery/{item['id']}.png")
-        if not screen.is_file():
-
-            try:
-                browser = p.chromium.launch()
-                page = browser.new_page()
-                page.goto(item["website"])
-                page.screenshot(path=screen)
-                browser.close()
-
-            except TimeoutError:
-                copy(default, screen)
-
-        item.pop("repo", None)
-
-        f.write(gallery_item.format(**item))
