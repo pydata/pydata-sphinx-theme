@@ -10,18 +10,6 @@ span.guilabel {
   border-radius: 4px;
   padding: 2.4px 6px;
   margin: auto 2px;
-  position: relative;
 
-  // This is a hack to control the opacity for guilabel with our color variables
-  // ref: https://stackoverflow.com/a/56951626/6734243
-  &:before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: var(--pst-color-info);
-    opacity: 0.1;
-  }
+  @include background-from-color-variable(--pst-color-info);
 }
