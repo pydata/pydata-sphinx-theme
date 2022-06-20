@@ -201,6 +201,21 @@ Here is an overview of the colors available in the theme (change theme mode to s
 
 .. raw:: html
 
+    <style>
+      span.pst-badge {border: 1px solid var(--pst-color-text-base);}
+      span.pst-primary {background-color: var(--pst-color-primary);}
+      span.pst-secondary {background-color: var(--pst-color-secondary);}
+      span.pst-success {background-color: var(--pst-color-success);}
+      span.pst-info {background-color: var(--pst-color-info);}
+      span.pst-warning {background-color: var(--pst-color-warning);}
+      span.pst-danger {background-color: var(--pst-color-danger);}
+      span.pst-background {background-color: var(--pst-color-background);}
+      span.pst-on-background {background-color: var(--pst-color-on-background);}
+      span.pst-surface {background-color: var(--pst-color-surface);}
+      span.pst-on-surface {background-color: var(--pst-color-on-surface);}
+      span.pst-target {background-color: var(--pst-color-target);}
+    </style>
+
     <p>
       <span class="sd-sphinx-override sd-badge pst-badge pst-primary">primary</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-secondary">secondary</span>
