@@ -244,7 +244,7 @@ You can control the colors used for these variables for each theme by
     }
 
 This theme uses shadows to convey depth in the light theme mode and opacity in the dark one.
-It is defines 4 color variables that help build overlays in your documentation.
+It defines 4 color variables that help build overlays in your documentation.
 
 - :code:`background`: color of the back-most surface of the documentation
 - :code:`on-background` elements that are set on top of this background (e.g. the header navbar on dark mode).
@@ -254,6 +254,17 @@ It is defines 4 color variables that help build overlays in your documentation.
 The following image should help you understand these overlays:
 
 .. raw:: html
+
+    <style>
+      /* use https://unminify.com to check the indented version of the overlay component */
+      .overlay-container {margin-top: 10%; left: 20%; --width: 80%; --height: 200px; width: var(--width); height: var(--height); position: relative;}
+      .overlay-container .pst-overlay {position: absolute; border: 2px solid var(--pst-color-border);}
+      .overlay-container .pst-background {background-color: var(--pst-color-background); width: var(--width); transform: skew(-45deg); height: var(--height);}
+      .overlay-container .pst-on-background {background-color: var(--pst-color-on-background); height: var(--height); width: calc(var(--width) / 3); transform: skew(-45deg) translate(-2rem, -2rem);}
+      .overlay-container .pst-surface {background-color: var(--pst-color-surface); height: var(--height); width: calc(var(--width) / 3); transform: skew(-45deg) translate(-2rem, -2rem); left: calc(var(--width) / 3 * 2);}
+      .overlay-container .pst-on-surface {background-color: var(--pst-color-on-surface); width: calc(var(--width) / 3); height: calc(var(--height) * 0.66); transform: skew(-45deg) translate(-2rem, -4rem); left: calc(var(--width) / 3 * 2);}
+      .overlay-container .label {position: absolute; bottom: 0.5rem; left: 50%; transform: skew(45deg) translateX(-50%); white-space: nowrap;}
+    </style>
 
     <div class="overlay-container">
       <div class="pst-overlay pst-background">
