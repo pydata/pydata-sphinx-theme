@@ -46,7 +46,7 @@
   // Overrides bootstrap
   background: var(--pst-color-on-background) !important;
   box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
-  z-index: 2000;
+  z-index: var(--pst-level-3);
 
   .navbar-nav {
     li a.nav-link {
@@ -72,6 +72,14 @@
 // overwrite bootstrap coloring
 .bd-header#navbar-main {
   background-color: var(--pst-color-navbar-background) !important;
+
+  @include media-breakpoint-down(md) {
+    padding-left: 2em;
+  }
+
+  @include media-breakpoint-down(lg) {
+    padding-right: 2em;
+  }
 }
 
 .navbar-header a {
@@ -102,55 +110,24 @@
   vertical-align: middle;
 }
 
-// customize the display of the sidebars btns
-.sidebar-switch {
-  display: none;
+label.primary-toggle {
+  margin: 0 1em;
+  position: absolute;
+  left: 0;
+  top: calc(var(--pst-header-height) / 4);
 
-  a {
-    color: var(--pst-color-text-muted);
-  }
-
-  a[aria-expanded="true"] {
-    color: var(--pst-color-primary);
-    transform: rotate(180deg);
-    transition: 0.18s linear;
+  @include media-breakpoint-up(md) {
+    display: none;
   }
 }
 
-#sidebar-primary-drawer {
-  @include media-breakpoint-down(md) {
-    display: inline-block;
-  }
-}
+label.secondary-toggle {
+  margin: 0 1em;
+  position: absolute;
+  right: 0;
+  top: calc(var(--pst-header-height) / 4);
 
-#sidebar-secondary-drawer {
-  &.sidebar-sm {
-    @include media-breakpoint-down(sm) {
-      display: inline-block;
-    }
-  }
-
-  &.sidebar-md {
-    @include media-breakpoint-down(md) {
-      display: inline-block;
-    }
-  }
-
-  &.sidebar-lg {
-    @include media-breakpoint-down(lg) {
-      display: inline-block;
-    }
-  }
-
-  &.sidebar-xl {
-    @include media-breakpoint-down(xl) {
-      display: inline-block;
-    }
-  }
-
-  &.sidebar-xxl {
-    @include media-breakpoint-down(xxl) {
-      display: inline-block;
-    }
+  @include media-breakpoint-up(lg) {
+    display: none;
   }
 }

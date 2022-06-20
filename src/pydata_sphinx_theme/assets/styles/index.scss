@@ -50,6 +50,7 @@ $grid-breakpoints: (
 @import "./components/switcher-version";
 @import "./components/toc-inpage";
 @import "./components/versionmodified";
+@import "./components/sidebar_toggle";
 
 // Content blocks in standard Sphinx
 @import "./content/admonitions";

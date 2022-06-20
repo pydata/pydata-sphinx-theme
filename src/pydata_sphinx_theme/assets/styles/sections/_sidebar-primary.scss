@@ -9,27 +9,14 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  z-index: 1000;
+  z-index: var(--pst-level-2);
   min-height: 100vh;
   border-right: 1px solid var(--pst-color-border);
   top: var(--pst-header-height);
 
-  &.collapse.show,
-  &.collapse.show + .col {
-    transition: 0.18s linear;
-    left: 0;
-  }
-
-  &.collapse,
-  &.collapsing,
-  &.collapsing + .col {
-    transition: 0.18s linear;
-    left: -25%;
-  }
-
   @include media-breakpoint-up(md) {
-    min-height: none;
     position: sticky;
+    min-height: none;
     max-height: calc(100vh - var(--pst-header-height));
   }
 
@@ -107,7 +94,11 @@ nav.bd-links {
 
   ul {
     list-style: none;
-    padding: 0 0 0 1.5rem;
+
+    // Reduce padding of nested `ul` items a bit
+    ul {
+      padding: 0 0 0 1rem;
+    }
   }
 
   li > a {

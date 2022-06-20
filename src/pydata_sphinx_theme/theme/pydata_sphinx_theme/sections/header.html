@@ -1,10 +1,8 @@
 <div class="bd-header__inner container-xl">
 
-  <div class="sidebar-switch" id="sidebar-primary-drawer">
-    <a class="ml-1" data-toggle="collapse" data-target=".bd-sidebar-primary">
-      <i class="fas fa-arrow-right"></i>
-    </a>
-  </div>
+  <label class="primary-toggle" for="__primary">
+    <span class="fas fa-bars"></span>
+  </label>
 
   <div id="navbar-start">
     {% for navbar_item in theme_navbar_start %}
@@ -33,12 +31,11 @@
       </div>
       {% endfor %}
     </div>
+
   </div>
 
-  <div class="sidebar-switch sidebar-{{ toc_show_width }}" id="sidebar-secondary-drawer">
-    <a class="mr-1" data-toggle="collapse" data-target=".bd-sidebar-secondary">
-      <i class="fas fa-arrow-left"></i>
-    </a>
-  </div>
+  <label class="secondary-toggle" for="__secondary">
+    <span class="fas fa-bars"></span>
+  </label>
 
 </div>

@@ -160,39 +160,8 @@ function scrollToActive() {
   });
 }
 
-/*******************************************************************************
- *
- */
-function sidebarToggle(classname) {
-  function toogle_bar() {
-    const primarySidebar = document.querySelector(classname);
-
-    // guess the hiding width
-    if (primarySidebar.className.include("toc-col-sm")) width = 576;
-    if (primarySidebar.className.include("toc-col-md")) width = 768;
-    if (primarySidebar.className.include("toc-col-lg")) width = 992;
-    if (primarySidebar.className.include("toc-col-xl")) width = 1200;
-    if (primarySidebar.className.include("toc-col-xxl")) width = 1400;
-
-    //md screen size in bootstrap
-    if (document.body.clientWidth <= width) {
-      primarySidebar.classList.remove("show");
-    } else {
-      primarySidebar.classList.add("show");
-    }
-  }
-
-  // toggle at least once on page load
-  toogle_bar();
-
-  // add a listener
-  window.addEventListener("resize", toogle_bar);
-}
-
 // This is equivalent to the .ready() function as described in
 // https://api.jquery.com/ready/
 $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
-$(sidebarToggle(".bd-sidebar-primary"));
-$(sidebarToggle(".bd-sidebar-secondary"));

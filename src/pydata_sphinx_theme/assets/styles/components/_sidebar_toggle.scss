@@ -1,0 +1,47 @@
+/*******************************************************************************
+* Rules th specify the display of the sidebars toggles
+*/
+input.sidebar-toggle {
+  display: none;
+}
+
+label.overlay {
+  background-color: black;
+  height: 0;
+  width: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: width 0ms, height 0ms, opacity 200ms ease-out;
+}
+
+@include media-breakpoint-down(md) {
+  input#__primary {
+    &:checked + label.overlay.overlay-primary {
+      height: 100vh;
+      width: 100vw;
+      opacity: 0.5;
+      z-index: var(--pst-level-1);
+    }
+
+    &:not(:checked) ~ .container-xl .bd-sidebar-primary {
+      display: none;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  input#__secondary {
+    &:checked + label.overlay.overlay-secondary {
+      height: 100vh;
+      width: 100vw;
+      opacity: 0.5;
+      z-index: var(--pst-level-1);
+    }
+
+    &:not(:checked) ~ .container-xl .bd-sidebar-secondary {
+      display: none;
+    }
+  }
+}
