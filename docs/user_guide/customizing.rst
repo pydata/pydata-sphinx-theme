@@ -228,8 +228,15 @@ You can control the colors used for these variables for each theme by
         --pst-color-primary: white;
     }
 
-This theme use shadows to convey depth in the light theme mode and opacity in the dark one. It is thus defining a set of 4 colors to help build overlays in your documenation.
-:code:`background` is setting the color the documentation and :code:`on-background` are the elements that are set on top of this background (e.g. the header navbar). :code:`surface` are elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme. :code:`on-surface` defines the elements that will be placed on top of the :code:`surface`` elements. The folowing image should help you understandsour different overlays:
+This theme uses shadows to convey depth in the light theme mode and opacity in the dark one.
+It is defines 4 color variables that help build overlays in your documentation.
+
+- :code:`background`: color of the back-most surface of the documentation
+- :code:`on-background` elements that are set on top of this background (e.g. the header navbar on dark mode).
+- :code:`surface` elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme.
+- :code:`on-surface` elements that are on top of :code:`surface` elements.
+
+The following image should help you understand these overlays:
 
 .. raw:: html
 
