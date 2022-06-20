@@ -248,8 +248,8 @@ It defines 4 color variables that help build overlays in your documentation.
 
 - :code:`background`: color of the back-most surface of the documentation
 - :code:`on-background` elements that are set on top of this background (e.g. the header navbar on dark mode).
-- :code:`surface` elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme.
-- :code:`on-surface` elements that are on top of :code:`surface` elements.
+- :code:`surface` elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme (e.g. code-block directives).
+- :code:`on-surface` elements that are on top of :code:`surface` elements (e.g. sidebar directives).
 
 The following image should help you understand these overlays:
 
