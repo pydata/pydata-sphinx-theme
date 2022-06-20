@@ -4,6 +4,7 @@ blockquote {
   color: var(--pst-color-text-muted);
   border-left: 0.25em solid var(--pst-color-border);
   border-radius: 0.2rem;
+  position: relative;
 
   p {
     color: var(--pst-color-text-muted);

@@ -35,6 +35,7 @@ div.admonition,
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: 700;
+    position: relative;
 
     &:after {
       position: absolute;

@@ -10,6 +10,7 @@ span.guilabel {
   border-radius: 4px;
   padding: 2.4px 6px;
   margin: auto 2px;
+  position: relative;
 
   @include background-from-color-variable(--pst-color-info);
 }
