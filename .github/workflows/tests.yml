@@ -53,7 +53,7 @@ jobs:
           from pathlib import Path
           text = Path("./warnings.txt").read_text().strip()
           print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if "kitchen-sink" not in ii]
+          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static/gallery/"])]
           assert len(unexpected) == 0
 
       - name: Run the tests
