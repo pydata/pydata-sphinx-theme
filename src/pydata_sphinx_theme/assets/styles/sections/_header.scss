@@ -111,10 +111,14 @@
 }
 
 label.primary-toggle {
+  font-size: 1.3rem;
   margin: 0 1em;
   position: absolute;
+  height: var(--pst-header-height);
   left: 0;
-  top: calc(var(--pst-header-height) / 4);
+  top: 0;
+  display: flex;
+  align-items: center;
 
   @include media-breakpoint-up(md) {
     display: none;
@@ -122,11 +126,15 @@ label.primary-toggle {
 }
 
 label.secondary-toggle {
+  font-size: 1.3rem;
   margin: 0 1em;
   position: absolute;
   right: 0;
-  top: calc(var(--pst-header-height) / 4);
+  top: 0;
+  height: var(--pst-header-height);
   transform: scale(-1, 1);
+  display: flex;
+  align-items: center;
 
   @include media-breakpoint-up(lg) {
     display: none;
