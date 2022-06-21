@@ -3,21 +3,23 @@
  * e.g., between-pages navigation.
  */
 .bd-sidebar-primary {
+  z-index: 0;
+  top: var(--pst-header-height);
+  max-height: calc(100vh - var(--pst-header-height));
   background-color: var(--pst-color-background);
   padding-top: 1em;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  position: fixed;
-  z-index: $zindex-modal;
-  min-height: 100vh;
-  border-right: 1px solid var(--pst-color-border);
-  top: var(--pst-header-height);
+  position: sticky;
 
-  @include media-breakpoint-up(md) {
-    position: sticky;
-    min-height: none;
-    max-height: calc(100vh - var(--pst-header-height));
+  @include media-breakpoint-down(md) {
+    position: fixed;
+    z-index: $zindex-modal;
+    min-height: 100vh;
+    max-height: 100vh;
+    border-right: 1px solid var(--pst-color-border);
+    top: 0;
   }
 
   @include scrollbar-style();

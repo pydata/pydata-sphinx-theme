@@ -25,23 +25,23 @@
 }
 
 .bd-sidebar-secondary {
+  z-index: 0;
+  top: var(--pst-header-height);
+  max-height: calc(100vh - var(--pst-header-height));
   background-color: var(--pst-color-background);
   padding-top: 1em;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   position: fixed;
-  z-index: $zindex-modal;
-  min-height: 100vh;
-  border-left: 1px solid var(--pst-color-border);
-  top: var(--pst-header-height);
   right: 0;
 
-  @include media-breakpoint-up(lg) {
-    position: none;
-    min-height: none;
-    border-left: none;
-    max-height: calc(100vh - var(--pst-header-height));
+  @include media-breakpoint-down(lg) {
+    z-index: $zindex-modal;
+    min-height: 100vh;
+    max-height: 100vh;
+    border-left: 1px solid var(--pst-color-border);
+    top: 0;
   }
 
   .onthispage {
