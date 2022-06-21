@@ -114,8 +114,8 @@ html_theme_options = {
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     "navbar_start": ["navbar-logo", "version-switcher"],
-    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
-    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing, we should use defaults in our docs
+    # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {

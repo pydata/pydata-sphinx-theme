@@ -30,3 +30,15 @@
     }
   }
 }
+
+// Search link icon should be a bit bigger since it is separate from icon links
+.search-link {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+
+  i {
+    font-size: 1.3rem;
+  }
+}

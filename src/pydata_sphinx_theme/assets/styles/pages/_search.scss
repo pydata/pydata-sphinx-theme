@@ -2,44 +2,67 @@
  * Search page special-cases
  */
 
-// Turn off the extra search UI at the top of the page
-#search-documentation {
-  & ~ p {
-    display: none;
-  }
-}
+// This selects for only the search page.
+// The search fields have no unique identifiers/classes, so here we hard-code
+// That the first h1 header is `search-documentation` as a reasonable estimate
+article > h1#search-documentation:first-child {
+  /*******************************************
+ * Search form
+ */
+  & ~ form input[type="text"] {
+    background-color: var(--pst-color-background);
+    border-radius: 0.2rem;
+    border: 1px solid var(--pst-color-border);
+    color: var(--pst-color-text-base);
 
-// Whitespace
-div#search-results > h2 {
-  margin-top: 0;
-}
-
-// The results of a search
-ul.search {
-  margin: 0;
-  list-style: none;
-
-  li {
-    background-image: none;
-    padding: 0;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid var(--pst-color-text-muted);
-
-    // First link is the page title, it should be a bit bigger
-    > a {
-      font-size: 1.2em;
+    // Inner-text of the search bar
+    &::placeholder {
+      color: var(--pst-color-border);
     }
 
-    div.context,
-    p.context {
-      margin: 0.5em 0 0 0;
+    // Background should always be same color regardless of active or nor
+    &:active,
+    &:focus {
+      background-color: var(--pst-color-background);
+      color: var(--pst-color-border);
+      border: 1px solid var(--pst-color-border);
+    }
+  }
 
-      // Add a # before page section titles to make it clear they are sections
-      a:before {
-        content: "#";
-        padding-right: 0.2em;
-        color: var(--pst-color-text-muted);
+  /*******************************************
+  * Search results
+  */
+  // Whitespace
+  & ~ div#search-results > h2 {
+    margin-top: 0;
+  }
+
+  ul.search {
+    margin: 0;
+    list-style: none;
+
+    li {
+      background-image: none;
+      padding: 0;
+      margin-bottom: 1em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid var(--pst-color-text-muted);
+
+      // First link is the page title, it should be a bit bigger
+      > a {
+        font-size: 1.2em;
+      }
+
+      div.context,
+      p.context {
+        margin: 0.5em 0 0 0;
+
+        // Add a # before page section titles to make it clear they are sections
+        a:before {
+          content: "#";
+          padding-right: 0.2em;
+          color: var(--pst-color-text-muted);
+        }
       }
     }
   }
