@@ -32,13 +32,38 @@
 }
 
 // Search link icon should be a bit bigger since it is separate from icon links
-.search-link {
+.search-button {
   display: flex;
   align-items: center;
   align-content: center;
   padding: 0;
+  color: var(--pst-color-text-muted);
+
+  &:hover {
+    color: var(--pst-color-primary);
+  }
 
   i {
     font-size: 1.3rem;
+  }
+}
+
+.search-button__search-container {
+  display: none;
+  position: absolute;
+  right: 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
+
+  &.show {
+    display: flex;
+    justify-content: end;
+  }
+
+  form.bd-search {
+    flex-grow: 1;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }

@@ -1,0 +1,21 @@
+{# Search page has its own UI / UX for search #}
+{% if pagename != "search" %}
+<!-- A button that will trigger a search field to be displayed on click. -->
+{% set containerClass="search-button__search-container" %}
+<script>
+var toggleSearchField = () => {
+  let field = document.querySelector('.{{ containerClass }}');
+  field.classList.toggle('show');
+  let input = field.querySelector("input");
+  input.focus().select();
+};
+</script>
+
+<button class="btn btn-sm navbar-btn search-button" onclick="toggleSearchField()" title="Toggle search field">
+  <i class="fas fa-search"></i>
+</button>
+{# This will be hidden by default until click #}
+<div class="{{ containerClass }}">
+  {% include "../components/search-field.html" %}
+</div>
+{% endif %}
