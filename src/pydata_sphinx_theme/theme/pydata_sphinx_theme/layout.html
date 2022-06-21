@@ -33,14 +33,14 @@
 
   <!-- Checkboxes to toggle the secondary sidebar -->
   <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+  <label class="overlay overlay-secondary toc-show-{{ toc_show_width }}" for="__secondary"></label>
 
   <div class="bd-header-announcement container-fluid" id="banner">
     {% include "sections/announcement.html" %}
   </div>
 
   {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar toc-show-{{ "xl" if sidebars else "md" }}" id="navbar-main">
       {%- include "sections/header.html" %}
     </nav>
   {% endblock %}

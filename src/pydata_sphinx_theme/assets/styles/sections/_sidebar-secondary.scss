@@ -25,9 +25,11 @@
 }
 
 .bd-sidebar-secondary {
-  z-index: 0;
-  top: var(--pst-header-height);
-  max-height: calc(100vh - var(--pst-header-height));
+  z-index: $zindex-modal;
+  top: 0;
+  min-height: 100vh;
+  max-height: 100vh;
+  border-left: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-background);
   padding-top: 1em;
   overflow-y: auto;
@@ -36,12 +38,18 @@
   position: fixed;
   right: 0;
 
-  @include media-breakpoint-down(lg) {
-    z-index: $zindex-modal;
-    min-height: 100vh;
-    max-height: 100vh;
-    border-left: 1px solid var(--pst-color-border);
-    top: 0;
+  // hide the sidebar in narrow screens
+  // based on the toc_show_width variable
+  @each $break, $width in $grid-breakpoints {
+    &.col-#{$break}-2 {
+      @include media-breakpoint-up($break) {
+        z-index: 0;
+        min-height: none;
+        max-height: calc(100vh - var(--pst-header-height));
+        border-left: none;
+        top: var(--pst-header-height);
+      }
+    }
   }
 
   .onthispage {

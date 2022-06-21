@@ -71,13 +71,21 @@
 // overwrite bootstrap coloring
 .bd-header#navbar-main {
   background-color: var(--pst-color-navbar-background) !important;
+  padding-right: 2em;
+  padding-left: 2em;
 
-  @include media-breakpoint-down(md) {
-    padding-left: 2em;
+  @include media-breakpoint-up(md) {
+    padding-left: none;
   }
 
-  @include media-breakpoint-down(lg) {
-    padding-right: 2em;
+  // add padding when the secondary sidebar is hidden
+  // based on the toc_show_width variable
+  @each $break, $width in $grid-breakpoints {
+    &.toc-show-#{$break} {
+      @include media-breakpoint-up($break) {
+        padding-right: none;
+      }
+    }
   }
 }
 
@@ -133,8 +141,14 @@ label {
     right: 0;
     transform: scale(-1, 1);
 
-    @include media-breakpoint-up(lg) {
-      display: none;
+    // hide the toogle when the secondary is normally displayed
+    // based on the toc_show_width variable
+    @each $break, $width in $grid-breakpoints {
+      &.toc-show-#{$break} {
+        @include media-breakpoint-up($break) {
+          display: none;
+        }
+      }
     }
   }
 }
