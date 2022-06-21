@@ -4,16 +4,23 @@
 {% set containerClass="search-button__search-container" %}
 <script>
 var toggleSearchField = () => {
-  let field = document.querySelector('.{{ containerClass }}');
-  field.classList.toggle('show');
-  let input = field.querySelector("input");
-  input.focus().select();
+  let button = document.getElementById("bd-search-button");
+
+  // This causes the search field to appear and expands the clickable div behind it
+  button.classList.toggle('show');
+
+  // This focuses the cursor on the search field
+  let input = document.querySelector('.{{ containerClass }} form input');
+  input.focus();
+  input.select();
 };
 </script>
 
-<button class="btn btn-sm navbar-btn search-button" onclick="toggleSearchField()" title="Toggle search field">
+<!-- An overlay that will expand in the background and cause the search to disappear when clicked -->
+<button class="btn btn-sm navbar-btn search-button" id="bd-search-button" onclick="toggleSearchField()" title="Toggle search field">
   <i class="fas fa-search"></i>
 </button>
+<div class="search-button__overlay" onclick="toggleSearchField()"></div>
 {# This will be hidden by default until click #}
 <div class="{{ containerClass }}">
   {% include "../components/search-field.html" %}
