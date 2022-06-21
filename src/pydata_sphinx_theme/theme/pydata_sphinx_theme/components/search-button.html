@@ -1,18 +1,25 @@
 {# Search page has its own UI / UX for search #}
-{% if pagename != "search" %}
 <!-- A button that will trigger a search field to be displayed on click. -->
 {% set containerClass="search-button__search-container" %}
 <script>
 var toggleSearchField = () => {
+  {% if pagename != "search" %}
   let button = document.getElementById("bd-search-button");
 
   // This causes the search field to appear and expands the clickable div behind it
   button.classList.toggle('show');
 
-  // This focuses the cursor on the search field
+  {# Different selectors for search input field based on the page #}
   let input = document.querySelector('.{{ containerClass }} form input');
+  {% else %}
+  {# This is the structure for the search input on search.html #}
+  let input = document.querySelector("form.bd-search input");
+  {% endif %}
+
+  // Select the search input field, and focus the page on it
   input.focus();
   input.select();
+  input.scrollIntoView({block: "center"});
 };
 </script>
 
@@ -20,8 +27,11 @@ var toggleSearchField = () => {
 <button class="btn btn-sm navbar-btn search-button" id="bd-search-button" onclick="toggleSearchField()" title="Toggle search field">
   <i class="fas fa-search"></i>
 </button>
+
+{#- Only on pages not `search.html`. This is because we only want the in-page search on this page -#}
+{%- if pagename !="search" -%}
+{#- This will be hidden by default until click -#}
 <div class="search-button__overlay" onclick="toggleSearchField()"></div>
-{# This will be hidden by default until click #}
 <div class="{{ containerClass }}">
   {% include "../components/search-field.html" %}
 </div>
