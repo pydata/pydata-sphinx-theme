@@ -126,6 +126,7 @@ label.secondary-toggle {
   position: absolute;
   right: 0;
   top: calc(var(--pst-header-height) / 4);
+  transform: scale(-1, 1);
 
   @include media-breakpoint-up(lg) {
     display: none;
