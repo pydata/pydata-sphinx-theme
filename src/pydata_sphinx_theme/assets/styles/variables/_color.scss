@@ -1,3 +1,8 @@
+/* for colored buttons and badges, ensure text color is legible */
+@function text-color($value) {
+  @return if(lightness($value) > 70, #000, #fff);
+}
+
 /*******************************************************************************
 * light theme
 *
@@ -5,17 +10,37 @@
 */
 html[data-theme="light"] {
   /*****************************************************************************
-  * main colors
+  * main colors. the $pst-semantic-colors follow the naming convention in
+  * sphinx-design, to allow for color overrides in
+  * ../extensions/_sphinx_design.scss. NOTE: some of these colors (most notably
+  * the *-text and *-highlight variables) are **only** included to allow
+  * sphinx-design overrides, and (probably?) should not be used in our own CSS rules.
+  *
+  * NOTE: this theme defines "info == primary" and "warning == secondary"
   */
-  --pst-color-primary: rgb(69 157 185);
-  --pst-color-secondary: rgb(238 144 64);
-  --pst-color-success: rgb(40, 167, 69);
-  --pst-color-info: var(--pst-color-primary);
-  --pst-color-warning: var(--pst-color-secondary);
-  --pst-color-danger: rgb(220, 53, 69);
-  --pst-color-text-base: rgb(51, 51, 51);
-  --pst-color-text-muted: rgb(77, 77, 77);
-  --pst-color-border: rgb(201, 201, 201);
+  $pst-semantic-colors: (
+    "primary": rgb(69, 157, 185),
+    "secondary": rgb(238, 144, 64),
+    "success": rgb(40, 167, 69),
+    "info": rgb(69, 157, 185),
+    "warning": rgb(238, 144, 64),
+    "danger": rgb(220, 53, 69),
+    "light": rgb(201, 201, 201),
+    "muted": rgb(77, 77, 77),
+    "dark": rgb(51, 51, 51),
+    "black": rgb(0, 0, 0),
+    "white": rgb(255, 255, 255),
+  );
+
+  @each $name, $value in $pst-semantic-colors {
+    --pst-color-#{$name}: #{$value};
+    --pst-color-#{$name}-text: #{text-color($value)};
+    --pst-color-#{$name}-highlight: #{mix(#000, $value, 15%)};
+  }
+  /* ↓↓↓ these are not sphinx-design overrides ↓↓↓ */
+  --pst-color-text-base: var(--pst-color-dark);
+  --pst-color-text-muted: var(--pst-color-muted);
+  --pst-color-border: var(--pst-color-light);
   --pst-color-shadow: rgb(216, 216, 216);
 
   /*****************************************************************************
@@ -68,17 +93,31 @@ html[data-theme="light"] {
 */
 html[data-theme="dark"] {
   /*****************************************************************************
-  * main colors
+  * main colors. See notes under data-theme="light", above.
   */
-  --pst-color-primary: rgb(69 157 185);
-  --pst-color-secondary: rgb(238 144 64);
-  --pst-color-success: rgb(72, 135, 87);
-  --pst-color-info: var(--pst-color-primary);
-  --pst-color-warning: var(--pst-color-secondary);
-  --pst-color-danger: rgb(203, 70, 83);
-  --pst-color-text-base: rgb(201, 209, 217);
-  --pst-color-text-muted: rgb(192, 192, 192);
-  --pst-color-border: rgb(192, 192, 192);
+  $pst-semantic-colors: (
+    "primary": rgb(69, 157, 185),
+    "secondary": rgb(238, 144, 64),
+    "success": rgb(72, 135, 87),
+    "info": rgb(69, 157, 185),
+    "warning": rgb(238, 144, 64),
+    "danger": rgb(203, 70, 83),
+    "light": rgb(201, 201, 201),
+    "muted": rgb(192, 192, 192),
+    "dark": rgb(201, 209, 217),
+    "black": rgb(0, 0, 0),
+    "white": rgb(255, 255, 255),
+  );
+
+  @each $name, $value in $pst-semantic-colors {
+    --pst-color-#{$name}: #{$value};
+    --pst-color-#{$name}-text: #{text-color($value)};
+    --pst-color-#{$name}-highlight: #{mix(#fff, $value, 15%)};
+  }
+
+  --pst-color-text-base: var(--pst-color-dark);
+  --pst-color-text-muted: var(--pst-color-muted);
+  --pst-color-border: var(--pst-color-muted);
   --pst-color-shadow: var(--pst-color-background);
 
   /*****************************************************************************
