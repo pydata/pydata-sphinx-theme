@@ -21,10 +21,17 @@ var toggleSearchField = () => {
   input.select();
   input.scrollIntoView({block: "center"});
 };
+
+// Add an event listener for this function for Ctrl + K
+window.addEventListener("keydown", (event) => {
+if (event.ctrlKey && event.code == "KeyK") {
+  event.preventDefault();
+  toggleSearchField();
+}}, true);
 </script>
 
 <!-- An overlay that will expand in the background and cause the search to disappear when clicked -->
-<button class="btn btn-sm navbar-btn search-button" id="bd-search-button" onclick="toggleSearchField()" title="Toggle search field">
+<button class="btn btn-sm navbar-btn search-button" id="bd-search-button" onclick="toggleSearchField()" title="{{ _('Toggle search field') }} (CTRL+K)">
   <i class="fas fa-search"></i>
 </button>
 

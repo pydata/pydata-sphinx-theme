@@ -792,9 +792,18 @@ any other context values.
        "some_other_arg": "?some-other-arg"
    }
 
+Search bar
+==========
+
+By default, the Search Bar is hidden, and will be displayed when a user either:
+
+- Clicks the magnifying class icon in the header: :fas:`magnifying-glass`.
+- Presses the keyboard shortcut :kbd:`CTRL` + :kbd:`K` (Windows) or :kbd:`CMD` + :kbd:`K` (Mac).
+
+You can also configure some aspects of the search bar, described below.
 
 Configure the search bar position
-=================================
+---------------------------------
 
 To modify the position of the search bar, add the ``search-field.html``
 template to your **sidebar**, or to one of the **navbar** positions, depending
@@ -824,7 +833,7 @@ following configuration:
    explicitly define a list of sidebar templates in `html_sidebars` and omit the `search-field.html` entry.
 
 Configure the search bar text
-=============================
+-----------------------------
 
 To modify the text that is in the search bar before people click on it, add the
 following configuration to your ``conf.py`` file:
