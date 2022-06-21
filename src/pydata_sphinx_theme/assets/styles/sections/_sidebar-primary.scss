@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  z-index: var(--pst-level-2);
+  z-index: $zindex-modal;
   min-height: 100vh;
   border-right: 1px solid var(--pst-color-border);
   top: var(--pst-header-height);
@@ -49,10 +49,8 @@
     position: absolute;
     top: 0;
     right: 0;
-    // height: var(--sidebar-item-height);
     height: 30px;
     width: 30px;
-    // width: var(--sidebar-expander-width);
 
     cursor: pointer;
 

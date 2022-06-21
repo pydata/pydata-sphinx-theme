@@ -22,7 +22,7 @@ label.overlay {
       height: 100vh;
       width: 100vw;
       opacity: 0.5;
-      z-index: var(--pst-level-1);
+      z-index: $zindex-modal-backdrop;
     }
 
     &:not(:checked) ~ .container-xl .bd-sidebar-primary {
@@ -37,7 +37,7 @@ label.overlay {
       height: 100vh;
       width: 100vw;
       opacity: 0.5;
-      z-index: var(--pst-level-1);
+      z-index: $zindex-modal-backdrop;
     }
 
     &:not(:checked) ~ .container-xl .bd-sidebar-secondary {
