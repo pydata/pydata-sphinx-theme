@@ -11,7 +11,7 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 
 .. danger::
 
-   ``sphinx-panels`` is no longer maintained and recommend you switch to ``sphinx-design``.
+   ``sphinx-panels`` is no longer maintained and we recommend you switch to ``sphinx-design``.
    We will deprecate support for sphinx-panels soon.
 
    To use the :code:`sphinx-panels` extention, add these lines to your custom CSS to overwrite the shadows of the panels:
