@@ -1,40 +1,21 @@
 /**
- * Search page special-cases
+ * /search.html page special-cases
  */
 
-// This selects for only the search page.
-// The search fields have no unique identifiers/classes, so here we hard-code
-// That the first h1 header is `search-documentation` as a reasonable estimate
-article > h1#search-documentation:first-child {
-  /*******************************************
- * Search form
- */
-  & ~ form input[type="text"] {
-    background-color: var(--pst-color-background);
-    border-radius: 0.2rem;
-    border: 1px solid var(--pst-color-border);
-    color: var(--pst-color-text-base);
-
-    // Inner-text of the search bar
-    &::placeholder {
-      color: var(--pst-color-border);
-    }
-
-    // Background should always be same color regardless of active or nor
-    &:active,
-    &:focus {
-      background-color: var(--pst-color-background);
-      color: var(--pst-color-border);
-      border: 1px solid var(--pst-color-border);
-    }
-  }
-
+.bd-search-container {
   /*******************************************
   * Search results
   */
   // Whitespace
-  & ~ div#search-results > h2 {
-    margin-top: 0;
+  div#search-results {
+    > h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
+    }
+
+    p.search-summary {
+      color: var(--pst-color-text-muted);
+    }
   }
 
   ul.search {
@@ -43,10 +24,9 @@ article > h1#search-documentation:first-child {
 
     li {
       background-image: none;
-      padding: 0;
-      margin-bottom: 1em;
-      padding-bottom: 1em;
-      border-bottom: 1px solid var(--pst-color-text-muted);
+      padding: 1rem 0;
+      margin: 1rem 0;
+      border-top: 1px solid var(--pst-color-text-muted);
 
       // First link is the page title, it should be a bit bigger
       > a {
@@ -55,6 +35,7 @@ article > h1#search-documentation:first-child {
 
       div.context,
       p.context {
+        color: var(--pst-color-text-base);
         margin: 0.5em 0 0 0;
 
         // Add a # before page section titles to make it clear they are sections

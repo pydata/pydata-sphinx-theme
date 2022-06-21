@@ -15,18 +15,18 @@
     border-radius: 0.2rem;
     border: 1px solid var(--pst-color-border);
     padding-left: 35px;
-    color: var(--pst-color-text-base);
+    color: var(--pst-color-border);
 
     // Inner-text of the search bar
     &::placeholder {
       color: var(--pst-color-border);
     }
 
-    // Background should always be same color regardless of active or nor
+    // Background should always be same color regardless of active or not
     &:active,
     &:focus {
       background-color: var(--pst-color-background);
-      color: var(--pst-color-border);
+      color: var(--pst-color-text-base);
     }
   }
 }

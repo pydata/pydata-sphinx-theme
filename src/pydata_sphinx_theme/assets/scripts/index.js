@@ -122,6 +122,11 @@ function addTOCInteractivity() {
 
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
+  // If the docs nav doesn't exist, do nothing (e.g., on search page)
+  if (!document.getElementById("bd-docs-nav")) {
+    return;
+  }
+
   var sidebar = document.querySelector("div.bd-sidebar");
 
   // Remember the sidebar scroll position between page loads
@@ -160,27 +165,8 @@ function scrollToActive() {
   });
 }
 
-/*******************************************************************************
- * Page-specific
- */
-
-// Activate the search field on the search page on pageload
-function focusSearchField() {
-  // Search for a specific field inside the Sphinx search form to avoid
-  // accidentally selecting other fields
-  let searchInput = document.querySelector(
-    "article > #search-documentation ~ form input[type='text']"
-  );
-  if (searchInput) {
-    searchInput.focus();
-    searchInput.select();
-    console.log("[PST]: Set focus on search field.");
-  }
-}
-
 // This is equivalent to the .ready() function as described in
 // https://api.jquery.com/ready/
 $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
-$(focusSearchField);
