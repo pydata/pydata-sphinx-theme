@@ -519,12 +519,13 @@ def test_old_google_analytics_id(sphinx_build_factory):
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
-    # This text makes the assumption that the google analytics will always be
-    # the second last script tag found in the document (last is the theme js).
-    script_tag = index_html.select("script")[-2]
 
-    assert "ga" in script_tag.string
-    assert "UA-XXXXX" in script_tag.string
+    # Search all the scripts and make sure one of them has the Google tag in there
+    tags_found = False
+    for script in index_html.select("script"):
+        if script.string and "ga" in script.string and "UA-XXXXX" in script.string:
+            tags_found = True
+    assert tags_found is True
 
 
 def test_show_nav_level(sphinx_build_factory):
