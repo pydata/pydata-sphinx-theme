@@ -71,3 +71,52 @@
     }
   }
 }
+/*******************************************************************************
+* color overrides. Here we recreate the sphinx-design rules for colors
+* (including button and badge colors), and assign our own --pst-color-*
+* variables instead of --sd-color-*.
+*/
+$sd-semantic-color-names: (
+  "primary",
+  "secondary",
+  "success",
+  "info",
+  "warning",
+  "danger",
+  "light",
+  "muted",
+  "dark",
+  "black",
+  "white"
+);
+
+html[data-theme="light"],
+html[data-theme="dark"] {
+  @each $name in $sd-semantic-color-names {
+    .sd-bg-#{$name} {
+      background-color: var(--pst-color-#{$name}) !important;
+    }
+    .sd-text-#{$name} {
+      color: var(--pst-color-#{$name}) !important;
+    }
+    .sd-outline-#{$name} {
+      border-color: var(--pst-color-#{$name}) !important;
+    }
+    .sd-bg-text-#{$name} {
+      color: var(--pst-color-#{$name}-text) !important;
+    }
+    a {
+      &.sd-btn-#{$name} {
+        color: var(--pst-color-#{$name}-text) !important;
+        border-color: var(--pst-color-#{$name}) !important;
+        background-color: var(--pst-color-#{$name}) !important;
+      }
+      &.sd-btn-#{$name}:focus,
+      &.sd-btn-#{$name}:hover {
+        color: var(--pst-color-#{$name}-text) !important;
+        border-color: var(--pst-color-#{$name}-highlight) !important;
+        background-color: var(--pst-color-#{$name}-highlight) !important;
+      }
+    }
+  }
+}
