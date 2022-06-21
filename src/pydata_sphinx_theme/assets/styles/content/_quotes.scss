@@ -10,5 +10,15 @@ blockquote {
     color: var(--pst-color-text-muted);
   }
 
+  // remove padding from included line-block to avoid duplication
+  .line-block {
+    margin: 0 0;
+  }
+
+  // remove margin bottom for the last p
+  p:last-child {
+    margin-bottom: 0;
+  }
+
   @include background-from-color-variable(--pst-color-border);
 }
