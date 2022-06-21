@@ -25,7 +25,54 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 
    This modification is not needed when using the :code:`sphinx-design` extention.
 
-Below you can find some examples of the **cards** and **tabs** created with the :code:`sphinx-design` extention.
+Below you can find some examples of the components created with the :code:`sphinx-design` extension.
+
+Badges and buttons
+------------------
+
+Here are some of the available badges:
+:bdg-primary:`primary`
+:bdg-secondary:`secondary`
+:bdg-success:`success`
+:bdg-primary-line:`primary outline`
+:bdg-secondary-line:`secondary outline`
+:bdg-success-line:`success outline`
+
+Here are some buttons, also using semantic color names. **Note:** in this theme, ``info`` is defined to be the same color as ``primary``, and ``warning`` is the same color as ``secondary``.
+
+.. grid:: auto
+
+    .. grid-item::
+
+        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+            :color: info
+            :shadow:
+
+            Info
+
+    .. grid-item::
+
+        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+            :color: warning
+            :shadow:
+
+            Warning
+
+    .. grid-item::
+
+        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+            :color: danger
+            :shadow:
+
+            Danger
+
+    .. grid-item::
+
+        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+            :color: muted
+            :shadow:
+
+            Muted
 
 Cards
 -----
