@@ -6,11 +6,13 @@
 /*******************************************************************************
  * shadows
  */
-.sd-shadow-xs,
-.sd-shadow-sm,
-.sd-shadow-md,
-.sd-shadow-lg {
-  box-shadow: 0 0.5rem 1rem var(--pst-color-shadow);
+html[data-theme="light"] {
+  .sd-shadow-xs,
+  .sd-shadow-sm,
+  .sd-shadow-md,
+  .sd-shadow-lg {
+    box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
+  }
 }
 
 /*******************************************************************************
