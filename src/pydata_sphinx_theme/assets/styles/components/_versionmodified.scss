@@ -12,25 +12,14 @@ div.deprecated {
   box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
     0 0 0.0625rem var(--pst-color-shadow);
   transition: color 250ms, background-color 250ms, border-color 250ms;
-  position: relative;
   background-color: var(--pst-color-on-background);
+  position: relative;
 
   > p {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
 
-    // This is a hack to control the opacity for version tags with our color variables
-    // ref: https://stackoverflow.com/a/56951626/6734243
-    &:before {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      background-color: var(--pst-color-info);
-      opacity: 0.1;
-    }
+    @include background-from-color-variable(--pst-color-info);
   }
 }
 
