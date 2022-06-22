@@ -98,7 +98,7 @@ $extra-semantic-colors: (
 $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
 
 /* Next, make a list of the semantic color names from sphinx-design (we only
- * need to create override rules for classes that sphinx-design has defined).
+ * need to override variables that sphinx-design has actually defined).
  * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L31-L43
  */
 $sd-semantic-color-names: (
@@ -123,7 +123,7 @@ $sd-semantic-color-names: (
   @return if(lightness($value) > 70, #000, #fff);
 }
 
-// Now we define the variables and create the override rules.
+// Now we override the --sd-color-* variables.
 @each $mode in (light, dark) {
   html[data-theme="#{$mode}"] {
     @each $name in $sd-semantic-color-names {
@@ -132,39 +132,10 @@ $sd-semantic-color-names: (
       @if type-of($value) == map {
         $value: map-get($value, $mode);
       }
-      // define the CSS variables (--pst-color-*) that we'll use to replace
-      // the sphinx-design variables (--sd-color-*).
-      --pst-color-#{$name}: #{$value};
-      --pst-color-#{$name}-text: #{text-color($value)};
-      --pst-color-#{$name}-highlight: #{darken($value, 15%)};
-      // finally, add the rules. these first two are for solid badges
-      .sd-bg-#{$name} {
-        background-color: var(--pst-color-#{$name}) !important;
-      }
-      .sd-text-#{$name} {
-        color: var(--pst-color-#{$name}) !important;
-      }
-      // outline badges
-      .sd-outline-#{$name} {
-        border-color: var(--pst-color-#{$name}) !important;
-      }
-      .sd-bg-text-#{$name} {
-        color: var(--pst-color-#{$name}-text) !important;
-      }
-      // buttons
-      a {
-        &.sd-btn-#{$name} {
-          color: var(--pst-color-#{$name}-text) !important;
-          border-color: var(--pst-color-#{$name}) !important;
-          background-color: var(--pst-color-#{$name}) !important;
-        }
-        &.sd-btn-#{$name}:focus,
-        &.sd-btn-#{$name}:hover {
-          color: var(--pst-color-#{$name}-text) !important;
-          border-color: var(--pst-color-#{$name}-highlight) !important;
-          background-color: var(--pst-color-#{$name}-highlight) !important;
-        }
-      }
+      // override the sphinx-design variables
+      --sd-color-#{$name}: #{$value};
+      --sd-color-#{$name}-text: #{text-color($value)};
+      --sd-color-#{$name}-highlight: #{darken($value, 15%)};
     }
   }
 }
