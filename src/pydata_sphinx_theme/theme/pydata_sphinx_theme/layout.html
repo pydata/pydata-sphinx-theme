@@ -32,8 +32,8 @@
   <label class="overlay overlay-primary" for="__primary"></label>
 
   <!-- Checkboxes to toggle the secondary sidebar -->
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
-  <label class="overlay overlay-secondary toc-show-{{ toc_show_width }}" for="__secondary"></label>
+  <input type="checkbox" class="sidebar-toggle toc-show-{{ "xl" if sidebars else "md" }}" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
 
   <div class="bd-header-announcement container-fluid" id="banner">
     {% include "sections/announcement.html" %}

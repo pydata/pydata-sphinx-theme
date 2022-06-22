@@ -74,7 +74,7 @@
   padding-right: 2em;
   padding-left: 2em;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up($pst-primary-breakpoint) {
     padding-left: none;
   }
 
@@ -132,7 +132,7 @@ label {
   &.primary-toggle {
     left: 0;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up($pst-primary-breakpoint) {
       display: none;
     }
   }
