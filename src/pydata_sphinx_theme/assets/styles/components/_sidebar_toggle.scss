@@ -9,7 +9,7 @@ label.overlay {
   background-color: black;
   height: 0;
   width: 0;
-  opacity: 0;
+  opacity: 0.5;
   position: fixed;
   top: 0;
   left: 0;
@@ -22,7 +22,6 @@ input {
   &#__secondary:checked + label.overlay.overlay-secondary {
     height: 100vh;
     width: 100vw;
-    opacity: 0.5;
   }
 
   &#__primary:not(:checked) ~ .container-xl .bd-sidebar-primary,
@@ -36,7 +35,6 @@ input {
     &:checked + label.overlay.overlay-primary {
       height: 0;
       width: 0;
-      opacity: 0;
     }
 
     &:not(:checked) ~ .container-xl .bd-sidebar-primary {
@@ -53,7 +51,6 @@ input {
       &:checked + label.overlay.overlay-secondary {
         height: 0;
         width: 0;
-        opacity: 0;
       }
 
       &:not(:checked) ~ .container-xl .bd-sidebar-secondary {
