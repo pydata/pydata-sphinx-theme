@@ -99,8 +99,7 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
 
 /* Next, make a list of the semantic color names from sphinx-design (we only
  * need to create override rules for classes that sphinx-design has defined).
- * Here we also incorporate a modified version of sphinx-design's text-color
- * function, to make sure that text is legible on colored buttons and badges.
+ * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L31-L43
  */
 $sd-semantic-color-names: (
   "primary",
@@ -116,6 +115,10 @@ $sd-semantic-color-names: (
   "white"
 );
 
+/* Here we also incorporate a modified version of sphinx-design's text-color
+ * function, to make sure that text is legible on colored buttons and badges.
+ * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L45-L47
+ */
 @function text-color($value) {
   @return if(lightness($value) > 70, #000, #fff);
 }
