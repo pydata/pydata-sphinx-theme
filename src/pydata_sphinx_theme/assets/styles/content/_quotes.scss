@@ -21,4 +21,9 @@ blockquote {
   }
 
   @include background-from-color-variable(--pst-color-border);
+
+  //hack to make the text in the bloquote selectable
+  &:before {
+    z-index: -1;
+  }
 }
