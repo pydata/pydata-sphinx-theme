@@ -797,7 +797,7 @@ Search bar
 
 By default, the Search Bar is hidden, and will be displayed when a user either:
 
-- Clicks the magnifying class icon in the header: :fas:`magnifying-glass`.
+- Clicks the magnifying class icon in the header: :fas:`search`.
 - Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
 
 You can also configure some aspects of the search bar, described below.
