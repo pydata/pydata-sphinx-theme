@@ -37,17 +37,6 @@
       border-color: var(--pst-color-text-muted);
       color: var(--pst-color-text-muted);
     }
-
-    #navbar-end {
-      margin-bottom: 0.5em;
-    }
-
-    #navbar-center,
-    #navbar-end {
-      > * {
-        margin-top: 0.5em;
-      }
-    }
   }
 }
 
