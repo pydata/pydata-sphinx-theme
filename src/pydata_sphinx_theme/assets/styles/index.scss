@@ -40,6 +40,7 @@ $grid-breakpoints: (
 @import "./sections/header";
 @import "./sections/sidebar-primary";
 @import "./sections/sidebar-secondary";
+@import "./sections/header_article";
 
 // Re-usable components across the theme
 @import "./components/icon-links";

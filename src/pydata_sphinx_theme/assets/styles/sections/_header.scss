@@ -68,27 +68,6 @@
   }
 }
 
-// overwrite bootstrap coloring
-.bd-header#navbar-main {
-  background-color: var(--pst-color-navbar-background) !important;
-  padding-right: 2em;
-  padding-left: 2em;
-
-  @include media-breakpoint-up($pst-primary-breakpoint) {
-    padding-left: none;
-  }
-
-  // add padding when the secondary sidebar is hidden
-  // based on the toc_show_width variable
-  @each $break, $width in $grid-breakpoints {
-    &.toc-show-#{$break} {
-      @include media-breakpoint-up($break) {
-        padding-right: none;
-      }
-    }
-  }
-}
-
 .navbar-header a {
   padding: 0 15px;
 }
@@ -115,40 +94,4 @@
   font-size: 0.7rem;
   padding-left: 2px;
   vertical-align: middle;
-}
-
-label {
-  &.sidebar-toggle {
-    cursor: pointer;
-    font-size: 1.2rem;
-    margin: 0 1em;
-    position: absolute;
-    height: var(--pst-header-height);
-    top: 0;
-    display: flex;
-    align-items: center;
-  }
-
-  &.primary-toggle {
-    left: 0;
-
-    @include media-breakpoint-up($pst-primary-breakpoint) {
-      display: none;
-    }
-  }
-
-  &.secondary-toggle {
-    right: 0;
-    transform: scale(-1, 1);
-
-    // hide the toogle when the secondary is normally displayed
-    // based on the toc_show_width variable
-    @each $break, $width in $grid-breakpoints {
-      &.toc-show-#{$break} {
-        @include media-breakpoint-up($break) {
-          display: none;
-        }
-      }
-    }
-  }
 }

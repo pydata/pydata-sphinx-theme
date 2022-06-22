@@ -57,6 +57,11 @@
       {% block docs_main %}
       {% set content_xl_width = "col-xl-7" if sidebars else "col-xl-8" %}
         <div class="bd-content col-12 col-md-9 {{ content_xl_width }}">
+
+          <nav class="bd-header-article navbar-light bg-light navbar-expand bd-navbar toc-show-{{ toc_show_width }}">
+            {% include "sections/header-article.html" %}
+          </nav>
+
           {% block docs_body %}
             <article class="bd-article" role="main">
               {% block body %} {% endblock %}

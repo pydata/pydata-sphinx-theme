@@ -1,0 +1,63 @@
+.bd-header-article {
+  background: var(--pst-color-on-background) !important;
+  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
+  padding: 0 2em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: var(--pst-header-height);
+
+  & ~ article.bd-article {
+    padding-top: var(--pst-header-height);
+  }
+
+  // asumption that people will always make the secondary sidebar disapear first
+  @each $break, $width in $grid-breakpoints {
+    &.toc-show-#{$break} {
+      @include media-breakpoint-up($break) {
+        display: none;
+
+        & ~ article.bd-article {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+}
+
+label {
+  &.sidebar-toggle {
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 0 1em;
+    position: absolute;
+    height: var(--pst-header-height);
+    top: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &.primary-toggle {
+    left: 0;
+
+    @include media-breakpoint-up($pst-primary-breakpoint) {
+      display: none;
+    }
+  }
+
+  &.secondary-toggle {
+    right: 0;
+    transform: scale(-1, 1);
+
+    // hide the toogle when the secondary is normally displayed
+    // based on the toc_show_width variable
+    @each $break, $width in $grid-breakpoints {
+      &.toc-show-#{$break} {
+        @include media-breakpoint-up($break) {
+          display: none;
+        }
+      }
+    }
+  }
+}
