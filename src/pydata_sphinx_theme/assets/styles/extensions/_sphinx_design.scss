@@ -6,6 +6,8 @@
  * same for our overrides to have any effect.
  */
 
+@use "../variables/color" as *;
+
 /*******************************************************************************
  * shadows
  */
@@ -78,10 +80,28 @@ html[data-theme="light"] {
 }
 /*******************************************************************************
  * color overrides. Here we recreate the sphinx-design rules for colors
- * (including button and badge colors), and assign our own --pst-color-*
+ * (including button and badge colors), and assign them our own --pst-color-*
  * variables instead of --sd-color-*.
+ *
+ * First, define the extra keys needed to cover the full range of semantic
+ * color names used in sphinx-design, then merge them with the names we
+ * already define for our own needs.
  */
+$extra-semantic-colors: (
+  "dark": map-get($pst-semantic-colors, "text-base"),
+  "muted": map-get($pst-semantic-colors, "text-muted"),
+  "light": rgb(201, 201, 201),
+  "black": rgb(0, 0, 0),
+  "white": rgb(255, 255, 255),
+);
 
+$all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
+
+/* Next, make a list of the semantic color names from sphinx-design (we only
+ * need to create override rules for classes that sphinx-design has defined).
+ * Here we also incorporate a modified version of sphinx-design's text-color
+ * function, to make sure that text is legible on colored buttons and badges.
+ */
 $sd-semantic-color-names: (
   "primary",
   "secondary",
@@ -96,40 +116,51 @@ $sd-semantic-color-names: (
   "white"
 );
 
-html[data-theme="light"],
-html[data-theme="dark"] {
-  /* @each {...} is like a for-loop:
-   * https://sass-lang.com/documentation/at-rules/control/each
-   * ...and #{$variable} inserts a variable into a CSS selector or property name:
-   * https://sass-lang.com/documentation/interpolation
-   */
-  @each $name in $sd-semantic-color-names {
-    /* solid badges */
-    .sd-bg-#{$name} {
-      background-color: var(--pst-color-#{$name}) !important;
-    }
-    .sd-text-#{$name} {
-      color: var(--pst-color-#{$name}) !important;
-    }
-    /* outline badges */
-    .sd-outline-#{$name} {
-      border-color: var(--pst-color-#{$name}) !important;
-    }
-    .sd-bg-text-#{$name} {
-      color: var(--pst-color-#{$name}-text) !important;
-    }
-    /* buttons */
-    a {
-      &.sd-btn-#{$name} {
-        color: var(--pst-color-#{$name}-text) !important;
-        border-color: var(--pst-color-#{$name}) !important;
+@function text-color($value) {
+  @return if(lightness($value) > 70, #000, #fff);
+}
+
+// Now we define the variables and create the override rules.
+@each $mode in (light, dark) {
+  html[data-theme="#{$mode}"] {
+    @each $name in $sd-semantic-color-names {
+      // check if this color is defined differently for light/dark
+      $value: map-get($all-colors, $name);
+      @if type-of($value) == map {
+        $value: map-get($value, $mode);
+      }
+      // define the CSS variables (--pst-color-*) that we'll use to replace
+      // the sphinx-design variables (--sd-color-*).
+      --pst-color-#{$name}: #{$value};
+      --pst-color-#{$name}-text: #{text-color($value)};
+      --pst-color-#{$name}-highlight: #{darken($value, 15%)};
+      // finally, add the rules. these first two are for solid badges
+      .sd-bg-#{$name} {
         background-color: var(--pst-color-#{$name}) !important;
       }
-      &.sd-btn-#{$name}:focus,
-      &.sd-btn-#{$name}:hover {
+      .sd-text-#{$name} {
+        color: var(--pst-color-#{$name}) !important;
+      }
+      // outline badges
+      .sd-outline-#{$name} {
+        border-color: var(--pst-color-#{$name}) !important;
+      }
+      .sd-bg-text-#{$name} {
         color: var(--pst-color-#{$name}-text) !important;
-        border-color: var(--pst-color-#{$name}-highlight) !important;
-        background-color: var(--pst-color-#{$name}-highlight) !important;
+      }
+      // buttons
+      a {
+        &.sd-btn-#{$name} {
+          color: var(--pst-color-#{$name}-text) !important;
+          border-color: var(--pst-color-#{$name}) !important;
+          background-color: var(--pst-color-#{$name}) !important;
+        }
+        &.sd-btn-#{$name}:focus,
+        &.sd-btn-#{$name}:hover {
+          color: var(--pst-color-#{$name}-text) !important;
+          border-color: var(--pst-color-#{$name}-highlight) !important;
+          background-color: var(--pst-color-#{$name}-highlight) !important;
+        }
       }
     }
   }
