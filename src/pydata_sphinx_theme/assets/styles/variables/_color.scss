@@ -74,7 +74,7 @@ $pst-semantic-colors: (
 *
 * NOTE: @each {...} is like a for-loop
 * https://sass-lang.com/documentation/at-rules/control/each
-* ...and #{$variable} inserts a variable into a CSS selector or property name
+* and #{...} inserts a variable into a CSS selector or property name
 * https://sass-lang.com/documentation/interpolation
 */
 @each $mode in (light, dark) {
