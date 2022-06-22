@@ -41,6 +41,7 @@ Here are some of the available badges:
 :bdg-success-line:`success outline`
 
 Here are some buttons, also using semantic color names. **Note:** in this theme, ``info`` is defined to be the same color as ``primary``, and ``warning`` is the same color as ``secondary``.
+If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, e.g., ``primary``, ``danger``, etc), badges and buttons will automatically use the custom color.
 
 .. grid:: auto
 
