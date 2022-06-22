@@ -27,6 +27,8 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 
 Below you can find some examples of the components created with the :code:`sphinx-design` extension.
 
+.. _badges-buttons:
+
 Badges and buttons
 ------------------
 
@@ -44,7 +46,8 @@ Here are some buttons, also using semantic color names. **Note:** in this theme,
 
     .. grid-item::
 
-        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+        .. button-ref:: badges-buttons
+            :ref-type: ref
             :color: info
             :shadow:
 
@@ -52,7 +55,8 @@ Here are some buttons, also using semantic color names. **Note:** in this theme,
 
     .. grid-item::
 
-        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+        .. button-ref:: badges-buttons
+            :ref-type: ref
             :color: warning
             :shadow:
 
@@ -60,7 +64,8 @@ Here are some buttons, also using semantic color names. **Note:** in this theme,
 
     .. grid-item::
 
-        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+        .. button-ref:: badges-buttons
+            :ref-type: ref
             :color: danger
             :shadow:
 
@@ -68,7 +73,8 @@ Here are some buttons, also using semantic color names. **Note:** in this theme,
 
     .. grid-item::
 
-        .. button-link:: https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html
+        .. button-ref:: badges-buttons
+            :ref-type: ref
             :color: muted
             :shadow:
 
