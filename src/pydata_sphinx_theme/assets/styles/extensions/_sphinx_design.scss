@@ -132,10 +132,14 @@ $sd-semantic-color-names: (
       @if type-of($value) == map {
         $value: map-get($value, $mode);
       }
+      // define the pst variables, so that downstream user overrides will work
+      --pst-color-#{$name}: #{$value};
+      --pst-color-#{$name}-text: #{text-color($value)};
+      --pst-color-#{$name}-highlight: #{darken($value, 15%)};
       // override the sphinx-design variables
-      --sd-color-#{$name}: #{$value};
-      --sd-color-#{$name}-text: #{text-color($value)};
-      --sd-color-#{$name}-highlight: #{darken($value, 15%)};
+      --sd-color-#{$name}: var(--pst-color-#{$name});
+      --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
+      --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
     }
   }
 }
