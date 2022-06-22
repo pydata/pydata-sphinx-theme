@@ -7,6 +7,10 @@ and structural elements of the theme. Click the sections on
 the left sidebar to see how various elements look on this theme.
 
 .. toctree::
+
+    gallery
+
+.. toctree::
     :maxdepth: 2
     :caption: Demo Documentation
 

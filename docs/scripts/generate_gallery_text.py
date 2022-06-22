@@ -18,13 +18,17 @@ def regenerate_gallery():
 
     # get the existing folders path
     _template_dir = Path(__file__).parents[1] / "_templates"
-    user_guide_dir = Path(__file__).parents[1] / "user_guide"
+    demo_dir = Path(__file__).parents[1] / "demo"
     _static_dir = Path(__file__).parents[1] / "_static"
 
     # update the gallery file with a new empty one
     src = _template_dir / "gallery.rst"
-    dst = user_guide_dir / "gallery.rst"
+    dst = demo_dir / "gallery.rst"
     copy(src, dst)
+
+    # create the static gallery folder
+    gallery_dir = _static_dir / "gallery"
+    gallery_dir.mkdir(exist_ok=True)
 
     # hydrate the gallery with new images
     site_content = (_template_dir / "gallery_item.rst").read_text()
@@ -35,7 +39,7 @@ def regenerate_gallery():
         for item in gallery_items:
 
             item["id"] = item["name"].lower().replace(" ", "_")
-            screenshot = _static_dir / f"gallery/{item['id']}.png"
+            screenshot = gallery_dir / f"{item['id']}.png"
 
             for _ in range(3):
                 try:

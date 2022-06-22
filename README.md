@@ -9,7 +9,7 @@ Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
 [![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
 This site is a guide for using the theme, and a demonstration for how it looks with various
-elements. See our [gallery](https://pydata-sphinx-theme.readthedocs.io/en/latest/user_guide/gallery.html) for more inspiration.
+elements. See our [gallery](https://pydata-sphinx-theme.readthedocs.io/en/latest/demo/gallery.html) for more inspiration.
 
 ## Installation and usage
 
