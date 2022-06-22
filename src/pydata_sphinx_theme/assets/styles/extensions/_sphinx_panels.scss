@@ -5,6 +5,18 @@
  */
 
 /*******************************************************************************
+* color
+*/
+@use "../variables/color" as *;
+
+@each $mode in (light, dark) {
+  html[data-theme="#{$mode}"] {
+    $value: map-get(map-get($pst-semantic-colors, "on-background"), $mode);
+    --pst-color-panel-background: $value;
+  }
+}
+
+/*******************************************************************************
  * sphinx-panels includes Bootstrap 4, which uses .container which can conflict
  * with docutils' `.. container::` directive.
  */
