@@ -272,11 +272,11 @@ If you build the documentation locally without first generating these images you
 
 If you'd like to build these images locally to preview in the theme, follow these steps:
 
-1. Install [playwright](https://playwright.dev/python/):
+1. Install [playwright](https://playwright.dev/python/) and the Chromium browser add-on:
 
    ```
    $ pip install playwright
-   $ install playwright
+   $ playwright install chromium
    ```
 
 2. Execute the gallery generation script from the repository root:
