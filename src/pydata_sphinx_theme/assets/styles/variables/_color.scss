@@ -28,7 +28,7 @@ html[data-theme="light"] {
   */
   --pst-color-background: rgb(255, 255, 255);
   --pst-color-on-background: rgb(255, 255, 255);
-  --pst-color-surface: rgb(240, 240, 240);
+  --pst-color-surface: rgb(245, 245, 245); // Jupyter light cell background
   --pst-color-on-surface: rgb(255, 255, 238);
 
   /*****************************************************************************
@@ -88,7 +88,7 @@ html[data-theme="dark"] {
   */
   --pst-color-background: rgb(18, 18, 18);
   --pst-color-on-background: rgb(30, 30, 30);
-  --pst-color-surface: rgb(41, 41, 41);
+  --pst-color-surface: rgb(33, 33, 33); // Jupyter dark cell background
   --pst-color-on-surface: rgb(55, 55, 55);
 
   /*****************************************************************************
