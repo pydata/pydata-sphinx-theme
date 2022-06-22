@@ -79,9 +79,12 @@ html[data-theme="light"] {
   }
 }
 /*******************************************************************************
- * color overrides. Here we recreate the sphinx-design rules for colors
- * (including button and badge colors), and assign them our own --pst-color-*
- * variables instead of --sd-color-*.
+ * color overrides. Here we create some extra --pst-color-* variables and use
+ * them to override the value of the corresponding sphinx-design variables.
+ * This is easier than re-writing the sphinx-design rules. Even easier would be
+ * directly assigning our values to the --sd-color-* variables, but then our
+ * downstream users couldn't override *our* colors and have it affect buttons
+ * and badges.
  *
  * First, define the extra keys needed to cover the full range of semantic
  * color names used in sphinx-design, then merge them with the names we
