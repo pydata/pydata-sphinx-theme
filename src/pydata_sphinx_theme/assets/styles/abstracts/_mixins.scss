@@ -21,8 +21,8 @@
 }
 
 /**
-* Hide the scrollbar until the element is overed, so keep the page clean
-*/
+ * Hide the scrollbar until the element is overed, so keep the page clean
+ */
 @mixin scrollbar-on-hover() {
   &:not(:hover) {
     &::-webkit-scrollbar-thumb {
@@ -32,8 +32,8 @@
 }
 
 /**
-* create a low opacity background behind object using our variable colors
-*/
+ * create a low opacity background behind object using our variable colors
+ */
 @mixin background-from-color-variable($color-variable, $opacity: 0.1) {
   // This is a hack to create a light background with controlled opacity
   // using our css color variables
