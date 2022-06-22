@@ -11,7 +11,7 @@ html[data-theme="light"] {
   .sd-shadow-sm,
   .sd-shadow-md,
   .sd-shadow-lg {
-    box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
+    box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;  // !important to over-ride an aggressive SD rule
   }
 }
 
