@@ -48,6 +48,8 @@
         max-height: calc(100vh - var(--pst-header-height));
         border-left: none;
         top: var(--pst-header-height);
+        position: sticky;
+        order: 2;
       }
     }
   }

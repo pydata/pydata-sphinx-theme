@@ -1,5 +1,5 @@
 {% block docs_toc %}
-  <div class="bd-sidebar-secondary col-6 col-{{ "xl" if sidebars else "md" }}-2 bd-toc">
+  <div class="bd-sidebar-secondary col-6 col-{{ toc_show_width }}-2 bd-toc">
     {% if meta is defined and not (meta is not none and 'notoc' in meta) %}
       {% for toc_item in theme_page_sidebar_items %}
       <div class="toc-item">
