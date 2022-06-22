@@ -40,6 +40,7 @@ label {
 
   &.primary-toggle {
     left: 0;
+    transform: scale(-1, 1);
 
     @include media-breakpoint-up($pst-primary-breakpoint) {
       display: none;
@@ -48,7 +49,6 @@ label {
 
   &.secondary-toggle {
     right: 0;
-    transform: scale(-1, 1);
 
     // hide the toogle when the secondary is normally displayed
     // based on the toc_show_width variable
