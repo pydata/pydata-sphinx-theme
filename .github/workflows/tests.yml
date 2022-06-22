@@ -24,8 +24,6 @@ jobs:
         os: [ubuntu-latest]
         python-version: [3.7, 3.8, 3.9, "3.10"]
         include:
-          - python-version: "3.10"
-            dev: true
           - os: macos-latest
             python-version: "3.9"
           - os: windows-latest
@@ -33,7 +31,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
@@ -46,13 +43,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .[coverage]
 
-      - name: Install pre-release dependencies
-        if: ${{ matrix.dev }}
-        run: pip install --upgrade --pre sphinx jinja2
-
       - name: Build docs to store
-        run: |
-          sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
+        run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
 
       - name: Check that there are no unexpected Sphinx warnings
         if: matrix.python-version == '3.9'
@@ -61,7 +53,7 @@ jobs:
           from pathlib import Path
           text = Path("./warnings.txt").read_text().strip()
           print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if "kitchen-sink" not in ii]
+          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static/gallery/"])]
           assert len(unexpected) == 0
 
       - name: Run the tests
@@ -104,7 +96,7 @@ jobs:
           from pathlib import Path
           text = Path("./warnings.txt").read_text().strip()
           print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if "kitchen-sink" not in ii]
+          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static/gallery/"])]
           assert len(unexpected) == 0
 
       - name: Run the tests
