@@ -3,18 +3,21 @@
 {% set containerClass="search-button__search-container" %}
 <script>
 var toggleSearchField = () => {
-  {% if pagename != "search" %}
+  // Class to make the search field appear and expand the clickable div behind it
+  // Note that `.show` will only have an effect on pages that aren't `search.html`
   let button = document.getElementById("bd-search-button");
-
-  // This causes the search field to appear and expands the clickable div behind it
   button.classList.toggle('show');
 
-  {# Different selectors for search input field based on the page #}
-  let input = document.querySelector('.{{ containerClass }} form input');
-  {% else %}
-  {# This is the structure for the search input on search.html #}
-  let input = document.querySelector("form.bd-search input");
-  {% endif %}
+  // We'll grab the elements we need to modify for the search field
+  let form = document.querySelector("form.bd-search");
+  let input = form.querySelector("input");
+
+  // Change the symbol to `meta key` if we are a Mac
+  var isMac = window.navigator.platform.toUpperCase().indexOf('MAC')>=0;
+  if (isMac) {
+    let kbd = form.querySelector("kbd.kbd-shortcut__modifier");
+    kbd.innerText = "⌘";
+  };
 
   // Select the search input field, and focus the page on it
   input.focus();

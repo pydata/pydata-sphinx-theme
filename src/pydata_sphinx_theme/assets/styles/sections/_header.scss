@@ -60,7 +60,10 @@
 
   .navbar-nav {
     display: flex;
-    gap: 1rem;
+    // Add a gap on wider screens, on narrow screens we are vertical + already have padding
+    @include media-breakpoint-up(lg) {
+      gap: 1rem;
+    }
 
     li a.nav-link {
       // Unset bootstrap padding so we can use a gutter
