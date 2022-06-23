@@ -1,6 +1,5 @@
 version: 2
-formats:
-  - htmlzip
+formats: all
 
 python:
   version: 3
