@@ -5,10 +5,12 @@ kernelspec:
   display_name: Python 3
 ---
 
-% To convert this to an ipynb file for testing with nbsphinx, run this command:
-% jupytext docs/demo/pydata.md --to ipynb
-%
-% And _temporarily_ delete the pydata.md file
+% To test this file with nbsphinx we need to convert to ipynb. To do this:
+% - Run this command: jupytext docs/demo/pydata.md --to ipynb
+% - *Temporarily* delete the pydata.md file
+% - Uncomment `nbsphinx` and comment `myst_nb` in "extensions" in our conf.py file
+% - Build the docs and test that the results look OK
+% - Undo everything in this list to make sure we revert back to the old structure
 
 # PyData Library Styles
 
