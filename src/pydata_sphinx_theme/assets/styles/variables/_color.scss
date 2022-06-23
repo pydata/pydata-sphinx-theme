@@ -56,10 +56,11 @@ $pst-semantic-colors: (
       "dark": rgb(30, 30, 30),
     ),
   // surface: object set above the background (without shadows)
+  // Uses JupyterLab cell background colors in light/dark theme
   "surface":
     (
-      "light": rgb(240, 240, 240),
-      "dark": rgb(41, 41, 41),
+      "light": rgb(245, 245, 245),
+      "dark": rgb(33, 33, 33),
     ),
   // on_surface: object on top of surface object (without shadows)
   "on-surface":
