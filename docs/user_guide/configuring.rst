@@ -355,14 +355,15 @@ section, following this pattern:
 Configure the sidebar
 =====================
 
-``pydata_sphinx_theme`` provides two new sidebar items by default:
+``pydata_sphinx_theme`` provides two sidebar items by default:
 
-- ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section
-- ``search-field.html`` - a bootstrap-friendly search bar
+- ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section.
 
-By default, this theme's sidebar has these two elements in it. If you'd like to
-override this behavior and control the sidebar on a per-page basis, use the
-`Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
+   When there are no pages to show, it will disappear and potentially add extra space for your page's content.
+
+- ``sidebar-ethical-ads.html`` - a placement for ReadTheDocs's Ethical Ads (will only show up on ReadTheDocs).
+
+If you'd like to override this behavior and add / remove different components, or control the sidebar on a per-page basis, use the `Sphinx html-sidebars configuration value <https://www.sphinx-doc.org/en/master/usage/configuration.html?highlight=html_sidebars#confval-html_sidebars>`_.
 
 .. _navigation-depth:
 
@@ -791,9 +792,18 @@ any other context values.
        "some_other_arg": "?some-other-arg"
    }
 
+Search bar
+==========
+
+By default, the Search Bar is hidden, and will be displayed when a user either:
+
+- Clicks the magnifying class icon in the header: :fas:`search`.
+- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
+
+You can also configure some aspects of the search bar, described below.
 
 Configure the search bar position
-=================================
+---------------------------------
 
 To modify the position of the search bar, add the ``search-field.html``
 template to your **sidebar**, or to one of the **navbar** positions, depending
@@ -823,7 +833,7 @@ following configuration:
    explicitly define a list of sidebar templates in `html_sidebars` and omit the `search-field.html` entry.
 
 Configure the search bar text
-=============================
+-----------------------------
 
 To modify the text that is in the search bar before people click on it, add the
 following configuration to your ``conf.py`` file:

@@ -18,12 +18,16 @@ $pst-semantic-colors: (
     "dark": rgb(203, 70, 83),
   ),
   "text-base": (
-    "light": rgb(51, 51, 51),
-    "dark": rgb(201, 209, 217),
+    // Black + 50
+    "light": rgb(50, 50, 50),
+    // White - 50
+    "dark": rgb(206, 206, 206),
   ),
   "text-muted": (
-    "light": rgb(77, 77, 77),
-    "dark": rgb(192, 192, 192),
+    // Twice as far from 0 as base
+    "light": rgb(100, 100, 100),
+    // Twice as far from 256 as base
+    "dark": rgb(166, 166, 166),
   ),
   "shadow": (
     "light": rgb(216, 216, 216),

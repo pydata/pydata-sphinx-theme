@@ -16,6 +16,16 @@
     align-items: center;
   }
 
+  #navbar-end,
+  #navbar-center {
+    gap: 1rem;
+  }
+
+  // A little smaller because this is displayed by default on mobile
+  #navbar-start {
+    gap: 0.5rem;
+  }
+
   // On smaller screens, add margin to the navbar start/stop
   @include media-breakpoint-down(lg) {
     #navbar-start {
@@ -26,17 +36,6 @@
       margin-right: 1em;
       border-color: var(--pst-color-text-muted);
       color: var(--pst-color-text-muted);
-    }
-
-    #navbar-end {
-      margin-bottom: 0.5em;
-    }
-
-    #navbar-center,
-    #navbar-end {
-      > * {
-        margin-top: 0.5em;
-      }
     }
   }
 }
@@ -49,8 +48,16 @@
   box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow); //rgba(0, 0, 0, 0.11);
 
   .navbar-nav {
+    display: flex;
+    // Add a gap on wider screens, on narrow screens we are vertical + already have padding
+    @include media-breakpoint-up(lg) {
+      gap: 1rem;
+    }
+
     li a.nav-link {
-      padding: 0 0.5rem;
+      // Unset bootstrap padding so we can use a gutter
+      padding-left: 0;
+      padding-right: 0;
       color: var(--pst-color-text-muted);
 
       &:hover {

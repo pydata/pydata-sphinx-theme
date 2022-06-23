@@ -126,8 +126,9 @@ samp {
 
 kbd {
   // use theme negative
-  background-color: var(--pst-color-text-base);
-  color: var(--pst-color-background);
+  background-color: var(--pst-color-on-background);
+  color: var(--pst-color-text-muted);
+  border: 1px solid var(--pst-color-border);
 }
 
 code {
