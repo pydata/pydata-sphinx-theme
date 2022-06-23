@@ -1,15 +1,14 @@
 .bd-header-article {
-  background: var(--pst-color-on-background) !important;
-  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
+  background: var(--pst-color-background) !important;
   padding: 0 2em;
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  min-height: var(--pst-header-height);
+  min-height: var(--pst-header-article-height);
 
   & ~ article.bd-article {
-    padding-top: var(--pst-header-height);
+    padding-top: var(--pst-header-article-height);
   }
 
   // asumption that people will always make the secondary sidebar disapear first
@@ -32,7 +31,7 @@ label {
     font-size: 1.2rem;
     margin: 0 1em;
     position: absolute;
-    height: var(--pst-header-height);
+    height: var(--pst-header-article-height);
     top: 0;
     display: flex;
     align-items: center;

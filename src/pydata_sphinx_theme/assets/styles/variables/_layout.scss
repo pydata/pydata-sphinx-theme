@@ -3,6 +3,7 @@
   * Overall Layout Variables
   */
   --pst-header-height: 60px;
+  --pst-header-article-height: calc(var(--pst-header-height) * 2 / 3);
 }
 
 /*******************************************************************************
