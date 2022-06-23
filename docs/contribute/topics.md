@@ -265,22 +265,27 @@ To demonstrate extra styles and syntax that is not in the Kitchen sink, use the 
 
 ## Update the example gallery
 
-This theme's documentation is exhibiting a gallery of differnet sites using this theme for their documentation. The images
-are automatically generated during RDT builds but not on local or test builds to save time. Instead a freezed version of
-these website are stored in the repository.
+This theme's documentation contains a gallery of sites that use this theme for their documentation.
+The images are automatically generated during ReadTheDocs builds, but are **not** automatically generated on local or test builds (to save time).
 
-If one want to update the images used in the development gallery first install [playwright](https://playwright.dev/python/):
+If you build the documentation locally without first generating these images you may get Sphinx warnings or errors, but this should be fine as long as the images build on ReadTheDocs tests.
 
-```
-$ pip install playwright
-$ install playwright
-```
+If you'd like to build these images locally to preview in the theme, follow these steps:
 
-And then execute the gallery generation script:
 
-```
-$ python ./docs/scripts/generate_gallery_text.py
-```
+1. Install [playwright](https://playwright.dev/python/):
+
+   ```
+   $ pip install playwright
+   $ install playwright
+   ```
+
+2. Execute the gallery generation script from the repository root:
+
+   ```
+   $ python ./docs/scripts/generate_gallery_text.py
+   ```
+
 
 :::{note}
 The newly generated images will be pushed to the distant repository.

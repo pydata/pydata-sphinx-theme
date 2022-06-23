@@ -1,15 +1,15 @@
-# pydata-sphinx-theme
+# The PyData Sphinx Theme
 
 ![pypi](https://img.shields.io/pypi/v/pydata-sphinx-theme) [![conda-forge](https://img.shields.io/conda/vn/conda-forge/pydata-sphinx-theme.svg)](https://anaconda.org/conda-forge/pydata-sphinx-theme) [![continuous-integration](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml/badge.svg)](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml) [![docs](https://readthedocs.org/projects/pydata-sphinx-theme/badge/)](https://readthedocs.org/projects/pydata-sphinx-theme/builds/) [![codecov](https://codecov.io/gh/pydata/pydata-sphinx-theme/branch/main/graph/badge.svg?token=NwOObjYacn)](https://codecov.io/gh/pydata/pydata-sphinx-theme)
 
-A Bootstrap-based Sphinx theme from the PyData community.
+A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData community](https://pydata.org).
 
-Demo site: https://pydata-sphinx-theme.readthedocs.io/en/latest/
+- 📚 Documentation: https://pydata-sphinx-theme.readthedocs.io/en/latest/
+- 💡 Examples: https://pydata-sphinx-theme.readthedocs.io/en/latest/demo
+- 🙌 Contribute: https://pydata-sphinx-theme.readthedocs.io/en/latest/contribute/index.html
 
 [![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
-This site is a guide for using the theme, and a demonstration for how it looks with various
-elements. See our [gallery](https://pydata-sphinx-theme.readthedocs.io/en/latest/demo/gallery.html) for more inspiration.
 
 ## Installation and usage
 

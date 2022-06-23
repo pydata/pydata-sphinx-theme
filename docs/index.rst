@@ -14,7 +14,13 @@ This allows you to group your documentation into sub-sections without cluttering
    If you are looking for a Sphinx theme that puts all of its sub-pages in the sidebar, the `Sphinx Book Theme <https://sphinx-book-theme.readthedocs.io/>`_ has a similar look and feel, and `Furo <https://pradyunsg.me/furo/quickstart/>`_ is another excellent choice.
 
 This site is a guide for using the theme, and a demonstration for how it looks with various
-elements. See our `gallery <demo/gallery.html>`_ for more inspiration.
+elements. See our gallery at the link below for more inspiration.
+
+.. button-ref::  demo/gallery
+   :color: primary
+   :ref-type: doc
+
+   Theme Gallery
 
 Acknowledgment and inspirations
 ===============================
