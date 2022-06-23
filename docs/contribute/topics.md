@@ -272,7 +272,6 @@ If you build the documentation locally without first generating these images you
 
 If you'd like to build these images locally to preview in the theme, follow these steps:
 
-
 1. Install [playwright](https://playwright.dev/python/):
 
    ```
@@ -285,7 +284,6 @@ If you'd like to build these images locally to preview in the theme, follow thes
    ```
    $ python ./docs/scripts/generate_gallery_text.py
    ```
-
 
 :::{note}
 The newly generated images will be pushed to the distant repository.

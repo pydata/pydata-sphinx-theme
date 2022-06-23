@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright, TimeoutError
 def regenerate_gallery():
     """
     Regenerate the gallery of snapshots from external websites.
-    
+
     This function should only be triggered in RTD builds as it increases the build
     time by 30-60s. Developers can still execute this function from time to time to
     populate the repository with updated files.

@@ -11,7 +11,7 @@ See the sections to the left and below to explore.
 
     gallery
     example_pandas
-    
+
 
 .. toctree::
     :maxdepth: 2
@@ -21,7 +21,7 @@ See the sections to the left and below to explore.
     theme-elements
     pydata
     api
-    
+
 
 .. toctree::
     :maxdepth: 3

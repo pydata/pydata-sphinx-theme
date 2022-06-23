@@ -10,7 +10,6 @@ A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData commu
 
 [![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
-
 ## Installation and usage
 
 The theme is available on PyPI and conda-forge. You can install
