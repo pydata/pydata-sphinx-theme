@@ -54,21 +54,21 @@ def regenerate_gallery():
 
     gallery_directive_items = []
     with sync_playwright() as p:
+        # Generate our browser to visit pages and generate images
+        browser = p.chromium.launch()
+        page = browser.new_page()
+
         for item in track(gallery_items, description="Generating screenshots..."):
             item["id"] = item["name"].lower().replace(" ", "_")
             screenshot = gallery_dir / f"{item['id']}.png"
 
             for ii in range(3):
                 try:
-                    browser = p.chromium.launch()
-                    page = browser.new_page()
                     page.goto(item["website"])
                     page.screenshot(path=screenshot)
-                    browser.close()
                     break
                 except TimeoutError:
                     print(f"{item['name']} timed out. Trying again (attempt {ii+2}/3)")
-                    browser.close()
                     continue
 
             # copy the 404 only if the screenshot file was not manually
@@ -83,6 +83,9 @@ def regenerate_gallery():
 
             # add the new gallery item to the gallery file
             gallery_directive_items.append(f"\n{gallery_item_template.format(**item)}")
+
+        # Clean up the browser since we no longer need it
+        browser.close()
 
     # Turn our gallery items into a string and add to our directive
     gallery_directive_items = indent("\n".join(gallery_directive_items), "   ")
