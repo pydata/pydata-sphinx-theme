@@ -1,144 +1,120 @@
 /*******************************************************************************
-* light theme
+* master color map. Only the colors that actually differ between light and dark
+* themes are specified separately.
 *
-* all the variables used for light theme coloring
+* NOTE: this theme defines "info == primary" and "warning == secondary"
 */
-html[data-theme="light"] {
-  /*****************************************************************************
-  * main colors
-  */
-  --pst-color-primary: rgb(69 157 185);
-  --pst-color-secondary: rgb(238 144 64);
-  --pst-color-success: rgb(40, 167, 69);
-  --pst-color-info: var(--pst-color-primary);
-  --pst-color-warning: var(--pst-color-secondary);
-  --pst-color-danger: rgb(220, 53, 69);
-  --pst-color-text-base: rgb(51, 51, 51);
-  --pst-color-text-muted: rgb(77, 77, 77);
-  --pst-color-border: rgb(201, 201, 201);
-  --pst-color-shadow: rgb(216, 216, 216);
-
-  /*****************************************************************************
-  * depth colors
-  *
-  * background: color that defines the furthest back
-  * on-background: provides light contrast against background, use of shadows in light theme
-  * surface: object set above the background (without shadows)
-  * on_surface: object on top of surface object (without shadows)
-  */
-  --pst-color-background: rgb(255, 255, 255);
-  --pst-color-on-background: rgb(255, 255, 255);
-  --pst-color-surface: rgb(245, 245, 245); // Jupyter light cell background
-  --pst-color-on-surface: rgb(255, 255, 238);
-
-  /*****************************************************************************
-  * extentions
-  */
-
-  --pst-color-panel-background: var(--pst-color-on-background);
-
-  /*****************************************************************************
-  * content
-  */
-
-  // links
-  --pst-color-link: var(--pst-color-primary);
-  --pst-color-link-hover: var(--pst-color-secondary);
-
-  // inline code
-  --pst-color-inline-code: rgb(232, 62, 140);
-
-  // targeted content
-  --pst-color-target: rgb(251, 229, 78);
-
-  /*****************************************************************************
-  * layout
-  */
-
-  // hide any content that should not be displayed in the light theme
-  .only-dark {
-    display: none !important;
-  }
-}
+$pst-semantic-colors: (
+  "primary": rgb(69, 157, 185),
+  "secondary": rgb(238, 144, 64),
+  "info": rgb(69, 157, 185),
+  "warning": rgb(238, 144, 64),
+  "success": (
+    "light": rgb(40, 167, 69),
+    "dark": rgb(72, 135, 87),
+  ),
+  "danger": (
+    "light": rgb(220, 53, 69),
+    "dark": rgb(203, 70, 83),
+  ),
+  "text-base": (
+    "light": rgb(51, 51, 51),
+    "dark": rgb(201, 209, 217),
+  ),
+  "text-muted": (
+    "light": rgb(77, 77, 77),
+    "dark": rgb(192, 192, 192),
+  ),
+  "shadow": (
+    "light": rgb(216, 216, 216),
+    "dark": rgb(18, 18, 18),
+  ),
+  "border": (
+    "light": rgb(201, 201, 201),
+    "dark": rgb(192, 192, 192),
+  ),
+  "inline-code": (
+    "light": rgb(232, 62, 140),
+    "dark": rgb(221, 158, 194),
+  ),
+  "target": (
+    "light": rgb(251, 229, 78),
+    "dark": rgb(71, 39, 0),
+  ),
+  // DEPTH COLORS
+  // background: color of the canvas / the furthest back layer
+  "background":
+    (
+      "light": rgb(255, 255, 255),
+      "dark": rgb(18, 18, 18),
+    ),
+  // on-background: provides slight contrast against background
+  // (by use of shadows in light theme)
+  "on-background":
+    (
+      "light": rgb(255, 255, 255),
+      "dark": rgb(30, 30, 30),
+    ),
+  // surface: object set above the background (without shadows)
+  // Uses JupyterLab cell background colors in light/dark theme
+  "surface":
+    (
+      "light": rgb(245, 245, 245),
+      "dark": rgb(33, 33, 33),
+    ),
+  // on_surface: object on top of surface object (without shadows)
+  "on-surface":
+    (
+      "light": rgb(255, 255, 238),
+      "dark": rgb(55, 55, 55),
+    ),
+);
 
 /*******************************************************************************
-* dark theme
+* write the color rules for each theme (light/dark)
 *
-* all the variables used for dark theme coloring
+* NOTE: @each {...} is like a for-loop
+* https://sass-lang.com/documentation/at-rules/control/each
+* and #{...} inserts a variable into a CSS selector or property name
+* https://sass-lang.com/documentation/interpolation
 */
-html[data-theme="dark"] {
-  /*****************************************************************************
-  * main colors
-  */
-  --pst-color-primary: rgb(69 157 185);
-  --pst-color-secondary: rgb(238 144 64);
-  --pst-color-success: rgb(72, 135, 87);
-  --pst-color-info: var(--pst-color-primary);
-  --pst-color-warning: var(--pst-color-secondary);
-  --pst-color-danger: rgb(203, 70, 83);
-  --pst-color-text-base: rgb(201, 209, 217);
-  --pst-color-text-muted: rgb(192, 192, 192);
-  --pst-color-border: rgb(192, 192, 192);
-  --pst-color-shadow: var(--pst-color-background);
-
-  /*****************************************************************************
-  * depth colors
-  *
-  * See light theme section for documentation of what variables mean.
-  */
-  --pst-color-background: rgb(18, 18, 18);
-  --pst-color-on-background: rgb(30, 30, 30);
-  --pst-color-surface: rgb(33, 33, 33); // Jupyter dark cell background
-  --pst-color-on-surface: rgb(55, 55, 55);
-
-  /*****************************************************************************
-  * extentions
-  */
-
-  --pst-color-panel-background: var(--pst-color-on-background);
-
-  /*****************************************************************************
-  * content
-  */
-
-  // links
-  --pst-color-link: var(--pst-color-primary);
-  --pst-color-link-hover: var(--pst-color-secondary);
-
-  // inline code
-  --pst-color-inline-code: rgb(221, 158, 194);
-
-  // targeted content
-  --pst-color-target: rgb(71, 39, 0);
-
-  // hide any content that should not be displayed in the dark theme
-  .only-light {
-    display: none !important;
-  }
-
-  /*****************************************************************************
-  * images
-  */
-
-  // specific brightness applied on images
-  img {
-    filter: brightness(0.8) contrast(1.2);
-  }
-
-  // images within the content area get a light background on dark theme
-  // in case they have transparency and black text
-  // If they have an only-dark class, assume they're already optimized for dark
-  .bd-content img:not(.only-dark) {
-    background: rgb(255, 255, 255);
-    border-radius: 0.25rem;
-  }
-
-  /*****************************************************************************
-  * math
-  */
-
-  // MathJax SVG outputs should be filled to same color as text.
-  .MathJax_SVG * {
-    fill: var(--pst-color-text-base);
+@each $mode in (light, dark) {
+  html[data-theme="#{$mode}"] {
+    @each $name, $value in $pst-semantic-colors {
+      // check if this color is defined differently for light/dark
+      @if type-of($value) == map {
+        $value: map-get($value, $mode);
+      }
+      --pst-color-#{$name}: #{$value};
+    }
+    // assign the "duplicate" colors (ones that just reference other variables)
+    --pst-color-link: var(--pst-color-primary);
+    --pst-color-link-hover: var(--pst-color-secondary);
+    // adapt to light/dark-specific content
+    @if $mode == "light" {
+      .only-dark {
+        display: none !important;
+      }
+    } @else {
+      .only-light {
+        display: none !important;
+      }
+      // adjust images in dark mode
+      img {
+        filter: brightness(0.8) contrast(1.2);
+      }
+      /* Give images a light background in dark mode in case they have
+      *  transparency and black text (unless they have class .only-dark, in
+      *  which case assume they're already optimized for dark mode).
+      */
+      .bd-content img:not(.only-dark) {
+        background: rgb(255, 255, 255);
+        border-radius: 0.25rem;
+      }
+      // MathJax SVG outputs should be filled to same color as text.
+      .MathJax_SVG * {
+        fill: var(--pst-color-text-base);
+      }
+    }
   }
 }
