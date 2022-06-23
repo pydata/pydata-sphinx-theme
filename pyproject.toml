@@ -45,6 +45,7 @@ doc = [
   "myst-nb",
   "pytest",
   "pytest-regressions",
+  "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
