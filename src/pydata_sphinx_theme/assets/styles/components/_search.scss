@@ -1,3 +1,6 @@
+/*************************
+ * Search field
+ */
 .bd-search {
   position: relative;
   padding: 1rem 15px;
@@ -14,19 +17,99 @@
     background-color: var(--pst-color-background);
     border-radius: 0.2rem;
     border: 1px solid var(--pst-color-border);
-    padding-left: 35px;
-    color: var(--pst-color-text-base);
+    padding-left: 2.5rem;
+    color: var(--pst-color-border);
 
     // Inner-text of the search bar
     &::placeholder {
       color: var(--pst-color-border);
     }
 
-    // Background should always be same color regardless of active or nor
+    // Background should always be same color regardless of active or not
     &:active,
     &:focus {
       background-color: var(--pst-color-background);
-      color: var(--pst-color-border);
+      color: var(--pst-color-text-base);
     }
+
+    // Remove the little "x" that pops up when you start typing
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+  }
+
+  // Shows off the keyboard shortcuts for the button
+  .search-button__kbd-shortcut {
+    position: absolute;
+    right: 2em;
+    color: var(--pst-color-border);
+  }
+}
+
+/*************************
+ * Search button
+ */
+// Search link icon should be a bit bigger since it is separate from icon links
+.search-button {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  padding: 0;
+  color: var(--pst-color-text-muted);
+
+  &:hover {
+    color: var(--pst-color-primary);
+  }
+
+  i {
+    font-size: 1.3rem;
+  }
+}
+
+.search-button__search-container {
+  display: none;
+  // Center in middle of screen just underneath header
+  position: fixed;
+  z-index: $zindex-fixed;
+  top: 6rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  right: 1rem;
+  margin-top: 0.5rem;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 0 1rem 1rem var(--pst-color-shadow); // A bit stronger/wider
+
+  form.bd-search {
+    flex-grow: 1;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  // Font and input text a bit bigger
+  i,
+  input {
+    font-size: 1.5rem;
+  }
+}
+
+.search-button__overlay {
+  display: none;
+}
+
+#bd-search-button.show {
+  ~ .search-button__search-container {
+    display: flex;
+  }
+
+  ~ .search-button__overlay {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
   }
 }

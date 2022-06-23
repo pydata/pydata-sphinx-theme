@@ -1,45 +1,49 @@
 /**
- * Search page special-cases
+ * /search.html page special-cases
  */
 
-// Turn off the extra search UI at the top of the page
-#search-documentation {
-  & ~ p {
-    display: none;
-  }
-}
-
-// Whitespace
-div#search-results > h2 {
-  margin-top: 0;
-}
-
-// The results of a search
-ul.search {
-  margin: 0;
-  list-style: none;
-
-  li {
-    background-image: none;
-    padding: 0;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid var(--pst-color-text-muted);
-
-    // First link is the page title, it should be a bit bigger
-    > a {
-      font-size: 1.2em;
+.bd-search-container {
+  /*******************************************
+  * Search results
+  */
+  // Whitespace
+  div#search-results {
+    > h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
     }
 
-    div.context,
-    p.context {
-      margin: 0.5em 0 0 0;
+    p.search-summary {
+      color: var(--pst-color-text-muted);
+    }
+  }
 
-      // Add a # before page section titles to make it clear they are sections
-      a:before {
-        content: "#";
-        padding-right: 0.2em;
-        color: var(--pst-color-text-muted);
+  ul.search {
+    margin: 0;
+    list-style: none;
+
+    li {
+      background-image: none;
+      padding: 1rem 0;
+      margin: 1rem 0;
+      border-top: 1px solid var(--pst-color-text-muted);
+
+      // First link is the page title, it should be a bit bigger
+      > a {
+        font-size: 1.2em;
+      }
+
+      div.context,
+      p.context {
+        color: var(--pst-color-text-base);
+        margin: 0.5em 0 0 0;
+
+        // Add a # before page section titles to make it clear they are sections
+        a:before {
+          content: "#";
+          padding-right: 0.2em;
+          color: var(--pst-color-text-muted);
+        }
       }
     }
   }

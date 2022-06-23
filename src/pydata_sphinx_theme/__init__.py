@@ -26,19 +26,15 @@ def update_config(app, env):
     # DEPRECATE >= v0.10
     if theme_options.get("search_bar_position") == "navbar":
         logger.warn(
-            (
-                "Deprecated config `search_bar_position` used."
-                "Use `search-field.html` in `navbar_end` template list instead."
-            )
+            "Deprecated config `search_bar_position` used."
+            "Use `search-field.html` in `navbar_end` template list instead."
         )
 
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
-            (
-                "`icon_links` must be a list of dictionaries, you provided "
-                f"type {type(theme_options.get('icon_links'))}."
-            )
+            "`icon_links` must be a list of dictionaries, you provided "
+            f"type {type(theme_options.get('icon_links'))}."
         )
 
     # Update the anchor link (it's a tuple, so need to overwrite the whole thing)
@@ -48,10 +44,8 @@ def update_config(app, env):
     # Raise a warning for a deprecated theme switcher config
     if "url_template" in theme_options.get("switcher", {}):
         logger.warn(
-            (
-                "html_theme_options['switcher']['url_template'] is no longer supported."
-                " Set version URLs in JSON directly."
-            )
+            "html_theme_options['switcher']['url_template'] is no longer supported."
+            " Set version URLs in JSON directly."
         )
 
     # Add an analytics ID to the site if provided
@@ -102,10 +96,8 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     # DEPRECATE: >= 0.11
     if context.get("theme_logo_link"):
         logger.warn(
-            (
-                "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
-                "Use the `logo.link` configuration dictionary instead."
-            )
+            "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
+            "Use the `logo.link` configuration dictionary instead."
         )
         theme_logo = context.get("theme_logo_link")
 
@@ -320,10 +312,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         }
         if align not in align_options:
             raise ValueError(
-                (
-                    "Theme optione navbar_align must be one of"
-                    f"{align_options.keys()}, got: {align}"
-                )
+                "Theme optione navbar_align must be one of"
+                f"{align_options.keys()}, got: {align}"
             )
         return align_options[align]
 

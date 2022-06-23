@@ -45,6 +45,7 @@ doc = [
   "myst-nb",
   "pytest",
   "pytest-regressions",
+  "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
@@ -54,7 +55,7 @@ doc = [
   "matplotlib",
   "numpy",
   "xarray",
-  "sphinx-design",
+  "sphinx-design"
 ]
 test = [
   "pytest",
