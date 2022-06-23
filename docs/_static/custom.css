@@ -1,8 +1,3 @@
-:root {
-  --sd-color-primary: var(--pst-color-primary);
-  --sd-color-secondary: var(--pst-color-secondary);
-}
-
 /* Background of stable should be green */
 #version_switcher a[data-version-name*="stable"] {
   position: relative;

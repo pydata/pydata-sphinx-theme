@@ -191,7 +191,6 @@ Color variables
 
 There are two special color variables for primary and secondary theme colors (``--pst-color-primary`` and ``--pst-color-secondary``, respectively).
 These are meant to complement one another visually across the theme, if you modify these, choose colors that look good when paired with one another.
-
 There are also several other color variables that control color for admonitions, links, menu items, etc.
 
 Each color variable has two values, one corresponding to the "light" and one for the "dark" theme.
@@ -230,8 +229,8 @@ Here is an overview of the colors available in the theme (change theme mode to s
       <span class="sd-sphinx-override sd-badge pst-badge pst-target">target</span>
     </p>
 
-You can control the colors used for these variables for each theme by
-:ref:`adding a custom CSS stylesheet <custom-css>` and adding a structure like so:
+
+**To modify the colors for these variables** for light and dark themes, :ref:`add a custom CSS stylesheet <custom-css>` with a structure like so:
 
 .. code-block:: css
 
@@ -283,10 +282,15 @@ The following image should help you understand these overlays:
 
 
 For a complete list of the theme colors that you may override, see the
-`color variables defaults CSS file <pydata-css-colors_>`_:
+`color variables defaults CSS file <pydata-css-colors_>`_.
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss
-  :language: scss
+.. it would be nice to have this `.. literalinclude::` here to actually show
+   the file, but there's a pygments bug that fails to lex SCSS variables
+   (specifically the `$` symbol that prepends SCSS variables, see
+   https://github.com/pygments/pygments/issues/2130). So for now it's
+   commented out.
+   .. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss
+     :language: scss
 
 Change footer display
 =====================

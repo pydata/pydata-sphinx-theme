@@ -49,10 +49,8 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 # -- Extension options -------------------------------------------------------
 
-myst_enable_extensions = [
-    # This allows us to use ::: to denote directives, useful for admonitions
-    "colon_fence",
-]
+# This allows us to use ::: to denote directives, useful for admonitions
+myst_enable_extensions = ["colon_fence"]
 
 # -- Options for HTML output -------------------------------------------------
 

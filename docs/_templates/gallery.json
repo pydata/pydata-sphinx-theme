@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Pandas",
+    "website": "https://pandas.pydata.org/docs/",
+    "repo": "https://github.com/pandas-dev/pandas"
+  },
+  {
+    "name": "NumPy",
+    "website": "https://numpy.org/doc/stable/",
+    "repo": "https://github.com/numpy/numpy"
+  },
+  {
+    "name": "SciPy",
+    "website": "https://docs.scipy.org/doc/scipy/",
+    "repo": "https://github.com/scipy/scipy"
+  },
+  {
+    "name": "Bokeh",
+    "website": "https://docs.bokeh.org/en/latest/",
+    "repo": "https://github.com/bokeh/bokeh"
+  },
+  {
+    "name": "CuPy",
+    "website": "https://docs.cupy.dev/en/stable/index.html",
+    "repo": "https://github.com/cupy/cupy"
+  },
+  {
+    "name": "PyVista",
+    "website": "https://docs.pyvista.org",
+    "repo": "https://github.com/pyvista/pyvista"
+  },
+  {
+    "name": "MNE-Python",
+    "website": "https://mne.tools/stable/index.html",
+    "repo": "https://github.com/mne-tools/mne-python"
+  },
+  {
+    "name": "NetworkX",
+    "website": "https://networkx.org/documentation/stable/",
+    "repo": "https://github.com/networkx/networkx"
+  },
+  {
+    "name": "Fairlearn",
+    "website": "https://fairlearn.org/main/about/",
+    "repo": "https://github.com/fairlearn/fairlearn"
+  },
+  {
+    "name": "Jupyter Book",
+    "website": "https://jupyterbook.org/en/stable/intro.html",
+    "repo": "https://github.com/executablebooks/jupyter-book"
+  },
+  {
+    "name": "Binder",
+    "website": "https://mybinder.readthedocs.io/en/latest/index.html",
+    "repo": "https://github.com/jupyterhub/binder"
+  },
+  {
+    "name": "Jupyter",
+    "website": "https://docs.jupyter.org/en/latest/",
+    "repo": "https://github.com/jupyter/jupyter"
+  },
+  {
+    "name": "MegEngine",
+    "website": "https://www.megengine.org.cn/doc/stable/en/index.html",
+    "repo": "https://github.com/MegEngine/MegEngine"
+  },
+  {
+    "name": "Feature-engine",
+    "website": "https://feature-engine.readthedocs.io/"
+  }
+]
