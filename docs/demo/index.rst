@@ -23,10 +23,11 @@ See the sections to the left and below to explore.
     api
 
 
+% Note: the caption below is intentionally long in order to test out what long captions look like.
 .. toctree::
     :maxdepth: 3
     :numbered:
-    :caption: Reference and test section. This section has headers and examples that are meant for theme developers to test functionality, like this long caption header to test its behavior.
+    :caption: Reference and test section. Mostly meant for developers to check that things look OK.
 
     no-sidebar
     mult_headers
