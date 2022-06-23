@@ -40,7 +40,7 @@ html[data-theme="dark"] .bd-content {
   div.jupyter_container {
     // Background has slightly more custom background behavior because of hard-coded color
     border: 1px solid var(--pst-color-border);
-    background-color: var(--pst-color-on-background);
+    background-color: var(--pst-color-surface);
     border-radius: 0.25rem;
 
     div.output,
@@ -49,7 +49,7 @@ html[data-theme="dark"] .bd-content {
     }
 
     div.highlight {
-      background-color: var(--pst-color-on-background);
+      background-color: var(--pst-color-surface);
     }
   }
 }
