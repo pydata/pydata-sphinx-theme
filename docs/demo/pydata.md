@@ -2,7 +2,13 @@
 file_format: mystnb
 kernelspec:
   name: python3
+  display_name: Python 3
 ---
+
+% To convert this to an ipynb file for testing with nbsphinx, run this command:
+% jupytext docs/demo/pydata.md --to ipynb
+%
+% And _temporarily_ delete the pydata.md file
 
 # PyData Library Styles
 
