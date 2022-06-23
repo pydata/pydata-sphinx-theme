@@ -66,6 +66,10 @@
       color: var(--pst-color-primary);
     }
   }
+
+  #navbar-collapsible.show {
+    background-color: var(--pst-color-surface);
+  }
 }
 
 .navbar-header a {
