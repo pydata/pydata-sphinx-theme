@@ -8,6 +8,7 @@ from shutil import copy
 from playwright.sync_api import sync_playwright, TimeoutError
 from rich.progress import track
 from rich import print
+from textwrap import indent, dedent
 
 
 def regenerate_gallery():
@@ -19,6 +20,20 @@ def regenerate_gallery():
     populate the repository with updated files.
     """
 
+    gallery_directive = dedent(
+        """
+    .. grid:: 1 1 1 2
+       :gutter: 3
+    """
+    ).strip()
+
+    gallery_item_template = dedent(
+        """
+    .. grid-item-card:: {name}
+       :img-bottom: ../_static/gallery/{id}.png
+       :link: {website}"""
+    )
+
     # get the existing folders path
     _template_dir = Path(__file__).parents[1] / "_templates"
     demo_dir = Path(__file__).parents[1] / "demo"
@@ -27,21 +42,19 @@ def regenerate_gallery():
     # update the gallery file with a new empty one
     src = _template_dir / "gallery.rst"
     dst = demo_dir / "gallery.rst"
-    copy(src, dst)
     print(f"Using gallery template from: {src}")
 
     # create the static gallery folder where we'll put the gallery source files
     gallery_dir = _static_dir / "gallery"
     gallery_dir.mkdir(exist_ok=True)
 
-    # generate the gallery with new images
-    site_content = (_template_dir / "gallery_item.rst").read_text()
+    # load gallery data
     gallery_items = json.loads((_template_dir / "gallery.json").read_text())
     image_404 = _static_dir / "404.png"
 
-    with dst.open("a") as f, sync_playwright() as p:
+    gallery_directive_items = []
+    with sync_playwright() as p:
         for item in track(gallery_items, description="Generating screenshots..."):
-
             item["id"] = item["name"].lower().replace(" ", "_")
             screenshot = gallery_dir / f"{item['id']}.png"
 
@@ -54,7 +67,8 @@ def regenerate_gallery():
                     browser.close()
                     break
                 except TimeoutError:
-                    print(f"{item['name']} timed out. Trying again (attempt {ii}/3)")
+                    print(f"{item['name']} timed out. Trying again (attempt {ii+2}/3)")
+                    browser.close()
                     continue
 
             # copy the 404 only if the screenshot file was not manually
@@ -68,7 +82,13 @@ def regenerate_gallery():
             item.pop("repo", None)
 
             # add the new gallery item to the gallery file
-            f.write(site_content.format(**item))
+            gallery_directive_items.append(f"\n{gallery_item_template.format(**item)}")
+
+    # Turn our gallery items into a string and add to our directive
+    gallery_directive_items = indent("\n".join(gallery_directive_items), "   ")
+    gallery_directive += gallery_directive_items
+
+    dst.write_text(src.read_text().format(gallery_directive=gallery_directive))
     print(f"Finished generating gallery at: {dst}")
 
 
