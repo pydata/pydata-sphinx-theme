@@ -1,6 +1,6 @@
-=========
-Demo site
-=========
+========
+Examples
+========
 
 This is a simple demonstration site to show off a few visual
 and structural elements of the theme. Click the sections on
