@@ -1,11 +1,11 @@
-$announcement-height: 3rem;
 .bd-header-announcement {
-  height: $announcement-height;
+  min-height: 3rem;
   width: 100%;
   display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
+  text-align: center;
   padding: 0.5rem 12.5%; // Horizontal padding so the width is 75%
   @include media-breakpoint-down(md) {
     // Announcements can take a bit more width on mobile
