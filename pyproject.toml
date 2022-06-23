@@ -54,7 +54,7 @@ doc = [
   "matplotlib",
   "numpy",
   "xarray",
-  "sphinx-design",
+  "sphinx-design"
 ]
 test = [
   "pytest",

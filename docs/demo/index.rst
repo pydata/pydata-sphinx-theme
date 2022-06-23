@@ -1,30 +1,37 @@
-=========
-Demo site
-=========
+========
+Examples
+========
 
-This is a simple demonstration site to show off a few visual
-and structural elements of the theme. Click the sections on
-the left sidebar to see how various elements look on this theme.
+These sections show off various features and styles of this theme.
+They should help you understand how this theme behaves and how others are using it.
+See the sections to the left and below to explore.
+
+.. toctree::
+    :caption: Real-world examples
+
+    gallery
+    example_pandas
+
 
 .. toctree::
     :maxdepth: 2
-    :caption: Demo Documentation
+    :caption: Theme-specific styles
 
     kitchen-sink/index
     theme-elements
     pydata
     api
-    example_pandas
-    Link to an external site <https://jupyterbook.org/>
+
 
 .. toctree::
     :maxdepth: 3
     :numbered:
-    :caption: This is an incredibly long caption for a long menu. Here are some more subpages to show off deep nested pages.
+    :caption: Reference and test section. This section has headers and examples that are meant for theme developers to test functionality, like this long caption header to test its behavior.
 
     no-sidebar
     mult_headers
     subpages/index
+    Link to an external site <https://jupyterbook.org/>
 
 .. meta::
     :description lang=en:
