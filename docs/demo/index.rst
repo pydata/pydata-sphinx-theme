@@ -24,6 +24,7 @@ See the sections to the left and below to explore.
 
 
 % Note: the caption below is intentionally long in order to test out what long captions look like.
+
 .. toctree::
     :maxdepth: 3
     :numbered:
