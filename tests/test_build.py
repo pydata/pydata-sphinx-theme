@@ -285,6 +285,25 @@ def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
     file_regression.check(navbar.prettify(), extension=".html")
 
 
+@pytest.mark.parametrize("n_links", (0, 4, 8))  # 0 = only dropdown, 8 = no dropdown
+def test_navbar_header_dropdown(sphinx_build_factory, file_regression, n_links):
+    """Test whether dropdown appears based on number of header links + config."""
+    extra_links = [{"url": f"https://{ii}.org", "name": ii} for ii in range(3)]
+
+    confoverrides = {
+        "html_theme_options": {
+            "external_links": extra_links,
+            "header_links_before_dropdown": n_links,
+        }
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar = index_html.select("ul#navbar-main-elements")[0]
+    file_regression.check(
+        navbar.prettify(), basename=f"navbar_headerlinks_n_{n_links}", extension=".html"
+    )
+
+
 def test_sidebars_captions(sphinx_build_factory, file_regression):
     sphinx_build = sphinx_build_factory("sidebars").build()
 
