@@ -86,9 +86,22 @@ html_theme_options = {
             "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
             "name": "Changelog",
         },
+        {
+            "url": "https://pydata.org",
+            "name": "PyData",
+        },
+        {
+            "url": "https://numfocus.org/",
+            "name": "NumFocus",
+        },
+        {
+            "url": "https://numfocus.org/donate",
+            "name": "Donate to NumFocus",
+        },
     ],
     "github_url": "https://github.com/pydata/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/PyData",
+    "header_links_before_dropdown": 4,
     "icon_links": [
         {
             "name": "PyPI",

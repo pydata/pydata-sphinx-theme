@@ -152,7 +152,9 @@ def update_templates(app, pagename, templatename, context, doctree):
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
-    def generate_nav_html(kind, startdepth=None, show_nav_level=1, **kwargs):
+    def generate_nav_html(
+        kind, startdepth=None, show_nav_level=1, n_links_before_dropdown=5, **kwargs
+    ):
         """
         Return the navigation link structure in HTML. Arguments are passed
         to Sphinx "toctree" function (context["toctree"] below).
@@ -174,6 +176,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             By default, this level is 1, and only top-level pages are shown,
             with drop-boxes to reveal children. Increasing `show_nav_level`
             will show child levels as well.
+        n_links_before_dropdown : int (default: 5)
+            The number of links to show before nesting the remaining links in
+            a Dropdown element.
 
         kwargs: passed to the Sphinx `toctree` template function.
 
@@ -191,6 +196,13 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             # select the "active" subset of the navigation tree for the sidebar
             toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
 
+        try:
+            n_links_before_dropdown = int(n_links_before_dropdown)
+        except Exception:
+            raise ValueError(
+                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
+            )
+
         soup = bs(toc_sphinx, "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
@@ -205,14 +217,46 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 if "#" in href and href != "#":
                     li.decompose()
 
+        # For navbar, generate only top-level links and add external links
         if kind == "navbar":
+            links = soup("li")
+
             # Add CSS for bootstrap
-            for li in soup("li"):
+            for li in links:
                 li["class"].append("nav-item")
                 li.find("a")["class"].append("nav-link")
-            # only select li items (not eg captions)
-            out = "\n".join([ii.prettify() for ii in soup.find_all("li")])
 
+            # Convert to HTML so we can append external links
+            links_html = [ii.prettify() for ii in links]
+
+            # Add external links
+            for external_link in context["theme_external_links"]:
+                links_html.append(
+                    f"""
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fas fa-external-link-alt"></i></a>
+                </li>"""  # noqa
+                )
+
+            # Wrap the final few header items in a "more" block
+            links_solo = links_html[:n_links_before_dropdown]
+            links_dropdown = links_html[n_links_before_dropdown:]
+
+            out = "\n".join(links_solo)
+            if links_dropdown:
+                links_dropdown_html = "\n".join(links_dropdown)
+                out += f"""
+                <div class="nav-item dropdown">
+                    <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {links_dropdown_html}
+                    </div>
+                </div>
+                """  # noqa
+
+        # For sidebar, we generate links starting at the second level of the active page
         elif kind == "sidebar":
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
