@@ -302,7 +302,7 @@ The ``primary sidebar`` will snap to the left, the ``secondary sidebar`` will sn
 - If neither sidebars are present, the ``article content`` will be present in the middle of the page.
 
 If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` and ``flex-grow`` CSS variables with the ``.bd-content`` selector.
-For example, to make the content grow to fit all available width, use:
+For example, to make the content grow to fit all available width, add a custom CSS rule like:
 
 .. code-block:: css
 
@@ -310,8 +310,6 @@ For example, to make the content grow to fit all available width, use:
      flex-grow: 1;
      max-width: 100%;
    }
-
-The content should then grow to fit all available horizontal space on pages without a primary or secondary sidebar.
 
 Change footer display
 =====================

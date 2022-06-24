@@ -31,8 +31,6 @@
   overflow-y: auto;
   top: var(--pst-header-height);
   position: sticky;
-  margin-left: auto; // The in-page TOC should always snap to the right
-
   .onthispage {
     color: var(--pst-color-text-base);
   }

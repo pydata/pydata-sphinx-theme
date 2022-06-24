@@ -39,8 +39,7 @@
           {% include "sections/sidebar-secondary.html" %}
 
           {% block docs_main %}
-          {% set content_xl_width = "col-xl-7" if sidebars else "col-xl-8" %}
-          <div class="bd-content col-12 col-md-9 {{ content_xl_width }}">
+          <div class="bd-content col">
               {% block docs_body %}
               <article class="bd-article" role="main">
                 {% block body %} {% endblock %}
