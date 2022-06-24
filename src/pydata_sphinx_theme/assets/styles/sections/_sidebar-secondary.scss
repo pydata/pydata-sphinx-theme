@@ -24,13 +24,14 @@
   }
 }
 
-.bd-toc {
+.bd-sidebar-secondary {
   -ms-flex-order: 2;
   order: 2;
   max-height: calc(100vh - 5rem);
   overflow-y: auto;
   top: var(--pst-header-height);
   position: sticky;
+  margin-left: auto; // The in-page TOC should always snap to the right
 
   .onthispage {
     color: var(--pst-color-text-base);

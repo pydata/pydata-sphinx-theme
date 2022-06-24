@@ -4,6 +4,7 @@
 .bd-content {
   display: flex;
   flex-direction: column;
+  margin: 0 auto; // Content should be centered relative to other UI elements
   // Give a bit more verticle spacing on wide screens
   padding: 3rem 1.5rem 2rem 3rem;
   @include media-breakpoint-down(md) {

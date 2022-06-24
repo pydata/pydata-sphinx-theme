@@ -9,7 +9,7 @@
                               titles_only=True) %}
 
 {% if sidebars and sidebar_nav_links %}
-<!-- Only show if we have sidebars configured, else just a small margin  -->
+{# Only show if we have sidebars configured #}
 <div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
   <div class="sidebar-start-items">
     {%- for sidebartemplate in sidebars %}
@@ -22,7 +22,5 @@
     {%- endfor %}
   </div>
 </div>
-{% else %}
-<div class="sidebar-primary col-12 col-md-1 col-xl-2 bd-sidebar no-sidebar"></div>
 {% endif %}
 {% endblock %}
