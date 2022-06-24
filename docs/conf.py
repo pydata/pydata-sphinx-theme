@@ -14,7 +14,8 @@ import pydata_sphinx_theme
 
 extensions = [
     "jupyter_sphinx",
-    "myst_parser",
+    "matplotlib.sphinxext.plot_directive",
+    "myst_nb",
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -48,10 +49,8 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 # -- Extension options -------------------------------------------------------
 
-myst_enable_extensions = [
-    # This allows us to use ::: to denote directives, useful for admonitions
-    "colon_fence",
-]
+# This allows us to use ::: to denote directives, useful for admonitions
+myst_enable_extensions = ["colon_fence"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -61,6 +60,7 @@ myst_enable_extensions = [
 html_theme = "pydata_sphinx_theme"
 html_logo = "_static/logo.svg"
 html_favicon = "_static/logo.svg"
+html_sourcelink_suffix = ""
 
 # Define the json_url for our version switcher.
 json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
@@ -108,12 +108,14 @@ html_theme_options = {
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
+    # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
+    "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     # "show_nav_level": 2,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
     # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     "navbar_start": ["navbar-logo", "version-switcher"],
-    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
-    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing, we should use defaults in our docs
+    # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
     "switcher": {

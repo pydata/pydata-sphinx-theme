@@ -32,7 +32,7 @@ def make_app():
     """create and return (but do not start) a tornado app"""
     app = web.Application(
         [(r"^/(.*)", CacheStaticHandler, dict(path=SETTINGS["static_path"]))],
-        **SETTINGS
+        **SETTINGS,
     )
 
     return app
@@ -42,9 +42,9 @@ def main(port, host):
     """start a tornado app on the desired port"""
     app = make_app()
     app.listen(port, host)
-    url = "http://{}:{}/".format(host, port)
+    url = f"http://{host}:{port}/"
     print("Watching files: \t\t{static_path}".format(**SETTINGS))
-    print("Hosting site on:\t\t{}".format(url))
+    print(f"Hosting site on:\t\t{url}")
     print("\nPress `Ctrl+C` to stop")
     try:
         ioloop.IOLoop.current().start()

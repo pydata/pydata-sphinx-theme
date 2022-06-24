@@ -5,6 +5,18 @@
  */
 
 /*******************************************************************************
+* color
+*/
+@use "../variables/color" as *;
+
+@each $mode in (light, dark) {
+  html[data-theme="#{$mode}"] {
+    $value: map-get(map-get($pst-semantic-colors, "on-background"), $mode);
+    --pst-color-panel-background: $value;
+  }
+}
+
+/*******************************************************************************
  * sphinx-panels includes Bootstrap 4, which uses .container which can conflict
  * with docutils' `.. container::` directive.
  */
@@ -19,15 +31,15 @@
  */
 
 .sphinx-bs .card {
-  border: 1px solid var(--pst-color-preformatted-border);
+  border: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-panel-background);
 
   .card-header {
-    border-bottom: 1px solid var(--pst-color-preformatted-border);
+    border-bottom: 1px solid var(--pst-color-border);
   }
 
   .card-footer {
-    border-top: 1px solid var(--pst-color-preformatted-border);
+    border-top: 1px solid var(--pst-color-border);
   }
 }
 
@@ -39,31 +51,31 @@
   > input {
     // Active tab label
     &:checked + label {
-      border-color: var(--pst-color-active-navigation);
-      color: var(--pst-color-active-navigation);
+      border-color: var(--pst-color-primary);
+      color: var(--pst-color-primary);
     }
 
     // hover label
     &:not(:checked) + label:hover {
-      border-color: var(--pst-color-active-navigation);
-      color: var(--pst-color-active-navigation);
+      border-color: var(--pst-color-primary);
+      color: var(--pst-color-primary);
       opacity: 0.5;
     }
   }
 
   // Tab label
   > label {
-    color: var(--pst-color-deactive-navigation);
+    color: var(--pst-color-text-muted);
 
     // Hovered label
     html &:hover {
-      color: var(--pst-color-active-navigation);
-      border-color: var(--pst-color-active-navigation);
+      color: var(--pst-color-primary);
+      border-color: var(--pst-color-primary);
       opacity: 0.5;
     }
   }
 
   > .tabbed-content {
-    border-color: var(pst-color-border);
+    border-color: var(--pst-color-border);
   }
 }

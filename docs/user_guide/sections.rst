@@ -98,7 +98,7 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "page_sidebar_items": ["page-toc", "edit-this-page"],
+      "page_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
       ...
     }
 

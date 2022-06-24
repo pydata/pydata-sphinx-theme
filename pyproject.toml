@@ -40,19 +40,22 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
+  "sphinx>=4,<5",  # Remove this when MyST-NB supports Sphinx 5
   "numpydoc",
-  "myst-parser",
-  "pandas",
+  "myst-nb",
   "pytest",
   "pytest-regressions",
+  "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
   "jupyter_sphinx",
+  "pandas",
   "plotly",
+  "matplotlib",
   "numpy",
   "xarray",
-  "sphinx-design",
+  "sphinx-design"
 ]
 test = [
   "pytest",

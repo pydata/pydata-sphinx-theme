@@ -1,5 +1,14 @@
 {% block docs_sidebar %}
-{% if sidebars %}
+{# Check whether there are sidebar links to conditionally hide the sidebar #}
+{# copied over from ../components/sidebar-nav-bs.html #}
+{% set sidebar_nav_links = generate_nav_html("sidebar",
+                              show_nav_level=theme_show_nav_level|int,
+                              maxdepth=theme_navigation_depth|int,
+                              collapse=theme_collapse_navigation|tobool,
+                              includehidden=True,
+                              titles_only=True) %}
+
+{% if sidebars and sidebar_nav_links %}
 <!-- Only show if we have sidebars configured, else just a small margin  -->
 <div class="bd-sidebar-primary col-6 col-md-3 bd-sidebar">
   <div class="sidebar-start-items">

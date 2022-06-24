@@ -18,7 +18,7 @@ def _should_install(session):
         return False
     bin_files = list(Path(session.bin).glob("*"))
     sphinx_is_installed = any("sphinx-build" in ii.name for ii in bin_files)
-    force_reinstall = "reinstall" in session.posargs
+    force_reinstall = "reinstall" in session.posargs or "-r" in session.posargs
     should_install = not sphinx_is_installed or force_reinstall
     if should_install:
         session.log("Installing fresh environment...")

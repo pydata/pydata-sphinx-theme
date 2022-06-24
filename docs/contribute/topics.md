@@ -262,3 +262,68 @@ Here's a list of our pages and where they come from in `sphinx-themes.org`:
 :::{note}
 To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../demo/theme-elements.md).
 :::
+
+## Update the example gallery
+
+This theme's documentation contains a gallery of sites that use this theme for their documentation.
+The images are automatically generated during ReadTheDocs builds, but are **not** automatically generated on local or test builds (to save time).
+
+If you build the documentation locally without first generating these images you may get Sphinx warnings or errors, but this should be fine as long as the images build on ReadTheDocs tests.
+
+If you'd like to build these images locally to preview in the theme, follow these steps:
+
+1. Install [playwright](https://playwright.dev/python/) and the Chromium browser add-on:
+
+   ```
+   $ pip install playwright
+   $ playwright install chromium
+   ```
+
+2. Execute the gallery generation script from the repository root:
+
+   ```
+   $ python ./docs/scripts/generate_gallery_text.py
+   ```
+
+:::{note}
+The newly generated images will be pushed to the distant repository.
+:::
+
+## Update JavaScript dependencies and their versions
+
+There are two kinds of dependency definitions in this theme:
+
+- `package.json` contains the **base dependencies** for this theme. They are broken down into a few categories like `dependencies` and `devDependencies`. It is edited by the maintainers.
+- `package-lock.json` contains the complete **frozen dependency chain** for this theme, including all sub-dependencies of our base dependencies. It is automatically generated.
+
+To update or add a JS dependency, follow these steps:
+
+1. **Edit `package.json`** by adding or modifying a dependency.
+2. **Re-generate `package-lock.json`** in order to create a new set of frozen dependencies for the theme. To do this, run the following command from [the Sphinx Theme Builder](https://github.com/pradyunsg/sphinx-theme-builder).
+
+   ```
+   stb npm install --include=dev
+   ```
+
+3. **Commit both files** to the repository. When new people pull in the latest commits, their `npm` environment will automatically update according to the new lockfile.
+
+## PyData package support
+
+This theme is designed by and for the PyData community, and so there are a few places where we special-case support for packages in this community.
+
+We define CSS rules that ensure PyData content in Sphinx looks reasonable on both light and dark themes.
+If we hear reports from maintainers that we could change something in this theme that would make their documentation look better, and if this change is sustainable for us, then we should do so.
+
+We store our PyData-specific SCSS in two relevant files, both in the `src/pydata_sphinx_theme/assets/styles/` folder:
+
+- `extensions/_execution.scss` - styles for Sphinx libraries that execute and insert code into the documentation. For example, MyST-NB, Jupyter Sphinx, and the Matplotlib `plot` directive. Most PyData support should go here via generic improvements that all packages benefit from.
+- `extensions/_pydata.scss` - styles for specific libraries in the PyData ecosystem. In general we should try to keep this minimal because it is mostly special-casing single library quirks.
+
+## Ignore formatting commits with `git blame`
+
+When making commits that are strictly formatting/style changes (e.g., after running a new version of black or running pyupgrade after dropping an old Python version), add the commit hash to `.git-blame-ignore-revs`, so `git blame` can ignore the change.
+
+For more details, see:
+
+- https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
+- https://github.com/pydata/pydata-sphinx-theme/pull/713
