@@ -292,6 +292,27 @@ For a complete list of the theme colors that you may override, see the
    .. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss
      :language: scss
 
+Horizontal spacing
+==================
+
+By default the theme's three columns have fixed widths.
+The ``primary sidebar`` will snap to the left, the ``secondary sidebar`` will snap to the right, and the ``article content`` will be centered in between.
+
+- If one of the sidebars is not present, then the ``article content`` will be centered between the other sidebar and the side of the page.
+- If neither sidebars are present, the ``article content`` will be present in the middle of the page.
+
+If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` and ``flex-grow`` CSS variables with the ``.bd-content`` selector.
+For example, to make the content grow to fit all available width, use:
+
+.. code-block:: css
+
+   .bd-content {
+     flex-grow: 1;
+     max-width: 100%;
+   }
+
+The content should then grow to fit all available horizontal space on pages without a primary or secondary sidebar.
+
 Change footer display
 =====================
 

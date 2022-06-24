@@ -67,9 +67,8 @@ def test_build_html(sphinx_build_factory, file_regression):
     navbar = index_html.select("div#navbar-center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
-    # Sidebar structure
-    sidebar = index_html.select(".bd-sidebar")[0]
-    file_regression.check(sidebar.prettify(), basename="sidebar_ix", extension=".html")
+    # Sidebars should be hidden on index page because there is no sub-page
+    assert not index_html.select(".bd-sidebar")
 
     # Sidebar subpage
     sidebar = subpage_html.select(".bd-sidebar")[0]
@@ -234,28 +233,6 @@ def test_favicons(sphinx_build_factory):
     assert icon_16 in str(index_html.select("head")[0])
     assert icon_32 in str(index_html.select("head")[0])
     assert icon_180 in str(index_html.select("head")[0])
-
-
-def test_sidebar_default(sphinx_build_factory):
-    """The sidebar is normally-sized when it has links."""
-    sphinx_build = sphinx_build_factory("base").build()
-    index_html = sphinx_build.html_tree("section1/index.html")
-    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-
-def test_sidebar_disabled(sphinx_build_factory):
-    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
-    confoverrides = {"html_sidebars": {"section1/index": ""}}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    index_html = sphinx_build.html_tree("section1/index.html")
-    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-
-def test_sidebar_nolinks(sphinx_build_factory):
-    """The sidebar is shrunk when it is present but has no links."""
-    sphinx_build = sphinx_build_factory("base").build()
-    index_html = sphinx_build.html_tree("page1.html")
-    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
 
 
 def test_navbar_align_default(sphinx_build_factory):
