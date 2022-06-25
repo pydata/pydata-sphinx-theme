@@ -14,8 +14,11 @@ This theme inherits its structure and section terminology from the `Sphinx Basic
 .. raw:: html
 
     <style>
-    div.sd-card .content {
-        min-height: 12rem;
+    .content {
+        min-height: 14rem;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
     }
     </style>
 
@@ -23,7 +26,8 @@ This theme inherits its structure and section terminology from the `Sphinx Basic
     :gutter: 0
     :class-container: sd-text-center
 
-    .. grid-item-card::
+    .. grid-item::
+        :outline:
         :columns: 12
 
         .. grid::
@@ -33,7 +37,6 @@ This theme inherits its structure and section terminology from the `Sphinx Basic
                 :columns: 12
 
                 **Header**
-
 
             .. grid-item::
                 :columns: 3
@@ -50,35 +53,37 @@ This theme inherits its structure and section terminology from the `Sphinx Basic
 
                 Components
 
-    .. grid-item-card::
+    .. grid-item::
+        :outline:
         :columns: 4
-        :class-body: primary-sidebar
+        :class: primary-sidebar
 
         **Primary Sidebar**
 
         Links between pages in the active section.
 
-    .. grid-item-card::
+    .. grid-item::
+        :outline:
         :columns: 6
-        :class-body: content
+        :class: content
 
         **Article content**
 
-        +++
-
         **Article footer**
 
-    .. grid-item-card::
+    .. grid-item::
+        :outline:
         :columns: 2
-        :class-body: secondary-sidebar
+        :class: secondary-sidebar
 
         **Secondary sidebar**
 
         Within-page header links
 
-    .. grid-item-card::
+    .. grid-item::
+        :outline:
         :columns: 12
-        :class-body: footer
+        :class: footer
 
         **Footer**
 
