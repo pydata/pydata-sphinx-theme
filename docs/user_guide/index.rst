@@ -11,6 +11,9 @@ Below is a brief overview of the major layout of this theme.
 First, take a look at the diagram to understand what the major sections are called.
 This theme inherits its structure and section terminology from the `Sphinx Basic NG theme <https://sphinx-basic-ng.readthedocs.io/en/latest/>`__.
 
+% The directives below generate a grid-like layout that mimics the structure of this theme.
+% It uses Sphinx Design grids: https://sphinx-design.readthedocs.io/en/latest/grids.html
+
 .. raw:: html
 
     <style>
