@@ -39,11 +39,8 @@
   <input type="checkbox" class="sidebar-toggle toc-show-{{ toc_show_width }}" name="__secondary" id="__secondary">
   <label class="overlay overlay-secondary" for="__secondary"></label>
 
-  <div class="bd-header-announcement container-fluid" id="banner">
-    {% include "sections/announcement.html" %}
-  </div>
+  {% include "sections/announcement.html" %}
 
-  {%- include "sections/announcement.html" -%}
   {% block docs_navbar %}
     <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar toc-show-{{ toc_show_width }}" id="navbar-main">
       {%- include "sections/header.html" %}
