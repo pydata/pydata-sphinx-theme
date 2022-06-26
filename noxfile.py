@@ -39,6 +39,7 @@ def compile(session):
 def docs(session):
     if _should_install(session):
         session.install("-e", ".[doc]")
+        session.install("docutils==0.19.b1", "--no-deps")
     session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html")
 
 
@@ -47,6 +48,7 @@ def docs_live(session):
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
+        session.install("docutils==0.19.b1", "--no-deps")
     session.run("stb", "serve", "docs", "--open-browser")
 
 

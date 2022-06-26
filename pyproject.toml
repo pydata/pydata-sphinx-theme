@@ -40,7 +40,6 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
-  "sphinx>=4,<5",  # Remove this when MyST-NB supports Sphinx 5
   "numpydoc",
   "myst-nb",
   "pytest",

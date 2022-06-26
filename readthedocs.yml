@@ -11,6 +11,7 @@ build:
     # build the gallery of themes before building the doc
     post_install:
       - pip install playwright
+      - pip install docutils==0.19.b1 --no-deps
       - playwright install chromium
       - python ./docs/scripts/generate_gallery_text.py
 
