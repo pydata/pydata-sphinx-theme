@@ -1,0 +1,27 @@
+/**
+ * Sphinx Togglebutton
+ * ref: https://sphinx-togglebutton.readthedocs.io/en/latest/
+ */
+
+div.admonition.dropdown {
+  // Over-ride the vertical height shrinking in sphinx-togglebutton
+  // since we use max-height
+  &.toggle-hidden {
+    max-height: 2.4rem;
+  }
+
+  button.toggle-button {
+    color: var(--pst-color-muted);
+  }
+}
+
+// Standalone toggle buttons
+// Use opacity to highlight in hover, not background color
+details.toggle-details summary.toggle-details__summary {
+  background: var(--pst-color-surface);
+  opacity: 0.9;
+  &:hover {
+    opacity: 1;
+    background: var(--pst-color-surface);
+  }
+}
