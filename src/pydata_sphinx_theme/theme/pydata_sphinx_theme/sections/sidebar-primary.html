@@ -10,7 +10,7 @@
 
 {% if sidebars and sidebar_nav_links %}
 <!-- Only show if we have sidebars configured, else just a small margin  -->
-<div class="bd-sidebar-primary col-6 col-md-3 bd-sidebar">
+<div class="bd-sidebar-primary col-9 col-md-3 bd-sidebar">
   <div class="sidebar-start-items">
     {%- for sidebartemplate in sidebars %}
     {%- include sidebartemplate %}
@@ -23,6 +23,6 @@
   </div>
 </div>
 {% else %}
-<div class="bd-sidebar-primary col-6 col-md-1 col-xl-2 bd-sidebar no-sidebar"></div>
+<div class="bd-sidebar-primary col-9 col-md-1 col-xl-2 bd-sidebar no-sidebar"></div>
 {% endif %}
 {% endblock %}

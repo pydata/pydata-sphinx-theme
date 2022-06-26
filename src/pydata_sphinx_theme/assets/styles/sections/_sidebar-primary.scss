@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: column;
   position: fixed;
+  transition: visibility $animation-time ease-out, width $animation-time ease 0s;
 
   @include media-breakpoint-up($pst-primary-breakpoint) {
     z-index: 0;

@@ -37,6 +37,7 @@
   flex-direction: column;
   position: fixed;
   right: 0;
+  transition: visibility $animation-time ease-out, width $animation-time ease 0s;
 
   // hide the sidebar in narrow screens
   // based on the toc_show_width variable

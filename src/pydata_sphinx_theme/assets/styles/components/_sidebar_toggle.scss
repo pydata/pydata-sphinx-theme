@@ -13,7 +13,7 @@ label.overlay {
   position: fixed;
   top: 0;
   left: 0;
-  transition: width 0ms, height 0ms, opacity 200ms ease-out;
+  transition: opacity $animation-time ease-out;
   z-index: $zindex-modal-backdrop;
 }
 
@@ -26,7 +26,8 @@ input {
 
   &#__primary:not(:checked) ~ .container-xl .bd-sidebar-primary,
   &#__secondary:not(:checked) ~ .container-xl .bd-sidebar-secondary {
-    display: none;
+    width: 0;
+    visibility: hidden;
   }
 }
 
