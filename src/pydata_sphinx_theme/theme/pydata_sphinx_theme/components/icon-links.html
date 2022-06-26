@@ -1,17 +1,17 @@
-{%- macro icon_link_nav_item(url, icon, name, type, additionalAttributes) -%}
+{%- macro icon_link_nav_item(url, icon, name, type, attributes='') -%}
   {%- if url | length > 2 %}
         <li class="nav-item">
-            {%- set attributes = { "rel": "noopener", "target": "_blank"} %}
+            {%- set attributesDefault = { "href": url, "title": name, "class": "nav-link", "rel": "noopener", "target": "_blank" } %}
             {%- set attributeString = [] %}
-            {%- if additionalAttributes %}
-              {%- for attr, value in additionalAttributes.items() -%}
-                {%- set _ = attributes.update({attr: value}) -%}
+            {%- if attributes %}
+              {%- for attr, value in attributes.items() -%}
+                {%- set _ = attributesDefault.update({attr: value}) -%}
               {%- endfor %}
             {% endif %}
-            {%- for attr, value in attributes.items() -%}
+            {%- for attr, value in attributesDefault.items() -%}
               {%- set _ = attributeString.append(attr ~ '="' ~ value ~ '"') -%}
             {%- endfor %}
-          <a class="nav-link" href="{{ url }}" {{ attributeString|join(' ') }} title="{{ _(name) }}">
+          <a {{ attributeString|join(' ') }}>
             {%- if type == "fontawesome" -%}
             <span><i class="{{ icon }}"></i></span>
             <label class="sr-only">{{ _(name) }}</label>
@@ -35,6 +35,6 @@
         {{ icon_link_nav_item(theme_twitter_url, "fab fa-twitter-square", "Twitter", "fontawesome") -}}
         {% endblock -%}
         {%- for icon_link in theme_icon_links -%}
-        {{ icon_link_nav_item(icon_link["url"], icon_link["icon"], icon_link["name"], icon_link.get("type", "fontawesome"), icon_link["additionalAttributes"]) -}}
+        {{ icon_link_nav_item(icon_link["url"], icon_link["icon"], icon_link["name"], icon_link.get("type", "fontawesome"), icon_link["attributes"]) -}}
         {%- endfor %}
       </ul>
