@@ -16,6 +16,7 @@ extensions = [
     "jupyter_sphinx",
     "matplotlib.sphinxext.plot_directive",
     "myst_nb",
+    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -126,7 +127,6 @@ html_theme_options = {
 
 html_sidebars = {
     "contribute/index": [
-        "search-field",
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
