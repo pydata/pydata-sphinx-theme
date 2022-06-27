@@ -68,7 +68,7 @@ def test_build_html(sphinx_build_factory, file_regression):
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebars should be hidden on index page because there is no sub-page
-    assert not index_html.select(".bd-sidebar")
+    assert not index_html.select(".bd-sidebar-primary")
 
     # Sidebar subpage
     sidebar = subpage_html.select(".bd-sidebar")[0]
