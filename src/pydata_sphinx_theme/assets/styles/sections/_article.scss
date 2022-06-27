@@ -4,6 +4,10 @@
 .bd-content {
   display: flex;
   flex-direction: column;
+  // Max-width is slightly more than the W3 since our docs often have images.
+  // We shoot for about 100 characters per line instead of 80.
+  // ref: https://www.w3.org/WAI/tutorials/page-structure/styling/#line-length
+  max-width: 60em;
   // Give a bit more verticle spacing on wide screens
   padding: 3rem 1.5rem 2rem 3rem;
   @include media-breakpoint-down(md) {

@@ -1,3 +1,5 @@
+:theme_html_remove_secondary_sidebar:
+
 =======================
 The PyData Sphinx Theme
 =======================
