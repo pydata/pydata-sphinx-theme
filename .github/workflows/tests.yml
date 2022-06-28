@@ -114,13 +114,6 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8]
-    env:
-      PORT: 8000
-      # the host interface to listen on, might need to be 0.0.0.0
-      HOST: 127.0.0.1
-      # the base url
-      URL: http://127.0.0.1:8000
-      PA11Y_BUILD: /tmp/pa11y/pa11y-${{ github.run_number }}
 
     steps:
       - uses: actions/checkout@v3
@@ -149,23 +142,6 @@ jobs:
           temporaryPublicStorage: true
           uploadArtifacts: true
           runs: 3 # Multiple runs to reduce variance
-
-      # Serve the docs for auditing with pa11y
-      - name: Serve the built site
-        run: |
-          nohup python docs/serve.py --port=${PORT} --host=${HOST} &
-          curl --retry 10 --retry-connrefused --retry-max-time 60 ${URL}/index.html
-
-      - name: Audit with pa11y
-        run: python docs/scripts/a11y.py --no-serve
-
-      - name: Publish pa11y report
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pa11y ${{ github.run_number }}
-          path: |
-            /tmp/pa11y
-        if: always()
 
   publish:
     name: Publish to PyPI
