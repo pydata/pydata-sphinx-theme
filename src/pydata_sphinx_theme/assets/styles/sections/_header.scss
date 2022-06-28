@@ -14,6 +14,7 @@
   #navbar-start {
     display: flex;
     align-items: center;
+    flex-flow: wrap;
   }
 
   #navbar-end,
@@ -49,9 +50,12 @@
 
   .navbar-nav {
     display: flex;
-    // Add a gap on wider screens, on narrow screens we are vertical + already have padding
+
     @include media-breakpoint-up(lg) {
+      // Add a gap on wider screens, on narrow screens we are vertical + already have padding
       gap: 1rem;
+      // Center align on wide screens so the dropdown button is centered properly
+      align-items: center;
     }
 
     li a.nav-link {
@@ -72,6 +76,24 @@
     > .active > .nav-link {
       font-weight: 600;
       color: var(--pst-color-primary);
+    }
+
+    // Dropdowns for the extra links
+    .dropdown {
+      z-index: $zindex-popover;
+      height: 2.2rem; // Slight hack to make this aligned with navbar links
+
+      button {
+        color: var(--pst-color-text-muted);
+      }
+
+      .dropdown-menu {
+        color: var(--pst-color-text-base);
+        background-color: var(--pst-color-on-background);
+        box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
+        padding: 0.5rem 1rem;
+        min-width: 20rem;
+      }
     }
   }
 }

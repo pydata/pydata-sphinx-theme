@@ -332,8 +332,14 @@ Additionally, the screen-reader accessible label for this menu can be configured
    }
 
 
-Adding external links to your nav bar
-=====================================
+Header Navigation Bar
+=====================
+
+The header navigation bar is at the top of each page and contains top-level navigation across pages in your documentation, as well as extra links and components that you can add.
+These sections cover a few things you can control with the Header Navigation Bar.
+
+Add external links
+------------------
 
 You can add external links to your navigation bar. These will show up to the right
 of your site's main links, and will have a small icon indicating that they point to
@@ -346,6 +352,23 @@ an external site. You can add external links to the nav bar like so:
          {"name": "link-one-name", "url": "https://<link-one>"},
          {"name": "link-two-name", "url": "https://<link-two>"}
      ]
+   }
+
+
+Header dropdown links
+---------------------
+
+By default, this theme will display the first **five** navigation links in the header (including both top-level links and external links).
+It will place the remaining header links in a **dropdown menu** titled "More".
+This prevents the header links from taking up so much space that they crowd out the UI components or spill off screen.
+
+To control how many header links are displayed before being placed in the dropdown, use the ``header_links_before_dropdown`` theme configuration variable.
+For example, to change the number of displayed header links to be ``4`` instead of ``5``:abbr:
+
+.. code-block:: python
+
+   html_theme_options = {
+     "header_links_before_dropdown": 4
    }
 
 Adding favicons
@@ -449,9 +472,6 @@ To enable this behavior, set the ``show_nav_level`` value to 0, like below:
    html_theme_options = {
       "show_nav_level": 0
    }
-
-
-
 
 You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
 If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
