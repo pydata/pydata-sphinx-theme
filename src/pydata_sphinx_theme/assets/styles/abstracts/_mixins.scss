@@ -3,15 +3,16 @@
 *********************************************/
 /**
 * Scrollbars should be thinner and slightly rounded, with a grey background
+* ref: https://www.nngroup.com/articles/scrolling-and-scrollbars/
 */
 @mixin scrollbar-style() {
   &::-webkit-scrollbar {
-    width: 0.3rem;
+    width: 0.4rem;
     height: 0.3rem;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #c1c1c1; // This is the default color in Chrome (variables don't seem to work in mixinx)
+    background: var(--pst-color-text-muted);
     border-radius: 0.25rem;
   }
 
@@ -21,12 +22,16 @@
 }
 
 /**
- * Hide the scrollbar until the element is overed, so keep the page clean
+ * Fade the scrollbar until the element is hovered, so it is less attention-grabbind
  */
 @mixin scrollbar-on-hover() {
-  &:not(:hover) {
+  &::-webkit-scrollbar-thumb {
+    background: var(--pst-color-on-surface);
+  }
+
+  &:hover {
     &::-webkit-scrollbar-thumb {
-      visibility: hidden;
+      background: var(--pst-color-text-muted);
     }
   }
 }

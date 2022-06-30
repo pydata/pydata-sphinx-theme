@@ -14,7 +14,6 @@ body {
   flex-direction: column;
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   // hack to avoid the black background on some browser including Safari
   &::-webkit-scrollbar-track {
