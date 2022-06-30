@@ -853,22 +853,22 @@ any other context values.
        "some_other_arg": "?some-other-arg"
    }
 
-Search bar
-==========
+Search bar / search button
+==========================
 
-By default, the Search Bar is hidden, and will be displayed when a user either:
+By default, the Search Bar is hidden, and there is a search button
+(a magnifying glass icon :fas:`search`) in the top navbar.
+The search bar will be displayed when a user either:
 
-- Clicks the magnifying class icon in the header: :fas:`search`.
-- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
+- Clicks the search button in the header.
+- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Linux, Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
 
 You can also configure some aspects of the search bar, described below.
 
 Configure the search bar position
 ---------------------------------
 
-To modify the position of the search bar, add the ``search-field.html``
-template to your **sidebar**, or to one of the **navbar** positions, depending
-on where you want it to be placed.
+The position of the search *button* is controlled by ``search-button`` and by default is included in ``html_theme_options["navbar_end"]``; you may move it elsewhere as befits your site's layout. You can force the search *bar* to not auto-hide by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_items"]``, etc), in which case pressing the search button will focus the existing search bar rather than overlaying one near the navbar.
 
 For example, if you'd like the search field to be in your side-bar, add it to
 the sidebar templates like so:
