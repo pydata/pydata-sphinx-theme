@@ -66,11 +66,13 @@ $grid-breakpoints: (
 
 // Content blocks from Sphinx extensions
 @import "./extensions/bootstrap";
+@import "./extensions/copybutton";
 @import "./extensions/ethical-ads";
 @import "./extensions/execution";
 @import "./extensions/pydata";
 @import "./extensions/sphinx_design";
 @import "./extensions/sphinx_panels";
+@import "./extensions/togglebutton";
 
 // Page-specific CSS
 @import "./pages/search";

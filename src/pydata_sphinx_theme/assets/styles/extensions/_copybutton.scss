@@ -1,0 +1,27 @@
+/**
+ * Sphinx Copybutton
+ * ref: https://sphinx-copybutton.readthedocs.io/
+ */
+
+div.highlight button.copybtn {
+  // Nicer spacing
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Removes the button background so we more naturally blend with the code cell.
+  background-color: var(--pst-color-surface);
+  color: var(--pst-color-muted);
+  border: none;
+
+  &:hover {
+    color: var(--pst-color-text);
+    background-color: var(--pst-color-surface);
+  }
+
+  // Tooltip styling
+  &.o-tooltip--left:after {
+    color: var(--pst-color-text);
+    background-color: var(--pst-color-surface);
+  }
+}

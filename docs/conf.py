@@ -23,6 +23,8 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx.ext.viewcode",
+    "sphinx_copybutton",
+    "sphinx_togglebutton",
 ]
 
 # -- Internationalization ------------------------------------------------
@@ -139,6 +141,7 @@ html_theme_options = {
 }
 
 html_sidebars = {
+    "index": ["search-field"],
     "contribute/index": [
         "sidebar-nav-bs",
         "custom-template",
