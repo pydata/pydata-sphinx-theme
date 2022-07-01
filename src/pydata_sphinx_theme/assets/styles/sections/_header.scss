@@ -2,8 +2,7 @@
   position: sticky;
   min-height: var(--pst-header-height);
   width: 100%;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 0;
   max-width: 100vw;
 
   .container-xl {
@@ -37,13 +36,7 @@
     overflow-y: auto;
     @include scrollbar-style;
 
-    // On smaller screens, add margin to the navbar start/stop
-    #navbar-start {
-      margin-left: 1em;
-    }
-
     button.navbar-toggler {
-      margin-right: 1em;
       border-color: var(--pst-color-text-muted);
       color: var(--pst-color-text-muted);
     }
