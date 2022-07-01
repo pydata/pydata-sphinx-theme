@@ -17,7 +17,6 @@
   }
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   &.no-sidebar {
     border-right: 0;
