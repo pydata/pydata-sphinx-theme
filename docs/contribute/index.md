@@ -53,5 +53,6 @@ The CSS and JS for this theme are built for the browser from `src/pydata_sphinx_
 :maxdepth: 2
 setup
 topics
+policies
 manual
 ```
