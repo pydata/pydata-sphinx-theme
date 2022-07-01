@@ -696,6 +696,29 @@ for more information). Example:
     }
 
 
+Add a warning banner for outdated versions
+------------------------------------------
+
+You can add a large warning banner to direct users to a specific version of your documentation if they are on a different version.
+This is useful if you have many versions of your documentation (e.g. old releases, development versions) and wish to direct users to a specific version (e.g., the latest stable version).
+
+To activate this feature, add the ``direct_to_version`` key in your ``switcher`` configuration.
+For example:
+
+.. code-block:: python
+
+    version = my_package_name.__version__.replace("dev0", "")  # may differ
+    html_theme_options = {
+        ...,
+        "switcher": {
+            "version_match": version,
+            # If version of this documentation is not `stable` (in switcher.json),
+            # display a banner directing to `stable`
+            "direct_to_version": "stable",
+        }
+    }
+
+
 Specify where to display the switcher
 -------------------------------------
 

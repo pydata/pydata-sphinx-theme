@@ -43,6 +43,12 @@ function checkPageExistsAndRedirect(event) {
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
         btn.dataset["activeVersionName"] = "";
         btn.dataset["activeVersion"] = "";
+
+        // The version of the current documentation page
+        let currentVersion = "{{ theme_switcher.get('version_match') }}";
+        // A version we'll direct users to via a banner if different from current version
+        let directToVersion = "{{ theme_switcher.get('direct_to_version') }}";
+
         // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
             // if no custom name specified (e.g., "latest"), use version string
@@ -72,12 +78,30 @@ function checkPageExistsAndRedirect(event) {
             // this version, rather than using sphinx's {{ version }} variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
-            if (entry.version == "{{ theme_switcher.get('version_match') }}") {
+            if (entry.version == currentVersion) {
                 node.classList.add("active");
                 btn.innerText = btn.dataset["activeVersionName"] = entry.name;
                 btn.dataset["activeVersion"] = entry.version;
             }
+
+            // If this entry is the one we wish to direct to
+            // And this entry is not currently active
+            // then add a banner to direct people there
+            if ((entry.version == directToVersion) && (directToVersion != currentVersion)) {
+                placeholder = document.getElementById("header-version-warning-placeholder");
+                placeholder.insertAdjacentHTML("afterend", `
+                <div class="bd-header-version-warning container-fluid" id="header-version-warning">
+                    <div class="bd-header-version-warning__content">
+                        <span>This documentation is for an <strong>unreleased</strong> or <strong>outdated</strong> version.</span>
+                        <a href="${entry.url}"><button class="btn">Switch to: ${entry.name}</button></a>
+                    </div>
+                </div>
+                `);
+                console.log("[PST]: Inserted version warning banner...");
+            }
+
         });
+
     });
 })();
 </script>
