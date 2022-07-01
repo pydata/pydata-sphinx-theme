@@ -137,7 +137,6 @@ html_theme_options = {
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,
-        "direct_to_version": "stable",
     },
 }
 

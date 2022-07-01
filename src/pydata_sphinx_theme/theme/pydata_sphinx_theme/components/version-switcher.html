@@ -46,8 +46,9 @@ function checkPageExistsAndRedirect(event) {
 
         // The version of the current documentation page
         let currentVersion = "{{ theme_switcher.get('version_match') }}";
-        // A version we'll direct users to via a banner if different from current version
-        let directToVersion = "{{ theme_switcher.get('direct_to_version') }}";
+
+        // Grab entry for the current version so we use it later
+        let currentVersionEntry = data.filter(entry => entry.version == currentVersion)[0];
 
         // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
@@ -87,19 +88,25 @@ function checkPageExistsAndRedirect(event) {
             // If this entry is the one we wish to direct to
             // And this entry is not currently active
             // then add a banner to direct people there
-            if ((entry.version == directToVersion) && (directToVersion != currentVersion)) {
+            if ((entry.preferred == "true") && (entry.version != currentVersion)) {
+                if (currentVersionEntry.type == "development") {
+                    var currentVersionType = "development version";
+                } else if (currentVersionEntry.type == "prerelease") {
+                    var currentVersionType = "release candidate";
+                } else {
+                    var currentVersionType = "previous release";
+                };
                 placeholder = document.getElementById("header-version-warning-placeholder");
                 placeholder.insertAdjacentHTML("afterend", `
                 <div class="bd-header-version-warning container-fluid" id="header-version-warning">
                     <div class="bd-header-version-warning__content">
-                        <span>This documentation is for an <strong>unreleased</strong> or <strong>outdated</strong> version.</span>
+                        <span>This documentation is for a <strong>${currentVersionType}</strong>.</span>
                         <a href="${entry.url}${currentFilePath}"><button class="btn">Switch to: ${entry.name}</button></a>
                     </div>
                 </div>
                 `);
                 console.log("[PST]: Inserted version warning banner...");
             }
-
         });
 
     });

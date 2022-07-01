@@ -702,22 +702,46 @@ Add a warning banner for outdated versions
 You can add a large warning banner to direct users to a specific version of your documentation if they are on a different version.
 This is useful if you have many versions of your documentation (e.g. old releases, development versions) and wish to direct users to a specific version (e.g., the latest stable version).
 
-To activate this feature, add the ``direct_to_version`` key in your ``switcher`` configuration.
-For example:
+To activate this feature, add ``"preferred": "true"`` to one of the entries in your ``switcher.json`` file.
+This will mark it as the "preferred version" that other versions should direct to.
 
-.. code-block:: python
+In addition, you may mark some versions with a ``"type"`` which will slightly modify the banner message displayed.
+To do so, add ``"type": "development"`` to any entry with one of three options, described below.
 
-    version = my_package_name.__version__.replace("dev0", "")  # may differ
-    html_theme_options = {
-        ...,
-        "switcher": {
-            "version_match": version,
-            # If version of this documentation is not `stable` (in switcher.json),
-            # display a banner directing to `stable`
-            "direct_to_version": "stable",
+- ``"type": "release"`` (default if no type specified): a **previous release**.
+- ``"type": "releasecandidate"``: a **release candidate**.
+- ``"type": "development"``: a **development branch**.
+
+For example, below we demonstrate a ``switcher.json`` with five entries: a development version, the latest release (which is preferred), a release candidate, and two previous releases.
+
+.. code:: json
+
+    [
+        {
+            "name": "v2.2dev0 (development)",
+            "version": "v2.2dev0",
+            "type": "development",
+            "url": "https://mysite.org/en/2.1/index.html"
+        },        {
+            "name": "v2.1 (stable)",
+            "version": "2.1",
+            "preferred": "true",
+            "url": "https://mysite.org/en/2.1/index.html"
+        },
+        {
+            "version": "2.1rc1",
+            "type": "releasecandidate",
+            "url": "https://mysite.org/en/2.1rc1/index.html"
+        },
+        {
+            "version": "2.0",
+            "url": "https://mysite.org/en/2.0/index.html"
+        },
+        {
+            "version": "1.0",
+            "url": "https://mysite.org/en/1.0/index.html"
         }
-    }
-
+    ]
 
 Specify where to display the switcher
 -------------------------------------
