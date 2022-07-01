@@ -36,7 +36,13 @@
     overflow-y: auto;
     @include scrollbar-style;
 
+    // On smaller screens, add margin to the navbar start/stop
+    #navbar-start {
+      margin-left: 1rem;
+    }
+
     button.navbar-toggler {
+      margin-right: 1rem;
       border-color: var(--pst-color-text-muted);
       color: var(--pst-color-text-muted);
     }
