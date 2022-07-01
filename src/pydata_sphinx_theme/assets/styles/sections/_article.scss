@@ -8,6 +8,7 @@
   // We shoot for about 100 characters per line instead of 80.
   // ref: https://www.w3.org/WAI/tutorials/page-structure/styling/#line-length
   max-width: 60em;
+  overflow-x: auto; // Prevent wide content from pushing off the secondary sidebar
   // Give a bit more verticle spacing on wide screens
   padding: 3rem 1.5rem 2rem 3rem;
   @include media-breakpoint-down(md) {
