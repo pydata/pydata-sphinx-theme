@@ -89,18 +89,16 @@ function checkPageExistsAndRedirect(event) {
             // And this entry is not currently active
             // then add a banner to direct people there
             if ((entry.preferred == "true") && (entry.version != currentVersion)) {
-                if (currentVersionEntry.type == "development") {
-                    var currentVersionType = "development version";
-                } else if (currentVersionEntry.type == "prerelease") {
-                    var currentVersionType = "release candidate";
+                if (currentVersionEntry.description) {
+                    var currentVersionDescription = currentVersionEntry.description;
                 } else {
-                    var currentVersionType = "previous release";
+                    var currentVersionDescription = "a previous release";
                 };
                 placeholder = document.getElementById("header-version-warning-placeholder");
                 placeholder.insertAdjacentHTML("afterend", `
                 <div class="bd-header-version-warning container-fluid" id="header-version-warning">
                     <div class="bd-header-version-warning__content">
-                        <span>This documentation is for a <strong>${currentVersionType}</strong>.</span>
+                        <span>This documentation is for <strong>${currentVersionDescription}</strong>.</span>
                         <a href="${entry.url}${currentFilePath}"><button class="btn">Switch to: ${entry.name}</button></a>
                     </div>
                 </div>

@@ -705,12 +705,8 @@ This is useful if you have many versions of your documentation (e.g. old release
 To activate this feature, add ``"preferred": "true"`` to one of the entries in your ``switcher.json`` file.
 This will mark it as the "preferred version" that other versions should direct to.
 
-In addition, you may mark some versions with a ``"type"`` which will slightly modify the banner message displayed.
-To do so, add ``"type": "development"`` to any entry with one of three options, described below.
-
-- ``"type": "release"`` (default if no type specified): a **previous release**.
-- ``"type": "releasecandidate"``: a **release candidate**.
-- ``"type": "development"``: a **development branch**.
+In addition, you may mark versions with a ``"description"`` which will be displayed in the banner message.
+If not given, the value of ``"description"`` will be ``"a previous release"``.
 
 For example, below we demonstrate a ``switcher.json`` with five entries: a development version, the latest release (which is preferred), a release candidate, and two previous releases.
 
@@ -720,7 +716,7 @@ For example, below we demonstrate a ``switcher.json`` with five entries: a devel
         {
             "name": "v2.2dev0 (development)",
             "version": "v2.2dev0",
-            "type": "development",
+            "description": "a development version",
             "url": "https://mysite.org/en/2.1/index.html"
         },        {
             "name": "v2.1 (stable)",
@@ -730,7 +726,7 @@ For example, below we demonstrate a ``switcher.json`` with five entries: a devel
         },
         {
             "version": "2.1rc1",
-            "type": "releasecandidate",
+            "description": "a release candidate for 2.1"
             "url": "https://mysite.org/en/2.1rc1/index.html"
         },
         {

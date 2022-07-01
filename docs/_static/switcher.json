@@ -2,7 +2,7 @@
   {
     "name": "dev",
     "version": "latest",
-    "type": "development",
+    "description": "the development version",
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/"
   },
   {
