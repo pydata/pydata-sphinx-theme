@@ -21,7 +21,8 @@ dependencies = [
   "sphinx>=4.0.2",
   "beautifulsoup4",
   "docutils!=0.17.0",
-  "packaging"
+  "packaging",
+  "pygments>=2.7"
 ]
 
 license = { file = "LICENSE" }
