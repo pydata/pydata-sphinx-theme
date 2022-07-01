@@ -144,7 +144,6 @@ pre {
   box-shadow: 1px 1px 1px var(--pst-color-shadow);
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   .linenos {
     opacity: 0.5;

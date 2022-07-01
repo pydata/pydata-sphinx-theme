@@ -7,8 +7,8 @@
 */
 @mixin scrollbar-style() {
   &::-webkit-scrollbar {
-    width: 0.4rem;
-    height: 0.3rem;
+    width: 0.5rem;
+    height: 0.5rem;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -19,21 +19,28 @@
   &::-webkit-scrollbar-track {
     background: transparent;
   }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--pst-color-on-surface);
+  }
+
+  // Hovering behavior for the scrollbar
+  // Include both hovering on the parent and on the thumb in case thumb is outside parent
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: var(--pst-color-text-muted);
+    }
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--pst-color-text-muted);
+  }
 }
 
 /**
  * Fade the scrollbar until the element is hovered, so it is less attention-grabbind
  */
 @mixin scrollbar-on-hover() {
-  &::-webkit-scrollbar-thumb {
-    background: var(--pst-color-on-surface);
-  }
-
-  &:hover {
-    &::-webkit-scrollbar-thumb {
-      background: var(--pst-color-text-muted);
-    }
-  }
 }
 
 /**

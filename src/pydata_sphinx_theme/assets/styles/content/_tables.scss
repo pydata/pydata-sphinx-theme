@@ -28,5 +28,4 @@ table {
   overflow: auto;
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 }
