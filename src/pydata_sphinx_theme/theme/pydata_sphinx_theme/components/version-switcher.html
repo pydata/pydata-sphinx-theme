@@ -93,7 +93,7 @@ function checkPageExistsAndRedirect(event) {
                 <div class="bd-header-version-warning container-fluid" id="header-version-warning">
                     <div class="bd-header-version-warning__content">
                         <span>This documentation is for an <strong>unreleased</strong> or <strong>outdated</strong> version.</span>
-                        <a href="${entry.url}"><button class="btn">Switch to: ${entry.name}</button></a>
+                        <a href="${entry.url}${currentFilePath}"><button class="btn">Switch to: ${entry.name}</button></a>
                     </div>
                 </div>
                 `);
