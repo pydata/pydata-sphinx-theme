@@ -332,8 +332,14 @@ Additionally, the screen-reader accessible label for this menu can be configured
    }
 
 
-Adding external links to your nav bar
-=====================================
+Header Navigation Bar
+=====================
+
+The header navigation bar is at the top of each page and contains top-level navigation across pages in your documentation, as well as extra links and components that you can add.
+These sections cover a few things you can control with the Header Navigation Bar.
+
+Add external links
+------------------
 
 You can add external links to your navigation bar. These will show up to the right
 of your site's main links, and will have a small icon indicating that they point to
@@ -346,6 +352,23 @@ an external site. You can add external links to the nav bar like so:
          {"name": "link-one-name", "url": "https://<link-one>"},
          {"name": "link-two-name", "url": "https://<link-two>"}
      ]
+   }
+
+
+Header dropdown links
+---------------------
+
+By default, this theme will display the first **five** navigation links in the header (including both top-level links and external links).
+It will place the remaining header links in a **dropdown menu** titled "More".
+This prevents the header links from taking up so much space that they crowd out the UI components or spill off screen.
+
+To control how many header links are displayed before being placed in the dropdown, use the ``header_links_before_dropdown`` theme configuration variable.
+For example, to change the number of displayed header links to be ``4`` instead of ``5``:abbr:
+
+.. code-block:: python
+
+   html_theme_options = {
+     "header_links_before_dropdown": 4
    }
 
 Adding favicons
@@ -449,9 +472,6 @@ To enable this behavior, set the ``show_nav_level`` value to 0, like below:
    html_theme_options = {
       "show_nav_level": 0
    }
-
-
-
 
 You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
 If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
@@ -912,9 +932,15 @@ use the following configuration:
      "navigation_with_keys": False
    }
 
+Secondary Sidebar (Table of Contents)
+=====================================
+
+The secondary sidebar is to the right of your documentation content.
+It is primarily for showing a within-page Table of Contents, as well as links that point to the source of the page.
+
 
 Show more levels of the in-page TOC by default
-==============================================
+----------------------------------------------
 
 Normally only the 2nd-level headers of a page are show in the right
 table of contents, and deeper levels are only shown when they are part
@@ -931,6 +957,11 @@ You can show deeper levels by default by using the following configuration, indi
 All headings up to and including the level specified will now be shown
 regardless of what is displayed on the page.
 
+Remove the Table of Contents
+----------------------------
+
+To remove the Table of Contents, add ``:theme_html_remove_secondary_sidebar:`` to the `file-wide metadata <https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata>`_ at the top of a page.
+This will remove the Table of Contents from that page only.
 
 Remove the sidebar from some pages
 ==================================

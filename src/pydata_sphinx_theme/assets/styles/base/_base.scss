@@ -14,7 +14,6 @@ body {
   flex-direction: column;
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   // hack to avoid the black background on some browser including Safari
   &::-webkit-scrollbar-track {
@@ -145,7 +144,6 @@ pre {
   box-shadow: 1px 1px 1px var(--pst-color-shadow);
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   .linenos {
     opacity: 0.5;

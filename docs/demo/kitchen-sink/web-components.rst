@@ -163,3 +163,27 @@ Tabs
 
             PROGRAM main
             END PROGRAM main
+
+Copybuttons
+===========
+
+`sphinx-copybutton <https://sphinx-copybutton.readthedocs.io/en/latest/>`__ adds a copy button to each of your code cells.
+You can see it in action by hovering over the code cell below:
+
+.. code-block:: python
+
+    print("A copybutton in the top-right!")
+
+Toggle buttons
+==============
+
+`sphinx-togglebutton <https://sphinx-togglebutton.readthedocs.io/en/latest/>`__ allows you to convert admonitions into toggle-able elements.
+
+.. admonition:: Click me to toggle!
+   :class: dropdown
+
+   This will be hidden until a click!
+
+.. toggle::
+
+    A standalone toggle button!

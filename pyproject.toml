@@ -21,7 +21,8 @@ dependencies = [
   "sphinx>=4.0.2",
   "beautifulsoup4",
   "docutils!=0.17.0",
-  "packaging"
+  "packaging",
+  "pygments>=2.7"
 ]
 
 license = { file = "LICENSE" }
@@ -55,7 +56,12 @@ doc = [
   "matplotlib",
   "numpy",
   "xarray",
-  "sphinx-design"
+  "sphinx-copybutton",
+  "sphinx-design",
+  "sphinx-togglebutton",
+  # Install nbsphinx in case we want to test it locally even though we can't load
+  # it at the same time as MyST-NB.
+  "nbsphinx"
 ]
 test = [
   "pytest",

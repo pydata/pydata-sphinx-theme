@@ -45,33 +45,34 @@
     <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar toc-show-{{ toc_show_width }}" id="navbar-main">
       {%- include "sections/header.html" %}
     </nav>
-  {% endblock %}
+    
+    {% endblock %}
 
-  <div class="bd-container container-xl">
-    <div class="bd-container__inner row">
-      {% include "sections/sidebar-primary.html" %}
-      {% include "sections/sidebar-secondary.html" %}
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          {% include "sections/sidebar-primary.html" %}
+          {% include "sections/sidebar-secondary.html" %}
 
-      {% block docs_main %}
-      {% set content_xl_width = "col-xl-7" if sidebars else "col-xl-8" %}
-        <div class="bd-content col-12 col-md-9 {{ content_xl_width }}">
+          {% block docs_main %}
+          <div class="bd-content col">
+          
+              <nav class="bd-header-article navbar-light bg-light navbar-expand bd-navbar toc-show-{{ toc_show_width }}">
+                  {% include "sections/header-article.html" %}
+              </nav>
+          
+              {% block docs_body %}
+              <article class="bd-article" role="main">
+                {% block body %} {% endblock %}
+              </article>
+              {% endblock %}
 
-          <nav class="bd-header-article navbar-light bg-light navbar-expand bd-navbar toc-show-{{ toc_show_width }}">
-            {% include "sections/header-article.html" %}
-          </nav>
+              {% if theme_show_prev_next %}
+              <footer class="bd-footer-article">
+                  {% include "sections/footer-article.html" %}
+              </footer>
+              {% endif %}
+          </div>
 
-          {% block docs_body %}
-            <article class="bd-article" role="main">
-              {% block body %} {% endblock %}
-            </article>
-          {% endblock %}
-
-          {% if theme_show_prev_next %}
-            <footer class="bd-footer-article">
-              {% include "sections/footer-article.html" %}
-            </footer>
-          {% endif %}
-        </div>
       {% endblock %}
     </div>
   </div>

@@ -1,11 +1,11 @@
 {% block docs_toc %}
-  <div class="bd-sidebar-secondary col-9 col-{{ toc_show_width }}-2 bd-toc">
-    {% if meta is defined and not (meta is not none and 'notoc' in meta) %}
-      {% for toc_item in theme_page_sidebar_items %}
-      <div class="toc-item">
-        {% include toc_item %}
-      </div>
-      {% endfor %}
-    {% endif %}
-  </div>
+{% if meta is defined and not (meta is not none and 'theme_html_remove_secondary_sidebar' in meta) %}
+<div class="bd-sidebar-secondary col-9 col-{{ toc_show_width }}-2 bd-toc">
+    {% for toc_item in theme_page_sidebar_items %}
+    <div class="toc-item">
+      {% include toc_item %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}

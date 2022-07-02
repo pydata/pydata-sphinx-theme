@@ -129,23 +129,3 @@ automation, page performance, and other best practices.
 
     Specifically, `foo-software/lighthouse-check-action <https://github.com/foo-software/lighthouse-check-action>`__
     is run on selected pages from the generated documentation site.
-
-
-Pa11y CI
---------
-
-`Pa11y CI <https://github.com/pa11y/pa11y-ci>`__ is a command line tool which can check
-a number of accessibility standards. It is most effective when paired with a `sitemap.xml`,
-discussed above.
-
-.. Hint::
-
-    This approach is more involved: for this site, we've written some
-    custom runners which:
-
-    - start a static file server locally with the docs site
-    - run `pa11y-ci` against the site's `sitemap.xml`
-    - read known failures in a `a11y-roadmap.txt` file
-    - generate HTML reports (including all errors)
-    - perform some light parsing to generate some short reports
-    - archive the reports in CI

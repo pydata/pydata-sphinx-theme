@@ -16,12 +16,15 @@ extensions = [
     "jupyter_sphinx",
     "matplotlib.sphinxext.plot_directive",
     "myst_nb",
+    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx.ext.viewcode",
+    "sphinx_copybutton",
+    "sphinx_togglebutton",
 ]
 
 # -- Internationalization ------------------------------------------------
@@ -86,9 +89,22 @@ html_theme_options = {
             "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
             "name": "Changelog",
         },
+        {
+            "url": "https://pydata.org",
+            "name": "PyData",
+        },
+        {
+            "url": "https://numfocus.org/",
+            "name": "NumFocus",
+        },
+        {
+            "url": "https://numfocus.org/donate",
+            "name": "Donate to NumFocus",
+        },
     ],
     "github_url": "https://github.com/pydata/pydata-sphinx-theme",
     "twitter_url": "https://twitter.com/PyData",
+    "header_links_before_dropdown": 4,
     "icon_links": [
         {
             "name": "PyPI",
@@ -125,8 +141,8 @@ html_theme_options = {
 }
 
 html_sidebars = {
+    "index": ["search-field"],
     "contribute/index": [
-        "search-field",
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars

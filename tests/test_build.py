@@ -67,9 +67,8 @@ def test_build_html(sphinx_build_factory, file_regression):
     navbar = index_html.select("div#navbar-center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
-    # Sidebar structure
-    sidebar = index_html.select(".bd-sidebar")[0]
-    file_regression.check(sidebar.prettify(), basename="sidebar_ix", extension=".html")
+    # Sidebars should be hidden on index page because there is no sub-page
+    assert not index_html.select(".bd-sidebar-primary")
 
     # Sidebar subpage
     sidebar = subpage_html.select(".bd-sidebar")[0]
@@ -236,28 +235,6 @@ def test_favicons(sphinx_build_factory):
     assert icon_180 in str(index_html.select("head")[0])
 
 
-def test_sidebar_default(sphinx_build_factory):
-    """The sidebar is normally-sized when it has links."""
-    sphinx_build = sphinx_build_factory("base").build()
-    index_html = sphinx_build.html_tree("section1/index.html")
-    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-
-def test_sidebar_disabled(sphinx_build_factory):
-    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
-    confoverrides = {"html_sidebars": {"section1/index": ""}}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    index_html = sphinx_build.html_tree("section1/index.html")
-    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-
-def test_sidebar_nolinks(sphinx_build_factory):
-    """The sidebar is shrunk when it is present but has no links."""
-    sphinx_build = sphinx_build_factory("base").build()
-    index_html = sphinx_build.html_tree("page1.html")
-    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-
 def test_navbar_align_default(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
     sphinx_build = sphinx_build_factory("base").build()
@@ -283,6 +260,37 @@ def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
     index_html = sphinx_build.html_tree("index.html")
     navbar = index_html.select("ul#navbar-main-elements")[0]
     file_regression.check(navbar.prettify(), extension=".html")
+
+
+@pytest.mark.parametrize("n_links", (0, 4, 8))  # 0 = only dropdown, 8 = no dropdown
+def test_navbar_header_dropdown(sphinx_build_factory, file_regression, n_links):
+    """Test whether dropdown appears based on number of header links + config."""
+    extra_links = [{"url": f"https://{ii}.org", "name": ii} for ii in range(3)]
+
+    confoverrides = {
+        "html_theme_options": {
+            "external_links": extra_links,
+            "header_links_before_dropdown": n_links,
+        }
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar = index_html.select("ul#navbar-main-elements")[0]
+    if n_links == 0:
+        # There should be *only* a dropdown and no standalone links
+        assert navbar.select("div.dropdown") and not navbar.select(
+            ".navbar-nav > li.nav-item"
+        )  # noqa
+    if n_links == 4:
+        # There should be at least one standalone link, and a dropdown
+        assert navbar.select(".navbar-nav > li.nav-item") and navbar.select(
+            "div.dropdown"
+        )  # noqa
+    if n_links == 8:
+        # There should be no dropdown and only standalone links
+        assert navbar.select(".navbar-nav > li.nav-item") and not navbar.select(
+            "div.dropdown"
+        )  # noqa
 
 
 def test_sidebars_captions(sphinx_build_factory, file_regression):
