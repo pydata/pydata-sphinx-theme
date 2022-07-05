@@ -44,6 +44,34 @@ And here is a really long equation with a label!
 
 You can add a link to equations like the one above: {eq}`My label` and {eq}`My label 2`.
 
+## Code blocks
+
+Code block styling is inspired by [GitHub's code block style](https://primer.style/css/components/markdown) and also has support for Code Block captions/titles.
+See [the Sphinx documentation on code blocks](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-code-block) for more information.
+
+```python
+print("A regular code block")
+print("A regular code block")
+print("A regular code block")
+```
+
+```{code-block} python
+:caption: python.py
+
+print("A code block with a caption.")
+print("A code block with a caption.")
+print("A code block with a caption.")
+```
+
+```{code-block} python
+:caption: python.py
+:linenos:
+
+print("A code block with a caption and line numbers.")
+print("A code block with a caption and line numbers.")
+print("A code block with a caption and line numbers.")
+```
+
 ## Code execution
 
 See [](pydata.md).
@@ -78,31 +106,4 @@ Something is modified, check your version number.
 
 ```{deprecated} 0.1.1
 Something is deprecated, use something else instead.
-```
-
-## Code blocks
-
-Code block styling is inspired by GitHub's documentation.
-
-```python
-print("A regular code block")
-print("A regular code block")
-print("A regular code block")
-```
-
-```{code-block} python
-:caption: python.py
-
-print("A code block with a caption.")
-print("A code block with a caption.")
-print("A code block with a caption.")
-```
-
-```{code-block} python
-:caption: python.py
-:linenos:
-
-print("A code block with a caption and line numbers.")
-print("A code block with a caption and line numbers.")
-print("A code block with a caption and line numbers.")
 ```
