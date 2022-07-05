@@ -79,3 +79,30 @@ Something is modified, check your version number.
 ```{deprecated} 0.1.1
 Something is deprecated, use something else instead.
 ```
+
+## Code blocks
+
+Code block styling is inspired by GitHub's documentation.
+
+```python
+print("A regular code block")
+print("A regular code block")
+print("A regular code block")
+```
+
+```{code-block} python
+:caption: python.py
+
+print("A code block with a caption.")
+print("A code block with a caption.")
+print("A code block with a caption.")
+```
+
+```{code-block} python
+:caption: python.py
+:linenos:
+
+print("A code block with a caption and line numbers.")
+print("A code block with a caption and line numbers.")
+print("A code block with a caption and line numbers.")
+```
