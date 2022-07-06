@@ -139,7 +139,7 @@
   padding: 0 15px;
 }
 
-// inline the element in the navbar as long as they fit and use display block when colapsing
+// inline the element in the navbar as long as they fit and use display block when collapsing
 @include media-breakpoint-up(md) {
   .navbar-center-item {
     display: inline-block;
