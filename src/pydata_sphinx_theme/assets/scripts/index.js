@@ -203,6 +203,13 @@ window.addEventListener(
   true
 );
 
+window.onload = function () {
+  let button = document.getElementById("bd-search-button");
+  let overlay = document.querySelector("div.search-button__overlay");
+  button.onclick = toggleSearchField;
+  overlay.onclick = toggleSearchField;
+};
+
 /*******************************************************************************
  * Finalize
  */

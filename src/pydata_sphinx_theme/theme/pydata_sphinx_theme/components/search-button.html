@@ -3,14 +3,14 @@
 {% set containerClass="search-button__search-container" %}
 
 <!-- An overlay that will expand in the background and cause the search to disappear when clicked -->
-<button class="btn btn-sm navbar-btn search-button" id="bd-search-button" onclick="toggleSearchField()" title="{{ _('Toggle search field') }}">
+<button class="btn btn-sm navbar-btn search-button" id="bd-search-button" title="{{ _('Toggle search field') }}">
   <i class="fas fa-search"></i>
 </button>
 
 {#- Only on pages not `search.html`. This is because we only want the in-page search on this page -#}
 {%- if pagename !="search" -%}
 {#- This will be hidden by default until click -#}
-<div class="search-button__overlay" onclick="toggleSearchField()"></div>
+<div class="search-button__overlay"></div>
 <div class="{{ containerClass }}">
   {% include "../components/search-field.html" %}
 </div>
