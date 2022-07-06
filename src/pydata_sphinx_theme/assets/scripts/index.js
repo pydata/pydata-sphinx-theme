@@ -165,6 +165,48 @@ function scrollToActive() {
   });
 }
 
+/*******************************************************************************
+ * Search
+ */
+var toggleSearchField = () => {
+  // Class to make the search field appear and expand the clickable div behind it
+  // Note that `.show` will only have an effect on pages that aren't `search.html`
+  let button = document.getElementById("bd-search-button");
+  button.classList.toggle("show");
+
+  // We'll grab the elements we need to modify for the search field
+  let form = document.querySelector("form.bd-search");
+  let input = form.querySelector("input");
+
+  // Change the symbol to `meta key` if we are a Mac
+  var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+  if (isMac) {
+    let kbd = form.querySelector("kbd.kbd-shortcut__modifier");
+    kbd.innerText = "⌘";
+  }
+
+  // Select the search input field, and focus the page on it
+  input.focus();
+  input.select();
+  input.scrollIntoView({ block: "center" });
+};
+
+// Add an event listener for this function for Ctrl/Cmd + K
+window.addEventListener(
+  "keydown",
+  (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
+      event.preventDefault();
+      toggleSearchField();
+    }
+  },
+  true
+);
+
+/*******************************************************************************
+ * Finalize
+ */
+
 // This is equivalent to the .ready() function as described in
 // https://api.jquery.com/ready/
 $(addModeListener);
