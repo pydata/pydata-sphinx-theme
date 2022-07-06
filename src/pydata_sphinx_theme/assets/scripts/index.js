@@ -168,55 +168,84 @@ function scrollToActive() {
 /*******************************************************************************
  * Search
  */
-var toggleSearchField = () => {
-  // Class to make the search field appear and expand the clickable div behind it
-  // Note that `.show` will only have an effect on pages that aren't `search.html`
-  let button = document.getElementById("bd-search-button");
-  if (button) {
-    button.classList.toggle("show");
-  }
-
-  // We'll grab the elements we need to modify for the search field
-  let form = document.querySelector("form.bd-search");
-  let input = form.querySelector("input");
-
-  // Change the symbol to `meta key` if we are a Mac
+var changeShortcutText = () => {
+  // Change the search hint to `meta key` if we are a Mac
+  let forms = document.querySelectorAll("form.bd-search");
   var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
   if (isMac) {
-    let kbd = form.querySelector("kbd.kbd-shortcut__modifier");
-    kbd.innerText = "⌘";
+    forms.forEach(
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
+    );
   }
+};
 
-  // Select the search input field, and focus the page on it
-  input.focus();
-  input.select();
-  input.scrollIntoView({ block: "center" });
+var findInput = () => {
+  /* if we knew we only had one search field, we could just do this:
+   *
+   * let input = document.querySelector("form.bd-search").querySelector("input");
+   *
+   * but instead here we check if multiple search fields exist, and set the
+   * keyboard-shortcut-focusing behavior on the first one that is not the
+   * auto-hidden one.
+   */
+  let forms = document.querySelectorAll("form.bd-search");
+  let inputs = Array.prototype.map.call(forms, (f) => f.querySelector("input"));
+  let nonHiddenInput = inputs.filter(
+    (x) =>
+      !x.parentElement.parentElement.classList.contains(
+        "search-button__search-container"
+      )
+  );
+  if (nonHiddenInput.length) {
+    return nonHiddenInput[0];
+  } else {
+    return inputs[0];
+  }
+};
+
+var toggleSearchField = () => {
+  // If the page doesn't have an always-visible search field, then toggle the
+  // hidden one to hide or show, and (un)focus it. If there **IS** an
+  // always-visible search field on the page, (un)focus that instead.
+  let input = findInput();
+  let button = document.getElementById("bd-search-button");
+  if (
+    input.parentElement.parentElement.classList.contains(
+      "search-button__search-container"
+    )
+  ) {
+    button.classList.toggle("show");
+  }
+  // when toggling off the search field, remove its focus
+  if (document.activeElement === input) {
+    input.blur();
+  } else {
+    input.focus();
+    input.select();
+    input.scrollIntoView({ block: "center" });
+  }
 };
 
 // Add an event listener for toggleSearchField() for Ctrl/Cmd + K
 window.addEventListener(
   "keydown",
   (event) => {
-    let button = document.getElementById("bd-search-button");
-    let input = document.querySelector("form.bd-search").querySelector("input");
+    let input = findInput();
+    // toggle on Ctrl+k or ⌘+k
     if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
       event.preventDefault();
       toggleSearchField();
-      // when hiding the search field, remove its focus
-      if (button && !button.classList.contains("show")) {
-        input.blur();
-      }
     }
     // also allow Escape key to hide (but not show) the dynamic search field
     else if (document.activeElement === input && event.code == "Escape") {
       toggleSearchField();
-      input.blur(); // remove focus
     }
   },
   true
 );
 
 window.onload = function () {
+  changeShortcutText();
   let button = document.getElementById("bd-search-button");
   let overlay = document.querySelector("div.search-button__overlay");
   if (button) {
