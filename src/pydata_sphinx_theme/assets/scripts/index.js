@@ -191,13 +191,23 @@ var toggleSearchField = () => {
   input.scrollIntoView({ block: "center" });
 };
 
-// Add an event listener for this function for Ctrl/Cmd + K
+// Add an event listener for toggleSearchField() for Ctrl/Cmd + K
 window.addEventListener(
   "keydown",
   (event) => {
+    let button = document.getElementById("bd-search-button");
+    let input = document.querySelector("form.bd-search").querySelector("input");
     if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
       event.preventDefault();
       toggleSearchField();
+    }
+    // also allow Escape key to hide (but not show) the dynamic search field
+    else if (document.activeElement === input && event.code == "Escape") {
+      toggleSearchField();
+    }
+    // when hiding the search field, remove its focus
+    if (!button.classList.contains("show")) {
+      input.blur();
     }
   },
   true
