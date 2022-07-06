@@ -172,7 +172,9 @@ var toggleSearchField = () => {
   // Class to make the search field appear and expand the clickable div behind it
   // Note that `.show` will only have an effect on pages that aren't `search.html`
   let button = document.getElementById("bd-search-button");
-  button.classList.toggle("show");
+  if (button) {
+    button.classList.toggle("show");
+  }
 
   // We'll grab the elements we need to modify for the search field
   let form = document.querySelector("form.bd-search");
@@ -200,14 +202,15 @@ window.addEventListener(
     if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
       event.preventDefault();
       toggleSearchField();
+      // when hiding the search field, remove its focus
+      if (button && !button.classList.contains("show")) {
+        input.blur();
+      }
     }
     // also allow Escape key to hide (but not show) the dynamic search field
     else if (document.activeElement === input && event.code == "Escape") {
       toggleSearchField();
-    }
-    // when hiding the search field, remove its focus
-    if (!button.classList.contains("show")) {
-      input.blur();
+      input.blur(); // remove focus
     }
   },
   true
@@ -216,8 +219,12 @@ window.addEventListener(
 window.onload = function () {
   let button = document.getElementById("bd-search-button");
   let overlay = document.querySelector("div.search-button__overlay");
-  button.onclick = toggleSearchField;
-  overlay.onclick = toggleSearchField;
+  if (button) {
+    button.onclick = toggleSearchField;
+  }
+  if (overlay) {
+    overlay.onclick = toggleSearchField;
+  }
 };
 
 /*******************************************************************************
