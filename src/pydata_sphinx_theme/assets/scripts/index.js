@@ -189,17 +189,20 @@ var findInput = () => {
    * auto-hidden one.
    */
   let forms = document.querySelectorAll("form.bd-search");
-  let inputs = Array.prototype.map.call(forms, (f) => f.querySelector("input"));
-  let nonHiddenInput = inputs.filter(
-    (x) =>
-      !x.parentElement.parentElement.classList.contains(
-        "search-button__search-container"
-      )
-  );
-  if (nonHiddenInput.length) {
-    return nonHiddenInput[0];
+  if (!forms.length) {
+    return;
   } else {
-    return inputs[0];
+    var form;
+    if (forms.length == 1) {
+      // there is exactly one search field (persistent or hidden)
+      form = forms[0];
+    } else {
+      // must be at least one persistent field, use the first persistent one
+      form = document.querySelector(
+        "div:not(.search-button__search-container) > form.bd-search"
+      );
+    }
+    return form.querySelector("input");
   }
 };
 
