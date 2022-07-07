@@ -47,7 +47,7 @@ The CSS and JS for this theme are built for the browser from `src/pydata_sphinx_
   - captures the techniques for transforming the JS and CSS source files in
     `src/pydata_sphinx_theme/assets/*` into the production assets in `src/theme/pydata_sphinx_theme/static/`
 
-**For more information** about developing this theme, see the sections below and in the left sidebar.
+**For more information** about developing this theme, see the sections below and in the sidebar to the left.
 
 ```{toctree}
 :maxdepth: 2

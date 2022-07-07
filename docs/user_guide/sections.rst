@@ -1,6 +1,6 @@
-====================================
-Add/Remove items from theme sections
-====================================
+===================================
+Add/Remove theme sections and items
+===================================
 
 There are a few major theme sections that you can customize to add/remove
 components, or add your own components. Each section is configured with a
@@ -37,15 +37,15 @@ By default, the following configuration is used:
    ...
    }
 
-The left sidebar
-================
+The primary sidebar (left)
+==========================
 
-The left sidebar is just to the left of a page's main content.
+The primary sidebar is just to the left of a page's main content.
 Configuring it is a bit different from configuring the other sections, because
 configuring the sidebar is natively supported in Sphinx, via the ``html_sidebars``
 configuration variable.
 
-For the left sidebar only, you can configure templates so that they only show
+For the primary sidebar only, you can configure templates so that they only show
 up on certain pages. You do so via a configuration like so in ``conf.py``:
 
 .. code-block:: python
@@ -66,14 +66,14 @@ By default, it has the following configuration:
         "**": ["search-field", "sidebar-nav-bs", "sidebar-ethical-ads"]
     }
 
-Left sidebar end sections
-=========================
+Primary sidebar end sections
+============================
 
-There is a special ``<div>`` within the left sidebar that appears at the
+There is a special ``<div>`` within the primary sidebar that appears at the
 bottom of the page, regardless of the content that is above it.
 
 To control the HTML templates that are within this div, use
-``html_theme_options['left_sidebar_end']`` in ``conf.py``.
+``html_theme_options['primary_sidebar_end']`` in ``conf.py``.
 
 By default, it has the following templates:
 
@@ -81,16 +81,16 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "left_sidebar_end": ["sidebar-ethical-ads"],
+      "primary_sidebar_end": ["sidebar-ethical-ads"],
       ...
     }
 
 
-The right in-page sidebar
-=========================
+The secondary sidebar (right)
+=============================
 
-The in-page sidebar is just to the right of a page's main content, and is
-configured in ``conf.py`` with ``html_theme_options['page_sidebar_items']``.
+The secondary sidebar contains page-related information.
+It is just to the right of a page's main content, and is configured in ``conf.py`` with ``html_theme_options['secondary_sidebar_items']``.
 
 By default, it has the following templates:
 
@@ -98,9 +98,16 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "page_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
+      "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
       ...
     }
+
+(secondary-sidebar:remove)=
+Remove the secondary sidebar
+----------------------------
+
+To remove the secondary sidebar, add ``:theme_html_remove_secondary_sidebar:`` to the `file-wide metadata <https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata>`_ at the top of a page.
+This will remove the secondary sidebar from that page only.
 
 The footer
 ==========

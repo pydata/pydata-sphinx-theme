@@ -721,7 +721,7 @@ version switcher in a sidebar. For example, you could define
     {%- include 'version-switcher.html' -%}
     {{ super() }}
 
-to insert a version switcher at the top of the left sidebar, while still
+to insert a version switcher at the top of the primary sidebar, while still
 keeping the default navigation below it. See :doc:`sections` for more
 information.
 
@@ -782,7 +782,7 @@ Add an Edit this Page button
 
 You can add a button to each page that will allow users to edit the page text
 directly and submit a pull request to update the documentation. To include this
-button in the right sidebar of each page, add the following configuration to
+button in the secondary sidebar of each page, add the following configuration to
 your ``conf.py`` file in 'html_theme_options':
 
 .. code:: python
@@ -937,7 +937,7 @@ Secondary Sidebar (Table of Contents)
 
 The secondary sidebar is to the right of your documentation content.
 It is primarily for showing a within-page Table of Contents, as well as links that point to the source of the page.
-
+To remove the secondary sidebar, see [](secondary-sidebar:remove).
 
 Show more levels of the in-page TOC by default
 ----------------------------------------------
@@ -957,16 +957,11 @@ You can show deeper levels by default by using the following configuration, indi
 All headings up to and including the level specified will now be shown
 regardless of what is displayed on the page.
 
-Remove the Table of Contents
-----------------------------
-
-To remove the Table of Contents, add ``:theme_html_remove_secondary_sidebar:`` to the `file-wide metadata <https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata>`_ at the top of a page.
-This will remove the Table of Contents from that page only.
 
 Remove the sidebar from some pages
 ==================================
 
-If you'd like the left sidebar to be removed from a page, you can use the
+If you'd like the primary sidebar to be removed from a page, you can use the
 following configuration in ``conf.py``:
 
 .. code-block:: python
@@ -983,7 +978,7 @@ This works for glob-style patterns as well. For example:
      "folder/*": []
    }
 
-If you'd like to remove the left sidebar from **all** pages of your documentation,
+If you'd like to remove the primary sidebar from **all** pages of your documentation,
 use this pattern:
 
 .. code-block:: python
