@@ -29,3 +29,14 @@
     </div>
   </div>
 </div>
+
+<script>
+// Adds the `shown` class to the parent so that we can trigger overflow
+// behavior that depends on whether we're expanded
+$('#navbar-collapsible').on('show.bs.collapse', function () {
+  $(".bd-header").addClass("shown");
+});
+$('#navbar-collapsible').on('hide.bs.collapse', function () {
+  $(".bd-header").removeClass("shown");
+});
+</script>

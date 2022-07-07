@@ -45,6 +45,11 @@
     overflow-y: visible;
     @include scrollbar-style;
 
+    // If we're expanded, then make it possible to scroll if overflow
+    &.shown {
+      overflow-y: auto;
+    }
+
     button.navbar-toggler {
       border-color: var(--pst-color-text-muted);
       color: var(--pst-color-text-muted);
