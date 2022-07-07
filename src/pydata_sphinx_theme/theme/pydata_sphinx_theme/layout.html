@@ -1,6 +1,19 @@
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}
 
+{# Create the sidebar links HTML here to re-use in a few places #}
+{# If we have no sidebar links, pop the links component from the sidebar list #}
+{%- set sidebar_nav_html = generate_nav_html("sidebar",
+    show_nav_level=theme_show_nav_level|int,
+    maxdepth=theme_navigation_depth|int,
+    collapse=theme_collapse_navigation|tobool,
+    includehidden=True,
+    titles_only=True)
+-%}
+{% if not sidebar_nav_html %}
+{% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+{% endif %}
+
 {# Metadata and asset linking #}
 
 {%- block css %}
