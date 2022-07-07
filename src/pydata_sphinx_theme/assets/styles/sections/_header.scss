@@ -5,8 +5,11 @@
   padding: 0.5rem 0;
   max-width: 100vw;
 
-  .container-xl {
+  .bd-header__inner {
     height: 100%;
+    gap: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   #navbar-end,
@@ -36,13 +39,7 @@
     overflow-y: auto;
     @include scrollbar-style;
 
-    // On smaller screens, add margin to the navbar start + toggle button
-    #navbar-start {
-      margin-left: 1rem;
-    }
-
     button.navbar-toggler {
-      margin-right: 1rem;
       border-color: var(--pst-color-text-muted);
       color: var(--pst-color-text-muted);
     }
