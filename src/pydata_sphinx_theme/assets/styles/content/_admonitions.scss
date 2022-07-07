@@ -184,15 +184,36 @@ div.admonition,
   }
 }
 
-// Similar content blocks that are not technically admonitions.
-.topic {
+/*
+ * Similar content blocks that are not technically admonitions.
+ */
+
+// Topics (also used for `contents` directive)
+div.topic {
   background-color: var(--pst-color-surface);
   border-color: var(--pst-color-border);
+  border-radius: 0.2rem;
+  padding: 1rem 1.25rem;
+
+  .topic-title {
+    margin: 0 0 0.5rem 0;
+  }
+
+  // Over-ride large default padding
+  ul.simple {
+    padding-left: 1rem;
+
+    ul {
+      // So that sub-lists will have a bit less padding
+      padding-left: 2em;
+    }
+  }
 }
 
 aside.sidebar {
   background-color: var(--pst-color-on-surface);
   border-color: var(--pst-color-border);
+  border-radius: 0.2rem;
 }
 
 .seealso dd {

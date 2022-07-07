@@ -3,6 +3,10 @@
 There are a few elements that are unique or particularly important to this theme.
 This page is a reference for how these look.
 
+```{contents} Page contents
+:local:
+```
+
 ## Mathematics
 
 Most Sphinx sites support math, but it is particularly important for scientific computing and so we illustrate support here as well.
