@@ -9,10 +9,11 @@
 
   max-height: calc(100vh - var(--pst-header-height));
   position: sticky;
+  top: var(--pst-header-height);
   @include make-col(3);
 
-  // Border and color
-  padding: 1rem 0 1rem 1rem;
+  // Borders padding and whitespace
+  padding: 2rem 1rem 1rem 1rem;
   border-right: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-background);
   overflow-y: auto;
@@ -86,8 +87,9 @@
 /* Between-page links and captions */
 nav.bd-links {
   font-size: var(--pst-sidebar-primary-font-size);
+  margin-right: -1rem;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
     display: block;
   }
 

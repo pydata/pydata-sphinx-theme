@@ -7,6 +7,11 @@
   .bd-header-article__end {
     margin-left: auto;
   }
+
+  // We hide this at the secondary breakpoint because no buttons are present here
+  @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+    display: none;
+  }
 }
 
 // Toggle labels

@@ -2,35 +2,16 @@
  * Secondary sidebar on the right.
  * e.g., in-page table of contents.
  */
-// Each TOC item is wrapped in this
-.tocsection {
-  padding-left: 10px;
-  border-left: 1px solid var(--pst-color-border);
-  padding: 0.3rem 1.5rem;
-
-  i {
-    padding-right: 0.5rem;
-  }
-}
-
-// The list of in-page TOC
-.section-nav {
-  padding-left: 0;
-  border-left: 1px solid var(--pst-color-border);
-  border-bottom: none;
-
-  ul {
-    padding-left: 1rem;
-  }
-}
-
 .bd-sidebar-secondary {
   display: flex;
-  flex-direction: column;
-  max-height: calc(100vh - var(--pst-header-height));
-  top: var(--pst-header-height);
-  position: sticky;
   order: 2;
+  flex-direction: column;
+  position: sticky;
+  top: var(--pst-header-height);
+  max-height: calc(100vh - var(--pst-header-height));
+
+  padding: 2rem 1rem 1rem 1rem;
+  @include make-col(2);
 
   // Color and border
   background-color: var(--pst-color-background);
@@ -43,18 +24,41 @@
   @include scrollbar-style();
 }
 
+// Each TOC item is wrapped in this
+.toc-item {
+  padding: 0.3rem 0.5rem;
+  @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+    border-left: 1px solid var(--pst-color-border);
+    padding-left: 1rem;
+  }
+
+  i {
+    padding-right: 0.5rem;
+  }
+}
+
+// The list of in-page TOC
+.section-nav {
+  padding-left: 0;
+  margin-bottom: 1rem; // A little extra space before the buttons
+  border-bottom: none;
+
+  ul {
+    padding-left: 1rem;
+  }
+}
+
 // Each entry of the in-page TOC
 .toc-entry {
   display: block;
 
   a {
+    // So that the highlight bar overlaps with the toc border
     display: block;
-    padding: 0.125rem 1.5rem;
+    padding: 0.125rem 0;
+    padding-left: 1rem;
+    margin-left: -1rem;
     color: var(--pst-color-text-muted);
-
-    @include media-breakpoint-up(xl) {
-      padding-right: 0;
-    }
 
     &:hover {
       color: var(--pst-color-primary);

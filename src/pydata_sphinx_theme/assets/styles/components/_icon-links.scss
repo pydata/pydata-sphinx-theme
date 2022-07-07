@@ -36,6 +36,7 @@
   }
 
   // inline the element in the navbar as long as they fit and use display block when collapsing
+  // One breakpoint less than $breakpoint-header. See variables/_layout.scss for more info.
   @include media-breakpoint-down(md) {
     flex-direction: row;
 

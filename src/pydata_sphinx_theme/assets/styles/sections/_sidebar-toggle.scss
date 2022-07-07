@@ -6,37 +6,6 @@
 * It is broken up into major sections below.
 */
 
-/**
- * Behavior for sliding drawer elements that will be toggled with an input
- *
- * NOTE: This mixin defines the behavior while *hidden* and we define the "show"
- * behavior in the sidebar_toggle.scss file
- */
-@mixin sliding-drawer($side: "left", $breakpoint: lg) {
-  // Note that media-breakpoint-down includes the widths above the breakpoint given
-  // So we should provide the breakpoint just *above* where we want the behavior to trigger.
-  @include media-breakpoint-down($breakpoint) {
-    position: fixed;
-    top: 0;
-    z-index: $zindex-modal;
-    height: 100vh;
-    max-height: 100vh;
-    width: 75%;
-    max-width: 350px;
-    transition: visibility $animation-time ease-out,
-      margin $animation-time ease-out;
-    visibility: hidden;
-
-    @if $side == "right" {
-      margin-right: -75%;
-      right: 0;
-    } @else {
-      margin-left: -75%;
-      left: 0;
-    }
-  }
-}
-
 /*******************************************************************************
 * Buttons and overlays
 */
@@ -78,8 +47,40 @@ input {
   }
 }
 
-// At wider screens we remove the toggle buttons and revert the margin behavior
-@include media-breakpoint-up($sidebar-primary-breakpoint) {
+/*******************************************************************************
+* Sidebar drawer behavior
+*/
+
+/**
+ * Behavior for sliding drawer elements that will be toggled with an input
+ *
+ * NOTE: This mixin defines the behavior while *hidden* and we define the "show"
+ * behavior in the sidebar_toggle.scss file
+ */
+@mixin sliding-drawer($side: "left") {
+  position: fixed;
+  top: 0;
+  z-index: $zindex-modal;
+  height: 100vh;
+  max-height: 100vh;
+  width: 75%;
+  flex-grow: 0.75;
+  max-width: 350px;
+  transition: visibility $animation-time ease-out,
+    margin $animation-time ease-out;
+  visibility: hidden;
+
+  @if $side == "right" {
+    margin-right: -75%;
+    right: 0;
+  } @else {
+    margin-left: -75%;
+    left: 0;
+  }
+}
+
+// Primary sidebar hides/shows at earlier widths
+@include media-breakpoint-up($breakpoint-sidebar-primary) {
   label.sidebar-toggle.primary-toggle {
     display: none;
   }
@@ -91,28 +92,34 @@ input {
     }
   }
 
-  ~ .bd-container .bd-sidebar-primary {
+  .bd-sidebar-primary {
     margin-left: 0;
     visibility: visible;
   }
 }
 
-// Secondary sidebar hides/shows on wider screens
-@include media-breakpoint-up($sidebar-secondary-breakpoint) {
+.bd-sidebar-primary {
+  // One breakpoint less than $breakpoint-sidebar-primary. See variables/_layout.scss for more info.
+  @include media-breakpoint-down(sm) {
+    @include sliding-drawer("left");
+  }
+}
+
+// Secondary sidebar hides/shows on wider widths
+@include media-breakpoint-up($breakpoint-sidebar-secondary) {
   label.sidebar-toggle.secondary-toggle {
     display: none;
   }
 
-  ~ .bd-container .bd-sidebar-secondary {
+  .bd-sidebar-secondary {
     margin-right: 0;
     visibility: visible;
   }
 }
 
-.bd-sidebar-primary {
-  @include sliding-drawer("left", $sidebar-primary-breakpoint);
-}
-
 .bd-sidebar-secondary {
-  @include sliding-drawer("right", $sidebar-secondary-breakpoint);
+  // One breakpoint less than $breakpoint-sidebar-secondary. See variables/_layout.scss for more info.
+  @include media-breakpoint-down(lg) {
+    @include sliding-drawer("right");
+  }
 }

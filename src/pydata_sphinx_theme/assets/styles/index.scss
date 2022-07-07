@@ -39,10 +39,10 @@ $grid-breakpoints: (
 @import "./sections/footer";
 @import "./sections/footer-article";
 @import "./sections/header";
+@import "./sections/header-article";
 @import "./sections/sidebar-primary";
 @import "./sections/sidebar-secondary";
 @import "./sections/sidebar-toggle";
-@import "./sections/header_article";
 
 // Re-usable components across the theme
 @import "./components/icon-links";
