@@ -1,10 +1,11 @@
 /*******************************************************************************
-* Rules th specify the display of the sidebars toggles
+* Buttons and overlays for sidebar toggles
 */
 input.sidebar-toggle {
   display: none;
 }
 
+// Background overlays
 label.overlay {
   background-color: black;
   height: 0;
@@ -18,45 +19,53 @@ label.overlay {
 }
 
 input {
+  // Show the correct overlay when its input is checked
   &#__primary:checked + label.overlay.overlay-primary,
   &#__secondary:checked + label.overlay.overlay-secondary {
     height: 100vh;
     width: 100vw;
   }
 
-  &#__primary:not(:checked) ~ .container-xl .bd-sidebar-primary,
-  &#__secondary:not(:checked) ~ .container-xl .bd-sidebar-secondary {
-    width: 0;
-    visibility: hidden;
+  // Primary sidebar slides in from the left
+  &#__primary:checked ~ .bd-container .bd-sidebar-primary {
+    visibility: visible;
+    margin-left: 0;
+  }
+
+  // Secondary sidebar slides in from the right
+  &#__secondary:checked ~ .bd-container .bd-sidebar-secondary {
+    visibility: visible;
+    margin-right: 0;
   }
 }
 
-@include media-breakpoint-up($pst-primary-breakpoint) {
+// At wider screens we remove the toggle buttons and revert the margin behavior
+@include media-breakpoint-up($sidebar-primary-breakpoint) {
+  label.sidebar-toggle.primary-toggle {
+    display: none;
+  }
+
   input#__primary {
     &:checked + label.overlay.overlay-primary {
       height: 0;
       width: 0;
     }
+  }
 
-    &:not(:checked) ~ .container-xl .bd-sidebar-primary {
-      display: flex;
-    }
+  ~ .bd-container .bd-sidebar-primary {
+    margin-left: 0;
+    visibility: visible;
   }
 }
 
-// hide the sidebar in narrow screens
-// based on the toc_show_width variable
-@each $break, $width in $grid-breakpoints {
-  input#__secondary.toc-show-#{$break} {
-    @include media-breakpoint-up($break) {
-      &:checked + label.overlay.overlay-secondary {
-        height: 0;
-        width: 0;
-      }
+// Secondary sidebar hides/shows on wider screens
+@include media-breakpoint-up($sidebar-secondary-breakpoint) {
+  label.sidebar-toggle.secondary-toggle {
+    display: none;
+  }
 
-      &:not(:checked) ~ .container-xl .bd-sidebar-secondary {
-        display: flex;
-      }
-    }
+  ~ .bd-container .bd-sidebar-secondary {
+    margin-right: 0;
+    visibility: visible;
   }
 }

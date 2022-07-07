@@ -1,63 +1,26 @@
-.bd-header-article {
-  background: var(--pst-color-background) !important;
-  padding: 0 2em;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
+.bd-header-article__inner {
   min-height: var(--pst-header-article-height);
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
 
-  & ~ article.bd-article {
-    padding-top: var(--pst-header-article-height);
-  }
-
-  // asumption that people will always make the secondary sidebar disapear first
-  @each $break, $width in $grid-breakpoints {
-    &.toc-show-#{$break} {
-      @include media-breakpoint-up($break) {
-        display: none;
-
-        & ~ article.bd-article {
-          padding-top: 0;
-        }
-      }
-    }
+  .bd-header-article__end {
+    margin-left: auto;
   }
 }
 
+// Toggle labels
 label {
   &.sidebar-toggle {
+    display: flex;
     cursor: pointer;
     font-size: 1.2rem;
-    margin: 0 1em;
-    position: absolute;
-    height: var(--pst-header-article-height);
-    top: 0;
-    display: flex;
     align-items: center;
     color: var(--pst-color-muted);
   }
 
+  // Flip the icon right-to-left on the left side
   &.primary-toggle {
-    left: 0;
     transform: scale(-1, 1);
-
-    @include media-breakpoint-up($pst-primary-breakpoint) {
-      display: none;
-    }
-  }
-
-  &.secondary-toggle {
-    right: 0;
-
-    // hide the toogle when the secondary is normally displayed
-    // based on the toc_show_width variable
-    @each $break, $width in $grid-breakpoints {
-      &.toc-show-#{$break} {
-        @include media-breakpoint-up($break) {
-          display: none;
-        }
-      }
-    }
   }
 }

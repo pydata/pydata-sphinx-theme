@@ -25,35 +25,18 @@
 }
 
 .bd-sidebar-secondary {
-  z-index: $zindex-modal;
-  top: 0;
-  min-height: 100vh;
-  max-height: 100vh;
-  border-left: 1px solid var(--pst-color-border);
-  background-color: var(--pst-color-background);
-  padding-top: 1em;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  position: fixed;
-  right: 0;
-  transition: visibility $animation-time ease-out, width $animation-time ease 0s;
+  max-height: calc(100vh - var(--pst-header-height));
+  top: var(--pst-header-height);
+  position: sticky;
+  order: 2;
 
-  // hide the sidebar in narrow screens
-  // based on the toc_show_width variable
-  @each $break, $width in $grid-breakpoints {
-    &.col-#{$break}-2 {
-      @include media-breakpoint-up($break) {
-        z-index: 0;
-        min-height: none;
-        max-height: calc(100vh - var(--pst-header-height));
-        border-left: none;
-        top: var(--pst-header-height);
-        position: sticky;
-        order: 2;
-      }
-    }
-  }
+  @include sliding-drawer("right", $sidebar-secondary-breakpoint);
+
+  // Color and border
+  background-color: var(--pst-color-background);
+  overflow-y: auto;
 
   .onthispage {
     color: var(--pst-color-text-base);
@@ -93,13 +76,4 @@
 
 .toc-h4 {
   font-size: 0.65rem;
-}
-
-// Other components of the in-page TOC
-.editthispage {
-  padding-top: 2rem;
-
-  a {
-    color: var(--pst-color-primary);
-  }
 }

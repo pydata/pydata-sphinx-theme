@@ -9,9 +9,12 @@
   // ref: https://www.w3.org/WAI/tutorials/page-structure/styling/#line-length
   max-width: 60em;
   overflow-x: auto; // Prevent wide content from pushing off the secondary sidebar
-  // Give a bit more verticle spacing on wide screens
-  padding: 3rem 1.5rem 2rem 3rem;
-  @include media-breakpoint-down(md) {
-    padding: 3rem 1rem 1rem 1rem;
+  padding: 1rem;
+
+  .bd-article {
+    // Give a bit more verticle spacing on wide screens
+    @include media-breakpoint-up(md) {
+      padding-top: 3rem;
+    }
   }
 }

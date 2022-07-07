@@ -3,6 +3,22 @@
 
 {# Metadata and asset linking #}
 
+{# Create the sidebar links HTML here to re-use in a few places #}
+{# If we have no sidebar links, pop the links component from the sidebar list #}
+{%- set sidebar_nav_html = generate_nav_html("sidebar",
+    show_nav_level=theme_show_nav_level|int,
+    maxdepth=theme_navigation_depth|int,
+    collapse=theme_collapse_navigation|tobool,
+    includehidden=True,
+    titles_only=True)
+-%}
+{% if not sidebar_nav_html %}
+{% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+{% endif %}
+
+{# A flag for whether we include a secondary sidebar based on the page metadata #}
+{% set use_sidebar_secondary = meta is defined and meta is not none and 'theme_html_remove_secondary_sidebar' not in meta %}
+
 {%- block css %}
   <script>
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
@@ -25,10 +41,6 @@
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="{{ default_mode }}">
 {%- endblock %}
 
-{# needs to live outside the `block` areas to be re-usable elsewhere #}
-{# set the width to hide the secondary navbar based on its presence #}
-{% set toc_show_width = "xl" if sidebars else "md" %}
-
 {%- block content %}
 
   <!-- checkbox to toggle primary sidebar -->
@@ -36,43 +48,41 @@
   <label class="overlay overlay-primary" for="__primary"></label>
 
   <!-- Checkboxes to toggle the secondary sidebar -->
-  <input type="checkbox" class="sidebar-toggle toc-show-{{ toc_show_width }}" name="__secondary" id="__secondary">
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
   <label class="overlay overlay-secondary" for="__secondary"></label>
 
   {% include "sections/announcement.html" %}
 
   {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar toc-show-{{ toc_show_width }}" id="navbar-main">
-      {%- include "sections/header.html" %}
-    </nav>
-    
-    {% endblock %}
+  <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+    {%- include "sections/header.html" %}
+  </nav>
+  {% endblock %}
 
-    <div class="bd-container container-xl">
-      <div class="bd-container__inner row">
-          {% include "sections/sidebar-primary.html" %}
-          {% include "sections/sidebar-secondary.html" %}
+  <div class="bd-container container-xl">
+    <div class="bd-container__inner row">
+      {% include "sections/sidebar-primary.html" %}
+      {% include "sections/sidebar-secondary.html" %}
 
-          {% block docs_main %}
-          <div class="bd-content col">
-          
-              <nav class="bd-header-article navbar-light bg-light navbar-expand bd-navbar toc-show-{{ toc_show_width }}">
-                  {% include "sections/header-article.html" %}
-              </nav>
-          
-              {% block docs_body %}
-              <article class="bd-article" role="main">
-                {% block body %} {% endblock %}
-              </article>
-              {% endblock %}
+      {% block docs_main %}
+      <div class="bd-content col">
 
-              {% if theme_show_prev_next %}
-              <footer class="bd-footer-article">
-                  {% include "sections/footer-article.html" %}
-              </footer>
-              {% endif %}
+          <div class="bd-header-article">
+              {% include "sections/header-article.html" %}
           </div>
 
+          {% block docs_body %}
+          <article class="bd-article" role="main">
+            {% block body %} {% endblock %}
+          </article>
+          {% endblock %}
+
+          {% if theme_show_prev_next %}
+          <footer class="bd-footer-article">
+              {% include "sections/footer-article.html" %}
+          </footer>
+          {% endif %}
+      </div>
       {% endblock %}
     </div>
   </div>

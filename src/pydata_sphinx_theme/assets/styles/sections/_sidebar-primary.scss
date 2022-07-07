@@ -2,27 +2,22 @@
  * The primary sidebar on the left.
  * e.g., between-pages navigation.
  */
+
 .bd-sidebar-primary {
-  z-index: $zindex-modal;
-  top: 0;
-  min-height: 100vh;
-  max-height: 100vh;
-  border-right: 1px solid var(--pst-color-border);
-  background-color: var(--pst-color-background);
-  padding-top: 1em;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  position: fixed;
-  transition: visibility $animation-time ease-out, width $animation-time ease 0s;
 
-  @include media-breakpoint-up($pst-primary-breakpoint) {
-    z-index: 0;
-    min-height: none;
-    max-height: calc(100vh - var(--pst-header-height));
-    top: var(--pst-header-height);
-    position: sticky;
-  }
+  max-height: calc(100vh - var(--pst-header-height));
+  position: sticky;
+  @include make-col(3);
+
+  @include sliding-drawer("left", $sidebar-primary-breakpoint);
+
+  // Border and color
+  padding: 1rem 0 1rem 1rem;
+  border-right: 1px solid var(--pst-color-border);
+  background-color: var(--pst-color-background);
+  overflow-y: auto;
 
   @include scrollbar-style();
 
@@ -48,6 +43,7 @@
       }
     }
   }
+  // Navigation item chevrons
   label {
     position: absolute;
     top: 0;
@@ -93,6 +89,10 @@
 nav.bd-links {
   font-size: var(--pst-sidebar-primary-font-size);
 
+  @include media-breakpoint-up(md) {
+    display: block;
+  }
+
   ul {
     list-style: none;
 
@@ -104,7 +104,7 @@ nav.bd-links {
 
   li > a {
     display: block;
-    padding: 0.25rem 1.5rem;
+    padding: 0.25rem 0;
     color: var(--pst-color-text-muted);
 
     &:hover {
@@ -140,7 +140,6 @@ nav.bd-links {
     position: relative;
     margin-top: 1.25em;
     margin-bottom: 0.5em;
-    padding: 0 1.5rem;
     color: var(--pst-color-text-base);
     &:first-child {
       margin-top: 0;
@@ -161,18 +160,6 @@ nav.bd-links {
   }
 
   > .bd-sidenav {
-    display: block;
-  }
-}
-
-// Top-level between-page toc container
-.bd-links {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  margin-right: -15px;
-  margin-left: -15px;
-
-  @include media-breakpoint-up(md) {
     display: block;
   }
 }

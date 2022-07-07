@@ -2,16 +2,17 @@
   /*****************************************************************************
   * Overall Layout Variables
   */
-  
+
   // This will impact the top offset for many sections
   --pst-header-height: 3rem;
   --pst-header-article-height: calc(var(--pst-header-height) * 2 / 3);
 }
 
 /*******************************************************************************
-* Define when the sidebars should be wrapped
+* Sidebar drawer behavior
 */
-$pst-primary-breakpoint: md;
+$sidebar-primary-breakpoint: md;
+$sidebar-secondary-breakpoint: xl;
 
 /*******************************************************************************
 * Define the animation behaviour
