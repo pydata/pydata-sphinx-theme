@@ -36,7 +36,7 @@
     overflow-y: auto;
     @include scrollbar-style;
 
-    // On smaller screens, add margin to the navbar start/stop
+    // On smaller screens, add margin to the navbar start + toggle button
     #navbar-start {
       margin-left: 1rem;
     }
