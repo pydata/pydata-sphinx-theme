@@ -11,8 +11,6 @@
   position: sticky;
   @include make-col(3);
 
-  @include sliding-drawer("left", $sidebar-primary-breakpoint);
-
   // Border and color
   padding: 1rem 0 1rem 1rem;
   border-right: 1px solid var(--pst-color-border);

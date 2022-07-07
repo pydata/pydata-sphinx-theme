@@ -41,6 +41,7 @@ $grid-breakpoints: (
 @import "./sections/header";
 @import "./sections/sidebar-primary";
 @import "./sections/sidebar-secondary";
+@import "./sections/sidebar-toggle";
 @import "./sections/header_article";
 
 // Re-usable components across the theme
@@ -51,7 +52,6 @@ $grid-breakpoints: (
 @import "./components/switcher-theme";
 @import "./components/switcher-version";
 @import "./components/toc-inpage";
-@import "./components/sidebar_toggle";
 @import "./components/versionmodified";
 
 // Content blocks in standard Sphinx

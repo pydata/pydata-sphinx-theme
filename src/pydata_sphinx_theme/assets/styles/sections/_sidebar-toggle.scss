@@ -1,5 +1,44 @@
 /*******************************************************************************
-* Buttons and overlays for sidebar toggles
+* Rules for the UX/UI of sidebar sliding drawers on mobile
+* Note that this sheet controls styles across many parts of the theme
+* It is aggregated into this one sheet instead of being split across
+* components in order to keep it easier to debug in one place.
+* It is broken up into major sections below.
+*/
+
+/**
+ * Behavior for sliding drawer elements that will be toggled with an input
+ *
+ * NOTE: This mixin defines the behavior while *hidden* and we define the "show"
+ * behavior in the sidebar_toggle.scss file
+ */
+@mixin sliding-drawer($side: "left", $breakpoint: lg) {
+  // Note that media-breakpoint-down includes the widths above the breakpoint given
+  // So we should provide the breakpoint just *above* where we want the behavior to trigger.
+  @include media-breakpoint-down($breakpoint) {
+    position: fixed;
+    top: 0;
+    z-index: $zindex-modal;
+    height: 100vh;
+    max-height: 100vh;
+    width: 75%;
+    max-width: 350px;
+    transition: visibility $animation-time ease-out,
+      margin $animation-time ease-out;
+    visibility: hidden;
+
+    @if $side == "right" {
+      margin-right: -75%;
+      right: 0;
+    } @else {
+      margin-left: -75%;
+      left: 0;
+    }
+  }
+}
+
+/*******************************************************************************
+* Buttons and overlays
 */
 input.sidebar-toggle {
   display: none;
@@ -68,4 +107,12 @@ input {
     margin-right: 0;
     visibility: visible;
   }
+}
+
+.bd-sidebar-primary {
+  @include sliding-drawer("left", $sidebar-primary-breakpoint);
+}
+
+.bd-sidebar-secondary {
+  @include sliding-drawer("right", $sidebar-secondary-breakpoint);
 }
