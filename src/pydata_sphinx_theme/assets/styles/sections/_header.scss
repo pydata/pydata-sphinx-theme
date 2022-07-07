@@ -12,6 +12,12 @@
     padding-right: 1rem;
   }
 
+  #navbar-collapsible {
+    // Remove padding because we inherit padding from the parent container
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   #navbar-end,
   #navbar-center,
   #navbar-start {
