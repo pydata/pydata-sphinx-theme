@@ -42,7 +42,7 @@
   @include media-breakpoint-down(md) {
     // Make it scrollable with a max height on mobile in cases there are many items
     max-height: 90vh;
-    overflow-y: auto;
+    overflow-y: visible;
     @include scrollbar-style;
 
     button.navbar-toggler {
