@@ -57,6 +57,7 @@ $grid-breakpoints: (
 // Content blocks in standard Sphinx
 @import "./content/admonitions";
 @import "./content/api";
+@import "./content/code";
 @import "./content/footnotes";
 @import "./content/hacks";
 @import "./content/lists";

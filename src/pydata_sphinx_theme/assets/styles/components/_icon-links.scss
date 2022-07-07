@@ -35,7 +35,7 @@
     border-radius: 0.2rem;
   }
 
-  // inline the element in the navbar as long as they fit and use display block when colapsing
+  // inline the element in the navbar as long as they fit and use display block when collapsing
   @include media-breakpoint-down(md) {
     flex-direction: row;
 
