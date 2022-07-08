@@ -4,8 +4,8 @@
   */
 
   // Header height will impact the top offset for many sections
+  // Article header is 66% of Header
   --pst-header-height: 3rem;
-  // Article Header is 66% so just a bit smaller
   --pst-header-article-height: calc(var(--pst-header-height) * 2 / 3);
 }
 
