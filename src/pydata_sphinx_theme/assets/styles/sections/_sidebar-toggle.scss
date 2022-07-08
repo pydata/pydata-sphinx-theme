@@ -54,8 +54,9 @@ input {
 /**
  * Behavior for sliding drawer elements that will be toggled with an input
  *
- * NOTE: This mixin defines the behavior while *hidden* and we define the "show"
- * behavior in the sidebar_toggle.scss file
+ * NOTE: We use this mixin to define the toggle behavior on narrow screens,
+ * And the wide-screen behavior of the sections is defined in their own section
+ * .scss files.
  */
 @mixin sliding-drawer($side: "left") {
   position: fixed;

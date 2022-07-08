@@ -47,35 +47,3 @@
     padding-left: 1rem;
   }
 }
-
-// Each entry of the in-page TOC
-.toc-entry {
-  display: block;
-
-  a {
-    // So that the highlight bar overlaps with the toc border
-    display: block;
-    padding: 0.125rem 0;
-    padding-left: 1rem;
-    margin-left: -1rem;
-    color: var(--pst-color-text-muted);
-
-    &:hover {
-      color: var(--pst-color-primary);
-      text-decoration: none;
-    }
-  }
-}
-
-/* adjust toc font sizes to improve overview */
-.toc-h2 {
-  font-size: 0.85rem;
-}
-
-.toc-h3 {
-  font-size: 0.75rem;
-}
-
-.toc-h4 {
-  font-size: 0.65rem;
-}
