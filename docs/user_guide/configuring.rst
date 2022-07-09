@@ -428,18 +428,19 @@ For example, to change the number of displayed header links to be ``4`` instead 
      "header_links_before_dropdown": 4
    }
 
-Adding favicons
-===============
+Add favicons
+============
 
-``pydata_sphinx_theme`` supports the
-`standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_,
-using ``html_favicon``.
+``pydata_sphinx_theme`` supports the `standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_, using ``html_favicon``.
 
-Additionally, ``pydata_sphinx_theme`` allows you to add any number of
-browser- or device-specific favicons of any size. To define arbitrary favicons,
-use the ``favicons`` configuration key. The ``href`` value can be either an
-absolute URL (beginning with ``http``) or a local path relative to your
-``html_static_path``:
+Additionally you ma add any number of browser- or device-specific favicons of any size.
+To do so, use the ``html_theme_options["favicons"]`` configuration key.
+
+The only required argument is ``href``, which can be either an absolute URL (beginning with ``http``) or a local path relative to your ``html_static_path``.
+In addition, you may specify a size with ``sizes``, specify a ``rel`` value, and specify a ``color``.
+See `this blog post on SVG favicons for more information <https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df>`_.
+
+For example, below we define three extra favicons of different sizes and ``rel`` types, and one with a specific color.
 
 .. code-block:: python
 
@@ -458,7 +459,8 @@ absolute URL (beginning with ``http``) or a local path relative to your
          {
             "rel": "apple-touch-icon",
             "sizes": "180x180",
-            "href": "apple-touch-icon-180x180.png"
+            "href": "apple-touch-icon-180x180.png",
+            "color": "#000000",
          },
       ]
    }
@@ -468,7 +470,7 @@ section, following this pattern:
 
 .. code-block:: html+jinja
 
-   <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}">
+   <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}" color="{{ favicon.color }}">
 
 
 .. _configure-sidebar:
