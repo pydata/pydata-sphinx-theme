@@ -53,3 +53,10 @@ html[data-theme="dark"] .bd-content {
     }
   }
 }
+
+// NBSphinx
+// If a cell immediately precedes text (with no output cell) then add padding
+// so that we have the same spacing as paragraphs after paragraphs.
+div.nblast + p {
+  margin-top: 1rem;
+}
