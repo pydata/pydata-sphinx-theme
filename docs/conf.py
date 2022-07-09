@@ -13,17 +13,19 @@ import pydata_sphinx_theme
 # -- General configuration ---------------------------------------------------
 
 extensions = [
-    "jupyter_sphinx",
-    "matplotlib.sphinxext.plot_directive",
-    "myst_nb",
-    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
-    "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx.ext.viewcode",
     "sphinx_copybutton",
+    # For extension examples and demos
+    "ablog",
+    "jupyter_sphinx",
+    "matplotlib.sphinxext.plot_directive",
+    "myst_nb",
+    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
+    "numpydoc",
     "sphinx_togglebutton",
 ]
 
@@ -145,7 +147,19 @@ html_sidebars = {
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
-    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
+    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items,
+    # Blog sidebars
+    # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
+    "demo/blog/*": [
+        "postcard.html",
+        "recentposts.html",
+        "tagcloud.html",
+        "categories.html",
+        "authors.html",
+        "languages.html",
+        "locations.html",
+        "archives.html",
+    ],
 }
 
 myst_heading_anchors = 2
@@ -160,6 +174,14 @@ html_context = {
 rediraffe_redirects = {
     "contributing.rst": "contribute/index.rst",
 }
+
+# ABlog configuration
+blog_path = "demo/blog/index"
+blog_authors = {
+    "pydata": ("PyData", "https://pydata.org"),
+    "jupyter": ("Jupyter", "https://jupyter.org"),
+}
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
