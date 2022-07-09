@@ -143,8 +143,8 @@ def update_templates(app, pagename, templatename, context, doctree):
         # Sphinx will auto-resolve href if it's a local file
         app.add_css_file(
             favicon["href"],
-            rel=favicon["rel"],
-            sizes=favicon["sizes"],
+            rel=favicon.get("rel", "icon"),
+            sizes=favicon.get("sizes", "16x16"),
             **{"type": f"image/{icon_type}"},
         )
 

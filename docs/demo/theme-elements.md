@@ -11,8 +11,7 @@ This page is a reference for how these look.
 
 Most Sphinx sites support math, but it is particularly important for scientific computing and so we illustrate support here as well.
 
-This is a test. Here is an equation:
-{math}`X_{0:5} = (X_0, X_1, X_2, X_3, X_4)`.
+This is a test. Here is an inline equation: {math}`X_{0:5} = (X_0, X_1, X_2, X_3, X_4)` and {math}`another` and {math}`x^2 x^3 x^4` another.
 
 Here is another:
 
