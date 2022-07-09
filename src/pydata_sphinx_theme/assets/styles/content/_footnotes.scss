@@ -8,7 +8,7 @@ dt.label > span.brackets:not(:only-child):after {
   content: "]";
 }
 
-// Make footnote as a supercript
+// Make footnote as a superscript
 a.footnote-reference {
   vertical-align: super;
   font-size: small;

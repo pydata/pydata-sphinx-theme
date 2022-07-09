@@ -16,20 +16,36 @@
 
 {# Metadata and asset linking #}
 
+{# Create the sidebar links HTML here to re-use in a few places #}
+{# If we have no sidebar links, pop the links component from the sidebar list #}
+{%- set sidebar_nav_html = generate_nav_html("sidebar",
+    show_nav_level=theme_show_nav_level|int,
+    maxdepth=theme_navigation_depth|int,
+    collapse=theme_collapse_navigation|tobool,
+    includehidden=True,
+    titles_only=True)
+-%}
+{% if not sidebar_nav_html %}
+{% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+{% endif %}
+
+{# A flag for whether we include a secondary sidebar based on the page metadata #}
+{% set use_sidebar_secondary = meta is defined and meta is not none and 'theme_html_remove_secondary_sidebar' not in meta %}
+
 {%- block css %}
-<script>
-  document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
-  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
-</script>
-{{ _webpack.head_pre_assets() }}
-{{ _webpack.head_pre_icons() }}
-{{- css() }}
-{{ _webpack.head_js_preload() }}
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  {{ _webpack.head_pre_assets() }}
+  {{ _webpack.head_pre_icons() }}
+  {{- css() }}
+  {{ _webpack.head_js_preload() }}
 {%- endblock %}
 
 {%- block extrahead %}
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="{{ language }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="{{ language }}">
 {%- endblock %}
 
 {% block body_tag %}
@@ -39,46 +55,62 @@
 {%- endblock %}
 
 {%- block content %}
-    {%- include "sections/announcement.html" -%}
-    {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
-      {%- include "sections/header.html" %}
-    </nav>
-    {% endblock %}
 
-    <div class="bd-container container-xl">
-      <div class="bd-container__inner row">
-          {% include "sections/sidebar-primary.html" %}
-          {% include "sections/sidebar-secondary.html" %}
+  <!-- checkbox to toggle primary sidebar -->
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
 
-          {% block docs_main %}
-          <div class="bd-content col">
-              {% block docs_body %}
-              <article class="bd-article" role="main">
-                {% block body %} {% endblock %}
-              </article>
-              {% endblock %}
+  <!-- Checkboxes to toggle the secondary sidebar -->
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
 
-              {% if theme_show_prev_next %}
-              <footer class="bd-footer-article">
-                  {% include "sections/footer-article.html" %}
-              </footer>
-              {% endif %}
+  {% include "sections/announcement.html" %}
+
+  {% block docs_navbar %}
+  <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+    {%- include "sections/header.html" %}
+  </nav>
+  {% endblock %}
+
+  <div class="bd-container container-xl">
+    <div class="bd-container__inner row">
+      {% include "sections/sidebar-primary.html" %}
+      {% include "sections/sidebar-secondary.html" %}
+
+      {% block docs_main %}
+      <div class="bd-content col">
+
+          <div class="bd-header-article">
+              {% include "sections/header-article.html" %}
           </div>
+
+          {% block docs_body %}
+          <article class="bd-article" role="main">
+            {% block body %} {% endblock %}
+          </article>
           {% endblock %}
+
+          {% if theme_show_prev_next %}
+          <footer class="bd-footer-article">
+              {% include "sections/footer-article.html" %}
+          </footer>
+          {% endif %}
       </div>
+      {% endblock %}
     </div>
+  </div>
 
   {# Scripts placed at the end of the page to cut down on time to first content #}
   {%- block scripts_end %}
-  {{ _webpack.body_post() }}
+    {{ _webpack.body_post() }}
   {%- endblock %}
+
 {%- endblock %}
 
 {%- block footer %}
-<footer class="bd-footer">
-  {%- include "sections/footer.html" %}
-</footer>
+  <footer class="bd-footer">
+    {%- include "sections/footer.html" %}
+  </footer>
 {%- endblock %}
 
 {# Silence the sidebars and relbars since we define our own #}

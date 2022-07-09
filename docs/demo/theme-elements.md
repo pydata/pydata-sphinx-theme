@@ -3,6 +3,10 @@
 There are a few elements that are unique or particularly important to this theme.
 This page is a reference for how these look.
 
+```{contents} Page contents
+:local:
+```
+
 ## Mathematics
 
 Most Sphinx sites support math, but it is particularly important for scientific computing and so we illustrate support here as well.
@@ -43,6 +47,34 @@ And here is a really long equation with a label!
 ```
 
 You can add a link to equations like the one above: {eq}`My label` and {eq}`My label 2`.
+
+## Code blocks
+
+Code block styling is inspired by [GitHub's code block style](https://primer.style/css/components/markdown) and also has support for Code Block captions/titles.
+See [the Sphinx documentation on code blocks](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-code-block) for more information.
+
+```python
+print("A regular code block")
+print("A regular code block")
+print("A regular code block")
+```
+
+```{code-block} python
+:caption: python.py
+
+print("A code block with a caption.")
+print("A code block with a caption.")
+print("A code block with a caption.")
+```
+
+```{code-block} python
+:caption: python.py
+:linenos:
+
+print("A code block with a caption and line numbers.")
+print("A code block with a caption and line numbers.")
+print("A code block with a caption and line numbers.")
+```
 
 ## Code execution
 

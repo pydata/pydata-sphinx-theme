@@ -9,8 +9,8 @@ All configuration options are passed with the ``html_theme_options`` variable
 in your ``conf.py`` file. This is a dictionary with ``key: val`` pairs that
 you can configure in various ways. This page describes the options available to you.
 
-Configure project logo and title
-================================
+Customize logo and title
+========================
 
 By default the theme will use the value of ``project`` on the left side of the header navbar.
 This can be replaced by a Logo image, and optionally a custom ``html_title`` as well.
@@ -18,12 +18,19 @@ This can be replaced by a Logo image, and optionally a custom ``html_title`` as 
 Single logo for light and dark mode
 -----------------------------------
 
-Put an image in a folder that is in `html_static_path`, and use the following configuration:
+To use a local image file, put an image in a folder that is in `html_static_path`, and use the following configuration:
 
 .. code:: python
 
    html_static_path = ["_static"]
    html_logo = "_static/logo.png"
+
+To use an external link to an image, make sure the ``html_logo`` begins with ``http``.
+For example:
+
+.. code:: python
+
+   html_logo = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
 
 Different logos for light and dark mode
 ---------------------------------------
@@ -51,13 +58,26 @@ Customize logo link
 -------------------
 
 The logo links to ``root_doc`` (usually the first page of your documentation) by default.
-If you'd like it to link to another page or use an external link instead, use the following configuration:
+You can instead link to a local document or an external website.
+To do so, use the ``html_theme_options["logo"]["link"]`` option and provide a new link.
+
+For example, to reference another local page:
 
 .. code-block:: python
 
    html_theme_options = {
        "logo": {
-           "link": "<other page or external link>",
+           "link": "some/other-page",
+       }
+   }
+
+To reference an external website, make sure your link starts with ``http``:
+
+.. code-block:: python
+
+   html_theme_options = {
+       "logo": {
+           "link": "https://pydata.org",
        }
    }
 
@@ -238,6 +258,10 @@ Here are several examples:
                "name": "Mastodon",
                "url": "https://<your-host>@<your-handle>",
                "icon": "fab fa-mastodon",
+               "attributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+               }
            },
        ],
        ...
@@ -331,6 +355,39 @@ Additionally, the screen-reader accessible label for this menu can be configured
        ...
    }
 
+Add custom attributes to icon links
+-----------------------------------
+
+You can add custom attributes to the link element (``<a>``) of your icon links.
+This is helpful if you need to add custom link behavior.
+To do so, use the pattern ``"attributes": {"attribute1": "value1"}`` in a given icon link entry.
+
+For example, to specify a custom ``target`` and ``rel`` attribute, and to define your own custom link classes:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               "name": "PyData",
+               "url": "https://pydata.org",
+               "icon": "_static/pydata-logo-square.png",
+               "type": "local",
+               # Add additional attributes to the href link.
+               # The defaults of target, rel, class, title and href may be overwritten.
+               "attributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+                  "class": "nav-link custom-fancy-css"
+               }
+           },
+       ],
+       ...
+   }
+
+.. warning::
+   This might make your icon links behave unexpectedly and might over-ride default behavior, so make sure you know what you're doing!
 
 Header Navigation Bar
 =====================

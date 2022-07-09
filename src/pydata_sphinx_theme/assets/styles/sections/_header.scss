@@ -2,11 +2,20 @@
   position: sticky;
   min-height: var(--pst-header-height);
   width: 100%;
-  padding: 0;
+  padding: 0.5rem 0;
   max-width: 100vw;
 
-  .container-xl {
+  .bd-header__inner {
     height: 100%;
+    gap: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #navbar-collapsible {
+    // Remove padding because we inherit padding from the parent container
+    padding-left: 0;
+    padding-right: 0;
   }
 
   #navbar-end,
@@ -27,14 +36,19 @@
     gap: 0.5rem;
   }
 
-  // On smaller screens, add margin to the navbar start/stop
-  @include media-breakpoint-down(lg) {
-    #navbar-start {
-      margin-left: 1em;
+  // One breakpoint less than $breakpoint-header. See variables/_layout.scss for more info.
+  @include media-breakpoint-down(md) {
+    // Make it scrollable with a max height on mobile in cases there are many items
+    max-height: 90vh;
+    overflow-y: visible;
+    @include scrollbar-style;
+
+    // If we're expanded, then make it possible to scroll if overflow
+    &.shown {
+      overflow-y: auto;
     }
 
     button.navbar-toggler {
-      margin-right: 1em;
       border-color: var(--pst-color-text-muted);
       color: var(--pst-color-text-muted);
     }
@@ -46,12 +60,12 @@
 .bd-header.navbar-light#navbar-main {
   // Overrides bootstrap
   background: var(--pst-color-on-background) !important;
-  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow); //rgba(0, 0, 0, 0.11);
+  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
 
   .navbar-nav {
     display: flex;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up($breakpoint-header) {
       // Add a gap on wider screens, on narrow screens we are vertical + already have padding
       gap: 1rem;
       // Center align on wide screens so the dropdown button is centered properly
@@ -80,35 +94,54 @@
 
     // Dropdowns for the extra links
     .dropdown {
-      z-index: $zindex-popover;
-      height: 2.2rem; // Slight hack to make this aligned with navbar links
-
+      // On mobile, the dropdown behaves like any other link, no hiding
       button {
+        display: none;
         color: var(--pst-color-text-muted);
       }
 
       .dropdown-menu {
-        color: var(--pst-color-text-base);
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
         background-color: var(--pst-color-on-background);
-        box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
-        padding: 0.5rem 1rem;
-        min-width: 20rem;
+        color: var(--pst-color-text-base);
+        border: none;
+      }
+
+      // On wide screens, the dropdown becomes a pop-up menu
+      @include media-breakpoint-up($breakpoint-header) {
+        height: 2.2rem; // Slight hack to make this aligned with navbar links
+
+        button {
+          display: flex;
+          align-items: center;
+        }
+
+        .dropdown-menu {
+          z-index: $zindex-popover;
+          box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
+          padding: 0.5rem 1rem;
+          margin: 0.5rem 0;
+          min-width: 20rem;
+
+          // Hide the menu unless show has been clicked
+          &:not(.show) {
+            display: none;
+          }
+        }
       }
     }
   }
-}
-
-// overwrite bootstrap coloring
-.bd-header#navbar-main {
-  background-color: var(--pst-color-navbar-background) !important;
 }
 
 .navbar-header a {
   padding: 0 15px;
 }
 
-// inline the element in the navbar as long as they fit and use display block when colapsing
-@include media-breakpoint-up(md) {
+// inline the element in the navbar as long as they fit and use display block when collapsing
+@include media-breakpoint-up($breakpoint-header) {
   .navbar-center-item {
     display: inline-block;
   }

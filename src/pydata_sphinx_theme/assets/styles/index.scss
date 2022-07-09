@@ -39,8 +39,10 @@ $grid-breakpoints: (
 @import "./sections/footer";
 @import "./sections/footer-article";
 @import "./sections/header";
+@import "./sections/header-article";
 @import "./sections/sidebar-primary";
 @import "./sections/sidebar-secondary";
+@import "./sections/sidebar-toggle";
 
 // Re-usable components across the theme
 @import "./components/icon-links";
@@ -55,6 +57,7 @@ $grid-breakpoints: (
 // Content blocks in standard Sphinx
 @import "./content/admonitions";
 @import "./content/api";
+@import "./content/code";
 @import "./content/footnotes";
 @import "./content/hacks";
 @import "./content/lists";
@@ -66,11 +69,13 @@ $grid-breakpoints: (
 
 // Content blocks from Sphinx extensions
 @import "./extensions/bootstrap";
+@import "./extensions/copybutton";
 @import "./extensions/ethical-ads";
 @import "./extensions/execution";
 @import "./extensions/pydata";
 @import "./extensions/sphinx_design";
 @import "./extensions/sphinx_panels";
+@import "./extensions/togglebutton";
 
 // Page-specific CSS
 @import "./pages/search";

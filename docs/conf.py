@@ -23,6 +23,8 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx.ext.viewcode",
+    "sphinx_copybutton",
+    "sphinx_togglebutton",
 ]
 
 # -- Internationalization ------------------------------------------------
@@ -114,6 +116,7 @@ html_theme_options = {
             "url": "https://pydata.org",
             "icon": "_static/pydata-logo.png",
             "type": "local",
+            "attributes": {"target": "_blank"},
         },
     ],
     "logo": {

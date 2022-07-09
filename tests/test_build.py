@@ -54,6 +54,7 @@ def sphinx_build_factory(make_app, tmp_path):
 
 def test_build_html(sphinx_build_factory, file_regression):
     """Test building the base html template and config."""
+
     sphinx_build = sphinx_build_factory("base")  # type: SphinxBuild
 
     # Basic build with defaults
@@ -124,6 +125,20 @@ def test_icon_links(sphinx_build_factory, file_regression):
                 "icon": "https://site5.org/image.svg",
                 "type": "url",
             },
+            {
+                "name": "FONTAWESOME",
+                "url": "https://site1.org",
+                "icon": "FACLASS",
+                "type": "fontawesome",
+                "attributes": {
+                    # This should over-ride the href above
+                    "href": "https://override.com",
+                    # This should add a new icon link attribute
+                    "foo": "bar",
+                    # CSS classes should be totally overwritten
+                    "class": "overridden classes",
+                },
+            },
         ]
     }
     confoverrides = {"html_theme_options": html_theme_options_icon_links}
@@ -190,6 +205,23 @@ def test_logo_external_link(sphinx_build_factory):
     index_html = sphinx_build.html_tree("index.html")
     index_str = str(index_html.select(".navbar-brand")[0])
     assert f'href="{test_url}"' in index_str
+
+
+def test_logo_external_image(sphinx_build_factory):
+    """Test that the logo link is correct for external URLs."""
+    # Test with a specified external logo image source
+    test_url = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                "image_dark": test_url,
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    index_str = str(index_html.select(".navbar-brand")[0])
+    assert f'src="{test_url}"' in index_str
 
 
 def test_favicons(sphinx_build_factory):

@@ -1,10 +1,8 @@
 {% block docs_sidebar %}
-{# Check whether there are sidebar links to conditionally hide the sidebar #}
-{# copied over from ../components/sidebar-nav-bs.html #}
 
 {% if sidebars %}
 {# Only show if we have sidebars configured #}
-<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+<div class="bd-sidebar-primary bd-sidebar">
   <div class="sidebar-start-items">
     {%- for sidebartemplate in sidebars %}
     {%- include sidebartemplate %}

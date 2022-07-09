@@ -10,7 +10,6 @@
   overflow: auto;
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   mjx-container {
     flex-grow: 1;
