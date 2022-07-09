@@ -45,7 +45,7 @@ def sphinx_build_factory(make_app, tmp_path):
     def _func(src_folder, **kwargs):
         copytree(path_tests / "sites" / src_folder, tmp_path / src_folder)
         app = make_app(
-            srcdir=sphinx_path(os.path.abspath((tmp_path / src_folder))), **kwargs
+            srcdir=sphinx_path(os.path.abspath(tmp_path / src_folder)), **kwargs
         )
         return SphinxBuild(app, tmp_path / src_folder)
 
@@ -54,6 +54,7 @@ def sphinx_build_factory(make_app, tmp_path):
 
 def test_build_html(sphinx_build_factory, file_regression):
     """Test building the base html template and config."""
+
     sphinx_build = sphinx_build_factory("base")  # type: SphinxBuild
 
     # Basic build with defaults
@@ -67,9 +68,8 @@ def test_build_html(sphinx_build_factory, file_regression):
     navbar = index_html.select("div#navbar-center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
-    # Sidebar structure
-    sidebar = index_html.select(".bd-sidebar")[0]
-    file_regression.check(sidebar.prettify(), basename="sidebar_ix", extension=".html")
+    # Sidebars should be hidden on index page because there is no sub-page
+    assert not index_html.select(".bd-sidebar-primary")
 
     # Sidebar subpage
     sidebar = subpage_html.select(".bd-sidebar")[0]
@@ -151,24 +151,60 @@ def test_icon_links(sphinx_build_factory, file_regression):
     )
 
 
-def test_logo(sphinx_build_factory):
+def test_logo_basic(sphinx_build_factory):
     """Test that the logo is shown by default, project title if no logo."""
     sphinx_build = sphinx_build_factory("base").build()
 
     # By default logo is shown
     index_html = sphinx_build.html_tree("index.html")
     assert index_html.select(".navbar-brand img")
+    assert "emptylogo" in str(index_html.select(".navbar-brand")[0])
     assert not index_html.select(".navbar-brand")[0].text.strip()
 
 
-def test_logo_name(sphinx_build_factory):
-    """Test that the logo is shown by default, project title if no logo."""
+def test_logo_no_image(sphinx_build_factory):
+    """Test that the text is shown if no image specified."""
     confoverrides = {"html_logo": ""}
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-
-    # if no logo is specified, use project title instead
     index_html = sphinx_build.html_tree("index.html")
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
+    assert "emptylogo" not in str(index_html.select(".navbar-brand")[0])
+
+
+def test_logo_two_images(sphinx_build_factory):
+    """Test that the logo image / text is correct when both dark / light given."""
+    # Test with a specified title and a dark logo
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                "text": "Foo Title",
+                "image_dark": "emptydarklogo.png",
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    index_str = str(index_html.select(".navbar-brand")[0])
+    assert "emptylogo" in index_str
+    assert "emptydarklogo" in index_str
+    assert "Foo Title" in index_str
+
+
+def test_logo_external_link(sphinx_build_factory):
+    """Test that the logo link is correct for external URLs."""
+    # Test with a specified external logo link
+    test_url = "https://secure.example.com"
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                "link": test_url,
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    index_str = str(index_html.select(".navbar-brand")[0])
+    assert f'href="{test_url}"' in index_str
 
 
 def test_favicons(sphinx_build_factory):
@@ -214,22 +250,6 @@ def test_favicons(sphinx_build_factory):
     assert icon_180 in str(index_html.select("head")[0])
 
 
-def test_sidebar_default(sphinx_build_factory):
-    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
-    sphinx_build = sphinx_build_factory("base").build()
-
-    index_html = sphinx_build.html_tree("page1.html")
-    assert "col-md-3" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-
-def test_sidebar_disabled(sphinx_build_factory):
-    """The sidebar is shrunk when no sidebars specified in html_sidebars."""
-    confoverrides = {"html_sidebars.page1": ""}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    index_html = sphinx_build.html_tree("page1.html")
-    assert "col-md-1" in index_html.select(".bd-sidebar")[0].attrs["class"]
-
-
 def test_navbar_align_default(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
     sphinx_build = sphinx_build_factory("base").build()
@@ -257,6 +277,37 @@ def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
     file_regression.check(navbar.prettify(), extension=".html")
 
 
+@pytest.mark.parametrize("n_links", (0, 4, 8))  # 0 = only dropdown, 8 = no dropdown
+def test_navbar_header_dropdown(sphinx_build_factory, file_regression, n_links):
+    """Test whether dropdown appears based on number of header links + config."""
+    extra_links = [{"url": f"https://{ii}.org", "name": ii} for ii in range(3)]
+
+    confoverrides = {
+        "html_theme_options": {
+            "external_links": extra_links,
+            "header_links_before_dropdown": n_links,
+        }
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar = index_html.select("ul#navbar-main-elements")[0]
+    if n_links == 0:
+        # There should be *only* a dropdown and no standalone links
+        assert navbar.select("div.dropdown") and not navbar.select(
+            ".navbar-nav > li.nav-item"
+        )  # noqa
+    if n_links == 4:
+        # There should be at least one standalone link, and a dropdown
+        assert navbar.select(".navbar-nav > li.nav-item") and navbar.select(
+            "div.dropdown"
+        )  # noqa
+    if n_links == 8:
+        # There should be no dropdown and only standalone links
+        assert navbar.select(".navbar-nav > li.nav-item") and not navbar.select(
+            "div.dropdown"
+        )  # noqa
+
+
 def test_sidebars_captions(sphinx_build_factory, file_regression):
     sphinx_build = sphinx_build_factory("sidebars").build()
 
@@ -277,22 +328,8 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression):
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
-def test_sidebars_single(sphinx_build_factory, file_regression):
-    confoverrides = {"templates_path": ["_templates_single_sidebar"]}
-    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
-
-    index_html = sphinx_build.html_tree("index.html")
-
-    # No navbar included
-    assert not index_html.select("nav#navbar-main")
-    assert not index_html.select(".navbar-nav")
-
-    # Sidebar structure
-    sidebar = index_html.select("nav#bd-docs-nav")[0]
-    file_regression.check(sidebar.prettify(), extension=".html")
-
-
 def test_sidebars_level2(sphinx_build_factory, file_regression):
+    """Sidebars in a second-level page w/ children"""
     confoverrides = {"templates_path": ["_templates_sidebar_level2"]}
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
@@ -491,12 +528,13 @@ def test_new_google_analytics_id(sphinx_build_factory):
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
-    # This text makes the assumption that the google analytics will always be
-    # the second last script tag found in the document (last is the theme js).
-    script_tag = index_html.select("script")[-2]
 
-    assert "gtag" in script_tag.string
-    assert "G-XXXXX" in script_tag.string
+    # Search all the scripts and make sure one of them has the Google tag in there
+    tags_found = False
+    for script in index_html.select("script"):
+        if script.string and "gtag" in script.string and "G-XXXXX" in script.string:
+            tags_found = True
+    assert tags_found is True
 
 
 def test_old_google_analytics_id(sphinx_build_factory):
@@ -504,12 +542,13 @@ def test_old_google_analytics_id(sphinx_build_factory):
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
-    # This text makes the assumption that the google analytics will always be
-    # the second last script tag found in the document (last is the theme js).
-    script_tag = index_html.select("script")[-2]
 
-    assert "ga" in script_tag.string
-    assert "UA-XXXXX" in script_tag.string
+    # Search all the scripts and make sure one of them has the Google tag in there
+    tags_found = False
+    for script in index_html.select("script"):
+        if script.string and "ga" in script.string and "UA-XXXXX" in script.string:
+            tags_found = True
+    assert tags_found is True
 
 
 def test_show_nav_level(sphinx_build_factory):

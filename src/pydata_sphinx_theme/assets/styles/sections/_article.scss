@@ -2,19 +2,21 @@
  * Main content area
  */
 .bd-content {
-  // Give a bit more verticle spacing on wide screens
-  padding: 3rem 1.5rem 2rem 3rem;
-  @include media-breakpoint-down(md) {
-    padding: 3rem 1rem 1rem 1rem;
-  }
+  display: flex;
+  flex-direction: column;
 
-  .section {
-    max-width: 100%;
+  // Max-width is slightly more than the W3 since our docs often have images.
+  // We shoot for about 100 characters per line instead of 80.
+  // ref: https://www.w3.org/WAI/tutorials/page-structure/styling/#line-length
+  max-width: 60em;
+  overflow-x: auto; // Prevent wide content from pushing off the secondary sidebar
+  padding: 1rem;
 
-    // make every overflowing elements in main content scrollable
-    table {
-      display: block;
-      overflow: auto;
+  .bd-article {
+    // Give a bit more verticle spacing on wide screens
+    @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+      padding-top: 2rem;
+      padding-left: 2rem;
     }
   }
 }

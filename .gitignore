@@ -111,3 +111,6 @@ node_modules/
 # Editors
 .vscode
 .idea
+
+# files from the gallery screenshots
+docs/_static/gallery

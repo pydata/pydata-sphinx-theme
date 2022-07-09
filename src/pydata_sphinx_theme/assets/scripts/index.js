@@ -45,7 +45,7 @@ function setTheme(mode) {
   // save mode and theme
   localStorage.setItem("mode", mode);
   localStorage.setItem("theme", theme);
-  console.log(`Changed to ${mode} mode using the ${theme} theme.`);
+  console.log(`[PST]: Changed to ${mode} mode using the ${theme} theme.`);
 
   // add a listener if set on auto
   prefersDark.onchange = mode == "auto" ? autoTheme : "";
@@ -85,7 +85,9 @@ function addModeListener() {
 
   // Attach event handlers for toggling themes colors
   const btn = document.getElementById("theme-switch");
-  btn.addEventListener("click", cycleMode);
+  if (btn != null) {
+    btn.addEventListener("click", cycleMode);
+  }
 }
 
 /*******************************************************************************
@@ -120,6 +122,11 @@ function addTOCInteractivity() {
 
 // Navigation sidebar scrolling to active page
 function scrollToActive() {
+  // If the docs nav doesn't exist, do nothing (e.g., on search page)
+  if (!document.getElementById("bd-docs-nav")) {
+    return;
+  }
+
   var sidebar = document.querySelector("div.bd-sidebar");
 
   // Remember the sidebar scroll position between page loads

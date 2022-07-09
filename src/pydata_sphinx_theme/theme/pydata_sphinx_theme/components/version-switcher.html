@@ -1,5 +1,5 @@
 <div class="dropdown" id="version_switcher">
-    <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
+    <button type="button" class="btn btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
         {{ theme_switcher.get('version_match') }}  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
@@ -50,10 +50,14 @@ function checkPageExistsAndRedirect(event) {
                 entry.name = entry.version;
             }
             // create the node
+            const span = document.createElement("span");
+            span.textContent = `${entry.name}`;
+
             const node = document.createElement("a");
             node.setAttribute("class", "list-group-item list-group-item-action py-1");
-            node.textContent = `${entry.name}`;
             node.setAttribute("href", `${entry.url}${currentFilePath}`);
+            node.appendChild(span);
+
             // on click, AJAX calls will check if the linked page exists before
             // trying to redirect, and if not, will redirect to the homepage
             // for that version of the docs.

@@ -1,0 +1,27 @@
+/**
+ * hack the display of equations to make sure they don't overlap on mobile display
+ */
+.math {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.5em;
+  max-width: 100%;
+  overflow: auto;
+
+  @include scrollbar-style();
+
+  mjx-container {
+    flex-grow: 1;
+  }
+
+  span.eqno a.headerlink {
+    position: relative;
+    font-size: 1em;
+  }
+}
+
+// Special-case for inline math
+span.math {
+  display: inline-flex;
+}

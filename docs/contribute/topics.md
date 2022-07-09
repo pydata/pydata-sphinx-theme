@@ -1,4 +1,4 @@
-# Topic guides and how-tos
+# Contribution guides
 
 These sections cover common operations and topics that are relevant to developing this theme.
 
@@ -136,91 +136,45 @@ In particular, our JavaScript assets are preloaded in `<head>`, and the scripts 
 
 The accessibility checking tools can find a number of common HTML patterns which
 assistive technology can't help users understand.
+We run a [Lighthouse](https://developers.google.com/web/tools/lighthouse) job in our CI/CD, which generates a "score" for all pages in our **Kitchen Sink** example documentation.
+The configuration for Lighthouse is in:
 
-In addition to [Lighthouse](https://developers.google.com/web/tools/lighthouse)
-in CI, the `pa11y` stack is installed as part of the development environment.
+- `.github/workflows/lighthouserc.json`
 
-The key components are:
+For more information about configuring lighthouse, see [the lighthouse documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md).
+For more information about Accessibility in general, see [](../user_guide/accessibility.rst).
 
-- [pa11y](https://github.com/pa11y/pa11y) which uses a headless browser to analyze
-  an HTML page with a configurable set of rules based on publish standards
-- [Pa11y-CI](https://github.com/pa11y/pa11y-ci) runs `pa11y` on multiple pages
-- [pa11y-reporter-html](https://github.com/pa11y/pa11y-reporter-html) generates
-  some nice HTML reports, suitable for review
+## Supporting new Python versions
 
-:::{note}
-Presently, the _default_ `pa11y` ruleset, `WCAG2AA` is used, a subset of
-the [Web Content Accessibility Guidelines](https://www.w3.org/TR/WCAG21).
-The [Quick Reference](https://www.w3.org/WAI/WCAG21/quickref) may provide
-lighter reading.
-:::
+For releases of Python, we aim to follow this approach[^1]:
 
-### Errors in CI/CD and what to do
+> For a new major/minor release of this theme, we support any minor Python versions released in the last 3.5 years (42 months), as defined in [the EOL schedule for Python](https://endoflife.date/python)[^2].
 
-We have a list of **known accessibility problems** in the file `docs/scripts/a11y-roadmap.txt`.
-This contains a list of errors that we aim to fix in the future, and that **do not cause tests to fail**.
+We define "support" as testing against each of these versions, so that users can be assured they will not trigger any bugs.
 
-When a pa11y accessibility audit is run in our CI/CD, it checks for any errors that are _not_ on this list, and if it finds them it will cause the job to error.
+For example, if we made a minor release tomorrow, we'd [look at the EOL schedule for Python](https://endoflife.date/python) and support all of the versions that fall within a 3.5 year window.
 
-When you see an error in your CI/CD job, look at the logs under the `Run accessibility audit` job.
-You should see an output that looks like this:
+[^1]: Our support for Python versions is inspired by [NEP 029](https://numpy.org/neps/nep-0029-deprecation_policy.html).
+[^2]: These policies are goals, but not promises. We are a volunteer-led community with limited time. Consider these sections to be our intention, but we recognize that we may not always be able to meet these criteria if we do not have capacity to do so. We welcome contributions from others to help us more sustainably meet these goals!
 
+## Supporting new Sphinx versions
+
+For supporting versions of Sphinx, we aim to follow this approach:
+
+> We support the latest released version of Sphinx that is **older than 6 months**.
+> We unofficially support earlier released versions of Sphinx, but may increase the lower-bound in our dependency pin without warning if needed[^2].
+
+When a new pre-release of Sphinx is released, we should follow these steps:
+
+- Ensure that our tests are passing. We run our tests with any **pre-releases** of Sphinx, so we can test major errors quickly and make the necessary changes.
+- [Look at the Sphinx Changelog](https://www.sphinx-doc.org/en/master/changes.html) and make sure there are no changes that might break things that aren't captured by our tests.
+- [Look at the deprecated API changes](https://www.sphinx-doc.org/en/master/extdev/deprecated.html) and make sure there are no changes that might break things that aren't captured by our tests.
+- [Look at the docutils changelog](https://docutils.sourceforge.io/RELEASE-NOTES.html) in case there's a new docutils version supported that breaks something.
+
+```{note}
+This theme does not pin the upper version of Sphinx that it supports.
+If a Sphinx release causes major breaking changes for our users, and we do not have the capacity to update our code and release a fix, we may temporarily pin the upper bound of Sphinx we support until this is fixed.
 ```
-JSON: /tmp/pa11y/pa11y-864/pa11y-ci-results.json
-Roadmap: /home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/a11y-roadmap.txt
-not on roadmap:
-  WCAG2AA.Principle2.Guideline2_4.2_4_1.G1,G123,G124.NoSuchID: 4
-on roadmap:
-  WCAG2AA.Principle1.Guideline1_3.1_3_1.H39.3.LayoutTable: 1
-  WCAG2AA.Principle1.Guideline1_3.1_3_1.H43,H63: 1
-  WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired: 1
-  WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail: 1828
-  WCAG2AA.Principle3.Guideline3_2.3_2_2.H32.2: 48
-  WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId: 9
-passed: false
-total errors: 1892
-```
-
-The problems that caused an error are in the `not on roadmap` section.
-Anything that is "not on the roadmap" is an error we have unexpectedly introduced in the PR.
-These should be identified and fixed.
-
-### Fix accessibility errors
-
-We keep a list of **known accessibility issues** in the {download}`accessibility roadmap <../scripts/a11y-roadmap.txt>`.
-These are issues which are currently flagged by the toolset, but that have not yet
-been fixed.
-
-To start working on one of the accessibility roadmap items, comment out one of the
-lines in `docs/a11y-roadmap.txt`, and re-run the audit to establish a baseline.
-
-Then, fix the issue in either the HTML templates, CSS, or python code, and re-run
-the audit until it is fixed.
-
-### Run an accessibility audit locally
-
-To run the accessibility problem finder locally:
-
-```console
-$ nox -s compile  # Compile the theme assets
-$ nox -s docs  # Build the documentation
-$ python docs/scripts/a11y.py  # Run a helper script for an accessibility audit
-```
-
-The output of the last command includes:
-
-- a short summary of the current state of the accessibility rules we are trying to maintain
-- local paths to JSON and HTML reports which contain all of the issues found
-
-## Update support for new Sphinx versions
-
-This theme does not pin the upper version of Sphinx that it supports, but there may be changes that need to happen when Sphinx releases a new version.
-As a general rule, we try to support new major Sphinx versions within 6 months of its release.
-
-Here's a list of things to check when Sphinx releases a new version:
-
-- [Look at the Sphinx Changelog](https://www.sphinx-doc.org/en/master/changes.html) and make sure there are no obvious breaking changes.
-- [Look at the deprecated API changes](https://www.sphinx-doc.org/en/master/extdev/deprecated.html) and make sure there are no obvious breaking changes.
 
 ## Update our kitchen sink documents
 
@@ -240,3 +194,68 @@ Here's a list of our pages and where they come from in `sphinx-themes.org`:
 :::{note}
 To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../demo/theme-elements.md).
 :::
+
+## Update the example gallery
+
+This theme's documentation contains a gallery of sites that use this theme for their documentation.
+The images are automatically generated during ReadTheDocs builds, but are **not** automatically generated on local or test builds (to save time).
+
+If you build the documentation locally without first generating these images you may get Sphinx warnings or errors, but this should be fine as long as the images build on ReadTheDocs tests.
+
+If you'd like to build these images locally to preview in the theme, follow these steps:
+
+1. Install [playwright](https://playwright.dev/python/) and the Chromium browser add-on:
+
+   ```
+   $ pip install playwright
+   $ playwright install chromium
+   ```
+
+2. Execute the gallery generation script from the repository root:
+
+   ```
+   $ python ./docs/scripts/generate_gallery_text.py
+   ```
+
+:::{note}
+The newly generated images will be pushed to the distant repository.
+:::
+
+## Update JavaScript dependencies and their versions
+
+There are two kinds of dependency definitions in this theme:
+
+- `package.json` contains the **base dependencies** for this theme. They are broken down into a few categories like `dependencies` and `devDependencies`. It is edited by the maintainers.
+- `package-lock.json` contains the complete **frozen dependency chain** for this theme, including all sub-dependencies of our base dependencies. It is automatically generated.
+
+To update or add a JS dependency, follow these steps:
+
+1. **Edit `package.json`** by adding or modifying a dependency.
+2. **Re-generate `package-lock.json`** in order to create a new set of frozen dependencies for the theme. To do this, run the following command from [the Sphinx Theme Builder](https://github.com/pradyunsg/sphinx-theme-builder).
+
+   ```
+   stb npm install --include=dev
+   ```
+
+3. **Commit both files** to the repository. When new people pull in the latest commits, their `npm` environment will automatically update according to the new lockfile.
+
+## PyData package support
+
+This theme is designed by and for the PyData community, and so there are a few places where we special-case support for packages in this community.
+
+We define CSS rules that ensure PyData content in Sphinx looks reasonable on both light and dark themes.
+If we hear reports from maintainers that we could change something in this theme that would make their documentation look better, and if this change is sustainable for us, then we should do so.
+
+We store our PyData-specific SCSS in two relevant files, both in the `src/pydata_sphinx_theme/assets/styles/` folder:
+
+- `extensions/_execution.scss` - styles for Sphinx libraries that execute and insert code into the documentation. For example, MyST-NB, Jupyter Sphinx, and the Matplotlib `plot` directive. Most PyData support should go here via generic improvements that all packages benefit from.
+- `extensions/_pydata.scss` - styles for specific libraries in the PyData ecosystem. In general we should try to keep this minimal because it is mostly special-casing single library quirks.
+
+## Ignore formatting commits with `git blame`
+
+When making commits that are strictly formatting/style changes (e.g., after running a new version of black or running pyupgrade after dropping an old Python version), add the commit hash to `.git-blame-ignore-revs`, so `git blame` can ignore the change.
+
+For more details, see:
+
+- https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
+- https://github.com/pydata/pydata-sphinx-theme/pull/713

@@ -1,0 +1,27 @@
+:root {
+  /*****************************************************************************
+  * Overall Layout Variables
+  */
+
+  // Header height will impact the top offset for many sections
+  // Article header is 66% of Header
+  --pst-header-height: 3rem;
+  --pst-header-article-height: calc(var(--pst-header-height) * 2 / 3);
+}
+
+/*******************************************************************************
+* Breakpoints that trigger UI changes
+*
+* Note that media-breakpoint-down begins at the next highest level!
+* So we should choose a media-breakpoint-down one *lower* than when we want to start
+* example: media-breakpoint-up(md) and media-breakpoint-down(sm) trigger at the same time
+* ref: https://github.com/twbs/bootstrap/issues/31214
+*/
+$breakpoint-header: lg; // When we collapse the header
+$breakpoint-sidebar-primary: md; // When we collapse the primary sidebar
+$breakpoint-sidebar-secondary: xl; // When we collapse the secondary sidebar
+
+/*******************************************************************************
+* Define the animation behaviour
+*/
+$animation-time: 200ms;

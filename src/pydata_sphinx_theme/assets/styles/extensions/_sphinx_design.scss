@@ -1,16 +1,23 @@
-/**
- * Special-cases for the sphinx-design lib
- * Mainly to make it compatible with the dark/light themes of pydata-sphinx-theme
+/*******************************************************************************
+ * Special-cases for the sphinx-design library, mainly to make it compatible
+ * with the dark/light themes of pydata-sphinx-theme.
+ *
+ * NOTE: sphinx-design uses !important quite liberally, so here we must do the
+ * same for our overrides to have any effect.
  */
+
+@use "../variables/color" as *;
 
 /*******************************************************************************
  * shadows
  */
-.sd-shadow-xs,
-.sd-shadow-sm,
-.sd-shadow-md,
-.sd-shadow-lg {
-  box-shadow: 0 0.5rem 1rem var(--pst-color-shadow);
+html[data-theme="light"] {
+  .sd-shadow-xs,
+  .sd-shadow-sm,
+  .sd-shadow-md,
+  .sd-shadow-lg {
+    box-shadow: 0 0.5rem 1rem var(--pst-color-shadow) !important;
+  }
 }
 
 /*******************************************************************************
@@ -18,15 +25,15 @@
  */
 
 .bd-content .sd-card {
-  border: 1px solid var(--pst-color-preformatted-border);
+  border: 1px solid var(--pst-color-border);
 
   .sd-card-header {
     background-color: var(--pst-color-panel-background);
-    border-bottom: 1px solid var(--pst-color-preformatted-border);
+    border-bottom: 1px solid var(--pst-color-border);
   }
   .sd-card-footer {
     background-color: var(--pst-color-panel-background);
-    border-top: 1px solid var(--pst-color-preformatted-border);
+    border-top: 1px solid var(--pst-color-border);
   }
 
   .sd-card-body {
@@ -47,27 +54,95 @@
   > input {
     // Active tab label
     &:checked + label {
-      border-color: var(--pst-color-active-navigation);
-      color: var(--pst-color-active-navigation);
+      border-color: var(--pst-color-primary);
+      color: var(--pst-color-primary);
     }
 
     // hover label
     &:not(:checked) + label:hover {
-      border-color: var(--pst-color-active-navigation);
-      color: var(--pst-color-active-navigation);
+      border-color: var(--pst-color-primary);
+      color: var(--pst-color-primary);
       opacity: 0.5;
     }
   }
 
   // Tab label
   > label {
-    color: var(--pst-color-deactive-navigation);
+    color: var(--pst-color-text-muted);
 
     // Hovered label
     html &:hover {
-      color: var(--pst-color-active-navigation);
-      border-color: var(--pst-color-active-navigation);
+      color: var(--pst-color-primary);
+      border-color: var(--pst-color-primary);
       opacity: 0.5;
+    }
+  }
+}
+/*******************************************************************************
+ * color overrides. Here we create some extra --pst-color-* variables and use
+ * them to override the value of the corresponding sphinx-design variables.
+ * This is easier than re-writing the sphinx-design rules. Even easier would be
+ * directly assigning our values to the --sd-color-* variables, but then our
+ * downstream users couldn't override *our* colors and have it affect buttons
+ * and badges.
+ *
+ * First, define the extra keys needed to cover the full range of semantic
+ * color names used in sphinx-design, then merge them with the names we
+ * already define for our own needs.
+ */
+$extra-semantic-colors: (
+  "dark": map-get($pst-semantic-colors, "text-base"),
+  "muted": map-get($pst-semantic-colors, "text-muted"),
+  "light": rgb(201, 201, 201),
+  "black": rgb(0, 0, 0),
+  "white": rgb(255, 255, 255),
+);
+
+$all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
+
+/* Next, make a list of the semantic color names from sphinx-design (we only
+ * need to override variables that sphinx-design has actually defined).
+ * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L31-L43
+ */
+$sd-semantic-color-names: (
+  "primary",
+  "secondary",
+  "success",
+  "info",
+  "warning",
+  "danger",
+  "light",
+  "muted",
+  "dark",
+  "black",
+  "white"
+);
+
+/* Here we also incorporate a modified version of sphinx-design's text-color
+ * function, to make sure that text is legible on colored buttons and badges.
+ * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L45-L47
+ */
+@function text-color($value) {
+  @return if(lightness($value) > 70, #000, #fff);
+}
+
+// Now we override the --sd-color-* variables.
+@each $mode in (light, dark) {
+  html[data-theme="#{$mode}"] {
+    @each $name in $sd-semantic-color-names {
+      // check if this color is defined differently for light/dark
+      $value: map-get($all-colors, $name);
+      @if type-of($value) == map {
+        $value: map-get($value, $mode);
+      }
+      // define the pst variables, so that downstream user overrides will work
+      --pst-color-#{$name}: #{$value};
+      --pst-color-#{$name}-text: #{text-color($value)};
+      --pst-color-#{$name}-highlight: #{darken($value, 15%)};
+      // override the sphinx-design variables
+      --sd-color-#{$name}: var(--pst-color-#{$name});
+      --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
+      --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
     }
   }
 }

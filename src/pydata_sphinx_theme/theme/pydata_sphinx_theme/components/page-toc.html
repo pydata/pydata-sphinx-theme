@@ -1,11 +1,11 @@
 {% set page_toc = generate_toc_html() %}
 
 {%- if page_toc | length >= 1 %}
-<div class="tocsection onthispage mt-5 pt-1 pb-3">
+<div class="tocsection onthispage">
     <i class="fas fa-list"></i> {{ _("On this page") }}
 </div>
 {%- endif %}
 
-<nav id="bd-toc-nav">
+<nav id="bd-toc-nav" class="page-toc">
     {{ page_toc }}
 </nav>

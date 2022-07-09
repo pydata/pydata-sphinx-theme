@@ -2,26 +2,23 @@
  * The primary sidebar on the left.
  * e.g., between-pages navigation.
  */
-.bd-sidebar {
-  padding-top: 1em;
-  overflow-y: auto;
+
+.bd-sidebar-primary {
   display: flex;
   flex-direction: column;
 
-  @include media-breakpoint-up(md) {
-    border-right: 1px solid var(--pst-color-border);
+  max-height: calc(100vh - var(--pst-header-height));
+  position: sticky;
+  top: var(--pst-header-height);
+  @include make-col(3);
 
-    @supports (position: -webkit-sticky) or (position: sticky) {
-      position: -webkit-sticky;
-      position: sticky;
-      top: var(--pst-header-height);
-      z-index: 1000;
-      height: calc(100vh - var(--pst-header-height));
-    }
-  }
+  // Borders padding and whitespace
+  padding: 2rem 1rem 1rem 1rem;
+  border-right: 1px solid var(--pst-color-border);
+  background-color: var(--pst-color-background);
+  overflow-y: auto;
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   &.no-sidebar {
     border-right: 0;
@@ -45,14 +42,13 @@
       }
     }
   }
+  // Navigation item chevrons
   label {
     position: absolute;
     top: 0;
     right: 0;
-    // height: var(--sidebar-item-height);
     height: 30px;
     width: 30px;
-    // width: var(--sidebar-expander-width);
 
     cursor: pointer;
 
@@ -90,16 +86,25 @@
 
 /* Between-page links and captions */
 nav.bd-links {
-  font-size: var(--pst-sidebar-font-size);
+  font-size: var(--pst-sidebar-primary-font-size);
+  margin-right: -1rem;
+
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    display: block;
+  }
 
   ul {
     list-style: none;
-    padding: 0 0 0 1.5rem;
+
+    // Reduce padding of nested `ul` items a bit
+    ul {
+      padding: 0 0 0 1rem;
+    }
   }
 
   li > a {
     display: block;
-    padding: 0.25rem 1.5rem;
+    padding: 0.25rem 0;
     color: var(--pst-color-text-muted);
 
     &:hover {
@@ -129,13 +134,12 @@ nav.bd-links {
 
   // Toctree captions
   p.caption {
-    font-size: var(--pst-sidebar-caption-font-size);
+    font-size: var(--pst-sidebar-primary-caption-font-size);
     text-transform: uppercase;
     font-weight: bold;
     position: relative;
     margin-top: 1.25em;
     margin-bottom: 0.5em;
-    padding: 0 1.5rem;
     color: var(--pst-color-text-base);
     &:first-child {
       margin-top: 0;
@@ -143,7 +147,7 @@ nav.bd-links {
   }
 }
 
-// Navigatation items on the left
+// Navigation items on the left
 .bd-sidenav {
   display: none;
 }
@@ -156,18 +160,6 @@ nav.bd-links {
   }
 
   > .bd-sidenav {
-    display: block;
-  }
-}
-
-// Top-level between-page toc container
-.bd-links {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  margin-right: -15px;
-  margin-left: -15px;
-
-  @include media-breakpoint-up(md) {
     display: block;
   }
 }

@@ -4,16 +4,16 @@ html {
 }
 
 body {
-  padding-top: var(--pst-header-height);
-
   background-color: var(--pst-color-background);
   font-family: var(--pst-font-family-base);
   font-weight: 400;
   line-height: 1.65;
   color: var(--pst-color-text-base);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   // hack to avoid the black background on some browser including Safari
   &::-webkit-scrollbar-track {
@@ -46,7 +46,7 @@ a {
   }
 
   &.headerlink {
-    color: var(--pst-color-danger);
+    color: var(--pst-color-warning);
     opacity: 0.4;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
@@ -124,8 +124,9 @@ samp {
 
 kbd {
   // use theme negative
-  background-color: var(--pst-color-text-base);
-  color: var(--pst-color-background);
+  background-color: var(--pst-color-on-background);
+  color: var(--pst-color-text-muted);
+  border: 1px solid var(--pst-color-border);
 }
 
 code {
@@ -134,7 +135,7 @@ code {
 
 pre {
   margin: 1.5em 0 1.5em 0;
-  padding: 10px;
+  padding: 1rem;
   background-color: var(--pst-color-surface);
   color: var(--pst-color-text-base);
   line-height: 1.2em;
@@ -143,7 +144,6 @@ pre {
   box-shadow: 1px 1px 1px var(--pst-color-shadow);
 
   @include scrollbar-style();
-  @include scrollbar-on-hover();
 
   .linenos {
     opacity: 0.5;

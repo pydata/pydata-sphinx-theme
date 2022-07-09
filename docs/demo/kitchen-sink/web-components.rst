@@ -11,7 +11,7 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 
 .. danger::
 
-   ``sphinx-panels`` is no longer maintained and recommend you switch to ``sphinx-design``.
+   ``sphinx-panels`` is no longer maintained and we recommend you switch to ``sphinx-design``.
    We will deprecate support for sphinx-panels soon.
 
    To use the :code:`sphinx-panels` extention, add these lines to your custom CSS to overwrite the shadows of the panels:
@@ -25,7 +25,61 @@ Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-
 
    This modification is not needed when using the :code:`sphinx-design` extention.
 
-Below you can find some examples of the **cards** and **tabs** created with the :code:`sphinx-design` extention.
+Below you can find some examples of the components created with the :code:`sphinx-design` extension.
+
+.. _badges-buttons:
+
+Badges and buttons
+------------------
+
+Here are some of the available badges:
+:bdg-primary:`primary`
+:bdg-secondary:`secondary`
+:bdg-success:`success`
+:bdg-primary-line:`primary outline`
+:bdg-secondary-line:`secondary outline`
+:bdg-success-line:`success outline`
+
+Here are some buttons, also using semantic color names. **Note:** in this theme, ``info`` is defined to be the same color as ``primary``, and ``warning`` is the same color as ``secondary``.
+If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, e.g., ``primary``, ``danger``, etc), badges and buttons will automatically use the custom color.
+
+.. grid:: auto
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: info
+            :shadow:
+
+            Info
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: warning
+            :shadow:
+
+            Warning
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: danger
+            :shadow:
+
+            Danger
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: muted
+            :shadow:
+
+            Muted
 
 Cards
 -----
@@ -109,3 +163,27 @@ Tabs
 
             PROGRAM main
             END PROGRAM main
+
+Copybuttons
+===========
+
+`sphinx-copybutton <https://sphinx-copybutton.readthedocs.io/en/latest/>`__ adds a copy button to each of your code cells.
+You can see it in action by hovering over the code cell below:
+
+.. code-block:: python
+
+    print("A copybutton in the top-right!")
+
+Toggle buttons
+==============
+
+`sphinx-togglebutton <https://sphinx-togglebutton.readthedocs.io/en/latest/>`__ allows you to convert admonitions into toggle-able elements.
+
+.. admonition:: Click me to toggle!
+   :class: dropdown
+
+   This will be hidden until a click!
+
+.. toggle::
+
+    A standalone toggle button!

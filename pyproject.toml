@@ -21,7 +21,8 @@ dependencies = [
   "sphinx>=4.0.2",
   "beautifulsoup4",
   "docutils!=0.17.0",
-  "packaging"
+  "packaging",
+  "pygments>=2.7"
 ]
 
 license = { file = "LICENSE" }
@@ -40,19 +41,27 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
+  "sphinx>=4,<5",  # Remove this when MyST-NB supports Sphinx 5
   "numpydoc",
-  "myst-parser",
-  "pandas",
+  "myst-nb",
   "pytest",
   "pytest-regressions",
+  "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
   "jupyter_sphinx",
+  "pandas",
   "plotly",
+  "matplotlib",
   "numpy",
   "xarray",
+  "sphinx-copybutton",
   "sphinx-design",
+  "sphinx-togglebutton",
+  # Install nbsphinx in case we want to test it locally even though we can't load
+  # it at the same time as MyST-NB.
+  "nbsphinx"
 ]
 test = [
   "pytest",

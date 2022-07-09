@@ -1,0 +1,31 @@
+.bd-header-article__inner {
+  min-height: var(--pst-header-article-height);
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+
+  .bd-header-article__end {
+    margin-left: auto;
+  }
+
+  // We hide this at the secondary breakpoint because no buttons are present here
+  @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+    display: none;
+  }
+}
+
+// Toggle labels
+label {
+  &.sidebar-toggle {
+    display: flex;
+    cursor: pointer;
+    font-size: 1.2rem;
+    align-items: center;
+    color: var(--pst-color-muted);
+  }
+
+  // Flip the icon right-to-left on the left side
+  &.primary-toggle {
+    transform: scale(-1, 1);
+  }
+}

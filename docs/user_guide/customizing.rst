@@ -171,17 +171,66 @@ In order to change a variable, follow these steps:
 For a complete list of the theme variables that you may override, see the
 `theme variables defaults CSS file <pydata-css-variables_>`_:
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
-  :language: CSS
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_layout.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_fonts.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_icons.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_admonitions.scss
+  :language: scss
+
+.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_versionmodified.scss
+  :language: scss
 
 Color variables
 ---------------
 
+There are two special color variables for primary and secondary theme colors (``--pst-color-primary`` and ``--pst-color-secondary``, respectively).
+These are meant to complement one another visually across the theme, if you modify these, choose colors that look good when paired with one another.
+There are also several other color variables that control color for admonitions, links, menu items, etc.
+
 Each color variable has two values, one corresponding to the "light" and one for the "dark" theme.
 These are used throughout many of the theme elements to define text color, background color, etc.
 
-You can control the colors used for these variables for each theme by
-:ref:`adding a custom CSS stylesheet <custom-css>` and adding a structure like so:
+Here is an overview of the colors available in the theme (change theme mode to switch from light to dark versions).
+
+.. raw:: html
+
+    <style>
+      span.pst-badge {border: 1px solid var(--pst-color-text-base);}
+      span.pst-primary {background-color: var(--pst-color-primary);}
+      span.pst-secondary {background-color: var(--pst-color-secondary);}
+      span.pst-success {background-color: var(--pst-color-success);}
+      span.pst-info {background-color: var(--pst-color-info);}
+      span.pst-warning {background-color: var(--pst-color-warning);}
+      span.pst-danger {background-color: var(--pst-color-danger);}
+      span.pst-background {background-color: var(--pst-color-background);}
+      span.pst-on-background {background-color: var(--pst-color-on-background);}
+      span.pst-surface {background-color: var(--pst-color-surface);}
+      span.pst-on-surface {background-color: var(--pst-color-on-surface);}
+      span.pst-target {background-color: var(--pst-color-target);}
+    </style>
+
+    <p>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-primary">primary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-secondary">secondary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-success">success</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-info">info</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-warning">warning</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-danger">danger</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-background">background</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-on-background">on-background</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-surface">surface</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-on-surface">on-surface</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-target">target</span>
+    </p>
+
+
+**To modify the colors for these variables** for light and dark themes, :ref:`add a custom CSS stylesheet <custom-css>` with a structure like so:
 
 .. code-block:: css
 
@@ -193,11 +242,74 @@ You can control the colors used for these variables for each theme by
         --pst-color-primary: white;
     }
 
-For a complete list of the theme colors that you may override, see the
-`color variables defaults CSS file <pydata-css-colors_>`_:
+This theme uses shadows to convey depth in the light theme mode and opacity in the dark one.
+It defines 4 color variables that help build overlays in your documentation.
 
-.. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/base/_color.scss
-  :language: scss
+- :code:`background`: color of the back-most surface of the documentation
+- :code:`on-background` elements that are set on top of this background (e.g. the header navbar on dark mode).
+- :code:`surface` elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme (e.g. code-block directives).
+- :code:`on-surface` elements that are on top of :code:`surface` elements (e.g. sidebar directives).
+
+The following image should help you understand these overlays:
+
+.. raw:: html
+
+    <style>
+      /* use https://unminify.com to check the indented version of the overlay component */
+      .overlay-container {margin-top: 10%; left: 20%; --width: 80%; --height: 200px; width: var(--width); height: var(--height); position: relative;}
+      .overlay-container .pst-overlay {position: absolute; border: 2px solid var(--pst-color-border);}
+      .overlay-container .pst-background {background-color: var(--pst-color-background); width: var(--width); transform: skew(-45deg); height: var(--height);}
+      .overlay-container .pst-on-background {background-color: var(--pst-color-on-background); height: var(--height); width: calc(var(--width) / 3); transform: skew(-45deg) translate(-2rem, -2rem);}
+      .overlay-container .pst-surface {background-color: var(--pst-color-surface); height: var(--height); width: calc(var(--width) / 3); transform: skew(-45deg) translate(-2rem, -2rem); left: calc(var(--width) / 3 * 2);}
+      .overlay-container .pst-on-surface {background-color: var(--pst-color-on-surface); width: calc(var(--width) / 3); height: calc(var(--height) * 0.66); transform: skew(-45deg) translate(-2rem, -4rem); left: calc(var(--width) / 3 * 2);}
+      .overlay-container .label {position: absolute; bottom: 0.5rem; left: 50%; transform: skew(45deg) translateX(-50%); white-space: nowrap;}
+    </style>
+
+    <div class="overlay-container">
+      <div class="pst-overlay pst-background">
+        <p class="label">background</p>
+      </div>
+      <div class="pst-overlay pst-on-background">
+        <p class="label">on-background</p>
+      </div>
+      <div class="pst-overlay pst-surface">
+        <p class="label">surface</p>
+      </div>
+      <div class="pst-overlay pst-on-surface">
+        <p class="label">on-surface</p>
+      </div>
+    </div>
+
+
+For a complete list of the theme colors that you may override, see the
+`color variables defaults CSS file <pydata-css-colors_>`_.
+
+.. it would be nice to have this `.. literalinclude::` here to actually show
+   the file, but there's a pygments bug that fails to lex SCSS variables
+   (specifically the `$` symbol that prepends SCSS variables, see
+   https://github.com/pygments/pygments/issues/2130). So for now it's
+   commented out.
+   .. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss
+     :language: scss
+
+Horizontal spacing
+==================
+
+By default the theme's three columns have fixed widths.
+The ``primary sidebar`` will snap to the left, the ``secondary sidebar`` will snap to the right, and the ``article content`` will be centered in between.
+
+- If one of the sidebars is not present, then the ``article content`` will be centered between the other sidebar and the side of the page.
+- If neither sidebars are present, the ``article content`` will be present in the middle of the page.
+
+If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` and ``flex-grow`` CSS variables with the ``.bd-content`` selector.
+For example, to make the content grow to fit all available width, add a custom CSS rule like:
+
+.. code-block:: css
+
+   .bd-content {
+     flex-grow: 1;
+     max-width: 100%;
+   }
 
 Change footer display
 =====================
@@ -209,12 +321,12 @@ To change this behavior so that they stack **horizontally**, add a rule like the
 
 .. code-block:: css
 
-   // Make each footer item in-line so they stack horizontally instead of vertically
+   /* Make each footer item in-line so they stack horizontally instead of vertically */
    .footer-item {
      display: inline-block;
    }
 
-   // Add a separating border line for all but the last item
+   /* Add a separating border line for all but the last item */
    .footer-item:not(:last-child) {
      border-right: 1px solid var(--pst-color-text-base);
      margin-right: .5em;
@@ -243,7 +355,7 @@ The default body and header fonts can be changed as follows:
   and monospace text. For example, the following can be added to a custom
   css file:
 
-  .. code-block:: none
+  .. code-block:: css
 
       :root {
           --pst-font-family-base: Verdana, var(--pst-font-family-base-system);
@@ -279,8 +391,8 @@ The default body and header fonts can be changed as follows:
     specifically the binary font files. This ensure the files will be loaded
     before waiting for the CSS to be parsed, but should be used with care.
 
-.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/styles/theme.css
-.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/base/_color.scss
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/
+.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 .. meta::

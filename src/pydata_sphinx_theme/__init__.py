@@ -15,30 +15,26 @@ from pygments.styles import get_all_styles
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.9.0rc2.dev0"
+__version__ = "0.9.1rc1.dev0"
 
 logger = logging.getLogger(__name__)
 
 
 def update_config(app, env):
-    theme_options = app.config["html_theme_options"]
+    theme_options = env.config.html_theme_options
 
-    # DEPRECATE after v0.9
+    # DEPRECATE >= v0.10
     if theme_options.get("search_bar_position") == "navbar":
-        logger.warn(
-            (
-                "Deprecated config `search_bar_position` used."
-                "Use `search-field.html` in `navbar_end` template list instead."
-            )
+        logger.warning(
+            "Deprecated config `search_bar_position` used."
+            "Use `search-field.html` in `navbar_end` template list instead."
         )
 
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
-            (
-                "`icon_links` must be a list of dictionaries, you provided "
-                f"type {type(theme_options.get('icon_links'))}."
-            )
+            "`icon_links` must be a list of dictionaries, you provided "
+            f"type {type(theme_options.get('icon_links'))}."
         )
 
     # Update the anchor link (it's a tuple, so need to overwrite the whole thing)
@@ -47,11 +43,9 @@ def update_config(app, env):
 
     # Raise a warning for a deprecated theme switcher config
     if "url_template" in theme_options.get("switcher", {}):
-        logger.warn(
-            (
-                "html_theme_options['switcher']['url_template'] is no longer supported."
-                " Set version URLs in JSON directly."
-            )
+        logger.warning(
+            "html_theme_options['switcher']['url_template'] is no longer supported."
+            " Set version URLs in JSON directly."
         )
 
     # Add an analytics ID to the site if provided
@@ -82,6 +76,32 @@ def update_config(app, env):
         # Link the JS files
         app.add_js_file(gid_js_path, loading_method="async")
         app.add_js_file(None, body=gid_script)
+
+
+def prepare_html_config(app, pagename, templatename, context, doctree):
+    """Prepare some configuration values for the HTML build.
+
+    For some reason updating the html_theme_options in an earlier Sphinx
+    event doesn't seem to update the values in context, so we manually update
+    it here with our config.
+    """
+    # Prepare the logo config dictionary
+    theme_logo = context.get("theme_logo")
+    if not theme_logo:
+        # In case theme_logo is an empty string
+        theme_logo = {}
+    if not isinstance(theme_logo, dict):
+        raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
+
+    # DEPRECATE: >= 0.11
+    if context.get("theme_logo_link"):
+        logger.warning(
+            "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
+            "Use the `logo.link` configuration dictionary instead."
+        )
+        theme_logo = context.get("theme_logo_link")
+
+    context["theme_logo"] = theme_logo
 
 
 def update_templates(app, pagename, templatename, context, doctree):
@@ -132,7 +152,9 @@ def update_templates(app, pagename, templatename, context, doctree):
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
-    def generate_nav_html(kind, startdepth=None, show_nav_level=1, **kwargs):
+    def generate_nav_html(
+        kind, startdepth=None, show_nav_level=1, n_links_before_dropdown=5, **kwargs
+    ):
         """
         Return the navigation link structure in HTML. Arguments are passed
         to Sphinx "toctree" function (context["toctree"] below).
@@ -154,6 +176,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             By default, this level is 1, and only top-level pages are shown,
             with drop-boxes to reveal children. Increasing `show_nav_level`
             will show child levels as well.
+        n_links_before_dropdown : int (default: 5)
+            The number of links to show before nesting the remaining links in
+            a Dropdown element.
 
         kwargs: passed to the Sphinx `toctree` template function.
 
@@ -171,6 +196,13 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             # select the "active" subset of the navigation tree for the sidebar
             toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
 
+        try:
+            n_links_before_dropdown = int(n_links_before_dropdown)
+        except Exception:
+            raise ValueError(
+                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
+            )
+
         soup = bs(toc_sphinx, "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
@@ -185,14 +217,46 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 if "#" in href and href != "#":
                     li.decompose()
 
+        # For navbar, generate only top-level links and add external links
         if kind == "navbar":
+            links = soup("li")
+
             # Add CSS for bootstrap
-            for li in soup("li"):
+            for li in links:
                 li["class"].append("nav-item")
                 li.find("a")["class"].append("nav-link")
-            # only select li items (not eg captions)
-            out = "\n".join([ii.prettify() for ii in soup.find_all("li")])
 
+            # Convert to HTML so we can append external links
+            links_html = [ii.prettify() for ii in links]
+
+            # Add external links
+            for external_link in context["theme_external_links"]:
+                links_html.append(
+                    f"""
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fas fa-external-link-alt"></i></a>
+                </li>"""  # noqa
+                )
+
+            # Wrap the final few header items in a "more" block
+            links_solo = links_html[:n_links_before_dropdown]
+            links_dropdown = links_html[n_links_before_dropdown:]
+
+            out = "\n".join(links_solo)
+            if links_dropdown:
+                links_dropdown_html = "\n".join(links_dropdown)
+                out += f"""
+                <div class="nav-item dropdown">
+                    <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {links_dropdown_html}
+                    </div>
+                </div>
+                """  # noqa
+
+        # For sidebar, we generate links starting at the second level of the active page
         elif kind == "sidebar":
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
@@ -292,10 +356,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         }
         if align not in align_options:
             raise ValueError(
-                (
-                    "Theme optione navbar_align must be one of"
-                    f"{align_options.keys()}, got: {align}"
-                )
+                "Theme optione navbar_align must be one of"
+                f"{align_options.keys()}, got: {align}"
             )
         return align_options[align]
 
@@ -382,7 +444,9 @@ def _get_local_toctree_for(
         kwargs["maxdepth"] = int(kwargs["maxdepth"])
     kwargs["collapse"] = collapse
 
-    for toctreenode in doctree.traverse(addnodes.toctree):
+    # FIX: Can just use "findall" once docutils 0.18+ is required
+    meth = "findall" if hasattr(doctree, "findall") else "traverse"
+    for toctreenode in getattr(doctree, meth)(addnodes.toctree):
         toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwargs)
         if toctree:
             toctrees.append(toctree)
@@ -624,14 +688,14 @@ def _overwrite_pygments_css(app, exception=None):
     pygments_styles = list(get_all_styles())
     light_theme = theme_options.get("pygment_light_style", default_light_theme)
     if light_theme not in pygments_styles:
-        logger.warn(
+        logger.warning(
             f"{light_theme}, is not part of the available pygments style,"
             f' defaulting to "{default_light_theme}".'
         )
         light_theme = default_light_theme
     dark_theme = theme_options.get("pygment_dark_style", default_dark_theme)
     if dark_theme not in pygments_styles:
-        logger.warn(
+        logger.warning(
             f"{dark_theme}, is not part of the available pygments style,"
             f' defaulting to "{default_dark_theme}".'
         )
@@ -662,6 +726,7 @@ def setup(app):
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)
+    app.connect("html-page-context", prepare_html_config)
     app.connect("build-finished", _overwrite_pygments_css)
 
     # Include component templates

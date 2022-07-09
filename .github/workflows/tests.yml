@@ -1,6 +1,12 @@
 name: continuous-integration
 
-on: [push, pull_request]
+# This prevents workflows from being run twice on PRs
+# ref: https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 env:
   COVERAGE_THRESHOLD: 60
@@ -10,21 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
       - uses: pre-commit/action@v2.0.3
 
-  # Build docs on a number of Python versions. In the future this can be
-  # where tests go.
   tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
         python-version: [3.7, 3.8, 3.9, "3.10"]
-        # Manually specify one OSX + Windows build to make sure it works there.
         include:
-          - python-version: "3.10"
-            dev: true
           - os: macos-latest
             python-version: "3.9"
           - os: windows-latest
@@ -32,9 +37,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -45,14 +49,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .[coverage]
 
-      - name: Install pre-release dependencies
-        if: ${{ matrix.dev }}
-        run: pip install --upgrade --pre sphinx jinja2
-
-      # Build the docs
       - name: Build docs to store
-        run: |
-          sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
+        run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
 
       - name: Check that there are no unexpected Sphinx warnings
         if: matrix.python-version == '3.9'
@@ -61,10 +59,9 @@ jobs:
           from pathlib import Path
           text = Path("./warnings.txt").read_text().strip()
           print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if "kitchen-sink" not in ii]
+          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static/gallery/"])]
           assert len(unexpected) == 0
 
-      # Run tests under coverage
       - name: Run the tests
         run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
 
@@ -72,25 +69,57 @@ jobs:
         if: ${{ always() }}
         run: codecov
 
+  prerelease:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.8", "3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
+
+      - name: Install (prerelease) dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade --pre -e .[test]
+
+      - name: Build docs to store
+        run: |
+          sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
+
+      - name: Check that there are no unexpected Sphinx warnings
+        if: matrix.python-version == 3.9
+        shell: python
+        run: |
+          from pathlib import Path
+          text = Path("./warnings.txt").read_text().strip()
+          print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
+          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static/gallery/"])]
+          assert len(unexpected) == 0
+
+      - name: Run the tests
+        run: pytest --color=yes
+
   # Run local Lighthouse audit against built site
   audit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.8]
-    env:
-      PORT: 8000
-      # the host interface to listen on, might need to be 0.0.0.0
-      HOST: 127.0.0.1
-      # the base url
-      URL: http://127.0.0.1:8000
-      PA11Y_BUILD: /tmp/pa11y/pa11y-${{ github.run_number }}
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -101,7 +130,6 @@ jobs:
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
 
-      # Build the docs
       - name: Build docs to store
         run: |
           sphinx-build -b html docs/ docs/_build/html
@@ -115,23 +143,6 @@ jobs:
           uploadArtifacts: true
           runs: 3 # Multiple runs to reduce variance
 
-      # Serve the docs for auditing with pa11y
-      - name: Serve the built site
-        run: |
-          nohup python docs/serve.py --port=${PORT} --host=${HOST} &
-          curl --retry 10 --retry-connrefused --retry-max-time 60 ${URL}/index.html
-
-      - name: Audit with pa11y
-        run: python docs/scripts/a11y.py --no-serve
-
-      - name: Publish pa11y report
-        uses: actions/upload-artifact@v3
-        with:
-          name: Pa11y ${{ github.run_number }}
-          path: |
-            /tmp/pa11y
-        if: always()
-
   publish:
     name: Publish to PyPI
     needs: [lint, tests]
@@ -141,7 +152,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
       - name: Set up Python 3.7
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: 3.7
       - name: Build package

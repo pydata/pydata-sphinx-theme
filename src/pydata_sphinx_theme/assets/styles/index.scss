@@ -18,20 +18,31 @@ $grid-breakpoints: (
 );
 @import "~bootstrap/scss/bootstrap";
 
-// Variables and re-usable SCSS functions
+// Variables
+@import "variables/layout";
+@import "variables/fonts";
+@import "variables/icons";
+@import "variables/admonitions";
+@import "variables/versionmodified";
+@import "variables/color";
+
+// re-usable SCSS functions / classes
 @import "abstracts/mixins";
 
 // Basic styling applied throughout site
 @import "./base/base";
-@import "./base/color";
 
 // Major theme layout, skeleton, and whitespace
+@import "./sections/container";
+@import "./sections/announcement";
 @import "./sections/article";
 @import "./sections/footer";
 @import "./sections/footer-article";
 @import "./sections/header";
+@import "./sections/header-article";
 @import "./sections/sidebar-primary";
 @import "./sections/sidebar-secondary";
+@import "./sections/sidebar-toggle";
 
 // Re-usable components across the theme
 @import "./components/icon-links";
@@ -46,19 +57,25 @@ $grid-breakpoints: (
 // Content blocks in standard Sphinx
 @import "./content/admonitions";
 @import "./content/api";
+@import "./content/code";
 @import "./content/footnotes";
 @import "./content/hacks";
 @import "./content/lists";
 @import "./content/quotes";
 @import "./content/spans";
 @import "./content/tables";
+@import "./content/toctree";
+@import "./content/math";
 
 // Content blocks from Sphinx extensions
 @import "./extensions/bootstrap";
+@import "./extensions/copybutton";
 @import "./extensions/ethical-ads";
+@import "./extensions/execution";
 @import "./extensions/pydata";
 @import "./extensions/sphinx_design";
 @import "./extensions/sphinx_panels";
+@import "./extensions/togglebutton";
 
 // Page-specific CSS
 @import "./pages/search";

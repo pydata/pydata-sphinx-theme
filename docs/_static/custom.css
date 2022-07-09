@@ -1,21 +1,19 @@
-:root {
-  --sd-color-primary: var(--pst-color-primary);
-}
-
-/* Background of stsable should be green */
+/* Background of stable should be green */
 #version_switcher a[data-version-name*="stable"] {
-  background-color: #e2ffe2;
+  position: relative;
 }
 
-/* Color of explicit versions should be orange */
-#version_switcher
-  a:not([data-version-name*="stable"]):not([data-version-name="dev"]) {
-  background-color: #f8f9fa;
-  color: grey;
+#version_switcher a[data-version-name*="stable"] span {
+  color: var(--pst-color-success);
 }
 
-/* If we're on a dev version, make the switcher button orange */
-#version_switcher_button[data-active-version-name*="dev"] {
-  background-color: rgb(255 138 62);
-  border-color: rgb(255 138 62);
+#version_switcher a[data-version-name*="stable"] span:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: var(--pst-color-success);
+  opacity: 0.1;
 }
