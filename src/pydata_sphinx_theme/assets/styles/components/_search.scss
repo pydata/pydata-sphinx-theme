@@ -81,7 +81,7 @@
   margin-top: 0.5rem;
   width: 90%;
   max-width: 800px;
-  box-shadow: 0 0 1rem 1rem var(--pst-color-shadow); // A bit stronger/wider
+  box-shadow: 0 0 1rem 0.2rem var(--pst-color-shadow);
 
   form.bd-search {
     flex-grow: 1;
@@ -108,6 +108,8 @@
   ~ .search-button__overlay {
     display: flex;
     position: fixed;
+    background-color: black;
+    opacity: 0.5;
     width: 100%;
     height: 100%;
     top: 0px;
