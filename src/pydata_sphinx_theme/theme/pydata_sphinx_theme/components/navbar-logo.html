@@ -12,14 +12,8 @@
   {% set is_logo = logo or theme_logo.get("image_light") or theme_logo.get("image_dark") %}
   {% set image_light = theme_logo.get("image_light") or logo %}
   {% set image_dark = theme_logo.get("image_dark") or logo %}
-
-  {#- Prepare the logo image link based on whether it is local or remote -#}
-  {% if not image_light.startswith("http") %}
-    {% set image_light = pathto('_static/' + image_light, 1) %}
-  {% endif %}
-  {% if not image_dark.startswith("http") %}
-    {% set image_dark = pathto('_static/' + image_dark, 1) %}
-  {% endif %}
+  {% set image_light = image_light if image_light.startswith("http") else pathto('_static/' + image_light, 1) %}
+  {% set image_dark = image_dark if image_dark.startswith("http") else pathto('_static/' + image_dark, 1) %}
   {% if is_logo %}
     <img src="{{ image_light }}" class="logo__image only-light" alt="Logo image">
     <img src="{{ image_dark }}" class="logo__image only-dark" alt="Logo image">
