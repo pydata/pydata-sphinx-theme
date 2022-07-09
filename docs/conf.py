@@ -119,6 +119,7 @@ html_theme_options = {
             "url": "https://pandas.pydata.org",
             "icon": "_static/pandas-square.svg",
             "type": "local",
+            "attributes": {"target": "_blank"},
         },
     ],
     "use_edit_page_button": True,

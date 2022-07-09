@@ -83,12 +83,6 @@ These links take the following form:
                "icon": "fab fa-github-square",
                # The type of image to be used (see below for details)
                "type": "fontawesome",
-               # Add additional attributes to the href link. The defaults of target, rel, class, title and href may be overwritten.
-               "attributes": {
-                  "target" : "_blank",
-                  "rel" : "noopener me",
-                  "class": "nav-link custom-fancy-css"
-               }
            }
       ]
    }
@@ -232,6 +226,37 @@ Additionally, the screen-reader accessible label for this menu can be configured
    html_theme_options = {
        ...
        "icon_links_label": "Quick Links",
+       ...
+   }
+
+Add custom attributes to icon links
+-----------------------------------
+
+You can add custom attributes to the link element (``<a>``) of your icon links.
+This is helpful if you need to add custom link behavior.
+To do so, use the pattern ``"attributes": {"attribute1": "value1"}`` in a given icon link entry.
+
+For example, to specify a custom ``target`` and ``rel`` attribute, and to define your own custom link classes:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               "name": "PyData",
+               "url": "https://pydata.org",
+               "icon": "_static/pydata-logo-square.png",
+               "type": "local",
+               # Add additional attributes to the href link.
+               # The defaults of target, rel, class, title and href may be overwritten.
+               "attributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+                  "class": "nav-link custom-fancy-css"
+               }
+           },
+       ],
        ...
    }
 
