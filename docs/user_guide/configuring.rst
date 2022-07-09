@@ -18,12 +18,20 @@ This can be replaced by a Logo image, and optionally a custom ``html_title`` as 
 Single logo for light and dark mode
 -----------------------------------
 
-Put an image in a folder that is in `html_static_path`, and use the following configuration:
+To use a local image file, put an image in a folder that is in `html_static_path`, and use the following configuration:
 
 .. code:: python
 
    html_static_path = ["_static"]
    html_logo = "_static/logo.png"
+
+To use an external link to an image, make sure the ``html_logo`` begins with ``http``.
+For example:
+
+.. code:: python
+
+   html_static_path = ["_static"]
+   html_logo = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
 
 Different logos for light and dark mode
 ---------------------------------------

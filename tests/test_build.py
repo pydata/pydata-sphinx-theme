@@ -193,6 +193,23 @@ def test_logo_external_link(sphinx_build_factory):
     assert f'href="{test_url}"' in index_str
 
 
+def test_logo_external_image(sphinx_build_factory):
+    """Test that the logo link is correct for external URLs."""
+    # Test with a specified external logo image source
+    test_url = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                "image_dark": test_url,
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    index_str = str(index_html.select(".navbar-brand")[0])
+    assert f'src="{test_url}"' in index_str
+
+
 def test_favicons(sphinx_build_factory):
     """Test that arbitrary favicons are included."""
     html_theme_options_favicons = {
