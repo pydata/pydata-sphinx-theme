@@ -54,6 +54,7 @@ def sphinx_build_factory(make_app, tmp_path):
 
 def test_build_html(sphinx_build_factory, file_regression):
     """Test building the base html template and config."""
+
     sphinx_build = sphinx_build_factory("base")  # type: SphinxBuild
 
     # Basic build with defaults

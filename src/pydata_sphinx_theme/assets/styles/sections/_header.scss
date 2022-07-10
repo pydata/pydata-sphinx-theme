@@ -36,9 +36,7 @@
     gap: 0.5rem;
   }
 
-  // Note: breakpoint-down *starts at the next-highest level*
-  // So media-breakpoint-down(md) triggers the behavior at lg
-  // ref: https://github.com/twbs/bootstrap/pull/29148 (it is changed in BS5)
+  // One breakpoint less than $breakpoint-header. See variables/_layout.scss for more info.
   @include media-breakpoint-down(md) {
     // Make it scrollable with a max height on mobile in cases there are many items
     max-height: 90vh;
@@ -57,12 +55,12 @@
 .bd-header.navbar-light#navbar-main {
   // Overrides bootstrap
   background: var(--pst-color-on-background) !important;
-  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow); //rgba(0, 0, 0, 0.11);
+  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
 
   .navbar-nav {
     display: flex;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up($breakpoint-header) {
       // Add a gap on wider screens, on narrow screens we are vertical + already have padding
       gap: 1rem;
       // Center align on wide screens so the dropdown button is centered properly
@@ -108,7 +106,7 @@
       }
 
       // On wide screens, the dropdown becomes a pop-up menu
-      @include media-breakpoint-up(lg) {
+      @include media-breakpoint-up($breakpoint-header) {
         height: 2.2rem; // Slight hack to make this aligned with navbar links
 
         button {
@@ -133,17 +131,12 @@
   }
 }
 
-// overwrite bootstrap coloring
-.bd-header#navbar-main {
-  background-color: var(--pst-color-navbar-background) !important;
-}
-
 .navbar-header a {
   padding: 0 15px;
 }
 
 // inline the element in the navbar as long as they fit and use display block when collapsing
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up($breakpoint-header) {
   .navbar-center-item {
     display: inline-block;
   }
