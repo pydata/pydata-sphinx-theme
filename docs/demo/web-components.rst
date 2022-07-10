@@ -168,6 +168,7 @@ Dropdowns
 ---------
 
 Dropdowns should look similar to admonitions, but clickable.
+See `the Sphinx Design Dropdown documentation <https://sphinx-design.readthedocs.io/en/latest/dropdowns.html>`__ for more information.
 
 .. admonition:: An admonition for reference.
 
