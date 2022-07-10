@@ -9,12 +9,12 @@
 @use "../variables/color" as *;
 
 /*******************************************************************************
- * Color and variables
- *
- * This is a list of the semantic color names from sphinx-design (we only
- * need to override variables that sphinx-design has actually defined).
- * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L31-L43
- */
+  * Color and variables
+  *
+  * This is a list of the semantic color names from sphinx-design (we only
+  * need to override variables that sphinx-design has actually defined).
+  * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L31-L43
+  */
 $sd-semantic-color-names: (
   "primary",
   "secondary",
@@ -30,25 +30,25 @@ $sd-semantic-color-names: (
 );
 
 /* Here we incorporate a modified version of sphinx-design's text-color
- * function, to make sure that text is legible on colored buttons and badges.
- * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L45-L47
- */
+  * function, to make sure that text is legible on colored buttons and badges.
+  * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L45-L47
+  */
 @function text-color($value) {
   @return if(lightness($value) > 70, #000, #fff);
 }
 
 /**
- * Here we create some extra --pst-color-* variables and use
- * them to override the value of the corresponding sphinx-design variables.
- * This is easier than re-writing the sphinx-design rules. Even easier would be
- * directly assigning our values to the --sd-color-* variables, but then our
- * downstream users couldn't override *our* colors and have it affect buttons
- * and badges.
- *
- * First, define the extra keys needed to cover the full range of semantic
- * color names used in sphinx-design, then merge them with the names we
- * already define for our own needs.
- */
+  * Here we create some extra --pst-color-* variables and use
+  * them to override the value of the corresponding sphinx-design variables.
+  * This is easier than re-writing the sphinx-design rules. Even easier would be
+  * directly assigning our values to the --sd-color-* variables, but then our
+  * downstream users couldn't override *our* colors and have it affect buttons
+  * and badges.
+  *
+  * First, define the extra keys needed to cover the full range of semantic
+  * color names used in sphinx-design, then merge them with the names we
+  * already define for our own needs.
+  */
 $extra-semantic-colors: (
   "dark": map-get($pst-semantic-colors, "text-base"),
   "muted": map-get($pst-semantic-colors, "text-muted"),
@@ -88,8 +88,8 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
 }
 
 /*******************************************************************************
- * shadows
- */
+  * shadows
+  */
 html[data-theme="light"] {
   .sd-shadow-xs,
   .sd-shadow-sm,
@@ -100,8 +100,8 @@ html[data-theme="light"] {
 }
 
 /*******************************************************************************
- * cards
- */
+  * cards
+  */
 
 .bd-content .sd-card {
   border: 1px solid var(--pst-color-border);
@@ -120,8 +120,8 @@ html[data-theme="light"] {
   }
 }
 /*******************************************************************************
- * tabs
- */
+  * tabs
+  */
 
 .bd-content .sd-tab-set {
   > input {
@@ -153,8 +153,8 @@ html[data-theme="light"] {
 }
 
 /*******************************************************************************
- * Dropdowns
- */
+  * Dropdowns
+  */
 details.sd-dropdown {
   // Remove all borders to over-ride SD behavior, and we'll add our own later
   border: 0px !important;
@@ -176,41 +176,40 @@ details.sd-dropdown {
     font-weight: 600;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    color: var(--pst-color-text) !important;
 
-    // Add a left border with the same structure as our admonitions
-    border-left: 0.2rem solid var(--sd-color-card-border) !important;
+    // Set a variable that we can re-use for colors later
+    // We must set this in the current and content sibling container
+    // so that it is defined in both places
+    --pst-sd-dropdown-color: var(--sd-color-card-border);
     & + div.sd-summary-content {
-      border-left: 0.2rem solid var(--sd-color-card-border);
-      border-bottom-left-radius: calc(0.25rem - 1px);
+      --pst-sd-dropdown-color: var(--sd-color-card-border);
     }
-
-    span.sd-summary-icon {
-      color: var(--sd-color-card-border);
-      display: inline-flex;
-      align-items: center;
+    @each $name in $sd-semantic-color-names {
+      &.sd-bg-#{$name} {
+        --pst-sd-dropdown-color: var(--sd-color-#{$name});
+        // Otherwise it won't be defined in the sibling element
+        & + div.sd-summary-content {
+          --pst-sd-dropdown-color: var(--sd-color-#{$name});
+        }
+      }
     }
 
     // Background color and border are grey by default
     background-color: unset !important;
-    @include background-from-color-variable(--sd-color-card-border);
+    @include background-from-color-variable(--pst-sd-dropdown-color);
 
-    // Loop through each semantic color name and create over-rides
-    // to over-ride border / background colors.
-    @each $name in $sd-semantic-color-names {
-      &.sd-bg-#{$name} {
-        color: var(--pst-color-text) !important;
-        @include background-from-color-variable(--sd-color-#{$name});
-        border-left-color: var(--sd-color-#{$name}) !important;
+    // Add a left border with the same structure as our admonitions
+    border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
+    & + div.sd-summary-content {
+      border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
+      border-bottom-left-radius: calc(0.25rem - 1px);
+    }
 
-        span.sd-summary-icon {
-          color: var(--sd-color-#{$name});
-        }
-
-        // The content block comes right after the title
-        & + div.sd-summary-content {
-          border-left-color: var(--sd-color-#{$name});
-        }
-      }
+    span.sd-summary-icon {
+      display: inline-flex;
+      align-items: center;
+      color: var(--pst-sd-dropdown-color) !important;
     }
 
     // Positioning of the caret
