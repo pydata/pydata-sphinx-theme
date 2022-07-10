@@ -182,17 +182,18 @@ See `the Sphinx Design Dropdown documentation <https://sphinx-design.readthedocs
 
    And some content!
 
+.. dropdown:: With a title
+   :icon: unlock
+
+   And some content and an icon!
+
 .. dropdown:: A primary title and color
    :color: primary
+   :icon: unlock
 
    And some content!
 
 .. dropdown:: A secondary title and color
-   :color: secondary
-
-   And some content!
-
-.. dropdown:: A secondary title and color and icon
    :color: secondary
    :icon: unlock
 

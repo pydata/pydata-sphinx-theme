@@ -80,6 +80,13 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
   }
 }
 
+// Make sure the color border variables are set using our variables
+@each $mode in (light, dark) {
+  html[data-theme="#{$mode}"] {
+    --sd-color-card-border: var(--pst-color-border);
+  }
+}
+
 /*******************************************************************************
  * shadows
  */
@@ -149,50 +156,67 @@ html[data-theme="light"] {
  * Dropdowns
  */
 details.sd-dropdown {
-  // We apply a border in the header and content to allow for color
-  border-left: 0px !important;
+  // Remove all borders to over-ride SD behavior, and we'll add our own later
+  border: 0px !important;
+  summary.sd-card-header {
+    border: 0 !important;
+    & + div.sd-summary-content {
+      border: 0;
+    }
+  }
 
   // Drop shadow should behave same as admonitions
   @include box-shadow();
+
+  // Header is where the "clickable" box goes
   summary.sd-card-header {
+    display: flex;
+    align-items: center;
     position: relative; // So background color works
     font-weight: 600;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-left: 1px solid var(--sd-color-card-border);
 
-    .sd-summary-up,
-    .sd-summary-down {
-      top: 0.6rem;
-    }
-
+    // Add a left border with the same structure as our admonitions
+    border-left: 0.2rem solid var(--sd-color-card-border) !important;
     & + div.sd-summary-content {
-      border-left: 1px solid var(--sd-color-card-border);
+      border-left: 0.2rem solid var(--sd-color-card-border);
       border-bottom-left-radius: calc(0.25rem - 1px);
     }
 
-    // Background / border colors should mimic admonitions
+    span.sd-summary-icon {
+      color: var(--sd-color-card-border);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    // Background color and border are grey by default
+    background-color: unset !important;
+    @include background-from-color-variable(--sd-color-card-border);
+
+    // Loop through each semantic color name and create over-rides
+    // to over-ride border / background colors.
     @each $name in $sd-semantic-color-names {
       &.sd-bg-#{$name} {
         color: var(--pst-color-text) !important;
-        background-color: unset !important;
         @include background-from-color-variable(--sd-color-#{$name});
-        border-left: 0.2rem solid var(--sd-color-#{$name});
+        border-left-color: var(--sd-color-#{$name}) !important;
+
+        span.sd-summary-icon {
+          color: var(--sd-color-#{$name});
+        }
 
         // The content block comes right after the title
         & + div.sd-summary-content {
-          border-left: 0.2rem solid var(--sd-color-#{$name});
+          border-left-color: var(--sd-color-#{$name});
         }
       }
     }
-  }
-}
 
-/* Finally some manual UI element replacements.
- */
-// Now we override the --sd-color-* variables.
-@each $mode in (light, dark) {
-  html[data-theme="#{$mode}"] {
-    --sd-color-card-border: var(--pst-color-border);
+    // Positioning of the caret
+    .sd-summary-up,
+    .sd-summary-down {
+      top: 0.7rem;
+    }
   }
 }
