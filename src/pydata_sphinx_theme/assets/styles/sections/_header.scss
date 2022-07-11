@@ -99,8 +99,6 @@
 
     // Dropdowns for the extra links
     .dropdown {
-      background-color: var(--pst-color-surface);
-
       // On mobile, the dropdown behaves like any other link, no hiding
       button {
         display: none;
@@ -112,15 +110,21 @@
         flex-direction: column;
         padding: 0;
         margin: 0;
-        background-color: var(--pst-color-on-background);
         color: var(--pst-color-text-base);
         border: none;
+
+        // color of the dropdown follows the color of the navbar
+        background-color: var(--pst-color-surface);
+        @include media-breakpoint-up($breakpoint-header) {
+          background-color: var(--pst-color-on-background);
+        }
       }
 
       // On wide screens, the dropdown becomes a pop-up menu
       @include media-breakpoint-up($breakpoint-header) {
         height: 2.2rem; // Slight hack to make this aligned with navbar links
-        background-color: var(--pst-color-on-background) button {
+
+        button {
           display: flex;
           align-items: center;
         }
