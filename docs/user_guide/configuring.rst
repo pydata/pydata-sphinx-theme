@@ -30,7 +30,6 @@ For example:
 
 .. code:: python
 
-   html_static_path = ["_static"]
    html_logo = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
 
 Different logos for light and dark mode
