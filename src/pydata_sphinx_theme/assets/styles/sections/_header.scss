@@ -59,8 +59,13 @@
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .bd-header.navbar-light#navbar-main {
   // Overrides bootstrap
-  background: var(--pst-color-on-background) !important;
+  background: var(--pst-color-surface) !important;
   box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
+
+  // make the header less prominent on bigger screens
+  @include media-breakpoint-up($breakpoint-header) {
+    background: var(--pst-color-on-background) !important;
+  }
 
   .navbar-nav {
     display: flex;
@@ -94,6 +99,8 @@
 
     // Dropdowns for the extra links
     .dropdown {
+      background-color: var(--pst-color-surface);
+
       // On mobile, the dropdown behaves like any other link, no hiding
       button {
         display: none;
@@ -113,8 +120,7 @@
       // On wide screens, the dropdown becomes a pop-up menu
       @include media-breakpoint-up($breakpoint-header) {
         height: 2.2rem; // Slight hack to make this aligned with navbar links
-
-        button {
+        background-color: var(--pst-color-on-background) button {
           display: flex;
           align-items: center;
         }
