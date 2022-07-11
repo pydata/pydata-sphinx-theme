@@ -66,4 +66,5 @@ Here are the guidelines we follow when creating new releases:
 - Releases should be as automated as possible, and should not rely on a single person to have special permissions or credentails.
 - Use the [{guilabel}`block-release`](https://github.com/pydata/pydata-sphinx-theme/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Ablock-release) label to prevent a release from happening until an issue is resolved.
 - Use [GitHub Milestones](https://github.com/pydata/pydata-sphinx-theme/milestones) to organize the issues that should be resolved as part of a new release.
-- For non-trivial improvements, try to make a `pre-release` and ask for feedback from users.
+- For non-trivial changes, **make a `release candidate`** and ask for feedback from users. This is important because we do not test much of the CSS and JavaScript-based functionality in our testing infrastructure.
+- After a week or so, if there are no blocking issues that have been opened since the Release Candidate, we can make a full release.
