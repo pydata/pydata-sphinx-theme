@@ -366,7 +366,8 @@ For example, to specify a custom ``target`` and ``rel`` attribute, and to define
        ...
    }
 
-
+.. warning::
+   This might make your icon links behave unexpectedly and might over-ride default behavior, so make sure you know what you're doing!
 Header Navigation Bar
 =====================
 
