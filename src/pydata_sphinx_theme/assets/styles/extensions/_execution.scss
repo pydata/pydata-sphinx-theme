@@ -53,3 +53,9 @@ html[data-theme="dark"] .bd-content {
     }
   }
 }
+
+// NBSphinx
+// Add extra padding to the final item in an nbsphinx container
+div.nblast.container {
+  margin-bottom: 1rem;
+}
