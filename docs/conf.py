@@ -121,7 +121,6 @@ html_theme_options = {
     "logo": {
         "text": "PyData Theme",
         "image_dark": "logo-dark.svg",
-        "link": "https://pydata.org",
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
