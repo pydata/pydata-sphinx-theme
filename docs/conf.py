@@ -116,6 +116,7 @@ html_theme_options = {
             "url": "https://pydata.org",
             "icon": "_static/pydata-logo.png",
             "type": "local",
+            "attributes": {"target": "_blank"},
         },
     ],
     "logo": {

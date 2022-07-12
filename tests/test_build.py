@@ -125,6 +125,20 @@ def test_icon_links(sphinx_build_factory, file_regression):
                 "icon": "https://site5.org/image.svg",
                 "type": "url",
             },
+            {
+                "name": "FONTAWESOME",
+                "url": "https://site1.org",
+                "icon": "FACLASS",
+                "type": "fontawesome",
+                "attributes": {
+                    # This should over-ride the href above
+                    "href": "https://override.com",
+                    # This should add a new icon link attribute
+                    "foo": "bar",
+                    # CSS classes should be totally overwritten
+                    "class": "overridden classes",
+                },
+            },
         ]
     }
     confoverrides = {"html_theme_options": html_theme_options_icon_links}

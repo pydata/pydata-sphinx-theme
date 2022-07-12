@@ -258,6 +258,10 @@ Here are several examples:
                "name": "Mastodon",
                "url": "https://<your-host>@<your-handle>",
                "icon": "fab fa-mastodon",
+               "attributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+               }
            },
        ],
        ...
@@ -351,6 +355,39 @@ Additionally, the screen-reader accessible label for this menu can be configured
        ...
    }
 
+Add custom attributes to icon links
+-----------------------------------
+
+You can add custom attributes to the link element (``<a>``) of your icon links.
+This is helpful if you need to add custom link behavior.
+To do so, use the pattern ``"attributes": {"attribute1": "value1"}`` in a given icon link entry.
+
+For example, to specify a custom ``target`` and ``rel`` attribute, and to define your own custom link classes:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               "name": "PyData",
+               "url": "https://pydata.org",
+               "icon": "_static/pydata-logo-square.png",
+               "type": "local",
+               # Add additional attributes to the href link.
+               # The defaults of target, rel, class, title and href may be overwritten.
+               "attributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+                  "class": "nav-link custom-fancy-css"
+               }
+           },
+       ],
+       ...
+   }
+
+.. warning::
+   This might make your icon links behave unexpectedly and might over-ride default behavior, so make sure you know what you're doing!
 
 Header Navigation Bar
 =====================
