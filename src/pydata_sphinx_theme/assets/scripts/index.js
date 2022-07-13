@@ -180,24 +180,18 @@ var changeShortcutText = () => {
 };
 
 var findSearchInput = () => {
-  /* if we knew we only had one search field, we could just do this:
-   *
-   * let input = document.querySelector("form.bd-search").querySelector("input");
-   *
-   * but instead here we check if multiple search fields exist, and set the
-   * keyboard-shortcut-focusing behavior on the first one that is not the
-   * auto-hidden one.
-   */
+  // find the search form(s) on the page
   let forms = document.querySelectorAll("form.bd-search");
   if (!forms.length) {
+    // no search form found
     return;
   } else {
     var form;
     if (forms.length == 1) {
-      // there is exactly one search field (persistent or hidden)
+      // there is exactly one search form (persistent or hidden)
       form = forms[0];
     } else {
-      // must be at least one persistent field, use the first persistent one
+      // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
         "div:not(.search-button__search-container) > form.bd-search"
       );
@@ -207,11 +201,12 @@ var findSearchInput = () => {
 };
 
 var toggleSearchField = () => {
-  // If the page doesn't have an always-visible search field, then toggle the
-  // hidden one to hide or show, and (un)focus it. If there **IS** an
-  // always-visible search field on the page, (un)focus that instead.
+  // focus/unfocus the search field (and if it's an auto-hiding one,
+  // show/hide it too)
   let input = findSearchInput();
   let button = document.getElementById("bd-search-button");
+  // if the input field is the hidden one (the one associated with the
+  // search button) then toggle the button state (to show/hide the field)
   if (
     input.parentElement.parentElement.classList.contains(
       "search-button__search-container"
