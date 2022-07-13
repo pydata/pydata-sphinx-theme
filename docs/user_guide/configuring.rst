@@ -945,9 +945,9 @@ following configuration:
        "navbar_end": ["navbar-icon-links.html", "search-field.html"]
    }
 
-.. note::
+.. warning::
 
-    If a page includes *both* the search button and an always-visible search field, the keyboard shortcuts will focus the always-visible field and the hidden search field will not display.
+    If a page includes *both* the search button and an always-visible search field, the keyboard shortcuts will focus the always-visible field and the hidden search field overlay will not display. *This may not be what you want:* on small screens (i.e. mobile devices) the sidebars may be hidden in a drawer, and if the persistent search field is there, it may receive focus without actually being made visible. It is **strongly recommended** that you use *either* search button and the hidden/overlaid field that comes with it, *or* use a persistent search field in a place that makes sense for your layout.
 
 
 Configure the search bar text
