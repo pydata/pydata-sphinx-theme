@@ -31,6 +31,7 @@ See the sections to the left and below to explore.
     :caption: Reference and test section. Mostly meant for developers to check that things look OK.
 
     no-sidebar
+    persistent-search-field
     mult_headers
     subpages/index
     Link to an external site <https://jupyterbook.org/>
