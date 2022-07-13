@@ -918,7 +918,7 @@ By default, the search input field is hidden, and there is a search button
 The search input field will be displayed when a user either:
 
 - Clicks the search button in the header.
-- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Linux, Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
+- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Linux, Windows) or :kbd:`⌘` + :kbd:`K` (macOS).
 
 You can also configure some aspects of the search button and search field, described below.
 
