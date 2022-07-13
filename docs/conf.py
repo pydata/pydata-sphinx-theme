@@ -147,6 +147,7 @@ html_sidebars = {
         "custom-template",
     ],  # This ensures we test for custom sidebars
     "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
+    "demo/persistent-search-field": ["search-field"],
 }
 
 myst_heading_anchors = 2
