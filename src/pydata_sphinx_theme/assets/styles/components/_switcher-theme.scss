@@ -2,12 +2,9 @@
 #theme-switch {
   // to overide bootstrap settings
   border-color: var(--pst-color-on-background);
-
-  &span {
-    padding: 0.275rem 0.55rem;
-    font-size: 1.1rem;
-    margin: 0 -0.5rem;
-  }
+  padding: 0.275rem 0.55rem;
+  font-size: 1.1rem;
+  margin: 0 -0.5rem;
 
   a {
     color: var(--pst-color-text-muted);
