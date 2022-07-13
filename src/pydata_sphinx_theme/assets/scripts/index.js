@@ -207,11 +207,10 @@ var toggleSearchField = () => {
   let button = document.getElementById("bd-search-button");
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
-  if (
-    input.parentElement.parentElement.classList.contains(
-      "search-button__search-container"
-    )
-  ) {
+  let hidden_input = document.querySelector(
+    ".search-button__search-container input"
+  );
+  if (input === hidden_input) {
     button.classList.toggle("show");
   }
   // when toggling off the search field, remove its focus
