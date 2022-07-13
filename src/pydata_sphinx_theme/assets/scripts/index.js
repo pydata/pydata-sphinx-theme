@@ -179,7 +179,7 @@ var changeShortcutText = () => {
   }
 };
 
-var findInput = () => {
+var findSearchInput = () => {
   /* if we knew we only had one search field, we could just do this:
    *
    * let input = document.querySelector("form.bd-search").querySelector("input");
@@ -210,7 +210,7 @@ var toggleSearchField = () => {
   // If the page doesn't have an always-visible search field, then toggle the
   // hidden one to hide or show, and (un)focus it. If there **IS** an
   // always-visible search field on the page, (un)focus that instead.
-  let input = findInput();
+  let input = findSearchInput();
   let button = document.getElementById("bd-search-button");
   if (
     input.parentElement.parentElement.classList.contains(
@@ -233,7 +233,7 @@ var toggleSearchField = () => {
 window.addEventListener(
   "keydown",
   (event) => {
-    let input = findInput();
+    let input = findSearchInput();
     // toggle on Ctrl+k or ⌘+k
     if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
       event.preventDefault();
