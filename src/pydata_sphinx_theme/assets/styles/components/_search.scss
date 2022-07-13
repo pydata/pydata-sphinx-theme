@@ -74,14 +74,13 @@
   // Center in middle of screen just underneath header
   position: fixed;
   z-index: $zindex-fixed;
-  top: 6rem;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   right: 1rem;
   margin-top: 0.5rem;
   width: 90%;
   max-width: 800px;
-  box-shadow: 0 0 1rem 0.2rem var(--pst-color-shadow);
 
   form.bd-search {
     flex-grow: 1;
