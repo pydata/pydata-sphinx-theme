@@ -165,6 +165,104 @@ function scrollToActive() {
   });
 }
 
+/*******************************************************************************
+ * Search
+ */
+var changeShortcutText = () => {
+  // Change the search hint to `meta key` if we are a Mac
+  let forms = document.querySelectorAll("form.bd-search");
+  var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+  if (isMac) {
+    forms.forEach(
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
+    );
+  }
+};
+
+var findInput = () => {
+  /* if we knew we only had one search field, we could just do this:
+   *
+   * let input = document.querySelector("form.bd-search").querySelector("input");
+   *
+   * but instead here we check if multiple search fields exist, and set the
+   * keyboard-shortcut-focusing behavior on the first one that is not the
+   * auto-hidden one.
+   */
+  let forms = document.querySelectorAll("form.bd-search");
+  if (!forms.length) {
+    return;
+  } else {
+    var form;
+    if (forms.length == 1) {
+      // there is exactly one search field (persistent or hidden)
+      form = forms[0];
+    } else {
+      // must be at least one persistent field, use the first persistent one
+      form = document.querySelector(
+        "div:not(.search-button__search-container) > form.bd-search"
+      );
+    }
+    return form.querySelector("input");
+  }
+};
+
+var toggleSearchField = () => {
+  // If the page doesn't have an always-visible search field, then toggle the
+  // hidden one to hide or show, and (un)focus it. If there **IS** an
+  // always-visible search field on the page, (un)focus that instead.
+  let input = findInput();
+  let button = document.getElementById("bd-search-button");
+  if (
+    input.parentElement.parentElement.classList.contains(
+      "search-button__search-container"
+    )
+  ) {
+    button.classList.toggle("show");
+  }
+  // when toggling off the search field, remove its focus
+  if (document.activeElement === input) {
+    input.blur();
+  } else {
+    input.focus();
+    input.select();
+    input.scrollIntoView({ block: "center" });
+  }
+};
+
+// Add an event listener for toggleSearchField() for Ctrl/Cmd + K
+window.addEventListener(
+  "keydown",
+  (event) => {
+    let input = findInput();
+    // toggle on Ctrl+k or ⌘+k
+    if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
+      event.preventDefault();
+      toggleSearchField();
+    }
+    // also allow Escape key to hide (but not show) the dynamic search field
+    else if (document.activeElement === input && event.code == "Escape") {
+      toggleSearchField();
+    }
+  },
+  true
+);
+
+window.onload = function () {
+  changeShortcutText();
+  let button = document.getElementById("bd-search-button");
+  let overlay = document.querySelector("div.search-button__overlay");
+  if (button) {
+    button.onclick = toggleSearchField;
+  }
+  if (overlay) {
+    overlay.onclick = toggleSearchField;
+  }
+};
+
+/*******************************************************************************
+ * Finalize
+ */
+
 // This is equivalent to the .ready() function as described in
 // https://api.jquery.com/ready/
 $(addModeListener);

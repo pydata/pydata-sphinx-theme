@@ -910,22 +910,22 @@ any other context values.
        "some_other_arg": "?some-other-arg"
    }
 
-Search bar
-==========
+Search bar / search button
+==========================
 
-By default, the Search Bar is hidden, and will be displayed when a user either:
+By default, the search input field is hidden, and there is a search button
+(a magnifying glass icon :fas:`search`) in the top navbar.
+The search input field will be displayed when a user either:
 
-- Clicks the magnifying class icon in the header: :fas:`search`.
-- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
+- Clicks the search button in the header.
+- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Linux, Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
 
-You can also configure some aspects of the search bar, described below.
+You can also configure some aspects of the search button and search field, described below.
 
-Configure the search bar position
----------------------------------
+Configure the search field position
+-----------------------------------
 
-To modify the position of the search bar, add the ``search-field.html``
-template to your **sidebar**, or to one of the **navbar** positions, depending
-on where you want it to be placed.
+The position of the search *button* is controlled by ``search-button`` and by default is included in ``html_theme_options["navbar_end"]``; you may move it elsewhere as befits your site's layout, or remove it. You can also add an always-visible search field to some/all pages in your site by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_items"]``, etc).
 
 For example, if you'd like the search field to be in your side-bar, add it to
 the sidebar templates like so:
@@ -936,7 +936,7 @@ the sidebar templates like so:
         "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
     }
 
-If instead you'd like to put the search bar in the top navbar, use the
+If instead you'd like to put the search field in the top navbar, use the
 following configuration:
 
 .. code:: python
@@ -947,8 +947,8 @@ following configuration:
 
 .. note::
 
-   By default the search bar is placed in the sidebar. If you wish to move it to the navbar,
-   explicitly define a list of sidebar templates in `html_sidebars` and omit the `search-field.html` entry.
+    If a page includes *both* the search button and an always-visible search field, the keyboard shortcuts will focus the always-visible field and the hidden search field will not display.
+
 
 Configure the search bar text
 -----------------------------
