@@ -146,7 +146,7 @@ def update_templates(app, pagename, templatename, context, doctree):
             "type": f"image/{icon_type}",
         }
         if favicon.get("color"):
-            opts["color"] = favicon.get("color", "")
+            opts["color"] = favicon["color"]
         # Sphinx will auto-resolve href if it's a local file
         app.add_css_file(favicon["href"], **opts)
 
