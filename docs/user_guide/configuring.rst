@@ -433,7 +433,7 @@ Add favicons
 
 ``pydata_sphinx_theme`` supports the `standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_, using ``html_favicon``.
 
-Additionally you ma add any number of browser- or device-specific favicons of any size.
+Additionally you may add any number of browser- or device-specific favicons of any size.
 To do so, use the ``html_theme_options["favicons"]`` configuration key.
 
 The only required argument is ``href``, which can be either an absolute URL (beginning with ``http``) or a local path relative to your ``html_static_path``.
