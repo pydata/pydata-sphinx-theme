@@ -131,7 +131,7 @@ For more information, see :ref:`manage-themes`.
 Configure pygment theme
 =======================
 
-As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the `pygment_light_style`and `pygment_style_style`. You can check available Pygments colors on this `page <https://help.farbox.com/pygments.html>`__.
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``. You can check available Pygments colors on this `page <https://help.farbox.com/pygments.html>`__.
 
 .. code-block:: python
 
@@ -143,7 +143,7 @@ As the Sphinx theme supports multiple modes, the code highlighting colors can be
 
 .. danger::
 
-   The native Sphinx option `pygments_style` will be overwritten by this theme.
+   The native Sphinx option ``pygments_style`` will be overwritten by this theme.
 
 Announcement banners
 ====================
