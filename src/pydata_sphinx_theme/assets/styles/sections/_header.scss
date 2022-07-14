@@ -66,16 +66,11 @@
     display: flex;
 
     @include media-breakpoint-up($breakpoint-header) {
-      // Add a gap on wider screens, on narrow screens we are vertical + already have padding
-      gap: 1rem;
       // Center align on wide screens so the dropdown button is centered properly
       align-items: center;
     }
 
     li a.nav-link {
-      // Unset bootstrap padding so we can use a gutter
-      padding-left: 0;
-      padding-right: 0;
       color: var(--pst-color-text-muted);
 
       &:hover {
@@ -97,7 +92,6 @@
       // On mobile, the dropdown behaves like any other link, no hiding
       button {
         display: none;
-        color: var(--pst-color-text-muted);
       }
 
       .dropdown-menu {
@@ -112,11 +106,10 @@
 
       // On wide screens, the dropdown becomes a pop-up menu
       @include media-breakpoint-up($breakpoint-header) {
-        height: 2.2rem; // Slight hack to make this aligned with navbar links
-
         button {
-          display: flex;
-          align-items: center;
+          display: unset;
+          color: var(--pst-color-text-muted);
+          border: none;
         }
 
         .dropdown-menu {
