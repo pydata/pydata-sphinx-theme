@@ -435,7 +435,6 @@ Add favicons
 
 Additionally you may add any number of browser- or device-specific favicons of any size.
 To do so, use the ``html_theme_options["favicons"]`` configuration key.
-
 The only required argument is ``href``, which can be either an absolute URL (beginning with ``http``) or a local path relative to your ``html_static_path``.
 In addition, you may specify a size with ``sizes``, specify a ``rel`` value, and specify a ``color``.
 See `this blog post on SVG favicons for more information <https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df>`_.
