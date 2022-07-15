@@ -5,3 +5,9 @@
   // This will impact the top offset for many sections
   --pst-header-height: 3rem;
 }
+
+@media (min-width: 88rem) {
+  .sb-page-width {
+    width: 100%;
+  }
+}
