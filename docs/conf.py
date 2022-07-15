@@ -118,6 +118,7 @@ html_theme_options = {
             "url": "https://pydata.org",
             "icon": "_static/pydata-logo.png",
             "type": "local",
+            "attributes": {"target": "_blank"},
         },
     ],
     "logo": {
@@ -148,6 +149,7 @@ html_sidebars = {
         "custom-template",
     ],  # This ensures we test for custom sidebars
     "demo/no-sidebar": [],  # Test what page looks like with no sidebar items,
+    "demo/persistent-search-field": ["search-field"],
     # Blog sidebars
     # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
     "demo/blog/*": [

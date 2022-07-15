@@ -5,7 +5,13 @@ These sections cover common operations and topics that are relevant to developin
 ## Make a release
 
 This theme uses GitHub tags and releases to automatically push new releases to
-PyPI. For information on this process, see [the release checklist](https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist#release-instructions).
+PyPI.
+Follow these steps to make a release:
+
+- Familiarize yourself with [our Release guidelines](policies:release) and decide if it is time for a release.
+- Copy the release infrustructions in [the release checklist](https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist#release-instructions).
+- Paste them into a new issue to coordinate the release.
+- Follow the checklist.
 
 ## Update JavaScript dependencies and their versions
 

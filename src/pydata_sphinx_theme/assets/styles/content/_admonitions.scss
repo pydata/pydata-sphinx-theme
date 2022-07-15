@@ -34,12 +34,12 @@ div.admonition,
   > .admonition-title {
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
-    font-weight: 700;
+    font-weight: 600;
     position: relative;
 
     &:after {
       position: absolute;
-      left: 0.6rem;
+      left: 0.5rem;
       width: 1rem;
       height: 1rem;
       color: var(--pst-color-info);

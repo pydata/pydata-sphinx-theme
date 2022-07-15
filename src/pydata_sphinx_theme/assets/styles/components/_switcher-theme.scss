@@ -1,17 +1,21 @@
 // the icons for theme change
 #theme-switch {
-  border-color: var(--pst-color-primary);
+  // to overide bootstrap settings
+  border-color: var(--pst-color-on-background);
+  padding: 0.25rem 0.5rem;
+  font-size: 1.1rem;
+  margin: 0 -0.5rem;
 
   a {
-    color: var(--pst-color-primary);
+    color: var(--pst-color-text-muted);
     display: none;
   }
 
   &:hover {
-    background-color: var(--pst-color-primary);
+    background-color: var(--pst-color-on-surface);
 
     a {
-      color: var(--pst-color-on-background);
+      color: var(--pst-color-text-base);
     }
   }
 }

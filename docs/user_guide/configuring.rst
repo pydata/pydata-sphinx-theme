@@ -9,8 +9,8 @@ All configuration options are passed with the ``html_theme_options`` variable
 in your ``conf.py`` file. This is a dictionary with ``key: val`` pairs that
 you can configure in various ways. This page describes the options available to you.
 
-Configure project logo and title
-================================
+Customize logo and title
+========================
 
 By default the theme will use the value of ``project`` on the left side of the header navbar.
 This can be replaced by a Logo image, and optionally a custom ``html_title`` as well.
@@ -18,12 +18,19 @@ This can be replaced by a Logo image, and optionally a custom ``html_title`` as 
 Single logo for light and dark mode
 -----------------------------------
 
-Put an image in a folder that is in `html_static_path`, and use the following configuration:
+To use a local image file, put an image in a folder that is in `html_static_path`, and use the following configuration:
 
 .. code:: python
 
    html_static_path = ["_static"]
    html_logo = "_static/logo.png"
+
+To use an external link to an image, make sure the ``html_logo`` begins with ``http``.
+For example:
+
+.. code:: python
+
+   html_logo = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
 
 Different logos for light and dark mode
 ---------------------------------------
@@ -51,13 +58,26 @@ Customize logo link
 -------------------
 
 The logo links to ``root_doc`` (usually the first page of your documentation) by default.
-If you'd like it to link to another page or use an external link instead, use the following configuration:
+You can instead link to a local document or an external website.
+To do so, use the ``html_theme_options["logo"]["link"]`` option and provide a new link.
+
+For example, to reference another local page:
 
 .. code-block:: python
 
    html_theme_options = {
        "logo": {
-           "link": "<other page or external link>",
+           "link": "some/other-page",
+       }
+   }
+
+To reference an external website, make sure your link starts with ``http``:
+
+.. code-block:: python
+
+   html_theme_options = {
+       "logo": {
+           "link": "https://pydata.org",
        }
    }
 
@@ -111,7 +131,7 @@ For more information, see :ref:`manage-themes`.
 Configure pygment theme
 =======================
 
-As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the `pygment_light_style`and `pygment_style_style`. You can check available Pygments colors on this `page <https://help.farbox.com/pygments.html>`__.
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``. You can check available Pygments colors on this `page <https://help.farbox.com/pygments.html>`__.
 
 .. code-block:: python
 
@@ -123,7 +143,7 @@ As the Sphinx theme supports multiple modes, the code highlighting colors can be
 
 .. danger::
 
-   The native Sphinx option `pygments_style` will be overwritten by this theme.
+   The native Sphinx option ``pygments_style`` will be overwritten by this theme.
 
 Announcement banners
 ====================
@@ -238,6 +258,10 @@ Here are several examples:
                "name": "Mastodon",
                "url": "https://<your-host>@<your-handle>",
                "icon": "fab fa-mastodon",
+               "attributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+               }
            },
        ],
        ...
@@ -331,6 +355,39 @@ Additionally, the screen-reader accessible label for this menu can be configured
        ...
    }
 
+Add custom attributes to icon links
+-----------------------------------
+
+You can add custom attributes to the link element (``<a>``) of your icon links.
+This is helpful if you need to add custom link behavior.
+To do so, use the pattern ``"attributes": {"attribute1": "value1"}`` in a given icon link entry.
+
+For example, to specify a custom ``target`` and ``rel`` attribute, and to define your own custom link classes:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links": [
+           {
+               "name": "PyData",
+               "url": "https://pydata.org",
+               "icon": "_static/pydata-logo-square.png",
+               "type": "local",
+               # Add additional attributes to the href link.
+               # The defaults of target, rel, class, title and href may be overwritten.
+               "attributes": {
+                  "target" : "_blank",
+                  "rel" : "noopener me",
+                  "class": "nav-link custom-fancy-css"
+               }
+           },
+       ],
+       ...
+   }
+
+.. warning::
+   This might make your icon links behave unexpectedly and might over-ride default behavior, so make sure you know what you're doing!
 
 Header Navigation Bar
 =====================
@@ -371,18 +428,18 @@ For example, to change the number of displayed header links to be ``4`` instead 
      "header_links_before_dropdown": 4
    }
 
-Adding favicons
-===============
+Add favicons
+============
 
-``pydata_sphinx_theme`` supports the
-`standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_,
-using ``html_favicon``.
+``pydata_sphinx_theme`` supports the `standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_, using ``html_favicon``.
 
-Additionally, ``pydata_sphinx_theme`` allows you to add any number of
-browser- or device-specific favicons of any size. To define arbitrary favicons,
-use the ``favicons`` configuration key. The ``href`` value can be either an
-absolute URL (beginning with ``http``) or a local path relative to your
-``html_static_path``:
+Additionally you may add any number of browser- or device-specific favicons of any size.
+To do so, use the ``html_theme_options["favicons"]`` configuration key.
+The only required argument is ``href``, which can be either an absolute URL (beginning with ``http``) or a local path relative to your ``html_static_path``.
+In addition, you may specify a size with ``sizes``, specify a ``rel`` value, and specify a ``color``.
+See `this blog post on SVG favicons for more information <https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df>`_.
+
+For example, below we define three extra favicons of different sizes and ``rel`` types, and one with a specific color.
 
 .. code-block:: python
 
@@ -401,7 +458,8 @@ absolute URL (beginning with ``http``) or a local path relative to your
          {
             "rel": "apple-touch-icon",
             "sizes": "180x180",
-            "href": "apple-touch-icon-180x180.png"
+            "href": "apple-touch-icon-180x180.png",
+            "color": "#000000",
          },
       ]
    }
@@ -411,7 +469,7 @@ section, following this pattern:
 
 .. code-block:: html+jinja
 
-   <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}">
+   <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}" color="{{ favicon.color }}">
 
 
 .. _configure-sidebar:
@@ -853,22 +911,22 @@ any other context values.
        "some_other_arg": "?some-other-arg"
    }
 
-Search bar
-==========
+Search bar / search button
+==========================
 
-By default, the Search Bar is hidden, and will be displayed when a user either:
+By default, the search input field is hidden, and there is a search button
+(a magnifying glass icon :fas:`search`) in the top navbar.
+The search input field will be displayed when a user either:
 
-- Clicks the magnifying class icon in the header: :fas:`search`.
-- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Windows) or :kbd:`⌘` + :kbd:`K` (Mac).
+- Clicks the search button in the header.
+- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Linux, Windows) or :kbd:`⌘` + :kbd:`K` (macOS).
 
-You can also configure some aspects of the search bar, described below.
+You can also configure some aspects of the search button and search field, described below.
 
-Configure the search bar position
----------------------------------
+Configure the search field position
+-----------------------------------
 
-To modify the position of the search bar, add the ``search-field.html``
-template to your **sidebar**, or to one of the **navbar** positions, depending
-on where you want it to be placed.
+The position of the search *button* is controlled by ``search-button`` and by default is included in ``html_theme_options["navbar_end"]``; you may move it elsewhere as befits your site's layout, or remove it. You can also add an always-visible search field to some/all pages in your site by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_items"]``, etc).
 
 For example, if you'd like the search field to be in your side-bar, add it to
 the sidebar templates like so:
@@ -879,7 +937,7 @@ the sidebar templates like so:
         "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
     }
 
-If instead you'd like to put the search bar in the top navbar, use the
+If instead you'd like to put the search field in the top navbar, use the
 following configuration:
 
 .. code:: python
@@ -888,10 +946,10 @@ following configuration:
        "navbar_end": ["navbar-icon-links.html", "search-field.html"]
    }
 
-.. note::
+.. warning::
 
-   By default the search bar is placed in the sidebar. If you wish to move it to the navbar,
-   explicitly define a list of sidebar templates in `html_sidebars` and omit the `search-field.html` entry.
+    If a page includes *both* the search button and an always-visible search field, the keyboard shortcuts will focus the always-visible field and the hidden search field overlay will not display. *This may not be what you want:* on small screens (i.e. mobile devices) the sidebars may be hidden in a drawer, and if the persistent search field is there, it may receive focus without actually being made visible. It is **strongly recommended** that you use *either* search button and the hidden/overlaid field that comes with it, *or* use a persistent search field in a place that makes sense for your layout.
+
 
 Configure the search bar text
 -----------------------------

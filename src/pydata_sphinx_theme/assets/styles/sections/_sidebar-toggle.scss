@@ -16,9 +16,9 @@ input.sidebar-toggle {
 // Background overlays
 label.overlay {
   background-color: black;
+  opacity: 0.5;
   height: 0;
   width: 0;
-  opacity: 0.5;
   position: fixed;
   top: 0;
   left: 0;
