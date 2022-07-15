@@ -140,13 +140,15 @@ def update_templates(app, pagename, templatename, context, doctree):
     # Add links for favicons in the topbar
     for favicon in context.get("theme_favicons", []):
         icon_type = Path(favicon["href"]).suffix.strip(".")
+        opts = {
+            "rel": favicon.get("rel", "icon"),
+            "sizes": favicon.get("sizes", "16x16"),
+            "type": f"image/{icon_type}",
+        }
+        if "color" in favicon:
+            opts["color"] = favicon["color"]
         # Sphinx will auto-resolve href if it's a local file
-        app.add_css_file(
-            favicon["href"],
-            rel=favicon["rel"],
-            sizes=favicon["sizes"],
-            **{"type": f"image/{icon_type}"},
-        )
+        app.add_css_file(favicon["href"], **opts)
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
