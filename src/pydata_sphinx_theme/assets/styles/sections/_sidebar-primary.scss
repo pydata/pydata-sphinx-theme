@@ -198,7 +198,7 @@ nav.bd-links {
   .active {
     > a,
     &:hover > a {
-      font-weight: $caption-weight;
+      font-weight: 600;
       color: var(--pst-color-primary);
     }
   }

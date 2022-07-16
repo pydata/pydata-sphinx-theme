@@ -79,7 +79,7 @@
     }
 
     > .active > .nav-link {
-      font-weight: $caption-weight;
+      font-weight: 600;
       color: var(--pst-color-primary);
     }
 
@@ -117,7 +117,7 @@
 }
 
 .toc-entry > .nav-link.active {
-  font-weight: $caption-weight;
+  font-weight: 600;
   color: var(--pst-color-primary);
   background-color: transparent;
   border-left: 2px solid var(--pst-color-primary);

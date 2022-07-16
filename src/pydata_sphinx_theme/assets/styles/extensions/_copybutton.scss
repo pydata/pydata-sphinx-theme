@@ -4,6 +4,9 @@
  */
 
 div.highlight button.copybtn {
+  // Slightly visible by default
+  opacity: 0.3;
+
   // Nicer spacing
   display: flex;
   align-items: center;

@@ -25,6 +25,11 @@ div.literal-block-wrapper {
     border-bottom: 1px solid var(--pst-color-border);
     padding: 0.5rem;
     font-size: 1rem;
+    font-weight: var(--pst-font-weight-caption);
+
+    a.headerlink {
+      font-size: inherit;
+    }
   }
 
   // Remove the upper border radius since we want it to connect with the title

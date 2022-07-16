@@ -14,16 +14,18 @@
   --pst-font-size-h5: 18px;
   --pst-font-size-h6: 16px;
 
-  // smaller then heading font sizes
+  // smaller than heading font sizes
   --pst-font-size-milli: 12px;
 
-  // sidebar management
+  // Sidebar styles
   --pst-sidebar-font-size: 0.9em;
+  --pst-sidebar-font-size-mobile: 1.2em;
   --pst-sidebar-header-font-size: 1.2em;
   --pst-sidebar-header-font-weight: 600;
 
-  // on mobile screens the font size of all sidebars is bigger
-  --pst-sidebar-font-size-mobile: 1.2em;
+  // Font weights
+  --pst-font-weight-caption: 300;
+  --pst-font-weight-heading: 600;
 
   // Font family
   // These are adapted from https://systemfontstack.com/ */
@@ -37,6 +39,3 @@
   --pst-font-family-heading: var(--pst-font-family-base-system);
   --pst-font-family-monospace: var(--pst-font-family-monospace-system);
 }
-
-// Captions in figures, tables, etc
-$caption-weight: 300;

@@ -2,7 +2,7 @@
  * Admonitions and blocks of styled content.
  * Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
  */
-
+$admonition-border-radius: 0.25rem;
 div.admonition,
 .admonition {
   margin: 1.5625em auto;
@@ -11,7 +11,7 @@ div.admonition,
   page-break-inside: avoid;
   border-left: 0.2rem solid;
   border-color: var(--pst-color-info);
-  border-radius: 0.2rem;
+  border-radius: $admonition-border-radius;
   background-color: var(--pst-color-on-background);
   @include box-shadow();
 
@@ -36,7 +36,7 @@ div.admonition,
   > .admonition-title {
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
-    font-weight: $caption-weight;
+    font-weight: var(--pst-font-weight-heading);
     position: relative;
 
     &:after {
@@ -245,7 +245,7 @@ nav.contents,
 aside.topic, {
   background-color: var(--pst-color-surface);
   border-color: var(--pst-color-border);
-  border-radius: 0.2rem;
+  border-radius: $admonition-border-radius;
   padding: 1rem 1.25rem;
 
   .topic-title {
@@ -267,23 +267,29 @@ aside.topic, {
  * Sidebar directive
  */
 aside.sidebar {
-  background-color: var(--pst-color-on-surface);
-  border-color: var(--pst-color-border);
-  border-radius: 0.2rem;
+  border: 1px solid var(--pst-color-border);
+  background-color: var(--pst-color-surface);
+  border-radius: $admonition-border-radius;
   // to match the admonition-styled sidebars:
   margin-left: 0.5rem;
   padding: 0;
-
   > *:last-child {
     padding-bottom: 1rem;
   }
 
   p.sidebar-title {
+    position: relative;
+    margin-bottom: 0;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--pst-color-border);
     font-family: var(--pst-font-family-heading);
-    font-weight: $caption-weight;
+    font-weight: var(--pst-font-weight-heading);
+
+    // The item following the title should have some extra whitespace
+    + * {
+      margin-top: 1rem;
+    }
   }
 
   > * {
