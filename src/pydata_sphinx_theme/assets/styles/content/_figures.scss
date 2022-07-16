@@ -1,0 +1,14 @@
+figure {
+  figcaption {
+    font-family: var(--pst-font-family-heading);
+    font-weight: $caption-weight;
+    margin-left: auto;
+    margin-right: auto;
+
+    table.table {
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}

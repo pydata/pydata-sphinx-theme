@@ -13,3 +13,12 @@ a.footnote-reference {
   vertical-align: super;
   font-size: small;
 }
+
+// Docutils 0.18 uses an `aside.footnote` container with differen internal structure
+aside.footnote {
+  margin-bottom: 1rem;
+  span.label,
+  span.backrefs {
+    font-weight: bold;
+  }
+}

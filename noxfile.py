@@ -44,6 +44,7 @@ def docs(session):
 
 @nox.session(name="docs-live")
 def docs_live(session):
+    session.install("sphinx>=5", "docutils>=0.18")
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")

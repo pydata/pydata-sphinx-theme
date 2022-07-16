@@ -1,4 +1,7 @@
-// Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
+/**
+ * Admonitions and blocks of styled content.
+ * Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
+ */
 
 div.admonition,
 .admonition {
@@ -33,7 +36,7 @@ div.admonition,
   > .admonition-title {
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
-    font-weight: 600;
+    font-weight: $caption-weight;
     position: relative;
 
     &:after {
@@ -227,12 +230,19 @@ div.admonition,
   }
 }
 
-/*
+/**************************************************************
  * Similar content blocks that are not technically admonitions.
  */
 
-// Topics (also used for `contents` directive)
-div.topic {
+/**
+ * Topics and the {contents} directive
+ */
+// Docutils <= 0.17
+div.topic,
+div.topic.contents,
+// Docutils >= 0.18
+nav.contents,
+aside.topic, {
   background-color: var(--pst-color-surface);
   border-color: var(--pst-color-border);
   border-radius: 0.2rem;
@@ -253,14 +263,38 @@ div.topic {
   }
 }
 
+/**
+ * Sidebar directive
+ */
 aside.sidebar {
   background-color: var(--pst-color-on-surface);
   border-color: var(--pst-color-border);
   border-radius: 0.2rem;
   // to match the admonition-styled sidebars:
   margin-left: 0.5rem;
+  padding: 0;
+
+  > *:last-child {
+    padding-bottom: 1rem;
+  }
+
+  p.sidebar-title {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--pst-color-border);
+    font-family: var(--pst-font-family-heading);
+    font-weight: $caption-weight;
+  }
+
+  > * {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
+/**
+ * Seealso is kind of like a vertically-collapsed admonition
+ */
 .seealso dd {
   margin-top: 0;
   margin-bottom: 0;

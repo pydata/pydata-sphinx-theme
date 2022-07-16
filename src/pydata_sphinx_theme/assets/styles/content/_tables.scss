@@ -23,7 +23,7 @@ table caption {
 
 // ensure table will fit in the article width and make them y-scrollable
 table {
-  display: block;
+  display: table;
   max-width: 100%;
   overflow: auto;
 
