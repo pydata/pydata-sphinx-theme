@@ -243,10 +243,13 @@ div.topic.contents,
 // Docutils >= 0.18
 nav.contents,
 aside.topic, {
+  display: flex;
+  flex-direction: column;
   background-color: var(--pst-color-surface);
   border-color: var(--pst-color-border);
   border-radius: $admonition-border-radius;
   padding: 1rem 1.25rem;
+  @include box-shadow();
 
   .topic-title {
     margin: 0 0 0.5rem 0;
@@ -285,17 +288,26 @@ aside.sidebar {
     border-bottom: 1px solid var(--pst-color-border);
     font-family: var(--pst-font-family-heading);
     font-weight: var(--pst-font-weight-heading);
+  }
 
-    // The item following the title should have some extra whitespace
-    + * {
-      margin-top: 1rem;
-    }
+  // Add margin to the first non-`.sidebar-title` item
+  > *:not(.sidebar-title):first-child,
+  > p.sidebar-title + * {
+    margin-top: 1rem;
   }
 
   > * {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+
+/**
+ * Rubrics look kind of like section headers
+ */
+p.rubric {
+  display: flex;
+  flex-direction: column;
 }
 
 /**

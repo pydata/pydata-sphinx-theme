@@ -3,7 +3,7 @@ blockquote {
   padding: 1em 1em;
   color: var(--pst-color-text-muted);
   border-left: 0.25em solid var(--pst-color-border);
-  border-radius: 0.2rem;
+  border-radius: $admonition-border-radius;
   position: relative;
 
   p {

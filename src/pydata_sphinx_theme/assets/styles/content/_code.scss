@@ -6,18 +6,19 @@
 // General code block behavior
 // Unset bootstrap behavior
 div[class*="highlight-"],
+div.highlight,
 div.literal-block-wrapper {
   display: flex;
   flex-direction: column;
   width: unset;
+  border-radius: $admonition-border-radius;
 }
 
 // Code blocks with captions
 // There's a wrapper when the code block has a title
 div.literal-block-wrapper {
   border: 1px solid var(--pst-color-border);
-  box-shadow: 1px 1px 1px var(--pst-color-shadow);
-  border-radius: 0.2rem; // A bit higher to make sure it doesn't stick out
+  border-radius: $admonition-border-radius;
 
   // This is where the title goes
   div.code-block-caption {
@@ -36,6 +37,7 @@ div.literal-block-wrapper {
   // Remove the box shadow so the wrapper gets the shadow instead
   div[class*="highlight-"] {
     margin: 0;
+    border-radius: 0;
     pre {
       border: none;
       box-shadow: none;
