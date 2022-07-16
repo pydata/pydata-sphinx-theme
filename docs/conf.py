@@ -20,9 +20,10 @@ extensions = [
     "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
     "sphinxext.rediraffe",
     "sphinx_design",
-    "sphinx.ext.viewcode",
     "sphinx_copybutton",
     "sphinx_togglebutton",
 ]
@@ -168,3 +169,5 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+
+todo_include_todos = True
