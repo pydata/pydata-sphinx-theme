@@ -10,4 +10,3 @@ This section showcases the various elements that Sphinx supports out-of-the-box.
   paragraph-markup
   api
   lists-and-tables
-  web-components
