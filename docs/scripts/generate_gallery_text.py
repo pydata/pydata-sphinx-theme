@@ -30,7 +30,7 @@ def regenerate_gallery():
     gallery_item_template = dedent(
         """
     .. grid-item-card:: {name}
-       :img-bottom: ../_static/gallery/{id}.png
+       :img-bottom: {path_image}
        :link: {website}"""
     )
 
@@ -88,6 +88,7 @@ def regenerate_gallery():
             item.pop("repo", None)
 
             # add the new gallery item to the gallery file
+            item["path_image"] = Path(f"../_static/gallery/{item.pop('id')}.png")
             gallery_directive_items.append(f"\n{gallery_item_template.format(**item)}")
 
         # Clean up the browser since we no longer need it
