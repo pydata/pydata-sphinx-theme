@@ -220,7 +220,7 @@ If you'd like to build these images locally to preview in the theme, follow thes
 2. Execute the gallery generation script from the repository root:
 
    ```
-   $ python ./docs/scripts/generate_gallery_text.py
+   $ python ./docs/scripts/generate_gallery_images.py
    ```
 
 :::{note}
