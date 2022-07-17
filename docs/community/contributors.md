@@ -5,7 +5,7 @@ This theme is supported and developed by various members of [the PyData communit
 ## Collaborators on the repository
 
 Here is a grid of collaborators on our GitHub repository.
-We don't yet have formal "team definitions" yet so this is mostly a reflection of who has commit rights to the repository.
+We don't yet have formal "team definitions" so this is mostly a reflection of who has commit rights to the repository.
 
 ```{gallery-grid} ../_static/contributors.yaml
 :class-card: text-center

@@ -21,4 +21,10 @@ When making new decisions about design and UI/UX, we often consult these themes 
 - title: "**PyTorch**"
   link: https://pytorch.org/docs/stable/index.html
   image: https://pytorch.org/assets/images/pytorch-logo.png
+- title: "**Docasaurus**"
+  link: https://docusaurus.io/docs
+  image: https://d33wubrfki0l68.cloudfront.net/c088b7acfcf11100903c44fe44f2f2d7e0f30531/47727/img/docusaurus.svg
+- title: "**Material for MkDocs**"
+  link: https://squidfunk.github.io/mkdocs-material/getting-started/
+  image: https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/src/.icons/logo.svg
 ```
