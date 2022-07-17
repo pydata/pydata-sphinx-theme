@@ -265,3 +265,9 @@ For more details, see:
 
 - https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
 - https://github.com/pydata/pydata-sphinx-theme/pull/713
+
+## The `gallery-grid` directive
+
+There are a few places where we use `sphinx-design` to generate "galleries" of grids with structured text and images.
+We've created a little Sphinx directive to make it easier to repeat this process in our documentation and to avoid repeating ourselves too much.
+It is located in the `docs/scripts/` folder in a dedicated module, and re-used throughout our documentation.

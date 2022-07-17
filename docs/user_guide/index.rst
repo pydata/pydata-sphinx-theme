@@ -2,7 +2,16 @@
 User Guide
 ==========
 
-The user guide describes how to use and customize this theme.
+These sections describe various ways to control and customize this theme.
+
+Theme use-cases
+===============
+
+This theme is designed for more complex documentation that breaks into natural sub-sections.
+
+It puts all top-level pages in your ``toctree`` into the header navigation bar.
+The sidebar will be populated with second-level pages when a top-level page is active.
+This allows you to group your documentation into sub-sections without cluttering the sidebar.
 
 How the theme is structured
 ===========================

@@ -1,5 +1,9 @@
 # -- Path setup --------------------------------------------------------------
 import os
+import sys
+
+sys.path.append("scripts")
+from gallery_directive import GalleryDirective
 
 # -- Project information -----------------------------------------------------
 
@@ -160,7 +164,7 @@ html_context = {
 }
 
 rediraffe_redirects = {
-    "contributing.rst": "contribute/index.rst",
+    "contributing.rst": "community/index.rst",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -168,3 +172,8 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+
+
+def setup(app):
+    # Add the gallery directive
+    app.add_directive("gallery-grid", GalleryDirective)
