@@ -100,6 +100,7 @@ Sphinx provides several different types of admonitions.
 .. warning::
 
    Reader discretion is strongly advised.
+
 ``versionadded``
 ================
 
