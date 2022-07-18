@@ -1,5 +1,15 @@
 /* Collapsing of the TOC sidebar while scrolling */
 /* Nav: hide second level (shown on .active) */
+
+nav.page-toc {
+  // A little extra space before the buttons
+  margin-bottom: 1rem;
+  // Each successive nested item will be a bit smaller
+  ul > li {
+    font-size: 0.95em;
+  }
+}
+
 .bd-toc .nav,
 .list-caption {
   .nav {
@@ -41,9 +51,4 @@
       border-left: 2px solid var(--pst-color-primary);
     }
   }
-}
-
-// Each successive nested item will be a bit smaller
-nav.page-toc ul > li {
-  font-size: 0.95em;
 }

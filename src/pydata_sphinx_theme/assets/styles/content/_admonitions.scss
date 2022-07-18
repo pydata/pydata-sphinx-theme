@@ -9,9 +9,8 @@ div.admonition,
   border-left: 0.2rem solid;
   border-color: var(--pst-color-info);
   border-radius: 0.2rem;
-  box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
-    0 0 0.0625rem var(--pst-color-shadow);
   background-color: var(--pst-color-on-background);
+  @include box-shadow();
 
   // Last item should have no spacing since we'll control that w/ padding
   *:last-child {
