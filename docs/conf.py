@@ -116,6 +116,7 @@ html_theme_options = {
             "url": "https://pydata.org",
             "icon": "_static/pydata-logo.png",
             "type": "local",
+            "attributes": {"target": "_blank"},
         },
     ],
     "logo": {
@@ -141,12 +142,12 @@ html_theme_options = {
 }
 
 html_sidebars = {
-    "index": ["search-field"],
     "contribute/index": [
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
     "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
+    "demo/persistent-search-field": ["search-field"],
 }
 
 myst_heading_anchors = 2

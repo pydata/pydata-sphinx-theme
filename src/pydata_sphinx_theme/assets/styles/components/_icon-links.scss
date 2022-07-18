@@ -3,8 +3,6 @@
  */
 
 #navbar-icon-links {
-  gap: 1rem;
-
   i {
     &.fa,
     &.fab,
@@ -35,12 +33,19 @@
     border-radius: 0.2rem;
   }
 
-  // inline the element in the navbar as long as they fit and use display block when colapsing
+  li:first-child a {
+    padding-left: 0;
+  }
+
+  // inline the element in the navbar as long as they fit and use display block when collapsing
+  // One breakpoint less than $breakpoint-header. See variables/_layout.scss for more info.
   @include media-breakpoint-down(md) {
     flex-direction: row;
 
+    // Use Bootstrap padding for these nav links to get the spacing right
     a {
-      margin-right: 0.1em;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
   }
 }

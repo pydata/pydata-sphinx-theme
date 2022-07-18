@@ -15,7 +15,7 @@ from pygments.styles import get_all_styles
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.9.1rc1.dev0"
+__version__ = "0.10.0rc1"
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ def update_config(app, env):
 
     # DEPRECATE >= v0.10
     if theme_options.get("search_bar_position") == "navbar":
-        logger.warn(
+        logger.warning(
             "Deprecated config `search_bar_position` used."
             "Use `search-field.html` in `navbar_end` template list instead."
         )
@@ -43,7 +43,7 @@ def update_config(app, env):
 
     # Raise a warning for a deprecated theme switcher config
     if "url_template" in theme_options.get("switcher", {}):
-        logger.warn(
+        logger.warning(
             "html_theme_options['switcher']['url_template'] is no longer supported."
             " Set version URLs in JSON directly."
         )
@@ -95,7 +95,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
 
     # DEPRECATE: >= 0.11
     if context.get("theme_logo_link"):
-        logger.warn(
+        logger.warning(
             "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
             "Use the `logo.link` configuration dictionary instead."
         )
@@ -140,13 +140,15 @@ def update_templates(app, pagename, templatename, context, doctree):
     # Add links for favicons in the topbar
     for favicon in context.get("theme_favicons", []):
         icon_type = Path(favicon["href"]).suffix.strip(".")
+        opts = {
+            "rel": favicon.get("rel", "icon"),
+            "sizes": favicon.get("sizes", "16x16"),
+            "type": f"image/{icon_type}",
+        }
+        if "color" in favicon:
+            opts["color"] = favicon["color"]
         # Sphinx will auto-resolve href if it's a local file
-        app.add_css_file(
-            favicon["href"],
-            rel=favicon["rel"],
-            sizes=favicon["sizes"],
-            **{"type": f"image/{icon_type}"},
-        )
+        app.add_css_file(favicon["href"], **opts)
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -688,14 +690,14 @@ def _overwrite_pygments_css(app, exception=None):
     pygments_styles = list(get_all_styles())
     light_theme = theme_options.get("pygment_light_style", default_light_theme)
     if light_theme not in pygments_styles:
-        logger.warn(
+        logger.warning(
             f"{light_theme}, is not part of the available pygments style,"
             f' defaulting to "{default_light_theme}".'
         )
         light_theme = default_light_theme
     dark_theme = theme_options.get("pygment_dark_style", default_dark_theme)
     if dark_theme not in pygments_styles:
-        logger.warn(
+        logger.warning(
             f"{dark_theme}, is not part of the available pygments style,"
             f' defaulting to "{default_dark_theme}".'
         )

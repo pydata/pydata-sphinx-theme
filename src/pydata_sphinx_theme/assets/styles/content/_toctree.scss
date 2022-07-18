@@ -31,3 +31,12 @@
     font-size: 1.3em;
   }
 }
+
+// In-page contents via the contents directive
+div.topic.contents {
+  // Style similarly to toctree
+  ul.simple {
+    list-style: none;
+    padding-left: 0;
+  }
+}

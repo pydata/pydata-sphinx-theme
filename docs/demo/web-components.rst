@@ -1,7 +1,7 @@
 .. INSPIRED FROM sphinx-design documentation
 
-Web components
-==============
+Sphinx Design Components
+========================
 
 Cards and tabs provide some extra UI flexibility for your content. Both `sphinx-design <https://sphinx-design.readthedocs.io/en/latest/index.html>`__ and `sphinx-panels <https://sphinx-panels.readthedocs.io/en/latest/>`__ can be used with this theme. This theme provides custom CSS to ensure that their look and feel is consistent with this theme.
 
@@ -163,6 +163,41 @@ Tabs
 
             PROGRAM main
             END PROGRAM main
+
+Dropdowns
+---------
+
+Dropdowns should look similar to admonitions, but clickable.
+See `the Sphinx Design Dropdown documentation <https://sphinx-design.readthedocs.io/en/latest/dropdowns.html>`__ for more information.
+
+.. admonition:: An admonition for reference.
+
+    And some admonition content.
+
+.. dropdown::
+
+   And with no title and some content!
+
+.. dropdown:: With a title
+
+   And some content!
+
+.. dropdown:: With a title
+   :icon: unlock
+
+   And some content and an icon!
+
+.. dropdown:: A primary title and color
+   :color: primary
+   :icon: unlock
+
+   And some content!
+
+.. dropdown:: A secondary title and color
+   :color: secondary
+   :icon: unlock
+
+   And some content!
 
 Copybuttons
 ===========

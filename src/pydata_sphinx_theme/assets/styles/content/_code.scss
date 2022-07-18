@@ -1,0 +1,27 @@
+/**
+ * Code block styling
+ */
+// There's a wrapper when the code block has a title
+div.literal-block-wrapper {
+  border: 1px solid var(--pst-color-border);
+  box-shadow: 1px 1px 1px var(--pst-color-shadow);
+  border-radius: 0.2rem; // A bit higher to make sure it doesn't stick out
+
+  // This is where the title goes
+  div.code-block-caption {
+    margin: 0;
+    border-bottom: 1px solid var(--pst-color-border);
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  // Remove the upper border radius since we want it to connect with the title
+  // Remove the box shadow so the wrapper gets the shadow instead
+  div[class*="highlight-"] {
+    margin: 0;
+    pre {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}

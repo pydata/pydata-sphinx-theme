@@ -38,9 +38,11 @@
 }
 
 /**
- * Fade the scrollbar until the element is hovered, so it is less attention-grabbind
+ * A consistent box shadow style we apply across elements.
  */
-@mixin scrollbar-on-hover() {
+@mixin box-shadow() {
+  box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
+    0 0 0.0625rem var(--pst-color-shadow) !important;
 }
 
 /**
