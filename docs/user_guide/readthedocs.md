@@ -13,8 +13,8 @@ Ethical advertisements are added to your sidebar by default. To ensure they are
 there if you manually update your sidebar, ensure that the `sidebar-ethical-ads.html`
 template is added to your list. For example:
 
-.. code:: python
-
+```python
 html_sidebars = {
-"\*\*": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
+    "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
 }
+```

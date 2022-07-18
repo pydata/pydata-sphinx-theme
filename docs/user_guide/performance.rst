@@ -3,10 +3,8 @@ Build performance and size
 ==========================
 
 By default this theme includes all of your documentation links in a collapsible sidebar.
-However, this may slow down your documentation builds considerably if you have
-a lot of documentation pages. This is most common with documentation for projects
-with a large API, which use the ``.. autosummary::`` directive to generate
-API documentation.
+However, this may slow down your documentation builds considerably if you have a lot of documentation pages.
+This is most common with documentation for projects with a large API, which use the ``.. autosummary::`` directive to generate API documentation.
 
 To improve the performance of your builds in these cases, first try modifying the navigation depth in the sidebar (see :ref:`navigation-depth`).
 If that doesn't work, try the fix in the section below.
@@ -15,13 +13,6 @@ If that doesn't work, try the fix in the section below.
 
 Selectively remove pages from your sidebar
 ------------------------------------------
-
-.. note::
-
-   This and the following sections are useful for sites that have a lot of pages (such as API
-   documentation with a lot of items). These take much longer to build and will have large
-   output sizes because of all the toctree links. These sections help with this problem,
-   ordered from least-to-most drastic.
 
 You can prevent pages from showing up in the navigation bar using a Sphinx
 extension called `sphinx-remove-toctrees <https://github.com/executablebooks/sphinx-remove-toctrees>`_.
