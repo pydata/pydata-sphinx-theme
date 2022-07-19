@@ -68,6 +68,7 @@ $grid-breakpoints: (
 @import "./content/math";
 
 // Content blocks from Sphinx extensions
+@import "./extensions/ablog";
 @import "./extensions/bootstrap";
 @import "./extensions/copybutton";
 @import "./extensions/ethical-ads";
