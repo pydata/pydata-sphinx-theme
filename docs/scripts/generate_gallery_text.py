@@ -88,7 +88,9 @@ def regenerate_gallery():
             item.pop("repo", None)
 
             # add the new gallery item to the gallery file
-            item["path_image"] = Path("..") / "_static" / "gallery" / f"{item.pop('id')}.png"
+            item["path_image"] = (
+                Path("..") / "_static" / "gallery" / f"{item.pop('id')}.png"
+            )
             gallery_directive_items.append(f"\n{gallery_item_template.format(**item)}")
 
         # Clean up the browser since we no longer need it
