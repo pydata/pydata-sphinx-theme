@@ -276,10 +276,10 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 links_dropdown_html = "\n".join(links_dropdown)
                 out += f"""
                 <div class="nav-item dropdown">
-                    <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         More
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu">
                         {links_dropdown_html}
                     </div>
                 </div>
@@ -385,7 +385,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         }
         if align not in align_options:
             raise ValueError(
-                "Theme optione navbar_align must be one of"
+                "Theme option navbar_align must be one of"
                 f"{align_options.keys()}, got: {align}"
             )
         return align_options[align]
