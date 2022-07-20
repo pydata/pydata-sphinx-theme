@@ -1,0 +1,129 @@
+
+.. _manage-themes:
+
+Light and dark themes
+=====================
+
+You can change the major background / foreground colors of this theme according to "dark" and "light" modes.
+These are controlled by a button in the navigation header, with the following options:
+
+- A ``light`` theme with a bright background and dark text / UI elements
+- A ``dark`` theme with a dark background and light text / UI elements
+- ``auto``: the documentation theme will follow the system default that you have set
+
+
+Configure default theme mode
+----------------------------
+
+By default, visitors to your documentation will use the theme mode ``auto``.
+This will choose a theme based on the user's system settings, and default to ``light`` if no system setting is found.
+
+If you wish to use a different default theme mode, set the ``default_mode`` configuration to one of ``auto``, ``dark``, ``light``.
+For example:
+
+.. code-block:: python
+
+   html_context = {
+      # ...
+      "default_mode": "light"
+   }
+
+For more information, see :ref:`manage-themes`.
+
+.. tip::
+
+   To completely remove the theme management, configure ``default_mode`` to the value you want in your documentation (``light`` or ``dark``) and then remove the theme-switcher from the ``navbar_end`` section of the header navbar configuration:
+
+   .. code-block:: python
+
+      html_theme_options {
+          ...
+          # Note we have omitted `theme-switcher` below
+          "navbar_end": ["navbar-icon-links"]
+      }
+
+Customize the CSS of light and dark themes
+------------------------------------------
+
+.. danger::
+
+    Theming is still a beta feature so the variables related to color theming are likely to change in the future. No backward compatibily is guaranteed when customization is done.
+
+
+To customize the CSS of page elements in a theme-dependent manner, use the ``html[data-theme='<THEME>']`` CSS selector.
+For example to define a different background color for both the light and dark themes:
+
+.. code-block:: css
+
+    /* anything related to the light theme */
+    html[data-theme="light"] {
+
+        /* whatever you want to change */
+        background: white;
+    }
+
+    /* anything related to the dark theme */
+    html[data-theme="dark"] {
+
+        /* whatever you want to change */
+        background: black;
+    }
+
+A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.
+
+Use theme-dependent content
+---------------------------
+
+It is possible to use different content for light and dark mode, so that the content only shows up when a particular theme is active.
+This is useful if your content depends on the theme's style, such as a PNG image with a light or a dark background.
+
+There are **two CSS helper classes** to specify items on the page as theme-specific.
+These are:
+
+- :code:`only-dark`: Only display an element when the dark theme is active.
+- :code:`only-light` Only display an element when the light theme is active.
+
+For example, the following page content defines two images, each of which uses a different one of the classes above.
+Change the theme and a new image should be displayed.
+
+.. code-block:: rst
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+        :class: only-dark
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+dog
+        :class: only-light
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+    :class: only-dark
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+dog
+    :class: only-light
+
+Define custom JavaScript to react to theme changes
+--------------------------------------------------
+
+You can define a JavaScript event hook that will run your code any time the theme changes.
+This is useful if you need to change elements of your page that cannot be defined by CSS rules.
+For example, to change an image source (e.g., logo) whenever the ``data-theme`` changes, a snippet like this can be used:
+
+.. code-block:: rst
+
+  .. raw:: html
+
+    <script type="text/javascript">
+      var observer = new MutationObserver(function(mutations) {
+        const dark = document.documentElement.dataset.theme == 'dark';
+        document.getElementsByClassName('mainlogo')[0].src = dark ? '_static/my_logo_dark.svg' : "_static/my_logo_light.svg";
+      })
+      observer.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+    </script>
+    <link rel="preload" href="_static/my_logo_dark.svg" as="image">
+
+  .. image:: _static/my_logo_light.svg
+     :alt: My Logo
+     :class: logo, mainlogo
+     :align: center
+
+The JavaScript reacts to ``data-theme`` changes to alter ``img``, and the ``link`` is used to preload the dark image.
+See the `MutationObserver documentation <https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver>`_ for more information.
