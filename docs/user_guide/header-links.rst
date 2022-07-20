@@ -66,6 +66,17 @@ These links take the following form:
       ]
    }
 
+
+Additionally, the screen-reader accessible label for this menu can be configured:
+
+.. code:: python
+
+   html_theme_options = {
+       ...
+       "icon_links_label": "Quick Links",
+       ...
+   }
+
 There are two kinds of icons you can use, described below:
 
 FontAwesome icons
@@ -196,15 +207,6 @@ These may be removed in a future release in favor of ``icon_links``:
        ...
    }
 
-Additionally, the screen-reader accessible label for this menu can be configured:
-
-.. code:: python
-
-   html_theme_options = {
-       ...
-       "icon_links_label": "Quick Links",
-       ...
-   }
 
 Add custom attributes to icon links
 -----------------------------------

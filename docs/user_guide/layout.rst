@@ -133,7 +133,7 @@ By default the theme's three columns have fixed widths.
 The ``primary sidebar`` will snap to the left, the ``secondary sidebar`` will snap to the right, and the ``article content`` will be centered in between.
 
 - If one of the sidebars is not present, then the ``article content`` will be centered between the other sidebar and the side of the page.
-- If neither sidebars are present, the ``article content`` will be present in the middle of the page.
+- If neither sidebar is present, the ``article content`` will be in the middle of the page.
 
 If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` and ``flex-grow`` CSS variables with the ``.bd-content`` selector.
 For example, to make the content grow to fit all available width, add a custom CSS rule like:
@@ -150,7 +150,7 @@ Templates and components
 
 There are a few major theme sections that you can customize to add/remove
 components, or add your own components. Each section is configured with a
-list of *html templates* - these are snippets of HTML that are inserted into
+list of *html templates* — these are snippets of HTML that are inserted into
 the section by Sphinx.
 
 You can choose which templates show up in each section, as well as the order in
