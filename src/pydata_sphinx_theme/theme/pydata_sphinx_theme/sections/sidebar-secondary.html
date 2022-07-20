@@ -1,11 +1,7 @@
-{% block docs_toc %}
-{% if meta is defined and not (meta is not none and 'theme_html_remove_secondary_sidebar' in meta) %}
-<div class="bd-sidebar-secondary bd-toc">
+
     {% for toc_item in theme_page_sidebar_items %}
     <div class="toc-item">
       {% include toc_item %}
     </div>
     {% endfor %}
 </div>
-{% endif %}
-{% endblock %}
