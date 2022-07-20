@@ -1,0 +1,51 @@
+/**
+ * ABlog
+ * ref: https://ablog.readthedocs.io/
+ */
+// HACK: ABlog has no CSS selector, but directly inserts elements into the sidebar
+// So we make an assumption here that any *top-level* sidebar items that are ul/h2/h3
+// Are attached to ABlog. This is hacky and we should try to get top-level ablog
+// CSS wrappers into ABlog instead.
+.bd-sidebar-primary .sidebar-start-items {
+  > h3,
+  > h2 {
+    margin-top: 1rem;
+  }
+
+  > ul {
+    list-style: none;
+    padding-left: 0;
+  }
+}
+
+// HACK: ABlog articles always seem to have the structure:
+// <section id="POST-TITLE-ID">{{ POST CONTENT }}
+// <div class="section">
+//   <div class="section"
+//      <span>previous button
+//      <span>empty space
+//      <span>next button
+//
+// So these rules make that assumption
+article.bd-article > section + div.section {
+  font-size: 1.2em;
+
+  span:first-child:before {
+    content: "\f104";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 800;
+  }
+
+  span:last-child:after {
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 800;
+  }
+}
+
+// The post list on the ablog index
+.ablog-post {
+  ul.ablog-archive {
+    padding-left: 0;
+  }
+}

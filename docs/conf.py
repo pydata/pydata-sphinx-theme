@@ -13,11 +13,6 @@ import pydata_sphinx_theme
 # -- General configuration ---------------------------------------------------
 
 extensions = [
-    "jupyter_sphinx",
-    "matplotlib.sphinxext.plot_directive",
-    "myst_nb",
-    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
-    "numpydoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.todo",
@@ -25,6 +20,13 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
+    # For extension examples and demos
+    "ablog",
+    "jupyter_sphinx",
+    "matplotlib.sphinxext.plot_directive",
+    "myst_nb",
+    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
+    "numpydoc",
     "sphinx_togglebutton",
 ]
 
@@ -54,7 +56,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 # -- Extension options -------------------------------------------------------
 
 # This allows us to use ::: to denote directives, useful for admonitions
-myst_enable_extensions = ["colon_fence"]
+myst_enable_extensions = ["colon_fence", "substitution"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -147,11 +149,24 @@ html_sidebars = {
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
-    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items
+    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items,
     "demo/persistent-search-field": ["search-field"],
+    # Blog sidebars
+    # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
+    "demo/blog/*": [
+        "postcard.html",
+        "recentposts.html",
+        "tagcloud.html",
+        "categories.html",
+        "authors.html",
+        "languages.html",
+        "locations.html",
+        "archives.html",
+    ],
 }
 
 myst_heading_anchors = 2
+myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
 
 html_context = {
     "github_user": "pydata",
@@ -163,6 +178,14 @@ html_context = {
 rediraffe_redirects = {
     "contributing.rst": "contribute/index.rst",
 }
+
+# ABlog configuration
+blog_path = "demo/blog/index"
+blog_authors = {
+    "pydata": ("PyData", "https://pydata.org"),
+    "jupyter": ("Jupyter", "https://jupyter.org"),
+}
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
