@@ -111,10 +111,6 @@ Here are several examples:
                "name": "Mastodon",
                "url": "https://<your-host>@<your-handle>",
                "icon": "fab fa-mastodon",
-               "attributes": {
-                  "target" : "_blank",
-                  "rel" : "noopener me",
-               }
            },
        ],
        ...
@@ -131,7 +127,7 @@ Here are several examples:
          color: #55acee;
       }
 
-   This has already been added for the brands that have *shortcuts*.
+   This has already been added for the brands that have *shortcuts* (:ref:`see below <icon-link-shortcuts>`).
 
 Image icons
 -----------
@@ -180,6 +176,8 @@ For example:
 .. tip::
 
    Use ``.svg`` images for a higher-resolution output that behaves similarly across screen sizes.
+
+.. _icon-link-shortcuts:
 
 Icon Link Shortcuts
 -------------------

@@ -29,7 +29,7 @@ GitHub
 .. code:: python
 
    html_context = {
-       # "github_url": "https://github.com", # or your GitHub Enterprise interprise
+       # "github_url": "https://github.com", # or your GitHub Enterprise site
        "github_user": "<your-github-org>",
        "github_repo": "<your-github-repo>",
        "github_version": "<your-branch>",
@@ -89,7 +89,7 @@ To do so, add the following extension to your documentation:
 .. code-block:: python
 
     extensions = [
-        ...,
+        ...
         "sphinx.ext.viewcode",
         ...
     ]

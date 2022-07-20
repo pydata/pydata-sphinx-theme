@@ -6,7 +6,7 @@ Customize logo and title
 ========================
 
 By default the theme will use the value of ``project`` on the left side of the header navbar.
-This can be replaced by a Logo image, and optionally a custom ``html_title`` as well.
+This can be replaced by a logo image, and optionally a custom ``html_title`` as well.
 
 Single logo for light and dark mode
 -----------------------------------
@@ -28,10 +28,10 @@ For example:
 Different logos for light and dark mode
 ---------------------------------------
 
-You may specify use a different version of your logo image for "light" and "dark" modes.
+You may specify a different version of your logo image for "light" and "dark" modes.
 This is useful if your logo image is not adapted to a dark mode (light background, not enough contrast, etc...).
 
-To do so, put the 2 image files in a folder that is in ``html_static_path`` and configure the relative path to each image with ``logo.image_light`` and ``logo.image_dark`` in ``html_theme_options``, like so:
+To do so, put the 2 image files in a folder that is in ``html_static_path`` and configure the relative path to each image with ``logo["image_light"]`` and ``logo["image_dark"]`` in ``html_theme_options``, like so:
 
 .. code-block:: python
 
@@ -45,7 +45,7 @@ To do so, put the 2 image files in a folder that is in ``html_static_path`` and 
 
 .. note::
 
-   ``image_light`` and ``image_dark`` will override the ``html_logo`` setting. If you only specify one of them, but not the other, then the un-specified setting will re-use ``html_logo``.
+   ``image_light`` and ``image_dark`` will override the ``html_logo`` setting. If you only specify one of the light or dark variants, the un-specified variant will fall back to the value of ``html_logo``.
 
 Customize logo link
 -------------------

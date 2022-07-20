@@ -16,7 +16,7 @@ Configure default theme mode
 ----------------------------
 
 By default, visitors to your documentation will use the theme mode ``auto``.
-This will choose a theme based on the user's system settings, and default to ``light`` if not settings are present.
+This will choose a theme based on the user's system settings, and default to ``light`` if no system setting is found.
 
 If you wish to use a different default theme mode, set the ``default_mode`` configuration to one of ``auto``, ``dark``, ``light``.
 For example:
@@ -37,7 +37,7 @@ For more information, see :ref:`manage-themes`.
    .. code-block:: python
 
       html_theme_options {
-          # ...
+          ...
           # Note we have omitted `theme-switcher` below
           "navbar_end": ["navbar-icon-links"]
       }
@@ -47,7 +47,7 @@ Customize the CSS of light and dark themes
 
 .. danger::
 
-    Theming is still a beta feature so the variables related to the theme switch are likely to change in the future. No backward compatibily is guaranteed when customization is done.
+    Theming is still a beta feature so the variables related to color theming are likely to change in the future. No backward compatibily is guaranteed when customization is done.
 
 
 To customize the CSS of page elements in a theme-dependent manner, use the ``html[data-theme='<THEME>']`` CSS selector.
@@ -69,7 +69,7 @@ For example to define a different background color for both the light and dark t
         background: black;
     }
 
-A complete list of the used colors for this theme can be found in the :doc:`CSS style section <styling>`.
+A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.
 
 Use theme-dependent content
 ---------------------------

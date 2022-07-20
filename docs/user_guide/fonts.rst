@@ -4,7 +4,7 @@ Fonts and FontAwesome
 The theme includes the `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__
 icon font (the ``.fa, .far, .fas`` styles, which are used for
 :ref:`icon links <icon-links>` and admonitions).
-This is the only `vendored` font, and otherwise the theme by default relies on
+This is the only *vendored* font, and otherwise the theme by default relies on
 available system fonts for normal body text and headers.
 
 The default body and header fonts can be changed as follows:
@@ -21,7 +21,7 @@ The default body and header fonts can be changed as follows:
           --pst-font-family-monospace: Courier, var(--pst-font-family-monospace-system);
       }
 
-  The ``-system`` variables are available to use as fallback to the default fonts.
+  The ``*-system`` variables are available to use as fallback to the default fonts.
 
 - If the font you want to specify in the section above is not generally available
   by default, you will additionally need to ensure the font is loaded.
@@ -46,8 +46,8 @@ The default body and header fonts can be changed as follows:
 
     To reduce the `Flash of Unstyled Content`, you may wish to explore various options for
     `preloading content <https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content>`__,
-    specifically the binary font files. This ensure the files will be loaded
-    before waiting for the CSS to be parsed, but should be used with care.
+    specifically the binary font files. This ensures the files will be loaded
+    before the CSS is parsed, but should be used with care.
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/
 .. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss
