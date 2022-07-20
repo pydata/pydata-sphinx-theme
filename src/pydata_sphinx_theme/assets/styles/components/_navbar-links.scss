@@ -1,0 +1,22 @@
+/**
+ * Navigation links within a navbar
+ */
+.navbar-nav {
+  // Navigation links
+  li a.nav-link {
+    color: var(--pst-color-text-muted);
+
+    &:hover {
+      color: var(--pst-color-primary);
+    }
+
+    &:focus {
+      color: var(--pst-color-primary);
+    }
+  }
+
+  > .active > .nav-link {
+    font-weight: 600;
+    color: var(--pst-color-primary);
+  }
+}

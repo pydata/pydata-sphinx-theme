@@ -1,18 +1,44 @@
 {% block docs_sidebar %}
 
-{% if sidebars %}
-{# Only show if we have sidebars configured #}
-<div class="bd-sidebar-primary bd-sidebar">
+<div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
+  {# Header items that will be displayed in the sidebar on mobile #}
+  <div class="sidebar-header-items">
+    {# The header center items #}
+    {% if theme_navbar_center %}
+      <div class="sidebar-header-items__center">
+      {% for navbar_item in theme_navbar_center %}
+      <div class="navbar-center-item">
+        {% include navbar_item %}
+      </div>
+      {% endfor %}
+      </div>
+    {% endif %}
+
+    {# The header end items #}
+    {% if theme_navbar_end %}
+    <div class="sidebar-header-items__end">
+      {% for navbar_item in theme_navbar_end %}
+      <div class="navbar-end-item">
+        {% include navbar_item %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  {% if sidebars %}
   <div class="sidebar-start-items">
     {%- for sidebartemplate in sidebars %}
     {%- include sidebartemplate %}
     {%- endfor %}
   </div>
+  {% endif %}
+
+  {# Items that will snap to the bottom of the screen#}
   <div class="sidebar-end-items">
     {%- for leftsidebartemplate in theme_left_sidebar_end %}
     {%- include leftsidebartemplate %}
     {%- endfor %}
   </div>
 </div>
-{% endif %}
 {% endblock %}

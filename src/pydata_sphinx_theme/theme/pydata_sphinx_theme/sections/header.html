@@ -1,5 +1,8 @@
 <div class="bd-header__inner container-xl">
 
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fas fa-bars"></span>
+  </label>
   <div id="navbar-start">
     {% for navbar_item in theme_navbar_start %}
     {% include navbar_item %}
@@ -11,9 +14,11 @@
     {%- include "../components/search-button.html" %}
   </div>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="{{ _('Toggle navigation') }}">
-    <span class="fas fa-bars"></span>
-  </button>
+  {% if use_sidebar_secondary %}
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fas fa-outdent"></span>
+  </label>
+  {% endif %}
 
   {% set navbar_class, navbar_align = navbar_align_class() %}
   <div id="navbar-collapsible" class="{{ navbar_class }} collapse navbar-collapse">
@@ -39,14 +44,3 @@
   </div>
 
 </div>
-
-<script>
-// Adds the `shown` class to the parent so that we can trigger overflow
-// behavior that depends on whether we're expanded
-$('#navbar-collapsible').on('show.bs.collapse', function () {
-  $(".bd-header").addClass("shown");
-});
-$('#navbar-collapsible').on('hide.bs.collapse', function () {
-  $(".bd-header").removeClass("shown");
-});
-</script>

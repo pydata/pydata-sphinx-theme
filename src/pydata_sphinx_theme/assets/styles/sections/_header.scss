@@ -33,6 +33,7 @@
 
   // A little smaller because this is displayed by default on mobile
   #navbar-start {
+    margin-right: auto;
     gap: 0.5rem;
   }
 
@@ -53,6 +54,11 @@
       color: var(--pst-color-text-muted);
     }
   }
+
+  label {
+    // Override a bootstrap default
+    margin-bottom: 0;
+  }
 }
 
 // If we want the shadow to only point downward in the future, set
@@ -64,65 +70,26 @@
 
   .navbar-nav {
     display: flex;
-
-    @include media-breakpoint-up($breakpoint-header) {
-      // Center align on wide screens so the dropdown button is centered properly
-      align-items: center;
-    }
-
-    li a.nav-link {
-      color: var(--pst-color-text-muted);
-
-      &:hover {
-        color: var(--pst-color-primary);
-      }
-
-      &:focus {
-        color: var(--pst-color-primary);
-      }
-    }
-
-    > .active > .nav-link {
-      font-weight: 600;
-      color: var(--pst-color-primary);
-    }
+    align-items: center;
 
     // Dropdowns for the extra links
     .dropdown {
-      // On mobile, the dropdown behaves like any other link, no hiding
       button {
-        display: none;
-      }
-
-      .dropdown-menu {
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-        background-color: var(--pst-color-on-background);
-        color: var(--pst-color-text-base);
+        display: unset;
+        color: var(--pst-color-text-muted);
         border: none;
       }
 
-      // On wide screens, the dropdown becomes a pop-up menu
-      @include media-breakpoint-up($breakpoint-header) {
-        button {
-          display: unset;
-          color: var(--pst-color-text-muted);
-          border: none;
-        }
+      .dropdown-menu {
+        z-index: $zindex-popover;
+        box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
+        padding: 0.5rem 1rem;
+        margin: 0.5rem 0;
+        min-width: 20rem;
 
-        .dropdown-menu {
-          z-index: $zindex-popover;
-          box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
-          padding: 0.5rem 1rem;
-          margin: 0.5rem 0;
-          min-width: 20rem;
-
-          // Hide the menu unless show has been clicked
-          &:not(.show) {
-            display: none;
-          }
+        // Hide the menu unless show has been clicked
+        &:not(.show) {
+          display: none;
         }
       }
     }

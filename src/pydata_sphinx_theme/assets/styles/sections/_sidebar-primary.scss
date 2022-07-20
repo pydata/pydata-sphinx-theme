@@ -24,6 +24,68 @@
     border-right: 0;
   }
 
+  &.hide-on-wide {
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      display: none;
+    }
+  }
+
+  // Hide the sidebar header items on widescreen since they are visible in the header
+  .sidebar-header-items {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--pst-color-border);
+    padding-bottom: 1rem;
+
+    // The dropdown toggle for extra links just shows them all instead.
+    .dropdown {
+      // On mobile, the dropdown behaves like any other link, no hiding
+      button {
+        display: none;
+      }
+
+      .dropdown-menu {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        background-color: var(--pst-color-on-background);
+        color: var(--pst-color-text-base);
+        border: none;
+      }
+    }
+
+    // Navigation links
+    li a.nav-link {
+      color: var(--pst-color-text-muted);
+
+      &:hover {
+        color: var(--pst-color-primary);
+      }
+
+      &:focus {
+        color: var(--pst-color-primary);
+      }
+    }
+
+    > .active > .nav-link {
+      font-weight: 600;
+      color: var(--pst-color-primary);
+    }
+
+    // Positioning end items
+    .sidebar-header-items__end {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      display: none;
+    }
+  }
+
   .sidebar-end-items {
     margin-top: auto;
     margin-bottom: 1em;
