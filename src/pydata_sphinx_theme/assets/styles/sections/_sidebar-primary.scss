@@ -17,8 +17,9 @@
   border-right: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-background);
   overflow-y: auto;
-
   @include scrollbar-style();
+
+  font-size: var(--pst-sidebar-primary-font-size);
 
   &.no-sidebar {
     border-right: 0;
@@ -34,9 +35,13 @@
   .sidebar-header-items {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--pst-color-border);
     padding-bottom: 1rem;
+
+    .sidebar-header-items__title {
+      font-size: 1.1rem;
+      color: var(--pst-color-text-base);
+      margin-bottom: 0.5rem;
+    }
 
     // The dropdown toggle for extra links just shows them all instead.
     .dropdown {
@@ -50,28 +55,10 @@
         flex-direction: column;
         padding: 0;
         margin: 0;
-        background-color: var(--pst-color-on-background);
-        color: var(--pst-color-text-base);
         border: none;
+        background-color: inherit;
+        font-size: inherit;
       }
-    }
-
-    // Navigation links
-    li a.nav-link {
-      color: var(--pst-color-text-muted);
-
-      &:hover {
-        color: var(--pst-color-primary);
-      }
-
-      &:focus {
-        color: var(--pst-color-primary);
-      }
-    }
-
-    > .active > .nav-link {
-      font-weight: 600;
-      color: var(--pst-color-primary);
     }
 
     // Positioning end items
@@ -84,6 +71,11 @@
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: none;
     }
+  }
+
+  .sidebar-start-items {
+    padding-top: 1rem;
+    border-top: 1px solid var(--pst-color-border);
   }
 
   .sidebar-end-items {
@@ -148,51 +140,7 @@
 
 /* Between-page links and captions */
 nav.bd-links {
-  font-size: var(--pst-sidebar-primary-font-size);
   margin-right: -1rem;
-
-  @include media-breakpoint-up($breakpoint-sidebar-primary) {
-    display: block;
-  }
-
-  ul {
-    list-style: none;
-
-    // Reduce padding of nested `ul` items a bit
-    ul {
-      padding: 0 0 0 1rem;
-    }
-  }
-
-  li > a {
-    display: block;
-    padding: 0.25rem 0;
-    color: var(--pst-color-text-muted);
-
-    &:hover {
-      color: var(--pst-color-primary);
-      text-decoration: none;
-      background-color: transparent;
-    }
-
-    &.reference.external {
-      &:after {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content: "\f35d";
-        font-size: 0.75em;
-        margin-left: 0.3em;
-      }
-    }
-  }
-
-  .active {
-    > a,
-    &:hover > a {
-      font-weight: 600;
-      color: var(--pst-color-primary);
-    }
-  }
 
   // Toctree captions
   p.caption {
@@ -206,48 +154,5 @@ nav.bd-links {
     &:first-child {
       margin-top: 0;
     }
-  }
-}
-
-// Navigation items on the left
-.bd-sidenav {
-  display: none;
-}
-
-.bd-toc-item.active {
-  margin-bottom: 1rem;
-
-  &:not(:first-child) {
-    margin-top: 1rem;
-  }
-
-  > .bd-sidenav {
-    display: block;
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Togglable expand/collapse
-////////////////////////////////////////////////////////////////////////////////
-
-.toctree-checkbox {
-  position: absolute;
-  display: none;
-}
-
-.toctree-checkbox {
-  ~ ul {
-    display: none;
-  }
-  ~ label i {
-    transform: rotate(0deg);
-  }
-}
-.toctree-checkbox:checked {
-  ~ ul {
-    display: block;
-  }
-  ~ label i {
-    transform: rotate(180deg);
   }
 }

@@ -84,10 +84,9 @@ function addModeListener() {
   setTheme(document.documentElement.dataset.mode);
 
   // Attach event handlers for toggling themes colors
-  const btn = document.getElementById("theme-switch");
-  if (btn != null) {
-    btn.addEventListener("click", cycleMode);
-  }
+  document.querySelectorAll(".theme-switch-button").forEach((el) => {
+    el.addEventListener("click", cycleMode);
+  });
 }
 
 /*******************************************************************************

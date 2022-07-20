@@ -1,5 +1,5 @@
 // the icons for theme change
-#theme-switch {
+.theme-switch-button {
   // to overide bootstrap settings
   border-color: var(--pst-color-on-background);
   padding: 0.25rem 0.5rem;
@@ -13,6 +13,7 @@
 
   &:hover {
     background-color: var(--pst-color-on-surface);
+    border-color: var(--pst-color-on-background);
 
     a {
       color: var(--pst-color-text-base);
@@ -20,12 +21,12 @@
   }
 }
 
-html[data-mode="auto"] #theme-switch a[data-mode="auto"] {
+html[data-mode="auto"] .theme-switch-button a[data-mode="auto"] {
   display: block;
 }
-html[data-mode="light"] #theme-switch a[data-mode="light"] {
+html[data-mode="light"] .theme-switch-button a[data-mode="light"] {
   display: block;
 }
-html[data-mode="dark"] #theme-switch a[data-mode="dark"] {
+html[data-mode="dark"] .theme-switch-button a[data-mode="dark"] {
   display: block;
 }

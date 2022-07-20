@@ -101,7 +101,7 @@ input {
 
 .bd-sidebar-primary {
   // One breakpoint less than $breakpoint-sidebar-primary. See variables/_layout.scss for more info.
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     @include sliding-drawer("left");
   }
 }
