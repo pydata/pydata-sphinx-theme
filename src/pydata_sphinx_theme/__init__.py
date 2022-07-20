@@ -77,6 +77,17 @@ def update_config(app, env):
         app.add_js_file(gid_js_path, loading_method="async")
         app.add_js_file(None, body=gid_script)
 
+    # or Plausible analytics
+    plausible_domain = theme_options.get("plausible_domain")
+    plausible_url = theme_options.get("plausible_url")
+
+    if plausible_domain and plausible_url:
+        plausible_script = f"""
+            data-domain={plausible_domain} src={plausible_url}
+        """
+        # Link the JS file
+        app.add_js_file(None, body=plausible_script, loading_method="defer")
+
 
 def prepare_html_config(app, pagename, templatename, context, doctree):
     """Prepare some configuration values for the HTML build.

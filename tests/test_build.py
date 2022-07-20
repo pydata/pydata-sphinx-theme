@@ -568,6 +568,23 @@ def test_old_google_analytics_id(sphinx_build_factory):
     assert tags_found is True
 
 
+def test_plausible_analytics_id(sphinx_build_factory):
+    confoverrides = {
+        "html_theme_options.plausible_domain": "toto",
+        "html_theme_options.plausible_url": "http://.../script.js"
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
+    sphinx_build.build()
+    index_html = sphinx_build.html_tree("index.html")
+
+    # Search all the scripts and make sure one of them has the plausible domain
+    tags_found = False
+    for script in index_html.select("script"):
+        if script.string and "data-domain" in script.string and "toto" in script.string:
+            tags_found = True
+    assert tags_found is True
+
+
 def test_show_nav_level(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
     confoverrides = {"html_theme_options.show_nav_level": 2}
