@@ -1,13 +1,13 @@
 /* Background of stable should be green */
-#version_switcher a[data-version-name*="stable"] {
+.version-switcher__container a[data-version-name*="stable"] {
   position: relative;
 }
 
-#version_switcher a[data-version-name*="stable"] span {
+.version-switcher__container a[data-version-name*="stable"] span {
   color: var(--pst-color-success);
 }
 
-#version_switcher a[data-version-name*="stable"] span:before {
+.version-switcher__container a[data-version-name*="stable"] span:before {
   content: "";
   width: 100%;
   height: 100%;

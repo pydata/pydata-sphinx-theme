@@ -195,12 +195,12 @@ You can create CSS rules that select this metadata like so:
 .. code-block:: scss
 
    // Style all links with a specific subset of versions
-   #version_switcher a[data-version="0.2"],
-   #version_switcher a[data-version="0.3"] {
+   .version-switcher__container a[data-version="0.2"],
+   .version-switcher__container a[data-version="0.3"] {
       background-color: red;
    }
    // Style all links with `stable` in the version name
-   #version_switcher a[data-version-name*="stable"] {
+   .version-switcher__container a[data-version-name*="stable"] {
       background-color: green;
    }
 
@@ -214,7 +214,7 @@ version, you could use the following CSS selector:
 .. code-block:: scss
 
    // If the active version has the name "dev", style it orange
-   #version_switcher_button[data-active-version-name*="dev"] {
+   .version-switcher__button[data-active-version-name*="dev"] {
       background-color: var(--pst-color-secondary);
    }
 

@@ -68,9 +68,6 @@ def test_build_html(sphinx_build_factory, file_regression):
     navbar = index_html.select("div#navbar-center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
-    # Sidebars should be hidden on index page because there is no sub-page
-    assert not index_html.select(".bd-sidebar-primary")
-
     # Sidebar subpage
     sidebar = subpage_html.select(".bd-sidebar")[0]
     file_regression.check(
@@ -271,7 +268,7 @@ def test_navbar_align_default(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
     sphinx_build = sphinx_build_factory("base").build()
     index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" in index_html.select("div#navbar-collapsible")[0].attrs["class"]
+    assert "col-lg-9" in index_html.select(".navbar-header-items")[0].attrs["class"]
 
 
 def test_navbar_align_right(sphinx_build_factory):
@@ -281,7 +278,7 @@ def test_navbar_align_right(sphinx_build_factory):
 
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" not in index_html.select("div#navbar-center")[0].attrs["class"]
+    assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
     assert "ml-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
 
 
@@ -632,7 +629,11 @@ def test_version_switcher(sphinx_build_factory, file_regression):
         }
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    switcher = sphinx_build.html_tree("index.html").select("#version_switcher")[0]
+    switcher = sphinx_build.html_tree("index.html").select(
+        ".version-switcher__container"
+    )[
+        0
+    ]  # noqa
     file_regression.check(
         switcher.prettify(), basename="navbar_switcher", extension=".html"
     )

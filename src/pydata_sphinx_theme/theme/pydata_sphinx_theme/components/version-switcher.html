@@ -1,9 +1,9 @@
-<div class="dropdown" id="version_switcher">
-    <button type="button" class="btn btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
+<div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
         {{ theme_switcher.get('version_match') }}  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
-    <div id="version_switcher_menu" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0" aria-labelledby="version-switcher__button">
     <!-- dropdown will be populated by javascript on page load -->
     </div>
 </div>
@@ -39,10 +39,12 @@ function checkPageExistsAndRedirect(event) {
 (function () {
     $.getJSON("{{ theme_switcher.get('json_url') }}", function(data, textStatus, jqXHR) {
         const currentFilePath = "{{ pagename }}.html";
-        let btn = document.getElementById("version_switcher_button");
-        // Set empty strings by default so that these attributes exist and can be used in CSS selectors
-        btn.dataset["activeVersionName"] = "";
-        btn.dataset["activeVersion"] = "";
+        let btns = document.querySelectorAll("version-switcher__button");
+        btns.forEach((btn) => {
+            // Set empty strings by default so that these attributes exist and can be used in CSS selectors
+            btn.dataset["activeVersionName"] = "";
+            btn.dataset["activeVersion"] = "";
+        });
         // create links to the corresponding page in the other docs versions
         $.each(data, function(index, entry) {
             // if no custom name specified (e.g., "latest"), use version string
@@ -67,15 +69,17 @@ function checkPageExistsAndRedirect(event) {
             node.dataset["versionName"] = entry.name;
             node.dataset["version"] = entry.version;
 
-            $("#version_switcher_menu").append(node);
+            $(".version-switcher__menu").append(node);
             // replace dropdown button text with the preferred display name of
             // this version, rather than using sphinx's {{ version }} variable.
             // also highlight the dropdown entry for the currently-viewed
             // version's entry
             if (entry.version == "{{ theme_switcher.get('version_match') }}") {
                 node.classList.add("active");
-                btn.innerText = btn.dataset["activeVersionName"] = entry.name;
-                btn.dataset["activeVersion"] = entry.version;
+                btns.forEach((btn) => {
+                    btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+                    btn.dataset["activeVersion"] = entry.version;
+                });
             }
         });
     });

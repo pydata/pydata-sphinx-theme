@@ -1,32 +1,38 @@
 // the icons for theme change
 .theme-switch-button {
-  // to overide bootstrap settings
+  // overide bootstrap settings
   border-color: var(--pst-color-on-background);
-  padding: 0.25rem 0.5rem;
   font-size: 1.1rem;
   margin: 0 -0.5rem;
 
   a {
-    color: var(--pst-color-text-muted);
     display: none;
+    color: var(--pst-color-text-muted);
+    padding: 0.25rem 0.12rem;
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+    }
   }
 
-  &:hover {
-    background-color: var(--pst-color-on-surface);
-    border-color: var(--pst-color-on-background);
-
+  &:hover,
+  &:active {
+    // overide bootstrap settings
+    background-color: var(--pst-color-on-surface) !important;
+    border-color: var(--pst-color-on-background) !important;
     a {
-      color: var(--pst-color-text-base);
+      color: var(--pst-color-text-muted);
     }
   }
 }
 
 html[data-mode="auto"] .theme-switch-button a[data-mode="auto"] {
-  display: block;
+  display: flex;
 }
 html[data-mode="light"] .theme-switch-button a[data-mode="light"] {
-  display: block;
+  display: flex;
 }
 html[data-mode="dark"] .theme-switch-button a[data-mode="dark"] {
-  display: block;
+  display: flex;
 }

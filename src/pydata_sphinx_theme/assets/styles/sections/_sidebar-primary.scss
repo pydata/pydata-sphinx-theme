@@ -31,6 +31,16 @@
     }
   }
 
+  .sidebar-primary__section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .sidebar-start-items__item,
+  .sidebar-end-items__item {
+    padding: 0.25rem 0;
+  }
+
   // Hide the sidebar header items on widescreen since they are visible in the header
   .sidebar-header-items {
     display: flex;
@@ -74,8 +84,11 @@
   }
 
   .sidebar-start-items {
-    padding-top: 1rem;
+    // Add a border on mobile to separate it from the header sidebar area
     border-top: 1px solid var(--pst-color-border);
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      border-top: none;
+    }
   }
 
   .sidebar-end-items {

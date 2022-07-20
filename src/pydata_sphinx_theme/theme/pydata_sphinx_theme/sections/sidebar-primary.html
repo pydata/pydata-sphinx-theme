@@ -2,7 +2,7 @@
 
 <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
   {# Header items that will be displayed in the sidebar on mobile #}
-  <div class="sidebar-header-items">
+  <div class="sidebar-header-items sidebar-primary__section">
     <p class="sidebar-header-items__title" role="heading" aria-label="{{ _('Navigation') }}">
       {{ _("Navigation") }}
     </p>
@@ -30,17 +30,21 @@
   </div>
 
   {% if sidebars %}
-  <div class="sidebar-start-items">
+  <div class="sidebar-start-items sidebar-primary__section">
     {%- for sidebartemplate in sidebars %}
+    <div class="sidebar-start-items__item"">
     {%- include sidebartemplate %}
+    </div>
     {%- endfor %}
   </div>
   {% endif %}
 
   {# Items that will snap to the bottom of the screen#}
-  <div class="sidebar-end-items">
-    {%- for leftsidebartemplate in theme_left_sidebar_end %}
-    {%- include leftsidebartemplate %}
+  <div class="sidebar-end-items sidebar-primary__section">
+    {%- for sidebartemplate in theme_left_sidebar_end %}
+    <div class="sidebar-end-items__item">
+    {%- include sidebartemplate %}
+    </div>
     {%- endfor %}
   </div>
 </div>
