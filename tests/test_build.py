@@ -540,8 +540,33 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
     assert edit_link[0].attrs["href"] == edit_url, f"edit link didn't match {edit_link}"
 
 
-def test_new_google_analytics_id(sphinx_build_factory):
-    confoverrides = {"html_theme_options.google_analytics_id": "G-XXXXX"}
+@pytest.mark.parametrize(
+    "provider,tags",
+    [
+        # deprecated
+        # new_google_analytics_id
+        ({"html_theme_options.google_analytics_id": "G-XXXXX"}, ["gtag", "G-XXXXX"]),
+        # old_google_analytics_id
+        ({"html_theme_options.google_analytics_id": "UA-XXXXX"}, ["ga", "UA-XXXXX"]),
+        # google analytics
+        (
+            {"html_theme_options.analytics": {"google_analytics_id": "G-XXXXX"}},
+            ["gtag", "G-XXXXX"],
+        ),
+        # plausible
+        (
+            {
+                "html_theme_options.analytics": {
+                    "plausible_analytics_domain": "toto",
+                    "plausible_analytics_url": "http://.../script.js",
+                }
+            },
+            ["data-domain", "toto"],
+        ),
+    ],
+)
+def test_analytics(sphinx_build_factory, provider, tags):
+    confoverrides = provider
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
@@ -549,38 +574,7 @@ def test_new_google_analytics_id(sphinx_build_factory):
     # Search all the scripts and make sure one of them has the Google tag in there
     tags_found = False
     for script in index_html.select("script"):
-        if script.string and "gtag" in script.string and "G-XXXXX" in script.string:
-            tags_found = True
-    assert tags_found is True
-
-
-def test_old_google_analytics_id(sphinx_build_factory):
-    confoverrides = {"html_theme_options.google_analytics_id": "UA-XXXXX"}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
-    sphinx_build.build()
-    index_html = sphinx_build.html_tree("index.html")
-
-    # Search all the scripts and make sure one of them has the Google tag in there
-    tags_found = False
-    for script in index_html.select("script"):
-        if script.string and "ga" in script.string and "UA-XXXXX" in script.string:
-            tags_found = True
-    assert tags_found is True
-
-
-def test_plausible_analytics_id(sphinx_build_factory):
-    confoverrides = {
-        "html_theme_options.plausible_analytics_domain": "toto",
-        "html_theme_options.plausible_analytics_url": "http://.../script.js",
-    }
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
-    sphinx_build.build()
-    index_html = sphinx_build.html_tree("index.html")
-
-    # Search all the scripts and make sure one of them has the plausible domain
-    tags_found = False
-    for script in index_html.select("script"):
-        if script.string and "data-domain" in script.string and "toto" in script.string:
+        if script.string and tags[0] in script.string and tags[1] in script.string:
             tags_found = True
     assert tags_found is True
 

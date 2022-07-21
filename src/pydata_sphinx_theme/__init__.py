@@ -2,6 +2,7 @@
 Bootstrap-based sphinx theme from the PyData community
 """
 import os
+import warnings
 from pathlib import Path
 
 import jinja2
@@ -49,44 +50,61 @@ def update_config(app, env):
         )
 
     # Add an analytics ID to the site if provided
-    # Currently only supports the two types of Google Analytics id.
+
+    # deprecated options for Google Analytics
     gid = theme_options.get("google_analytics_id")
     if gid:
-        # In this case it is "new-style" google analytics
-        if "G-" in gid:
-            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
-            gid_script = f"""
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){{ dataLayer.push(arguments); }}
-                gtag('js', new Date());
-                gtag('config', '{gid}');
-            """
-        # In this case it is "old-style" google analytics
+        msg = (
+            "'google_analytics_id' is deprecated and will be removed in "
+            "version 0.11, please refer to the documentation "
+            "and use 'analytics' instead."
+        )
+        warnings.warn(msg, DeprecationWarning, stacklevel=2)
+        if theme_options.get("analytics"):
+            theme_options["analytics"].update({"google_analytics_id": gid})
         else:
-            gid_js_path = "https://www.google-analytics.com/analytics.js"
-            gid_script = f"""
-                window.ga = window.ga || function () {{
-                    (ga.q = ga.q || []).push(arguments) }};
-                ga.l = +new Date;
-                ga('create', '{gid}', 'auto');
-                ga('set', 'anonymizeIp', true);
-                ga('send', 'pageview');
+            theme_options["analytics"] = {"google_analytics_id": gid}
+
+    analytics = theme_options.get("analytics")
+    if analytics:
+        # Plausible analytics
+        plausible_domain = analytics.get("plausible_analytics_domain")
+        plausible_url = analytics.get("plausible_analytics_url")
+
+        if plausible_domain and plausible_url:
+            plausible_script = f"""
+                data-domain={plausible_domain} src={plausible_url}
             """
+            # Link the JS file
+            app.add_js_file(None, body=plausible_script, loading_method="defer")
 
-        # Link the JS files
-        app.add_js_file(gid_js_path, loading_method="async")
-        app.add_js_file(None, body=gid_script)
+        # Two types of Google Analytics id.
+        gid = analytics.get("google_analytics_id")
+        if gid:
+            # In this case it is "new-style" google analytics
+            if "G-" in gid:
+                gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
+                gid_script = f"""
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){{ dataLayer.push(arguments); }}
+                    gtag('js', new Date());
+                    gtag('config', '{gid}');
+                """
+            # In this case it is "old-style" google analytics
+            else:
+                gid_js_path = "https://www.google-analytics.com/analytics.js"
+                gid_script = f"""
+                    window.ga = window.ga || function () {{
+                        (ga.q = ga.q || []).push(arguments) }};
+                    ga.l = +new Date;
+                    ga('create', '{gid}', 'auto');
+                    ga('set', 'anonymizeIp', true);
+                    ga('send', 'pageview');
+                """
 
-    # or Plausible analytics
-    plausible_domain = theme_options.get("plausible_analytics_domain")
-    plausible_url = theme_options.get("plausible_analytics_url")
-
-    if plausible_domain and plausible_url:
-        plausible_script = f"""
-            data-domain={plausible_domain} src={plausible_url}
-        """
-        # Link the JS file
-        app.add_js_file(None, body=plausible_script, loading_method="defer")
+            # Link the JS files
+            app.add_js_file(gid_js_path, loading_method="async")
+            app.add_js_file(None, body=gid_script)
 
 
 def prepare_html_config(app, pagename, templatename, context, doctree):

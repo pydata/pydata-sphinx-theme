@@ -1,22 +1,20 @@
 Analytics and usage services
 ============================
 
-Google Analytics
-================
-
-If the ``google_analytics_id`` config option is specified (like ``G-XXXXXXXXXX``),
-Google Analytics' javascript is included in the html pages.
+The theme supports analytics via the ``analytics`` option. It is configured
+by passing a dictionary with options. See the sections bellow for relevant
+options depending on the analytic provider that you want to use.
 
 .. code:: python
 
    html_theme_options = {
-       "google_analytics_id": "G-XXXXXXXXXX",
+       "analytics": analytics_options,
    }
 
-Plausible Analytics
-===================
+Plausible Analytics (recommended)
+=================================
 
-Alternatively https://plausible.io can be used to gather simple
+https://plausible.io can be used to gather simple
 and privacy-friendly analytics for the site. The configuration consists in
 a server URL and a specific domain. Plausible' javascript will be included in
 all html pages to gather metrics. And the dashboard can be accessed at
@@ -27,7 +25,19 @@ team on social media following https://scientific-python.org for assistance.
 
 .. code:: python
 
-   html_theme_options = {
+   analytics_options = {
        "plausible_analytics_domain": "my-domain",
        "plausible_analytics_url": "https://.../script.js",
+   }
+
+Google Analytics
+================
+
+If the ``google_analytics_id`` config option is specified (like ``G-XXXXXXXXXX``),
+Google Analytics' javascript is included in the html pages.
+
+.. code:: python
+
+   analytics_options = {
+       "google_analytics_id": "G-XXXXXXXXXX",
    }
