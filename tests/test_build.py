@@ -570,8 +570,8 @@ def test_old_google_analytics_id(sphinx_build_factory):
 
 def test_plausible_analytics_id(sphinx_build_factory):
     confoverrides = {
-        "html_theme_options.plausible_domain": "toto",
-        "html_theme_options.plausible_url": "http://.../script.js",
+        "html_theme_options.plausible_analytics_domain": "toto",
+        "html_theme_options.plausible_analytics_url": "http://.../script.js",
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
