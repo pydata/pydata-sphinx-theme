@@ -78,8 +78,8 @@ def update_config(app, env):
         app.add_js_file(None, body=gid_script)
 
     # or Plausible analytics
-    plausible_domain = theme_options.get("plausible_domain")
-    plausible_url = theme_options.get("plausible_url")
+    plausible_domain = theme_options.get("plausible_analytics_domain")
+    plausible_url = theme_options.get("plausible_analytics_url")
 
     if plausible_domain and plausible_url:
         plausible_script = f"""
