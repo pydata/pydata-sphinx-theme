@@ -17,11 +17,13 @@ Plausible Analytics
 ===================
 
 Alternatively https://plausible.io can be used to gather simple
-and privacy-friendly analytics for the site. The dashboard can be accessed
-at ``url/domain``.
-The Scientific-Python community can offer a self-hosted server.
+and privacy-friendly analytics for the site. The configuration consists in
+a server URL and a specific domain. Plausible' javascript will be included in
+all html pages to gather metrics. And the dashboard can be accessed at
+``https://url/my_domain``.
 
-Plausible' javascript is included in the html pages.
+The Scientific-Python community can offer a self-hosted server. Contact the
+team on social media following https://scientific-python.org for assistance.
 
 .. code:: python
 
