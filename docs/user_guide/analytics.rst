@@ -1,9 +1,9 @@
 Analytics and usage services
 ============================
 
-The theme supports analytics via the ``analytics`` option. It is configured
+The theme supports several web analytics services via the ``analytics`` option. It is configured
 by passing a dictionary with options. See the sections bellow for relevant
-options depending on the analytic provider that you want to use.
+options depending on the analytics provider that you want to use.
 
 .. code:: python
 
@@ -25,6 +25,7 @@ team on social media following https://scientific-python.org for assistance.
 
 .. code:: python
 
+   # To be re-used in html_theme_options["analytics"]
    analytics_options = {
        "plausible_analytics_domain": "my-domain",
        "plausible_analytics_url": "https://.../script.js",
@@ -38,6 +39,7 @@ Google Analytics' javascript is included in the html pages.
 
 .. code:: python
 
+   # To be re-used in html_theme_options["analytics"]
    analytics_options = {
        "google_analytics_id": "G-XXXXXXXXXX",
    }

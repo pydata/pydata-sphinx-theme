@@ -52,6 +52,7 @@ def update_config(app, env):
     # Add an analytics ID to the site if provided
 
     # deprecated options for Google Analytics
+    # TODO: deprecate >= v0.12
     gid = theme_options.get("google_analytics_id")
     if gid:
         msg = (

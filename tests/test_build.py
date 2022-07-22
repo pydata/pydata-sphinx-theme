@@ -543,7 +543,7 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
 @pytest.mark.parametrize(
     "provider,tags",
     [
-        # deprecated
+        # TODO: Deprecate old-style analytics config >= 0.12
         # new_google_analytics_id
         ({"html_theme_options.google_analytics_id": "G-XXXXX"}, ["gtag", "G-XXXXX"]),
         # old_google_analytics_id
