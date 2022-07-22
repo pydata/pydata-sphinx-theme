@@ -79,6 +79,24 @@ print("A code block with a caption and line numbers.")
 
 See [](pydata.md).
 
+## Admonition-like sidebars
+
+```{sidebar} Sidebar title
+---
+class: admonition info
+---
+Content goes here...
+```
+
+Here is a bunch of text to provide some vertical distance against which the adjacent sidebar can be viewed. This sidebar gets styled like an admonition because it has added classes:
+
+```rst
+.. sidebar:: Sidebar title
+    :class: admonition info
+
+    Content goes here...
+```
+
 ## Embedding in admonitions
 
 ````{note}
