@@ -11,17 +11,28 @@ options depending on the analytics provider that you want to use.
        "analytics": analytics_options,
    }
 
-Plausible Analytics (recommended)
-=================================
+Generally speaking we recommend using Plausible over Google Analytics because
+it has a better story around user security and privacy. In addition, it is more
+open-source and transparent. In fact,
+`you can self-host a Plausible server <https://www.elvisduru.com/blog/how-to-self-host-plausible-analytics>`__.
+
+.. admonition:: Get a self-hosted Plausible server at ``scientific-python.org``
+   :class: tip
+
+   If your documentation is for a package that is part of the SciPy / PyData
+   ecosystem, they might be able to host a Plausible server for you at
+   `<your-package>.scientific-python.org`.
+   To ask about this, contact them on the social media platform of your choice
+   and learn more at `scientific-python.org <https://scientific-python.org>`__.
+
+Plausible Analytics
+===================
 
 https://plausible.io can be used to gather simple
 and privacy-friendly analytics for the site. The configuration consists in
 a server URL and a specific domain. Plausible' javascript will be included in
 all html pages to gather metrics. And the dashboard can be accessed at
 ``https://url/my_domain``.
-
-The Scientific-Python community can offer a self-hosted server. Contact the
-team on social media following https://scientific-python.org for assistance.
 
 .. code:: python
 
