@@ -50,7 +50,7 @@ def update_config(app, env):
         )
 
     # Add an analytics ID to the site if provided
-
+    analytics = theme_options.get("analytics", {})
     # deprecated options for Google Analytics
     # TODO: deprecate >= v0.12
     gid = theme_options.get("google_analytics_id")
@@ -61,12 +61,8 @@ def update_config(app, env):
             "and use 'analytics' instead."
         )
         warnings.warn(msg, DeprecationWarning, stacklevel=2)
-        if theme_options.get("analytics"):
-            theme_options["analytics"].update({"google_analytics_id": gid})
-        else:
-            theme_options["analytics"] = {"google_analytics_id": gid}
+        analytics.update({"google_analytics_id": gid})
 
-    analytics = theme_options.get("analytics")
     if analytics:
         # Plausible analytics
         plausible_domain = analytics.get("plausible_analytics_domain")
