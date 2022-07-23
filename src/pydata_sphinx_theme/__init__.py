@@ -68,6 +68,7 @@ def update_config(app, env):
         plausible_domain = analytics.get("plausible_analytics_domain")
         plausible_url = analytics.get("plausible_analytics_url")
 
+        # Ref: https://plausible.io/docs/plausible-script
         if plausible_domain and plausible_url:
             plausible_script = f"""
                 data-domain={plausible_domain} src={plausible_url}
