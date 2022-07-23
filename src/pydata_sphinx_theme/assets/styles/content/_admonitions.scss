@@ -10,6 +10,7 @@ aside.sidebar {
   //    putting these stules after the .admonition styles though.
   &.admonition {
     margin-top: 0 !important;
+    margin-left: 1em !important;
     border: 0;
   }
 }
