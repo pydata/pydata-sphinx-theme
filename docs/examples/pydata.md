@@ -6,7 +6,7 @@ kernelspec:
 ---
 
 % To test this file with nbsphinx we need to convert to ipynb. To do this:
-% - Run this command: jupytext docs/demo/pydata.md --to ipynb
+% - Run this command: jupytext docs/examples/pydata.md --to ipynb
 % - _Temporarily_ delete the pydata.md file
 % - Uncomment `nbsphinx` and comment `myst_nb` in "extensions" in our conf.py file
 % - Build the docs and test that the results look OK

@@ -4,6 +4,22 @@ This section covers the simplest way to get started developing this theme locall
 It uses automation and as few steps as possible to get things done.
 If you'd like to do more operations manually, see [](manual.md).
 
+## Workflow for contributing changes
+
+We follow a [typical GitHub workflow](https://guides.github.com/introduction/flow/)
+of:
+
+- create a personal fork of this repo
+- create a branch
+- open a pull request
+- fix findings of various linters and checks
+- work through code review
+
+For each pull request, the documentation is built and deployed to make it easier to review the changes in the PR.
+To access this, click on the {{ rtd }} preview in the CI/CD jobs.
+
+The sections below cover the steps to do this in more detail.
+
 ## Clone the repository
 
 First off you'll need your own copy of the `pydata-sphinx-theme` codebase.

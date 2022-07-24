@@ -184,20 +184,12 @@ If a Sphinx release causes major breaking changes for our users, and we do not h
 
 ## Update our kitchen sink documents
 
-The [kitchen sink reference](../demo/kitchen-sink/index.rst) is for demonstrating as much syntax and style for Sphinx builds as possible.
+The [kitchen sink reference](../examples/kitchen-sink/index.rst) is for demonstrating as much syntax and style for Sphinx builds as possible.
 It is copied directly from the [`sphinx-themes.org` documentation](https://sphinx-themes.org/) so that we use standardized reference docs compared with other communities.
 The source files for these pages are stored [in the `sphinx-themes.org` repository](https://github.com/sphinx-themes/sphinx-themes.org/raw/master/sample-docs/kitchen-sink/).
 
 To update the kitchen sink source files, there is a helper Python script that will loop through the known kitchen sink files and copy over the latest text.
 To use it, run the following from the root of the repository:
-
-```python
-python docs/scripts/update_kitchen_sink.py
-```
-
-:::{note}
-To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../user_guide/theme-elements.md).
-:::
 
 ## Update the example gallery
 
@@ -218,7 +210,7 @@ If you'd like to build these images locally to preview in the theme, follow thes
 2. Execute the gallery generation script from the repository root:
 
    ```
-   $ python ./docs/scripts/generate_gallery_text.py
+   $ python ./docs/scripts/generate_gallery_images.py
    ```
 
 :::{note}
@@ -263,3 +255,9 @@ For more details, see:
 
 - https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
 - https://github.com/pydata/pydata-sphinx-theme/pull/713
+
+## The `gallery-grid` directive
+
+There are a few places where we use `sphinx-design` to generate "galleries" of grids with structured text and images.
+We've created a little Sphinx directive to make it easier to repeat this process in our documentation and to avoid repeating ourselves too much.
+It is located in the `docs/scripts/` folder in a dedicated module, and re-used throughout our documentation.

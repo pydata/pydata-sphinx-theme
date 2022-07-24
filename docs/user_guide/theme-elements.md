@@ -105,7 +105,7 @@ print("A code block with a caption and line numbers.")
 ## Code execution
 
 This theme has support for Jupyter execution libraries so that you can programmatically update your documentation with each build.
-For examples, see [](../demo/pydata.md).
+For examples, see [](../examples/pydata.md).
 
 ## Admonition sidebars
 

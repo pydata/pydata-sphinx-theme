@@ -1,5 +1,9 @@
 # -- Path setup --------------------------------------------------------------
 import os
+import sys
+
+sys.path.append("scripts")
+from gallery_directive import GalleryDirective
 
 # -- Project information -----------------------------------------------------
 
@@ -145,15 +149,15 @@ html_theme_options = {
 }
 
 html_sidebars = {
-    "contribute/index": [
+    "community/index": [
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
-    "demo/no-sidebar": [],  # Test what page looks like with no sidebar items,
-    "demo/persistent-search-field": ["search-field"],
+    "examples/no-sidebar": [],  # Test what page looks like with no sidebar items
+    "examples/persistent-search-field": ["search-field"],
     # Blog sidebars
     # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
-    "demo/blog/*": [
+    "examples/blog/*": [
         "postcard.html",
         "recentposts.html",
         "tagcloud.html",
@@ -176,11 +180,11 @@ html_context = {
 }
 
 rediraffe_redirects = {
-    "contributing.rst": "contribute/index.rst",
+    "contributing.rst": "community/index.rst",
 }
 
 # ABlog configuration
-blog_path = "demo/blog/index"
+blog_path = "examples/blog/index"
 blog_authors = {
     "pydata": ("PyData", "https://pydata.org"),
     "jupyter": ("Jupyter", "https://jupyter.org"),
@@ -192,5 +196,9 @@ blog_authors = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-
 todo_include_todos = True
+
+
+def setup(app):
+    # Add the gallery directive
+    app.add_directive("gallery-grid", GalleryDirective)

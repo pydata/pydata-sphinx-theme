@@ -26,7 +26,7 @@ kitchen_sink_files = [
     "tables.rst",
     "typography.rst",
 ]
-path_sink = Path(__file__).parent.parent / "demo" / "kitchen-sink"
+path_sink = Path(__file__).parent.parent / "examples" / "kitchen-sink"
 for ifile in kitchen_sink_files:
     print(f"Reading {ifile}...")
     url = f"https://github.com/sphinx-themes/sphinx-themes.org/raw/master/sample-docs/kitchen-sink/{ifile}"  # noqa
