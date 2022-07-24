@@ -198,7 +198,7 @@ Here's a list of our pages and where they come from in `sphinx-themes.org`:
 - [`paragraph-markup.rst`](../demo/kitchen-sink/paragraph-markup.rst) ([source](https://github.com/sphinx-themes/sphinx-themes.org/blob/master/sample-docs/kitchen-sink/paragraph-markup.rst))
 
 :::{note}
-To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../demo/theme-elements.md).
+To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../user_guide/theme-elements.md).
 :::
 
 ## Update the example gallery
