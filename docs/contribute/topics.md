@@ -188,14 +188,12 @@ The [kitchen sink reference](../demo/kitchen-sink/index.rst) is for demonstratin
 It is copied directly from the [`sphinx-themes.org` documentation](https://sphinx-themes.org/) so that we use standardized reference docs compared with other communities.
 The source files for these pages are stored [in the `sphinx-themes.org` repository](https://github.com/sphinx-themes/sphinx-themes.org/raw/master/sample-docs/kitchen-sink/).
 
-If you'd like to update our local files with any changes that have been made to the `sphinx-themes.org` files, simply copy/paste those changes into our local files and make a commit.
+To update the kitchen sink source files, there is a helper Python script that will loop through the known kitchen sink files and copy over the latest text.
+To use it, run the following from the root of the repository:
 
-Here's a list of our pages and where they come from in `sphinx-themes.org`:
-
-- [`index.rst`](../demo/kitchen-sink/index.rst) ([source](https://github.com/sphinx-themes/sphinx-themes.org/blob/master/sample-docs/kitchen-sink/index.rst))
-- [`api.rst`](../demo/kitchen-sink/api.rst) ([source](https://github.com/sphinx-themes/sphinx-themes.org/blob/master/sample-docs/kitchen-sink/api.rst))
-- [`lists-and-tables.rst`](../demo/kitchen-sink/lists-and-tables.rst) ([source](https://github.com/sphinx-themes/sphinx-themes.org/blob/master/sample-docs/kitchen-sink/lists-and-tables.rst))
-- [`paragraph-markup.rst`](../demo/kitchen-sink/paragraph-markup.rst) ([source](https://github.com/sphinx-themes/sphinx-themes.org/blob/master/sample-docs/kitchen-sink/paragraph-markup.rst))
+```python
+python docs/scripts/update_kitchen_sink.py
+```
 
 :::{note}
 To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../demo/theme-elements.md).

@@ -15,9 +15,10 @@ import pydata_sphinx_theme
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
     "sphinxext.rediraffe",
     "sphinx_design",
-    "sphinx.ext.viewcode",
     "sphinx_copybutton",
     # For extension examples and demos
     "ablog",
@@ -191,3 +192,5 @@ blog_authors = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+
+todo_include_todos = True
