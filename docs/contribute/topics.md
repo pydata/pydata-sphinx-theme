@@ -196,7 +196,7 @@ python docs/scripts/update_kitchen_sink.py
 ```
 
 :::{note}
-To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../demo/theme-elements.md).
+To demonstrate extra styles and syntax that is not in the Kitchen sink, use the [Theme Elements reference](../user_guide/theme-elements.md).
 :::
 
 ## Update the example gallery

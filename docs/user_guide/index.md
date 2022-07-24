@@ -49,6 +49,13 @@ keyboard-shortcuts
 ```
 
 ```{toctree}
+:caption: Content and features
+theme-elements
+ablog
+web-components
+```
+
+```{toctree}
 :caption: Theming and Style
 
 branding

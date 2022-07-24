@@ -19,10 +19,7 @@ See the sections to the left and below to explore.
     :caption: Theme-specific styles
 
     kitchen-sink/index
-    theme-elements
     pydata
-    ablog
-    web-components
     api
 
 
