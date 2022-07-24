@@ -21,7 +21,7 @@ A clean, Bootstrap-based Sphinx theme by and for [the PyData community](https://
 - header: "🌗 Light / Dark theme"
   content: "Users can toggle between light and dark themes interactively."
 - header: "🎨 Customizable UI and themes"
-  content: "Customize colors and branding with CSS variables, and build custom UIs with [Sphinx Design](examples/web-components)."
+  content: "Customize colors and branding with CSS variables, and build custom UIs with [Sphinx Design](user_guide/web-components)."
 - header: "{fab}`python` Supports PyData and Jupyter"
   content: "CSS and UI support for Jupyter extensions and PyData execution outputs."
   link: "examples/pydata"

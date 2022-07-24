@@ -19,9 +19,10 @@ import pydata_sphinx_theme
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
     "sphinxext.rediraffe",
     "sphinx_design",
-    "sphinx.ext.viewcode",
     "sphinx_copybutton",
     # For extension examples and demos
     "ablog",
@@ -148,7 +149,7 @@ html_theme_options = {
 }
 
 html_sidebars = {
-    "contribute/index": [
+    "community/index": [
         "sidebar-nav-bs",
         "custom-template",
     ],  # This ensures we test for custom sidebars
@@ -195,6 +196,7 @@ blog_authors = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+todo_include_todos = True
 
 
 def setup(app):

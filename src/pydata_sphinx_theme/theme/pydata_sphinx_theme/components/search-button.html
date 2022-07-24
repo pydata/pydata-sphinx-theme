@@ -1,14 +1,4 @@
-{# Search page has its own UI / UX for search #}
-<!-- A button that will trigger a search field to be displayed on click. -->
-{% set containerClass="search-button__search-container" %}
-
-<!-- An overlay that will expand in the background and cause the search to disappear when clicked -->
-<button class="btn btn-sm navbar-btn search-button" id="bd-search-button" title="{{ _('Search') }}">
+{# A button that, when clicked, will trigger a search popup overlay #}
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="{{ _('Search') }}">
   <i class="fas fa-search"></i>
 </button>
-
-{#- This will be hidden by default until click -#}
-<div class="search-button__overlay"></div>
-<div class="{{ containerClass }}">
-  {% include "../components/search-field.html" %}
-</div>

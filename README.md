@@ -9,8 +9,8 @@
 A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData community](https://pydata.org).
 
 - 📚 Documentation: https://pydata-sphinx-theme.readthedocs.io/en/latest/
-- 💡 Examples: https://pydata-sphinx-theme.readthedocs.io/en/latest/demo
-- 🙌 Contribute: https://pydata-sphinx-theme.readthedocs.io/en/latest/contribute/index.html
+- 💡 Examples: https://pydata-sphinx-theme.readthedocs.io/en/latest/examples/
+- 🙌 Contribute: https://pydata-sphinx-theme.readthedocs.io/en/latest/community/index.html
 
 [![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
@@ -40,7 +40,7 @@ And that's it!
 > This theme may not work with the latest major versions of Sphinx, especially
 > if they have only recently been released. Please give us a few months of
 > time to work out any bugs and changes when new releases are made.
-> See [our contributing documentation](docs/contribute/topics.md) for more information.
+> See [our contributing documentation](docs/community/topics.md) for more information.
 
 ## Contribute to and develop the theme
 
@@ -48,4 +48,4 @@ Contributions are very welcome! Installing the development version, building
 the demo docs and developing the css/js of the theme, etc, is explained in
 more detail in the contributing section of the documentation:
 
-- [Contributing documentation](https://pydata-sphinx-theme.readthedocs.io/en/stable/contribute/index.html)
+- [Contributing documentation](https://pydata-sphinx-theme.readthedocs.io/en/stable/community/index.html)

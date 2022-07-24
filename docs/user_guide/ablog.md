@@ -9,7 +9,7 @@ This theme has styling support for ABlog, and demonstrates some of its functiona
 
 Click below to go to the blog
 
-```{button-link} blog/index.html
+```{button-link} ../examples/blog/index.html
 :color: primary
 Go to the blog
 ```
