@@ -12,7 +12,7 @@ A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData commu
 - 💡 Examples: https://pydata-sphinx-theme.readthedocs.io/en/latest/examples/
 - 🙌 Contribute: https://pydata-sphinx-theme.readthedocs.io/en/latest/community/index.html
 
-[![demo site](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
+[![Example documentation with this theme](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
 ## Installation and usage
 
@@ -45,7 +45,7 @@ And that's it!
 ## Contribute to and develop the theme
 
 Contributions are very welcome! Installing the development version, building
-the demo docs and developing the css/js of the theme, etc, is explained in
+the example docs and developing the css/js of the theme, etc, is explained in
 more detail in the contributing section of the documentation:
 
-- [Contributing documentation](https://pydata-sphinx-theme.readthedocs.io/en/stable/community/index.html)
+- [Community and contributing documentation](https://pydata-sphinx-theme.readthedocs.io/en/latest/community/index.html)

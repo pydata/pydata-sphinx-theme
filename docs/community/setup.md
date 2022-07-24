@@ -15,8 +15,8 @@ of:
 - fix findings of various linters and checks
 - work through code review
 
-For each pull request, the demo site is built and deployed to make it easier to review
-the changes in the PR. To access this, click on the "ReadTheDocs" preview in the CI/CD jobs.
+For each pull request, the documentation is built and deployed to make it easier to review the changes in the PR.
+To access this, click on the {{ rtd }} preview in the CI/CD jobs.
 
 The sections below cover the steps to do this in more detail.
 
