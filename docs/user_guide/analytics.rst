@@ -50,7 +50,7 @@ The dashboard with analytics results will be accessible at ``https://<plausible-
 
 .. seealso::
 
-  See the ``Plausible Documentation <https://plausible.io/docs/plausible-script>`__ for more information about this script.
+  See the `Plausible Documentation <https://plausible.io/docs/plausible-script>`__ for more information about this script.
 
 Google Analytics
 ================
