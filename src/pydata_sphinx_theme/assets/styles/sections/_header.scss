@@ -156,3 +156,9 @@
   padding-left: 2px;
   vertical-align: middle;
 }
+
+@media (min-width: 88rem) {
+  .sb-page-width {
+    width: 100rem;
+  }
+}

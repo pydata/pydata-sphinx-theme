@@ -111,7 +111,7 @@ $pst-semantic-colors: (
       *  transparency and black text (unless they have class .only-dark, in
       *  which case assume they're already optimized for dark mode).
       */
-      .bd-content img:not(.only-dark) {
+      .sb-content img:not(.only-dark) {
         background: rgb(255, 255, 255);
         border-radius: 0.25rem;
       }

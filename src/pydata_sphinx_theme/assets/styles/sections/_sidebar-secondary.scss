@@ -11,7 +11,6 @@
   max-height: calc(100vh - var(--pst-header-height));
 
   padding: 2rem 1rem 1rem 1rem;
-  @include make-col(2);
 
   // Color and border
   background-color: var(--pst-color-background);

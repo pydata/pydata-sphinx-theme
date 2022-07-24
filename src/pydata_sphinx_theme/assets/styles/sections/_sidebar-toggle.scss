@@ -33,19 +33,19 @@ input {
     height: 100vh;
     width: 100vw;
   }
-
-  // Primary sidebar slides in from the left
-  &#__primary:checked ~ .bd-container .bd-sidebar-primary {
-    visibility: visible;
-    margin-left: 0;
-  }
-
-  // Secondary sidebar slides in from the right
-  &#__secondary:checked ~ .bd-container .bd-sidebar-secondary {
-    visibility: visible;
-    margin-right: 0;
-  }
 }
+// Primary sidebar slides in from the left
+//   &#__primary:checked ~ .sb-container .sb-sidebar-primary {
+//     visibility: visible;
+//     margin-left: 0;
+//   }
+
+//   // Secondary sidebar slides in from the right
+//   &#__secondary:checked ~ .sb-container .bd-sidebar-secondary {
+//     visibility: visible;
+//     margin-right: 0;
+//   }
+// }
 
 /*******************************************************************************
 * Sidebar drawer behavior
@@ -93,13 +93,13 @@ input {
     }
   }
 
-  .bd-sidebar-primary {
+  .sb-sidebar-primary {
     margin-left: 0;
     visibility: visible;
   }
 }
 
-.bd-sidebar-primary {
+.sb-sidebar-primary {
   // One breakpoint less than $breakpoint-sidebar-primary. See variables/_layout.scss for more info.
   @include media-breakpoint-down(sm) {
     @include sliding-drawer("left");

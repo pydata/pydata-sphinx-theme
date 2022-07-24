@@ -306,7 +306,7 @@ For example, to make the content grow to fit all available width, add a custom C
 
 .. code-block:: css
 
-   .bd-content {
+   .sb-content {
      flex-grow: 1;
      max-width: 100%;
    }

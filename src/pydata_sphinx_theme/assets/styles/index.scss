@@ -79,9 +79,3 @@ $grid-breakpoints: (
 
 // Page-specific CSS
 @import "./pages/search";
-
-@media (min-width: 88rem) {
-  .sb-page-width {
-    width: 100%;
-  }
-}
