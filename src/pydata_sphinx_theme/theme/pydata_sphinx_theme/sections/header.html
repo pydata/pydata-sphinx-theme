@@ -8,17 +8,6 @@
     {% endfor %}
   </div>
 
-  {# A search button to show up only on mobile #}
-  <div class="search-button-container--mobile">
-    {%- include "../components/search-button.html" %}
-  </div>
-
-  {% if use_sidebar_secondary %}
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fas fa-outdent"></span>
-  </label>
-  {% endif %}
-
   {% set navbar_class, navbar_align = navbar_align_class() %}
   <div class="{{ navbar_class }} navbar-header-items">
     <div id="navbar-center" class="{{ navbar_align }}">
@@ -40,9 +29,17 @@
       {% endfor %}
     </div>
   </div>
+
+
+  {# A search button to show up only on mobile #}
+  <div class="search-button-container--mobile">
+    {%- include "../components/search-button.html" %}
+  </div>
+
   {% if use_sidebar_secondary %}
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
       <span class="fas fa-outdent"></span>
   </label>
   {% endif %}
+
 </div>

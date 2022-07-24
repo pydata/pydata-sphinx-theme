@@ -30,6 +30,7 @@
     display: none;
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: inherit;
+      flex-grow: 1;
       padding: 0;
     }
   }

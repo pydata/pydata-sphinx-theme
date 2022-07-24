@@ -135,10 +135,9 @@ html_theme_options = {
     # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     # "show_nav_level": 2,
-    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
-    # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    "navbar_start": ["navbar-logo", "version-switcher"],
-    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing, we should use defaults in our docs
+    "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
+    # "navbar_start": ["navbar-logo"],
+    "navbar_center": ["version-switcher", "navbar-nav"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
@@ -146,6 +145,7 @@ html_theme_options = {
         "json_url": json_url,
         "version_match": version_match,
     },
+    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
 }
 
 html_sidebars = {

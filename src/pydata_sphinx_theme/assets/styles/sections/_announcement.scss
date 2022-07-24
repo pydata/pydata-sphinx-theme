@@ -7,8 +7,8 @@
   justify-content: center;
   text-align: center;
   padding: 0.5rem 12.5%; // Horizontal padding so the width is 75%
-  // One breakpoint less than $breakpoint-header. See variables/_layout.scss for more info.
-  @include media-breakpoint-down(md) {
+  // One breakpoint less than $breakpoint-sidebar-primary. See variables/_layout.scss for more info.
+  @include media-breakpoint-down(lg) {
     // Announcements can take a bit more width on mobile
     padding: 0.5rem 2%;
   }

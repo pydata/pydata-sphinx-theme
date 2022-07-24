@@ -38,8 +38,9 @@
   }
 
   // inline the element in the navbar as long as they fit and use display block when collapsing
-  // One breakpoint less than $breakpoint-header. See variables/_layout.scss for more info.
-  @include media-breakpoint-down(md) {
+  // One breakpoint less than $breakpoint-sidebar-primary.
+  // See variables/_layout.scss for more info.
+  @include media-breakpoint-down(lg) {
     flex-direction: row;
 
     // Use Bootstrap padding for these nav links to get the spacing right
