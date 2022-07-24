@@ -49,7 +49,7 @@ doc = [
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
-  # For demo examples
+  # For examples section
   "ablog",
   "jupyter_sphinx",
   "pandas",

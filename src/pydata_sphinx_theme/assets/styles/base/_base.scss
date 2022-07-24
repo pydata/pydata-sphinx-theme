@@ -126,7 +126,14 @@ kbd {
   // use theme negative
   background-color: var(--pst-color-on-background);
   color: var(--pst-color-text-muted);
-  border: 1px solid var(--pst-color-border);
+
+  // Compound keyboard elements will have nested kbd in them, so this prevents double lines
+  &:not(.compound) {
+    border: 1px solid var(--pst-color-border);
+    margin: 0 0.1rem;
+    padding: 0.1rem 0.4rem;
+    box-shadow: 1px 1px 1px var(--pst-color-shadow);
+  }
 }
 
 code {

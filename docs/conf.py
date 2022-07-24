@@ -132,12 +132,12 @@ html_theme_options = {
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
-    "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
-    # "show_nav_level": 2,
     "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    # "navbar_start": ["navbar-logo"],
     "navbar_center": ["version-switcher", "navbar-nav"],
+    "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
+    # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
+    # "show_nav_level": 2,
+    # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]

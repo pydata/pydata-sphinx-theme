@@ -20,6 +20,10 @@
   @include scrollbar-style();
 
   font-size: var(--pst-sidebar-primary-font-size);
+  // Font size should be a bit bigger on mobile
+  @include media-breakpoint-down(lg) {
+    font-size: 1.3em;
+  }
 
   &.no-sidebar {
     border-right: 0;
@@ -48,7 +52,7 @@
     padding-bottom: 1rem;
 
     .sidebar-header-items__title {
-      font-size: 1.1rem;
+      font-size: var(--pst-sidebar-primary-caption-font-size);
       color: var(--pst-color-text-base);
       margin-bottom: 0.5rem;
     }
@@ -69,6 +73,12 @@
         background-color: inherit;
         font-size: inherit;
       }
+    }
+
+    // Center header items get displayed vertically, end items are displayed horizontally
+    .sidebar-header-items__center {
+      display: flex;
+      flex-direction: column;
     }
 
     // Positioning end items

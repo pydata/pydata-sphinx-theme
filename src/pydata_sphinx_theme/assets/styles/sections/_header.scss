@@ -29,7 +29,7 @@
   .navbar-header-items {
     display: none;
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
-      display: inherit;
+      display: flex;
       flex-grow: 1;
       padding: 0;
     }
