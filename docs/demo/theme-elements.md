@@ -79,14 +79,31 @@ print("A code block with a caption and line numbers.")
 
 See [](pydata.md).
 
-## Admonition-like sidebars
+## Admonition sidebars
+
+Sphinx comes with a `{sidebar}` directive that looks like the following:
 
 ```{sidebar} Sidebar title
----
-class: admonition info
----
 Content goes here...
 ```
+
+However, we also support a short-hand way of making **admonitions behave like sidebars**.
+This can be a helpful way of highlighting content that lives to the side of your main text without interrupting the vertical flow as much.
+
+To make an admonition behave like a sidebar, add the `sidebar` class to its list of classes.
+For example, the following admonition will display in the sidebar:
+
+```{admonition} A sidebar admonition!
+:class: sidebar note
+Some sidebar content.
+```
+
+````md
+```{admonition} A sidebar admonition!
+:class: sidebar note
+Some sidebar content.
+```
+````
 
 Here is a bunch of text to provide some vertical distance against which the adjacent sidebar can be viewed. This sidebar gets styled like an admonition because it has added classes:
 

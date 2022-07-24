@@ -1,21 +1,5 @@
 // Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
 
-// this works better if it comes before the .admonition styles...
-aside.sidebar {
-  background-color: var(--pst-color-on-surface);
-  border-color: var(--pst-color-border);
-  border-radius: 0.2rem;
-
-  // ...but it compels us to use !important here. It's still simpler than
-  //    putting these stules after the .admonition styles though.
-  &.admonition {
-    margin-top: 0 !important;
-    margin-left: 1em !important;
-    border: 0;
-  }
-}
-
-aside.sidebar.admonition,
 div.admonition,
 .admonition {
   margin: 1.5625em auto;
@@ -34,7 +18,6 @@ div.admonition,
   }
 
   // Items after the title should be indented
-  p.sidebar-title ~ *,
   p.admonition-title ~ * {
     margin-left: 1.4rem;
     margin-right: 1.4rem;
@@ -47,7 +30,6 @@ div.admonition,
   }
 
   // Defaults for all admonitions
-  > .sidebar-title,
   > .admonition-title {
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
@@ -76,7 +58,6 @@ div.admonition,
 
   &.attention {
     border-color: var(--pst-color-warning);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-warning);
@@ -91,7 +72,6 @@ div.admonition,
 
   &.caution {
     border-color: var(--pst-color-warning);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-warning);
@@ -106,7 +86,6 @@ div.admonition,
 
   &.warning {
     border-color: var(--pst-color-warning);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-warning);
@@ -121,7 +100,6 @@ div.admonition,
 
   &.danger {
     border-color: var(--pst-color-danger);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-danger);
@@ -136,7 +114,6 @@ div.admonition,
 
   &.error {
     border-color: var(--pst-color-danger);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-danger);
@@ -151,7 +128,6 @@ div.admonition,
 
   &.hint {
     border-color: var(--pst-color-success);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-success);
@@ -166,7 +142,6 @@ div.admonition,
 
   &.tip {
     border-color: var(--pst-color-success);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-success);
@@ -181,7 +156,6 @@ div.admonition,
 
   &.important {
     border-color: var(--pst-color-success);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-success);
@@ -196,7 +170,6 @@ div.admonition,
 
   &.note {
     border-color: var(--pst-color-info);
-    > .sidebar-title,
     > .admonition-title {
       &:before {
         background-color: var(--pst-color-info);
@@ -206,6 +179,26 @@ div.admonition,
         color: var(--pst-color-info);
         content: var(--pst-icon-admonition-note);
       }
+    }
+  }
+
+  /**
+   * Special-case for a `sidebar` class that makes the admonition float to
+   * the right like the {sidebar} directive.
+   */
+  &.sidebar {
+    max-width: 40%;
+    float: right;
+    clear: both;
+    margin-left: 0.5rem;
+
+    // Undo the .sidebar directive border
+    border: none;
+
+    // No margin since we have less horizontal space w/ the sidebar
+    p.admonition-title ~ * {
+      margin-left: 0rem;
+      margin-right: 0rem;
     }
   }
 }
@@ -234,6 +227,12 @@ div.topic {
       padding-left: 2em;
     }
   }
+}
+
+aside.sidebar {
+  background-color: var(--pst-color-on-surface);
+  border-color: var(--pst-color-border);
+  border-radius: 0.2rem;
 }
 
 .seealso dd {
