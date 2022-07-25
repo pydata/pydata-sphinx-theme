@@ -1,18 +1,1 @@
 {% extends "page.html" %}
-
-{% block head_title %}{{ docstitle|striptags|e }}{% endblock head_title %}
-
-{# Drop the sidebars #}
-{% block container %}
-<div class="sb-container__inner sb-page-width">
-  {%- block index_content -%}
-  <div style="margin: auto; padding: 1rem">
-    <p>You seem to actually care about how this landing page looks! Nice!</p>
-    <p>
-      You likely want to add the dedicated template,
-      <a style="color: blue; text-decoration: underline;" href="https://pradyunsg.me/lutra/customisation/landing-pages/example-index/">as described in the documentation</a>.
-    </p>
-  </div>
-  {%- endblock index_content -%}
-</div>
-{% endblock container %}
