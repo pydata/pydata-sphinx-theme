@@ -22,7 +22,7 @@ open-source and transparent. In fact,
 
    If your documentation is for a package that is part of the SciPy / PyData
    ecosystem, they might be able to host a Plausible server for you at
-   ``views.scientific-python.org``.
+   ``https://views.scientific-python.org/<your-package>``.
    To ask about this, contact them on the social media platform of your choice
    and learn more at `scientific-python.org <https://scientific-python.org>`__.
 
