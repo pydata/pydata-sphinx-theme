@@ -13,7 +13,6 @@ import "../styles/index.scss";
  * Theme interaction
  */
 
-console.log("Heyyyylllo its workkking rigghhtth");
 var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
 /**

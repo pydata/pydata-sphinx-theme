@@ -3,6 +3,16 @@
 {% set is_remote=theme_announcement.startswith("http") %}
 
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
+{%- if is_remote %}
+<script>
+$.get("{{ theme_announcement }}", success=(data)=>{
+      $("#header-announcement").html(`<div class="bd-header-announcement__content">${data}</div>`);
+  }).fail(() => {
+  console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}")
+});
+
+</script>
+{% endif %}
 
 <div class="bd-header-announcement container-fluid" id="header-announcement">
   {#- if announcement text is not remote, populate announcement w/ local content -#}
