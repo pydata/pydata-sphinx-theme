@@ -69,18 +69,36 @@
 }
 
 // __search-container will only show up when we use the search pop-up bar
-.search-button__search-container {
+.search-button__search-container,
+.search-button__overlay {
   display: none;
-  // Center in middle of screen just underneath header
-  position: fixed;
-  z-index: $zindex-fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  right: 1rem;
-  margin-top: 0.5rem;
-  width: 90%;
-  max-width: 800px;
+}
+.search-button__wrapper.show {
+  .search-button__search-container {
+    display: flex;
+    // Center in middle of screen just underneath header
+    position: fixed;
+    z-index: $zindex-modal;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    right: 1rem;
+    margin-top: 0.5rem;
+    width: 90%;
+    max-width: 800px;
+  }
+
+  .search-button__overlay {
+    display: flex;
+    position: fixed;
+    z-index: $zindex-modal-backdrop;
+    background-color: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+  }
 
   form.bd-search {
     flex-grow: 1;
@@ -95,23 +113,22 @@
   }
 }
 
-.search-button__overlay {
-  display: none;
-}
+/**
+ * Button behavior on mobile / wide so it shows up in the header on mobile.
+ */
 
-#bd-search-button.show {
-  ~ .search-button__search-container {
+// The navbar end version should only show on wide screens
+.navbar-end__search-button-container {
+  display: none;
+  @include media-breakpoint-up($breakpoint-header) {
     display: flex;
   }
+}
 
-  ~ .search-button__overlay {
-    display: flex;
-    position: fixed;
-    background-color: black;
-    opacity: 0.5;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
+// The one next to the hamburger menu only shows on narrow screens
+.search-button-container--mobile {
+  margin-left: auto;
+  @include media-breakpoint-up($breakpoint-header) {
+    display: none;
   }
 }

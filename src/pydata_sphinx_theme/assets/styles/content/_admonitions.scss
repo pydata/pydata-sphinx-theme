@@ -181,6 +181,26 @@ div.admonition,
       }
     }
   }
+
+  /**
+   * Special-case for a `sidebar` class that makes the admonition float to
+   * the right like the {sidebar} directive.
+   */
+  &.sidebar {
+    max-width: 40%;
+    float: right;
+    clear: both;
+    margin-left: 0.5rem;
+
+    // Undo the .sidebar directive border
+    border: none;
+
+    // No margin since we have less horizontal space w/ the sidebar
+    p.admonition-title ~ * {
+      margin-left: 0rem;
+      margin-right: 0rem;
+    }
+  }
 }
 
 /*

@@ -51,6 +51,7 @@ doc = [
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For demo examples
+  "ablog",
   "jupyter_sphinx",
   "pandas",
   "plotly",

@@ -169,19 +169,8 @@ function scrollToActive() {
 /*******************************************************************************
  * Search
  */
-var changeShortcutText = () => {
-  // Change the search hint to `meta key` if we are a Mac
-  let forms = document.querySelectorAll("form.bd-search");
-  var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
-  if (isMac) {
-    forms.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
-    );
-  }
-};
-
+/** Find any search forms on the page and return their input element */
 var findSearchInput = () => {
-  // find the search form(s) on the page
   let forms = document.querySelectorAll("form.bd-search");
   if (!forms.length) {
     // no search form found
@@ -201,18 +190,21 @@ var findSearchInput = () => {
   }
 };
 
+/**
+ * Activate the search field on the page.
+ * - If there is a search field already visible it will be activated.
+ * - If not, then a search field will pop up.
+ */
 var toggleSearchField = () => {
-  // focus/unfocus the search field (and if it's an auto-hiding one,
-  // show/hide it too)
+  // Find the search input to highlight
   let input = findSearchInput();
-  let button = document.getElementById("bd-search-button");
+
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
-  let hidden_input = document.querySelector(
-    ".search-button__search-container input"
-  );
-  if (input === hidden_input) {
-    button.classList.toggle("show");
+  let searchPopupWrapper = document.querySelector(".search-button__wrapper");
+  let hiddenInput = searchPopupWrapper.querySelector("input");
+  if (input === hiddenInput) {
+    searchPopupWrapper.classList.toggle("show");
   }
   // when toggling off the search field, remove its focus
   if (document.activeElement === input) {
@@ -224,31 +216,49 @@ var toggleSearchField = () => {
   }
 };
 
-// Add an event listener for toggleSearchField() for Ctrl/Cmd + K
-window.addEventListener(
-  "keydown",
-  (event) => {
-    let input = findSearchInput();
-    // toggle on Ctrl+k or ⌘+k
-    if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
-      event.preventDefault();
-      toggleSearchField();
-    }
-    // also allow Escape key to hide (but not show) the dynamic search field
-    else if (document.activeElement === input && event.code == "Escape") {
-      toggleSearchField();
-    }
-  },
-  true
-);
+/** Add an event listener for toggleSearchField() for Ctrl/Cmd + K */
+var addEventListenerForSearchKeyboard = () => {
+  window.addEventListener(
+    "keydown",
+    (event) => {
+      let input = findSearchInput();
+      // toggle on Ctrl+k or ⌘+k
+      if ((event.ctrlKey || event.metaKey) && event.code == "KeyK") {
+        event.preventDefault();
+        toggleSearchField();
+      }
+      // also allow Escape key to hide (but not show) the dynamic search field
+      else if (document.activeElement === input && event.code == "Escape") {
+        toggleSearchField();
+      }
+    },
+    true
+  );
+};
 
-window.onload = function () {
-  changeShortcutText();
-  let button = document.getElementById("bd-search-button");
-  let overlay = document.querySelector("div.search-button__overlay");
-  if (button) {
-    button.onclick = toggleSearchField;
+/** Change the search hint to `meta key` if we are a Mac */
+var changeSearchShortcutKey = () => {
+  let forms = document.querySelectorAll("form.bd-search");
+  var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+  if (isMac) {
+    forms.forEach(
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
+    );
   }
+};
+
+/** Activate callbacks for search button popup */
+var setupSearchButtons = () => {
+  changeSearchShortcutKey();
+  addEventListenerForSearchKeyboard();
+
+  // Add the search button trigger event callback
+  document.querySelectorAll(".search-button__button").forEach((btn) => {
+    btn.onclick = toggleSearchField;
+  });
+
+  // Add the search button overlay event callback
+  let overlay = document.querySelector(".search-button__overlay");
   if (overlay) {
     overlay.onclick = toggleSearchField;
   }
@@ -263,3 +273,4 @@ window.onload = function () {
 $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
+$(setupSearchButtons);
