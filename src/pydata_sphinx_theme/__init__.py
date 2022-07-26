@@ -180,10 +180,11 @@ def update_templates(app, pagename, templatename, context, doctree):
     # Add metadata to DOCUMENTATION_OPTIONS so that we can re-use later
     # Pagename to current page
     app.add_js_file(None, body=f"DOCUMENTATION_OPTIONS.pagename = '{pagename}';")
-    if context.get("theme_switcher", {}).get("json_url"):
+    if isinstance(context.get("theme_switcher"), dict):
         theme_switcher = context["theme_switcher"]
-        json_url = theme_switcher["json_url"]
-        version_match = theme_switcher["version_match"]
+        if theme_switcher.get("json_url"):
+            json_url = theme_switcher["json_url"]
+            version_match = theme_switcher["version_match"]
 
         # Add variables to our JavaScript for re-use in our main JS script
         js = f"""
