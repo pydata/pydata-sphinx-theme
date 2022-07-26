@@ -19,10 +19,9 @@
   overflow-y: auto;
   @include scrollbar-style();
 
-  font-size: var(--pst-sidebar-primary-font-size);
-  // Font size should be a bit bigger on mobile
+  font-size: var(--pst-sidebar-font-size);
   @include media-breakpoint-down(lg) {
-    font-size: 1.3em;
+    font-size: var(--pst-sidebar-font-size-mobile);
   }
 
   &.no-sidebar {
@@ -52,7 +51,7 @@
     padding-bottom: 1rem;
 
     .sidebar-header-items__title {
-      font-size: var(--pst-sidebar-primary-caption-font-size);
+      font-size: var(--pst-sidebar-caption-font-size);
       color: var(--pst-color-text-base);
       margin-bottom: 0.5rem;
     }
@@ -120,7 +119,7 @@
     }
   }
   // Navigation item chevrons
-  label {
+  label.toctree-toggle {
     position: absolute;
     top: 0;
     right: 0;
@@ -167,7 +166,7 @@ nav.bd-links {
 
   // Toctree captions
   p.caption {
-    font-size: var(--pst-sidebar-primary-caption-font-size);
+    font-size: var(--pst-sidebar-caption-font-size);
     text-transform: uppercase;
     font-weight: bold;
     position: relative;

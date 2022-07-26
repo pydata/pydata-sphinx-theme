@@ -20,7 +20,6 @@
 
   .bd-header__inner {
     height: 100%;
-    gap: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -31,7 +30,7 @@
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: flex;
       flex-grow: 1;
-      padding: 0;
+      padding: 0 0 0 0.5rem;
     }
   }
 
@@ -52,6 +51,11 @@
   #navbar-start {
     margin-right: auto;
     gap: 0.5rem;
+  }
+
+  #navbar-end {
+    // End navbar items should snap to the right
+    justify-content: end;
   }
 
   .navbar-nav {
@@ -105,19 +109,21 @@
     &.sidebar-toggle {
       display: flex;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: var(--pst-font-size-icon);
       align-items: center;
       color: var(--pst-color-muted);
       margin-bottom: 0;
     }
 
     &.primary-toggle {
+      padding-right: 1rem;
       @include media-breakpoint-up($breakpoint-sidebar-primary) {
         display: none;
       }
     }
 
     &.secondary-toggle {
+      padding-left: 1rem;
       @include media-breakpoint-up($breakpoint-sidebar-secondary) {
         display: none;
       }

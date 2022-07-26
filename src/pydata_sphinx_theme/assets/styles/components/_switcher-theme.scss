@@ -2,13 +2,14 @@
 .theme-switch-button {
   // overide bootstrap settings
   border-color: var(--pst-color-on-background);
-  font-size: 1.1rem;
+  font-size: var(--pst-font-size-icon);
   margin: 0 -0.5rem;
+  padding: 0; // We pad the `a` not the container
 
   a {
     display: none;
     color: var(--pst-color-text-muted);
-    padding: 0.25rem 0.12rem;
+    padding: 0.5rem;
     &:hover,
     &:active,
     &:focus {

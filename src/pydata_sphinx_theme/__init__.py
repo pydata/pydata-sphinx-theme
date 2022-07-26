@@ -396,6 +396,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
 
 def _add_collapse_checkboxes(soup):
+    """Add checkboxes to collapse children in a toctree."""
     # based on https://github.com/pradyunsg/furo
 
     toctree_checkbox_count = 0
@@ -425,7 +426,9 @@ def _add_collapse_checkboxes(soup):
         if soup.new_tag is None:
             continue
 
-        label = soup.new_tag("label", attrs={"for": checkbox_name})
+        label = soup.new_tag(
+            "label", attrs={"for": checkbox_name, "class": "toctree-toggle"}
+        )
         label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
         if "toctree-l0" in classes:
             # making label cover the whole caption text with css
