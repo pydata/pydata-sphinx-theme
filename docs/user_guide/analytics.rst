@@ -22,7 +22,7 @@ open-source and transparent. In fact,
 
    If your documentation is for a package that is part of the SciPy / PyData
    ecosystem, they might be able to host a Plausible server for you at
-   ``<your-package>.scientific-python.org``.
+   ``https://views.scientific-python.org/<your-package>``.
    To ask about this, contact them on the social media platform of your choice
    and learn more at `scientific-python.org <https://scientific-python.org>`__.
 
@@ -35,13 +35,12 @@ and privacy-friendly analytics for the site. To configure, you will need to prov
 - A URL pointing to the JavaScript analytics script that is served by your Plausible server
 - A domain that reflects where your documentation lives
 
-Plausible' javascript will be included in all html pages to gather metrics.
+Plausible's javascript will be included in all html pages to gather metrics.
 The dashboard with analytics results will be accessible at ``https://<plausible-url>/<my-domain>``.
 
 .. code:: python
 
-   # To be re-used in html_theme_options["analytics"]
-   analytics_options = {
+   html_theme_options["analytics"] = {
        # The domain you'd like to use for this analytics instance
        "plausible_analytics_domain": "my-domain",
        # The analytics script that is served by Plausible
@@ -60,7 +59,6 @@ Google Analytics' javascript is included in the html pages.
 
 .. code:: python
 
-   # To be re-used in html_theme_options["analytics"]
-   analytics_options = {
+   html_theme_options["analytics"] = {
        "google_analytics_id": "G-XXXXXXXXXX",
    }
