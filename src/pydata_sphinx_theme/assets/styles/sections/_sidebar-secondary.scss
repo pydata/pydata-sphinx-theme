@@ -10,9 +10,9 @@
   top: var(--pst-header-height);
   max-height: calc(100vh - var(--pst-header-height));
 
-  font-size: var(--pst-sidebar-secondary-font-size);
-  @include media-breakpoint-down(lg) {
-    font-size: var(--pst-sidebar-font-size-mobile);
+  font-size: var(--pst-sidebar-font-size-mobile);
+  @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+    font-size: var(--pst-sidebar-secondary-font-size);
   }
 
   padding: 2rem 1rem 1rem 1rem;

@@ -36,3 +36,12 @@ button.version-switcher__button {
     }
   }
 }
+
+// Font behavior on mobile
+button.version-switcher__button,
+.version-switcher__menu {
+  font-size: 1.1em; // A bit smaller than other menu font
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    font-size: unset;
+  }
+}

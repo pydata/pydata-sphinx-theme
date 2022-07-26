@@ -82,7 +82,7 @@ version_match = os.environ.get("READTHEDOCS_VERSION")
 if not version_match or version_match.isdigit():
     # For local development, infer the version to match from the package.
     release = pydata_sphinx_theme.__version__
-    if "dev" in release:
+    if "dev" in release or "rc" in release:
         version_match = "latest"
         # We want to keep the relative reference if we are in dev mode
         # but we want the whole url if we are effectively in a released version

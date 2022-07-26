@@ -6,6 +6,7 @@
 .bd-sidebar-primary {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 
   max-height: calc(100vh - var(--pst-header-height));
   position: sticky;
@@ -19,9 +20,9 @@
   overflow-y: auto;
   @include scrollbar-style();
 
-  font-size: var(--pst-sidebar-font-size);
-  @include media-breakpoint-down(lg) {
-    font-size: var(--pst-sidebar-font-size-mobile);
+  font-size: var(--pst-sidebar-font-size-mobile);
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    font-size: var(--pst-sidebar-font-size);
   }
 
   &.no-sidebar {
@@ -34,11 +35,6 @@
     }
   }
 
-  .sidebar-primary__section {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
   .sidebar-start-items__item,
   .sidebar-end-items__item {
     padding: 0.25rem 0;
@@ -48,16 +44,16 @@
   .sidebar-header-items {
     display: flex;
     flex-direction: column;
-    padding-bottom: 1rem;
 
     .sidebar-header-items__title {
-      font-size: var(--pst-sidebar-caption-font-size);
+      font-weight: var(--pst-sidebar-header-font-weight);
+      font-size: var(--pst-sidebar-header-font-size);
       color: var(--pst-color-text-base);
       margin-bottom: 0.5rem;
     }
 
     // The dropdown toggle for extra links just shows them all instead.
-    .dropdown {
+    .nav-item.dropdown {
       // On mobile, the dropdown behaves like any other link, no hiding
       button {
         display: none;
@@ -166,9 +162,8 @@ nav.bd-links {
 
   // Toctree captions
   p.caption {
-    font-size: var(--pst-sidebar-caption-font-size);
-    text-transform: uppercase;
-    font-weight: bold;
+    font-size: var(--pst-sidebar-header-font-size);
+    font-weight: var(--pst-sidebar-header-font-weight);
     position: relative;
     margin-top: 1.25em;
     margin-bottom: 0.5em;
