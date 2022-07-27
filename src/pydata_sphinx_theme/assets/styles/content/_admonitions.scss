@@ -191,11 +191,33 @@ div.admonition,
     float: right;
     clear: both;
     margin-left: 0.5rem;
+    margin-top: 0;
 
     // Undo the .sidebar directive border
-    border: none;
+    border-width: 0 0 0 0.2rem;
 
-    // No margin since we have less horizontal space w/ the sidebar
+    &.attention,
+    &.caution,
+    &.warning {
+      border-color: var(--pst-color-warning);
+    }
+
+    &.danger,
+    &.error {
+      border-color: var(--pst-color-danger);
+    }
+
+    &.hint,
+    &.tip,
+    &.important {
+      border-color: var(--pst-color-success);
+    }
+
+    &.note {
+      border-color: var(--pst-color-info);
+    }
+
+    // No inner margin since we have less horizontal space w/ the sidebar
     p.admonition-title ~ * {
       margin-left: 0rem;
       margin-right: 0rem;
@@ -233,6 +255,8 @@ aside.sidebar {
   background-color: var(--pst-color-on-surface);
   border-color: var(--pst-color-border);
   border-radius: 0.2rem;
+  // to match the admonition-styled sidebars:
+  margin-left: 0.5rem;
 }
 
 .seealso dd {
