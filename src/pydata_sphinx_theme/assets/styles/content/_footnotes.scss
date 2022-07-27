@@ -16,7 +16,7 @@ a.footnote-reference {
 
 // Docutils 0.18 uses an `aside.footnote` container with different internal structure
 aside.footnote {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   &:last-child {
     margin-bottom: 1rem;
   }
