@@ -101,20 +101,8 @@ input {
 
 .bd-sidebar-primary {
   // One breakpoint less than $breakpoint-sidebar-primary. See variables/_layout.scss for more info.
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     @include sliding-drawer("left");
-  }
-}
-
-// Secondary sidebar hides/shows on wider widths
-@include media-breakpoint-up($breakpoint-sidebar-secondary) {
-  label.sidebar-toggle.secondary-toggle {
-    display: none;
-  }
-
-  .bd-sidebar-secondary {
-    margin-right: 0;
-    visibility: visible;
   }
 }
 

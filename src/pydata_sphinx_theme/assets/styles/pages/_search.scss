@@ -9,7 +9,7 @@
   // Whitespace
   div#search-results {
     > h2 {
-      font-size: 1.5rem;
+      font-size: var(--pst-font-size-icon);
       margin-top: 0;
     }
 

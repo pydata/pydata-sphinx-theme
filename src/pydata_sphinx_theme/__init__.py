@@ -177,6 +177,22 @@ def update_templates(app, pagename, templatename, context, doctree):
         # Sphinx will auto-resolve href if it's a local file
         app.add_css_file(favicon["href"], **opts)
 
+    # Add metadata to DOCUMENTATION_OPTIONS so that we can re-use later
+    # Pagename to current page
+    app.add_js_file(None, body=f"DOCUMENTATION_OPTIONS.pagename = '{pagename}';")
+    if isinstance(context.get("theme_switcher"), dict):
+        theme_switcher = context["theme_switcher"]
+        if theme_switcher.get("json_url"):
+            json_url = theme_switcher["json_url"]
+            version_match = theme_switcher["version_match"]
+
+        # Add variables to our JavaScript for re-use in our main JS script
+        js = f"""
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = '{json_url}';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
+        """
+        app.add_js_file(None, body=js)
+
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
@@ -276,10 +292,10 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 links_dropdown_html = "\n".join(links_dropdown)
                 out += f"""
                 <div class="nav-item dropdown">
-                    <button class="btn dropdown-toggle nav-item" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         More
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu">
                         {links_dropdown_html}
                     </div>
                 </div>
@@ -385,7 +401,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         }
         if align not in align_options:
             raise ValueError(
-                "Theme optione navbar_align must be one of"
+                "Theme option navbar_align must be one of"
                 f"{align_options.keys()}, got: {align}"
             )
         return align_options[align]
@@ -396,6 +412,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
 
 def _add_collapse_checkboxes(soup):
+    """Add checkboxes to collapse children in a toctree."""
     # based on https://github.com/pradyunsg/furo
 
     toctree_checkbox_count = 0
@@ -425,7 +442,9 @@ def _add_collapse_checkboxes(soup):
         if soup.new_tag is None:
             continue
 
-        label = soup.new_tag("label", attrs={"for": checkbox_name})
+        label = soup.new_tag(
+            "label", attrs={"for": checkbox_name, "class": "toctree-toggle"}
+        )
         label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
         if "toctree-l0" in classes:
             # making label cover the whole caption text with css

@@ -1,9 +1,13 @@
-#version_switcher_button {
+button.version-switcher__button {
   border-color: var(--pst-color-border);
   color: var(--pst-color-text-base);
+
+  &:hover {
+    color: var(--pst-color-text-base);
+  }
 }
 
-#version_switcher_menu {
+.version-switcher__menu {
   border-color: var(--pst-color-border);
 
   a.list-group-item {
@@ -30,5 +34,14 @@
       background-color: var(--pst-color-primary);
       opacity: 0.1;
     }
+  }
+}
+
+// Font behavior on mobile
+button.version-switcher__button,
+.version-switcher__menu {
+  font-size: 1.1em; // A bit smaller than other menu font
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    font-size: unset;
   }
 }

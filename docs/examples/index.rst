@@ -10,7 +10,6 @@ See the sections to the left and below to explore.
     :caption: Real-world examples
 
     gallery
-    pydata
     example_pandas
 
 

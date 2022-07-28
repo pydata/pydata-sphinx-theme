@@ -43,16 +43,15 @@
 
 {%- block content %}
 
-  <!-- checkbox to toggle primary sidebar -->
+  {# checkbox to toggle primary sidebar #}
   <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
   <label class="overlay overlay-primary" for="__primary"></label>
 
-  <!-- Checkboxes to toggle the secondary sidebar -->
+  {# Checkboxes to toggle the secondary sidebar #}
   <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
   <label class="overlay overlay-secondary" for="__secondary"></label>
 
-  <!-- A search field pop-up that will only show when the search button is clicked -->
-
+  {# A search field pop-up that will only show when the search button is clicked #}
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
@@ -60,32 +59,50 @@
     </div>
   </div>
 
-  {% include "sections/announcement.html" %}
+  {%- if theme_announcement -%}
+  <div class="bd-header-announcement container-fluid" id="header-announcement">
+    {% include "sections/announcement.html" %}
+  </div>
+  {%- endif %}
 
   {% block docs_navbar %}
-  <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main">
     {%- include "sections/header.html" %}
   </nav>
   {% endblock %}
 
   <div class="bd-container container-xl">
     <div class="bd-container__inner row">
-      {% include "sections/sidebar-primary.html" %}
-      {% include "sections/sidebar-secondary.html" %}
+      {# Primary sidebar #}
+      <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
+        {% include "sections/sidebar-primary.html" %}
+      </div>
 
+      {# Secondary sidebar #}
+      {% block docs_toc %}
+      {% if meta is defined and not (meta is not none and 'theme_html_remove_secondary_sidebar' in meta) %}
+        <div class="bd-sidebar-secondary bd-toc">
+          {% include "sections/sidebar-secondary.html" %}
+        </div>
+      {% endif %}
+      {% endblock %}
+
+      {# Main content area #}
       {% block docs_main %}
       <div class="bd-content col">
-
+          {# Article header #}
           <div class="bd-header-article">
               {% include "sections/header-article.html" %}
           </div>
 
+          {# Article content #}
           {% block docs_body %}
           <article class="bd-article" role="main">
             {% block body %} {% endblock %}
           </article>
           {% endblock %}
 
+          {# Article Footer #}
           {% if theme_show_prev_next %}
           <footer class="bd-footer-article">
               {% include "sections/footer-article.html" %}
@@ -103,6 +120,7 @@
 
 {%- endblock %}
 
+{# Footer #}
 {%- block footer %}
   <footer class="bd-footer">
     {%- include "sections/footer.html" %}

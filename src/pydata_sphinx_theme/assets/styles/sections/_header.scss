@@ -1,5 +1,18 @@
-.navbar {
+/**
+ * The header at the top of the page.
+ */
+
+// If we want the shadow to only point downward in the future, set
+// box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
+.bd-header {
   position: sticky;
+  top: 0;
+  z-index: $zindex-fixed;
+
+  // Overrides bootstrap
+  background: var(--pst-color-on-background) !important;
+  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
+
   min-height: var(--pst-header-height);
   width: 100%;
   padding: 0.5rem 0;
@@ -7,15 +20,18 @@
 
   .bd-header__inner {
     height: 100%;
-    gap: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
-  #navbar-collapsible {
-    // Remove padding because we inherit padding from the parent container
-    padding-left: 0;
-    padding-right: 0;
+  // Hide the header items on mobile
+  .navbar-header-items {
+    display: none;
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      display: flex;
+      flex-grow: 1;
+      padding: 0 0 0 0.5rem;
+    }
   }
 
   #navbar-end,
@@ -33,126 +49,92 @@
 
   // A little smaller because this is displayed by default on mobile
   #navbar-start {
+    margin-right: auto;
     gap: 0.5rem;
   }
 
-  // One breakpoint less than $breakpoint-header. See variables/_layout.scss for more info.
-  @include media-breakpoint-down(md) {
-    // Make it scrollable with a max height on mobile in cases there are many items
-    max-height: 90vh;
-    overflow-y: visible;
-    @include scrollbar-style;
-
-    // If we're expanded, then make it possible to scroll if overflow
-    &.shown {
-      overflow-y: auto;
-    }
-
-    button.navbar-toggler {
-      border-color: var(--pst-color-text-muted);
-      color: var(--pst-color-text-muted);
-    }
+  #navbar-end {
+    // End navbar items should snap to the right
+    justify-content: end;
   }
-}
-
-// If we want the shadow to only point downward in the future, set
-// box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
-.bd-header.navbar-light#navbar-main {
-  // Overrides bootstrap
-  background: var(--pst-color-on-background) !important;
-  box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
 
   .navbar-nav {
     display: flex;
-
-    @include media-breakpoint-up($breakpoint-header) {
-      // Center align on wide screens so the dropdown button is centered properly
-      align-items: center;
-    }
-
-    li a.nav-link {
-      color: var(--pst-color-text-muted);
-
-      &:hover {
-        color: var(--pst-color-primary);
-      }
-
-      &:focus {
-        color: var(--pst-color-primary);
-      }
-    }
-
-    > .active > .nav-link {
-      font-weight: 600;
-      color: var(--pst-color-primary);
-    }
+    align-items: center;
 
     // Dropdowns for the extra links
     .dropdown {
-      // On mobile, the dropdown behaves like any other link, no hiding
       button {
-        display: none;
-      }
-
-      .dropdown-menu {
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-        background-color: var(--pst-color-on-background);
-        color: var(--pst-color-text-base);
+        display: unset;
+        color: var(--pst-color-text-muted);
         border: none;
       }
 
-      // On wide screens, the dropdown becomes a pop-up menu
-      @include media-breakpoint-up($breakpoint-header) {
-        button {
-          display: unset;
-          color: var(--pst-color-text-muted);
-          border: none;
-        }
+      .dropdown-menu {
+        z-index: $zindex-popover;
+        border: 1px solid var(--pst-color-border);
+        box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
+        background-color: var(--pst-color-on-background);
+        padding: 0.5rem 1rem;
+        margin: 0.5rem 0;
+        min-width: 20rem;
 
-        .dropdown-menu {
-          z-index: $zindex-popover;
-          box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
-          padding: 0.5rem 1rem;
-          margin: 0.5rem 0;
-          min-width: 20rem;
-
-          // Hide the menu unless show has been clicked
-          &:not(.show) {
-            display: none;
-          }
+        // Hide the menu unless show has been clicked
+        &:not(.show) {
+          display: none;
         }
       }
     }
   }
 }
 
-.navbar-header a {
-  padding: 0 15px;
-}
-
 // inline the element in the navbar as long as they fit and use display block when collapsing
-@include media-breakpoint-up($breakpoint-header) {
-  .navbar-center-item {
-    display: inline-block;
-  }
-}
-
-.toc-entry > .nav-link.active {
-  font-weight: 600;
-  color: var(--pst-color-primary);
-  background-color: transparent;
-  border-left: 2px solid var(--pst-color-primary);
-}
-
-.nav-link:hover {
-  border-style: none;
+.navbar-center-item {
+  display: inline-block;
 }
 
 #navbar-main-elements li.nav-item i {
   font-size: 0.7rem;
   padding-left: 2px;
   vertical-align: middle;
+}
+
+/**
+ * Showing and hiding the sidebar toggle buttons and header items
+ */
+// Hide the header items on mobile
+.bd-header {
+  // Toggle labels
+  label {
+    &.sidebar-toggle {
+      display: flex;
+      cursor: pointer;
+      font-size: var(--pst-font-size-icon);
+      align-items: center;
+      color: var(--pst-color-muted);
+      margin-bottom: 0;
+    }
+
+    &.primary-toggle {
+      padding-right: 1rem;
+      @include media-breakpoint-up($breakpoint-sidebar-primary) {
+        display: none;
+      }
+    }
+
+    &.secondary-toggle {
+      padding-left: 1rem;
+      @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+        display: none;
+      }
+    }
+  }
+
+  // Hide the navbar header items on mobile because they're in the sidebar
+  .navbar-header-items {
+    display: none;
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      display: inherit;
+    }
+  }
 }

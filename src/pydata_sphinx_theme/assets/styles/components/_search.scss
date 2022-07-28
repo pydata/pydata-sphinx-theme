@@ -109,7 +109,7 @@
   // Font and input text a bit bigger
   i,
   input {
-    font-size: 1.5rem;
+    font-size: var(--pst-font-size-icon);
   }
 }
 
@@ -120,7 +120,7 @@
 // The navbar end version should only show on wide screens
 .navbar-end__search-button-container {
   display: none;
-  @include media-breakpoint-up($breakpoint-header) {
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
     display: flex;
   }
 }
@@ -128,7 +128,7 @@
 // The one next to the hamburger menu only shows on narrow screens
 .search-button-container--mobile {
   margin-left: auto;
-  @include media-breakpoint-up($breakpoint-header) {
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
     display: none;
   }
 }

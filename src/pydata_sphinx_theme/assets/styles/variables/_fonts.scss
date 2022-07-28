@@ -17,9 +17,13 @@
   // smaller then heading font sizes
   --pst-font-size-milli: 12px;
 
-  // primary sidebar management
-  --pst-sidebar-primary-font-size: 0.9em;
-  --pst-sidebar-primary-caption-font-size: 0.9em;
+  // sidebar management
+  --pst-sidebar-font-size: 0.9em;
+  --pst-sidebar-header-font-size: 1.2em;
+  --pst-sidebar-header-font-weight: 600;
+
+  // on mobile screens the font size of all sidebars is bigger
+  --pst-sidebar-font-size-mobile: 1.2em;
 
   // Font family
   // These are adapted from https://systemfontstack.com/ */

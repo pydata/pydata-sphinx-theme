@@ -6,6 +6,7 @@
 .bd-sidebar-primary {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 
   max-height: calc(100vh - var(--pst-header-height));
   position: sticky;
@@ -17,11 +18,82 @@
   border-right: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-background);
   overflow-y: auto;
-
   @include scrollbar-style();
+
+  font-size: var(--pst-sidebar-font-size-mobile);
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    font-size: var(--pst-sidebar-font-size);
+  }
 
   &.no-sidebar {
     border-right: 0;
+  }
+
+  &.hide-on-wide {
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      display: none;
+    }
+  }
+
+  .sidebar-start-items__item,
+  .sidebar-end-items__item {
+    padding: 0.25rem 0;
+  }
+
+  // Hide the sidebar header items on widescreen since they are visible in the header
+  .sidebar-header-items {
+    display: flex;
+    flex-direction: column;
+
+    .sidebar-header-items__title {
+      font-weight: var(--pst-sidebar-header-font-weight);
+      font-size: var(--pst-sidebar-header-font-size);
+      color: var(--pst-color-text-base);
+      margin-bottom: 0.5rem;
+    }
+
+    // The dropdown toggle for extra links just shows them all instead.
+    .nav-item.dropdown {
+      // On mobile, the dropdown behaves like any other link, no hiding
+      button {
+        display: none;
+      }
+
+      .dropdown-menu {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        border: none;
+        background-color: inherit;
+        font-size: inherit;
+      }
+    }
+
+    // Center header items get displayed vertically, end items are displayed horizontally
+    .sidebar-header-items__center {
+      display: flex;
+      flex-direction: column;
+    }
+
+    // Positioning end items
+    .sidebar-header-items__end {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      display: none;
+    }
+  }
+
+  .sidebar-start-items {
+    // Add a border on mobile to separate it from the header sidebar area
+    border-top: 1px solid var(--pst-color-border);
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      border-top: none;
+    }
   }
 
   .sidebar-end-items {
@@ -43,7 +115,7 @@
     }
   }
   // Navigation item chevrons
-  label {
+  label.toctree-toggle {
     position: absolute;
     top: 0;
     right: 0;
@@ -86,57 +158,12 @@
 
 /* Between-page links and captions */
 nav.bd-links {
-  font-size: var(--pst-sidebar-primary-font-size);
   margin-right: -1rem;
-
-  @include media-breakpoint-up($breakpoint-sidebar-primary) {
-    display: block;
-  }
-
-  ul {
-    list-style: none;
-
-    // Reduce padding of nested `ul` items a bit
-    ul {
-      padding: 0 0 0 1rem;
-    }
-  }
-
-  li > a {
-    display: block;
-    padding: 0.25rem 0;
-    color: var(--pst-color-text-muted);
-
-    &:hover {
-      color: var(--pst-color-primary);
-      text-decoration: none;
-      background-color: transparent;
-    }
-
-    &.reference.external {
-      &:after {
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content: "\f35d";
-        font-size: 0.75em;
-        margin-left: 0.3em;
-      }
-    }
-  }
-
-  .active {
-    > a,
-    &:hover > a {
-      font-weight: 600;
-      color: var(--pst-color-primary);
-    }
-  }
 
   // Toctree captions
   p.caption {
-    font-size: var(--pst-sidebar-primary-caption-font-size);
-    text-transform: uppercase;
-    font-weight: bold;
+    font-size: var(--pst-sidebar-header-font-size);
+    font-weight: var(--pst-sidebar-header-font-weight);
     position: relative;
     margin-top: 1.25em;
     margin-bottom: 0.5em;
@@ -144,48 +171,5 @@ nav.bd-links {
     &:first-child {
       margin-top: 0;
     }
-  }
-}
-
-// Navigation items on the left
-.bd-sidenav {
-  display: none;
-}
-
-.bd-toc-item.active {
-  margin-bottom: 1rem;
-
-  &:not(:first-child) {
-    margin-top: 1rem;
-  }
-
-  > .bd-sidenav {
-    display: block;
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Togglable expand/collapse
-////////////////////////////////////////////////////////////////////////////////
-
-.toctree-checkbox {
-  position: absolute;
-  display: none;
-}
-
-.toctree-checkbox {
-  ~ ul {
-    display: none;
-  }
-  ~ label i {
-    transform: rotate(0deg);
-  }
-}
-.toctree-checkbox:checked {
-  ~ ul {
-    display: block;
-  }
-  ~ label i {
-    transform: rotate(180deg);
   }
 }

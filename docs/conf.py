@@ -82,7 +82,7 @@ version_match = os.environ.get("READTHEDOCS_VERSION")
 if not version_match or version_match.isdigit():
     # For local development, infer the version to match from the package.
     release = pydata_sphinx_theme.__version__
-    if "dev" in release:
+    if "dev" in release or "rc" in release:
         version_match = "latest"
         # We want to keep the relative reference if we are in dev mode
         # but we want the whole url if we are effectively in a released version
@@ -132,13 +132,12 @@ html_theme_options = {
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
+    "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
+    "navbar_center": ["version-switcher", "navbar-nav"],
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
+    # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
     # "show_nav_level": 2,
-    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
-    # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    "navbar_start": ["navbar-logo", "version-switcher"],
-    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing, we should use defaults in our docs
+    # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
     # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""]
@@ -146,6 +145,7 @@ html_theme_options = {
         "json_url": json_url,
         "version_match": version_match,
     },
+    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
 }
 
 html_sidebars = {
