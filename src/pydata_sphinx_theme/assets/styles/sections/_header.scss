@@ -61,7 +61,7 @@
   .navbar-nav {
     display: flex;
 
-    @include media-breakpoint-up($breakpoint-header) {
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
       // Center align on wide screens so the dropdown button is centered properly
       align-items: center;
     }
@@ -110,7 +110,7 @@
 }
 
 // inline the element in the navbar as long as they fit and use display block when collapsing
-@include media-breakpoint-up($breakpoint-header) {
+@include media-breakpoint-up($breakpoint-sidebar-primary) {
   .navbar-center-item {
     display: inline-block;
   }
