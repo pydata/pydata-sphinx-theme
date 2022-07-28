@@ -36,7 +36,7 @@
     }
 
     // Active page is always highlighted
-    &.current a {
+    &.current > a {
       font-weight: 600;
       color: var(--pst-color-primary);
     }
