@@ -2,7 +2,8 @@
 .theme-switch-button {
   // overide bootstrap settings
   border-color: var(--pst-color-on-background);
-  font-size: var(--pst-font-size-icon);
+  // Size is a bit smaller because the background shadow is bigger
+  font-size: calc(var(--pst-font-size-icon) - 0.1rem);
   margin: 0 -0.5rem;
   padding: 0; // We pad the `a` not the container
 
