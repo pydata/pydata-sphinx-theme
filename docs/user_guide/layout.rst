@@ -408,6 +408,7 @@ Note that some of them may have CSS rules that assume a specific section (and
 will be named accordingly).
 
 .. refer to files in: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/
+
 - ``copyright.html``
 - ``edit-this-page.html``
 - ``footer-article/prev-next.html``
