@@ -3,14 +3,13 @@
  * e.g., between-pages navigation.
  */
 
-.bd-sidebar-primary {
+.sb-sidebar-primary {
   display: flex;
   flex-direction: column;
 
   max-height: calc(100vh - var(--pst-header-height));
   position: sticky;
   top: var(--pst-header-height);
-  @include make-col(3);
 
   // Borders padding and whitespace
   padding: 2rem 1rem 1rem 1rem;

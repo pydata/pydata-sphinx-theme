@@ -2,17 +2,15 @@
 
 {% if sidebars %}
 {# Only show if we have sidebars configured #}
-<div class="bd-sidebar-primary bd-sidebar">
-  <div class="sidebar-start-items">
-    {%- for sidebartemplate in sidebars %}
-    {%- include sidebartemplate %}
-    {%- endfor %}
-  </div>
-  <div class="sidebar-end-items">
-    {%- for leftsidebartemplate in theme_left_sidebar_end %}
-    {%- include leftsidebartemplate %}
-    {%- endfor %}
-  </div>
+<div class="sidebar-start-items">
+  {%- for sidebartemplate in sidebars %}
+  {%- include sidebartemplate %}
+  {%- endfor %}
+</div>
+<div class="sidebar-end-items">
+  {%- for leftsidebartemplate in theme_left_sidebar_end %}
+  {%- include leftsidebartemplate %}
+  {%- endfor %}
 </div>
 {% endif %}
 {% endblock %}
