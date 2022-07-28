@@ -22,5 +22,5 @@ regardless of what is displayed on the page.
 Remove the Table of Contents
 ----------------------------
 
-To remove the Table of Contents, add ``:theme_html_remove_secondary_sidebar:`` to the `file-wide metadata <https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata>`_ at the top of a page.
+To remove the Table of Contents, add ``:html_theme.secondary_sidebar.remove:`` to the `file-wide metadata <https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata>`_ at the top of a page.
 This will remove the Table of Contents from that page only.

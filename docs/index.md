@@ -4,7 +4,7 @@ myst:
     "description lang=en": |
       Top-level documentation for pydata-sphinx theme, with links to the rest
       of the site..
-theme_html_remove_secondary_sidebar: true
+html_theme.secondary_sidebar.remove: true
 ---
 
 # The PyData Sphinx Theme

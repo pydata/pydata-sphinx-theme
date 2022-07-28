@@ -261,3 +261,24 @@ For more details, see:
 There are a few places where we use `sphinx-design` to generate "galleries" of grids with structured text and images.
 We've created a little Sphinx directive to make it easier to repeat this process in our documentation and to avoid repeating ourselves too much.
 It is located in the `docs/scripts/` folder in a dedicated module, and re-used throughout our documentation.
+
+## Page-level configuration
+
+In some areas we support page-level configuration to control behavior on a per-page basis.
+Try to make this configuration follow the `html_theme_options` structure of our configuration as much as possibl.
+Begin them with `html_theme`, and separate "nested" configuration sections with periods (`.`).
+This is [similar to how the TOML language defines nested configuration](https://toml.io/en/v1.0.0#keys).
+
+For example, to remove the secondary sidebar, we use a page metadata key like this:
+
+```rst
+:html_theme.secondary_sidebar.remove: true
+```
+
+Note how the period naturally separates nested sections, and looks very similar to what we'd expect if we put this in a Python dictionary in `conf.py`:
+
+```python
+html_theme_options = {
+   "secondary_sidebar": {"remove": "true"}
+}
+```

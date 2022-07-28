@@ -17,7 +17,7 @@
 {% endif %}
 
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
-{% set use_sidebar_secondary = meta is defined and meta is not none and 'theme_html_remove_secondary_sidebar' not in meta %}
+{% set use_sidebar_secondary = meta is defined and meta is not none and 'html_theme.secondary_sidebar.remove' not in meta %}
 
 {%- block css %}
   <script>
@@ -80,7 +80,7 @@
 
       {# Secondary sidebar #}
       {% block docs_toc %}
-      {% if meta is defined and not (meta is not none and 'theme_html_remove_secondary_sidebar' in meta) %}
+      {% if meta is defined and not (meta is not none and 'html_theme.secondary_sidebar.remove' in meta) %}
         <div class="bd-sidebar-secondary bd-toc">
           {% include "sections/sidebar-secondary.html" %}
         </div>
