@@ -16,8 +16,15 @@
 {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
 {% endif %}
 
+{# Remove the page-toc from secondary sidebar if there are no links to show #}
+{% if generate_toc_html() | length < 1 %}
+{% set theme_page_sidebar_items = theme_page_sidebar_items | reject("in", "page-toc.html") | list %}
+{% endif %}
+
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
-{% set use_sidebar_secondary = meta is defined and meta is not none and 'html_theme.secondary_sidebar.remove' not in meta %}
+{% set remove_sidebar_secondary = (meta is defined and meta is not none
+                                   and 'html_theme.sidebar_secondary.remove' in meta)
+                                   or not theme_page_sidebar_items %}
 
 {%- block css %}
   <script>
@@ -80,7 +87,7 @@
 
       {# Secondary sidebar #}
       {% block docs_toc %}
-      {% if meta is defined and not (meta is not none and 'html_theme.secondary_sidebar.remove' in meta) %}
+      {% if not remove_sidebar_secondary %}
         <div class="bd-sidebar-secondary bd-toc">
           {% include "sections/sidebar-secondary.html" %}
         </div>

@@ -36,7 +36,7 @@
     {%- include "../components/search-button.html" %}
   </div>
 
-  {% if use_sidebar_secondary %}
+  {% if not remove_sidebar_secondary %}
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
       <span class="fas fa-outdent"></span>
   </label>

@@ -102,7 +102,7 @@ You can click on section titles to learn more about them and some basic layout c
         :padding: 2
         :outline:
         :columns: 2
-        :class: secondary-sidebar
+        :class: sidebar-secondary
 
         .. button-ref:: layout-sidebar-secondary
             :color: primary

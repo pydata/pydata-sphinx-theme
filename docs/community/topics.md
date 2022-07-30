@@ -272,13 +272,13 @@ This is [similar to how the TOML language defines nested configuration](https://
 For example, to remove the secondary sidebar, we use a page metadata key like this:
 
 ```rst
-:html_theme.secondary_sidebar.remove: true
+:html_theme.sidebar_secondary.remove: true
 ```
 
 Note how the period naturally separates nested sections, and looks very similar to what we'd expect if we put this in a Python dictionary in `conf.py`:
 
 ```python
 html_theme_options = {
-   "secondary_sidebar": {"remove": "true"}
+   "sidebar_secondary": {"remove": "true"}
 }
 ```
