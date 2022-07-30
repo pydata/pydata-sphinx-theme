@@ -74,6 +74,12 @@ def test_build_html(sphinx_build_factory, file_regression):
         sidebar.prettify(), basename="sidebar_subpage", extension=".html"
     )
 
+    # Secondary sidebar should not have in-page TOC if it is empty
+    assert not sphinx_build.html_tree("page1.html").select("div.onthispage")
+
+    # Secondary sidebar should not be present if page-level metadata given
+    assert not sphinx_build.html_tree("page2.html").select("div.bd-sidebar-secondary")
+
 
 def test_toc_visibility(sphinx_build_factory):
     # Test that setting TOC level visibility works as expected
