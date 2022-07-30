@@ -3,9 +3,8 @@
 # then it triggers our upload to PyPI for a new release.
 name: Publish to PyPI
 on:
-  push:
-    tags:
-      - "*"
+  release:
+    types: ["published"]
 
 jobs:
   tests:
