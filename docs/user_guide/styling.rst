@@ -3,7 +3,6 @@ Theme variables and CSS
 =======================
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/
-.. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
 
 This section covers a few ways that you can control the look and feel of your theme via your own CSS and theme variables.
@@ -174,17 +173,13 @@ The following image should help you understand these overlays:
       </div>
     </div>
 
-
-For a complete list of the theme colors that you may override, see the
-`color variables defaults CSS file <pydata-css-colors_>`_.
-
 .. it would be nice to have this `.. literalinclude::` here to actually show
    the file, but there's a pygments bug that fails to lex SCSS variables
    (specifically the `$` symbol that prepends SCSS variables, see
    https://github.com/pygments/pygments/issues/2130). So for now it's
-   commented out.
-   .. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss
-     :language: scss
+   just a raw download link.
+
+For a complete list of the theme colors that you may override, see the :download:`PyData theme CSS colors stylesheet <../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss>`.
 
 Configure pygments theme
 ========================

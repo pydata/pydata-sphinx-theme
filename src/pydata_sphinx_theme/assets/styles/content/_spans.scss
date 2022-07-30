@@ -15,7 +15,7 @@ span.guilabel {
   @include background-from-color-variable(--pst-color-info);
 }
 
-a.reference.download.external:before {
+a.reference.download:before {
   content: "\f019";
   font-family: "Font Awesome 5 Free";
   font-size: 0.8em;
