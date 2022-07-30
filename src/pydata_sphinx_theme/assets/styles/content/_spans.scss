@@ -14,3 +14,12 @@ span.guilabel {
 
   @include background-from-color-variable(--pst-color-info);
 }
+
+a.reference.download:before {
+  content: "\f019";
+  font-family: "Font Awesome 5 Free";
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 0 0.25em;
+  color: var(--pst-color-text-muted);
+}
