@@ -32,8 +32,9 @@
   }
 }
 
-// In-page contents via the contents directive
-div.topic.contents {
+div.topic.contents,  // Docutils <= 0.17
+nav.contents  // Docutils >= 0.18
+{
   // Style similarly to toctree
   ul.simple {
     list-style: none;

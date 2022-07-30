@@ -160,6 +160,49 @@
 nav.bd-links {
   margin-right: -1rem;
 
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    display: block;
+  }
+
+  ul {
+    list-style: none;
+
+    // Reduce padding of nested `ul` items a bit
+    ul {
+      padding: 0 0 0 1rem;
+    }
+  }
+
+  li > a {
+    display: block;
+    padding: 0.25rem 0;
+    color: var(--pst-color-text-muted);
+
+    &:hover {
+      color: var(--pst-color-primary);
+      text-decoration: none;
+      background-color: transparent;
+    }
+
+    &.reference.external {
+      &:after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f35d";
+        font-size: 0.75em;
+        margin-left: 0.3em;
+      }
+    }
+  }
+
+  .active {
+    > a,
+    &:hover > a {
+      font-weight: 600;
+      color: var(--pst-color-primary);
+    }
+  }
+
   // Toctree captions
   p.caption {
     font-size: var(--pst-sidebar-header-font-size);

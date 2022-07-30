@@ -118,6 +118,17 @@ I was made with the `{admonition}` directive and a `sidebar` class.
 I was made with the `{sidebar}` directive.
 ```
 
+## Footnotes
+
+Here's one footnote[^1] and another footnote [^2] and a named footenote[^named], symbol [^*].
+
+[^1]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
+[^2]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
+[^named]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
+[^*]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
+
+## Version changes
+
 This theme supports a short-hand way of making **admonitions behave like sidebars**.
 This can be a helpful way of highlighting content that lives to the side of your main text without interrupting the vertical flow as much.
 

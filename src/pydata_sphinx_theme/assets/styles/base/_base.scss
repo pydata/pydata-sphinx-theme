@@ -112,7 +112,7 @@ small,
 
 hr {
   border: 0;
-  border-top: 1px solid var(pst-color-border);
+  border-top: 1px solid var(--pst-color-border);
 }
 
 pre,
@@ -147,8 +147,7 @@ pre {
   color: var(--pst-color-text-base);
   line-height: 1.2em;
   border: 1px solid var(--pst-color-border);
-  border-radius: 0.2rem;
-  box-shadow: 1px 1px 1px var(--pst-color-shadow);
+  border-radius: $admonition-border-radius;
 
   @include scrollbar-style();
 

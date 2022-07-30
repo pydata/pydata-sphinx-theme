@@ -1,5 +1,8 @@
-// Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
-
+/**
+ * Admonitions and blocks of styled content.
+ * Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
+ */
+$admonition-border-radius: 0.25rem;
 div.admonition,
 .admonition {
   margin: 1.5625em auto;
@@ -8,7 +11,7 @@ div.admonition,
   page-break-inside: avoid;
   border-left: 0.2rem solid;
   border-color: var(--pst-color-info);
-  border-radius: 0.2rem;
+  border-radius: $admonition-border-radius;
   background-color: var(--pst-color-on-background);
   @include box-shadow();
 
@@ -33,7 +36,7 @@ div.admonition,
   > .admonition-title {
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
-    font-weight: 600;
+    font-weight: var(--pst-font-weight-heading);
     position: relative;
 
     &:after {
@@ -227,16 +230,26 @@ div.admonition,
   }
 }
 
-/*
+/**************************************************************
  * Similar content blocks that are not technically admonitions.
  */
 
-// Topics (also used for `contents` directive)
-div.topic {
+/**
+ * Topics and the {contents} directive
+ */
+// Docutils <= 0.17
+div.topic,
+div.topic.contents,
+// Docutils >= 0.18
+nav.contents,
+aside.topic, {
+  display: flex;
+  flex-direction: column;
   background-color: var(--pst-color-surface);
   border-color: var(--pst-color-border);
-  border-radius: 0.2rem;
+  border-radius: $admonition-border-radius;
   padding: 1rem 1.25rem;
+  @include box-shadow();
 
   .topic-title {
     margin: 0 0 0.5rem 0;
@@ -253,14 +266,53 @@ div.topic {
   }
 }
 
+/**
+ * Sidebar directive
+ */
 aside.sidebar {
-  background-color: var(--pst-color-on-surface);
-  border-color: var(--pst-color-border);
-  border-radius: 0.2rem;
+  border: 1px solid var(--pst-color-border);
+  background-color: var(--pst-color-surface);
+  border-radius: $admonition-border-radius;
   // to match the admonition-styled sidebars:
   margin-left: 0.5rem;
+  padding: 0;
+  > *:last-child {
+    padding-bottom: 1rem;
+  }
+
+  p.sidebar-title {
+    position: relative;
+    margin-bottom: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--pst-color-border);
+    font-family: var(--pst-font-family-heading);
+    font-weight: var(--pst-font-weight-heading);
+  }
+
+  // Add margin to the first non-`.sidebar-title` item
+  > *:not(.sidebar-title):first-child,
+  > p.sidebar-title + * {
+    margin-top: 1rem;
+  }
+
+  > * {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
+/**
+ * Rubrics look kind of like section headers
+ */
+p.rubric {
+  display: flex;
+  flex-direction: column;
+}
+
+/**
+ * Seealso is kind of like a vertically-collapsed admonition
+ */
 .seealso dd {
   margin-top: 0;
   margin-bottom: 0;

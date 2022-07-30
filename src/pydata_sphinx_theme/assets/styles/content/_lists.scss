@@ -11,3 +11,9 @@ dl.field-list {
   display: grid;
   grid-template-columns: fit-content(30%) minmax(0, 1fr);
 }
+
+ol li > p:first-child,
+ul li > p:first-child {
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
+}

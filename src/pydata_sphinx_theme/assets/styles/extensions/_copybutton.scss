@@ -10,16 +10,16 @@ div.highlight button.copybtn {
   justify-content: center;
 
   // Removes the button background so we more naturally blend with the code cell.
-  background-color: var(--pst-color-surface);
+  background-color: unset;
 
   // Don't over-ride the success color
   &:not(.success) {
     color: var(--pst-color-muted);
   }
   border: none;
+  background-color: var(--pst-color-surface);
 
   &:hover {
-    background-color: var(--pst-color-surface);
     &:not(.success) {
       color: var(--pst-color-text);
     }

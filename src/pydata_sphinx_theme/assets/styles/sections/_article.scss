@@ -16,6 +16,7 @@
     // Give a bit more verticle spacing on wide screens
     @include media-breakpoint-up($breakpoint-sidebar-secondary) {
       padding-top: 2rem;
+      padding-left: 2rem;
     }
   }
 }

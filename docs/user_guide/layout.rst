@@ -270,7 +270,7 @@ By default, it has the following configuration:
 
 - ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section.
 
-   When there are no pages to show, it will disappear and potentially add extra space for your page's content.
+  When there are no pages to show, it will disappear and potentially add extra space for your page's content.
 
 - ``sidebar-ethical-ads.html`` - a placement for ReadTheDocs's Ethical Ads (will only show up on ReadTheDocs).
 
@@ -407,20 +407,26 @@ Below is a list of built-in templates that you can insert into any section.
 Note that some of them may have CSS rules that assume a specific section (and
 will be named accordingly).
 
-- ``icon-links.html``
-- ``search-field.html``
+.. refer to files in: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/
+
 - ``copyright.html``
 - ``edit-this-page.html``
+- ``footer-article/prev-next.html``
+- ``icon-links.html``
 - ``last-updated.html``
 - ``navbar-icon-links.html``
 - ``navbar-logo.html``
 - ``navbar-nav.html``
 - ``page-toc.html``
+- ``search-button.html``
+- ``search-field.html``
 - ``sidebar-ethical-ads.html``
 - ``sidebar-nav-bs.html``
+- ``sourcelink.html``
 - ``sphinx-version.html``
-- ``version-switcher.html``
 - ``theme-switcher.html``
+- ``version-switcher.html``
+
 
 Add your own HTML templates to theme sections
 =============================================

@@ -1,5 +1,6 @@
 .. INSPIRED FROM sphinx-design documentation
 
+========================
 Sphinx Design Components
 ========================
 
@@ -30,7 +31,7 @@ Below you can find some examples of the components created with the :code:`sphin
 .. _badges-buttons:
 
 Badges and buttons
-------------------
+==================
 
 Here are some of the available badges:
 :bdg-primary:`primary`
@@ -82,7 +83,7 @@ If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom p
             Muted
 
 Cards
------
+=====
 
 .. grid::
 
@@ -122,7 +123,7 @@ Cards
 
 
 Tabs
-----
+====
 
 .. tab-set::
 
@@ -165,7 +166,7 @@ Tabs
             END PROGRAM main
 
 Dropdowns
----------
+=========
 
 Dropdowns should look similar to admonitions, but clickable.
 See `the Sphinx Design Dropdown documentation <https://sphinx-design.readthedocs.io/en/latest/dropdowns.html>`__ for more information.

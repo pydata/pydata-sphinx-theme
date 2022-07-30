@@ -32,6 +32,10 @@ df
 
 ## Matplotlib
 
+```{sidebar}
+Here's a sidebar to test that the code cells behave as we'd expect when there is content to the right. The code cell should be displayed to the left and with no overlap.
+```
+
 ```{code-cell}
 import matplotlib.pyplot as plt
 

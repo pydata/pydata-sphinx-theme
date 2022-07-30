@@ -60,7 +60,28 @@
 
   .navbar-nav {
     display: flex;
-    align-items: center;
+
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      // Center align on wide screens so the dropdown button is centered properly
+      align-items: center;
+    }
+
+    li a.nav-link {
+      color: var(--pst-color-text-muted);
+
+      &:hover {
+        color: var(--pst-color-primary);
+      }
+
+      &:focus {
+        color: var(--pst-color-primary);
+      }
+    }
+
+    > .active > .nav-link {
+      font-weight: 600;
+      color: var(--pst-color-primary);
+    }
 
     // Dropdowns for the extra links
     .dropdown {
@@ -89,8 +110,21 @@
 }
 
 // inline the element in the navbar as long as they fit and use display block when collapsing
-.navbar-center-item {
-  display: inline-block;
+@include media-breakpoint-up($breakpoint-sidebar-primary) {
+  .navbar-center-item {
+    display: inline-block;
+  }
+}
+
+.toc-entry > .nav-link.active {
+  font-weight: 600;
+  color: var(--pst-color-primary);
+  background-color: transparent;
+  border-left: 2px solid var(--pst-color-primary);
+}
+
+.nav-link:hover {
+  border-style: none;
 }
 
 #navbar-main-elements li.nav-item i {

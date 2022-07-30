@@ -15,7 +15,7 @@
 
   input {
     background-color: var(--pst-color-background);
-    border-radius: 0.2rem;
+    border-radius: $admonition-border-radius;
     border: 1px solid var(--pst-color-border);
     padding-left: 2.5rem;
     color: var(--pst-color-border);
