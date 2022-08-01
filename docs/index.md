@@ -24,10 +24,10 @@ A clean, Bootstrap-based Sphinx theme by and for [the PyData community](https://
   content: "Customize colors and branding with CSS variables, and build custom UIs with [Sphinx Design](user_guide/web-components)."
 - header: "{fab}`python` Supports PyData and Jupyter"
   content: "CSS and UI support for Jupyter extensions and PyData execution outputs."
-  link: "examples/pydata"
+  link: "examples/pydata.html"
 - header: "💡 Example Gallery"
   content: "See our gallery of projects that use this theme."
-  link: "examples/gallery"
+  link: "examples/gallery.html"
 ```
 
 ```{seealso}
