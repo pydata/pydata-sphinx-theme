@@ -4,10 +4,7 @@
  */
 
 .bd-sidebar-primary {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
+  flex-shrink: 0;
   max-height: calc(100vh - var(--pst-header-height));
   position: sticky;
   top: var(--pst-header-height);

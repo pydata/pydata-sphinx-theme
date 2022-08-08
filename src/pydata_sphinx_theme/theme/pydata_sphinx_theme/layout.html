@@ -78,45 +78,45 @@
   </nav>
   {% endblock %}
 
-  <div class="bd-container container-xl">
-    <div class="bd-container__inner row">
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
-
-      {# Secondary sidebar #}
-      {% block docs_toc %}
-      {% if not remove_sidebar_secondary %}
-        <div class="bd-sidebar-secondary bd-toc">
-          {% include "sections/sidebar-secondary.html" %}
-        </div>
-      {% endif %}
-      {% endblock %}
-
-      {# Main content area #}
-      {% block docs_main %}
-      <div class="bd-content col">
-          {# Article header #}
-          <div class="bd-header-article">
-              {% include "sections/header-article.html" %}
+      <main class="bd-main">
+        {# Main content area #}
+        {% block docs_main %}
+        <div class="bd-content">
+          <div class="bd-article-container">
+            {# Article header #}
+            <div class="bd-header-article">
+                {% include "sections/header-article.html" %}
+            </div>
+            {# Article content #}
+            {% block docs_body %}
+            <article class="bd-article" role="main">
+              {% block body %} {% endblock %}
+            </article>
+            {% endblock %}
+            {# Article Footer #}
+            {% if theme_show_prev_next %}
+            <footer class="bd-footer-article">
+                {% include "sections/footer-article.html" %}
+            </footer>
+            {% endif %}
           </div>
-
-          {# Article content #}
-          {% block docs_body %}
-          <article class="bd-article" role="main">
-            {% block body %} {% endblock %}
-          </article>
-          {% endblock %}
-
-          {# Article Footer #}
-          {% if theme_show_prev_next %}
-          <footer class="bd-footer-article">
-              {% include "sections/footer-article.html" %}
-          </footer>
+          {# Secondary sidebar #}
+          {% block docs_toc %}
+          {% if not remove_sidebar_secondary %}
+            <div class="bd-sidebar-secondary bd-toc">
+              {% include "sections/sidebar-secondary.html" %}
+            </div>
           {% endif %}
-      </div>
-      {% endblock %}
+          {% endblock %}
+        </div>
+        {% endblock %}
+      </main>
     </div>
   </div>
 
