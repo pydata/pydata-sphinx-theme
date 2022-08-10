@@ -120,7 +120,7 @@ This is configured in the `webpack.config.js` file, and imported in the respecti
 
 ### FontAwesome icons
 
-Three "styles" of the [FontAwesome 5 Free](https://fontawesome.com/icons?m=free)
+Three "styles" of the [FontAwesome 6 Free](https://fontawesome.com/icons?m=free)
 icon font are used for {ref}`icon links <icon-links>` and admonitions, and is
 the only `vendored` font.
 
