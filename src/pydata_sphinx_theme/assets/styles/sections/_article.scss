@@ -5,6 +5,7 @@
   flex-grow: 1;
   flex-direction: column;
   display: flex;
+  min-width: 0;
 
   .bd-content {
     display: flex;
