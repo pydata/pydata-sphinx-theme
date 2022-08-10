@@ -78,15 +78,19 @@ class GalleryDirective(SphinxDirective):
             options = {}
             if "link" in item:
                 options["link"] = item["link"]
-
+                
             if "class-card" in self.options:
                 options["class-card"] = self.options["class-card"]
+                
             if "img-background" in item:
                 options["img-background"] = item["img-background"]
+                
             if "img-top" in item:
                 options["img-top"] = item["img-top"]
+                
             if "img-bottom" in item:
                 options["img-bottom"] = item["img-bottom"]
+                
             options_str = "\n".join(f":{k}: {v}" for k, v in options.items()) + "\n\n"
 
             # Grid card content
