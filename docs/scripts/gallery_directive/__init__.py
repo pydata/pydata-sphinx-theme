@@ -76,8 +76,8 @@ class GalleryDirective(SphinxDirective):
         for item in grid_data:
             # Grid card parameters
             options = {}
-            if "link" in item:
-                options["link"] = item["link"]
+            if "website" in item:
+                options["link"] = item["website"]
                 
             if "class-card" in self.options:
                 options["class-card"] = self.options["class-card"]
