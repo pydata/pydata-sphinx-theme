@@ -352,14 +352,16 @@ use this pattern:
 Footer Content
 ==============
 
-What is the exact use of it?
+The footer content is a narrow bar spanning the article’s content and secondary sidebar.
+It does not contain anything immediately viewable to the reader, but is kept as a placeholder in case theme developers wish to re-use it in the future.
+
 
 .. _layout-sidebar-secondary:
 
 Secondary Sidebar (right)
 =========================
 
-The in-page sidebar is just to the right of a page's main content, and is
+The in-page sidebar is just to the right of a page's article content, and is
 configured in ``conf.py`` with ``html_theme_options['page_sidebar_items']``.
 
 By default, it has the following templates:
@@ -396,7 +398,7 @@ at the bottom. You can hide these buttons with the following configuration:
 Footer
 ======
 
-The footer is just below a page's main content, and is configured in ``conf.py``
+The footer is just below a page’s main content, and is configured in ``conf.py``
 with ``html_theme_options['footer_items']``.
 
 By default, it has the following templates:
