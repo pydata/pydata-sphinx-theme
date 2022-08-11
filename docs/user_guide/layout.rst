@@ -347,6 +347,13 @@ use this pattern:
      "**": []
    }
 
+.. _layout-footer-ontent:
+
+Footer Content
+==============
+
+What is the exact use of it?
+
 .. _layout-sidebar-secondary:
 
 Secondary Sidebar (right)
