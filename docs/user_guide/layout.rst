@@ -79,38 +79,63 @@ You can click on section titles to learn more about them and some basic layout c
         Links between pages in the active section.
 
     .. grid-item::
-        :padding: 2
-        :outline:
-        :columns: 6
-        :class: content
+        :columns: 8
 
-        .. button-ref:: layout-article-header
-            :color: primary
+        .. grid::
+            :margin: 0
+            :gutter: 0
+
+            .. grid-item::
+                :class: content
+                :padding: 2
+                :columns: 8
+                :outline:
+
+                .. button-ref:: layout-article-header
+                    :color: primary
+                    :outline:
+
+                    Article Header
+
+                **Article Content**
+
+                .. button-ref:: layout-article-footer
+                    :color: primary
+                    :outline:
+
+                    Article Footer
+
+            .. grid-item::
+                :padding: 2
+                :columns: 4
+                :outline:
+                :class: sidebar-secondary
+
+                .. button-ref:: layout-sidebar-secondary
+                    :color: primary
+                    :outline:
+
+                    Secondary Sidebar
+
+                Within-page header links
+
+        .. grid::
+            :margin: 0
+            :gutter: 0
             :outline:
 
-            Article Header
+            .. grid-item::
+                :padding: 2
+                :columns: 12
+                :class: footer-content
 
-        **Article Content**
+                .. button-ref:: layout-footer-content
+                    :color: primary
+                    :outline:
 
-        .. button-ref:: layout-article-footer
-            :color: primary
-            :outline:
+                    Footer content
 
-            Article Footer
 
-    .. grid-item::
-        :padding: 2
-        :outline:
-        :columns: 2
-        :class: sidebar-secondary
-
-        .. button-ref:: layout-sidebar-secondary
-            :color: primary
-            :outline:
-
-            Secondary Sidebar
-
-        Within-page header links
 
     .. grid-item::
         :padding: 2
