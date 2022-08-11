@@ -347,7 +347,7 @@ use this pattern:
      "**": []
    }
 
-.. _layout-footer-ontent:
+.. _layout-footer-content:
 
 Footer Content
 ==============
