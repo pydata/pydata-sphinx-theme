@@ -17,7 +17,7 @@
   }
 
   padding: 2rem 1rem 1rem 1rem;
-  width: 17rem;
+  width: var(--pst-sidebar-secondary);
 
   // Color and border
   background-color: var(--pst-color-background);
