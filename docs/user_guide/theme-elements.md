@@ -11,7 +11,7 @@ Some of these are triggered with configuration or markdown syntax that is unique
 
 Most Sphinx sites support math, but it is particularly important for scientific computing and so we illustrate support here as well.
 
-Here is an inline equation: {math}`X_{0:5} = (X_0, X_1, X_2, X_3, X_4)` and {math}`another` and {math}`x^2 x^3 x^4` another.
+Here is an inline equation: {math}`X_{0:5} = (X_0, X_1, X_2, X_3, X_4)` and {math}`another` and {math}`x^2 x^3 x^4` another. And here's one to test vertical height {math}`\frac{\partial^2 f}{\partial \phi^2}`.
 
 Here is block-level equation:
 

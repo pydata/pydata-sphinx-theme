@@ -4,24 +4,30 @@
 .math {
   align-items: center;
   display: flex;
-  flex-direction: row-reverse;
   gap: 0.5em;
   max-width: 100%;
-  overflow: auto;
-
-  @include scrollbar-style();
-
-  mjx-container {
-    flex-grow: 1;
-  }
-
-  span.eqno a.headerlink {
-    position: relative;
-    font-size: 1em;
-  }
+  // This will be over-ridden for the y-direction and divs
+  overflow: hidden;
 }
 
 // Special-case for inline math
 span.math {
   display: inline-flex;
+}
+
+div.math {
+  // So that the eqno shows up after the equation
+  flex-direction: row-reverse;
+
+  span.eqno a.headerlink {
+    position: relative;
+    font-size: 1em;
+  }
+
+  mjx-container {
+    flex-grow: 1;
+    padding-bottom: 0.2rem;
+    overflow-x: auto;
+    @include scrollbar-style();
+  }
 }
