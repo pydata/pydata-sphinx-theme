@@ -24,4 +24,5 @@
 // Special-case for inline math
 span.math {
   display: inline-flex;
+  overflow-y: hidden;
 }
