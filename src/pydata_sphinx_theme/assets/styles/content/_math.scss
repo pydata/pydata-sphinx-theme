@@ -1,29 +1,37 @@
 /**
- * hack the display of equations to make sure they don't overlap on mobile display
+ * Mathematics via MathJax.
+ * 
+ * This is designed for MathJax v3
+ * ref: https://www.sphinx-doc.org/en/master/usage/extensions/math.html#module-sphinx.ext.mathjax
  */
-.math {
+ 
+// Applies to all math elements
+span.math, div.math {
   align-items: center;
   display: flex;
-  gap: 0.5em;
   max-width: 100%;
   // This will be over-ridden for the y-direction and divs
   overflow: hidden;
 }
 
-// Special-case for inline math
+// Inline-only
 span.math {
   display: inline-flex;
 }
 
+// Block-level only
 div.math {
+  gap: 0.5em;
   // So that the eqno shows up after the equation
   flex-direction: row-reverse;
 
+  // The equation number / link
   span.eqno a.headerlink {
     position: relative;
     font-size: 1em;
   }
 
+  // The math container
   mjx-container {
     flex-grow: 1;
     padding-bottom: 0.2rem;
