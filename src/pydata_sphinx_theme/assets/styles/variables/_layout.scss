@@ -20,7 +20,7 @@
 */
 $breakpoint-sidebar-primary: lg; // When we collapse the primary sidebar
 $breakpoint-sidebar-secondary: xl; // When we collapse the secondary sidebar
-$breakpoint-page-width: 88rem; // value taken from sphinx-basic-ng
+$breakpoint-page-width: 88rem; // following sphinx-basic-ng design pattern, which we are ultimately going to inherit
 
 /*******************************************************************************
 * Define the animation behaviour
