@@ -18,7 +18,7 @@
     border-radius: $admonition-border-radius;
     border: 1px solid var(--pst-color-border);
     padding-left: 2.5rem;
-    color: var(--pst-color-border);
+    color: var(--pst-color-text-base);
 
     // Inner-text of the search bar
     &::placeholder {
