@@ -240,7 +240,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # Iterate through each toctree node in the root document
         # Grab the toctree pages and find the relative link + title.
         links_html = []
-        for toc in root.traverse(toctree_node):
+        # Can just use "findall" once docutils min version >=0.18.1
+        meth = "findall" if hasattr(root, "findall") else "traverse"
+        for toc in getattr(root, meth)(toctree_node):
             for _, page in toc.attributes["entries"]:
                 # If this is the active ancestor page, add a class so we highlight it
                 current = " current active" if page == active_header_page else ""
@@ -295,7 +297,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
     # Cache this function because it is expensive to run, and becaues Sphinx
     # somehow runs this twice in some circumstances in unpredictable ways.
-    @lru_cache
+    @lru_cache(maxsize=None)
     def generate_toctree_html(kind, startdepth=1, show_nav_level=1, **kwargs):
         """
         Return the navigation link structure in HTML. This is similar to Sphinx's
@@ -392,6 +394,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         return out
 
+    @lru_cache(maxsize=None)
     def generate_toc_html(kind="html"):
         """Return the within-page TOC links in HTML."""
 
