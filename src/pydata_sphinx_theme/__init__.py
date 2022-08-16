@@ -4,6 +4,7 @@ Bootstrap-based sphinx theme from the PyData community
 import os
 import warnings
 from pathlib import Path
+from functools import lru_cache
 
 import jinja2
 from bs4 import BeautifulSoup as bs
@@ -284,6 +285,17 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         return out
 
+    # TODO: Deprecate after v0.12
+    def generate_nav_html(*args, **kwargs):
+        logger.warn(
+            "`generate_nav_html` is deprecated and will be removed."
+            "Use `generate_toctree_html` instead."
+        )
+        generate_toctree_html(*args, **kwargs)
+
+    # Cache this function because it is expensive to run, and becaues Sphinx
+    # somehow runs this twice in some circumstances in unpredictable ways.
+    @lru_cache
     def generate_toctree_html(kind, startdepth=1, show_nav_level=1, **kwargs):
         """
         Return the navigation link structure in HTML. This is similar to Sphinx's
@@ -448,6 +460,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
+
+    # TODO: Deprecate after v0.12
+    context["generate_nav_html"] = generate_nav_html
 
 
 def _add_collapse_checkboxes(soup):
