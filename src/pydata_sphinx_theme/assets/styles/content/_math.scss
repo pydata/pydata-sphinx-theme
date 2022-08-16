@@ -1,12 +1,13 @@
 /**
  * Mathematics via MathJax.
- * 
+ *
  * This is designed for MathJax v3
  * ref: https://www.sphinx-doc.org/en/master/usage/extensions/math.html#module-sphinx.ext.mathjax
  */
- 
+
 // Applies to all math elements
-span.math, div.math {
+span.math,
+div.math {
   align-items: center;
   display: flex;
   max-width: 100%;
