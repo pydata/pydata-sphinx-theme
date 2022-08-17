@@ -29,6 +29,17 @@
   }
 }
 
+// specific border color when the button is nested in the navbar
+// as it's color is different from the header
+.bd-sidebar-primary .theme-switch-button {
+  border-color: var(--pst-color-background);
+
+  &:hover,
+  &:active {
+    border-color: var(--pst-color-background) !important;
+  }
+}
+
 html[data-mode="auto"] .theme-switch-button a[data-mode="auto"] {
   display: flex;
 }
