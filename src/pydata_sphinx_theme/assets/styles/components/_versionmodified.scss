@@ -27,7 +27,6 @@ div.versionadded {
 
   p:before {
     background-color: var(--pst-color-success);
-    pointer-events: none;
   }
 }
 
@@ -36,7 +35,6 @@ div.versionchanged {
 
   p:before {
     background-color: var(--pst-color-warning);
-    pointer-events: none;
   }
 }
 
@@ -45,7 +43,6 @@ div.deprecated {
 
   p:before {
     background-color: var(--pst-color-danger);
-    pointer-events: none;
   }
 }
 
