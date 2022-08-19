@@ -239,7 +239,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # Iterate through each toctree node in the root document
         # Grab the toctree pages and find the relative link + title.
         links_html = []
-        for toc in root.traverse(toctree_node):
+        # Can just use "findall" once docutils min version >=0.18.1
+        meth = "findall" if hasattr(root, "findall") else "traverse"
+        for toc in getattr(root, meth)(toctree_node):
             for _, page in toc.attributes["entries"]:
                 # If this is the active ancestor page, add a class so we highlight it
                 current = " current active" if page == active_header_page else ""
