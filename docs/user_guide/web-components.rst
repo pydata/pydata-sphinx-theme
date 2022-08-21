@@ -87,19 +87,29 @@ Cards
 
 .. grid::
 
-    .. grid-item-card:: Content of the first card
+    .. grid-item-card:: Only heading
 
-    .. grid-item-card:: Content of the second card
+    .. grid-item-card::
+
+        Only body.
+
+        But with multiple text paragraphs.
+
+    .. grid-item-card:: Heading and body
+
+        Content of the third card.
 
         :bdg-primary:`example`
 
-    .. grid-item-card::
+.. grid::
+
+    .. grid-item-card:: A card with a dropdown menu
 
         .. dropdown:: :fa:`eye,mr-1` third card
 
             Hidden content
 
-    .. grid-item-card:: Clickable  fourth Card
+    .. grid-item-card:: A clickable card
         :link: https://example.com
 
 .. grid::
