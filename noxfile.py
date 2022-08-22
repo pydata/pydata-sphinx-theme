@@ -55,3 +55,48 @@ def test(session):
     if _should_install(session):
         session.install("-e", ".[test]")
     session.run("pytest", *session.posargs)
+
+
+@nox.session(name="profile")
+def profile(session):
+    """Generate a profile chart with py-spy.
+
+    The chart will be placed at profile.svg and can be viewed in the browser.
+    """
+    import shutil as sh
+    import tempfile
+    from textwrap import dedent
+
+    if _should_install(session):
+        session.install("-e", ".[test]")
+    session.install("py-spy")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Copy over our base test site to the temporary folder
+        path_base = Path("tests/sites/base/")
+        path_tmp = Path(tmpdir) / path_base
+        sh.copytree(path_base, path_tmp)
+
+        # Add a bunch of extra files to increase the build length
+        index = path_tmp / "index.rst"
+        text = index.read_text()
+        text += dedent(
+            """
+        .. toctree::
+            :glob:
+
+            many/*
+        """
+        )
+        index.write_text(text)
+        (path_tmp / "many").mkdir()
+
+        # Create a bunch of empty pages to slow the build
+        for ii in range(50):
+            (path_tmp / "many" / f"{ii}.rst").write_text("Test\n====\n\nbody\n")
+
+        # Specify our output directory and profile the build
+        path_tmp_out = path_tmp / "_build"
+        session.run(
+            *f"py-spy record -o profile.svg -- sphinx-build {path_tmp} {path_tmp_out}".split()  # noqa
+        )
