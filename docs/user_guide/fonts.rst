@@ -1,7 +1,7 @@
 Fonts and FontAwesome
 =====================
 
-The theme includes the `FontAwesome 5 Free <https://fontawesome.com/icons?m=free>`__
+The theme includes the `FontAwesome 6 Free <https://fontawesome.com/icons?m=free>`__
 icon font (the ``.fa, .far, .fas`` styles, which are used for
 :ref:`icon links <icon-links>` and admonitions).
 This is the only *vendored* font, and otherwise the theme by default relies on

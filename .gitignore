@@ -114,3 +114,6 @@ node_modules/
 
 # files from the gallery screenshots
 docs/_static/gallery
+
+# Our site profile tests
+profile.svg

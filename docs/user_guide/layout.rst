@@ -79,38 +79,63 @@ You can click on section titles to learn more about them and some basic layout c
         Links between pages in the active section.
 
     .. grid-item::
-        :padding: 2
-        :outline:
-        :columns: 6
-        :class: content
+        :columns: 8
 
-        .. button-ref:: layout-article-header
-            :color: primary
+        .. grid::
+            :margin: 0
+            :gutter: 0
+
+            .. grid-item::
+                :class: content
+                :padding: 2
+                :columns: 8
+                :outline:
+
+                .. button-ref:: layout-article-header
+                    :color: primary
+                    :outline:
+
+                    Article Header
+
+                **Article Content**
+
+                .. button-ref:: layout-article-footer
+                    :color: primary
+                    :outline:
+
+                    Article Footer
+
+            .. grid-item::
+                :padding: 2
+                :columns: 4
+                :outline:
+                :class: sidebar-secondary
+
+                .. button-ref:: layout-sidebar-secondary
+                    :color: primary
+                    :outline:
+
+                    Secondary Sidebar
+
+                Within-page header links
+
+        .. grid::
+            :margin: 0
+            :gutter: 0
             :outline:
 
-            Article Header
+            .. grid-item::
+                :padding: 2
+                :columns: 12
+                :class: footer-content
 
-        **Article Content**
+                .. button-ref:: layout-footer-content
+                    :color: primary
+                    :outline:
 
-        .. button-ref:: layout-article-footer
-            :color: primary
-            :outline:
+                    Footer content
 
-            Article Footer
 
-    .. grid-item::
-        :padding: 2
-        :outline:
-        :columns: 2
-        :class: sidebar-secondary
-
-        .. button-ref:: layout-sidebar-secondary
-            :color: primary
-            :outline:
-
-            Secondary Sidebar
-
-        Within-page header links
 
     .. grid-item::
         :padding: 2
@@ -322,12 +347,21 @@ use this pattern:
      "**": []
    }
 
+.. _layout-footer-content:
+
+Footer Content
+==============
+
+The footer content is a narrow bar spanning the article’s content and secondary sidebar.
+It does not contain anything immediately viewable to the reader, but is kept as a placeholder in case theme developers wish to re-use it in the future.
+
+
 .. _layout-sidebar-secondary:
 
 Secondary Sidebar (right)
 =========================
 
-The in-page sidebar is just to the right of a page's main content, and is
+The in-page sidebar is just to the right of a page's article content, and is
 configured in ``conf.py`` with ``html_theme_options['page_sidebar_items']``.
 
 By default, it has the following templates:
@@ -364,7 +398,7 @@ at the bottom. You can hide these buttons with the following configuration:
 Footer
 ======
 
-The footer is just below a page's main content, and is configured in ``conf.py``
+The footer is just below a page’s main content, and is configured in ``conf.py``
 with ``html_theme_options['footer_items']``.
 
 By default, it has the following templates:

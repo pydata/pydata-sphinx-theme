@@ -62,5 +62,10 @@
     top: 0;
     background-color: var(#{$color-variable});
     opacity: $opacity;
+
+    // So that hovering over the text within background is still possible.
+    // Otherwise the background overlays the text and you cannot click or select easily.
+    // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
+    pointer-events: none;
   }
 }
