@@ -199,6 +199,7 @@ def update_templates(app, pagename, templatename, context, doctree):
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
+    @lru_cache(maxsize=None)
     def generate_header_nav_html(n_links_before_dropdown=5):
         """
         Generate top-level links that are meant for the header navigation.

@@ -146,3 +146,33 @@ jobs:
           temporaryPublicStorage: true
           uploadArtifacts: true
           runs: 3 # Multiple runs to reduce variance
+
+  # Generate a profile of the code and upload as an artifact
+  profile:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel setuptools nox
+
+      - name: Generate a profile
+        run: |
+          nox -s profile
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: profile-results
+          path: profile.svg

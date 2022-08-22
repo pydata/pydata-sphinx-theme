@@ -95,8 +95,13 @@ def profile(session):
         for ii in range(50):
             (path_tmp / "many" / f"{ii}.rst").write_text("Test\n====\n\nbody\n")
 
+        if "-o" in session.posargs:
+            output = session.posargs[session.posargs.index("-o") + 1]
+        else:
+            output = "profile.svg"
+
         # Specify our output directory and profile the build
         path_tmp_out = path_tmp / "_build"
         session.run(
-            *f"py-spy record -o profile.svg -- sphinx-build {path_tmp} {path_tmp_out}".split()  # noqa
+            *f"py-spy record -o {output} -- sphinx-build {path_tmp} {path_tmp_out}".split()  # noqa
         )
