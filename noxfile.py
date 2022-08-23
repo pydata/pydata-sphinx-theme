@@ -92,7 +92,8 @@ def profile(session):
         (path_tmp / "many").mkdir()
 
         # Create a bunch of empty pages to slow the build
-        for ii in range(50):
+        n_extra_pages = 50
+        for ii in range(n_extra_pages):
             (path_tmp / "many" / f"{ii}.rst").write_text("Test\n====\n\nbody\n")
 
         if "-o" in session.posargs:
@@ -100,8 +101,12 @@ def profile(session):
         else:
             output = "profile.svg"
 
-        # Specify our output directory and profile the build
+        # Specify our output directory
         path_tmp_out = path_tmp / "_build"
+
+        # Profile the build
+        print(f"Profiling build with {n_extra_pages} pages with py-spy...")
         session.run(
             *f"py-spy record -o {output} -- sphinx-build {path_tmp} {path_tmp_out}".split()  # noqa
         )
+        print(f"py-spy profiler output at this file: {output}")
