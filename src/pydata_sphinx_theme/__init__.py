@@ -290,7 +290,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
     # TODO: Deprecate after v0.12
     def generate_nav_html(*args, **kwargs):
-        logger.warn(
+        logger.warning(
             "`generate_nav_html` is deprecated and will be removed."
             "Use `generate_toctree_html` instead."
         )
