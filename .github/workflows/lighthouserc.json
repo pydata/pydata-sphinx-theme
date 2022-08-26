@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": "./docs/_build/html/examples/kitchen-sink",
+      "staticDistDir": "./audit/_build/kitchen-sink/",
       "settings": {
         "skipAudits": ["canonical"]
       }
