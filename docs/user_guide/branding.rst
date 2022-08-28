@@ -77,10 +77,9 @@ To reference an external website, make sure your link starts with ``http``:
 Customize logo alternative text
 -------------------------------
 
-The logo is by default using "Logo image" as an alternative text of the image. To set
-a specific alt text for this to be accessible to those using screen readers or other
-assistive tech, use the ``html_teme_options["logo"]["alt_text"]`` and provide a new name
-as in the following example:
+You may set a custom ``alt text`` to use with your logo.
+This can make the logo more accessible to those using screen readers or other assistive tech.
+To do so, use ``html_teme_options["logo"]["alt_text"]`` as in the following example:
 
 .. code-block:: python
    :caption: conf.py
