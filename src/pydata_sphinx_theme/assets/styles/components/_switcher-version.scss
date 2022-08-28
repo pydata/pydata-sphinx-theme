@@ -1,6 +1,11 @@
 button.version-switcher__button {
   border-color: var(--pst-color-border);
   color: var(--pst-color-text-base);
+  margin-bottom: 1em;
+
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    margin-bottom: none;
+  }
 
   &:hover {
     color: var(--pst-color-text-base);
