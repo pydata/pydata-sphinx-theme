@@ -83,6 +83,7 @@ assistive tech, use the ``html_teme_options["logo"]["alt_text"]`` and provide a 
 as in the following example:
 
 .. code-block:: python
+   :caption: conf.py
 
    html_theme_options = {
        "logo": {
