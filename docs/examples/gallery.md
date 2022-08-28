@@ -5,6 +5,6 @@ If you'd like to add your documentation to this list, simply add an entry to [th
 
 ```{gallery-grid} ../_static/gallery.yaml
 ---
-grid-columns: "1 2 2 3" 
+grid-columns: "1 2 2 3"
 
 ```
