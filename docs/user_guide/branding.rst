@@ -77,7 +77,7 @@ To reference an external website, make sure your link starts with ``http``:
 Customize logo alternative text
 -------------------------------
 
-You may set a custom ``alt text`` to use with your logo.
+You may set a custom ``alt text`` to use with your logo to replace the default ("logo image").
 This can make the logo more accessible to those using screen readers or other assistive tech.
 To do so, use ``html_teme_options["logo"]["alt_text"]`` as in the following example:
 
