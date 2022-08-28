@@ -134,9 +134,19 @@ jobs:
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
 
-      - name: Build docs to store
+      # We want to run the audit on a simplified documentation build so that
+      # the audit results aren't affected by non-theme things like extensions.
+      # Here we copy over just the kitchen sink into an empty docs site with
+      # only the theme loaded so extensions don't play a role in audit scores.
+      - name: Copy kitchen sink to a tiny site and build it
         run: |
-          sphinx-build -b html docs/ docs/_build/html
+          mkdir audit/
+          mkdir audit/site
+          cp -r docs/examples/kitchen-sink audit/site/kitchen-sink
+          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > audit/site/index.rst
+          echo 'html_theme = "pydata_sphinx_theme"' > audit/site/conf.py
+          echo '.. toctree::\n   :glob:\n\n   *' >> audit/site/index.rst
+          sphinx-build audit/site audit/_build
 
       # The lighthouse audit runs directly on the HTML files, no serving needed
       - name: Audit with Lighthouse
