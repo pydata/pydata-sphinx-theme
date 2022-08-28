@@ -78,7 +78,7 @@ Customize logo alternative text
 -------------------------------
 
 The logo is by default using "Logo image" as an alternative text of the image. To set
-a specific alt text for this to be accessible to those using screen readers and another
+a specific alt text for this to be accessible to those using screen readers or other
 assistive tech, use the ``html_teme_options["logo"]["alt_text"]`` and provide a new name
 as in the following example:
 
