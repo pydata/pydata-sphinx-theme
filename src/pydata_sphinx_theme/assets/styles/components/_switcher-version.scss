@@ -1,10 +1,10 @@
 button.version-switcher__button {
   border-color: var(--pst-color-border);
   color: var(--pst-color-text-base);
+  // Add a margin on narrow screens to avoid feeling cramped
   margin-bottom: 1em;
-
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
-    margin-bottom: none;
+    margin-bottom: unset;
   }
 
   &:hover {
