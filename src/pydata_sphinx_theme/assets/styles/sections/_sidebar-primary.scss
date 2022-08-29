@@ -36,7 +36,7 @@
 
   .sidebar-start-items__item,
   .sidebar-end-items__item {
-    padding: 0.25rem 0;
+    padding: 0.5rem 0;
   }
 
   // Hide the sidebar header items on widescreen since they are visible in the header
@@ -202,9 +202,15 @@ nav.bd-links {
     }
   }
 
+  // Title
+  p.bd-links__title {
+    font-size: var(--pst-sidebar-header-font-size);
+    font-weight: var(--pst-sidebar-header-font-weight);
+    margin-bottom: 0.5rem;
+  }
+
   // Toctree captions
   p.caption {
-    font-size: var(--pst-sidebar-header-font-size);
     font-weight: var(--pst-sidebar-header-font-weight);
     position: relative;
     margin-top: 1.25em;
