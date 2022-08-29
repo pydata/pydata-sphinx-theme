@@ -72,46 +72,6 @@ jobs:
         if: ${{ always() }}
         run: codecov
 
-  prerelease:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10"]
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: "pip"
-          cache-dependency-path: "pyproject.toml"
-
-      - name: Install (prerelease) dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade --pre -e .[test]
-
-      - name: Build docs to store
-        run: |
-          sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
-
-      - name: Check that there are no unexpected Sphinx warnings
-        if: matrix.python-version == 3.9
-        shell: python
-        run: |
-          from pathlib import Path
-          text = Path("./warnings.txt").read_text().strip()
-          print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static", "parse.py"])]
-          print("\n=== Unexpected Warnings ===\n\n" + "\n".join(unexpected))
-          assert len(unexpected) == 0
-
-      - name: Run the tests
-        run: pytest --color=yes
-
   # Run local Lighthouse audit against built site
   audit:
     runs-on: ubuntu-latest
