@@ -73,9 +73,9 @@ def update_config(app, env):
         # Ref: https://plausible.io/docs/plausible-script
         if plausible_domain and plausible_url:
             kwargs = {
-                "loading_method": "defer", 
-                "data-domain": plausible_domain, 
-                "filename": plausible_url
+                "loading_method": "defer",
+                "data-domain": plausible_domain,
+                "filename": plausible_url,
             }
             app.add_js_file(**kwargs)
 
