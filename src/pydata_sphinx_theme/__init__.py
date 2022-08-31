@@ -72,11 +72,12 @@ def update_config(app, env):
 
         # Ref: https://plausible.io/docs/plausible-script
         if plausible_domain and plausible_url:
-            plausible_script = f"""
-                data-domain={plausible_domain} src={plausible_url}
-            """
-            # Link the JS file
-            app.add_js_file(None, body=plausible_script, loading_method="defer")
+            kwargs = {
+                "loading_method": "defer", 
+                "data-domain": plausible_domain, 
+                "filename": plausible_url
+            }
+            app.add_js_file(**kwargs)
 
         # Two types of Google Analytics id.
         gid = analytics.get("google_analytics_id")
