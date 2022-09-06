@@ -110,18 +110,20 @@ the image without speicfying the helper class:
 .. code-block:: rst
 
     .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+        :class: p-2
 
 .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+    :class: p-2
 
 and the same image with it:
 
 .. code-block:: rst
 
     .. image:: https://source.unsplash.com/200x200/daily?cute+cat
-        :class: dark-light
+        :class: dark-light p-2
 
 .. image:: https://source.unsplash.com/200x200/daily?cute+cat
-    :class: dark-light
+    :class: dark-light p-2
 
 Define custom JavaScript to react to theme changes
 --------------------------------------------------
