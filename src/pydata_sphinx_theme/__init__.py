@@ -5,6 +5,7 @@ import os
 import warnings
 from pathlib import Path
 from functools import lru_cache
+import json
 
 import jinja2
 from bs4 import BeautifulSoup as bs
@@ -15,6 +16,7 @@ from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
+import requests
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -187,6 +189,14 @@ def update_templates(app, pagename, templatename, context, doctree):
         if theme_switcher.get("json_url"):
             json_url = theme_switcher["json_url"]
             version_match = theme_switcher["version_match"]
+
+            # check that the json file is not illformed
+            # it will throw an error if there is a an issue
+            switcher_content = json.loads(requests.get(json_url))
+            missing_url = any(["url" not in e for e in switcher_content])
+            missing_version = any(["version" not in e for e in switcher_content])
+            if missing_url or missing_version:
+                raise AttributeError("The version switcher .json file is malformed")
 
         # Add variables to our JavaScript for re-use in our main JS script
         js = f"""
