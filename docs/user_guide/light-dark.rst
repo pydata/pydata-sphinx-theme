@@ -100,6 +100,29 @@ Change the theme and a new image should be displayed.
 .. image:: https://source.unsplash.com/200x200/daily?cute+dog
     :class: only-light
 
+Use non theme-dependent  content
+--------------------------------
+
+by design Pydata-sphinx-theme will add a white background to any image that is not specifying the :code:`only-dark` class when displayed in the dark theme. If your image is suitable for both light and dark theme, please use the following **CSS helper class** :code:`dark-light` to make your image theme agnostic.
+
+the image without speicfying the helper class:
+
+.. code-block:: rst
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+
+and the same image with it:
+
+.. code-block:: rst
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+        :class: dark-light
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+    :class: dark-light
+
 Define custom JavaScript to react to theme changes
 --------------------------------------------------
 
