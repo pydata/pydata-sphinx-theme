@@ -71,8 +71,8 @@ For example to define a different background color for both the light and dark t
 
 A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.
 
-Use theme-dependent content
----------------------------
+Theme-dependent images and content 
+----------------------------------
 
 It is possible to use different content for light and dark mode, so that the content only shows up when a particular theme is active.
 This is useful if your content depends on the theme's style, such as a PNG image with a light or a dark background.
@@ -100,12 +100,14 @@ Change the theme and a new image should be displayed.
 .. image:: https://source.unsplash.com/200x200/daily?cute+dog
     :class: only-light
 
-Use non theme-dependent  content
---------------------------------
+Images and content that work in both themes
+-------------------------------------------
 
-by design Pydata-sphinx-theme will add a white background to any image that is not specifying the :code:`only-dark` class when displayed in the dark theme. If your image is suitable for both light and dark theme, please use the following **CSS helper class** :code:`dark-light` to make your image theme agnostic.
+For images without the :code:`only-dark` class, when the **dark theme** is activated, a white background will automatically be added to ensure the image contents are visible.
+If your image is suitable for both light and dark theme, add the CSS class :code:`dark-light` to make your image theme-agnostic.
 
-the image without speicfying the helper class:
+For example, here's an image without adding this helper class.
+Change to the dark theme and a grey background will be present.
 
 .. code-block:: rst
 
@@ -115,7 +117,7 @@ the image without speicfying the helper class:
 .. image:: https://source.unsplash.com/200x200/daily?cute+cat
     :class: p-2
 
-and the same image with it:
+Here's the same image with this class added:
 
 .. code-block:: rst
 
