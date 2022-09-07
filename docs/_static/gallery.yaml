@@ -53,3 +53,6 @@
 - title: ArviZ
   website: https://python.arviz.org/
   img-bottom: ../_static/gallery/arviz.png
+- title: EnOSlib
+  website: https://discovery.gitlabpages.inria.fr/enoslib/
+  img-bottom: ../_static/gallery/enoslib.png
