@@ -71,7 +71,7 @@ For example to define a different background color for both the light and dark t
 
 A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.
 
-Theme-dependent images and content 
+Theme-dependent images and content
 ----------------------------------
 
 It is possible to use different content for light and dark mode, so that the content only shows up when a particular theme is active.
