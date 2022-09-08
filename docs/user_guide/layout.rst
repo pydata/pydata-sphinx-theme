@@ -460,6 +460,7 @@ will be named accordingly).
 - ``sphinx-version.html``
 - ``theme-switcher.html``
 - ``version-switcher.html``
+- ``indices.html``
 
 
 Add your own HTML templates to theme sections
