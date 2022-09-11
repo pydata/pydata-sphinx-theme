@@ -360,3 +360,4 @@ $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
 $(setupSearchButtons);
+$('[data-toggle="tooltip"]').tooltip();
