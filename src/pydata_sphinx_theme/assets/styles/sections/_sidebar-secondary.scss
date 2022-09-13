@@ -52,3 +52,21 @@
     padding-left: 1rem;
   }
 }
+
+// The 'Hide Search Matches' link
+div#searchbox {
+  p.highlight-link {
+    // remove excess margin from p tag
+    margin-bottom: 0px;
+    a {
+      // add icon via CSS because the link is created by javascript
+      // match padding to .toc-item > i above
+      // f010 is magnifying glass minus
+      &:before {
+        content: "\f010";
+        font-family: FontAwesome;
+        padding-right: 0.5rem;
+      }
+    }
+  }
+}
