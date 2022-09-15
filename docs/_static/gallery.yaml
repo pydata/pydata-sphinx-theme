@@ -53,3 +53,6 @@
 - title: ArviZ
   website: https://python.arviz.org/
   img-bottom: ../_static/gallery/arviz.png
+- title: SEPAL
+  website: https://docs.sepal.io/en/latest/index.html
+  img-bottom: ../_static/gallery/sepal.png
