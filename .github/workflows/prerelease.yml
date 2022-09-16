@@ -39,18 +39,26 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+          import os
+
           text = Path("./warnings.txt").read_text().strip()
           print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
           unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static", "parse.py"])]
           print("\n=== Unexpected Warnings ===\n\n" + "\n".join(unexpected))
-          assert len(unexpected) == 0
+
+          env_file = os.getenv('GITHUB_ENV')
+          with open(env_file, "a") as f:
+              f.write("SPHINX_BUILD_UNEXPECTED_WARNINGS = len(unexpected)!=0")
 
       - name: Run the tests
-        run: pytest --color=yes
+        run: |
+          pytest --color=yes
+          echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
         
       # If either the docs build or the tests resulted in an error, create an issue to note it
       - name: Create an issue if failure
         uses: JasonEtco/create-an-issue@v2
+        if: ${{ env.SPHINX_BUILD_UNEXPECTED_WARNINGS || !env.PYTEST_ERRORS }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
