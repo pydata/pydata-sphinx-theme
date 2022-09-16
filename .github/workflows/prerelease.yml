@@ -3,6 +3,7 @@ name: cron-integration
 on:
   schedule:
     # Run this workflow once a week
+    # ref: https://crontab.guru/#0_0_*_*_0
     - cron: "0 0 * * 0"
   workflow_dispatch:
 
@@ -45,9 +46,12 @@ jobs:
           assert len(unexpected) == 0
 
       - name: Run the tests
+        run: pytest --color=yes
+        
+      # If either the docs build or the tests resulted in an error, create an issue to note it
+      - name: Create an issue if failure
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           filename: .github/prerelease-template.md
-        run: pytest --color=yes
