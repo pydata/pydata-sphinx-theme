@@ -54,7 +54,7 @@ jobs:
         run: |
           pytest --color=yes
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
-        
+
       # If either the docs build or the tests resulted in an error, create an issue to note it
       - name: Create an issue if failure
         uses: JasonEtco/create-an-issue@v2
