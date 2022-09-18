@@ -556,16 +556,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
             {"html_theme_options.analytics": {"google_analytics_id": "G-XXXXX"}},
             ["gtag", "G-XXXXX"],
         ),
-        # plausible
-        (
-            {
-                "html_theme_options.analytics": {
-                    "plausible_analytics_domain": "toto",
-                    "plausible_analytics_url": "http://.../script.js",
-                }
-            },
-            ["data-domain", "toto"],
-        ),
         # google and plausible
         (
             {
@@ -591,6 +581,7 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
     ],
 )
 def test_analytics(sphinx_build_factory, provider, tags):
+
     confoverrides = provider
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
@@ -602,6 +593,26 @@ def test_analytics(sphinx_build_factory, provider, tags):
         if script.string and tags[0] in script.string and tags[1] in script.string:
             tags_found = True
     assert tags_found is True
+
+
+def test_plausible(sphinx_build_factory):
+    provider = {
+        "html_theme_options.analytics": {
+            "plausible_analytics_domain": "toto",
+            "plausible_analytics_url": "http://.../script.js",
+        }
+    }
+    confoverrides = provider
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
+    sphinx_build.build()
+    index_html = sphinx_build.html_tree("index.html")
+
+    # Search all the scripts and make sure one of them has the Google tag in there
+    attr_found = False
+    for script in index_html.select("script"):
+        if script.attrs.get("data-domain") == "toto":
+            attr_found = True
+    assert attr_found is True
 
 
 def test_show_nav_level(sphinx_build_factory):
