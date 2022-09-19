@@ -36,6 +36,7 @@ navigation
 page-toc
 header-links
 source-buttons
+indices
 ```
 
 ```{toctree}
