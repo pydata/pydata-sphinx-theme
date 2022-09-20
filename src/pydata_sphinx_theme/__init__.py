@@ -247,7 +247,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         meth = "findall" if hasattr(root, "findall") else "traverse"
         for toc in getattr(root, meth)(toctree_node):
             for title, page in toc.attributes["entries"]:
-                # if the page is self use the coorect link
+                # if the page is using "self" use the correct link
                 page = toc.attributes["parent"] if page == "self" else page
 
                 # If this is the active ancestor page, add a class so we highlight it
