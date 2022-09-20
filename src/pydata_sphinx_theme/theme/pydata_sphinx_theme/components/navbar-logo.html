@@ -1,9 +1,9 @@
 {% if not theme_logo.get("link") %}
   {% set href = pathto(root_doc) %}
-{% elif theme_logo.get("link").startswith("http") %}
-  {% set href = theme_logo.get("link") %} {# external url #}
-{% else %}
+{% elif hasdoc(theme_logo.get("link")) %}
   {% set href = pathto(theme_logo.get("link")) %} {# internal page #}
+{% else %}
+  {% set href = theme_logo.get("link") %} {# external url #}
 {% endif %}
 
 <a class="navbar-brand logo" href="{{ href }}">

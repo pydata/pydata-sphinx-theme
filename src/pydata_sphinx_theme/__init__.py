@@ -72,11 +72,12 @@ def update_config(app, env):
 
         # Ref: https://plausible.io/docs/plausible-script
         if plausible_domain and plausible_url:
-            plausible_script = f"""
-                data-domain={plausible_domain} src={plausible_url}
-            """
-            # Link the JS file
-            app.add_js_file(None, body=plausible_script, loading_method="defer")
+            kwargs = {
+                "loading_method": "defer",
+                "data-domain": plausible_domain,
+                "filename": plausible_url,
+            }
+            app.add_js_file(**kwargs)
 
         # Two types of Google Analytics id.
         gid = analytics.get("google_analytics_id")
@@ -238,16 +239,17 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         # Find the root document because it lists our top-level toctree pages
         root = app.env.tocs[app.config.root_doc]
+
         # Iterate through each toctree node in the root document
         # Grab the toctree pages and find the relative link + title.
         links_html = []
         # Can just use "findall" once docutils min version >=0.18.1
         meth = "findall" if hasattr(root, "findall") else "traverse"
         for toc in getattr(root, meth)(toctree_node):
-            for _, page in toc.attributes["entries"]:
+            for title, page in toc.attributes["entries"]:
                 # If this is the active ancestor page, add a class so we highlight it
                 current = " current active" if page == active_header_page else ""
-                title = app.env.titles[page].astext()
+                title = title if title else app.env.titles[page].astext()
                 links_html.append(
                     f"""
                 <li class="nav-item{current}">
