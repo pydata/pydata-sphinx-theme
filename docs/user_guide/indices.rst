@@ -2,7 +2,7 @@
 Sphinx indices
 ==============
 
-Sphinx generates indices named `genindex`, `modindex` and `py-modindex` when building a documentation. more information in the Sphinx documentation `here <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-index>`__.
+Sphinx generates indices named `genindex`, `modindex` and `py-modindex` when building a documentation. More information about them can be found in the Sphinx documentation `here <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-index>`__.
 
 Add indices links
 =================
