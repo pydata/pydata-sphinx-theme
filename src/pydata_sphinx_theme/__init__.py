@@ -247,9 +247,14 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         meth = "findall" if hasattr(root, "findall") else "traverse"
         for toc in getattr(root, meth)(toctree_node):
             for title, page in toc.attributes["entries"]:
+                # if the page is self use the coorect link
+                page = toc.attributes["parent"] if page == "self" else page
+
                 # If this is the active ancestor page, add a class so we highlight it
                 current = " current active" if page == active_header_page else ""
                 title = title if title else app.env.titles[page].astext()
+
+                # create the html output
                 links_html.append(
                     f"""
                 <li class="nav-item{current}">
