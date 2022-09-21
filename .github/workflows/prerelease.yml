@@ -27,7 +27,7 @@ jobs:
 
       - name: Install (prerelease) dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip wheel setuptools
           python -m pip install --upgrade --pre -e .[test]
 
       - name: Build docs to store
