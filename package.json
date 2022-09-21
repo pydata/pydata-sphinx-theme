@@ -15,7 +15,7 @@
     "imports-loader": "^0.8.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^7.0.3",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "postcss": "^8.1",
     "postcss-loader": "^4.0.3",
     "sass-loader": "^10.3.1",
@@ -31,7 +31,7 @@
     "@fortawesome/fontawesome-free": "6.1.2",
     "bootstrap": "^4.4.1",
     "jquery": "3.5.1",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "popper.js": "^1.16.1"
   }
 }
