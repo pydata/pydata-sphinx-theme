@@ -103,8 +103,14 @@ Change the theme and a new image should be displayed.
 Images and content that work in both themes
 -------------------------------------------
 
-For images without the :code:`only-dark` class, when the **dark theme** is activated, a white background will automatically be added to ensure the image contents are visible.
-If your image is suitable for both light and dark theme, add the CSS class :code:`dark-light` to make your image theme-agnostic.
+When the **dark theme** is activated, images that do not support dark mode will
+automatically have a white background added to ensure the image contents are
+visible, and their brightness will be reduced by a filter.
+
+If your image is suitable for the dark theme, add the CSS class
+:code:`only-dark` as noted above. If your image is suitable for both light and
+dark theme, add the CSS class :code:`dark-light` to make your image
+theme-agnostic.
 
 For example, here's an image without adding this helper class.
 Change to the dark theme and a grey background will be present.
