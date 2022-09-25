@@ -303,8 +303,15 @@ if (themeSwitchBtns) {
         btn.dataset["activeVersionName"] = "";
         btn.dataset["activeVersion"] = "";
       });
+
+      // If data is a list, turn it into a dictionary with an `entries` field
+      if (data.isArray()) {
+        data = {"entries": data};
+        console.log("[PST]: Version switcher entries were a list. Moving to `entries` key.")
+      }
+
       // create links to the corresponding page in the other docs versions
-      $.each(data, function (index, entry) {
+      $.each(data["entries"], function (index, entry) {
         // if no custom name specified (e.g., "latest"), use version string
         if (!("name" in entry)) {
           entry.name = entry.version;
@@ -345,7 +352,35 @@ if (themeSwitchBtns) {
             btn.dataset["activeVersion"] = entry.version;
           });
         }
+
+        // If a preferred_version is specified and it is this entry, store the
+        // entry's information to use later.
+        if (entry.version === data["preferred_version"]) {
+          var preferred_version = entry.version;
+        }
       });
+
+      // If this is a preferred version, display a banner to redirect to it.
+      if ((preferred_version) && (preferred_version != btn.dataset["activeVersion"])) {
+        // Specify whether we are on an old version or a development version
+        if ((data["development_version"]) && (data["development_version"] == btn.dataset["activeVersion"])) {
+          var redirect_msg = "This a <strong>development version</strong> of the documentation."
+        } else {
+          var redirect_msg = "This is an <strong>outdated version</strong> of the documentation."
+        };
+
+        // Replace our warning banner placeholder with a visible banner
+        placeholder = document.getElementById("header-version-warning-placeholder");
+        placeholder.insertAdjacentHTML("afterend", `
+        <div class="bd-header-version-warning container-fluid" id="header-version-warning">
+            <div class="bd-header-version-warning__content">
+                <span>${redirect_msg}</span>
+                <a href="${preferred_version.url}${currentFilePath}"><button class="btn">Switch to: ${preferred_version.name}</button></a>
+            </div>
+        </div>
+        `);
+        console.log("[PST]: Inserted version warning banner...");
+      }
     }
   );
 }

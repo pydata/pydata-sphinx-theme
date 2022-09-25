@@ -1,4 +1,7 @@
-[
+{
+  "preferred_version": "stable",
+  "development_version": "latest",
+  "entries": [
   {
     "name": "dev",
     "version": "latest",
@@ -54,4 +57,5 @@
     "version": "v0.3.2",
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.3.2/"
   }
-]
+],
+}

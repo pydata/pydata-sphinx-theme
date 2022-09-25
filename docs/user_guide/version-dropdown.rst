@@ -31,9 +31,14 @@ Below is a more in-depth description of each of these configuration steps.
 Add a JSON file to define your switcher's versions
 --------------------------------------------------
 
-First, write a JSON file stating which versions of your docs will be listed in
-the switcher's dropdown menu. That file should contain a list of entries that
-each can have the following fields:
+First, create a JSON file stating which versions of your docs will be listed in
+the switcher's dropdown menu.
+The contents of this file are a **dictionary** of key-val pairs that configure the version switcher.
+
+The only required key of this configuration is called ``entries``.
+It corresponds to a list of entries for each version of the documentation you wish to include.
+
+Each item in ``entries`` may have the following fields:
 
 - ``version``: a version string. This is checked against
   ``switcher['version_match']`` to provide styling to the switcher.
@@ -41,33 +46,37 @@ each can have the following fields:
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc).
 
-Here is an example JSON file:
+Here is an example JSON file that adds a list of several version entries.
 
-.. code:: json
+.. code-block:: json
+    :caption: switcher.json
 
-    [
-        {
-            "name": "v2.1 (stable)",
-            "version": "2.1",
-            "url": "https://mysite.org/en/2.1/index.html"
-        },
-        {
-            "version": "2.1rc1",
-            "url": "https://mysite.org/en/2.1rc1/index.html"
-        },
-        {
-            "version": "2.0",
-            "url": "https://mysite.org/en/2.0/index.html"
-        },
-        {
-            "version": "1.0",
-            "url": "https://mysite.org/en/1.0/index.html"
-        }
-    ]
+    {
+        "entries":[
+            {
+                "name":"v2.1 (stable)",
+                "version":"2.1",
+                "url":"https://mysite.org/en/2.1/index.html"
+            },
+            {
+                "version":"2.2rc1",
+                "url":"https://mysite.org/en/2.2rc1/index.html"
+            },
+            {
+                "version":"2.0",
+                "url":"https://mysite.org/en/2.0/index.html"
+            },
+            {
+                "version":"1.0",
+                "url":"https://mysite.org/en/1.0/index.html"
+            }
+        ]
+    }
 
-See the discussion of ``switcher['json_url']`` (below) for options of where to
-save the JSON file.
+In addition to ``entries`` there are a few other key/value configuration options, as explained below.
+See :ref:`switcher-url-location` for options of where to save the JSON file.
 
+.. _switcher-url-location:
 
 Configure ``switcher['json_url']``
 ----------------------------------
@@ -222,3 +231,76 @@ version, you could use the following CSS selector:
 
    See the `MDN documentation on dataset properties <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset>`_
    for more information on using and styling with these properties.
+
+
+Add a warning banner to direct users to a specific version
+----------------------------------------------------------
+
+You can add a large warning banner to direct users to a specific version of your documentation if they are on a different version.
+This is useful if you have many versions of your documentation (e.g. old releases, development versions) and wish to direct users to a specific version (e.g., the latest stable version).
+
+To activate this feature, use the ``preferred_version`` key in your ``versions.json`` configuration file.
+The value should be the unique identifier of the version to which users should be redirected.
+
+For example, below we modify the ``switcher.json`` file described above to note version ``2.1`` as the preferred version.
+
+.. code-block:: json
+    :caption: switcher.json
+
+    {
+       "preferred_version":"2.1",
+       "entries":[
+          {
+             "name":"v2.1 (stable)",
+             "version":"2.1",
+             "url":"https://mysite.org/en/2.1/index.html"
+          },
+          {
+             "version":"2.2rc1",
+             "url":"https://mysite.org/en/2.2rc1/index.html"
+          },
+          {
+             "version":"2.0",
+             "url":"https://mysite.org/en/2.0/index.html"
+          },
+          {
+             "version":"1.0",
+             "url":"https://mysite.org/en/1.0/index.html"
+          }
+       ],
+    }
+
+For all documentation pages on a different version, a large warning banner will be displayed stating that they they are on an out-of-date version, with a button to direct them to the preferred version.
+
+Specify that an outdated version is a *development* version
+```````````````````````````````````````````````````````````
+
+If a version is a "development" version instead of an out-dated version, you may change the message that is displayed.
+To do so, add a ``development_version`` key to your JSON configuration, like so:
+
+.. code-block:: json
+    :caption: switcher.json
+
+    {
+       "preferred_version":"2.1",
+       "development_version":"2.2rc1",
+       "entries":[
+          {
+             "name":"v2.1 (stable)",
+             "version":"2.2rc1",
+             "url":"https://mysite.org/en/2.1/index.html"
+          },
+          {
+             "version":"2.2rc1",
+             "url":"https://mysite.org/en/2.2rc1/index.html"
+          },
+          {
+             "version":"2.0",
+             "url":"https://mysite.org/en/2.0/index.html"
+          },
+          {
+             "version":"1.0",
+             "url":"https://mysite.org/en/1.0/index.html"
+          }
+       ],
+    }
