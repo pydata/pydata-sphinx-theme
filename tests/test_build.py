@@ -629,7 +629,7 @@ def test_version_switcher(sphinx_build_factory, file_regression):
         "html_theme_options": {
             "navbar_end": ["version-switcher"],
             "switcher": {
-                "json_url": "switcher.json",
+                "json_url": "_static/switcher.json",
                 "version_match": "0.7.1",
             },
         }
