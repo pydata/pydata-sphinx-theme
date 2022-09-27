@@ -24,7 +24,7 @@
       .bd-article {
         // Give a bit more verticle spacing on wide screens
         @include media-breakpoint-up($breakpoint-sidebar-secondary) {
-          padding-top: 1rem;
+          padding-top: 1.5rem;
           padding-left: 2rem;
         }
       }
