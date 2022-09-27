@@ -21,6 +21,8 @@ Below are examples of each that we use as a benchmark for reference.
 ## Pandas
 
 ```{code-cell}
+import string
+
 import numpy as np
 import pandas as pd
 
