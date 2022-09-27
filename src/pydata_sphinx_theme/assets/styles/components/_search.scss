@@ -75,7 +75,7 @@
 }
 .search-button__wrapper.show {
   .search-button__search-container {
-    display: flex;
+    display: inline-block;
     // Center in middle of screen just underneath header
     position: fixed;
     z-index: $zindex-modal;
