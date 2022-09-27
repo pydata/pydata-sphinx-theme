@@ -70,6 +70,7 @@ def update_config(app, env):
             # check that the json file is not illformed
             # it will throw an error if there is a an issue
             switcher_content = json.loads(content)
+            print(switcher_content)
             missing_url = any(["url" not in e for e in switcher_content])
             missing_version = any(["version" not in e for e in switcher_content])
             if missing_url or missing_version:
