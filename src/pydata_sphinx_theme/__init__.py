@@ -190,9 +190,16 @@ def update_templates(app, pagename, templatename, context, doctree):
             json_url = theme_switcher["json_url"]
             version_match = theme_switcher["version_match"]
 
+            # try to read the json file. If it's a url we use request,
+            # else we simply read the local file
+            try:
+                content = requests.get(json_url).text
+            except requests.ConnectionError:
+                content = Path(json_url).read_text()
+
             # check that the json file is not illformed
             # it will throw an error if there is a an issue
-            switcher_content = json.loads(requests.get(json_url).text)
+            switcher_content = json.loads(content)
             missing_url = any(["url" not in e for e in switcher_content])
             missing_version = any(["version" not in e for e in switcher_content])
             if missing_url or missing_version:
