@@ -194,7 +194,7 @@ def update_templates(app, pagename, templatename, context, doctree):
             # else we simply read the local file
             try:
                 content = requests.get(json_url).text
-            except requests.ConnectionError:
+            except Exception:
                 content = Path(json_url).read_text()
 
             # check that the json file is not illformed
