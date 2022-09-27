@@ -53,6 +53,31 @@ def update_config(app, env):
             " Set version URLs in JSON directly."
         )
 
+    # check the validity of the theme swithcer file
+    if isinstance(theme_options.get("switcher"), dict):
+        theme_switcher = theme_options.get("switcher")
+        if theme_switcher.get("json_url"):
+            json_url = theme_switcher["json_url"]
+            theme_switcher["version_match"]
+
+            # try to read the json file. If it's a url we use request,
+            # else we simply read the local file from the source directory
+            try:
+                content = requests.get(json_url).text
+            except Exception:
+                content = Path(env.srcdir, json_url).read_text()
+
+            # check that the json file is not illformed
+            # it will throw an error if there is a an issue
+            switcher_content = json.loads(content)
+            missing_url = any(["url" not in e for e in switcher_content])
+            missing_version = any(["version" not in e for e in switcher_content])
+            if missing_url or missing_version:
+                raise AttributeError(
+                    f'The version switcher "{json_url}" file is malformed'
+                    ' at least one of the items is missing the "url" or "version" key'
+                )
+
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
     # deprecated options for Google Analytics
@@ -186,24 +211,8 @@ def update_templates(app, pagename, templatename, context, doctree):
     app.add_js_file(None, body=f"DOCUMENTATION_OPTIONS.pagename = '{pagename}';")
     if isinstance(context.get("theme_switcher"), dict):
         theme_switcher = context["theme_switcher"]
-        if theme_switcher.get("json_url"):
-            json_url = theme_switcher["json_url"]
-            version_match = theme_switcher["version_match"]
-
-            # try to read the json file. If it's a url we use request,
-            # else we simply read the local file
-            try:
-                content = requests.get(json_url).text
-            except Exception:
-                content = Path(json_url).read_text()
-
-            # check that the json file is not illformed
-            # it will throw an error if there is a an issue
-            switcher_content = json.loads(content)
-            missing_url = any(["url" not in e for e in switcher_content])
-            missing_version = any(["version" not in e for e in switcher_content])
-            if missing_url or missing_version:
-                raise AttributeError("The version switcher .json file is malformed")
+        json_url = theme_switcher["json_url"]
+        version_match = theme_switcher["version_match"]
 
         # Add variables to our JavaScript for re-use in our main JS script
         js = f"""
