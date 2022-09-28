@@ -862,7 +862,7 @@ class LinkTransform(SphinxPostTransform):
                 # only do something if the platform is identified
                 self.platform = self.supported_platform.get(uri.netloc)
                 if self.platform is not None:
-                    node.set_class(self.platform)
+                    node.attributes["classes"].append(self.platform)
                     node.children[0] = nodes.Text(self.parse_path(uri.path))
 
     def parse_path(self, path):
