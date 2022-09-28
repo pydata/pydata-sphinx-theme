@@ -671,4 +671,4 @@ def test_shorten_link(sphinx_build_factory, file_regression):
 
     sphinx_build = sphinx_build_factory("base").build()
     github = sphinx_build.html_tree("page1.html").select(".github")[0]
-    file_regression.check(github.prettify(), basename="github_link", extention=".html")
+    file_regression.check(github.prettify(), basename="github_link", extension=".html")
