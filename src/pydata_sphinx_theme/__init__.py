@@ -854,10 +854,10 @@ class LinkTransform(SphinxPostTransform):
         # raise Exception(list(self.document.findall(matcher)))
         for node in list(self.document.findall(matcher)):
             uri = node.attributes.get("refuri")
-            text = node.children[0]
+            text = next(iter(node.children), None)
             # only act if the uri and text are the same
             # if not the user has already customized the display of the link
-            if uri is not None and text == uri:
+            if uri is not None and text is not None and text == uri:
                 uri = urlparse(uri)
                 # only do something if the platform is identified
                 self.platform = self.supported_platform.get(uri.netloc)
