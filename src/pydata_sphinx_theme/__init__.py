@@ -849,10 +849,7 @@ class LinkTransform(SphinxPostTransform):
 
     def run(self, **kwargs):
         matcher = NodeMatcher(nodes.reference)
-        # this list must be pre-created as during iteration new nodes
-        # are added which match the condition in the NodeMatcher.
-        # raise Exception(list(self.document.findall(matcher)))
-        for node in list(self.document.findall(matcher)):
+        for node in self.document.findall(matcher):
             uri = node.attributes.get("refuri")
             text = next(iter(node.children), None)
             # only act if the uri and text are the same
@@ -881,9 +878,9 @@ class LinkTransform(SphinxPostTransform):
         # check the platform name and read the information accordingly
         if self.platform == "github":
             text = "github"
-            if len(s) >= 2:
+            if len(s) > 1:
                 text = s[1]
-            if len(s) >= 3:
+            if len(s) > 2:
                 text += f"/{s[2]}"
             if len(s) > 3:
                 if s[3] in ["issues", "pull", "discussions"]:
@@ -891,11 +888,11 @@ class LinkTransform(SphinxPostTransform):
 
         elif self.platform == "gitlab":
             text = "gitlab"
-            if len(s) >= 2:
+            if len(s) > 1:
                 text = s[1]
-            if len(s) >= 3:
+            if len(s) > 2:
                 text += f"/{s[2]}"
-            if len(s) >= 4:
+            if len(s) > 3:
                 if s[4] in ["issues", "merge_requests"]:
                     text += f"#{s[-1]}"
 
