@@ -664,3 +664,12 @@ def test_theme_switcher(sphinx_build_factory, file_regression):
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extension=".html"
     )
+
+
+def test_shorten_link(sphinx_build_factory, file_regression):
+    """regression test the shorten links html"""
+
+    sphinx_build = sphinx_build_factory("base").build()
+    github = sphinx_build.html_tree("page1.html").select(".github")[0]
+    print(github)
+    file_regression.check(github.prettyfy(), basename="github_link", extention=".html")
