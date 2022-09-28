@@ -867,10 +867,6 @@ class LinkTransform(SphinxPostTransform):
         parse the content of the url with respect to the selected platform
         """
 
-        # exit if no platform is set
-        if self.platform is None:
-            return None
-
         # split the url content
         # be careful the first one is a "/"
         s = path.split("/")
