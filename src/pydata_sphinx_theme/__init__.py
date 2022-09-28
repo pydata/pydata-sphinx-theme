@@ -880,14 +880,24 @@ class LinkTransform(SphinxPostTransform):
 
         # check the platform name and read the information accordingly
         if self.platform == "github":
-            text = f"{s[1]}/{s[2]}"
-            if s[3] in ["issues", "pull", "discussions"]:
-                text += f"#{s[-1]}"
+            text = "github"
+            if len(s) >= 2:
+                text = s[1]
+            if len(s) >= 3:
+                text += f"/{s[2]}"
+            if len(s) > 3:
+                if s[3] in ["issues", "pull", "discussions"]:
+                    text += f"#{s[-1]}"
 
         elif self.platform == "gitlab":
-            text = f"{s[1]}/{s[2]}"
-            if s[4] in ["issues", "merge_requests"]:
-                text += f"#{s[-1]}"
+            text = "gitlab"
+            if len(s) >= 2:
+                text = s[1]
+            if len(s) >= 3:
+                text += f"/{s[2]}"
+            if len(s) >= 4:
+                if s[4] in ["issues", "merge_requests"]:
+                    text += f"#{s[-1]}"
 
         return text
 
