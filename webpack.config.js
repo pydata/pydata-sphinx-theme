@@ -75,6 +75,7 @@ function macroTemplate({ compilation }) {
         href="{{ pathto('_static/vendor/fontawesome/${
           vendorVersions.fontAwesome
         }/webfonts/fa-brands-400.woff2', 1) }}">
+      <link rel="preload" as="font" type="font/woff2" crossorigin
         href="{{ pathto('_static/vendor/fontawesome/${
           vendorVersions.fontAwesome
         }/webfonts/fa-regular-400.woff2', 1) }}">
