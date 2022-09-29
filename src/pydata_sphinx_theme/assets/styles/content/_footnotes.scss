@@ -24,4 +24,8 @@ aside.footnote {
   span.backrefs {
     font-weight: bold;
   }
+
+  &:target {
+    background-color: var(--pst-color-target);
+  }
 }
