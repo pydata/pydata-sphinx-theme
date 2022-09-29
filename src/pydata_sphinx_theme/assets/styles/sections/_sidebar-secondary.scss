@@ -25,6 +25,7 @@
 
   .onthispage {
     color: var(--pst-color-text-base);
+    font-weight: var(--pst-sidebar-header-font-weight);
   }
 
   @include scrollbar-style();
@@ -32,7 +33,7 @@
 
 // Each TOC item is wrapped in this
 .toc-item {
-  padding: 0.3rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   @include media-breakpoint-up($breakpoint-sidebar-secondary) {
     border-left: 1px solid var(--pst-color-border);
     padding-left: 1rem;
