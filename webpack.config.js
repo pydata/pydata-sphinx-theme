@@ -75,6 +75,9 @@ function macroTemplate({ compilation }) {
         href="{{ pathto('_static/vendor/fontawesome/${
           vendorVersions.fontAwesome
         }/webfonts/fa-brands-400.woff2', 1) }}">
+        href="{{ pathto('_static/vendor/fontawesome/${
+          vendorVersions.fontAwesome
+        }/webfonts/fa-regular-400.woff2', 1) }}">
     {% endmacro %}
 
     {% macro head_pre_assets() %}
