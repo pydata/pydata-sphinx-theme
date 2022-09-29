@@ -144,7 +144,7 @@ Some sidebar content.
 ```
 ````
 
-## link shortening
+## Link shortening for git repository services
 
 Many projects have links back to their issues / PRs hosted on platforms like **GitHub** or **GitLab**. Instead of displaying these as raw links, this theme does some lightweight formatting for these platforms specifically. here is an example from the issue requesting this feature: [https://github.com/pydata/pydata-sphinx-theme/issues/841](https://github.com/pydata/pydata-sphinx-theme/issues/841).
 
