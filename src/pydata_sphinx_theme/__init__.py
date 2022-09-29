@@ -395,12 +395,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                     f"li.toctree-l{ii} > input.toctree-checkbox"
                 ):
                     checkbox.attrs["checked"] = None
-            out = soup.prettify()
 
-        elif kind == "raw":
-            out = soup
-
-        return out
+        return soup
 
     @lru_cache(maxsize=None)
     def generate_toc_html(kind="html"):
@@ -661,6 +657,7 @@ def soup_to_python(soup, only_pages=False):
     navs = []
     for ul in soup.find_all("ul", recursive=False):
         extract_level_recursive(ul, navs)
+
     return navs
 
 
