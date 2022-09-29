@@ -18,6 +18,7 @@
       // Max-width is slightly more than the W3 since our docs often have images.
       // We shoot for about 100 characters per line instead of 80.
       // ref: https://www.w3.org/WAI/tutorials/page-structure/styling/#line-length
+      width: 100%;
       max-width: 60em;
       overflow-x: auto; // Prevent wide content from pushing off the secondary sidebar
       padding: 1rem;
