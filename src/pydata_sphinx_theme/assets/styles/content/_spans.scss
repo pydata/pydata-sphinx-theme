@@ -16,7 +16,7 @@ span.guilabel {
 }
 
 a.reference.download:before {
-  content: "\f019";
+  content: var(--pst-icon-download);
   font-family: "Font Awesome 6 Free";
   font-size: 0.8em;
   font-weight: 600;
