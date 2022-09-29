@@ -64,8 +64,8 @@ div#searchbox {
       // match padding to .toc-item > i above
       // f010 is magnifying glass minus
       &:before {
-        content: "\f010";
-        font-family: FontAwesome;
+        content: var(--pst-icon-search-minus);
+        font-family: "Font Awesome 6 Free";
         padding-right: 0.5rem;
       }
     }

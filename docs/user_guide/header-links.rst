@@ -59,7 +59,7 @@ These links take the following form:
                # URL where the link will redirect
                "url": "https://github.com/<your-org>/<your-repo>",  # required
                # Icon class (if "type": "fontawesome"), or path to local image (if "type": "local")
-               "icon": "fab fa-github-square",
+               "icon": "fa-brands fa-square-github",
                # The type of image to be used (see below for details)
                "type": "fontawesome",
            }
@@ -91,7 +91,7 @@ specifying a FontAwesome class in the ``icon`` value.
 The value of ``icon`` can be any full
 `FontAwesome 6 Free <https://fontawesome.com/icons?d=gallery&m=free>`__ icon.
 In addition to the main icon class, e.g. ``fa-cat``, the "style" class must
-also be provided e.g. `fab` for *branding*, or `fas` for *solid*.
+also be provided e.g. `fa-brands` for *branding*, or `fa-solid` for *solid*.
 
 Here are several examples:
 
@@ -103,25 +103,25 @@ Here are several examples:
            {
                "name": "GitHub",
                "url": "https://github.com/<your-org>/<your-repo>",
-               "icon": "fab fa-github-square",
+               "icon": "fa-brands fa-square-github",
                "type": "fontawesome",
            },
            {
                "name": "GitLab",
                "url": "https://gitlab.com/<your-org>/<your-repo>",
-               "icon": "fab fa-gitlab",
+               "icon": "fa-brands fa-square-gitlab",
                "type": "fontawesome",
            },
            {
                "name": "Twitter",
                "url": "https://twitter.com/<your-handle>",
-               "icon": "fab fa-twitter-square",
+               "icon": "fa-brands fa-square-twitter",
                # The default for `type` is `fontawesome` so it is not actually required in any of the above examples as it is shown here
            },
            {
                "name": "Mastodon",
                "url": "https://<your-host>@<your-handle>",
-               "icon": "fab fa-mastodon",
+               "icon": "fa-brands fa-mastodon",
            },
        ],
        ...

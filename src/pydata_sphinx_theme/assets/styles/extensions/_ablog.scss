@@ -31,14 +31,14 @@ article.bd-article > section + div.section {
   font-size: 1.2em;
 
   span:first-child:before {
-    content: "\f104";
-    font-family: "Font Awesome 5 Free";
+    content: var(--pst-icon-angle-left);
+    font-family: "Font Awesome 6 Free";
     font-weight: 800;
   }
 
   span:last-child:after {
-    content: "\f105";
-    font-family: "Font Awesome 5 Free";
+    content: var(--pst-icon-angle-right);
+    font-family: "Font Awesome 6 Free";
     font-weight: 800;
   }
 }
