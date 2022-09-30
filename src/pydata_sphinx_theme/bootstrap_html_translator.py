@@ -1,7 +1,6 @@
 """A custom Sphinx HTML Translator for Bootstrap layout
 """
 from packaging.version import Version
-from docutils import nodes
 
 import sphinx
 from sphinx.writers.html5 import HTML5Translator
@@ -29,9 +28,13 @@ class BootstrapHTML5Translator(HTML5Translator):
         return super().starttag(*args, **kwargs)
 
     def visit_table(self, node):
-        # type: (nodes.Element) -> None
-        # copy of sphinx source to *not* add 'docutils' and 'align-default' classes
-        # but add 'table' class
+        """
+        copy of sphinx source to *not* add 'docutils' and 'align-default' classes
+        but add 'table' class
+        """
+
+        # init the attributes
+        atts = {}
 
         # generate_targets_for_table is deprecated in 4.0
         if Version(sphinx.__version__) < Version("4.0"):
@@ -42,14 +45,19 @@ class BootstrapHTML5Translator(HTML5Translator):
         else:
             self._table_row_indices.append(0)
 
+        # get the classes
         classes = [cls.strip(" \t\n") for cls in self.settings.table_style.split(",")]
 
         # we're looking at the 'real_table', which is wrapped by an autosummary
         if isinstance(node.parent, autosummary_table):
             classes += ["autosummary"]
 
+        # add the width if set in a style attribute
+        if "width" in node:
+            atts["style"] = f'width: {node["width"]}'
+
         # classes.insert(0, "docutils")  # compat
         # if 'align' in node:
         #     classes.append('align-%s' % node['align'])
-        tag = self.starttag(node, "table", CLASS=" ".join(classes))
+        tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
