@@ -6,6 +6,7 @@ import warnings
 from pathlib import Path
 from functools import lru_cache
 import json
+from urllib.parse import urlparse
 
 import jinja2
 from bs4 import BeautifulSoup as bs
@@ -63,9 +64,10 @@ def update_config(app, env):
 
         # try to read the json file. If it's a url we use request,
         # else we simply read the local file from the source directory
-        try:
+        # it will raise an error if the file does not exist
+        if urlparse(json_url).scheme in ["http", "https"]:
             content = requests.get(json_url).text
-        except Exception:
+        else:
             content = Path(env.srcdir, json_url).read_text()
 
         # check that the json file is not illformed
