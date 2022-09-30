@@ -56,8 +56,9 @@ class BootstrapHTML5Translator(HTML5Translator):
         if "width" in node:
             atts["style"] = f'width: {node["width"]}'
 
-        # classes.insert(0, "docutils")  # compat
-        # if 'align' in node:
-        #     classes.append('align-%s' % node['align'])
+        # add specific class if align is set
+        if "align" in node:
+            classes.append(f'align-{node["align"]}')
+
         tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
