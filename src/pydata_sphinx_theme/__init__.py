@@ -857,7 +857,7 @@ class ShortenLinkTransform(SphinxPostTransform):
                 self.platform = self.supported_platform.get(uri.netloc)
                 if self.platform is not None:
                     node.attributes["classes"].append(self.platform)
-                    node.children[0] = nodes.Text(self.parse_path(uri.path))
+                    node.children[0] = nodes.Text(self.parse_url(uri.path))
 
     def parse_url(self, path):
         """
@@ -901,7 +901,7 @@ def setup(app):
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    app.add_post_transform(LinkTransform)
+    app.add_post_transform(ShortenLinkTransform)
 
     app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
