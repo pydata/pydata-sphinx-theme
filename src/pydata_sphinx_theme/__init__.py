@@ -825,7 +825,7 @@ def _overwrite_pygments_css(app, exception=None):
 # ------------------------------------------------------------------------------
 
 
-class LinkTransform(SphinxPostTransform):
+class ShortenLinkTransform(SphinxPostTransform):
     """
     Shorten link when they are coming from github or gitlab and add an extra class to the tag
     for further styling.
