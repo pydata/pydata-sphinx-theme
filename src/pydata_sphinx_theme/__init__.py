@@ -859,7 +859,7 @@ class ShortenLinkTransform(SphinxPostTransform):
                     node.attributes["classes"].append(self.platform)
                     node.children[0] = nodes.Text(self.parse_path(uri.path))
 
-    def parse_path(self, path):
+    def parse_url(self, path):
         """
         parse the content of the url with respect to the selected platform
         """
