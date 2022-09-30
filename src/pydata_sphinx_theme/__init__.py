@@ -5,12 +5,16 @@ import os
 import warnings
 from pathlib import Path
 from functools import lru_cache
+from urllib.parse import urlparse
 
 import jinja2
 from bs4 import BeautifulSoup as bs
+from docutils import nodes
 from sphinx import addnodes
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.addnodes import toctree as toctree_node
+from sphinx.transforms.post_transforms import SphinxPostTransform
+from sphinx.util.nodes import NodeMatcher
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
@@ -816,6 +820,78 @@ def _overwrite_pygments_css(app, exception=None):
         f.write(get_pygments_stylesheet(light_theme, dark_theme))
 
 
+# ------------------------------------------------------------------------------
+# customize rendering of the links
+# ------------------------------------------------------------------------------
+
+
+class ShortenLinkTransform(SphinxPostTransform):
+    """
+    Shorten link when they are coming from github or gitlab and add an extra class to the tag
+    for further styling.
+    Before::
+        <a class="reference external" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+            https://github.com/2i2c-org/infrastructure/issues/1329
+        </a>
+    After::
+        <a class="reference external github" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+            2i2c-org/infrastructure#1329
+        </a>
+    """  # noqa
+
+    default_priority = 400
+    formats = ("html",)
+    supported_platform = {"github.com": "github", "gitlab.com": "gitlab"}
+    platform = None
+
+    def run(self, **kwargs):
+        matcher = NodeMatcher(nodes.reference)
+        for node in self.document.findall(matcher):
+            uri = node.attributes.get("refuri")
+            text = next(iter(node.children), None)
+            # only act if the uri and text are the same
+            # if not the user has already customized the display of the link
+            if uri is not None and text is not None and text == uri:
+                uri = urlparse(uri)
+                # only do something if the platform is identified
+                self.platform = self.supported_platform.get(uri.netloc)
+                if self.platform is not None:
+                    node.attributes["classes"].append(self.platform)
+                    node.children[0] = nodes.Text(self.parse_url(uri.path))
+
+    def parse_url(self, path):
+        """
+        parse the content of the url with respect to the selected platform
+        """
+
+        # split the url content
+        # be careful the first one is a "/"
+        s = path.split("/")
+
+        # check the platform name and read the information accordingly
+        if self.platform == "github":
+            text = "github"
+            if len(s) > 1:
+                text = s[1]
+            if len(s) > 2:
+                text += f"/{s[2]}"
+            if len(s) > 3:
+                if s[3] in ["issues", "pull", "discussions"]:
+                    text += f"#{s[-1]}"
+
+        elif self.platform == "gitlab":
+            text = "gitlab"
+            if len(s) > 1:
+                text = s[1]
+            if len(s) > 2:
+                text += f"/{s[2]}"
+            if len(s) > 3:
+                if s[4] in ["issues", "merge_requests"]:
+                    text += f"#{s[-1]}"
+
+        return text
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -824,6 +900,8 @@ def setup(app):
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
+
+    app.add_post_transform(ShortenLinkTransform)
 
     app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
