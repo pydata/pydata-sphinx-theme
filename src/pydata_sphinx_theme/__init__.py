@@ -274,7 +274,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             links_html.append(
                 f"""
             <li class="nav-item">
-                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fas fa-external-link-alt"></i></a>
+                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fa-solid fa-up-right-from-square"></i></a>
             </li>"""  # noqa
             )
 
@@ -399,12 +399,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                     f"li.toctree-l{ii} > input.toctree-checkbox"
                 ):
                     checkbox.attrs["checked"] = None
-            out = soup.prettify()
 
-        elif kind == "raw":
-            out = soup
-
-        return out
+        return soup
 
     @lru_cache(maxsize=None)
     def generate_toc_html(kind="html"):
@@ -514,7 +510,7 @@ def _add_collapse_checkboxes(soup):
         label = soup.new_tag(
             "label", attrs={"for": checkbox_name, "class": "toctree-toggle"}
         )
-        label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+        label.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
         if "toctree-l0" in classes:
             # making label cover the whole caption text with css
             label["class"] = "label-parts"
@@ -665,6 +661,7 @@ def soup_to_python(soup, only_pages=False):
     navs = []
     for ul in soup.find_all("ul", recursive=False):
         extract_level_recursive(ul, navs)
+
     return navs
 
 

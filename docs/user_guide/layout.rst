@@ -374,6 +374,8 @@ By default, it has the following templates:
       ...
     }
 
+To learn how to further customize or remove the secondary sidebar, please check :doc:`page-toc`.
+
 .. _layout-article-footer:
 
 Article Footer
