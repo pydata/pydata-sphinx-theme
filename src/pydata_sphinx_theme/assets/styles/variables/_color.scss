@@ -103,15 +103,18 @@ $pst-semantic-colors: (
       .only-light {
         display: none !important;
       }
-      // adjust images in dark mode
-      img {
+      /* Adjust images in dark mode (unless they have class .only-dark or
+       * .dark-light, in which case assume they're already optimized for dark
+       * mode).
+       */
+      img:not(.only-dark):not(.dark-light) {
         filter: brightness(0.8) contrast(1.2);
       }
       /* Give images a light background in dark mode in case they have
-      *  transparency and black text (unless they have class .only-dark, in
+      *  transparency and black text (unless they have class .only-dark or .dark-light, in
       *  which case assume they're already optimized for dark mode).
       */
-      .bd-content img:not(.only-dark) {
+      .bd-content img:not(.only-dark):not(.dark-light) {
         background: rgb(255, 255, 255);
         border-radius: 0.25rem;
       }

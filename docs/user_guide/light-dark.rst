@@ -71,8 +71,8 @@ For example to define a different background color for both the light and dark t
 
 A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.
 
-Use theme-dependent content
----------------------------
+Theme-dependent images and content
+----------------------------------
 
 It is possible to use different content for light and dark mode, so that the content only shows up when a particular theme is active.
 This is useful if your content depends on the theme's style, such as a PNG image with a light or a dark background.
@@ -99,6 +99,39 @@ Change the theme and a new image should be displayed.
 
 .. image:: https://source.unsplash.com/200x200/daily?cute+dog
     :class: only-light
+
+Images and content that work in both themes
+-------------------------------------------
+
+When the **dark theme** is activated, images that do not support dark mode will
+automatically have a white background added to ensure the image contents are
+visible, and their brightness will be reduced by a filter.
+
+If your image is suitable for the dark theme, add the CSS class
+:code:`only-dark` as noted above. If your image is suitable for both light and
+dark theme, add the CSS class :code:`dark-light` to make your image
+theme-agnostic.
+
+For example, here's an image without adding this helper class.
+Change to the dark theme and a grey background will be present.
+
+.. code-block:: rst
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+        :class: p-2
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+    :class: p-2
+
+Here's the same image with this class added:
+
+.. code-block:: rst
+
+    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+        :class: dark-light p-2
+
+.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+    :class: dark-light p-2
 
 Define custom JavaScript to react to theme changes
 --------------------------------------------------

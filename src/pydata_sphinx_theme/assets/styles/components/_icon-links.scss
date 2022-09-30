@@ -4,21 +4,20 @@
 
 #navbar-icon-links {
   i {
-    &.fa,
-    &.fab,
-    &.far,
-    &.fas {
+    &.fa-brands,
+    &.fa-regular,
+    &.fa-solid {
       vertical-align: middle;
       font-style: normal;
       font-size: var(--pst-font-size-icon);
     }
 
     /* Social media buttons */
-    &.fa-twitter-square:before {
+    &.fa-square-twitter:before {
       color: #55acee;
     }
 
-    &.fa-gitlab:before {
+    &.fa-square-gitlab:before {
       color: #548;
     }
 

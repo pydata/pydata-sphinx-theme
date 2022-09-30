@@ -10,9 +10,12 @@ from urllib.parse import urlparse
 
 import jinja2
 from bs4 import BeautifulSoup as bs
+from docutils import nodes
 from sphinx import addnodes
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.addnodes import toctree as toctree_node
+from sphinx.transforms.post_transforms import SphinxPostTransform
+from sphinx.util.nodes import NodeMatcher
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
@@ -102,11 +105,12 @@ def update_config(app, env):
 
         # Ref: https://plausible.io/docs/plausible-script
         if plausible_domain and plausible_url:
-            plausible_script = f"""
-                data-domain={plausible_domain} src={plausible_url}
-            """
-            # Link the JS file
-            app.add_js_file(None, body=plausible_script, loading_method="defer")
+            kwargs = {
+                "loading_method": "defer",
+                "data-domain": plausible_domain,
+                "filename": plausible_url,
+            }
+            app.add_js_file(**kwargs)
 
         # Two types of Google Analytics id.
         gid = analytics.get("google_analytics_id")
@@ -267,16 +271,22 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         # Find the root document because it lists our top-level toctree pages
         root = app.env.tocs[app.config.root_doc]
+
         # Iterate through each toctree node in the root document
         # Grab the toctree pages and find the relative link + title.
         links_html = []
         # Can just use "findall" once docutils min version >=0.18.1
         meth = "findall" if hasattr(root, "findall") else "traverse"
         for toc in getattr(root, meth)(toctree_node):
-            for _, page in toc.attributes["entries"]:
+            for title, page in toc.attributes["entries"]:
+                # if the page is using "self" use the correct link
+                page = toc.attributes["parent"] if page == "self" else page
+
                 # If this is the active ancestor page, add a class so we highlight it
                 current = " current active" if page == active_header_page else ""
-                title = app.env.titles[page].astext()
+                title = title if title else app.env.titles[page].astext()
+
+                # create the html output
                 links_html.append(
                     f"""
                 <li class="nav-item{current}">
@@ -292,7 +302,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             links_html.append(
                 f"""
             <li class="nav-item">
-                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fas fa-external-link-alt"></i></a>
+                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fa-solid fa-up-right-from-square"></i></a>
             </li>"""  # noqa
             )
 
@@ -417,12 +427,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                     f"li.toctree-l{ii} > input.toctree-checkbox"
                 ):
                     checkbox.attrs["checked"] = None
-            out = soup.prettify()
 
-        elif kind == "raw":
-            out = soup
-
-        return out
+        return soup
 
     @lru_cache(maxsize=None)
     def generate_toc_html(kind="html"):
@@ -532,7 +538,7 @@ def _add_collapse_checkboxes(soup):
         label = soup.new_tag(
             "label", attrs={"for": checkbox_name, "class": "toctree-toggle"}
         )
-        label.append(soup.new_tag("i", attrs={"class": "fas fa-chevron-down"}))
+        label.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
         if "toctree-l0" in classes:
             # making label cover the whole caption text with css
             label["class"] = "label-parts"
@@ -683,6 +689,7 @@ def soup_to_python(soup, only_pages=False):
     navs = []
     for ul in soup.find_all("ul", recursive=False):
         extract_level_recursive(ul, navs)
+
     return navs
 
 
@@ -841,6 +848,78 @@ def _overwrite_pygments_css(app, exception=None):
         f.write(get_pygments_stylesheet(light_theme, dark_theme))
 
 
+# ------------------------------------------------------------------------------
+# customize rendering of the links
+# ------------------------------------------------------------------------------
+
+
+class ShortenLinkTransform(SphinxPostTransform):
+    """
+    Shorten link when they are coming from github or gitlab and add an extra class to the tag
+    for further styling.
+    Before::
+        <a class="reference external" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+            https://github.com/2i2c-org/infrastructure/issues/1329
+        </a>
+    After::
+        <a class="reference external github" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+            2i2c-org/infrastructure#1329
+        </a>
+    """  # noqa
+
+    default_priority = 400
+    formats = ("html",)
+    supported_platform = {"github.com": "github", "gitlab.com": "gitlab"}
+    platform = None
+
+    def run(self, **kwargs):
+        matcher = NodeMatcher(nodes.reference)
+        for node in self.document.findall(matcher):
+            uri = node.attributes.get("refuri")
+            text = next(iter(node.children), None)
+            # only act if the uri and text are the same
+            # if not the user has already customized the display of the link
+            if uri is not None and text is not None and text == uri:
+                uri = urlparse(uri)
+                # only do something if the platform is identified
+                self.platform = self.supported_platform.get(uri.netloc)
+                if self.platform is not None:
+                    node.attributes["classes"].append(self.platform)
+                    node.children[0] = nodes.Text(self.parse_url(uri.path))
+
+    def parse_url(self, path):
+        """
+        parse the content of the url with respect to the selected platform
+        """
+
+        # split the url content
+        # be careful the first one is a "/"
+        s = path.split("/")
+
+        # check the platform name and read the information accordingly
+        if self.platform == "github":
+            text = "github"
+            if len(s) > 1:
+                text = s[1]
+            if len(s) > 2:
+                text += f"/{s[2]}"
+            if len(s) > 3:
+                if s[3] in ["issues", "pull", "discussions"]:
+                    text += f"#{s[-1]}"
+
+        elif self.platform == "gitlab":
+            text = "gitlab"
+            if len(s) > 1:
+                text = s[1]
+            if len(s) > 2:
+                text += f"/{s[2]}"
+            if len(s) > 3:
+                if s[4] in ["issues", "merge_requests"]:
+                    text += f"#{s[-1]}"
+
+        return text
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -849,6 +928,8 @@ def setup(app):
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
+
+    app.add_post_transform(ShortenLinkTransform)
 
     app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also

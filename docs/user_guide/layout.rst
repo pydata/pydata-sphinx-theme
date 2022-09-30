@@ -374,6 +374,8 @@ By default, it has the following templates:
       ...
     }
 
+To learn how to further customize or remove the secondary sidebar, please check :doc:`page-toc`.
+
 .. _layout-article-footer:
 
 Article Footer
@@ -452,6 +454,7 @@ will be named accordingly).
 - ``navbar-logo.html``
 - ``navbar-nav.html``
 - ``page-toc.html``
+- ``searchbox.html``
 - ``search-button.html``
 - ``search-field.html``
 - ``sidebar-ethical-ads.html``
@@ -460,6 +463,7 @@ will be named accordingly).
 - ``sphinx-version.html``
 - ``theme-switcher.html``
 - ``version-switcher.html``
+- ``indices.html``
 
 
 Add your own HTML templates to theme sections

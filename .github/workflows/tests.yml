@@ -47,7 +47,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
 
       - name: Build docs to store
@@ -60,7 +60,7 @@ jobs:
           from pathlib import Path
           text = Path("./warnings.txt").read_text().strip()
           print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["kitchen-sink", "_static", "parse.py"])]
+          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["frame.py", "_static", "parse.py"])]
           for ii in unexpected:
             print(f"Unexpected warning: \n{unexpected}\n\n")
           assert len(unexpected) == 0

@@ -45,7 +45,7 @@ div.admonition,
       width: 1rem;
       height: 1rem;
       color: var(--pst-color-info);
-      font-family: "Font Awesome 5 Free";
+      font-family: "Font Awesome 6 Free";
       font-weight: 900;
       content: var(--pst-icon-admonition-default);
       opacity: 1;
@@ -242,7 +242,7 @@ div.topic,
 div.topic.contents,
 // Docutils >= 0.18
 nav.contents,
-aside.topic, {
+aside.topic {
   display: flex;
   flex-direction: column;
   background-color: var(--pst-color-surface);
