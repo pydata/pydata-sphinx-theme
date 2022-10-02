@@ -58,7 +58,7 @@ class BootstrapHTML5Translator(HTML5Translator):
 
         # add specific class if align is set
         if "align" in node:
-            classes.append(f'align-{node["align"]}')
+            classes.append(f'table-{node["align"]}')
 
         tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
