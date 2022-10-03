@@ -22,7 +22,7 @@ jobs:
           python-version: "3.9"
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
-      - uses: pre-commit/action@v2.0.3
+      - uses: pre-commit/action@v3.0.0
 
   tests:
     runs-on: ${{ matrix.os }}

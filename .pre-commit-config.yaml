@@ -3,19 +3,19 @@ exclude: github_deploy_key_pandas_dev_pandas_sphinx_theme\.enc
 
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.6.2
+    rev: v2.7.1
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
         exclude: .+((\.html)|index\.(.+)\.css)$
 
   - repo: https://github.com/psf/black
-    rev: 22.3.0
+    rev: 22.8.0
     hooks:
       - id: black
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 4.0.1
+    rev: 5.0.4
     hooks:
       - id: flake8
 
@@ -31,7 +31,7 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.34.0
+    rev: v2.38.2
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
