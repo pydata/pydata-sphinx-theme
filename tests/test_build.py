@@ -547,11 +547,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
 @pytest.mark.parametrize(
     "provider,tags",
     [
-        # TODO: Deprecate old-style analytics config >= 0.12
-        # new_google_analytics_id
-        ({"html_theme_options.google_analytics_id": "G-XXXXX"}, ["gtag", "G-XXXXX"]),
-        # old_google_analytics_id
-        ({"html_theme_options.google_analytics_id": "UA-XXXXX"}, ["ga", "UA-XXXXX"]),
         # google analytics
         (
             {"html_theme_options.analytics": {"google_analytics_id": "G-XXXXX"}},
@@ -565,17 +560,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
                     "plausible_analytics_domain": "toto",
                     "plausible_analytics_url": "http://.../script.js",
                 }
-            },
-            ["gtag", "G-XXXXX"],
-        ),
-        # TODO: Deprecate old-style analytics config >= 0.12
-        (
-            {
-                "html_theme_options.analytics": {
-                    "plausible_analytics_domain": "toto",
-                    "plausible_analytics_url": "http://.../script.js",
-                },
-                "html_theme_options.google_analytics_id": "G-XXXXX",
             },
             ["gtag", "G-XXXXX"],
         ),
