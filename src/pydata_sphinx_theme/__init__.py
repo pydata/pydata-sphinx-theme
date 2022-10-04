@@ -5,6 +5,7 @@ import os
 import warnings
 from pathlib import Path
 from functools import lru_cache
+import json
 from urllib.parse import urlparse
 
 import jinja2
@@ -19,6 +20,7 @@ from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
+import requests
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -54,6 +56,33 @@ def update_config(app, env):
             "html_theme_options['switcher']['url_template'] is no longer supported."
             " Set version URLs in JSON directly."
         )
+
+    # check the validity of the theme swithcer file
+    if isinstance(theme_options.get("switcher"), dict):
+        theme_switcher = theme_options.get("switcher")
+
+        # raise an error if one of these compulsory keys is missing
+        json_url = theme_switcher["json_url"]
+        theme_switcher["version_match"]
+
+        # try to read the json file. If it's a url we use request,
+        # else we simply read the local file from the source directory
+        # it will raise an error if the file does not exist
+        if urlparse(json_url).scheme in ["http", "https"]:
+            content = requests.get(json_url).text
+        else:
+            content = Path(env.srcdir, json_url).read_text()
+
+        # check that the json file is not illformed
+        # it will throw an error if there is a an issue
+        switcher_content = json.loads(content)
+        missing_url = any(["url" not in e for e in switcher_content])
+        missing_version = any(["version" not in e for e in switcher_content])
+        if missing_url or missing_version:
+            raise AttributeError(
+                f'The version switcher "{json_url}" file is malformed'
+                ' at least one of the items is missing the "url" or "version" key'
+            )
 
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
@@ -189,9 +218,8 @@ def update_templates(app, pagename, templatename, context, doctree):
     app.add_js_file(None, body=f"DOCUMENTATION_OPTIONS.pagename = '{pagename}';")
     if isinstance(context.get("theme_switcher"), dict):
         theme_switcher = context["theme_switcher"]
-        if theme_switcher.get("json_url"):
-            json_url = theme_switcher["json_url"]
-            version_match = theme_switcher["version_match"]
+        json_url = theme_switcher["json_url"]
+        version_match = theme_switcher["version_match"]
 
         # Add variables to our JavaScript for re-use in our main JS script
         js = f"""
