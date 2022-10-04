@@ -204,7 +204,7 @@ def update_templates(app, pagename, templatename, context, doctree):
 def add_inline_math(node):
     """Render a node with HTML tags that activate MathJax processing.
     This is meant for use with rendering section titles with math in them, because
-    math outputs are ignored by sphinx in headers.
+    math outputs are ignored by pydata-sphinx-theme's header.
 
     related to the behaviour of a normal math node from:
     https://github.com/sphinx-doc/sphinx/blob/master/sphinx/ext/mathjax.py#L28
