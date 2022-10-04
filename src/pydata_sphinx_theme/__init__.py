@@ -853,6 +853,18 @@ def _overwrite_pygments_css(app, exception=None):
 # ------------------------------------------------------------------------------
 
 
+def _traverse_or_findall(node, condition, **kwargs):
+    """Triage node.traverse (docutils <0.18.1) vs node.findall.
+    TODO: This check can be removed when the minimum supported docutils version
+    for numpydoc is docutils>=0.18.1
+    """
+    return (
+        node.findall(condition, **kwargs)
+        if hasattr(node, "findall")
+        else node.traverse(condition, **kwargs)
+    )
+
+
 class ShortenLinkTransform(SphinxPostTransform):
     """
     Shorten link when they are coming from github or gitlab and add an extra class to the tag
@@ -874,7 +886,8 @@ class ShortenLinkTransform(SphinxPostTransform):
 
     def run(self, **kwargs):
         matcher = NodeMatcher(nodes.reference)
-        for node in self.document.findall(matcher):
+        # Can just use "findall" once docutils min version >=0.18.1
+        for node in  _traverse_or_findall(self.document, matcher):
             uri = node.attributes.get("refuri")
             text = next(iter(node.children), None)
             # only act if the uri and text are the same
