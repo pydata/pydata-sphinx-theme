@@ -169,6 +169,7 @@ html_sidebars = {
         "locations.html",
         "archives.html",
     ],
+    "index": [],
 }
 
 myst_heading_anchors = 2
