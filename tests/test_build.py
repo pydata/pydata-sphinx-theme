@@ -676,3 +676,11 @@ def test_shorten_link(sphinx_build_factory, file_regression):
 
     gitlab = sphinx_build.html_tree("page1.html").select(".gitlab")[0]
     file_regression.check(gitlab.prettify(), basename="gitlab_link", extension=".html")
+
+
+def test_math_header_item(sphinx_build_factory, file_regression):
+    """regression test the math items in a header title"""
+
+    sphinx_build = sphinx_build_factory("base").build()
+    li = sphinx_build.html_tree("page2.html").select("#navbar-main-elements li")[1]
+    file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
