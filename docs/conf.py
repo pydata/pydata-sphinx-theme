@@ -86,7 +86,7 @@ if not version_match or version_match.isdigit():
         version_match = "latest"
         # We want to keep the relative reference if we are in dev mode
         # but we want the whole url if we are effectively in a released version
-        json_url = "/_static/switcher.json"
+        json_url = "_static/switcher.json"
     else:
         version_match = "v" + release
 
