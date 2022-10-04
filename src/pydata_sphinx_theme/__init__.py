@@ -24,7 +24,7 @@ import requests
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.11.0rc1"
+__version__ = "0.11.0rc2"
 
 logger = logging.getLogger(__name__)
 
