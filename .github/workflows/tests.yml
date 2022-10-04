@@ -24,53 +24,53 @@ jobs:
           cache-dependency-path: "pyproject.toml"
       - uses: pre-commit/action@v3.0.0
 
-  tests:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11-dev"]
-        include:
-          - os: macos-latest
-            python-version: "3.9"
-          - os: windows-latest
-            python-version: "3.9"
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: "pip"
-          cache-dependency-path: "pyproject.toml"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[coverage]
-
-      - name: Build docs to store
-        run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
-
-      - name: Check that there are no unexpected Sphinx warnings
-        if: matrix.python-version == '3.9'
-        shell: python
-        run: |
-          from pathlib import Path
-          text = Path("./warnings.txt").read_text().strip()
-          print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["frame.py", "_static", "parse.py"])]
-          for ii in unexpected:
-            print(f"Unexpected warning: \n{unexpected}\n\n")
-          assert len(unexpected) == 0
-
-      - name: Run the tests
-        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
-
-      - name: Upload coverage
-        if: ${{ always() }}
-        run: codecov
+#  tests:
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os: [ubuntu-latest]
+#        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11-dev"]
+#        include:
+#          - os: macos-latest
+#            python-version: "3.9"
+#          - os: windows-latest
+#            python-version: "3.9"
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Set up Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: ${{ matrix.python-version }}
+#          cache: "pip"
+#          cache-dependency-path: "pyproject.toml"
+#
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip wheel setuptools
+#          python -m pip install -e .[coverage]
+#
+#      - name: Build docs to store
+#        run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
+#
+#      - name: Check that there are no unexpected Sphinx warnings
+#        if: matrix.python-version == '3.9'
+#        shell: python
+#        run: |
+#          from pathlib import Path
+#          text = Path("./warnings.txt").read_text().strip()
+#          print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
+#          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["frame.py", "_static", "parse.py"])]
+#          for ii in unexpected:
+#            print(f"Unexpected warning: \n{unexpected}\n\n")
+#          assert len(unexpected) == 0
+#
+#      - name: Run the tests
+#        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+#
+#      - name: Upload coverage
+#        if: ${{ always() }}
+#        run: codecov
 
   sphinx-versions:
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
       matrix:
         python-version: ["3.8"]
         sphinx-version:
-          ["sphinx==4.2", "sphinx==4.5", "sphinx==5.0", "sphinx>=5.0"]
+          ["sphinx==4.3", "sphinx==4.5", "sphinx==5.0", "sphinx>=5.0"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
