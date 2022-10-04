@@ -78,7 +78,7 @@ jobs:
       matrix:
         python-version: ["3.8"]
         sphinx-version:
-          ["sphinx==4.3", "sphinx==4.5", "sphinx==5.0", "sphinx>=5.0"]
+          ["sphinx==4.4", "sphinx==4.5", "sphinx==5.0", "sphinx>=5.0"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
