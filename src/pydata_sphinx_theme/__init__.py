@@ -273,7 +273,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                 current = " current active" if page == active_header_page else ""
 
                 # sanitize page title for use in the html output if needed
-                print(type(title))
                 if title is None:
                     title = ""
                     for node in app.env.titles[page].children:
