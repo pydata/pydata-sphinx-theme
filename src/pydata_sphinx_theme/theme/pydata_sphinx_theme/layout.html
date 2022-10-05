@@ -12,7 +12,7 @@
     includehidden=True,
     titles_only=True)
 -%}
-{% if not sidebar_nav_html %}
+{% if sidebar_nav_html | length < 1 %}
 {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
 {% endif %}
 
