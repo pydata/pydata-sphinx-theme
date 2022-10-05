@@ -12,12 +12,12 @@
     includehidden=True,
     titles_only=True)
 -%}
-{% if sidebar_nav_html | length < 1 %}
+{% if sidebar_nav_html | length == 0 %}
 {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
 {% endif %}
 
 {# Remove the page-toc from secondary sidebar if there are no links to show #}
-{% if generate_toc_html() | length < 1 %}
+{% if generate_toc_html() | length == 0 %}
 {% set theme_page_sidebar_items = theme_page_sidebar_items | reject("in", "page-toc.html") | list %}
 {% endif %}
 
