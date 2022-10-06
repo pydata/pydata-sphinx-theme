@@ -140,9 +140,9 @@ html_theme_options = {
     # "show_nav_level": 2,
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
-    # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
+    # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""],
-    # "page_sidebar_items": ["page-toc.html"],  # Remove the source buttons
+    # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,

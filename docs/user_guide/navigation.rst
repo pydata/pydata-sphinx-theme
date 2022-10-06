@@ -3,7 +3,7 @@
 Navigation depth and collapsing sidebars
 ========================================
 
-By default, this theme enables to expand/collapse subsections in the left
+By default, this theme enables to expand/collapse subsections in the primary
 sidebar navigation (without actually navigating to the page itself), and this extends
 up to 4 levels deep:
 

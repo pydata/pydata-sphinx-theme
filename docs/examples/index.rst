@@ -4,7 +4,7 @@ Examples
 
 These sections show off various features and styles of this theme.
 They should help you understand how this theme behaves and how others are using it.
-See the sections to the left and below to explore.
+See the sections in the primary sidebar and below to explore.
 
 .. toctree::
     :caption: Real-world examples

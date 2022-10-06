@@ -8,4 +8,4 @@ html_sidebars = {
 }
 ```
 
-The left sidebar should be entirely gone, and the main content should expand slightly to make up the extra space.
+The primary sidebar should be entirely gone, and the main content should expand slightly to make up the extra space.
