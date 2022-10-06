@@ -9,7 +9,7 @@ Add an Edit this Page button
 
 You can add a button to each page that will allow users to edit the page text
 directly and submit a pull request to update the documentation. To include this
-button in the right sidebar of each page, add the following configuration to
+button in the secondary sidebar of each page, add the following configuration to
 your ``conf.py`` file in 'html_theme_options':
 
 .. code:: python
