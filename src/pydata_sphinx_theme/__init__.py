@@ -39,6 +39,38 @@ def update_config(app, env):
             "Use `search-field.html` in `navbar_end` template list instead."
         )
 
+    # DEPRECATE >= 0.11
+    if theme_options.get("left_sidebar_end"):
+        theme_options["primary_sidebar_end"] = theme_options.get("left_sidebar_end")
+        logger.warning(
+            "The configuration `left_sidebar_end` is deprecated."
+            "Use `primary_sidebar_end`"
+        )
+
+    if theme_options.get("left_sidebar_end"):
+        theme_options["primary_sidebar_end"] = theme_options.get("left_sidebar_end")
+        logger.warning(
+            "The configuration `left_sidebar_end` is deprecated."
+            "Use `primary_sidebar_end`."
+        )
+
+    if theme_options.get("logo_text"):
+        logo = theme_options.get("logo", {})
+        logo["text"] = theme_options.get("logo_text")
+        theme_options["logo"] = logo
+        logger.warning(
+            "The configuration `logo_text` is deprecated." "Use `'logo': {'text': }`."
+        )
+
+    if theme_options.get("page_sidebar_items"):
+        theme_options["secondary_sidebar_items"] = theme_options.get(
+            "page_sidebar_items"
+        )
+        logger.warning(
+            "The configuration `page_sidebar_items` is deprecated."
+            "Use `secondary_sidebar_items`."
+        )
+
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
