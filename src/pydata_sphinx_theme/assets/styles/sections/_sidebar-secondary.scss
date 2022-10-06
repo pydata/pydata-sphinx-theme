@@ -66,6 +66,7 @@ div#searchbox {
         content: var(--pst-icon-search-minus);
         color: unset; // make sure it uses the same color as the text
         font-family: "Font Awesome 6 Free";
+        font-weight: 900;
         padding-right: 0.5rem;
         margin-right: 0;
       }
