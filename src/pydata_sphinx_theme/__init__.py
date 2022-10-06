@@ -229,6 +229,20 @@ def update_templates(app, pagename, templatename, context, doctree):
         app.add_js_file(None, body=js)
 
 
+def add_inline_math(node):
+    """Render a node with HTML tags that activate MathJax processing.
+    This is meant for use with rendering section titles with math in them, because
+    math outputs are ignored by pydata-sphinx-theme's header.
+
+    related to the behaviour of a normal math node from:
+    https://github.com/sphinx-doc/sphinx/blob/master/sphinx/ext/mathjax.py#L28
+    """
+
+    return (
+        '<span class="math notranslate nohighlight">' rf"\({node.astext()}\)" "</span>"
+    )
+
+
 def add_toctree_functions(app, pagename, templatename, context, doctree):
     """Add functions so Jinja templates can add toctree objects."""
 
@@ -254,6 +268,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             The number of links to show before nesting the remaining links in
             a Dropdown element.
         """
+
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
         except Exception:
@@ -284,15 +299,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
                 # If this is the active ancestor page, add a class so we highlight it
                 current = " current active" if page == active_header_page else ""
-                title = title if title else app.env.titles[page].astext()
+
+                # sanitize page title for use in the html output if needed
+                if title is None:
+                    title = ""
+                    for node in app.env.titles[page].children:
+                        if isinstance(node, nodes.math):
+                            title += add_inline_math(node)
+                        else:
+                            title += node.astext()
 
                 # create the html output
                 links_html.append(
                     f"""
                 <li class="nav-item{current}">
-                    <a class="nav-link" href="{context["pathto"](page)}">
-                        {title}
-                    </a>
+                  <a class="nav-link" href="{context["pathto"](page)}">
+                    {title}
+                  </a>
                 </li>
                 """
                 )
