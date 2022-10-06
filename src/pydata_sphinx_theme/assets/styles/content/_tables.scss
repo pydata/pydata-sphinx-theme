@@ -10,6 +10,18 @@ table {
   overflow: auto;
 
   @include scrollbar-style();
+
+  // default to table-center
+  margin-left: auto;
+  margin-right: auto;
+
+  &.table-right {
+    margin-right: 0;
+  }
+
+  &.table-left {
+    margin-left: 0;
+  }
 }
 
 // customize table caption from bootstrap
