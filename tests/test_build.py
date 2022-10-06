@@ -16,9 +16,10 @@ class SphinxBuild:
         self.app = app
         self.src = src
 
-    def build(self):
+    def build(self, no_warning=True):
         self.app.build()
-        assert self.warnings == "", self.status
+        if no_warning is True:
+            assert self.warnings == "", self.status
         return self
 
     @property
@@ -684,3 +685,36 @@ def test_math_header_item(sphinx_build_factory, file_regression):
     sphinx_build = sphinx_build_factory("base").build()
     li = sphinx_build.html_tree("page2.html").select("#navbar-main-elements li")[1]
     file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
+
+
+def test_deprecated_build_html(sphinx_build_factory, file_regression):
+    """Test building the base html template with all the deprecated configs"""
+
+    sphinx_build = sphinx_build_factory("deprecated")  # type: SphinxBuild
+
+    # Basic build with defaults
+    sphinx_build.build(no_warning=False)
+    assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
+
+    # check the deprecation warnings
+    warnings = sphinx_build.warnings.split("WARNING: ")
+    assert len(warnings) == 5  # testing the text of the warning is not necessary here
+
+    index_html = sphinx_build.html_tree("index.html")
+    subpage_html = sphinx_build.html_tree("section1/index.html")
+
+    # Navbar structure
+    navbar = index_html.select("div#navbar-center")[0]
+    file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
+
+    # Sidebar subpage
+    sidebar = subpage_html.select(".bd-sidebar")[0]
+    file_regression.check(
+        sidebar.prettify(), basename="sidebar_subpage", extension=".html"
+    )
+
+    # Secondary sidebar should not have in-page TOC if it is empty
+    assert not sphinx_build.html_tree("page1.html").select("div.onthispage")
+
+    # Secondary sidebar should not be present if page-level metadata given
+    assert not sphinx_build.html_tree("page2.html").select("div.bd-sidebar-secondary")

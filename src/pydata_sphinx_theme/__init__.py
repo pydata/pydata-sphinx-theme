@@ -47,13 +47,6 @@ def update_config(app, env):
             "Use `primary_sidebar_end`"
         )
 
-    if theme_options.get("left_sidebar_end"):
-        theme_options["primary_sidebar_end"] = theme_options.get("left_sidebar_end")
-        logger.warning(
-            "The configuration `left_sidebar_end` is deprecated."
-            "Use `primary_sidebar_end`."
-        )
-
     if theme_options.get("logo_text"):
         logo = theme_options.get("logo", {})
         logo["text"] = theme_options.get("logo_text")
