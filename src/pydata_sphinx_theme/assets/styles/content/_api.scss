@@ -1,8 +1,8 @@
 // Style API docs from sphinx' autodoc / autosummary
 
-/**
- * Styling for field lists
- */
+/*******************************************************************************
+* Styling for field lists
+*/
 
 /* grey highlighting of 'parameter' and 'returns' field */
 table.field-list {
@@ -35,7 +35,7 @@ table.field-list {
   }
 }
 
-/**
+/*******************************************************************************
 * Styling for autosummary tables
 */
 
@@ -103,4 +103,28 @@ span.highlighted {
   border-bottom: 1px solid var(--pst-color-border);
   position: relative;
   background-color: var(--pst-color-target);
+}
+
+/*******************************************************************************
+* Styling for autosummary titles like "parameters" and "returns"
+*/
+
+// the API selector
+// from https://github.com/pradyunsg/furo/blob/main/src/furo/assets/styles/content/_api.sass#L6)
+dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) {
+  dd {
+    margin-left: 2rem;
+  }
+
+  dl.field-list {
+    display: grid;
+    grid-template-columns: unset;
+  }
+
+  dt.field-odd,
+  dt.field-even {
+    margin-top: 0.2rem;
+    margin-bottom: 0.1rem;
+    background-color: var(--pst-color-surface);
+  }
 }

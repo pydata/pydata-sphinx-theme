@@ -5,13 +5,6 @@ dd {
   margin-left: 30px;
 }
 
-// Prevent field lists from stretching too much on narrow screens
-// ref: https://css-tricks.com/preventing-a-grid-blowout/
-dl.field-list {
-  display: grid;
-  grid-template-columns: fit-content(30%) minmax(0, 1fr);
-}
-
 ol li > p:first-child,
 ul li > p:first-child {
   margin-bottom: 0.25rem;
