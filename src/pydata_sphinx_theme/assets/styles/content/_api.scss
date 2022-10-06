@@ -109,14 +109,22 @@ span.highlighted {
 * Styling for autosummary titles like "parameters" and "returns"
 */
 
-dl.field-list {
-  display: grid;
-  grid-template-columns: unset;
-}
+// the API selector
+// from https://github.com/pradyunsg/furo/blob/main/src/furo/assets/styles/content/_api.sass#L6)
+dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) {
+  dd {
+    margin-left: 2rem;
+  }
 
-dt.field-odd,
-dt.field-even {
-  margin-top: 0.2rem;
-  margin-bottom: 0.1rem;
-  background-color: var(--pst-color-surface);
+  dl.field-list {
+    display: grid;
+    grid-template-columns: unset;
+  }
+
+  dt.field-odd,
+  dt.field-even {
+    margin-top: 0.2rem;
+    margin-bottom: 0.1rem;
+    background-color: var(--pst-color-surface);
+  }
 }
