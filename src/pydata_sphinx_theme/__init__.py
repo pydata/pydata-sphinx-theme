@@ -835,13 +835,13 @@ def _overwrite_pygments_css(app, exception=None):
     So yes, at build time we overwrite the pygment.css file so that it embeds
     2 versions:
     - the light theme prefixed with "[data-theme="light"]" using tango
-    - the dark theme prefixed with "[data-theme="dark"]" using native
+    - the dark theme prefixed with "[data-theme="dark"]" using monokai
 
     When the theme is switched, Pygments will be using one of the preset css
     style.
     """
     default_light_theme = "tango"
-    default_dark_theme = "native"
+    default_dark_theme = "monokai"
 
     if exception is not None:
         return
