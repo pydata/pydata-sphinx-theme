@@ -38,8 +38,12 @@ const vendorPaths = {
 function macroTemplate({ compilation }) {
   const hash = compilation.hash;
   // We load these files into the theme via HTML templates
-  const css_files = ["styles/theme.css", "styles/pydata-sphinx-theme.css"];
-  const js_files = ["scripts/pydata-sphinx-theme.js"];
+  const css_files = [
+    "styles/theme.css",
+    "style/bootstrap.css",
+    "styles/index.css",
+  ];
+  const js_files = ["scripts/bootstrap.js", "scripts/pydata-sphinx-theme.js"];
 
   // Load a CSS script with a digest for cache busting.
   function stylesheet(css) {
@@ -105,6 +109,7 @@ module.exports = {
     "pydata-sphinx-theme": [
       "./src/pydata_sphinx_theme/assets/scripts/index.js",
     ],
+    bootstrap: ["./src/pydata_sphinx_theme/assets/scripts/bootstrap.js"],
   },
   output: {
     filename: "scripts/[name].js",
@@ -126,7 +131,7 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "styles/pydata-sphinx-theme.css",
+              name: "styles/[name].css",
             },
           },
           {
