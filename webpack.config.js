@@ -20,6 +20,7 @@ const dedent = require("dedent");
 //
 // Paths for various assets (sources and destinations)
 //
+const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
 const staticPath = resolve(
   __dirname,
   "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static"
@@ -67,22 +68,18 @@ function macroTemplate({ compilation }) {
     -->
     {# Load FontAwesome icons #}
     {% macro head_pre_icons() %}
-      <link rel="stylesheet"
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/css/all.min.css', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/webfonts/fa-solid-900.woff2', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/webfonts/fa-brands-400.woff2', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/webfonts/fa-regular-400.woff2', 1) }}">
+      <link rel="stylesheet" href="{{ pathto('_static/vendor/fontawesome/${
+        vendorVersions.fontAwesome
+      }/css/all.min.css', 1) }}">
+      <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/vendor/fontawesome/${
+        vendorVersions.fontAwesome
+      }/webfonts/fa-solid-900.woff2', 1) }}">
+      <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/vendor/fontawesome/${
+        vendorVersions.fontAwesome
+      }/webfonts/fa-brands-400.woff2', 1) }}">
+      <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/vendor/fontawesome/${
+        vendorVersions.fontAwesome
+      }/webfonts/fa-regular-400.woff2', 1) }}">
     {% endmacro %}
 
     {% macro head_pre_assets() %}
@@ -106,10 +103,8 @@ module.exports = {
   mode: "production",
   devtool: "source-map",
   entry: {
-    "pydata-sphinx-theme": [
-      "./src/pydata_sphinx_theme/assets/scripts/pydata-sphinx-theme.js",
-    ],
-    bootstrap: ["./src/pydata_sphinx_theme/assets/scripts/bootstrap.js"],
+    "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
+    bootstrap: resolve(scriptPath, "bootstrap.js"),
   },
   output: {
     filename: "scripts/[name].js",
