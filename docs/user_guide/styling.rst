@@ -45,12 +45,12 @@ base variables
 In order to change a variable, follow these steps:
 
 1. :ref:`Add a custom CSS stylesheet <custom-css>`. This is where we'll configure the variables.
-2. Underneath a ``:root`` section, add the variables you wish to update. For example, to update
+2. Underneath a ``html`` section, add the variables you wish to update. For example, to update
    the base font size, you might add this to ``custom.css``:
 
    .. code-block:: css
 
-       :root {
+       html {
            --pst-font-size-base: 17px;
        }
 
