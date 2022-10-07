@@ -92,22 +92,34 @@ def update_config(app, env):
 
         # try to read the json file. If it's a url we use request,
         # else we simply read the local file from the source directory
-        # it will raise an error if the file does not exist
+        # display a log warning if the file cannot be reached
+        content = None
         if urlparse(json_url).scheme in ["http", "https"]:
-            content = requests.get(json_url).text
+            try:
+                content = requests.get(json_url).text
+            except ConnectionError:
+                logger.warning(
+                    f'The version switcher "{json_url}" file cannot be read.'
+                )
         else:
-            content = Path(env.srcdir, json_url).read_text()
+            try:
+                content = Path(env.srcdir, json_url).read_text()
+            except FileNotFoundError:
+                logger.warning(
+                    f'The version switcher "{json_url}" file cannot be read.'
+                )
 
-        # check that the json file is not illformed
-        # it will throw an error if there is a an issue
-        switcher_content = json.loads(content)
-        missing_url = any(["url" not in e for e in switcher_content])
-        missing_version = any(["version" not in e for e in switcher_content])
-        if missing_url or missing_version:
-            raise AttributeError(
-                f'The version switcher "{json_url}" file is malformed'
-                ' at least one of the items is missing the "url" or "version" key'
-            )
+        # check that the json file is not illformed,
+        # throw a warning if the file is ill formed and an error if it's not json
+        if content is not None:
+            switcher_content = json.loads(content)
+            missing_url = any(["url" not in e for e in switcher_content])
+            missing_version = any(["version" not in e for e in switcher_content])
+            if missing_url or missing_version:
+                logger.warning(
+                    f'The version switcher "{json_url}" file is malformed'
+                    ' at least one of the items is missing the "url" or "version" key'
+                )
 
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
