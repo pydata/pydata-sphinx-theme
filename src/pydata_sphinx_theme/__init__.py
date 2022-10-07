@@ -2,7 +2,6 @@
 Bootstrap-based sphinx theme from the PyData community
 """
 import os
-import warnings
 from pathlib import Path
 from functools import lru_cache
 import json
@@ -111,18 +110,6 @@ def update_config(app, env):
 
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
-    # deprecated options for Google Analytics
-    # TODO: deprecate >= v0.12
-    gid = theme_options.get("google_analytics_id")
-    if gid:
-        msg = (
-            "'google_analytics_id' is deprecated and will be removed in "
-            "version 0.11, please refer to the documentation "
-            "and use 'analytics' instead."
-        )
-        warnings.warn(msg, DeprecationWarning, stacklevel=2)
-        analytics.update({"google_analytics_id": gid})
-
     if analytics:
         # Plausible analytics
         plausible_domain = analytics.get("plausible_analytics_domain")
@@ -137,29 +124,16 @@ def update_config(app, env):
             }
             app.add_js_file(**kwargs)
 
-        # Two types of Google Analytics id.
+        # Google Analytics
         gid = analytics.get("google_analytics_id")
         if gid:
-            # In this case it is "new-style" google analytics
-            if "G-" in gid:
-                gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
-                gid_script = f"""
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){{ dataLayer.push(arguments); }}
-                    gtag('js', new Date());
-                    gtag('config', '{gid}');
-                """
-            # In this case it is "old-style" google analytics
-            else:
-                gid_js_path = "https://www.google-analytics.com/analytics.js"
-                gid_script = f"""
-                    window.ga = window.ga || function () {{
-                        (ga.q = ga.q || []).push(arguments) }};
-                    ga.l = +new Date;
-                    ga('create', '{gid}', 'auto');
-                    ga('set', 'anonymizeIp', true);
-                    ga('send', 'pageview');
-                """
+            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
+            gid_script = f"""
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){{ dataLayer.push(arguments); }}
+                gtag('js', new Date());
+                gtag('config', '{gid}');
+            """
 
             # Link the JS files
             app.add_js_file(gid_js_path, loading_method="async")
