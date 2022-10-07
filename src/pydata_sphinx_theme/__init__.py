@@ -98,20 +98,18 @@ def update_config(app, env):
             try:
                 content = requests.get(json_url).text
             except ConnectionError:
-                logger.warning(
-                    f'The version switcher "{json_url}" file cannot be read.'
-                )
+                pass
         else:
             try:
                 content = Path(env.srcdir, json_url).read_text()
             except FileNotFoundError:
-                logger.warning(
-                    f'The version switcher "{json_url}" file cannot be read.'
-                )
+                pass
 
-        # check that the json file is not illformed,
-        # throw a warning if the file is ill formed and an error if it's not json
-        if content is not None:
+        if content is None:
+            logger.warning(f'The version switcher "{json_url}" file cannot be read.')
+        else:
+            # check that the json file is not illformed,
+            # throw a warning if the file is ill formed and an error if it's not json
             switcher_content = json.loads(content)
             missing_url = any(["url" not in e for e in switcher_content])
             missing_version = any(["version" not in e for e in switcher_content])
