@@ -51,6 +51,9 @@ jobs:
           python -m pip install -e .[coverage]
           python -m pip list
 
+      - name: Check node version
+        run: node -v
+
       - name: Test Sphinx==4.2
         if: matrix.python-version == '3.7'
         run: |
