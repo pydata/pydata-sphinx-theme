@@ -20,6 +20,7 @@ const dedent = require("dedent");
 //
 // Paths for various assets (sources and destinations)
 //
+
 const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
 const staticPath = resolve(
   __dirname,
@@ -39,12 +40,21 @@ const vendorPaths = {
 function macroTemplate({ compilation }) {
   const hash = compilation.hash;
   // We load these files into the theme via HTML templates
+
   const css_files = [
     "styles/theme.css",
     "styles/bootstrap.css",
     "styles/pydata-sphinx-theme.css",
   ];
   const js_files = ["scripts/bootstrap.js", "scripts/pydata-sphinx-theme.js"];
+  const icon_files = [
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-solid-900.woff2`,
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-brands-400.woff2`,
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-regular-400.woff2`,
+  ];
+  const font_files = [
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/css/all.min.css`,
+  ];
 
   // Load a CSS script with a digest for cache busting.
   function stylesheet(css) {
@@ -61,6 +71,11 @@ function macroTemplate({ compilation }) {
     return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${hash}"></script>`;
   }
 
+  // Load the fonts as preload files
+  function font(woff2) {
+    return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}">`;
+  }
+
   return dedent(`\
     <!--
       AUTO-GENERATED from webpack.config.js, do **NOT** edit by hand.
@@ -68,18 +83,8 @@ function macroTemplate({ compilation }) {
     -->
     {# Load FontAwesome icons #}
     {% macro head_pre_icons() %}
-      <link rel="stylesheet" href="{{ pathto('_static/vendor/fontawesome/${
-        vendorVersions.fontAwesome
-      }/css/all.min.css', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/vendor/fontawesome/${
-        vendorVersions.fontAwesome
-      }/webfonts/fa-solid-900.woff2', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/vendor/fontawesome/${
-        vendorVersions.fontAwesome
-      }/webfonts/fa-brands-400.woff2', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/vendor/fontawesome/${
-        vendorVersions.fontAwesome
-      }/webfonts/fa-regular-400.woff2', 1) }}">
+      ${font_files.map(stylesheet).join("\n")}
+      ${icon_files.map(font).join("\n")}
     {% endmacro %}
 
     {% macro head_pre_assets() %}
