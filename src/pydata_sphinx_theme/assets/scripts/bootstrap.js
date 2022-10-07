@@ -3,8 +3,8 @@
  * jQuery is defined as a Webpack external, thus this import uses the externally defined jquery dependency.
  */
 import "jquery";
-
 import "popper.js";
+
 import "bootstrap";
 
 import "../styles/bootstrap.scss";

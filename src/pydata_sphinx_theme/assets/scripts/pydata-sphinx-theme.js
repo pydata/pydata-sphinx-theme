@@ -4,9 +4,6 @@
  */
 import "jquery";
 
-import "popper.js";
-import "bootstrap";
-
 import "../styles/pydata-sphinx-theme.scss";
 
 /*******************************************************************************
