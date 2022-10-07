@@ -38,9 +38,10 @@ const vendorPaths = {
 // Cache-busting Jinja2 macros (`webpack-macros.html`) used in `layout.html`
 //
 function macroTemplate({ compilation }) {
+  // add a hash keep for each build
   const hash = compilation.hash;
-  // We load these files into the theme via HTML templates
 
+  // We load these files into the theme via HTML templates
   const css_files = [
     "styles/theme.css",
     "styles/bootstrap.css",
