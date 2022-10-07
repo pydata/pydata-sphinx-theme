@@ -40,7 +40,7 @@ function macroTemplate({ compilation }) {
   // We load these files into the theme via HTML templates
   const css_files = [
     "styles/theme.css",
-    "style/bootstrap.css",
+    "styles/bootstrap.css",
     "styles/index.css",
   ];
   const js_files = ["scripts/bootstrap.js", "scripts/pydata-sphinx-theme.js"];
