@@ -41,7 +41,7 @@ function macroTemplate({ compilation }) {
   const css_files = [
     "styles/theme.css",
     "styles/bootstrap.css",
-    "styles/index.css",
+    "styles/pydata-sphinx-theme.css",
   ];
   const js_files = ["scripts/bootstrap.js", "scripts/pydata-sphinx-theme.js"];
 
@@ -107,7 +107,7 @@ module.exports = {
   devtool: "source-map",
   entry: {
     "pydata-sphinx-theme": [
-      "./src/pydata_sphinx_theme/assets/scripts/index.js",
+      "./src/pydata_sphinx_theme/assets/scripts/pydata-sphinx-theme.js",
     ],
     bootstrap: ["./src/pydata_sphinx_theme/assets/scripts/bootstrap.js"],
   },

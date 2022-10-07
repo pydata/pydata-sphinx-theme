@@ -1,8 +1,8 @@
 # theme generated webpack outputs
 scripts/pydata-sphinx-theme.js
 scripts/pydata-sphinx-theme.js.map
-styles/index.css
-styles/index.css.map
+styles/pydata-sphinx-theme.css
+styles/pydata-sphinx-theme.css.map
 
 # bootstrap generated webpack outputs
 scripts/bootstrap.js
