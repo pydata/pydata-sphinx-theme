@@ -409,7 +409,7 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "footer_items": ["copyright", "sphinx-version"],
+      "footer_items": ["copyright", "sphinx-version", "theme-version"],
       ...
     }
 
@@ -464,6 +464,7 @@ will be named accordingly).
 - ``theme-switcher.html``
 - ``version-switcher.html``
 - ``indices.html``
+- ``theme-version.html``
 
 
 Add your own HTML templates to theme sections
