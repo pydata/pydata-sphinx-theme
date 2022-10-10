@@ -25,8 +25,7 @@ def check_warnings(file):
     missing_warnings = []
     for w in ref_warnings:
         try:
-            index = test_warnings.index(w)
-            test_warnings.pop(index)
+            test_warnings.pop(test_warnings.index(w))
         except ValueError:
             missing_warnings += [w]
             print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{w}\n")
