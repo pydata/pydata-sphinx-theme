@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 from colorama import Fore, init
 
@@ -34,7 +35,7 @@ def check_warnings(file):
     for w in test_warnings:
         print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{w}")
 
-    assert len(missing_warnings) == 0 and len(test_warnings) == 0
+    return len(missing_warnings) != 0 or len(test_warnings) != 0
 
 
 if __name__ == "__main__":
@@ -43,4 +44,4 @@ if __name__ == "__main__":
     file = Path.cwd() / "warnings.txt"
 
     # execute the test
-    check_warnings(file)
+    sys.exit(check_warnings(file))
