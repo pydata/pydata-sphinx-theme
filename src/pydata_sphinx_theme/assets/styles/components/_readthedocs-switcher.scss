@@ -1,6 +1,7 @@
 .bd-sidebar-primary div#rtd-footer-container {
   position: sticky;
   bottom: 0;
+  margin: -1rem -1rem; // ignore sidebar padding
 
   .rst-versions.rst-badge {
     position: unset;
@@ -13,8 +14,19 @@
     gap: 0.2rem;
     height: 2.5rem;
     transition: background-color 0.2s ease-out;
-    background-color: #fff;
-    color: #5a5a5a;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: var(--pst-color-background);
+    color: var(--pst-color-text-muted);
+    border-top: 1px solid var(--pst-color-border);
+  }
+
+  .rst-current-version {
+    font-family: var(--pst-font-family-base-system);
+
+    .fa.fa-book {
+      color: var(--pst-color-text-muted);
+    }
+    .fa.fa-carret-down {
+      color: var(--pst-color-text-muted);
+    }
   }
 }
