@@ -1,28 +1,28 @@
-/opt/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.drop:1: WARNING: duplicate object description of pandas.DataFrame.drop, other instance in examples/generated/pandas.DataFrame.drop, use :noindex: for one of them
-/opt/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:1: WARNING: duplicate object description of pandas.DataFrame.groupby, other instance in examples/generated/pandas.DataFrame.groupby, use :noindex: for one of them
-/opt/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/series.py:docstring of pandas.Series.array:1: WARNING: duplicate object description of pandas.Series.array, other instance in examples/generated/pandas.Series.array, use :noindex: for one of them
-/opt/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:42: WARNING: undefined label: 'groupby.transform'
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:14: WARNING: image file not readable: _static/gallery/pandas.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:25: WARNING: image file not readable: _static/gallery/numpy.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:36: WARNING: image file not readable: _static/gallery/scipy.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:47: WARNING: image file not readable: _static/gallery/bokeh.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:58: WARNING: image file not readable: _static/gallery/cupy.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:69: WARNING: image file not readable: _static/gallery/pyvista.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:80: WARNING: image file not readable: _static/gallery/mne-python.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:91: WARNING: image file not readable: _static/gallery/networkx.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:102: WARNING: image file not readable: _static/gallery/fairlearn.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:113: WARNING: image file not readable: _static/gallery/jupyter_book.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:124: WARNING: image file not readable: _static/gallery/binder.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:135: WARNING: image file not readable: _static/gallery/jupyter.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:146: WARNING: image file not readable: _static/gallery/megengine.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:157: WARNING: image file not readable: _static/gallery/feature-engine.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:168: WARNING: image file not readable: _static/gallery/arviz.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:179: WARNING: image file not readable: _static/gallery/sepal.png
-/opt/pydata-sphinx-theme/docs/examples/gallery.md:190: WARNING: image file not readable: _static/gallery/enoslib.png
-/opt/miniforge3/envs/pst/lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResult:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
-/opt/miniforge3/envs/pst/lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResultBytes:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.count'. Check your autosummary_generate setting.
-/opt/miniforge3/envs/pst/lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResult:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.count'. Check your autosummary_generate setting.
-/opt/miniforge3/envs/pst/lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResultBytes:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.count'. Check your autosummary_generate setting.
-/opt/miniforge3/envs/pst/lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResult:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.count'. Check your autosummary_generate setting.
-/opt/miniforge3/envs/pst/lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResultBytes:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'. Check your autosummary_generate setting.
-/opt/miniforge3/envs/pst/lib/python3.9/urllib/parse.py:docstring of urllib.parse.quote:14: ERROR: Unexpected indentation.
+/home/runner/work/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.drop:1: WARNING: duplicate object description of pandas.DataFrame.drop, other instance in examples/generated/pandas.DataFrame.drop, use :noindex: for one of them
+/home/runner/work/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:1: WARNING: duplicate object description of pandas.DataFrame.groupby, other instance in examples/generated/pandas.DataFrame.groupby, use :noindex: for one of them
+/home/runner/work/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/series.py:docstring of pandas.Series.array:1: WARNING: duplicate object description of pandas.Series.array, other instance in examples/generated/pandas.Series.array, use :noindex: for one of them
+/home/runner/work/pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:42: WARNING: undefined label: 'groupby.transform'
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:14: WARNING: image file not readable: _static/gallery/pandas.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:25: WARNING: image file not readable: _static/gallery/numpy.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:36: WARNING: image file not readable: _static/gallery/scipy.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:47: WARNING: image file not readable: _static/gallery/bokeh.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:58: WARNING: image file not readable: _static/gallery/cupy.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:69: WARNING: image file not readable: _static/gallery/pyvista.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:80: WARNING: image file not readable: _static/gallery/mne-python.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:91: WARNING: image file not readable: _static/gallery/networkx.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:102: WARNING: image file not readable: _static/gallery/fairlearn.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:113: WARNING: image file not readable: _static/gallery/jupyter_book.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:124: WARNING: image file not readable: _static/gallery/binder.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:135: WARNING: image file not readable: _static/gallery/jupyter.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:146: WARNING: image file not readable: _static/gallery/megengine.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:157: WARNING: image file not readable: _static/gallery/feature-engine.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:168: WARNING: image file not readable: _static/gallery/arviz.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:179: WARNING: image file not readable: _static/gallery/sepal.png
+/home/runner/work/pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:190: WARNING: image file not readable: _static/gallery/enoslib.png
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResult:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResultBytes:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.count'. Check your autosummary_generate setting.
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResult:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.count'. Check your autosummary_generate setting.
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResultBytes:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.count'. Check your autosummary_generate setting.
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResult:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.count'. Check your autosummary_generate setting.
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResultBytes:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'. Check your autosummary_generate setting.
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/urllib/parse.py:docstring of urllib.parse.quote:14: ERROR: Unexpected indentation.
