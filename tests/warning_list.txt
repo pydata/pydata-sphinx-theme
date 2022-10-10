@@ -1,31 +1,31 @@
-lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:42: WARNING: undefined label: 'groupby.transform'
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:14: WARNING: image file not readable: _static/gallery/pandas.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:25: WARNING: image file not readable: _static/gallery/numpy.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:36: WARNING: image file not readable: _static/gallery/scipy.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:47: WARNING: image file not readable: _static/gallery/bokeh.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:58: WARNING: image file not readable: _static/gallery/cupy.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:69: WARNING: image file not readable: _static/gallery/pyvista.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:80: WARNING: image file not readable: _static/gallery/mne-python.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:91: WARNING: image file not readable: _static/gallery/networkx.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:102: WARNING: image file not readable: _static/gallery/fairlearn.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:113: WARNING: image file not readable: _static/gallery/jupyter_book.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:124: WARNING: image file not readable: _static/gallery/binder.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:135: WARNING: image file not readable: _static/gallery/jupyter.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:146: WARNING: image file not readable: _static/gallery/megengine.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:157: WARNING: image file not readable: _static/gallery/feature-engine.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:168: WARNING: image file not readable: _static/gallery/arviz.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:179: WARNING: image file not readable: _static/gallery/sepal.png
-pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:190: WARNING: image file not readable: _static/gallery/enoslib.png
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResult:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResult:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.index'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResultBytes:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.count'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResultBytes:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.index'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResult:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.count'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResult:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.index'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResultBytes:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.count'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResultBytes:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.index'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResult:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.count'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResult:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.index'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResultBytes:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResultBytes:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.index'. Check your autosummary_generate setting.
-lib/python3.9/urllib/parse.py:docstring of urllib.parse.quote:14: ERROR: Unexpected indentation.
+WARNING: undefined label: 'groupby.transform'
+WARNING: image file not readable: _static/gallery/pandas.png
+WARNING: image file not readable: _static/gallery/numpy.png
+WARNING: image file not readable: _static/gallery/scipy.png
+WARNING: image file not readable: _static/gallery/bokeh.png
+WARNING: image file not readable: _static/gallery/cupy.png
+WARNING: image file not readable: _static/gallery/pyvista.png
+WARNING: image file not readable: _static/gallery/mne-python.png
+WARNING: image file not readable: _static/gallery/networkx.png
+WARNING: image file not readable: _static/gallery/fairlearn.png
+WARNING: image file not readable: _static/gallery/jupyter_book.png
+WARNING: image file not readable: _static/gallery/binder.png
+WARNING: image file not readable: _static/gallery/jupyter.png
+WARNING: image file not readable: _static/gallery/megengine.png
+WARNING: image file not readable: _static/gallery/feature-engine.png
+WARNING: image file not readable: _static/gallery/arviz.png
+WARNING: image file not readable: _static/gallery/sepal.png
+WARNING: image file not readable: _static/gallery/enoslib.png
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.index'. Check your autosummary_generate setting.
+ERROR: Unexpected indentation.
