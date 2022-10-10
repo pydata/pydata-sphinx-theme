@@ -351,6 +351,33 @@ if (themeSwitchBtns) {
 }
 
 /*******************************************************************************
+ * MutationObserver to move the ReadTheDocs button
+ */
+
+function initRTDObserver() {
+  const mutatedCallback = (mutationList, observer) => {
+    mutationList.forEach((mutation) => {
+      // Check whether the mutation is for RTD, which will have a specific structure
+      if (mutation.addedNodes.length === 0) {
+        return;
+      }
+      if (mutation.addedNodes[0].data === undefined) {
+        return;
+      }
+      if (mutation.addedNodes[0].data.search("Inserted RTD Footer") != -1) {
+        mutation.addedNodes.forEach((node) => {
+          document.getElementById("rtd-footer-container").append(node);
+        });
+      }
+    });
+  };
+
+  const observer = new MutationObserver(mutatedCallback);
+  const config = { childList: true };
+  observer.observe(document.body, config);
+}
+
+/*******************************************************************************
  * Finalize
  */
 
@@ -361,3 +388,4 @@ $(scrollToActive);
 $(addTOCInteractivity);
 $(setupSearchButtons);
 $('[data-toggle="tooltip"]').tooltip({ delay: { show: 500, hide: 100 } });
+$(initRTDObserver);
