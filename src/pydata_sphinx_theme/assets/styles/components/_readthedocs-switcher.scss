@@ -1,0 +1,20 @@
+.bd-sidebar-primary div#rtd-footer-container {
+  position: sticky;
+  bottom: 0;
+
+  .rst-versions.rst-badge {
+    position: unset;
+    font-size: 0.9em;
+  }
+
+  .rst-versions.rst-badge .rst-current-version {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    height: 2.5rem;
+    transition: background-color 0.2s ease-out;
+    background-color: #fff;
+    color: #5a5a5a;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}
