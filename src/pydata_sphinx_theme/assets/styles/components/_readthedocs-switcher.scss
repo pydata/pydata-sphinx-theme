@@ -6,9 +6,6 @@
   .rst-versions.rst-badge {
     position: unset;
     font-size: 0.9em;
-  }
-
-  .rst-versions.rst-badge .rst-current-version {
     display: flex;
     align-items: center;
     gap: 0.2rem;
@@ -16,11 +13,12 @@
     transition: background-color 0.2s ease-out;
     background-color: var(--pst-color-background);
     color: var(--pst-color-text-muted);
-    border-top: 1px solid var(--pst-color-border);
   }
 
   .rst-current-version {
     font-family: var(--pst-font-family-base-system);
+    border-top: 1px solid var(--pst-color-border);
+    border-bottom: 1px solid var(--pst-color-border);
 
     .fa.fa-book {
       color: var(--pst-color-text-muted);
@@ -35,6 +33,31 @@
     }
     .fa.fa-caret-down {
       color: var(--pst-color-text-muted);
+    }
+  }
+
+  rst-other-version {
+    background-color: var(--pst-color-background);
+    color: var(--pst-color-text-base);
+
+    dl {
+      dd a {
+        color: var(--pst-color-text-muted);
+      }
+    }
+
+    hr {
+      background-color: var(--pst-color-border);
+    }
+
+    small span a {
+      color: var(--pst-color-link);
+    }
+
+    input {
+      padding-left: 0.5rem;
+      border: 1px solid var(--pst-color-border);
+      background-color: var(--pst-color-background);
     }
   }
 }
