@@ -1,7 +1,7 @@
 .bd-sidebar-primary div#rtd-footer-container {
   position: sticky;
   bottom: -1rem;
-  margin: -1rem 0 -1rem -1rem; // ignore sidebar padding
+  margin: -1rem -1rem -1rem -1rem; // ignore sidebar padding
 
   .rst-versions.rst-badge {
     position: unset;
@@ -14,7 +14,7 @@
       height: 2.5rem;
       transition: background-color 0.2s ease-out;
       background-color: var(--pst-color-background);
-      color: var(--pst-color-text-muted);
+      color: var(--pst-color-success);
       font-family: var(--pst-font-family-base-system);
       border-top: 1px solid var(--pst-color-border);
       border-bottom: 1px solid var(--pst-color-border);
@@ -37,7 +37,7 @@
   }
 
   .rst-other-versions {
-    background-color: var(--pst-color-background);
+    background-color: var(--pst-color-surface);
     color: var(--pst-color-text-base);
 
     dl {
@@ -57,7 +57,7 @@
     input {
       padding-left: 0.5rem;
       border: 1px solid var(--pst-color-border);
-      background-color: var(--pst-color-background);
+      background-color: var(--pst-color-surface);
     }
   }
 }
