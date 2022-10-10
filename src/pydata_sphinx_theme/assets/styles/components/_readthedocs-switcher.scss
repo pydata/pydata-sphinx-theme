@@ -6,6 +6,7 @@
   .rst-versions.rst-badge {
     position: unset;
     font-size: 0.9em;
+    font-family: var(--pst-font-family-base);
 
     .rst-current-version {
       display: flex;
@@ -15,9 +16,7 @@
       transition: background-color 0.2s ease-out;
       background-color: var(--pst-color-background);
       color: var(--pst-color-success);
-      font-family: var(--pst-font-family-base-system);
       border-top: 1px solid var(--pst-color-border);
-      border-bottom: 1px solid var(--pst-color-border);
     }
 
     .fa.fa-book {
@@ -27,12 +26,18 @@
       &::after {
         color: var(--pst-color-text-base);
         content: "Read The Docs";
-        font-family: var(--pst-font-family-base-system);
+        font-family: var(--pst-font-family-base);
         font-weight: var(--pst-font-weight-heading);
       }
     }
     .fa.fa-caret-down {
       color: var(--pst-color-text-muted);
+    }
+  }
+
+  .rst-versions.rst-badge.shift-up {
+    .rst-current-version {
+      border-bottom: 1px solid var(--pst-color-border);
     }
   }
 
