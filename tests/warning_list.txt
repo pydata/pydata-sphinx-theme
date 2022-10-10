@@ -1,6 +1,3 @@
-lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.drop:1: WARNING: duplicate object description of pandas.DataFrame.drop, other instance in examples/generated/pandas.DataFrame.drop, use :noindex: for one of them
-lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:1: WARNING: duplicate object description of pandas.DataFrame.groupby, other instance in examples/generated/pandas.DataFrame.groupby, use :noindex: for one of them
-lib/python3.9/site-packages/pandas/core/series.py:docstring of pandas.Series.array:1: WARNING: duplicate object description of pandas.Series.array, other instance in examples/generated/pandas.Series.array, use :noindex: for one of them
 lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:42: WARNING: undefined label: 'groupby.transform'
 pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:14: WARNING: image file not readable: _static/gallery/pandas.png
 pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:25: WARNING: image file not readable: _static/gallery/numpy.png
@@ -20,9 +17,15 @@ pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:168: WARNING: i
 pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:179: WARNING: image file not readable: _static/gallery/sepal.png
 pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:190: WARNING: image file not readable: _static/gallery/enoslib.png
 lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResult:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
+lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResult:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.index'. Check your autosummary_generate setting.
 lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResultBytes:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.count'. Check your autosummary_generate setting.
+lib/python3.9/urllib/parse.py:docstring of urllib.parse.DefragResultBytes:28: WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.index'. Check your autosummary_generate setting.
 lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResult:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.count'. Check your autosummary_generate setting.
+lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResult:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.index'. Check your autosummary_generate setting.
 lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResultBytes:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.count'. Check your autosummary_generate setting.
+lib/python3.9/urllib/parse.py:docstring of urllib.parse.ParseResultBytes:54: WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.index'. Check your autosummary_generate setting.
 lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResult:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.count'. Check your autosummary_generate setting.
+lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResult:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.index'. Check your autosummary_generate setting.
 lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResultBytes:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'. Check your autosummary_generate setting.
+lib/python3.9/urllib/parse.py:docstring of urllib.parse.SplitResultBytes:50: WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.index'. Check your autosummary_generate setting.
 lib/python3.9/urllib/parse.py:docstring of urllib.parse.quote:14: ERROR: Unexpected indentation.
