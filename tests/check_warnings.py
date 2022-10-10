@@ -11,6 +11,14 @@ def check_warnings(file):
     """
     Check the list of warnings produced by the GitHub CI tests
     raise errors if there are unexpected ones and/or if some are missing
+
+    Args:
+        file (pathlib.Path): the path to the generated warning.txt file from
+            the CI build
+
+    Return:
+        0 if the warnings are all there
+        1 if some warning are not registered or unexpected
     """
 
     # print some log
@@ -34,7 +42,7 @@ def check_warnings(file):
 
     # the remaining one are unexpected
     for w in test_warnings:
-        print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{w}")
+        print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{w}\n")
 
     return len(missing_warnings) != 0 or len(test_warnings) != 0
 
