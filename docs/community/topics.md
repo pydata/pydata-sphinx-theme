@@ -283,11 +283,11 @@ html_theme_options = {
 }
 ```
 
-## Manage build warnings
+## Manage expected build warnings
 
-When the CI GitHub workflow is launched, The build of our documentation is tested against Python 3.9. A script check the warnings raised by Sphinx to assert that they are all knwown and managed. The list of the known warnings can be found in :code:`tests/warning_list.txt`. If you need a new entry, copy/paste the warning message (everything string at :code:`WARNING:`) at the bottom of the file.
+In our CI workflow, we use a script to check for any warnings raised by Sphinx to assert that the only warnings are _expected_ ones. The list of expected warnings can be found in :code:`tests/warning_list.txt`. To add a new entry, copy/paste the warning message (the message beginning with :code:`WARNING:`) to the bottom of the file.
 
-For exemple if you get:
+For example if you get:
 
 ```console
 Unexpected warning: C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\pandas\core\frame.py:docstring of pandas.core.frame.DataFrame.groupby:42: WARNING: undefined label: 'groupby.transform'
