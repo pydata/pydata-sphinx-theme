@@ -1,6 +1,6 @@
 .bd-sidebar-primary div#rtd-footer-container {
   position: sticky;
-  bottom: 0;
+  bottom: -1rem;
   margin: -1rem -1rem; // ignore sidebar padding
 
   .rst-versions.rst-badge {
@@ -24,8 +24,15 @@
 
     .fa.fa-book {
       color: var(--pst-color-text-muted);
+      margin-right: auto;
+
+      &::after {
+        content: "Read The Docs";
+        font-family: var(--pst-font-family-base-system);
+        font-weight: var(--pst-font-weight-heading);
+      }
     }
-    .fa.fa-carret-down {
+    .fa.fa-caret-down {
       color: var(--pst-color-text-muted);
     }
   }
