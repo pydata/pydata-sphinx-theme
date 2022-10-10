@@ -1,7 +1,7 @@
-pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.drop:1: WARNING: duplicate object description of pandas.DataFrame.drop, other instance in examples/generated/pandas.DataFrame.drop, use :noindex: for one of them
-pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:1: WARNING: duplicate object description of pandas.DataFrame.groupby, other instance in examples/generated/pandas.DataFrame.groupby, use :noindex: for one of them
-pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/series.py:docstring of pandas.Series.array:1: WARNING: duplicate object description of pandas.Series.array, other instance in examples/generated/pandas.Series.array, use :noindex: for one of them
-pydata-sphinx-theme/.nox/docs/lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:42: WARNING: undefined label: 'groupby.transform'
+lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.drop:1: WARNING: duplicate object description of pandas.DataFrame.drop, other instance in examples/generated/pandas.DataFrame.drop, use :noindex: for one of them
+lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:1: WARNING: duplicate object description of pandas.DataFrame.groupby, other instance in examples/generated/pandas.DataFrame.groupby, use :noindex: for one of them
+lib/python3.9/site-packages/pandas/core/series.py:docstring of pandas.Series.array:1: WARNING: duplicate object description of pandas.Series.array, other instance in examples/generated/pandas.Series.array, use :noindex: for one of them
+lib/python3.9/site-packages/pandas/core/frame.py:docstring of pandas.core.frame.DataFrame.groupby:42: WARNING: undefined label: 'groupby.transform'
 pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:14: WARNING: image file not readable: _static/gallery/pandas.png
 pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:25: WARNING: image file not readable: _static/gallery/numpy.png
 pydata-sphinx-theme/pydata-sphinx-theme/docs/examples/gallery.md:36: WARNING: image file not readable: _static/gallery/scipy.png
