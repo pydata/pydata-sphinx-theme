@@ -1,12 +1,13 @@
 .bd-sidebar-primary div#rtd-footer-container {
   position: sticky;
   bottom: -1rem;
-  margin: -1rem 0 -1rem -1rem; // ignore sidebar padding
+  margin: -1rem; // ignore sidebar padding
 
   .rst-versions.rst-badge {
     position: unset;
     font-size: 0.9em;
     font-family: var(--pst-font-family-base);
+    max-width: unset;
 
     .rst-current-version {
       display: flex;
