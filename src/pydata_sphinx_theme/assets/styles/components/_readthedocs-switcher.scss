@@ -1,7 +1,7 @@
 .bd-sidebar-primary div#rtd-footer-container {
   position: sticky;
   bottom: -1rem;
-  margin: -1rem -1rem; // ignore sidebar padding
+  margin: -1rem 0 -1rem -1rem; // ignore sidebar padding
 
   .rst-versions.rst-badge {
     position: unset;
@@ -27,6 +27,7 @@
       margin-right: auto;
 
       &::after {
+        color: var(--pst-color-text-base);
         content: "Read The Docs";
         font-family: var(--pst-font-family-base-system);
         font-weight: var(--pst-font-weight-heading);
