@@ -929,28 +929,29 @@ class ShortenLinkTransform(SphinxPostTransform):
 
         # split the url content
         # be careful the first one is a "/"
-        s = path.split("/")
+        parts = path.split("/")
 
         # check the platform name and read the information accordingly
+        # as "<organisation>/<repository>#<element number>"
         if self.platform == "github":
             text = "github"
-            if len(s) > 1:
-                text = s[1]
-            if len(s) > 2:
-                text += f"/{s[2]}"
-            if len(s) > 3:
-                if s[3] in ["issues", "pull", "discussions"]:
-                    text += f"#{s[-1]}"
+            if len(parts) > 1:
+                text = parts[1]  # organisation
+            if len(parts) > 2:
+                text += f"/{parts[2]}"  # repository
+            if len(parts) > 3:
+                if parts[3] in ["issues", "pull", "discussions"]:
+                    text += f"#{parts[-1]}"  # element number
 
         elif self.platform == "gitlab":
             text = "gitlab"
-            if len(s) > 1:
-                text = s[1]
-            if len(s) > 2:
-                text += f"/{s[2]}"
-            if len(s) > 4:
-                if s[4] in ["issues", "merge_requests"]:
-                    text += f"#{s[-1]}"
+            if len(parts) > 1:
+                text = parts[1]  # organisation
+            if len(parts) > 2:
+                text += f"/{parts[2]}"  # repository
+            if len(parts) > 4:
+                if parts[4] in ["issues", "merge_requests"]:
+                    text += f"#{parts[-1]}"  # element number
 
         return text
 
