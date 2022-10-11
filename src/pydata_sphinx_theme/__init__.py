@@ -948,7 +948,7 @@ class ShortenLinkTransform(SphinxPostTransform):
                 text = s[1]
             if len(s) > 2:
                 text += f"/{s[2]}"
-            if len(s) > 3:
+            if len(s) > 4:
                 if s[4] in ["issues", "merge_requests"]:
                     text += f"#{s[-1]}"
 
