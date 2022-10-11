@@ -55,8 +55,10 @@
   <label class="overlay overlay-primary" for="__primary"></label>
 
   {# Checkboxes to toggle the secondary sidebar #}
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+  {% if not remove_sidebar_secondary %}
+    <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+    <label class="overlay overlay-secondary" for="__secondary"></label>
+  {% endif %}
 
   {# A search field pop-up that will only show when the search button is clicked #}
   <div class="search-button__wrapper">
