@@ -14,7 +14,9 @@
   }
 
   i.fa-solid.fa-magnifying-glass {
-    padding-right: 0.5rem;
+    position: absolute;
+    left: 1.6rem;
+    color: var(--pst-color-text-muted);
   }
 
   input {
@@ -90,10 +92,6 @@
     margin-top: 0.5rem;
     width: 90%;
     max-width: 800px;
-
-    i.fa-solid.fa-magnifying-glass {
-      padding-right: 0.5rem;
-    }
   }
 
   .search-button__overlay {
