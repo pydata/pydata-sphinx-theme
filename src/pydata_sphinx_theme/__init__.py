@@ -147,6 +147,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     event doesn't seem to update the values in context, so we manually update
     it here with our config.
     """
+
     # Prepare the logo config dictionary
     theme_logo = context.get("theme_logo")
     if not theme_logo:
@@ -164,6 +165,9 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
         theme_logo = context.get("theme_logo_link")
 
     context["theme_logo"] = theme_logo
+
+    # update version number
+    context["theme_version"] = __version__
 
 
 def update_templates(app, pagename, templatename, context, doctree):
