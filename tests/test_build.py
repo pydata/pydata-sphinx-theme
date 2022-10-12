@@ -656,11 +656,11 @@ def test_shorten_link(sphinx_build_factory, file_regression):
 
     sphinx_build = sphinx_build_factory("base").build()
 
-    github = sphinx_build.html_tree("page1.html").select(".github")[0]
-    file_regression.check(github.prettify(), basename="github_link", extension=".html")
+    github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
+    file_regression.check(github.prettify(), basename="github_links", extension=".html")
 
-    gitlab = sphinx_build.html_tree("page1.html").select(".gitlab")[0]
-    file_regression.check(gitlab.prettify(), basename="gitlab_link", extension=".html")
+    gitlab = sphinx_build.html_tree("page1.html").select(".gitlab-container")[0]
+    file_regression.check(gitlab.prettify(), basename="gitlab_links", extension=".html")
 
 
 def test_math_header_item(sphinx_build_factory, file_regression):

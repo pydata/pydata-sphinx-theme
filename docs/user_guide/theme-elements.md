@@ -146,6 +146,20 @@ Some sidebar content.
 
 ## Link shortening for git repository services
 
-Many projects have links back to their issues / PRs hosted on platforms like **GitHub** or **GitLab**. Instead of displaying these as raw links, this theme does some lightweight formatting for these platforms specifically. Here is an example from the issue requesting this feature: [https://github.com/pydata/pydata-sphinx-theme/issues/841](https://github.com/pydata/pydata-sphinx-theme/issues/841).
+Many projects have links back to their issues / PRs hosted on platforms like **GitHub** or **GitLab**. Instead of displaying these as raw links, this theme does some lightweight formatting for these platforms specifically. Here is some examples from github and gitlab:
+
+**GitHub**
+
+- "https://github.com" -> [https://github.com](https://github.com)
+- "https://github.com/pydata" -> [https://github.com/pydata](https://github.com/pydata)
+- "https://github.com/pydata/pydata-sphinx-theme" -> [https://github.com/pydata/pydata-sphinx-theme](https://github.com/pydata/pydata-sphinx-theme)
+- "https://github.com/pydata/pydata-sphinx-theme/pull/1012" -> [https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)
+
+**GitLab**
+
+- "https://gitlab.com" -> [https://gitlab.com](https://gitlab.com)
+- "https://gitlab.com/gitlab-org" -> [https://gitlab.com/gitlab-org](https://gitlab.com/gitlab-org)
+- "https://gitlab.com/gitlab-org/gitlab" -> [https://gitlab.com/gitlab-org/gitlab](https://gitlab.com/gitlab-org/gitlab)
+- "https://gitlab.com/gitlab-org/gitlab/-/issues/375583" -> [https://gitlab.com/gitlab-org/gitlab/-/issues/375583](https://gitlab.com/gitlab-org/gitlab/-/issues/375583)
 
 Links provided with a text body won't be changed.
