@@ -96,8 +96,10 @@ def update_config(app, env):
         content = None
         if urlparse(json_url).scheme in ["http", "https"]:
             try:
-                content = requests.get(json_url).text
-            except ConnectionError:
+                request = requests.get(json_url)
+                request.raise_for_status()
+                content = request.text
+            except (ConnectionError, requests.HTTPError):
                 pass
         else:
             try:
