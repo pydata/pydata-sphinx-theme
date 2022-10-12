@@ -15,7 +15,7 @@ The default body and header fonts can be changed as follows:
 
   .. code-block:: css
 
-      :root {
+      html {
           --pst-font-family-base: Verdana, var(--pst-font-family-base-system);
           --pst-font-family-heading: Cambria, Georgia, Times, var(--pst-font-family-base-system);
           --pst-font-family-monospace: Courier, var(--pst-font-family-monospace-system);
