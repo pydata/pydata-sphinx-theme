@@ -55,6 +55,7 @@ $grid-breakpoints: (
 @import "./components/toc-inpage";
 @import "./components/versionmodified";
 @import "./components/indices";
+@import "./components/readthedocs-switcher";
 
 // Content blocks in standard Sphinx
 @import "./content/admonitions";
