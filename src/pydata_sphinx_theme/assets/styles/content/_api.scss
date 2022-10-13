@@ -114,6 +114,11 @@ span.highlighted {
 dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) {
   dd {
     margin-left: 2rem;
+
+    // Fix until this will be solved to Sphinx https://github.com/sphinx-doc/sphinx/issues/10815
+    & > dl.simple > dt {
+      display: flex;
+    }
   }
 
   dl.field-list {
