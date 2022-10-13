@@ -21,6 +21,7 @@ from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
+from requests.exceptions import ConnectionError, HTTPError, RetryError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -99,7 +100,7 @@ def update_config(app, env):
                 request = requests.get(json_url)
                 request.raise_for_status()
                 content = request.text
-            except (ConnectionError, requests.HTTPError):
+            except (ConnectionError, HTTPError, RetryError):
                 pass
         else:
             try:
