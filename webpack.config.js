@@ -43,9 +43,9 @@ function macroTemplate({ compilation }) {
 
   // We load these files into the theme via HTML templates
   const css_files = [
-    "styles/theme.css",
-    "styles/bootstrap.css",
-    "styles/pydata-sphinx-theme.css",
+    "styles/theme.css", // basic sphinx css
+    "styles/bootstrap.css", // all bootstrap 5 css with variable adjustments
+    "styles/pydata-sphinx-theme.css", // all the css created for this specific theme
   ];
   const js_files = ["scripts/bootstrap.js", "scripts/pydata-sphinx-theme.js"];
   const icon_files = [
