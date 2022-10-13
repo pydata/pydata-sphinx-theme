@@ -1,6 +1,7 @@
 [flake8]
-max-line-length = 88
-ignore =
-    E203,  # space before : (needed for how black formats slicing)
-    W503,  # line break before binary operator
+# E203: space before ":" | needed for how black formats slicing
+# E501: line too long | Black take care of it
+# W503: line break before binary operator | Black take care of it
+# W605: invalid escape sequence | we escape specific characters for sphinx
+ignore = E203, E501, W503, W605
 exclude = setup.py,docs/conf.py,node_modules,docs,build,dist

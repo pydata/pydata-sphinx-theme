@@ -302,11 +302,11 @@ By default, it has the following configuration:
 Primary sidebar end sections
 ----------------------------
 
-There is a special ``<div>`` within the left sidebar that appears at the
+There is a special ``<div>`` within the primary sidebar that appears at the
 bottom of the page, regardless of the content that is above it.
 
 To control the HTML templates that are within this div, use
-``html_theme_options['left_sidebar_end']`` in ``conf.py``.
+``html_theme_options['primary_sidebar_end']`` in ``conf.py``.
 
 By default, it has the following templates:
 
@@ -314,14 +314,14 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "left_sidebar_end": ["sidebar-ethical-ads"],
+      "primary_sidebar_end": ["sidebar-ethical-ads"],
       ...
     }
 
 Remove the primary sidebar from pages
 -------------------------------------
 
-If you'd like the left sidebar to be removed from a page, you can use the
+If you'd like the primary sidebar to be removed from a page, you can use the
 following configuration in ``conf.py``:
 
 .. code-block:: python
@@ -338,7 +338,7 @@ This works for glob-style patterns as well. For example:
      "folder/*": []
    }
 
-If you'd like to remove the left sidebar from **all** pages of your documentation,
+If you'd like to remove the primary sidebar from **all** pages of your documentation,
 use this pattern:
 
 .. code-block:: python
@@ -362,7 +362,7 @@ Secondary Sidebar (right)
 =========================
 
 The in-page sidebar is just to the right of a page's article content, and is
-configured in ``conf.py`` with ``html_theme_options['page_sidebar_items']``.
+configured in ``conf.py`` with ``html_theme_options['secondary_sidebar_items']``.
 
 By default, it has the following templates:
 
@@ -370,7 +370,7 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "page_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
+      "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
       ...
     }
 
@@ -409,7 +409,7 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "footer_items": ["copyright", "sphinx-version"],
+      "footer_items": ["copyright", "sphinx-version", "theme-version"],
       ...
     }
 
@@ -464,6 +464,7 @@ will be named accordingly).
 - ``theme-switcher.html``
 - ``version-switcher.html``
 - ``indices.html``
+- ``theme-version.html``
 
 
 Add your own HTML templates to theme sections

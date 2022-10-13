@@ -2,9 +2,9 @@
 Bootstrap-based sphinx theme from the PyData community
 """
 import os
-import warnings
 from pathlib import Path
 from functools import lru_cache
+import json
 from urllib.parse import urlparse
 
 import jinja2
@@ -19,10 +19,11 @@ from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
+import requests
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.10.1"
+__version__ = "0.11.1rc1.dev0"
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +36,31 @@ def update_config(app, env):
         logger.warning(
             "Deprecated config `search_bar_position` used."
             "Use `search-field.html` in `navbar_end` template list instead."
+        )
+
+    # DEPRECATE >= 0.11
+    if theme_options.get("left_sidebar_end"):
+        theme_options["primary_sidebar_end"] = theme_options.get("left_sidebar_end")
+        logger.warning(
+            "The configuration `left_sidebar_end` is deprecated."
+            "Use `primary_sidebar_end`"
+        )
+
+    if theme_options.get("logo_text"):
+        logo = theme_options.get("logo", {})
+        logo["text"] = theme_options.get("logo_text")
+        theme_options["logo"] = logo
+        logger.warning(
+            "The configuration `logo_text` is deprecated." "Use `'logo': {'text': }`."
+        )
+
+    if theme_options.get("page_sidebar_items"):
+        theme_options["secondary_sidebar_items"] = theme_options.get(
+            "page_sidebar_items"
+        )
+        logger.warning(
+            "The configuration `page_sidebar_items` is deprecated."
+            "Use `secondary_sidebar_items`."
         )
 
     # Validate icon links
@@ -55,20 +81,35 @@ def update_config(app, env):
             " Set version URLs in JSON directly."
         )
 
+    # check the validity of the theme swithcer file
+    if isinstance(theme_options.get("switcher"), dict):
+        theme_switcher = theme_options.get("switcher")
+
+        # raise an error if one of these compulsory keys is missing
+        json_url = theme_switcher["json_url"]
+        theme_switcher["version_match"]
+
+        # try to read the json file. If it's a url we use request,
+        # else we simply read the local file from the source directory
+        # it will raise an error if the file does not exist
+        if urlparse(json_url).scheme in ["http", "https"]:
+            content = requests.get(json_url).text
+        else:
+            content = Path(env.srcdir, json_url).read_text()
+
+        # check that the json file is not illformed
+        # it will throw an error if there is a an issue
+        switcher_content = json.loads(content)
+        missing_url = any(["url" not in e for e in switcher_content])
+        missing_version = any(["version" not in e for e in switcher_content])
+        if missing_url or missing_version:
+            raise AttributeError(
+                f'The version switcher "{json_url}" file is malformed'
+                ' at least one of the items is missing the "url" or "version" key'
+            )
+
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
-    # deprecated options for Google Analytics
-    # TODO: deprecate >= v0.12
-    gid = theme_options.get("google_analytics_id")
-    if gid:
-        msg = (
-            "'google_analytics_id' is deprecated and will be removed in "
-            "version 0.11, please refer to the documentation "
-            "and use 'analytics' instead."
-        )
-        warnings.warn(msg, DeprecationWarning, stacklevel=2)
-        analytics.update({"google_analytics_id": gid})
-
     if analytics:
         # Plausible analytics
         plausible_domain = analytics.get("plausible_analytics_domain")
@@ -83,29 +124,16 @@ def update_config(app, env):
             }
             app.add_js_file(**kwargs)
 
-        # Two types of Google Analytics id.
+        # Google Analytics
         gid = analytics.get("google_analytics_id")
         if gid:
-            # In this case it is "new-style" google analytics
-            if "G-" in gid:
-                gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
-                gid_script = f"""
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){{ dataLayer.push(arguments); }}
-                    gtag('js', new Date());
-                    gtag('config', '{gid}');
-                """
-            # In this case it is "old-style" google analytics
-            else:
-                gid_js_path = "https://www.google-analytics.com/analytics.js"
-                gid_script = f"""
-                    window.ga = window.ga || function () {{
-                        (ga.q = ga.q || []).push(arguments) }};
-                    ga.l = +new Date;
-                    ga('create', '{gid}', 'auto');
-                    ga('set', 'anonymizeIp', true);
-                    ga('send', 'pageview');
-                """
+            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
+            gid_script = f"""
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){{ dataLayer.push(arguments); }}
+                gtag('js', new Date());
+                gtag('config', '{gid}');
+            """
 
             # Link the JS files
             app.add_js_file(gid_js_path, loading_method="async")
@@ -119,6 +147,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     event doesn't seem to update the values in context, so we manually update
     it here with our config.
     """
+
     # Prepare the logo config dictionary
     theme_logo = context.get("theme_logo")
     if not theme_logo:
@@ -137,6 +166,9 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
 
     context["theme_logo"] = theme_logo
 
+    # update version number
+    context["theme_version"] = __version__
+
 
 def update_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
@@ -146,8 +178,8 @@ def update_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_center",
         "theme_navbar_end",
         "theme_footer_items",
-        "theme_page_sidebar_items",
-        "theme_left_sidebar_end",
+        "theme_secondary_sidebar_items",
+        "theme_primary_sidebar_end",
         "sidebars",
     ]
     for section in template_sections:
@@ -189,9 +221,8 @@ def update_templates(app, pagename, templatename, context, doctree):
     app.add_js_file(None, body=f"DOCUMENTATION_OPTIONS.pagename = '{pagename}';")
     if isinstance(context.get("theme_switcher"), dict):
         theme_switcher = context["theme_switcher"]
-        if theme_switcher.get("json_url"):
-            json_url = theme_switcher["json_url"]
-            version_match = theme_switcher["version_match"]
+        json_url = theme_switcher["json_url"]
+        version_match = theme_switcher["version_match"]
 
         # Add variables to our JavaScript for re-use in our main JS script
         js = f"""
@@ -199,6 +230,20 @@ def update_templates(app, pagename, templatename, context, doctree):
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
         """
         app.add_js_file(None, body=js)
+
+
+def add_inline_math(node):
+    """Render a node with HTML tags that activate MathJax processing.
+    This is meant for use with rendering section titles with math in them, because
+    math outputs are ignored by pydata-sphinx-theme's header.
+
+    related to the behaviour of a normal math node from:
+    https://github.com/sphinx-doc/sphinx/blob/master/sphinx/ext/mathjax.py#L28
+    """
+
+    return (
+        '<span class="math notranslate nohighlight">' rf"\({node.astext()}\)" "</span>"
+    )
 
 
 def add_toctree_functions(app, pagename, templatename, context, doctree):
@@ -226,6 +271,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             The number of links to show before nesting the remaining links in
             a Dropdown element.
         """
+
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
         except Exception:
@@ -247,7 +293,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         # Iterate through each toctree node in the root document
         # Grab the toctree pages and find the relative link + title.
         links_html = []
-        # Can just use "findall" once docutils min version >=0.18.1
+        # TODO: just use "findall" once docutils min version >=0.18.1
         meth = "findall" if hasattr(root, "findall") else "traverse"
         for toc in getattr(root, meth)(toctree_node):
             for title, page in toc.attributes["entries"]:
@@ -256,15 +302,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
                 # If this is the active ancestor page, add a class so we highlight it
                 current = " current active" if page == active_header_page else ""
-                title = title if title else app.env.titles[page].astext()
+
+                # sanitize page title for use in the html output if needed
+                if title is None:
+                    title = ""
+                    for node in app.env.titles[page].children:
+                        if isinstance(node, nodes.math):
+                            title += add_inline_math(node)
+                        else:
+                            title += node.astext()
 
                 # create the html output
                 links_html.append(
                     f"""
                 <li class="nav-item{current}">
-                    <a class="nav-link" href="{context["pathto"](page)}">
-                        {title}
-                    </a>
+                  <a class="nav-link" href="{context["pathto"](page)}">
+                    {title}
+                  </a>
                 </li>
                 """
                 )
@@ -784,13 +838,13 @@ def _overwrite_pygments_css(app, exception=None):
     So yes, at build time we overwrite the pygment.css file so that it embeds
     2 versions:
     - the light theme prefixed with "[data-theme="light"]" using tango
-    - the dark theme prefixed with "[data-theme="dark"]" using native
+    - the dark theme prefixed with "[data-theme="dark"]" using monokai
 
     When the theme is switched, Pygments will be using one of the preset css
     style.
     """
     default_light_theme = "tango"
-    default_dark_theme = "native"
+    default_dark_theme = "monokai"
 
     if exception is not None:
         return
@@ -825,6 +879,18 @@ def _overwrite_pygments_css(app, exception=None):
 # ------------------------------------------------------------------------------
 
 
+def _traverse_or_findall(node, condition, **kwargs):
+    """Triage node.traverse (docutils <0.18.1) vs node.findall.
+    TODO: This check can be removed when the minimum supported docutils version
+    for numpydoc is docutils>=0.18.1
+    """
+    return (
+        node.findall(condition, **kwargs)
+        if hasattr(node, "findall")
+        else node.traverse(condition, **kwargs)
+    )
+
+
 class ShortenLinkTransform(SphinxPostTransform):
     """
     Shorten link when they are coming from github or gitlab and add an extra class to the tag
@@ -846,7 +912,8 @@ class ShortenLinkTransform(SphinxPostTransform):
 
     def run(self, **kwargs):
         matcher = NodeMatcher(nodes.reference)
-        for node in self.document.findall(matcher):
+        # TODO: just use "findall" once docutils min version >=0.18.1
+        for node in _traverse_or_findall(self.document, matcher):
             uri = node.attributes.get("refuri")
             text = next(iter(node.children), None)
             # only act if the uri and text are the same
@@ -866,28 +933,29 @@ class ShortenLinkTransform(SphinxPostTransform):
 
         # split the url content
         # be careful the first one is a "/"
-        s = path.split("/")
+        parts = path.split("/")
 
         # check the platform name and read the information accordingly
+        # as "<organisation>/<repository>#<element number>"
         if self.platform == "github":
             text = "github"
-            if len(s) > 1:
-                text = s[1]
-            if len(s) > 2:
-                text += f"/{s[2]}"
-            if len(s) > 3:
-                if s[3] in ["issues", "pull", "discussions"]:
-                    text += f"#{s[-1]}"
+            if len(parts) > 1:
+                text = parts[1]  # organisation
+            if len(parts) > 2:
+                text += f"/{parts[2]}"  # repository
+            if len(parts) > 3:
+                if parts[3] in ["issues", "pull", "discussions"]:
+                    text += f"#{parts[-1]}"  # element number
 
         elif self.platform == "gitlab":
             text = "gitlab"
-            if len(s) > 1:
-                text = s[1]
-            if len(s) > 2:
-                text += f"/{s[2]}"
-            if len(s) > 3:
-                if s[4] in ["issues", "merge_requests"]:
-                    text += f"#{s[-1]}"
+            if len(parts) > 1:
+                text = parts[1]  # organisation
+            if len(parts) > 2:
+                text += f"/{parts[2]}"  # repository
+            if len(parts) > 4:
+                if parts[4] in ["issues", "merge_requests"]:
+                    text += f"#{parts[-1]}"  # element number
 
         return text
 

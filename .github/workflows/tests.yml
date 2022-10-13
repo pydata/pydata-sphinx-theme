@@ -22,14 +22,14 @@ jobs:
           python-version: "3.9"
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
-      - uses: pre-commit/action@v2.0.3
+      - uses: pre-commit/action@v3.0.0
 
   tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.7, 3.8, 3.9, "3.10"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11-dev"]
         include:
           - os: macos-latest
             python-version: "3.9"
@@ -49,6 +49,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
+          python -m pip list
+
+      - name: Test Sphinx==4.2
+        if: matrix.python-version == '3.7'
+        run: |
+          python -m pip install sphinx==4.2
+          python -m pip list
 
       - name: Build docs to store
         run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
@@ -77,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ["3.8"]
 
     steps:
       - uses: actions/checkout@v3
@@ -122,7 +129,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ["3.8"]
 
     steps:
       - uses: actions/checkout@v3

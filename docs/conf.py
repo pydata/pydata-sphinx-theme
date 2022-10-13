@@ -86,7 +86,7 @@ if not version_match or version_match.isdigit():
         version_match = "latest"
         # We want to keep the relative reference if we are in dev mode
         # but we want the whole url if we are effectively in a released version
-        json_url = "/_static/switcher.json"
+        json_url = "_static/switcher.json"
     else:
         version_match = "v" + release
 
@@ -140,9 +140,9 @@ html_theme_options = {
     # "show_nav_level": 2,
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
-    # "left_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
+    # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "footer_items": ["copyright", "sphinx-version", ""],
-    # "page_sidebar_items": ["page-toc.html"],  # Remove the source buttons
+    # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,

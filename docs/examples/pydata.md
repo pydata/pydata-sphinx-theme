@@ -21,12 +21,14 @@ Below are examples of each that we use as a benchmark for reference.
 ## Pandas
 
 ```{code-cell}
+import string
+
 import numpy as np
 import pandas as pd
 
 rng = np.random.default_rng()
-data = rng.standard_normal((100, 3))
-df = pd.DataFrame(data, columns=['a', 'b', 'c'])
+data = rng.standard_normal((100, 26))
+df = pd.DataFrame(data, columns=list(string.ascii_lowercase))
 df
 ```
 

@@ -167,7 +167,7 @@ version switcher in a sidebar. For example, you could define
     {%- include 'version-switcher.html' -%}
     {{ super() }}
 
-to insert a version switcher at the top of the left sidebar, while still
+to insert a version switcher at the top of the primary sidebar, while still
 keeping the default navigation below it. See :doc:`layout` for more
 information.
 

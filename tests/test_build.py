@@ -16,9 +16,10 @@ class SphinxBuild:
         self.app = app
         self.src = src
 
-    def build(self):
+    def build(self, no_warning=True):
         self.app.build()
-        assert self.warnings == "", self.status
+        if no_warning is True:
+            assert self.warnings == "", self.status
         return self
 
     @property
@@ -546,11 +547,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
 @pytest.mark.parametrize(
     "provider,tags",
     [
-        # TODO: Deprecate old-style analytics config >= 0.12
-        # new_google_analytics_id
-        ({"html_theme_options.google_analytics_id": "G-XXXXX"}, ["gtag", "G-XXXXX"]),
-        # old_google_analytics_id
-        ({"html_theme_options.google_analytics_id": "UA-XXXXX"}, ["ga", "UA-XXXXX"]),
         # google analytics
         (
             {"html_theme_options.analytics": {"google_analytics_id": "G-XXXXX"}},
@@ -564,17 +560,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
                     "plausible_analytics_domain": "toto",
                     "plausible_analytics_url": "http://.../script.js",
                 }
-            },
-            ["gtag", "G-XXXXX"],
-        ),
-        # TODO: Deprecate old-style analytics config >= 0.12
-        (
-            {
-                "html_theme_options.analytics": {
-                    "plausible_analytics_domain": "toto",
-                    "plausible_analytics_url": "http://.../script.js",
-                },
-                "html_theme_options.google_analytics_id": "G-XXXXX",
             },
             ["gtag", "G-XXXXX"],
         ),
@@ -671,8 +656,49 @@ def test_shorten_link(sphinx_build_factory, file_regression):
 
     sphinx_build = sphinx_build_factory("base").build()
 
-    github = sphinx_build.html_tree("page1.html").select(".github")[0]
-    file_regression.check(github.prettify(), basename="github_link", extension=".html")
+    github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
+    file_regression.check(github.prettify(), basename="github_links", extension=".html")
 
-    gitlab = sphinx_build.html_tree("page1.html").select(".gitlab")[0]
-    file_regression.check(gitlab.prettify(), basename="gitlab_link", extension=".html")
+    gitlab = sphinx_build.html_tree("page1.html").select(".gitlab-container")[0]
+    file_regression.check(gitlab.prettify(), basename="gitlab_links", extension=".html")
+
+
+def test_math_header_item(sphinx_build_factory, file_regression):
+    """regression test the math items in a header title"""
+
+    sphinx_build = sphinx_build_factory("base").build()
+    li = sphinx_build.html_tree("page2.html").select("#navbar-main-elements li")[1]
+    file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
+
+
+def test_deprecated_build_html(sphinx_build_factory, file_regression):
+    """Test building the base html template with all the deprecated configs"""
+
+    sphinx_build = sphinx_build_factory("deprecated")  # type: SphinxBuild
+
+    # Basic build with defaults
+    sphinx_build.build(no_warning=False)
+    assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
+
+    # check the deprecation warnings
+    warnings = sphinx_build.warnings.split("WARNING: ")
+    assert len(warnings) == 5  # testing the text of the warning is not necessary here
+
+    index_html = sphinx_build.html_tree("index.html")
+    subpage_html = sphinx_build.html_tree("section1/index.html")
+
+    # Navbar structure
+    navbar = index_html.select("div#navbar-center")[0]
+    file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
+
+    # Sidebar subpage
+    sidebar = subpage_html.select(".bd-sidebar")[0]
+    file_regression.check(
+        sidebar.prettify(), basename="sidebar_subpage", extension=".html"
+    )
+
+    # Secondary sidebar should not have in-page TOC if it is empty
+    assert not sphinx_build.html_tree("page1.html").select("div.onthispage")
+
+    # Secondary sidebar should not be present if page-level metadata given
+    assert not sphinx_build.html_tree("page2.html").select("div.bd-sidebar-secondary")

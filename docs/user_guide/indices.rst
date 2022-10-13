@@ -7,13 +7,13 @@ Sphinx generates indices named `genindex`, `modindex` and `py-modindex` when bui
 Add indices links
 =================
 
-By design the indices pages are not linked in a documentation generated with this theme. To include them in the left sidebar of each page, add the following configuration to your ``conf.py`` file in ``html_theme_options`` and the available indices will be display at the bottom.
+By design the indices pages are not linked in a documentation generated with this theme. To include them in the primary sidebar of each page, add the following configuration to your ``conf.py`` file in ``html_theme_options`` and the available indices will be display at the bottom.
 
 .. code-block:: python
 
     html_theme_options = {
         #[...]
-        "left_sidebar_end": ["indices.html", "sidebar-ethical-ads.html"]
+        "primary_sidebar_end": ["indices.html", "sidebar-ethical-ads.html"]
         #[...]
     }
 

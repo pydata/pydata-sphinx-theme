@@ -16,7 +16,7 @@ To use a local image file, put an image in a folder that is in `html_static_path
 .. code:: python
 
    html_static_path = ["_static"]
-   html_logo = "_static/logo.png"
+   html_logo = "logo.png"
 
 To use an external link to an image, make sure the ``html_logo`` begins with ``http``.
 For example:

@@ -34,12 +34,15 @@
   </div>
   {% endif %}
 
-  {# Items that will snap to the bottom of the screen#}
+  {# Items that will snap to the bottom of the screen #}
   <div class="sidebar-end-items sidebar-primary__section">
-    {%- for sidebartemplate in theme_left_sidebar_end %}
+    {%- for sidebartemplate in theme_primary_sidebar_end %}
     <div class="sidebar-end-items__item">
     {%- include sidebartemplate %}
     </div>
     {%- endfor %}
   </div>
+
+  {# add the rtd flyout in the sidebar if existing #}
+  <div id="rtd-footer-container"></div>
 {% endblock %}
