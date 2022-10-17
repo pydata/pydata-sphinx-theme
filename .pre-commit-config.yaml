@@ -32,3 +32,9 @@ repos:
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
+
+  - repo: https://github.com/Riverside-Healthcare/djLint
+    rev: v1.19.1
+    hooks:
+      - id: djlint-jinja
+        types_or: ["html"]
