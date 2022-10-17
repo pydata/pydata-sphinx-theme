@@ -27,6 +27,16 @@ __version__ = "0.11.1rc1.dev0"
 
 logger = logging.getLogger(__name__)
 
+# the theme options related to part of the layout in conf.py
+layout_keys = [
+    "navbar_start",
+    "navbar_center",
+    "navbar_end",
+    "primary_sidebar_end",
+    "footer_items",
+    "secondary_sidebar_items",
+]
+
 
 def update_config(app, env):
     theme_options = env.config.html_theme_options
@@ -62,6 +72,21 @@ def update_config(app, env):
             "The configuration `page_sidebar_items` is deprecated."
             "Use `secondary_sidebar_items`."
         )
+
+    # DEPRECATE >= 0.12
+    for option in layout_keys:
+        if theme_options.get(option):
+            layout = theme_options.get(option)  # need a copy as we pop elements
+            for i, v in enumerate(theme_options.get(option)):
+                if "search-button" in v:
+                    layout.pop(i)
+                    logger.warning(
+                        "The configuration `search-button` is deprecated. The button "
+                        "is now automatically set and removed if a permanent search "
+                        "field is set in conf.py"
+                    )
+            # rewrite the list
+            theme_options[option] = layout
 
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):

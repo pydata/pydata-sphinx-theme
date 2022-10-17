@@ -455,7 +455,6 @@ will be named accordingly).
 - ``navbar-nav.html``
 - ``page-toc.html``
 - ``searchbox.html``
-- ``search-button.html``
 - ``search-field.html``
 - ``sidebar-ethical-ads.html``
 - ``sidebar-nav-bs.html``

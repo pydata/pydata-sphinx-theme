@@ -28,6 +28,11 @@ html_theme_options = {
         "edit-this-page.html",
         "sourcelink.html",
     ],
+    "navbar_end": [
+        "theme-switcher.html",
+        "search-button.html",
+        "navbar-icon-links.html",
+    ],
 }
 
 html_sidebars = {"section1/index": ["sidebar-nav-bs.html"]}
