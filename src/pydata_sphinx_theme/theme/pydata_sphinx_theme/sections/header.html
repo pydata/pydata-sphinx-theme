@@ -19,9 +19,11 @@
     </div>
 
     <div id="navbar-end">
+      {% if not theme_with_search %}
       <div class="navbar-end-item navbar-end__search-button-container">
         {%- include "../components/header/search-button.html" %}
       </div>
+      {% endif %}
       {% for navbar_item in theme_navbar_end %}
       <div class="navbar-end-item">
         {% include navbar_item %}
@@ -32,9 +34,11 @@
 
 
   {# A search button to show up only on mobile #}
+  {% if not theme_with_search %}
   <div class="search-button-container--mobile">
     {%- include "../components/header/search-button.html" %}
   </div>
+  {% endif %}
 
   {% if not remove_sidebar_secondary %}
   <label class="sidebar-toggle secondary-toggle" for="__secondary">

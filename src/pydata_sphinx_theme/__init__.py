@@ -194,6 +194,15 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     # update version number
     context["theme_version"] = __version__
 
+    # check if a permanent search filed is set. If yes, the search button will be
+    # hidden in the final layout
+    context["theme_with_search"] = False
+    for section in layout_keys:
+        if context.get(f"theme_{section}"):
+            for i, v in enumerate(context.get(f"theme_{section}")):
+                if "search-field" in v:
+                    context["theme_with_search"] = True
+
 
 def update_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
