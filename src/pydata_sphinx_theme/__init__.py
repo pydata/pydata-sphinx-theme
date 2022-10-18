@@ -196,12 +196,12 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
 
     # check if a permanent search field is set. If yes, the search button will be
     # hidden in the final layout
-    context["theme_with_search"] = False
+    context["theme_use_search_overlay"] = False
     for section in section_list:
         if context.get(f"theme_{section}"):
             for v in context.get(f"theme_{section}"):
                 if "search-field" in v:
-                    context["theme_with_search"] = True
+                    context["theme_use_search_overlay"] = True
 
 
 def update_templates(app, pagename, templatename, context, doctree):

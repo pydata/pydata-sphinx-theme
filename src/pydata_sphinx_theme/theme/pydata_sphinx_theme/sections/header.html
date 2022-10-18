@@ -19,7 +19,7 @@
     </div>
 
     <div id="navbar-end">
-      {% if not theme_with_search %}
+      {% if not theme_use_search_overlay %}
       <div class="navbar-end-item navbar-end__search-button-container">
         {%- include "../components/header/search-button.html" %}
       </div>
@@ -34,7 +34,7 @@
 
 
   {# A search button to show up only on mobile #}
-  {% if not theme_with_search %}
+  {% if not theme_use_search_overlay %}
   <div class="search-button-container--mobile">
     {%- include "../components/header/search-button.html" %}
   </div>
