@@ -1010,7 +1010,10 @@ class HeaderTransform(SphinxPostTransform):
         matcher = NodeMatcher(nodes.title)
         # TODO: just use "findall" once docutils min version >=0.18.1
         for node in _traverse_or_findall(self.document, matcher):
-            pass
+            if isinstance(node.parent, addnodes.compact_paragraph) and node.parent.get(
+                "toctree"
+            ):
+                pass
 
 
 # -----------------------------------------------------------------------------
@@ -1024,14 +1027,7 @@ def setup(app):
 
     app.add_post_transform(ShortenLinkTransform)
     app.add_post_transform(BSTableTransform)
-    app.add_post_transform(HeaderTransform)
-
-    # app.set_translator("html", BootstrapHTML5Translator)
-    # Read the Docs uses ``readthedocs`` as the name of the build, and also
-    # uses a special "dirhtml" builder so we need to replace these both with
-    # our custom HTML builder
-    # app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
-    # app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
+    # app.add_post_transform(HeaderTransform)
 
     app.connect("env-updated", update_config)
     app.connect("html-page-context", setup_edit_url)
