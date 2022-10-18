@@ -14,7 +14,7 @@ You can also configure some aspects of the search button and search field, descr
 Configure the search field position
 -----------------------------------
 
-You can add an always-visible search field to some/all pages in your site by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_items"]``, etc).
+You can add an always-visible search field to some/all pages in your site by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_items"]``, etc). If you include this, the built-in search button / overlay will be hidden and disabled on that page.
 
 For example, if you'd like the search field to be in your side-bar, add it to
 the sidebar templates like so:
