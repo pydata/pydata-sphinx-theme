@@ -204,6 +204,7 @@ Each section is configured in ``conf.py`` with the following configuration:
 - Left section: ``html_theme_options['navbar_start']``
 - Middle menu: ``html_theme_options['navbar_center']``
 - Right section: ``html_theme_options['navbar_end']``
+- Persistent right section: ``html_theme_options['navbar_persistent']``
 
 By default, the following configuration is used:
 
@@ -213,9 +214,14 @@ By default, the following configuration is used:
    ...
    "navbar_start": ["navbar-logo"],
    "navbar_center": ["navbar-nav"],
-   "navbar_end": ["navbar-icon-links"]
+   "navbar_end": ["navbar-icon-links"],
+   "navbar_persistent": ["search-button"]
    ...
    }
+
+.. warning::
+
+    The *Persistent right section* is placed next to the ``navbar_end`` but its elements will remain visible in the header even on small screens when all oher elements are collapsed. It has been design for the ``search-button`` only and we cannot guarantee its compatibility with other components.
 
 Configure the navbar center alignment
 -------------------------------------
