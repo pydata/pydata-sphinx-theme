@@ -704,5 +704,4 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     assert not sphinx_build.html_tree("page2.html").select("div.bd-sidebar-secondary")
 
     # there should be 2 magnifying glass (the one for mobile and the normal one)
-    print(index_html.select(".search-button__button"))
     assert len(index_html.select(".search-button__button")) == 2
