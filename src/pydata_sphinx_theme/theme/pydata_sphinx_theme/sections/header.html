@@ -20,7 +20,7 @@
 
     <div id="navbar-end">
       {% for navbar_item in theme_navbar_persistent %}
-        <div class="navbar-end-item navbar-end__search-button-container">
+        <div class="navbar-end-item navbar-persistent--container">
           {% include navbar_item %}
         </div>
       {% endfor %}
@@ -35,7 +35,7 @@
 
   {# A search button to show up only on mobile #}
   {% for navbar_item in theme_navbar_persistent %}
-    <div class="search-button-container--mobile">
+    <div class="navbar-persistent--mobile">
       {%- include navbar_item %}
     </div>
   {% endfor %}
