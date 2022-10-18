@@ -221,7 +221,7 @@ By default, the following configuration is used:
 
 .. warning::
 
-    The *Persistent right section* is placed next to the ``navbar_end`` but its elements will remain visible in the header even on small screens when all oher elements are collapsed. It has been design for the ``search-button`` only and we cannot guarantee its compatibility with other components.
+    The *Persistent right section* is placed next to the ``navbar_end`` but its elements will remain visible in the header even on small screens when all other elements are collapsed. It has been design for the ``search-button`` only and we cannot guarantee its compatibility with other components.
 
 Configure the navbar center alignment
 -------------------------------------
