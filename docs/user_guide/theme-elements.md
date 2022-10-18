@@ -107,6 +107,7 @@ print("A code block with a caption and line numbers.")
 When used directly, the `code` role just displays the text without syntax highlighting, as a literal. As mentioned in the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#inline-code-highlighting) you can also enable syntax highlighting by defining a custom role. It will then use the same highligther as in the `code-block` directive.
 
 ```{code-block} rst
+
 .. role:: python(code)
    :language: python
 
