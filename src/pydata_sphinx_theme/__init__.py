@@ -12,6 +12,8 @@ from bs4 import BeautifulSoup as bs
 from docutils import nodes
 from sphinx import addnodes
 from sphinx.environment.adapters.toctree import TocTree
+
+# from sphinx.ext.autosummary import autosummary_table
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
@@ -21,7 +23,7 @@ from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
 
-from .bootstrap_html_translator import BootstrapHTML5Translator
+# from .bootstrap_html_translator import BootstrapHTML5Translator
 
 __version__ = "0.11.1rc1.dev0"
 
@@ -875,7 +877,7 @@ def _overwrite_pygments_css(app, exception=None):
 
 
 # ------------------------------------------------------------------------------
-# customize rendering of the links
+# customize rendering of the html elements
 # ------------------------------------------------------------------------------
 
 
@@ -960,6 +962,57 @@ class ShortenLinkTransform(SphinxPostTransform):
         return text
 
 
+class BSTableTransform(SphinxPostTransform):
+    """
+    Update the table nodes to remove "docutils" class and replace "align-xxx" by "table-xxx"
+    Add the "table" class to fit bootsrap
+    """
+
+    default_priority = 400
+    formats = ("html",)
+
+    def run(self, **kwargs):
+        matcher = NodeMatcher(nodes.table)
+        # TODO: just use "findall" once docutils min version >=0.18.1
+        for node in _traverse_or_findall(self.document, matcher):
+
+            # extract the classes as a list
+            classes = node.attributes["classes"]
+            classes = classes if len(classes) == 0 else classes[0].split(" ")
+
+            # remove docutils
+            "docutils" not in classes or classes.remove("docutils")
+
+            # add the table class
+            classes.append("table")
+
+            # we're looking at the 'real_table', which is wrapped by an autosummary
+            # it seems it's already done
+            # if isinstance(node.parent, autosummary_table):
+            #    classes.append("autosummary")
+
+            # add specific class if align is set
+            if "align" in node:
+                classes.append(f'table-{node["align"]}')
+
+            node.attributes["classes"] = [" ".join(classes)]
+
+
+class HeaderTransform(SphinxPostTransform):
+    """
+    ensure an aria-level is set for any heading role
+    """
+
+    default_priority = 400
+    formats = ("html",)
+
+    def run(self, **kwargs):
+        matcher = NodeMatcher(nodes.title)
+        # TODO: just use "findall" once docutils min version >=0.18.1
+        for node in _traverse_or_findall(self.document, matcher):
+            pass
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -970,13 +1023,15 @@ def setup(app):
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
     app.add_post_transform(ShortenLinkTransform)
+    app.add_post_transform(BSTableTransform)
+    app.add_post_transform(HeaderTransform)
 
-    app.set_translator("html", BootstrapHTML5Translator)
+    # app.set_translator("html", BootstrapHTML5Translator)
     # Read the Docs uses ``readthedocs`` as the name of the build, and also
     # uses a special "dirhtml" builder so we need to replace these both with
     # our custom HTML builder
-    app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
-    app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
+    # app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
+    # app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
 
     app.connect("env-updated", update_config)
     app.connect("html-page-context", setup_edit_url)
