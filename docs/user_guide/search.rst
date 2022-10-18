@@ -36,7 +36,7 @@ following configuration:
 
 .. warning::
 
-    If a page includes an always-visible search field, the keyboard shortcuts will focus the always-visible field and the hidden search field overlay will not display. *This may not be what you want:* on small screens (i.e. mobile devices) the sidebars may be hidden in a drawer, and if the persistent search field is there, it may receive focus without actually being made visible. It is **strongly recommended** that you use *either* search button and the hidden/overlaid field that comes with it, *or* use a persistent search field in a place that makes sense for your layout.
+    On pages where you include an always-visible search field, the keyboard shortcuts will focus that field *even if it is offscreen*. For example, on small screens (i.e. mobile devices) the sidebars may be hidden in a drawer, and if the persistent search field is in the sidebar, it may receive focus without actually being made visible. Thus if you use the persistent search field, it is **strongly recommended** to place it in the main content area of your page.
 
 
 Configure the search bar text
