@@ -32,6 +32,7 @@ extensions = [
     # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
     "numpydoc",
     "sphinx_togglebutton",
+    "jupyterlite_sphinx",
 ]
 
 # -- Internationalization ------------------------------------------------
