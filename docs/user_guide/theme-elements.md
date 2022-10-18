@@ -114,7 +114,7 @@ When used directly, the `code` role just displays the text without syntax highli
 In Python you can :python:`import sphinx`.
 ```
 
-```{role} python
+```{role} python(code)
 :language: python
 ```
 
