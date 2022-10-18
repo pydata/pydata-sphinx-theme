@@ -82,7 +82,7 @@ def update_config(app, env):
                     layout.pop(i)
                     logger.warning(
                         "The configuration `search-button` is deprecated. The button "
-                        "is now automatically set and removed if a permanent search "
+                        "is now automatically set, and removed if a persistent search "
                         "field is set in conf.py"
                     )
             # rewrite the list
