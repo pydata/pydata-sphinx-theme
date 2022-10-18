@@ -176,6 +176,7 @@ def update_templates(app, pagename, templatename, context, doctree):
     template_sections = [
         "theme_navbar_start",
         "theme_navbar_center",
+        "theme_navbar_persistent",
         "theme_navbar_end",
         "theme_footer_items",
         "theme_secondary_sidebar_items",

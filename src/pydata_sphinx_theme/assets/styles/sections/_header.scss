@@ -174,3 +174,19 @@
     }
   }
 }
+
+// THe elements next to the hamburger menu only show on narrow screens
+.navbar-persistent--mobile {
+  margin-left: auto;
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    display: none;
+  }
+}
+
+// The navbar-persistent content should only show on wide screens
+.navbar-persistent--container {
+  display: none;
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    display: flex;
+  }
+}
