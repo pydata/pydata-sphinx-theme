@@ -115,11 +115,5 @@ This section demonstrate how it displays in a pydata-sphinx-theme context:
 :height: 600px
 :prompt: Try Replite!
 
-import matplotlib.pyplot as plt
-import numpy as np
-
-rng = np.random.default_rng()
-data = rng.standard_normal((3, 100))
-fig, ax = plt.subplots()
-ax.scatter(data[0], data[1], c=data[2], s=3)
+print("it's a test")
 ```
