@@ -194,7 +194,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     # update version number
     context["theme_version"] = __version__
 
-    # check if a permanent search filed is set. If yes, the search button will be
+    # check if a permanent search field is set. If yes, the search button will be
     # hidden in the final layout
     context["theme_with_search"] = False
     for section in section_list:
