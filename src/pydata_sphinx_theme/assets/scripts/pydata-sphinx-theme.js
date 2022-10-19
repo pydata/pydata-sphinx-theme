@@ -375,7 +375,7 @@ function initRTDObserver() {
 }
 
 /*******************************************************************************
- * Call function after docuemnt finish loading
+ * Call function after document loading.
  * This is equivalent to the .ready() function as described in
  * https://api.jquery.com/ready/
  */
