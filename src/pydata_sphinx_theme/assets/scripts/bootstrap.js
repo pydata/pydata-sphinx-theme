@@ -9,7 +9,9 @@ import "bootstrap";
 import "../styles/bootstrap.scss";
 
 /*******************************************************************************
- * Finalize
+ * Call function after docuemnt finish loading
+ * This is equivalent to the .ready() function as described in
+ * https://api.jquery.com/ready/
  */
 
 $('[data-toggle="tooltip"]').tooltip({ delay: { show: 500, hide: 100 } });

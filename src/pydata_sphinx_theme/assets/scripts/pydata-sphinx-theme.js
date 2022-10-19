@@ -375,11 +375,11 @@ function initRTDObserver() {
 }
 
 /*******************************************************************************
- * Finalize
+ * Call function after docuemnt finish loading
+ * This is equivalent to the .ready() function as described in
+ * https://api.jquery.com/ready/
  */
 
-// This is equivalent to the .ready() function as described in
-// https://api.jquery.com/ready/
 $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
