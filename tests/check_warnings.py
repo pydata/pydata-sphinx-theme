@@ -22,13 +22,18 @@ def check_warnings(file):
     """
 
     # print some log
-    print("\n=== Sphinx Warnings test ===\n\n")
+    print("\n=== Sphinx Warnings test ===\n")
 
     # find the file where all the known warnings are stored
     warning_file = Path(__file__).parent / "warning_list.txt"
 
     test_warnings = file.read_text().strip().split("\n")
     ref_warnings = warning_file.read_text().strip().split("\n")
+
+    print(
+        f'Checking build warnings in file: "{file}" and comparing to expected '
+        f'warnings defined in "{warning_file}"\n\n'
+    )
 
     # find all the missing warnings
     missing_warnings = []
