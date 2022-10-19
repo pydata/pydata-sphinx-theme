@@ -1,4 +1,4 @@
-/* Sphinx injects the html output with jquery and other javascript files.
+/* Import and setup functions to control Bootstrap's behavior.
  * To enable Popper.js (and other jQuery plugins) to hook into the same instance of jQuery,
  * jQuery is defined as a Webpack external, thus this import uses the externally defined jquery dependency.
  */
