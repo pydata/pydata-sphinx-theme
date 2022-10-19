@@ -10,7 +10,7 @@ import "bootstrap";
 import "../styles/bootstrap.scss";
 
 /*******************************************************************************
- * Call function after document loading.
+ * Call functions after document loading.
  * This is equivalent to the .ready() function as described in
  * https://api.jquery.com/ready/
  */
