@@ -3,11 +3,13 @@
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
 {%- if is_remote %}
 <script>
-$.get("{{ theme_announcement }}", success=(data)=>{
-      $("#header-announcement").html(`<div class="bd-header-announcement__content">${data}</div>`);
-  }).fail(() => {
-  console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}")
-});
+fetch("{{ theme_announcement }}")
+  .then(data => {
+    document.querySelector("#header-announcement").html(`<div class="bd-header-announcement__content">${data}</div>`);
+  })
+  .catch(error => {
+    console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}");
+  });
 </script>
 {#- if announcement text is not remote, populate announcement w/ local content -#}
 {%- else %}

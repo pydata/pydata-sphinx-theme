@@ -1,7 +1,7 @@
-/* Import and setup functions to control Bootstrap's behavior.
- */
+// Import and setup functions to control Bootstrap's behavior.
 import "@popperjs/core";
 import { Tooltip } from "bootstrap";
+import { documentReady } from "./mixin";
 
 import "../styles/bootstrap.scss";
 
@@ -9,9 +9,20 @@ import "../styles/bootstrap.scss";
  * Trigger tooltips
  */
 
-var tooltipTriggerList = [].slice.call(
-  document.querySelectorAll('[data-bs-toggle="tooltip"]')
-);
-tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new Tooltip(tooltipTriggerEl);
-});
+/**
+ * Add tooltip to each element with the "tooltip" data-bs-toogle class
+ */
+function TriggerTooltip() {
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new Tooltip(tooltipTriggerEl);
+  });
+}
+
+/*******************************************************************************
+ * Call functions after document loading.
+ */
+
+documentReady(TriggerTooltip);
