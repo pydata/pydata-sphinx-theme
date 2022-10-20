@@ -5,7 +5,8 @@
 <script>
 fetch("{{ theme_announcement }}")
   .then(data => {
-    document.querySelector("#header-announcement").html(`<div class="bd-header-announcement__content">${data}</div>`);
+    div = document.querySelector("#header-announcement")
+    div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
   })
   .catch(error => {
     console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}");
