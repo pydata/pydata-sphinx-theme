@@ -17,7 +17,7 @@ function TriggerTooltip() {
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
   );
   tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new Tooltip(tooltipTriggerEl);
+    return new Tooltip(tooltipTriggerEl, { delay: { show: 500, hide: 100 } });
   });
 }
 
