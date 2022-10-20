@@ -368,7 +368,7 @@ Secondary Sidebar (right)
 =========================
 
 The in-page sidebar is just to the right of a page's article content, and is
-configured in ``conf.py`` with ``html_theme_options['secondary_sidebar_items']``.
+configured in ``conf.py`` with ``html_theme_options['page_sidebar_items']``.
 
 By default, it has the following templates:
 
@@ -376,7 +376,7 @@ By default, it has the following templates:
 
     html_theme_options = {
       ...
-      "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
+      "page_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
       ...
     }
 
