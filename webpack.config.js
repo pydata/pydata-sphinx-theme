@@ -20,6 +20,8 @@ const dedent = require("dedent");
 //
 // Paths for various assets (sources and destinations)
 //
+
+const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
 const staticPath = resolve(
   __dirname,
   "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static"
@@ -36,10 +38,24 @@ const vendorPaths = {
 // Cache-busting Jinja2 macros (`webpack-macros.html`) used in `layout.html`
 //
 function macroTemplate({ compilation }) {
+  // add a hash keep for each build
   const hash = compilation.hash;
+
   // We load these files into the theme via HTML templates
-  const css_files = ["styles/theme.css", "styles/pydata-sphinx-theme.css"];
-  const js_files = ["scripts/pydata-sphinx-theme.js"];
+  const css_files = [
+    "styles/theme.css", // basic sphinx css
+    "styles/bootstrap.css", // all bootstrap 5 css with variable adjustments
+    "styles/pydata-sphinx-theme.css", // all the css created for this specific theme
+  ];
+  const js_files = ["scripts/bootstrap.js", "scripts/pydata-sphinx-theme.js"];
+  const icon_files = [
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-solid-900.woff2`,
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-brands-400.woff2`,
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-regular-400.woff2`,
+  ];
+  const font_files = [
+    `vendor/fontawesome/${vendorVersions.fontAwesome}/css/all.min.css`,
+  ];
 
   // Load a CSS script with a digest for cache busting.
   function stylesheet(css) {
@@ -56,6 +72,11 @@ function macroTemplate({ compilation }) {
     return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${hash}"></script>`;
   }
 
+  // Load the fonts as preload files
+  function font(woff2) {
+    return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}">`;
+  }
+
   return dedent(`\
     <!--
       AUTO-GENERATED from webpack.config.js, do **NOT** edit by hand.
@@ -63,22 +84,8 @@ function macroTemplate({ compilation }) {
     -->
     {# Load FontAwesome icons #}
     {% macro head_pre_icons() %}
-      <link rel="stylesheet"
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/css/all.min.css', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/webfonts/fa-solid-900.woff2', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/webfonts/fa-brands-400.woff2', 1) }}">
-      <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="{{ pathto('_static/vendor/fontawesome/${
-          vendorVersions.fontAwesome
-        }/webfonts/fa-regular-400.woff2', 1) }}">
+      ${font_files.map(stylesheet).join("\n")}
+      ${icon_files.map(font).join("\n")}
     {% endmacro %}
 
     {% macro head_pre_assets() %}
@@ -102,9 +109,8 @@ module.exports = {
   mode: "production",
   devtool: "source-map",
   entry: {
-    "pydata-sphinx-theme": [
-      "./src/pydata_sphinx_theme/assets/scripts/index.js",
-    ],
+    "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
+    bootstrap: resolve(scriptPath, "bootstrap.js"),
   },
   output: {
     filename: "scripts/[name].js",
@@ -126,7 +132,7 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "styles/pydata-sphinx-theme.css",
+              name: "styles/[name].css",
             },
           },
           {

@@ -1,22 +1,8 @@
 // Import Bootstrap core
-// Override bootstrap variables
-$spacer: 1rem;
-
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1400px,
-);
-
-$grid-breakpoints: (
-  xs: 0,
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1200px,
-);
-@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/functions";
+@import "variables/bootstrap";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
 
 // Variables
 @import "variables/layout";

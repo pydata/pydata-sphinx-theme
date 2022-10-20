@@ -8,6 +8,8 @@ theme-name = "pydata_sphinx_theme"
 additional-compiled-static-assets = [
   "webpack-macros.html",
   "vendor/",
+  "styles/bootstrap.css",
+  "scripts/bootstrap.js"
 ]
 
 [project]
