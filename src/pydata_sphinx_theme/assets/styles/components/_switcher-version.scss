@@ -15,10 +15,13 @@ button.version-switcher__button {
 .version-switcher__menu {
   border-color: var(--pst-color-border);
 
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--pst-color-border);
+  }
+
   a.list-group-item {
     background-color: var(--pst-color-on-background);
     color: var(--pst-color-text-base);
-    border: 1px solid var(--pst-color-border);
     padding: 0.75rem 1.25rem;
 
     &:hover {
