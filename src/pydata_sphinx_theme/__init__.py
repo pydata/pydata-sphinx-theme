@@ -343,7 +343,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
