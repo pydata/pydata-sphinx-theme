@@ -36,19 +36,7 @@ jobs:
 
       - name: Check that there are no unexpected Sphinx warnings
         if: matrix.python-version == 3.9
-        shell: python
-        run: |
-          from pathlib import Path
-          import os
-
-          text = Path("./warnings.txt").read_text().strip()
-          print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["frame.py", "_static", "parse.py"])]
-          print("\n=== Unexpected Warnings ===\n\n" + "\n".join(unexpected))
-
-          env_file = os.getenv('GITHUB_ENV')
-          with open(env_file, "a") as f:
-              f.write("SPHINX_BUILD_UNEXPECTED_WARNINGS = len(unexpected)!=0")
+        run: python tests/check_warnings.py
 
       - name: Run the tests
         run: |
