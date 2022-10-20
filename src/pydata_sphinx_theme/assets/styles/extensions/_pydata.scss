@@ -10,7 +10,7 @@
 /**
  * special case for table rendered via nbsphinx
  */
-.rendered_html {
+html div.rendered_html {
   table {
     table-layout: auto;
   }
