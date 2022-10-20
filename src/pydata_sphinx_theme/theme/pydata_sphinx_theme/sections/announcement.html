@@ -4,9 +4,9 @@
 {%- if is_remote %}
 <script>
 fetch("{{ theme_announcement }}")
-  .then(res => {res.text()})
+  .then(res => {return res.text();})
   .then(data => {
-    div = document.querySelector("#header-announcement")
+    div = document.querySelector("#header-announcement");
     div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
   })
   .catch(error => {

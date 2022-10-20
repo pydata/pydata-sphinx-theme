@@ -308,7 +308,9 @@ function checkPageExistsAndRedirect(event) {
 var themeSwitchBtns = document.querySelectorAll("version-switcher__button");
 if (themeSwitchBtns) {
   fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
-    .then((data) => data.json())
+    .then((res) => {
+      return res.json();
+    })
     .then((data) => {
       const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
       themeSwitchBtns.forEach((btn) => {
