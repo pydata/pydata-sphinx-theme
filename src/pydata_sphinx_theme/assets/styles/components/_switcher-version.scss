@@ -18,7 +18,8 @@ button.version-switcher__button {
   a.list-group-item {
     background-color: var(--pst-color-on-background);
     color: var(--pst-color-text-base);
-    border-color: var(--pst-color-border);
+    border: 1px solid var(--pst-color-border);
+    padding: 0.75rem 1.25rem;
 
     &:hover {
       background-color: var(--pst-color-surface);
