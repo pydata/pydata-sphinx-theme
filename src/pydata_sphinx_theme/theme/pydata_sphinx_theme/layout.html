@@ -46,6 +46,11 @@
   {# set up with scrollspy to update the toc as we scroll #}
   {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="{{ default_mode }}">
+
+  {# A button hidden by default to help assistive devices quickly jump to main content #}
+  {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
+  <a class="skip-link" href="#main-content">{{ _("Skip to main content") }}</a>
+
 {%- endblock %}
 
 {%- block content %}
@@ -84,7 +89,7 @@
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
-      <main class="bd-main">
+      <main id="main-content" class="bd-main">
         {# Main content area #}
         {% block docs_main %}
         <div class="bd-content">
