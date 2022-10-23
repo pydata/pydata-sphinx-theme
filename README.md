@@ -8,9 +8,9 @@
 
 A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData community](https://pydata.org).
 
-- 📚 Documentation: https://pydata-sphinx-theme.readthedocs.io
-- 💡 Examples: https://pydata-sphinx-theme.readthedocs.io/en/latest/examples/
-- 🙌 Contribute: https://pydata-sphinx-theme.readthedocs.io/en/latest/community/index.html
+- 📚 Documentation: https://pydata-sphinx-theme.readthedocs.io/en/stable
+- 💡 Examples: https://pydata-sphinx-theme.readthedocs.io/en/stable/examples
+- 🙌 Contribute: https://pydata-sphinx-theme.readthedocs.io/en/stable/community
 
 [![Example documentation with this theme](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
