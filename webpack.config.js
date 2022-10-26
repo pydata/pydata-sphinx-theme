@@ -43,13 +43,13 @@ function font(woff2){ return `<link rel="preload" as="font" type="font/woff2" cr
  * the assets to load in the macro
  */
  const theme_stylesheets = [
-  `styles/theme.css`, // basic sphinx css
-  `styles/bootstrap.css`, // all bootstrap 5 css with variable adjustments
-  `styles/pydata-sphinx-theme.css`, // all the css created for this specific theme
+  "styles/theme.css", // basic sphinx css
+  "styles/bootstrap.css", // all bootstrap 5 css with variable adjustments
+  "styles/pydata-sphinx-theme.css", // all the css created for this specific theme
 ];
 const theme_scripts = [
-  `scripts/bootstrap.js`,
-  `scripts/pydata-sphinx-theme.js`,
+  "scripts/bootstrap.js",
+  "scripts/pydata-sphinx-theme.js",
 ];
 const fa_stylesheets = [
   `vendor/fontawesome/${vendorVersions.fontAwesome}/css/all.min.css`,
