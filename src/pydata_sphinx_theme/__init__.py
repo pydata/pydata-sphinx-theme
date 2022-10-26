@@ -84,7 +84,9 @@ def update_config(app, env):
         )
 
     # check the validity of the theme swithcer file
-    if isinstance(theme_options.get("switcher"), dict):
+    is_dict = isinstance(theme_options.get("switcher"), dict)
+    is_tested = theme_options.get("check_switcher") is True
+    if is_dict and is_tested:
         theme_switcher = theme_options.get("switcher")
 
         # raise an error if one of these compulsory keys is missing
