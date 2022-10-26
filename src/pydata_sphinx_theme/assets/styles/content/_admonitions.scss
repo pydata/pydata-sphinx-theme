@@ -185,6 +185,20 @@ div.admonition,
     }
   }
 
+  &.seealso {
+    border-color: var(--pst-color-success);
+    > .admonition-title {
+      &:before {
+        background-color: var(--pst-color-success);
+      }
+
+      &:after {
+        color: var(--pst-color-success);
+        content: var(--pst-icon-admonition-seealso);
+      }
+    }
+  }
+
   /**
    * Special-case for a `sidebar` class that makes the admonition float to
    * the right like the {sidebar} directive.
