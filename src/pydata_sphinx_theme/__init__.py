@@ -85,7 +85,7 @@ def update_config(app, env):
 
     # check the validity of the theme swithcer file
     is_dict = isinstance(theme_options.get("switcher"), dict)
-    is_tested = theme_options.get("check_switcher") is True
+    is_tested = not theme_options.get("check_switcher") is False
     if is_dict and is_tested:
         theme_switcher = theme_options.get("switcher")
 
