@@ -2,7 +2,7 @@
  * Styling for notebooks executed in the docs using nbsphinx or myst-NB
  * Note that they are not compatible
  */
- 
+
 /*******************************************************************************
  * nbsphinx
  */
@@ -16,7 +16,7 @@ html div.rendered_html {
 /*******************************************************************************
  * myst NB
  */
- div.cell_output .output {
+div.cell_output .output {
   max-width: 100%;
   overflow-x: auto;
 
