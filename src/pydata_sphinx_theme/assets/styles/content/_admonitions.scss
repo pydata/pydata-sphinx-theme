@@ -186,14 +186,14 @@ div.admonition,
   }
 
   &.seealso {
-    border-color: var(--pst-color-success);
+    border-color: var(--pst-color-info);
     > .admonition-title {
       &:before {
-        background-color: var(--pst-color-success);
+        background-color: var(--pst-color-info);
       }
 
       &:after {
-        color: var(--pst-color-success);
+        color: var(--pst-color-info);
         content: var(--pst-icon-admonition-seealso);
       }
     }
