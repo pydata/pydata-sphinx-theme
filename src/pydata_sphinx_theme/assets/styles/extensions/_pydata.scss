@@ -7,11 +7,4 @@
   display: block !important;
 }
 
-/**
- * special case for table rendered via nbsphinx
- */
-html div.rendered_html {
-  table {
-    table-layout: auto;
-  }
-}
+
