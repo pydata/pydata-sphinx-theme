@@ -60,14 +60,14 @@ div.admonition,
   }
 
   &.attention {
-    border-color: var(--pst-color-warning);
+    border-color: var(--pst-color-secondary);
     > .admonition-title {
       &:before {
-        background-color: var(--pst-color-warning);
+        background-color: var(--pst-color-secondary);
       }
 
       &:after {
-        color: var(--pst-color-warning);
+        color: var(--pst-color-secondary);
         content: var(--pst-icon-admonition-attention);
       }
     }
@@ -158,14 +158,14 @@ div.admonition,
   }
 
   &.important {
-    border-color: var(--pst-color-success);
+    border-color: var(--pst-color-secondary);
     > .admonition-title {
       &:before {
-        background-color: var(--pst-color-success);
+        background-color: var(--pst-color-secondary);
       }
 
       &:after {
-        color: var(--pst-color-success);
+        color: var(--pst-color-secondary);
         content: var(--pst-icon-admonition-important);
       }
     }
@@ -186,14 +186,14 @@ div.admonition,
   }
 
   &.seealso {
-    border-color: var(--pst-color-info);
+    border-color: var(--pst-color-success);
     > .admonition-title {
       &:before {
-        background-color: var(--pst-color-info);
+        background-color: var(--pst-color-success);
       }
 
       &:after {
-        color: var(--pst-color-info);
+        color: var(--pst-color-success);
         content: var(--pst-icon-admonition-seealso);
       }
     }
