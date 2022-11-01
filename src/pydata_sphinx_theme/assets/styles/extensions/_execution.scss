@@ -6,37 +6,12 @@
  * In the future, we might add dark theme support for specific packages.
  */
 
-// Set background of some cell outputs to white-ish to make sure colors work
-// This is because many libraries make output that only looks good on white
-@mixin cell-output-background {
-  color: var(--pst-color-on-background);
-  background-color: var(--pst-color-text-base);
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-}
+/******************************************************************************
+ * Jupyter Sphinx
+ */
 
 // Dark theme special-cases
 html[data-theme="dark"] .bd-content {
-  // MyST-NB
-  div.cell_output {
-    img,
-    .text_html {
-      @include cell-output-background;
-    }
-  }
-
-  // NBSphinx
-  .nboutput {
-    .output_area.rendered_html {
-      @include cell-output-background;
-    }
-
-    .output_area.stderr {
-      background: var(--pst-color-danger);
-    }
-  }
-
-  // Jupyter Sphinx
   div.jupyter_container {
     // Background has slightly more custom background behavior because of hard-coded color
     border: 1px solid var(--pst-color-border);
@@ -50,33 +25,6 @@ html[data-theme="dark"] .bd-content {
 
     div.highlight {
       background-color: var(--pst-color-surface);
-    }
-  }
-}
-
-// NBSphinx
-// Add extra padding to the final item in an nbsphinx container
-div.nblast.container {
-  margin-bottom: 1rem;
-}
-
-// MyST-NB
-// Prevent tables from scrunching together
-.bd-content {
-  div.cell_input {
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-  }
-
-  div.cell_input,
-  div.output {
-    border-radius: $admonition-border-radius;
-  }
-
-  div.output {
-    table {
-      table-layout: auto;
     }
   }
 }
