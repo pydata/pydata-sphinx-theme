@@ -2,7 +2,7 @@ name: Scheduled pre-release tests
 
 on:
   schedule:
-    # Run this workflow once a week
+    # Run this workflow twice a week
     # ref: https://crontab.guru/#0_5_*_*_1,4
     - cron: "0 5 * * 1,4"
   workflow_dispatch:
