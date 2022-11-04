@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 from functools import lru_cache
 import json
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 import jinja2
 from bs4 import BeautifulSoup as bs
@@ -925,38 +925,50 @@ class ShortenLinkTransform(SphinxPostTransform):
                 self.platform = self.supported_platform.get(uri.netloc)
                 if self.platform is not None:
                     node.attributes["classes"].append(self.platform)
-                    node.children[0] = nodes.Text(self.parse_url(uri.path))
+                    node.children[0] = nodes.Text(self.parse_url(uri))
 
-    def parse_url(self, path):
+    def parse_url(self, uri):
         """
         parse the content of the url with respect to the selected platform
         """
+        path = uri.path
 
-        # split the url content
-        # be careful the first one is a "/"
-        parts = path.split("/")
+        if path == "":
+            # plain url passed, return platform only
+            return self.platform
+
+        # the leading "/" is removed
+        path = path.lstrip("/")
 
         # check the platform name and read the information accordingly
         # as "<organisation>/<repository>#<element number>"
+        # or "<group>/<subgroup 1>/…/<subgroup N>/<repository>#<element number>"
         if self.platform == "github":
-            text = "github"
+            # split the url content
+            parts = path.split("/")
+            if len(parts) > 0:
+                text = parts[0]  # organisation
             if len(parts) > 1:
-                text = parts[1]  # organisation
+                text += f"/{parts[1]}"  # repository
             if len(parts) > 2:
-                text += f"/{parts[2]}"  # repository
-            if len(parts) > 3:
-                if parts[3] in ["issues", "pull", "discussions"]:
+                if parts[2] in ["issues", "pull", "discussions"]:
                     text += f"#{parts[-1]}"  # element number
 
         elif self.platform == "gitlab":
-            text = "gitlab"
-            if len(parts) > 1:
-                text = parts[1]  # organisation
-            if len(parts) > 2:
-                text += f"/{parts[2]}"  # repository
-            if len(parts) > 4:
-                if parts[4] in ["issues", "merge_requests"]:
-                    text += f"#{parts[-1]}"  # element number
+            # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
+            if any(map(uri.path.__contains__, ["issues", "merge_requests"])):
+                group_and_subgroups, parts, *_ = path.split("/-/")
+                parts = parts.split("/")
+                url_type, element_number, *_ = parts
+                if url_type == "issues":
+                    text = f"{group_and_subgroups}#{element_number}"
+                elif url_type == "merge_requests":
+                    text = f"{group_and_subgroups}!{element_number}"
+            else:
+                # display the whole uri (after "gitlab.com/") including parameters
+                # for example "<group>/<subgroup1>/<subgroup2>/<repository>"
+                text = uri._replace(netloc="", scheme="")  # remove platform
+                text = urlunparse(text)[1:]  # combine to string and strip leading "/"
 
         return text
 
