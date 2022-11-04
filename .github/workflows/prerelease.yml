@@ -1,19 +1,19 @@
-name: cron-integration
+name: Scheduled pre-release tests
 
 on:
   schedule:
-    # Run this workflow once a week
-    # ref: https://crontab.guru/#0_0_*_*_0
-    - cron: "0 0 * * 0"
+    # Run this workflow twice a week
+    # ref: https://crontab.guru/#0_5_*_*_1,4
+    - cron: "0 5 * * 1,4"
   workflow_dispatch:
 
 jobs:
   prerelease:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
           sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
 
       - name: Check that there are no unexpected Sphinx warnings
-        if: matrix.python-version == 3.9
+        if: matrix.python-version == "3.10"
         run: python tests/check_warnings.py
 
       - name: Run the tests
