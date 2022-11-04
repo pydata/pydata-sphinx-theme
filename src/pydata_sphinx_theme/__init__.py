@@ -83,7 +83,7 @@ def update_config(app, env):
             " Set version URLs in JSON directly."
         )
 
-    # check the validity of the theme swithcer file
+    # check the validity of the theme switcher file
     is_dict = isinstance(theme_options.get("switcher"), dict)
     should_test = theme_options.get("check_switcher", False)
     if is_dict and should_test:
