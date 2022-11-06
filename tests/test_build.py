@@ -669,8 +669,8 @@ def test_version_switcher(sphinx_build_factory, file_regression, url):
         )
 
     elif url == "http://a.b/switcher.json":  # this file doesn't exist"
-        not_read = 'WARNING: The version switcher "http://a.b/switcher.json" file cannot be read.'  # noqa
-        assert escape_ansi(sphinx_build.warnings).strip() == not_read
+        not_read = 'WARNING: The version switcher "http://a.b/switcher.json" file cannot be read due to the following error:\n'  # noqa
+        assert not_read in escape_ansi(sphinx_build.warnings).strip()
 
     elif url == "missing_url.json":  # this file is missing the url key for one version
         missing_url = 'WARNING: The version switcher "missing_url.json" file is malformed at least one of the items is missing the "url" or "version" key'  # noqa

@@ -96,22 +96,25 @@ def update_config(app, env):
         # try to read the json file. If it's a url we use request,
         # else we simply read the local file from the source directory
         # display a log warning if the file cannot be reached
-        content = None
+        reading_error = None
         if urlparse(json_url).scheme in ["http", "https"]:
             try:
                 request = requests.get(json_url)
                 request.raise_for_status()
                 content = request.text
-            except (ConnectionError, HTTPError, RetryError):
-                pass
+            except (ConnectionError, HTTPError, RetryError) as e:
+                reading_error = repr(e)
         else:
             try:
                 content = Path(env.srcdir, json_url).read_text()
-            except FileNotFoundError:
-                pass
+            except FileNotFoundError as e:
+                reading_error = repr(e)
 
-        if content is None:
-            logger.warning(f'The version switcher "{json_url}" file cannot be read.')
+        if reading_error is not None:
+            logger.warning(
+                f'The version switcher "{json_url}" file cannot be read due to the following error:\n'
+                f"{reading_error}"
+            )
         else:
             # check that the json file is not illformed,
             # throw a warning if the file is ill formed and an error if it's not json
