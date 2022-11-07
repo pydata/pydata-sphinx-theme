@@ -174,16 +174,18 @@ You may skip the need to manually define the link text by [activating the MyST L
 
 For example:
 
-reStructuredText
-: - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
+- **reStructuredText**
+
+  - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
   - https://github.com/pydata/pydata-sphinx-theme/pull/1012
 
-MyST Markdown (default)
-: - `[https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)`
+- **MyST Markdown (default)**
+
+  - `[https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)`
   - [https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)
 
-MyST Markdown with [MyST Linkify](https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#linkify)
-: - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
+- **MyST Markdown with [MyST Linkify](https://myst-**parser.readthedocs.io/en/latest/syntax/optional.html#linkify)
+  - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
   - https://github.com/pydata/pydata-sphinx-theme/pull/1012
 
 There are a variety of link targets supported, here's a table for reference:
