@@ -13,6 +13,7 @@ Page 1
     https://github.com/pydata
     https://github.com/pydata/pydata-sphinx-theme
     https://github.com/pydata/pydata-sphinx-theme/pull/1012
+    https://github.com/orgs/github/projects/4247
 
 **GitLab**
 

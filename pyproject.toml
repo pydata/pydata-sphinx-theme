@@ -45,6 +45,7 @@ classifiers = [
 doc = [
   "numpydoc",
   "myst-nb",
+  "linkify-it-py",  # for link shortening
   "pytest",
   "pytest-regressions",
   "rich",
