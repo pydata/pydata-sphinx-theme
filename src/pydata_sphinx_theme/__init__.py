@@ -937,7 +937,8 @@ class ShortenLinkTransform(SphinxPostTransform):
             # plain url passed, return platform only
             return self.platform
 
-        # the leading "/" is removed
+        # if the path is not empty it contains a leading "/", which we don't want to
+        # include in the parsed content
         path = path.lstrip("/")
 
         # check the platform name and read the information accordingly
