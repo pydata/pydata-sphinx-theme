@@ -194,7 +194,7 @@ There are a variety of link targets supported, here's a table for reference:
 - `https://github.com/pydata`: https://github.com/pydata
 - `https://github.com/pydata/pydata-sphinx-theme`: https://github.com/pydata/pydata-sphinx-theme
 - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`: https://github.com/pydata/pydata-sphinx-theme/pull/1012
-- `https://github.com/orgs/github/projects/4247`: https://github.com/orgs/github/projects/4247
+- `https://github.com/orgs/pydata/projects/2`: https://github.com/orgs/pydata/projects/2
 
 **GitLab**
 
