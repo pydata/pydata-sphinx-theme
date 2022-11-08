@@ -332,15 +332,28 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                             title += node.astext()
 
                 # create the html output
-                links_html.append(
-                    f"""
-                <li class="nav-item{current}">
-                  <a class="nav-link" href="{context["pathto"](page)}">
-                    {title}
-                  </a>
-                </li>
-                """
-                )
+                if "://" in page:
+                    # then this is actually an external URI
+                     links_html.append(
+                        f"""
+                    <li class="nav-item{current}">
+                      <a class="nav-link external" href="{page}">
+                        {title}
+                      </a>
+                    </li>
+                    """
+                    )
+                else:
+                    # otherwise resolve relative to the base URI
+                    links_html.append(
+                        f"""
+                    <li class="nav-item{current}">
+                      <a class="nav-link internal" href="{context["pathto"](page)}">
+                        {title}
+                      </a>
+                    </li>
+                    """
+                    )
 
         # Add external links defined in configuration as sibling list items
         for external_link in context["theme_external_links"]:
