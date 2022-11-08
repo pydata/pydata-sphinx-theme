@@ -60,14 +60,14 @@ div.admonition,
   }
 
   &.attention {
-    border-color: var(--pst-color-secondary);
+    border-color: var(--pst-color-attention);
     > .admonition-title {
       &:before {
-        background-color: var(--pst-color-secondary);
+        background-color: var(--pst-color-attention);
       }
 
       &:after {
-        color: var(--pst-color-secondary);
+        color: var(--pst-color-attention);
         content: var(--pst-icon-admonition-attention);
       }
     }
@@ -158,14 +158,14 @@ div.admonition,
   }
 
   &.important {
-    border-color: var(--pst-color-secondary);
+    border-color: var(--pst-color-attention);
     > .admonition-title {
       &:before {
-        background-color: var(--pst-color-secondary);
+        background-color: var(--pst-color-attention);
       }
 
       &:after {
-        color: var(--pst-color-secondary);
+        color: var(--pst-color-attention);
         content: var(--pst-icon-admonition-important);
       }
     }
@@ -230,6 +230,10 @@ div.admonition,
     // TODO: these semantic-color-names border-color rules might no longer be
     //       needed when we drop support for Sphinx 4 / docutils 0.17
     &.attention,
+    &.important {
+      border-color: var(--pst-color-attention);
+    }
+
     &.caution,
     &.warning {
       border-color: var(--pst-color-warning);
@@ -242,11 +246,12 @@ div.admonition,
 
     &.hint,
     &.tip,
-    &.important {
+    &.seealso {
       border-color: var(--pst-color-success);
     }
 
-    &.note {
+    &.note,
+    &.todo {
       border-color: var(--pst-color-info);
     }
 

@@ -6,15 +6,16 @@
 */
 $pst-semantic-colors: (
   "primary": rgb(69, 157, 185),
-  "secondary": (
-    "light": rgb(255, 193, 7),
-    "dark": rgb(220, 169, 15),
-  ),
+  "secondary": rgb(238, 144, 64),
   "info": rgb(69, 157, 185),
   "warning": rgb(238, 144, 64),
   "success": (
     "light": rgb(40, 167, 69),
     "dark": rgb(72, 135, 87),
+  ),
+  "attention": (
+    "light": rgb(255, 193, 7),
+    "dark": rgb(220, 169, 15),
   ),
   "danger": (
     "light": rgb(220, 53, 69),
