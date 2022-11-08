@@ -20,6 +20,7 @@ from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
+from requests.exceptions import ConnectionError, HTTPError, RetryError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
@@ -81,8 +82,10 @@ def update_config(app, env):
             " Set version URLs in JSON directly."
         )
 
-    # check the validity of the theme swithcer file
-    if isinstance(theme_options.get("switcher"), dict):
+    # check the validity of the theme switcher file
+    is_dict = isinstance(theme_options.get("switcher"), dict)
+    should_test = theme_options.get("check_switcher", True)
+    if is_dict and should_test:
         theme_switcher = theme_options.get("switcher")
 
         # raise an error if one of these compulsory keys is missing
@@ -91,22 +94,37 @@ def update_config(app, env):
 
         # try to read the json file. If it's a url we use request,
         # else we simply read the local file from the source directory
-        # it will raise an error if the file does not exist
+        # display a log warning if the file cannot be reached
+        reading_error = None
         if urlparse(json_url).scheme in ["http", "https"]:
-            content = requests.get(json_url).text
+            try:
+                request = requests.get(json_url)
+                request.raise_for_status()
+                content = request.text
+            except (ConnectionError, HTTPError, RetryError) as e:
+                reading_error = repr(e)
         else:
-            content = Path(env.srcdir, json_url).read_text()
+            try:
+                content = Path(env.srcdir, json_url).read_text()
+            except FileNotFoundError as e:
+                reading_error = repr(e)
 
-        # check that the json file is not illformed
-        # it will throw an error if there is a an issue
-        switcher_content = json.loads(content)
-        missing_url = any(["url" not in e for e in switcher_content])
-        missing_version = any(["version" not in e for e in switcher_content])
-        if missing_url or missing_version:
-            raise AttributeError(
-                f'The version switcher "{json_url}" file is malformed'
-                ' at least one of the items is missing the "url" or "version" key'
+        if reading_error is not None:
+            logger.warning(
+                f'The version switcher "{json_url}" file cannot be read due to the following error:\n'
+                f"{reading_error}"
             )
+        else:
+            # check that the json file is not illformed,
+            # throw a warning if the file is ill formed and an error if it's not json
+            switcher_content = json.loads(content)
+            missing_url = any(["url" not in e for e in switcher_content])
+            missing_version = any(["version" not in e for e in switcher_content])
+            if missing_url or missing_version:
+                logger.warning(
+                    f'The version switcher "{json_url}" file is malformed'
+                    ' at least one of the items is missing the "url" or "version" key'
+                )
 
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
