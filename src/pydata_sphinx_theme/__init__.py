@@ -947,13 +947,20 @@ class ShortenLinkTransform(SphinxPostTransform):
         if self.platform == "github":
             # split the url content
             parts = path.split("/")
-            if len(parts) > 0:
-                text = parts[0]  # organisation
-            if len(parts) > 1:
-                text += f"/{parts[1]}"  # repository
-            if len(parts) > 2:
-                if parts[2] in ["issues", "pull", "discussions"]:
-                    text += f"#{parts[-1]}"  # element number
+
+            if parts[0] == "orgs" and "/projects" in path:
+                # We have a projects board link
+                # ref: `orgs/{org}/projects/{project-id}`
+                text = f"{parts[1]}/projects#{parts[3]}"
+            else:
+                # We have an issues, PRs, or repository link
+                if len(parts) > 0:
+                    text = parts[0]  # organisation
+                if len(parts) > 1:
+                    text += f"/{parts[1]}"  # repository
+                if len(parts) > 2:
+                    if parts[2] in ["issues", "pull", "discussions"]:
+                        text += f"#{parts[-1]}"  # element number
 
         elif self.platform == "gitlab":
             # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
