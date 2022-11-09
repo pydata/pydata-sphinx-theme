@@ -355,9 +355,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         for external_link in context["theme_external_links"]:
             links_html.append(
                 f"""
-            <li class="nav-item">
-                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fa-solid fa-up-right-from-square"></i></a>
-            </li>"""  # noqa
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="{ external_link["url"] }">
+                    { external_link["name"] }
+                  </a>
+                </li>
+                """
             )
 
         # The first links will always be visible

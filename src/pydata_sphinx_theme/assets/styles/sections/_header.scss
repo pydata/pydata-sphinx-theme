@@ -125,8 +125,18 @@
   border-left: 2px solid var(--pst-color-primary);
 }
 
-.nav-link:hover {
-  border-style: none;
+.nav-link {
+  :hover {
+    border-style: none;
+  }
+
+  &.nav-external:after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: var(--pst-icon-external-link);
+    font-size: 0.75em;
+    margin-left: 0.3em;
+  }
 }
 
 #navbar-main-elements li.nav-item i {
