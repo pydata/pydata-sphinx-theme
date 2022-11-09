@@ -93,10 +93,6 @@ if not version_match or version_match.isdigit():
 html_theme_options = {
     "external_links": [
         {
-            "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
-            "name": "Changelog",
-        },
-        {
             "url": "https://pydata.org",
             "name": "PyData",
         },
