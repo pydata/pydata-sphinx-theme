@@ -331,14 +331,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                         else:
                             title += node.astext()
 
+                # set up the status of the link and the path
+                # if the path is relative then we use the context for the path
+                # resolution and the internal class.
+                # If it's an absolute one then we use the external class and
+                # the complete url.
+                is_absolute = bool(urlparse(page).netloc)
+                link_status = "external" if is_absolute else "internal"
+                link_href = page if is_absolute else context["pathto"](page)
+
                 # create the html output
                 links_html.append(
                     f"""
-                <li class="nav-item{current}">
-                  <a class="nav-link" href="{context["pathto"](page)}">
-                    {title}
-                  </a>
-                </li>
+                    <li class="nav-item{current}">
+                      <a class="nav-link nav-{link_status}" href="{link_href}">
+                        {title}
+                      </a>
+                    </li>
                 """
                 )
 
@@ -346,9 +355,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         for external_link in context["theme_external_links"]:
             links_html.append(
                 f"""
-            <li class="nav-item">
-                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fa-solid fa-up-right-from-square"></i></a>
-            </li>"""  # noqa
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="{ external_link["url"] }">
+                    { external_link["name"] }
+                  </a>
+                </li>
+                """
             )
 
         # The first links will always be visible
