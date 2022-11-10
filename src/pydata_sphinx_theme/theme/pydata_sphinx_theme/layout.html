@@ -22,7 +22,10 @@ titles_only=True)
 and 'html_theme.sidebar_secondary.remove' in meta)
 or not theme_secondary_sidebar_items %}
 {%- block css %}
-  <script>
+  {# The data-cfasync attribute disables CloudFlare's Rocket loader so that #}
+  {# mode/theme are correctly set before the browser renders the page. #}
+  {# https://github.com/pydata/pydata-sphinx-theme/pull/1045 #}
+  <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
@@ -38,11 +41,14 @@ or not theme_secondary_sidebar_items %}
 {% block body_tag %}
   {# set up with scrollspy to update the toc as we scroll #}
   {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
-  <body data-spy="scroll"
-        data-target="#bd-toc-nav"
-        data-offset="180"
-        data-default-mode="{{ default_mode }}">
-{%- endblock body_tag %}
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="{{ default_mode }}">
+
+  {# A button hidden by default to help assistive devices quickly jump to main content #}
+  {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
+  <a class="skip-link" href="#main-content">{{ _("Skip to main content") }}</a>
+
+{%- endblock %}
+
 {%- block content %}
   {# checkbox to toggle primary sidebar #}
   <input type="checkbox"
@@ -78,7 +84,7 @@ or not theme_secondary_sidebar_items %}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
-      <main class="bd-main">
+      <main id="main-content" class="bd-main">
         {# Main content area #}
         {% block docs_main %}
           <div class="bd-content">

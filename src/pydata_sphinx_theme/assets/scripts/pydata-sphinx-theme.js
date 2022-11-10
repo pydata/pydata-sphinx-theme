@@ -1,13 +1,10 @@
 /* Sphinx injects the html output with jquery and other javascript files.
- * To enable Popper.js (and other jQuery plugins) to hook into the same instance of jQuery,
- * jQuery is defined as a Webpack external, thus this import uses the externally defined jquery dependency.
+ * for jQuery plugin, jQuery is defined as a Webpack external, thus this import
+ * uses the externally defined jquery dependency.
  */
 import "jquery";
 
-import "popper.js";
-import "bootstrap";
-
-import "../styles/index.scss";
+import "../styles/pydata-sphinx-theme.scss";
 
 /*******************************************************************************
  * Theme interaction
@@ -378,14 +375,13 @@ function initRTDObserver() {
 }
 
 /*******************************************************************************
- * Finalize
+ * Call functions after document loading.
+ * This is equivalent to the .ready() function as described in
+ * https://api.jquery.com/ready/
  */
 
-// This is equivalent to the .ready() function as described in
-// https://api.jquery.com/ready/
 $(addModeListener);
 $(scrollToActive);
 $(addTOCInteractivity);
 $(setupSearchButtons);
-$('[data-toggle="tooltip"]').tooltip({ delay: { show: 500, hide: 100 } });
 $(initRTDObserver);

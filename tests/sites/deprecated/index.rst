@@ -8,6 +8,7 @@ Index ``with code`` in title
    page1
    page2
    section1/index
+   google <https://google.com>
 
 A header
 --------

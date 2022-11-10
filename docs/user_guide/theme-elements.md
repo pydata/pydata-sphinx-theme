@@ -102,6 +102,24 @@ print("A code block with a caption and line numbers.")
 print("A code block with a caption and line numbers.")
 ```
 
+## Inline code
+
+When used directly, the `code` role just displays the text without syntax highlighting, as a literal. As mentioned in the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#inline-code-highlighting) you can also enable syntax highlighting by defining a custom role. It will then use the same highligther as in the `code-block` directive.
+
+```{code-block} rst
+
+.. role:: python(code)
+   :language: python
+
+In Python you can :python:`import sphinx`.
+```
+
+```{role} python(code)
+:language: python
+```
+
+In Python you can {python}`import sphinx`.
+
 ## Code execution
 
 This theme has support for Jupyter execution libraries so that you can programmatically update your documentation with each build.
@@ -146,20 +164,45 @@ Some sidebar content.
 
 ## Link shortening for git repository services
 
-Many projects have links back to their issues / PRs hosted on platforms like **GitHub** or **GitLab**. Instead of displaying these as raw links, this theme does some lightweight formatting for these platforms specifically. Here is some examples from github and gitlab:
+Many projects have links back to their issues / PRs hosted on platforms like **GitHub** or **GitLab**.
+Instead of displaying these as raw links, this theme does some lightweight formatting for these platforms specifically.
+
+In **reStructuredText**, URLs are automatically converted to links, so this works automatically.
+
+In **MyST Markdown**, by default you must define a standard markdown link and duplicate the URL in the link text.
+You may skip the need to manually define the link text by [activating the MyST Linkify extension](https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#linkify).
+
+For example:
+
+- **reStructuredText**
+
+  - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
+  - https://github.com/pydata/pydata-sphinx-theme/pull/1012
+
+- **MyST Markdown (default)**
+
+  - `[https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)`
+  - [https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)
+
+- **MyST Markdown with [MyST Linkify](https://myst-**parser.readthedocs.io/en/latest/syntax/optional.html#linkify)
+  - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
+  - https://github.com/pydata/pydata-sphinx-theme/pull/1012
+
+There are a variety of link targets supported, here's a table for reference:
 
 **GitHub**
 
-- "https://github.com" -> [https://github.com](https://github.com)
-- "https://github.com/pydata" -> [https://github.com/pydata](https://github.com/pydata)
-- "https://github.com/pydata/pydata-sphinx-theme" -> [https://github.com/pydata/pydata-sphinx-theme](https://github.com/pydata/pydata-sphinx-theme)
-- "https://github.com/pydata/pydata-sphinx-theme/pull/1012" -> [https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)
+- `https://github.com`: https://github.com
+- `https://github.com/pydata`: https://github.com/pydata
+- `https://github.com/pydata/pydata-sphinx-theme`: https://github.com/pydata/pydata-sphinx-theme
+- `https://github.com/pydata/pydata-sphinx-theme/pull/1012`: https://github.com/pydata/pydata-sphinx-theme/pull/1012
+- `https://github.com/orgs/pydata/projects/2`: https://github.com/orgs/pydata/projects/2
 
 **GitLab**
 
-- "https://gitlab.com" -> [https://gitlab.com](https://gitlab.com)
-- "https://gitlab.com/gitlab-org" -> [https://gitlab.com/gitlab-org](https://gitlab.com/gitlab-org)
-- "https://gitlab.com/gitlab-org/gitlab" -> [https://gitlab.com/gitlab-org/gitlab](https://gitlab.com/gitlab-org/gitlab)
-- "https://gitlab.com/gitlab-org/gitlab/-/issues/375583" -> [https://gitlab.com/gitlab-org/gitlab/-/issues/375583](https://gitlab.com/gitlab-org/gitlab/-/issues/375583)
+- `https://gitlab.com`: https://gitlab.com
+- `https://gitlab.com/gitlab-org`: https://gitlab.com/gitlab-org
+- `https://gitlab.com/gitlab-org/gitlab`: https://gitlab.com/gitlab-org/gitlab
+- `https://gitlab.com/gitlab-org/gitlab/-/issues/375583`: https://gitlab.com/gitlab-org/gitlab/-/issues/375583
 
 Links provided with a text body won't be changed.
