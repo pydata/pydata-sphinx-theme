@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 from functools import lru_cache
 import json
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 import jinja2
 from bs4 import BeautifulSoup as bs
@@ -20,10 +20,11 @@ from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
+from requests.exceptions import ConnectionError, HTTPError, RetryError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.11.1rc1.dev0"
+__version__ = "0.12.0rc1"
 
 logger = logging.getLogger(__name__)
 
@@ -81,8 +82,10 @@ def update_config(app, env):
             " Set version URLs in JSON directly."
         )
 
-    # check the validity of the theme swithcer file
-    if isinstance(theme_options.get("switcher"), dict):
+    # check the validity of the theme switcher file
+    is_dict = isinstance(theme_options.get("switcher"), dict)
+    should_test = theme_options.get("check_switcher", True)
+    if is_dict and should_test:
         theme_switcher = theme_options.get("switcher")
 
         # raise an error if one of these compulsory keys is missing
@@ -91,22 +94,37 @@ def update_config(app, env):
 
         # try to read the json file. If it's a url we use request,
         # else we simply read the local file from the source directory
-        # it will raise an error if the file does not exist
+        # display a log warning if the file cannot be reached
+        reading_error = None
         if urlparse(json_url).scheme in ["http", "https"]:
-            content = requests.get(json_url).text
+            try:
+                request = requests.get(json_url)
+                request.raise_for_status()
+                content = request.text
+            except (ConnectionError, HTTPError, RetryError) as e:
+                reading_error = repr(e)
         else:
-            content = Path(env.srcdir, json_url).read_text()
+            try:
+                content = Path(env.srcdir, json_url).read_text()
+            except FileNotFoundError as e:
+                reading_error = repr(e)
 
-        # check that the json file is not illformed
-        # it will throw an error if there is a an issue
-        switcher_content = json.loads(content)
-        missing_url = any(["url" not in e for e in switcher_content])
-        missing_version = any(["version" not in e for e in switcher_content])
-        if missing_url or missing_version:
-            raise AttributeError(
-                f'The version switcher "{json_url}" file is malformed'
-                ' at least one of the items is missing the "url" or "version" key'
+        if reading_error is not None:
+            logger.warning(
+                f'The version switcher "{json_url}" file cannot be read due to the following error:\n'
+                f"{reading_error}"
             )
+        else:
+            # check that the json file is not illformed,
+            # throw a warning if the file is ill formed and an error if it's not json
+            switcher_content = json.loads(content)
+            missing_url = any(["url" not in e for e in switcher_content])
+            missing_version = any(["version" not in e for e in switcher_content])
+            if missing_url or missing_version:
+                logger.warning(
+                    f'The version switcher "{json_url}" file is malformed'
+                    ' at least one of the items is missing the "url" or "version" key'
+                )
 
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
@@ -313,14 +331,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                         else:
                             title += node.astext()
 
+                # set up the status of the link and the path
+                # if the path is relative then we use the context for the path
+                # resolution and the internal class.
+                # If it's an absolute one then we use the external class and
+                # the complete url.
+                is_absolute = bool(urlparse(page).netloc)
+                link_status = "external" if is_absolute else "internal"
+                link_href = page if is_absolute else context["pathto"](page)
+
                 # create the html output
                 links_html.append(
                     f"""
-                <li class="nav-item{current}">
-                  <a class="nav-link" href="{context["pathto"](page)}">
-                    {title}
-                  </a>
-                </li>
+                    <li class="nav-item{current}">
+                      <a class="nav-link nav-{link_status}" href="{link_href}">
+                        {title}
+                      </a>
+                    </li>
                 """
                 )
 
@@ -328,9 +355,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         for external_link in context["theme_external_links"]:
             links_html.append(
                 f"""
-            <li class="nav-item">
-                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fa-solid fa-up-right-from-square"></i></a>
-            </li>"""  # noqa
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="{ external_link["url"] }">
+                    { external_link["name"] }
+                  </a>
+                </li>
+                """
             )
 
         # The first links will always be visible
@@ -925,38 +955,58 @@ class ShortenLinkTransform(SphinxPostTransform):
                 self.platform = self.supported_platform.get(uri.netloc)
                 if self.platform is not None:
                     node.attributes["classes"].append(self.platform)
-                    node.children[0] = nodes.Text(self.parse_url(uri.path))
+                    node.children[0] = nodes.Text(self.parse_url(uri))
 
-    def parse_url(self, path):
+    def parse_url(self, uri):
         """
         parse the content of the url with respect to the selected platform
         """
+        path = uri.path
 
-        # split the url content
-        # be careful the first one is a "/"
-        parts = path.split("/")
+        if path == "":
+            # plain url passed, return platform only
+            return self.platform
+
+        # if the path is not empty it contains a leading "/", which we don't want to
+        # include in the parsed content
+        path = path.lstrip("/")
 
         # check the platform name and read the information accordingly
         # as "<organisation>/<repository>#<element number>"
+        # or "<group>/<subgroup 1>/…/<subgroup N>/<repository>#<element number>"
         if self.platform == "github":
-            text = "github"
-            if len(parts) > 1:
-                text = parts[1]  # organisation
-            if len(parts) > 2:
-                text += f"/{parts[2]}"  # repository
-            if len(parts) > 3:
-                if parts[3] in ["issues", "pull", "discussions"]:
-                    text += f"#{parts[-1]}"  # element number
+            # split the url content
+            parts = path.split("/")
+
+            if parts[0] == "orgs" and "/projects" in path:
+                # We have a projects board link
+                # ref: `orgs/{org}/projects/{project-id}`
+                text = f"{parts[1]}/projects#{parts[3]}"
+            else:
+                # We have an issues, PRs, or repository link
+                if len(parts) > 0:
+                    text = parts[0]  # organisation
+                if len(parts) > 1:
+                    text += f"/{parts[1]}"  # repository
+                if len(parts) > 2:
+                    if parts[2] in ["issues", "pull", "discussions"]:
+                        text += f"#{parts[-1]}"  # element number
 
         elif self.platform == "gitlab":
-            text = "gitlab"
-            if len(parts) > 1:
-                text = parts[1]  # organisation
-            if len(parts) > 2:
-                text += f"/{parts[2]}"  # repository
-            if len(parts) > 4:
-                if parts[4] in ["issues", "merge_requests"]:
-                    text += f"#{parts[-1]}"  # element number
+            # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
+            if any(map(uri.path.__contains__, ["issues", "merge_requests"])):
+                group_and_subgroups, parts, *_ = path.split("/-/")
+                parts = parts.split("/")
+                url_type, element_number, *_ = parts
+                if url_type == "issues":
+                    text = f"{group_and_subgroups}#{element_number}"
+                elif url_type == "merge_requests":
+                    text = f"{group_and_subgroups}!{element_number}"
+            else:
+                # display the whole uri (after "gitlab.com/") including parameters
+                # for example "<group>/<subgroup1>/<subgroup2>/<repository>"
+                text = uri._replace(netloc="", scheme="")  # remove platform
+                text = urlunparse(text)[1:]  # combine to string and strip leading "/"
 
         return text
 

@@ -60,7 +60,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 # -- Extension options -------------------------------------------------------
 
 # This allows us to use ::: to denote directives, useful for admonitions
-myst_enable_extensions = ["colon_fence", "substitution"]
+myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -92,10 +92,6 @@ if not version_match or version_match.isdigit():
 
 html_theme_options = {
     "external_links": [
-        {
-            "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
-            "name": "Changelog",
-        },
         {
             "url": "https://pydata.org",
             "name": "PyData",

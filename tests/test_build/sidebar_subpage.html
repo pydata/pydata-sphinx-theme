@@ -8,12 +8,12 @@
      </p>
      <ul class="navbar-nav" id="navbar-main-elements">
       <li class="nav-item">
-       <a class="nav-link" href="../page1.html">
+       <a class="nav-link nav-internal" href="../page1.html">
         Page 1
        </a>
       </li>
       <li class="nav-item">
-       <a class="nav-link" href="../page2.html">
+       <a class="nav-link nav-internal" href="../page2.html">
         Page
         <span class="math notranslate nohighlight">
          \(\beta\)
@@ -21,8 +21,13 @@
        </a>
       </li>
       <li class="nav-item current active">
-       <a class="nav-link" href="#">
+       <a class="nav-link nav-internal" href="#">
         Section 1 index
+       </a>
+      </li>
+      <li class="nav-item">
+       <a class="nav-link nav-external" href="https://google.com">
+        google
        </a>
       </li>
      </ul>
@@ -31,20 +36,20 @@
   </div>
   <div class="sidebar-header-items__end">
    <div class="navbar-end-item">
-    <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" data-bs-placement="bottom" data-bs-toggle="tooltip" title="light/dark">
-     <a class="theme-switch" data-mode="light">
+    <button aria-label="light/dark" class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" data-bs-placement="bottom" data-bs-toggle="tooltip" title="light/dark">
+     <span class="theme-switch" data-mode="light">
       <i class="fa-solid fa-sun">
       </i>
-     </a>
-     <a class="theme-switch" data-mode="dark">
-      <i class="fa-regular fa-moon">
+     </span>
+     <span class="theme-switch" data-mode="dark">
+      <i class="fa-solid fa-moon">
       </i>
-     </a>
-     <a class="theme-switch" data-mode="auto">
+     </span>
+     <span class="theme-switch" data-mode="auto">
       <i class="fa-solid fa-circle-half-stroke">
       </i>
-     </a>
-    </span>
+     </span>
+    </button>
    </div>
    <div class="navbar-end-item">
     <ul aria-label="Icon Links" class="navbar-nav" id="navbar-icon-links">
