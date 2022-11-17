@@ -37,6 +37,8 @@ Colors
 Our default code highlighting styles are ``a11y-high-contrast-light`` and
 ``a11y-high-contrast-dark`` from https://github.com/Quansight-Labs/accessible-pygments.
 These styles are designed to be more accessible to users with limited visual abilities.
+If you don't like the look of our default code highlighting styles, there are several more
+to choose from at https://github.com/Quansight-Labs/accessible-pygments.
 
 
 What You Can Do
