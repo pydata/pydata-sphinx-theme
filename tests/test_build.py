@@ -691,6 +691,58 @@ def test_math_header_item(sphinx_build_factory, file_regression):
     file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
 
 
+@pytest.mark.parametrize(
+    "style_names,keyword_colors",
+    [
+        (("fake_foo", "fake_bar"), ("#204a87", "#66d9ef")),
+        (
+            ("a11y-high-contrast-light", "a11y-high-contrast-dark"),
+            ("#7928a1", "#dcc6e0"),
+        ),
+    ],
+)
+def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors):
+    """Test that setting color themes works.
+
+    NOTE: the expected keyword colors for fake_foo and fake_bar are the colors
+    from the fallback styles (tango and monokai, respectively).
+    """
+    confoverrides = {
+        "html_theme_options": {
+            "pygment_light_style": style_names[0],
+            "pygment_dark_style": style_names[1],
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
+        no_warning=False
+    )
+    warnings = sphinx_build.warnings.strip().split("\n")
+    # see if our warnings worked
+    if style_names[0].startswith("fake"):
+        assert len(warnings) == 2
+        re.match(r"Color theme fake_foo.*tango", warnings[0])
+        re.match(r"Color theme fake_bar.*monokai", warnings[1])
+    else:
+        assert warnings == [""]
+    # test that the rendered HTML has highlighting spans
+    page_two = sphinx_build.html_tree("page2.html")
+    keyword = (
+        page_two.select(".highlight-python")[0].select(".highlight")[0].select(".k")[0]
+    )
+    assert str(keyword) == '<span class="k">as</span>'
+    # test that the pygments CSS file specifies the expected colors
+    css = Path(sphinx_build.outdir) / "_static" / "pygments.css"
+    with open(css) as css_file:
+        lines = css_file.readlines()
+    assert lines[0].startswith('html[data-theme="light"]')
+    for mode, color in dict(zip(["light", "dark"], keyword_colors)).items():
+        regexp = re.compile(
+            r'html\[data-theme="' + mode + r'"\].*\.k .*color: ' + color
+        )
+        matches = [regexp.match(line) is not None for line in lines]
+        assert sum(matches) == 1
+
+
 def test_deprecated_build_html(sphinx_build_factory, file_regression):
     """Test building the base html template with all the deprecated configs"""
 
