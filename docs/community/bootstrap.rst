@@ -17,17 +17,27 @@ If your documentation was using a ``custom.css`` and/or a ``custom.js``, please 
 
     All the changes from *v4* to *v5* are listed in their documentation: https://getbootstrap.com/docs/5.0/migration/. We will only list the one the have consequences on some of ``pydata-sphinx-theme`` components.
 
+Sass
+^^^^
+
 -   Media query mixins parameters have changed for a more logical approach.
+
     -   ``media-breakpoint-down()`` uses the breakpoint itself instead of the next breakpoint (e.g., ``media-breakpoint-down(lg)`` instead of ``media-breakpoint-down(md)`` targets viewports smaller than lg).
     -   Similarly, the second parameter in ``media-breakpoint-between()`` also uses the breakpoint itself instead of the next breakpoint (e.g., ``media-between(sm, lg)`` instead of ``media-breakpoint-between(sm, md)`` targets viewports between sm and lg).
 
 -   ``box-shadow`` mixins now allow ``null`` values and drop ``none`` from multiple arguments.
+
+Content, Reboot, etc
+^^^^^^^^^^^^^^^^^^^^
 
 -   Nested tables do not inherit styles anymore.
 
 -   ``.thead-light`` and ``.thead-dark`` are dropped in favor of the ``.table-*`` variant classes which can be used for all table elements (``thead``, ``tbody``, ``tfoot``, ``tr``, ``th`` and ``td``).
 
 -   Dropped ``.text-justify`` class. See https://github.com/twbs/bootstrap/pull/29793
+
+Utilities
+^^^^^^^^^
 
 -   Renamed several utilities to use logical property names instead of directional names with the addition of RTL support:
 
@@ -38,5 +48,8 @@ If your documentation was using a ``custom.css`` and/or a ``custom.js``, please 
     -   Renamed ``.ml-*`` and ``.mr-*`` to ``.ms-*`` and ``.me-*``.
     -   Renamed ``.pl-*`` and ``.pr-*`` to ``.ps-*`` and ``.pe-*``.
     -   Renamed ``.text-left`` and ``.text-right`` to ``.text-start`` and ``.text-end``.
+
+JavaScript
+^^^^^^^^^^
 
 -   Data attributes for all JavaScript plugins are now namespaced to help distinguish Bootstrap functionality from third parties and your own code. For example, we use ``data-bs-toggle`` instead of ``data-toggle``.
