@@ -25,7 +25,7 @@ If your documentation was using a ``custom.css`` and/or a ``custom.js``, please 
 
 -   Nested tables do not inherit styles anymore.
 
--   ``.thead-light`` and ``.thead-dark`` are dropped in favor of the .``table-*`` variant classes which can be used for all table elements (``thead``, ``tbody``, ``tfoot``, ``tr``, ``th`` and ``td``).
+-   ``.thead-light`` and ``.thead-dark`` are dropped in favor of the ``.table-*`` variant classes which can be used for all table elements (``thead``, ``tbody``, ``tfoot``, ``tr``, ``th`` and ``td``).
 
 -   Dropped ``.text-justify`` class. See https://github.com/twbs/bootstrap/pull/29793
 
