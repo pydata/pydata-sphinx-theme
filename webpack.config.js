@@ -6,7 +6,7 @@
  * - Generates a `webpack-macros.html` file that defines macros used
  *   to insert CSS / JS at various places in the main `layout.html` template.
  * - Compiles our SCSS and JS and places them in the _static/ folder
- * - Downloads and links FontAwesome and some JS libraries (Bootstrap, jQuery, etc)
+ * - Downloads and links FontAwesome and some JS libraries (Bootstrap, etc)
  */
 
 const { resolve } = require("path");
@@ -135,7 +135,6 @@ module.exports = {
   },
   output: {filename: "scripts/[name].js", path: staticPath},
   optimization: {minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})]},
-  externals: {jquery: "jQuery"}, // will be removed with Sphinx 6
   module: {
     rules: [{
       test: /\.scss$/,

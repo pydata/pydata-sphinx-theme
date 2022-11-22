@@ -293,7 +293,7 @@ def test_navbar_align_right(sphinx_build_factory):
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("index.html")
     assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
-    assert "ml-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
+    assert "ms-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):

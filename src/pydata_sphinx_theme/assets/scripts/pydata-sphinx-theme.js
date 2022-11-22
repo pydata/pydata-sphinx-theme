@@ -1,8 +1,5 @@
-/* Sphinx injects the html output with jquery and other javascript files.
- * for jQuery plugin, jQuery is defined as a Webpack external, thus this import
- * uses the externally defined jquery dependency.
- */
-import "jquery";
+// Define the custom behavior of the page
+import { documentReady } from "./mixin";
 
 import "../styles/pydata-sphinx-theme.scss";
 
@@ -14,6 +11,7 @@ var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
 /**
  * set the the body theme to the one specified by the user browser
+ *
  * @param {event} e
  */
 function autoTheme(e) {
@@ -25,6 +23,7 @@ function autoTheme(e) {
 /**
  * Set the theme using the specified mode.
  * It can be one of ["auto", "dark", "light"]
+ *
  * @param {str} mode
  */
 function setTheme(mode) {
@@ -90,15 +89,17 @@ function addModeListener() {
  * TOC interactivity
  */
 
+/**
+ * TOC sidebar - add "active" class to parent list
+ *
+ * Bootstrap's scrollspy adds the active class to the <a> link,
+ * but for the automatic collapsing we need this on the parent list item.
+ *
+ * The event is triggered on "window" (and not the nav item as documented),
+ * see https://github.com/twbs/bootstrap/issues/20086
+ */
 function addTOCInteractivity() {
-  // TOC sidebar - add "active" class to parent list
-  //
-  // Bootstrap's scrollspy adds the active class to the <a> link,
-  // but for the automatic collapsing we need this on the parent list item.
-  //
-  // The event is triggered on "window" (and not the nav item as documented),
-  // see https://github.com/twbs/bootstrap/issues/20086
-  $(window).on("activate.bs.scrollspy", function () {
+  window.addEventListener("activate.bs.scrollspy", function () {
     const navLinks = document.querySelectorAll("#bd-toc-nav a");
 
     navLinks.forEach((navLink) => {
@@ -116,7 +117,9 @@ function addTOCInteractivity() {
  * Scroll
  */
 
-// Navigation sidebar scrolling to active page
+/**
+ * Navigation sidebar scrolling to active page
+ */
 function scrollToActive() {
   // If the docs nav doesn't exist, do nothing (e.g., on search page)
   if (!document.getElementById("bd-docs-nav")) {
@@ -164,7 +167,10 @@ function scrollToActive() {
 /*******************************************************************************
  * Search
  */
-/** Find any search forms on the page and return their input element */
+
+/**
+ * Find any search forms on the page and return their input element
+ */
 var findSearchInput = () => {
   let forms = document.querySelectorAll("form.bd-search");
   if (!forms.length) {
@@ -211,7 +217,9 @@ var toggleSearchField = () => {
   }
 };
 
-/** Add an event listener for toggleSearchField() for Ctrl/Cmd + K */
+/**
+ * Add an event listener for toggleSearchField() for Ctrl/Cmd + K
+ */
 var addEventListenerForSearchKeyboard = () => {
   window.addEventListener(
     "keydown",
@@ -231,7 +239,9 @@ var addEventListenerForSearchKeyboard = () => {
   );
 };
 
-/** Change the search hint to `meta key` if we are a Mac */
+/**
+ * Change the search hint to `meta key` if we are a Mac
+ */
 var changeSearchShortcutKey = () => {
   let forms = document.querySelectorAll("form.bd-search");
   var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
@@ -242,7 +252,9 @@ var changeSearchShortcutKey = () => {
   }
 };
 
-/** Activate callbacks for search button popup */
+/**
+ * Activate callbacks for search button popup
+ */
 var setupSearchButtons = () => {
   changeSearchShortcutKey();
   addEventListenerForSearchKeyboard();
@@ -267,22 +279,26 @@ var setupSearchButtons = () => {
  * - DOCUMENTATION_OPTIONS.pagename
  * - DOCUMENTATION_OPTIONS.theme_switcher_url
  */
-// Check if corresponding page path exists in other version of docs
-// and, if so, go there instead of the homepage of the other docs version
+
+/**
+ * Check if corresponding page path exists in other version of docs
+ * and, if so, go there instead of the homepage of the other docs version
+ *
+ * @param {event} event the event that trigger the check
+ */
 function checkPageExistsAndRedirect(event) {
   const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`,
     tryUrl = event.target.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
-  $.ajax({
-    type: "HEAD",
-    url: tryUrl,
-    // if the page exists, go there
-    success: function () {
+
+  fetch(tryUrl, { method: "HEAD" })
+    .then(() => {
       location.href = tryUrl;
-    },
-  }).fail(function () {
-    location.href = otherDocsHomepage;
-  });
+    }) // if the page exists, go there
+    .catch((error) => {
+      location.href = otherDocsHomepage;
+    });
+
   // this prevents the browser from following the href of the clicked node
   // (which is fine because this function takes care of redirecting)
   return false;
@@ -291,9 +307,11 @@ function checkPageExistsAndRedirect(event) {
 // Populate the version switcher from the JSON config file
 var themeSwitchBtns = document.querySelectorAll("version-switcher__button");
 if (themeSwitchBtns) {
-  $.getJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url,
-    function (data, textStatus, jqXHR) {
+  fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
       const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
       themeSwitchBtns.forEach((btn) => {
         // Set empty strings by default so that these attributes exist and can be used in CSS selectors
@@ -301,7 +319,7 @@ if (themeSwitchBtns) {
         btn.dataset["activeVersion"] = "";
       });
       // create links to the corresponding page in the other docs versions
-      $.each(data, function (index, entry) {
+      data.forEach((entry) => {
         // if no custom name specified (e.g., "latest"), use version string
         if (!("name" in entry)) {
           entry.name = entry.version;
@@ -327,7 +345,7 @@ if (themeSwitchBtns) {
         node.dataset["versionName"] = entry.name;
         node.dataset["version"] = entry.version;
 
-        $(".version-switcher__menu").append(node);
+        document.querySelector(".version-switcher__menu").append(node);
         // replace dropdown button text with the preferred display name of
         // this version, rather than using sphinx's {{ version }} variable.
         // also highlight the dropdown entry for the currently-viewed
@@ -343,14 +361,17 @@ if (themeSwitchBtns) {
           });
         }
       });
-    }
-  );
+    });
 }
 
 /*******************************************************************************
  * MutationObserver to move the ReadTheDocs button
  */
 
+/**
+ * intercept the RTD flyout and place it in the rtd-footer-container if existing
+ * if not it stays where on top of the page
+ */
 function initRTDObserver() {
   const mutatedCallback = (mutationList, observer) => {
     mutationList.forEach((mutation) => {
@@ -376,12 +397,10 @@ function initRTDObserver() {
 
 /*******************************************************************************
  * Call functions after document loading.
- * This is equivalent to the .ready() function as described in
- * https://api.jquery.com/ready/
  */
 
-$(addModeListener);
-$(scrollToActive);
-$(addTOCInteractivity);
-$(setupSearchButtons);
-$(initRTDObserver);
+documentReady(addModeListener);
+documentReady(scrollToActive);
+documentReady(addTOCInteractivity);
+documentReady(setupSearchButtons);
+documentReady(initRTDObserver);
