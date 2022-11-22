@@ -34,10 +34,10 @@ const faPath = {fontAwesome: resolve(vendorPath, "fontawesome", vendorVersions.f
  * the fonts are loaded from vendors
  */
 
-function stylesheet(css){ return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet">`;}
-function preload(js){ return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}">`;}
+function stylesheet(css){ return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet" />`;}
+function preload(js){ return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}" />`;}
 function script(js){ return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`;}
-function font(woff2){ return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}">`;}
+function font(woff2){ return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}" />`;}
 
 /*******************************************************************************
  * the assets to load in the macro
