@@ -6,7 +6,7 @@
  * - Generates a `webpack-macros.html` file that defines macros used
  *   to insert CSS / JS at various places in the main `layout.html` template.
  * - Compiles our SCSS and JS and places them in the _static/ folder
- * - Downloads and links FontAwesome and some JS libraries (Bootstrap, jQuery, etc)
+ * - Downloads and links FontAwesome and some JS libraries (Bootstrap, etc)
  */
 
 const { resolve } = require("path");
@@ -34,10 +34,10 @@ const faPath = {fontAwesome: resolve(vendorPath, "fontawesome", vendorVersions.f
  * the fonts are loaded from vendors
  */
 
-function stylesheet(css){ return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet"/>`;}
-function preload(js){ return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"/>`;}
+function stylesheet(css){ return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet" />`;}
+function preload(js){ return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}" />`;}
 function script(js){ return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`;}
-function font(woff2){ return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}"/>`;}
+function font(woff2){ return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}" />`;}
 
 /*******************************************************************************
  * the assets to load in the macro
@@ -135,7 +135,6 @@ module.exports = {
   },
   output: {filename: "scripts/[name].js", path: staticPath},
   optimization: {minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})]},
-  externals: {jquery: "jQuery"}, // will be removed with Sphinx 6
   module: {
     rules: [{
       test: /\.scss$/,

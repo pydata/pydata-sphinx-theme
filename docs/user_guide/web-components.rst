@@ -105,7 +105,7 @@ Cards
 
     .. grid-item-card:: A card with a dropdown menu
 
-        .. dropdown:: :fa:`eye,mr-1` third card
+        .. dropdown:: :fa:`eye me-1` third card
 
             Hidden content
 

@@ -51,6 +51,7 @@ doc = [
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
+  "accessible-pygments",
   # For examples section
   "ablog",
   "jupyter_sphinx",

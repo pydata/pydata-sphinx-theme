@@ -1,32 +1,28 @@
 {%- macro icon_link_nav_item(url, icon, name, type, attributes='') -%}
   {%- if url | length > 2 %}
-    <li class="nav-item">
-      {%- set attributesDefault = { "href": url, "title": name, "class": "nav-link", "rel": "noopener", "target": "_blank", "data-toggle": "tooltip"} %}
-      {%- if attributes %}
-        {% for key, val in attributes.items() %}
-          {% set _ = attributesDefault.update(attributes) %}
-        {% endfor %}
-      {% endif -%}
-      {% set attributeString = [] %}
-      {% for key, val in attributesDefault.items() %}
-        {%- set _ = attributeString.append('%s="%s"' % (key, val)) %}
-      {% endfor %}
-      {% set attributeString = attributeString | join(" ") -%}
-      <a {{ attributeString }}>
-        {%- if type == "fontawesome" -%}
-          <span><i class="{{ icon }}"></i></span>
-          <label class="sr-only">{{ _(name) }}</label>
-        {%- elif type == "local" -%}
-          <img src="{{ pathto(icon, 1) }}"
-               class="icon-link-image"
-               alt="{{ _(name) }}"/>
-        {%- elif type == "url" -%}
-          <img src="{{ icon }}" class="icon-link-image" alt="{{ _(name) }}"/>
-        {%- else %}
-          <span>Incorrectly configured icon link. Type must be `fontawesome`, `url` or `local`.</span>
-        {%- endif -%}
-      </a>
-    </li>
+        <li class="nav-item">
+          {%- set attributesDefault = { "href": url, "title": name, "class": "nav-link", "rel": "noopener", "target": "_blank", "data-bs-toggle": "tooltip", "data-bs-placement": "bottom"} %}
+          {%- if attributes %}{% for key, val in attributes.items() %}
+            {% set _ = attributesDefault.update(attributes) %}
+          {% endfor %}{% endif -%}
+          {% set attributeString = [] %}
+          {% for key, val in attributesDefault.items() %}
+            {%- set _ = attributeString.append('%s="%s"' % (key, val)) %}
+          {% endfor %}
+          {% set attributeString = attributeString | join(" ") -%}
+          <a {{ attributeString }}>
+            {%- if type == "fontawesome" -%}
+            <span><i class="{{ icon }}"></i></span>
+            <label class="sr-only">{{ _(name) }}</label>
+            {%- elif type == "local" -%}
+            <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ _(name) }}"/>
+            {%- elif type == "url" -%}
+            <img src="{{ icon }}" class="icon-link-image" alt="{{ _(name) }}"/>
+            {%- else %}
+            <span>Incorrectly configured icon link. Type must be `fontawesome`, `url` or `local`.</span>
+            {%- endif -%}
+          </a>
+        </li>
   {%- endif -%}
 {%- endmacro -%}
 <ul id="navbar-icon-links"
