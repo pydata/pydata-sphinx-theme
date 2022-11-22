@@ -1,21 +1,26 @@
 Upgrade to bootstrap 5
 ======================
 
-Since *v0.13*, ``pydata-sphinx-theme`` has moved from Bootstrap 4 to bootstrap 5. This documentation will guide you through the changes we made and the one you should take care of in your existing documentation.
+Since *v0.13*, ``pydata-sphinx-theme`` has moved from Bootstrap 4 to `Bootstrap 5 <https://getbootstrap.com/docs/5.1/getting-started/introduction/>`_.
+This documentation will guide you through the changes we made and how you could follow the same steps in your existing documentation.
 
 Dropping **JQuery**
 -------------------
 
-Bootstrap Dropped **jQuery** dependency and rewrote plugins to be in regular JavaScript. Note that Sphinx *v6* will do the same (https://github.com/sphinx-doc/sphinx/issues/10070). As a consequence, we also rewrote all our javascript to only use vanilla **JavaScript**. Any documentation relying on **JQuery** in their ``custom.js`` will need to rewrite it or specifically importy **JQuery**.
+Bootstrap Dropped its **JQuery** dependency and rewrote plugins to be in regular JavaScript.
+Sphinx *v6* will do the same (https://github.com/sphinx-doc/sphinx/issues/10070).
+As a consequence, we also rewrote all our javascript to only use vanilla **JavaScript**.
+Any documentation relying on **JQuery** in their ``custom.js`` files will need to rewrite it or specifically import **JQuery**.
 
 Breaking changes
 ----------------
 
-If your documentation was using a ``custom.css`` and/or a ``custom.js``, please pay attention to this migration items.
+‼️ Relevant for those using a ``custom.css`` and/or a ``custom.js`` file!
 
-.. tip::
+Bootstrap changed a number of CSS classes, so if you wrote custom rules of JS logic that depended on them, it may have changed.
 
-    All the changes from *v4* to *v5* are listed in their documentation: https://getbootstrap.com/docs/5.0/migration/. We will only list the one the have consequences on some of ``pydata-sphinx-theme`` components.
+All of the changes from *v4* to *v5* are `listed in their documentation <https://getbootstrap.com/docs/5.0/migration/>`_.
+Below list the ones that had consequences on ``pydata-sphinx-theme`` components.
 
 Sass
 ^^^^
