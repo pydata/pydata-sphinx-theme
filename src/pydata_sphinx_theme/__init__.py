@@ -1007,7 +1007,9 @@ class ShortenLinkTransform(SphinxPostTransform):
 
         elif self.platform == "gitlab":
             # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
-            if "/-/" in path and any(map(uri.path.__contains__, ["issues", "merge_requests"])):
+            if "/-/" in path and any(
+                map(uri.path.__contains__, ["issues", "merge_requests"])
+            ):
                 group_and_subgroups, parts, *_ = path.split("/-/")
                 parts = parts.split("/")
                 url_type, element_number, *_ = parts
