@@ -19,6 +19,8 @@ Go to the blog
 ```{postlist}
 :list-style: circle
 :category: Manual
-:format: "{title}"
+:date: "%Y-%m-%d"
+:format: "{title} - {date}"
+:excerpts:
 :sort:
 ```

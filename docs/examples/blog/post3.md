@@ -4,10 +4,11 @@ date: Jan 03, 2022
 author: jupyter
 location: World
 category: Manual
+tags: one, two, three
 language: English
 ---
 
-# Post title 3
+# Post three with a long-ish title we can use to compare
 
 Here's some text for post 3!
 
