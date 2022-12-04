@@ -159,7 +159,7 @@ def update_config(app):
 
     # Update ABlog configuration default if present
     if "ablog" in app.config.extensions:
-        app.config.__dict__["fontawesome_included"] = True       
+        app.config.__dict__["fontawesome_included"] = True
 
 
 def prepare_html_config(app, pagename, templatename, context, doctree):
