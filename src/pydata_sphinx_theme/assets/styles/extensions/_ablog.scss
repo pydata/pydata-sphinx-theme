@@ -6,15 +6,40 @@
 // So we make an assumption here that any *top-level* sidebar items that are ul/h2/h3
 // Are attached to ABlog. This is hacky and we should try to get top-level ablog
 // CSS wrappers into ABlog instead.
-.bd-sidebar-primary .sidebar-start-items {
+.bd-sidebar-primary .sidebar-start-items__item {
   > h3,
   > h2 {
-    margin-top: 1rem;
+    // Remove unnecessary vertical whitespace
+    margin-top: 0.5rem;
+    // Headers are too big by default
+    font-size: 1.7rem;
   }
 
   > ul {
+    // No bullet points for the primary sidebar items
     list-style: none;
     padding-left: 0;
+    // Otherwise a scrollbar randomly shows up
+    overflow-y: hidden;
+    // List of recent post items
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    // The ablog cloud should move horizontally
+    &.ablog-cloud {
+      flex-direction: row;
+      gap: 0;
+    }
+  }
+}
+
+// Vertical-align tag clouds
+ul.ablog-cloud {
+  li {
+    // Center the tag cloud items
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -30,22 +55,69 @@
 article.bd-article > section + div.section {
   font-size: 1.2em;
 
+  // The bottom previous / next arrows
+  span {
+    // To ensure that the whole thing fits on one line even if there are long titles
+    max-width: 45%;
+    // Alignment with the prev/next arrows
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    // Remove the ABlog icons because we specify our own
+    a i {
+      display: none;
+    }
+    // If the span is empty, it means there's no previous/next page to go to
+    // so this prevents the arrow from showing up
+    &:empty {
+      display: none;
+    }
+  }
+
+  // The first span is the "previous" button
   span:first-child:before {
     content: var(--pst-icon-angle-left);
     font-family: "Font Awesome 6 Free";
     font-weight: 800;
   }
 
-  span:last-child:after {
-    content: var(--pst-icon-angle-right);
-    font-family: "Font Awesome 6 Free";
-    font-weight: 800;
+  // The second span is just an empty space so we remove it because we're
+  // positioning with flex
+  span:first-child + span {
+    display: none !important;
+  }
+
+  // The third span is aligned to the right
+  span:last-child {
+    text-align: right;
+    &:after {
+      content: var(--pst-icon-angle-right);
+      font-family: "Font Awesome 6 Free";
+      font-weight: 800;
+    }
   }
 }
 
-// The post list on the ablog index
-.ablog-post {
-  ul.ablog-archive {
-    padding-left: 0;
+// Post metadata that is on the "posts" page
+ul.ablog-archive {
+  padding-left: 0;
+  font-size: 1.25rem;
+}
+
+// The post list when you use the {postlist} directive
+ul.postlist {
+  padding-left: 0;
+
+  li.ablog-post {
+    list-style: none;
+
+    // Title line should be a bit bigger
+    .ablog-post-title {
+      font-size: 1.5rem;
+    }
+    // Create a bit more whitespace if there's an excerpt
+    .ablog-post-excerpt {
+      margin-bottom: 2em;
+    }
   }
 }

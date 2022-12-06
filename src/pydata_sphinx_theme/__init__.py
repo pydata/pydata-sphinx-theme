@@ -29,8 +29,8 @@ __version__ = "0.12.1rc1.dev0"
 logger = logging.getLogger(__name__)
 
 
-def update_config(app, env):
-    theme_options = env.config.html_theme_options
+def update_config(app):
+    theme_options = app.config.html_theme_options
 
     # DEPRECATE >= v0.10
     if theme_options.get("search_bar_position") == "navbar":
@@ -105,7 +105,7 @@ def update_config(app, env):
                 reading_error = repr(e)
         else:
             try:
-                content = Path(env.srcdir, json_url).read_text()
+                content = Path(app.srcdir, json_url).read_text()
             except FileNotFoundError as e:
                 reading_error = repr(e)
 
@@ -156,6 +156,10 @@ def update_config(app, env):
             # Link the JS files
             app.add_js_file(gid_js_path, loading_method="async")
             app.add_js_file(None, body=gid_script)
+
+    # Update ABlog configuration default if present
+    if "ablog" in app.config.extensions:
+        app.config.__dict__["fontawesome_included"] = True
 
 
 def prepare_html_config(app, pagename, templatename, context, doctree):
@@ -1044,7 +1048,7 @@ def setup(app):
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
 
-    app.connect("env-updated", update_config)
+    app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)
