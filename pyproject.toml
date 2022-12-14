@@ -24,7 +24,8 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
-  "pygments>=2.7"
+  "pygments>=2.7",
+  "accessible-pygments"
 ]
 
 license = { file = "LICENSE" }
@@ -51,7 +52,6 @@ doc = [
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
-  "accessible-pygments",
   # For examples section
   "ablog",
   "jupyter_sphinx",
