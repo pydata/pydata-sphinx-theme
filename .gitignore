@@ -118,3 +118,6 @@ docs/_static/gallery
 
 # Our site profile tests
 profile.svg
+
+# MacOSX store files
+**/.DS_Store
