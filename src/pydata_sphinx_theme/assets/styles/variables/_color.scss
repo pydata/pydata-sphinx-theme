@@ -107,7 +107,7 @@ $pst-semantic-colors: (
     }
     // assign the "duplicate" colors (ones that just reference other variables)
     --pst-color-link: var(--pst-color-primary);
-    --pst-color-link-hover: var(--pst-color-warning);
+    --pst-color-link-hover: var(--pst-color-secondary);
     // adapt to light/dark-specific content
     @if $mode == "light" {
       .only-dark {
