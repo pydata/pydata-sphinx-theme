@@ -5,13 +5,23 @@
 * NOTE: this theme defines "info == primary" and "warning == secondary"
 */
 $pst-semantic-colors: (
-  "primary": rgb(69, 157, 185),
-  "secondary": rgb(238, 144, 64),
-  "info": rgb(69, 157, 185),
-  "warning": rgb(238, 144, 64),
+  "primary": (
+    "dark": rgb(102, 205, 218),
+    "light": rgb(0, 130, 146),
+  ),
+  "secondary": (
+    "dark": rgb(252, 165, 0),
+    "light": rgb(176, 98, 0),
+  ),
+  // semantic colours - used to indicate state or purpose
+  "info": #1d7afc,
+  "warning": (
+    "dark": rgb(252, 165, 0),
+    "light": rgb(235, 131, 0),
+  ),
   "success": (
-    "light": rgb(40, 167, 69),
-    "dark": rgb(72, 135, 87),
+    "light": rgb(34, 160, 107),
+    "dark": rgb(75, 206, 151),
   ),
   "attention": (
     "light": rgb(255, 193, 7),
@@ -42,8 +52,8 @@ $pst-semantic-colors: (
     "dark": rgb(192, 192, 192),
   ),
   "inline-code": (
-    "light": rgb(232, 62, 140),
-    "dark": rgb(221, 158, 194),
+    "dark": rgb(255, 128, 200),
+    "light": rgb(191, 57, 137),
   ),
   "target": (
     "light": rgb(251, 229, 78),
