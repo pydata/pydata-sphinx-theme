@@ -8,8 +8,8 @@
 Accessibility
 *************
 
-Creating and publishing content that does not exclude audiences with limited abilities
-of various kinds is challenging, but also important, to achieve and then maintain.
+Creating and publishing content that does not exclude disabled readers is a challenging
+yet extremely important and impactful task, to achieve and then maintain.
 
 While there is no one-size-fits-all solution to maintaining accessible content, this
 theme and documentation site use some techniques to avoid common content shortcomings.
@@ -34,11 +34,21 @@ page that lacks metadata, please open a pull request to add it!
 Colors
 ======
 
+Syntax highlighting
+-------------------
+
 Our default code highlighting styles are ``a11y-high-contrast-light`` and
 ``a11y-high-contrast-dark`` from https://github.com/Quansight-Labs/accessible-pygments.
-These styles are designed to be more accessible to users with limited visual abilities.
+These styles are designed to be more accessible by meeting `WCAG 2.1 criteria for color contrast <https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html>`__.
 If you don't like the look of our default code highlighting styles, there are several more
 to choose from at https://github.com/Quansight-Labs/accessible-pygments.
+
+Default branding colors
+-----------------------
+
+The PyData Sphinx Theme uses a modified version of the PyData brand colors to ensure
+the theme complies with the `WCAG 2.1 criteria for color contrast <https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html>`__,
+both, in dark and light mode.
 
 
 What You Can Do
@@ -55,7 +65,7 @@ Natural Language
 ----------------
 
 If not using a more robust `internationalization approach <https://www.sphinx-doc.org/en/master/usage/advanced/intl.html>`__,
-specifying at least the baseline natural language will help assistive technology
+specifying at least the baseline natural language will help assistive technology (such as screen readers)
 identify if the content is in a language the reader understands.
 
 .. Hint::
@@ -75,7 +85,7 @@ approach to telling programs like search engines and assistive technologies wher
 different content appears on a website.
 
 If using a service like `ReadTheDocs <https://readthedocs.com>`__, these files
-will be created for you *automatically*, but for some of the other approaches below,
+will be created for you *automatically*, but for some other approaches below,
 it's handy to generate a `sitemap.xml` locally or in CI with a tool like
 `sphinx-sitemap <https://pypi.org/project/sphinx-sitemap/>`__.
 
@@ -153,3 +163,15 @@ automation, page performance, and other best practices.
 
     Specifically, `foo-software/lighthouse-check-action <https://github.com/foo-software/lighthouse-check-action>`__
     is run on selected pages from the generated documentation site.
+
+Other useful resources
+======================
+
+It is important to ensure your color choices are accessible when customizing your documentation theme.
+
+Color contrast checkers
+-----------------------
+
+- `WebAIM link contrast checker <https://webaim.org/resources/linkcontrastchecker>`__: useful to check links color contrast.
+- `Mozilla color picker tool <https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool>`__: to create and adjust custom colors for the web, as well to convert among various color formats.
+- `Adobe color contrast analyser <https://color.adobe.com/create/color-contrast-analyzer>`__: useful to check the contrast between two colors, and find suitable alternatives to meet WCAG 2.1 contrast criteria.

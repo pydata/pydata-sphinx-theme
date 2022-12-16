@@ -39,7 +39,7 @@ used to quickly control behavior and display across your documentation.
 These are based on top of the basic `Bootstrap CSS variables <https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables>`_
 extended with some theme specific variables.
 
-base variables
+Base variables
 --------------
 
 In order to change a variable, follow these steps:
@@ -97,8 +97,9 @@ Here is an overview of the colors available in the theme (change theme mode to s
       span.pst-badge {border: 1px solid var(--pst-color-text-base);}
       span.pst-primary {background-color: var(--pst-color-primary);}
       span.pst-secondary {background-color: var(--pst-color-secondary);}
-      span.pst-success {background-color: var(--pst-color-success);}
       span.pst-info {background-color: var(--pst-color-info);}
+      span.pst-success {background-color: var(--pst-color-success);}
+      span.pst-attention {background-color: var(--pst-color-attention);}
       span.pst-warning {background-color: var(--pst-color-warning);}
       span.pst-danger {background-color: var(--pst-color-danger);}
       span.pst-background {background-color: var(--pst-color-background);}
@@ -111,8 +112,9 @@ Here is an overview of the colors available in the theme (change theme mode to s
     <p>
       <span class="sd-sphinx-override sd-badge pst-badge pst-primary">primary</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-secondary">secondary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-success">success</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-info">info</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-success">success</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-attention">attention</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-warning">warning</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-danger">danger</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-background">background</span>
@@ -184,7 +186,8 @@ For a complete list of the theme colors that you may override, see the :download
 Configure pygments theme
 ========================
 
-As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``. You can check available Pygments colors on this `page <https://pygments.org/styles/>`__.
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``. You can check available `Pygments colors on this page <https://pygments.org/styles/>`__ as well
+as `WCAG-conformant pygments styles <https://github.com/Quansight-Labs/accessible-pygments>`__ that you can use in your documentation.
 
 .. code-block:: python
 
