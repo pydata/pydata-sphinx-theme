@@ -184,7 +184,7 @@ For example:
   - `[https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)`
   - [https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)
 
-- **MyST Markdown with [MyST Linkify](https://myst-**parser.readthedocs.io/en/latest/syntax/optional.html#linkify)
+- **MyST Markdown with [MyST Linkify](https://myst-**parser.readthedocs.io/en/latest/syntax/optional.html#linkify)**
   - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
   - https://github.com/pydata/pydata-sphinx-theme/pull/1012
 
