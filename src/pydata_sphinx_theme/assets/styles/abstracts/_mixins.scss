@@ -42,14 +42,13 @@
  * A consistent box shadow style we apply across elements.
  */
 @mixin box-shadow() {
-  box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
-    0 0 0.0625rem var(--pst-color-shadow) !important;
+  box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow), 0 0 0.0625rem var(--pst-color-shadow) !important;
 }
 
 /**
  * create a low opacity background behind object using our variable colors
  */
-@mixin background-from-color-variable($color-variable, $opacity: 0.1) {
+@mixin background-from-color-variable($color-variable, $opacity: 0.2) {
   // This is a hack to create a light background with controlled opacity
   // using our css color variables
   // ref: https://stackoverflow.com/a/56951626/6734243
