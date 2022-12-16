@@ -6,18 +6,18 @@
 */
 $pst-semantic-colors: (
   "primary": (
-    "dark": rgb(102, 205, 218),
+    "dark": rgb(5, 174, 194),
     "light": rgb(0, 130, 146),
   ),
   "secondary": (
-    "dark": rgb(235, 131, 0),
-    "light": rgb(176, 98, 0),
+    "dark": rgb(217, 112, 8),
+    "light": rgb(182, 92, 2),
   ),
   // semantic colours - used to indicate state or purpose
   "info": #1d7afc,
   "warning": (
-    "dark": rgb(235, 131, 0),
-    "light": rgb(235, 131, 0),
+    "light": rgb(217, 112, 8),
+    "dark": rgb(238, 144, 64),
   ),
   "success": (
     "light": rgb(34, 160, 107),
@@ -52,8 +52,8 @@ $pst-semantic-colors: (
     "dark": rgb(192, 192, 192),
   ),
   "inline-code": (
-    "dark": rgb(255, 128, 200),
-    "light": rgb(191, 57, 137),
+    "dark": rgb(222, 135, 194),
+    "light": rgb(188, 15, 133),
   ),
   "target": (
     "light": rgb(251, 229, 78),
