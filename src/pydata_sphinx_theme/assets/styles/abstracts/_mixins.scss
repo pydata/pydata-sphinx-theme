@@ -48,7 +48,7 @@
 /**
  * create a low opacity background behind object using our variable colors
  */
-@mixin background-from-color-variable($color-variable, $opacity: 0.2) {
+@mixin background-from-color-variable($color-variable, $opacity: 0.1) {
   // This is a hack to create a light background with controlled opacity
   // using our css color variables
   // ref: https://stackoverflow.com/a/56951626/6734243
