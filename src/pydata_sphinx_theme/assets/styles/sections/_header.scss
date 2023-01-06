@@ -13,7 +13,8 @@
   background: var(--pst-color-on-background) !important;
   box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
 
-  min-height: var(--pst-header-height);
+  height: var(--pst-header-height);
+  max-height: var(--pst-header-height);
   width: 100%;
   padding: 0.5rem 0;
   max-width: 100vw;
