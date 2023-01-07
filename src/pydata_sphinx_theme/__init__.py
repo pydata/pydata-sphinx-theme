@@ -923,7 +923,7 @@ def _overwrite_pygments_css(app, exception=None):
 
 
 # ------------------------------------------------------------------------------
-# customize rendering of the links
+# customize rendering of tag elements
 # ------------------------------------------------------------------------------
 
 
