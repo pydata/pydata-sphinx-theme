@@ -103,7 +103,7 @@ class BootstrapHTML5Translator(HTML5Translator):
             node,
             "div",
             suffix="",
-            CLASS="highlight-%s notranslate" % lang,
+            CLASS=f"highlight-{lang} notranslate",
             tabindex="0",
         )
         self.body.append(starttag + highlighted + "</div>\n")
