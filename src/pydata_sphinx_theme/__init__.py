@@ -530,10 +530,10 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             if not title.select(".toc-h2"):
                 out = ""
             else:
-                out = title.find("ul").prettify()
+                out = title.find("ul")
         # Else treat the h1 headers as sections
         else:
-            out = soup.prettify()
+            out = soup
 
         # Return the toctree object
         if kind == "html":
