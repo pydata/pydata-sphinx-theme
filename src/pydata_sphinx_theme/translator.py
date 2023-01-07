@@ -1,18 +1,18 @@
-"""A custom Sphinx HTML Translator for Bootstrap layout
+"""
+A custom Sphinx HTML Translator for Bootstrap layout
 """
 from packaging.version import Version
 
 import sphinx
-from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
 from sphinx.ext.autosummary import autosummary_table
 
 logger = logging.getLogger(__name__)
 
 
-class BootstrapHTML5Translator(HTML5Translator):
-    """Custom HTML Translator for a Bootstrap-ified Sphinx layout
-    This is a specialization of the HTML5 Translator of sphinx.
+class BootstrapHTML5TranslatorMixin:
+    """
+    Mixin HTML Translator for a Bootstrap-ified Sphinx layout.
     Only a couple of functions have been overridden to produce valid HTML to be
     directly styled with Bootstrap, and fulfill acessibility best practices.
     """

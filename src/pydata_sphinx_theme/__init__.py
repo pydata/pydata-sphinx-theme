@@ -6,6 +6,7 @@ from pathlib import Path
 from functools import lru_cache
 import json
 from urllib.parse import urlparse, urlunparse
+import types
 
 import jinja2
 from bs4 import BeautifulSoup as bs
@@ -22,7 +23,7 @@ from pygments.styles import get_all_styles
 import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 
-from .bootstrap_html_translator import BootstrapHTML5Translator
+from .translator import BootstrapHTML5TranslatorMixin
 
 __version__ = "0.12.1rc1.dev0"
 
@@ -1030,6 +1031,39 @@ class ShortenLinkTransform(SphinxPostTransform):
         return text
 
 
+def setup_translators(app):
+    """
+    Override translators respecting the one defined (if any).
+
+    We create a new class by inheriting the Sphinx Translator already defined and our own ``BootstrapHTML5TranslatorMixin`` that includes custom logic
+    """
+    if not app.registry.translators.items():
+        translator = types.new_class(
+            "BootstrapHTML5Translator",
+            (
+                BootstrapHTML5TranslatorMixin,
+                app.builder.default_translator_class,
+            ),
+            {},
+        )
+        app.set_translator(app.builder.name, translator, override=True)
+    else:
+        for name, klass in app.registry.translators.items():
+            if app.builder.format != "html":
+                # Skip translators that are not HTML
+                continue
+
+            translator = types.new_class(
+                "BootstrapHTML5Translator",
+                (
+                    BootstrapHTML5TranslatorMixin,
+                    klass,
+                ),
+                {},
+            )
+            app.set_translator(name, translator, override=True)
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -1041,13 +1075,7 @@ def setup(app):
 
     app.add_post_transform(ShortenLinkTransform)
 
-    app.set_translator("html", BootstrapHTML5Translator)
-    # Read the Docs uses ``readthedocs`` as the name of the build, and also
-    # uses a special "dirhtml" builder so we need to replace these both with
-    # our custom HTML builder
-    app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
-    app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
-
+    app.connect("builder-inited", setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
