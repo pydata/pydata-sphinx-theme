@@ -5,7 +5,6 @@
     "build": "webpack"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
     "dedent": "^0.7.0",
@@ -29,9 +28,8 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.1.2",
-    "bootstrap": "^4.4.1",
-    "jquery": "3.5.1",
-    "optimize-css-assets-webpack-plugin": "^6.0.1",
-    "popper.js": "^1.16.1"
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.2",
+    "optimize-css-assets-webpack-plugin": "^6.0.1"
   }
 }

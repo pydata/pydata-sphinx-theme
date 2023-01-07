@@ -14,7 +14,9 @@
   }
 
   i.fa-solid.fa-magnifying-glass {
-    padding-right: 0.5rem;
+    position: absolute;
+    left: 1.6rem;
+    color: var(--pst-color-text-muted);
   }
 
   input {
@@ -90,10 +92,6 @@
     margin-top: 0.5rem;
     width: 90%;
     max-width: 800px;
-
-    i.fa-solid.fa-magnifying-glass {
-      padding-right: 0.5rem;
-    }
   }
 
   .search-button__overlay {
@@ -118,25 +116,5 @@
   i,
   input {
     font-size: var(--pst-font-size-icon);
-  }
-}
-
-/**
- * Button behavior on mobile / wide so it shows up in the header on mobile.
- */
-
-// The navbar end version should only show on wide screens
-.navbar-end__search-button-container {
-  display: none;
-  @include media-breakpoint-up($breakpoint-sidebar-primary) {
-    display: flex;
-  }
-}
-
-// The one next to the hamburger menu only shows on narrow screens
-.search-button-container--mobile {
-  margin-left: auto;
-  @include media-breakpoint-up($breakpoint-sidebar-primary) {
-    display: none;
   }
 }

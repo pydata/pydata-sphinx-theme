@@ -13,21 +13,25 @@ $pst-semantic-colors: (
     "light": rgb(40, 167, 69),
     "dark": rgb(72, 135, 87),
   ),
+  "attention": (
+    "light": rgb(255, 193, 7),
+    "dark": rgb(220, 169, 15),
+  ),
   "danger": (
     "light": rgb(220, 53, 69),
     "dark": rgb(203, 70, 83),
   ),
   "text-base": (
-    // Black + 50
     "light": rgb(50, 50, 50),
-    // White - 50
+    // Black + 50
     "dark": rgb(206, 206, 206),
+    // White - 50
   ),
   "text-muted": (
-    // Twice as far from 0 as base
     "light": rgb(100, 100, 100),
-    // Twice as far from 256 as base
+    // Twice as far from 0 as base
     "dark": rgb(166, 166, 166),
+    // Twice as far from 256 as base
   ),
   "shadow": (
     "light": rgb(216, 216, 216),
@@ -93,7 +97,7 @@ $pst-semantic-colors: (
     }
     // assign the "duplicate" colors (ones that just reference other variables)
     --pst-color-link: var(--pst-color-primary);
-    --pst-color-link-hover: var(--pst-color-secondary);
+    --pst-color-link-hover: var(--pst-color-warning);
     // adapt to light/dark-specific content
     @if $mode == "light" {
       .only-dark {

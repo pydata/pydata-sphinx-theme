@@ -64,6 +64,7 @@ instance/
 # Sphinx documentation
 docs/_build/
 docs/examples/generated/
+warnings.txt
 
 # PyBuilder
 target/
@@ -117,3 +118,6 @@ docs/_static/gallery
 
 # Our site profile tests
 profile.svg
+
+# MacOSX store files
+**/.DS_Store

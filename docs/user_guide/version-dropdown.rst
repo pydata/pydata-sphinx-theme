@@ -115,6 +115,14 @@ a few different ways:
           }
       }
 
+By default the theme is testing the :code:`.json` file provided and outputs warnings in the Sphinx build. If this test breaks the pipeline of your docs, the test can be disabled by configuring the :code:`check_switcher` parameter in :code:`conf.py`:
+
+.. code-block:: python
+
+    html_theme_options = {
+        # ...
+        "check_switcher": False
+    }
 
 Configure ``switcher['version_match']``
 ---------------------------------------

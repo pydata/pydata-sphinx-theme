@@ -61,7 +61,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 # -- Extension options -------------------------------------------------------
 
 # This allows us to use ::: to denote directives, useful for admonitions
-myst_enable_extensions = ["colon_fence", "substitution"]
+myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -93,10 +93,6 @@ if not version_match or version_match.isdigit():
 
 html_theme_options = {
     "external_links": [
-        {
-            "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
-            "name": "Changelog",
-        },
         {
             "url": "https://pydata.org",
             "name": "PyData",
@@ -137,12 +133,12 @@ html_theme_options = {
     "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     "navbar_center": ["version-switcher", "navbar-nav"],
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
-    # "announcement": "Here's a test <a href='https://google.com'>announcement</a>!",
     # "show_nav_level": 2,
     # "navbar_start": ["navbar-logo"],
-    # "navbar_end": ["theme-switcher", "navbar-icon-links"],  # Just for testing, we should use defaults in our docs
+    # "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    # "navbar_persistent": ["search-button"],
     # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
-    # "footer_items": ["copyright", "sphinx-version", ""],
+    # "footer_items": ["copyright", "sphinx-version"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,

@@ -1,26 +1,28 @@
-# Exclude the encrypted file.
-exclude: github_deploy_key_pandas_dev_pandas_sphinx_theme\.enc
+# Fix the node version to avoid a GLIBC error
+# ref: https://stackoverflow.com/questions/71939099/bitbucket-pipeline-error-installing-pre-commit-ts-lint/71940852#71940852
+default_language_version:
+  node: 16.14.2
 
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
+    rev: v3.0.0-alpha.4
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
         exclude: .+((\.html)|index\.(.+)\.css)$
 
   - repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 22.12.0
     hooks:
       - id: black
 
-  - repo: https://github.com/pycqa/flake8
-    rev: 5.0.4
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
     hooks:
       - id: flake8
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: v4.4.0
     hooks:
       - id: check-builtin-literals
       - id: check-case-conflict
@@ -31,7 +33,13 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.38.2
+    rev: v3.3.1
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
+
+  - repo: https://github.com/Riverside-Healthcare/djLint
+    rev: v1.19.7
+    hooks:
+      - id: djlint-jinja
+        types_or: ["html"]

@@ -5,9 +5,9 @@
   // Size is a bit smaller because the background shadow is bigger
   font-size: calc(var(--pst-font-size-icon) - 0.1rem);
   margin: 0 -0.5rem;
-  padding: 0; // We pad the `a` not the container
+  padding: 0; // We pad the `span` not the container
 
-  a {
+  span {
     display: none;
     color: var(--pst-color-text-muted);
     padding: 0.5rem;
@@ -40,12 +40,12 @@
   }
 }
 
-html[data-mode="auto"] .theme-switch-button a[data-mode="auto"] {
+html[data-mode="auto"] .theme-switch-button span[data-mode="auto"] {
   display: flex;
 }
-html[data-mode="light"] .theme-switch-button a[data-mode="light"] {
+html[data-mode="light"] .theme-switch-button span[data-mode="light"] {
   display: flex;
 }
-html[data-mode="dark"] .theme-switch-button a[data-mode="dark"] {
+html[data-mode="dark"] .theme-switch-button span[data-mode="dark"] {
   display: flex;
 }

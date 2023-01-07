@@ -1,19 +1,19 @@
-name: cron-integration
+name: Scheduled pre-release tests
 
 on:
   schedule:
-    # Run this workflow once a week
-    # ref: https://crontab.guru/#0_0_*_*_0
-    - cron: "0 0 * * 0"
+    # Run this workflow twice a week
+    # ref: https://crontab.guru/#0_5_*_*_1,4
+    - cron: "0 5 * * 1,4"
   workflow_dispatch:
 
 jobs:
   prerelease:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v3
@@ -35,20 +35,8 @@ jobs:
           sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
 
       - name: Check that there are no unexpected Sphinx warnings
-        if: matrix.python-version == 3.9
-        shell: python
-        run: |
-          from pathlib import Path
-          import os
-
-          text = Path("./warnings.txt").read_text().strip()
-          print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["frame.py", "_static", "parse.py"])]
-          print("\n=== Unexpected Warnings ===\n\n" + "\n".join(unexpected))
-
-          env_file = os.getenv('GITHUB_ENV')
-          with open(env_file, "a") as f:
-              f.write("SPHINX_BUILD_UNEXPECTED_WARNINGS = len(unexpected)!=0")
+        if: matrix.python-version == '3.10'
+        run: python tests/check_warnings.py
 
       - name: Run the tests
         run: |

@@ -1,22 +1,8 @@
 // Import Bootstrap core
-// Override bootstrap variables
-$spacer: 1rem;
-
-$container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1400px,
-);
-
-$grid-breakpoints: (
-  xs: 0,
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1200px,
-);
-@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/functions";
+@import "variables/bootstrap";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
 
 // Variables
 @import "variables/layout";
@@ -33,6 +19,7 @@ $grid-breakpoints: (
 @import "./base/base";
 
 // Major theme layout, skeleton, and whitespace
+@import "./sections/skip-link";
 @import "./sections/container";
 @import "./sections/announcement";
 @import "./sections/article";
@@ -55,6 +42,7 @@ $grid-breakpoints: (
 @import "./components/toc-inpage";
 @import "./components/versionmodified";
 @import "./components/indices";
+@import "./components/readthedocs-switcher";
 
 // Content blocks in standard Sphinx
 @import "./content/admonitions";
@@ -80,6 +68,7 @@ $grid-breakpoints: (
 @import "./extensions/sphinx_design";
 @import "./extensions/sphinx_panels";
 @import "./extensions/togglebutton";
+@import "./extensions/notebooks";
 
 // Page-specific CSS
 @import "./pages/search";

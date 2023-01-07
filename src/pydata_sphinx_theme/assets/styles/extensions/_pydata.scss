@@ -6,12 +6,3 @@
 .xr-wrap[hidden] {
   display: block !important;
 }
-
-/**
- * special case for table rendered via nbsphinx
- */
-.rendered_html {
-  table {
-    table-layout: auto;
-  }
-}

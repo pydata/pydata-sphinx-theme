@@ -31,8 +31,8 @@ See the sections in the primary sidebar and below to explore.
 
     no-sidebar
     persistent-search-field
-    mult_headers
     subpages/index
+    mult_headers
     Link to an external site <https://jupyterbook.org/>
 
 .. meta::

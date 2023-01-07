@@ -1,0 +1,10 @@
+{
+    "profile": "jinja",
+    "extension": "html",
+    "indent": "2",
+    "max_line_length": "120",
+    "use_gitignore": "True",
+    "format_js": "True",
+    "format_css": "True",
+    "ignore": "H006,J018,T003,H025"
+}

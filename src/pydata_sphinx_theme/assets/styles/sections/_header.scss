@@ -13,7 +13,8 @@
   background: var(--pst-color-on-background) !important;
   box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
 
-  min-height: var(--pst-header-height);
+  height: var(--pst-header-height);
+  max-height: var(--pst-header-height);
   width: 100%;
   padding: 0.5rem 0;
   max-width: 100vw;
@@ -125,8 +126,18 @@
   border-left: 2px solid var(--pst-color-primary);
 }
 
-.nav-link:hover {
-  border-style: none;
+.nav-link {
+  &:hover {
+    border-style: none;
+  }
+
+  &.nav-external:after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: var(--pst-icon-external-link);
+    font-size: 0.75em;
+    margin-left: 0.3em;
+  }
 }
 
 #navbar-main-elements li.nav-item i {
@@ -172,5 +183,21 @@
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: inherit;
     }
+  }
+}
+
+// THe elements next to the hamburger menu only show on narrow screens
+.navbar-persistent--mobile {
+  margin-left: auto;
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    display: none;
+  }
+}
+
+// The navbar-persistent content should only show on wide screens
+.navbar-persistent--container {
+  display: none;
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    display: flex;
   }
 }

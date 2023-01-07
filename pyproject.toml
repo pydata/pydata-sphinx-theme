@@ -8,6 +8,8 @@ theme-name = "pydata_sphinx_theme"
 additional-compiled-static-assets = [
   "webpack-macros.html",
   "vendor/",
+  "styles/bootstrap.css",
+  "scripts/bootstrap.js"
 ]
 
 [project]
@@ -22,7 +24,8 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
-  "pygments>=2.7"
+  "pygments>=2.7",
+  "accessible-pygments"
 ]
 
 license = { file = "LICENSE" }
@@ -43,6 +46,7 @@ classifiers = [
 doc = [
   "numpydoc",
   "myst-nb",
+  "linkify-it-py",  # for link shortening
   "pytest",
   "pytest-regressions",
   "rich",
@@ -71,6 +75,7 @@ test = [
 coverage = [
   "pytest-cov",
   "codecov",
+  "colorama",
   "pydata-sphinx-theme[test]",
 ]
 dev = [

@@ -1,4 +1,5 @@
 import os
+import re
 from pathlib import Path
 from shutil import copytree
 
@@ -9,6 +10,12 @@ from sphinx.testing.path import path as sphinx_path
 from sphinx.testing.util import SphinxTestApp
 
 path_tests = Path(__file__).parent
+
+
+def escape_ansi(string):
+    """helper function to remove ansi coloring from sphinx warnings"""
+    ansi_escape = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]")
+    return ansi_escape.sub("", string)
 
 
 class SphinxBuild:
@@ -256,16 +263,17 @@ def test_favicons(sphinx_build_factory):
 
     icon_16 = (
         '<link href="https://secure.example.com/favicon/favicon-16x16.png" '
-        'rel="icon" sizes="16x16" type="image/png">'
+        'rel="icon" sizes="16x16" type="image/png"/>'
     )
     icon_32 = (
         '<link href="_static/favicon-32x32.png" rel="icon" sizes="32x32" '
-        'type="image/png">'
+        'type="image/png"/>'
     )
     icon_180 = (
         '<link href="_static/apple-touch-icon-180x180.png" '
-        'rel="apple-touch-icon" sizes="180x180" type="image/png">'
+        'rel="apple-touch-icon" sizes="180x180" type="image/png"/>'
     )
+    print(index_html.select("head")[0])
     assert icon_16 in str(index_html.select("head")[0])
     assert icon_32 in str(index_html.select("head")[0])
     assert icon_180 in str(index_html.select("head")[0])
@@ -286,7 +294,7 @@ def test_navbar_align_right(sphinx_build_factory):
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("index.html")
     assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
-    assert "ml-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
+    assert "ms-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
@@ -547,11 +555,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
 @pytest.mark.parametrize(
     "provider,tags",
     [
-        # TODO: Deprecate old-style analytics config >= 0.12
-        # new_google_analytics_id
-        ({"html_theme_options.google_analytics_id": "G-XXXXX"}, ["gtag", "G-XXXXX"]),
-        # old_google_analytics_id
-        ({"html_theme_options.google_analytics_id": "UA-XXXXX"}, ["ga", "UA-XXXXX"]),
         # google analytics
         (
             {"html_theme_options.analytics": {"google_analytics_id": "G-XXXXX"}},
@@ -565,17 +568,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
                     "plausible_analytics_domain": "toto",
                     "plausible_analytics_url": "http://.../script.js",
                 }
-            },
-            ["gtag", "G-XXXXX"],
-        ),
-        # TODO: Deprecate old-style analytics config >= 0.12
-        (
-            {
-                "html_theme_options.analytics": {
-                    "plausible_analytics_domain": "toto",
-                    "plausible_analytics_url": "http://.../script.js",
-                },
-                "html_theme_options.google_analytics_id": "G-XXXXX",
             },
             ["gtag", "G-XXXXX"],
         ),
@@ -628,7 +620,12 @@ def test_show_nav_level(sphinx_build_factory):
         assert "checked" in checkbox.attrs
 
 
-def test_version_switcher(sphinx_build_factory, file_regression):
+switcher_files = ["switcher.json", "http://a.b/switcher.json", "missing_url.json"]
+"the switcher files tested in test_version_switcher, not all of them exist"
+
+
+@pytest.mark.parametrize("url", switcher_files)
+def test_version_switcher(sphinx_build_factory, file_regression, url):
     """Regression test the version switcher dropdown HTML.
 
     Note that a lot of the switcher HTML gets populated by JavaScript,
@@ -641,20 +638,28 @@ def test_version_switcher(sphinx_build_factory, file_regression):
         "html_theme_options": {
             "navbar_end": ["version-switcher"],
             "switcher": {
-                "json_url": "switcher.json",
+                "json_url": url,
                 "version_match": "0.7.1",
             },
         }
     }
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    switcher = sphinx_build.html_tree("index.html").select(
-        ".version-switcher__container"
-    )[
-        0
-    ]  # noqa
-    file_regression.check(
-        switcher.prettify(), basename="navbar_switcher", extension=".html"
-    )
+    factory = sphinx_build_factory("base", confoverrides=confoverrides)
+    sphinx_build = factory.build(no_warning=False)
+
+    if url == "switcher.json":  # this should work
+        index = sphinx_build.html_tree("index.html")
+        switcher = index.select(".version-switcher__container")[0]
+        file_regression.check(
+            switcher.prettify(), basename="navbar_switcher", extension=".html"
+        )
+
+    elif url == "http://a.b/switcher.json":  # this file doesn't exist"
+        not_read = 'WARNING: The version switcher "http://a.b/switcher.json" file cannot be read due to the following error:\n'  # noqa
+        assert not_read in escape_ansi(sphinx_build.warnings).strip()
+
+    elif url == "missing_url.json":  # this file is missing the url key for one version
+        missing_url = 'WARNING: The version switcher "missing_url.json" file is malformed at least one of the items is missing the "url" or "version" key'  # noqa
+        assert escape_ansi(sphinx_build.warnings).strip() == missing_url
 
 
 def test_theme_switcher(sphinx_build_factory, file_regression):
@@ -672,11 +677,11 @@ def test_shorten_link(sphinx_build_factory, file_regression):
 
     sphinx_build = sphinx_build_factory("base").build()
 
-    github = sphinx_build.html_tree("page1.html").select(".github")[0]
-    file_regression.check(github.prettify(), basename="github_link", extension=".html")
+    github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
+    file_regression.check(github.prettify(), basename="github_links", extension=".html")
 
-    gitlab = sphinx_build.html_tree("page1.html").select(".gitlab")[0]
-    file_regression.check(gitlab.prettify(), basename="gitlab_link", extension=".html")
+    gitlab = sphinx_build.html_tree("page1.html").select(".gitlab-container")[0]
+    file_regression.check(gitlab.prettify(), basename="gitlab_links", extension=".html")
 
 
 def test_math_header_item(sphinx_build_factory, file_regression):
@@ -685,6 +690,58 @@ def test_math_header_item(sphinx_build_factory, file_regression):
     sphinx_build = sphinx_build_factory("base").build()
     li = sphinx_build.html_tree("page2.html").select("#navbar-main-elements li")[1]
     file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
+
+
+@pytest.mark.parametrize(
+    "style_names,keyword_colors",
+    [
+        (("fake_foo", "fake_bar"), ("#204a87", "#66d9ef")),
+        (
+            ("a11y-high-contrast-light", "a11y-high-contrast-dark"),
+            ("#7928a1", "#dcc6e0"),
+        ),
+    ],
+)
+def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors):
+    """Test that setting color themes works.
+
+    NOTE: the expected keyword colors for fake_foo and fake_bar are the colors
+    from the fallback styles (tango and monokai, respectively).
+    """
+    confoverrides = {
+        "html_theme_options": {
+            "pygment_light_style": style_names[0],
+            "pygment_dark_style": style_names[1],
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
+        no_warning=False
+    )
+    warnings = sphinx_build.warnings.strip().split("\n")
+    # see if our warnings worked
+    if style_names[0].startswith("fake"):
+        assert len(warnings) == 2
+        re.match(r"Color theme fake_foo.*tango", warnings[0])
+        re.match(r"Color theme fake_bar.*monokai", warnings[1])
+    else:
+        assert warnings == [""]
+    # test that the rendered HTML has highlighting spans
+    page_two = sphinx_build.html_tree("page2.html")
+    keyword = (
+        page_two.select(".highlight-python")[0].select(".highlight")[0].select(".k")[0]
+    )
+    assert str(keyword) == '<span class="k">as</span>'
+    # test that the pygments CSS file specifies the expected colors
+    css = Path(sphinx_build.outdir) / "_static" / "pygments.css"
+    with open(css) as css_file:
+        lines = css_file.readlines()
+    assert lines[0].startswith('html[data-theme="light"]')
+    for mode, color in dict(zip(["light", "dark"], keyword_colors)).items():
+        regexp = re.compile(
+            r'html\[data-theme="' + mode + r'"\].*\.k .*color: ' + color
+        )
+        matches = [regexp.match(line) is not None for line in lines]
+        assert sum(matches) == 1
 
 
 def test_deprecated_build_html(sphinx_build_factory, file_regression):
@@ -718,3 +775,11 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
 
     # Secondary sidebar should not be present if page-level metadata given
     assert not sphinx_build.html_tree("page2.html").select("div.bd-sidebar-secondary")
+
+
+def test_ablog(sphinx_build_factory):
+    """Ensure that we are over-riding the ABlog default FontAwesome config."""
+
+    confoverrides = {"extensions": ["ablog"]}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    assert sphinx_build.app.config.fontawesome_included is True

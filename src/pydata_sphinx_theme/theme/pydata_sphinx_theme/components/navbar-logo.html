@@ -5,9 +5,7 @@
 {% else %}
   {% set href = theme_logo.get("link") %} {# external url #}
 {% endif %}
-
 <a class="navbar-brand logo" href="{{ href }}">
-
   {# get all the brand information from html_theme_option #}
   {% set is_logo = logo or theme_logo.get("image_light") or theme_logo.get("image_dark") %}
   {% set image_light = theme_logo.get("image_light") or logo %}
@@ -15,10 +13,11 @@
   {% set image_light = image_light if image_light.startswith("http") else pathto('_static/' + image_light, 1) %}
   {% set image_dark = image_dark if image_dark.startswith("http") else pathto('_static/' + image_dark, 1) %}
   {% set alt = theme_logo.get("alt_text", "Logo image") %}
-
   {% if is_logo %}
-    <img src="{{ image_light }}" class="logo__image only-light" alt="{{ alt }}">
-    <img src="{{ image_dark }}" class="logo__image only-dark" alt="{{ alt }}">
+    <img src="{{ image_light }}"
+         class="logo__image only-light"
+         alt="{{ alt }}"/>
+    <img src="{{ image_dark }}" class="logo__image only-dark" alt="{{ alt }}"/>
   {% endif %}
   {% if not is_logo or theme_logo.get("text") %}
     <p class="title logo__title">{{ theme_logo.get("text") or docstitle }}</p>

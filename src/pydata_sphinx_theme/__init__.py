@@ -2,11 +2,10 @@
 Bootstrap-based sphinx theme from the PyData community
 """
 import os
-import warnings
 from pathlib import Path
 from functools import lru_cache
 import json
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 import jinja2
 from bs4 import BeautifulSoup as bs
@@ -21,16 +20,17 @@ from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
+from requests.exceptions import ConnectionError, HTTPError, RetryError
 
 from .bootstrap_html_translator import BootstrapHTML5Translator
 
-__version__ = "0.11.1rc1.dev0"
+__version__ = "0.12.1rc1.dev0"
 
 logger = logging.getLogger(__name__)
 
 
-def update_config(app, env):
-    theme_options = env.config.html_theme_options
+def update_config(app):
+    theme_options = app.config.html_theme_options
 
     # DEPRECATE >= v0.10
     if theme_options.get("search_bar_position") == "navbar":
@@ -82,8 +82,10 @@ def update_config(app, env):
             " Set version URLs in JSON directly."
         )
 
-    # check the validity of the theme swithcer file
-    if isinstance(theme_options.get("switcher"), dict):
+    # check the validity of the theme switcher file
+    is_dict = isinstance(theme_options.get("switcher"), dict)
+    should_test = theme_options.get("check_switcher", True)
+    if is_dict and should_test:
         theme_switcher = theme_options.get("switcher")
 
         # raise an error if one of these compulsory keys is missing
@@ -92,37 +94,40 @@ def update_config(app, env):
 
         # try to read the json file. If it's a url we use request,
         # else we simply read the local file from the source directory
-        # it will raise an error if the file does not exist
+        # display a log warning if the file cannot be reached
+        reading_error = None
         if urlparse(json_url).scheme in ["http", "https"]:
-            content = requests.get(json_url).text
+            try:
+                request = requests.get(json_url)
+                request.raise_for_status()
+                content = request.text
+            except (ConnectionError, HTTPError, RetryError) as e:
+                reading_error = repr(e)
         else:
-            content = Path(env.srcdir, json_url).read_text()
+            try:
+                content = Path(app.srcdir, json_url).read_text()
+            except FileNotFoundError as e:
+                reading_error = repr(e)
 
-        # check that the json file is not illformed
-        # it will throw an error if there is a an issue
-        switcher_content = json.loads(content)
-        missing_url = any(["url" not in e for e in switcher_content])
-        missing_version = any(["version" not in e for e in switcher_content])
-        if missing_url or missing_version:
-            raise AttributeError(
-                f'The version switcher "{json_url}" file is malformed'
-                ' at least one of the items is missing the "url" or "version" key'
+        if reading_error is not None:
+            logger.warning(
+                f'The version switcher "{json_url}" file cannot be read due to the following error:\n'
+                f"{reading_error}"
             )
+        else:
+            # check that the json file is not illformed,
+            # throw a warning if the file is ill formed and an error if it's not json
+            switcher_content = json.loads(content)
+            missing_url = any(["url" not in e for e in switcher_content])
+            missing_version = any(["version" not in e for e in switcher_content])
+            if missing_url or missing_version:
+                logger.warning(
+                    f'The version switcher "{json_url}" file is malformed'
+                    ' at least one of the items is missing the "url" or "version" key'
+                )
 
     # Add an analytics ID to the site if provided
     analytics = theme_options.get("analytics", {})
-    # deprecated options for Google Analytics
-    # TODO: deprecate >= v0.12
-    gid = theme_options.get("google_analytics_id")
-    if gid:
-        msg = (
-            "'google_analytics_id' is deprecated and will be removed in "
-            "version 0.11, please refer to the documentation "
-            "and use 'analytics' instead."
-        )
-        warnings.warn(msg, DeprecationWarning, stacklevel=2)
-        analytics.update({"google_analytics_id": gid})
-
     if analytics:
         # Plausible analytics
         plausible_domain = analytics.get("plausible_analytics_domain")
@@ -137,33 +142,24 @@ def update_config(app, env):
             }
             app.add_js_file(**kwargs)
 
-        # Two types of Google Analytics id.
+        # Google Analytics
         gid = analytics.get("google_analytics_id")
         if gid:
-            # In this case it is "new-style" google analytics
-            if "G-" in gid:
-                gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
-                gid_script = f"""
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){{ dataLayer.push(arguments); }}
-                    gtag('js', new Date());
-                    gtag('config', '{gid}');
-                """
-            # In this case it is "old-style" google analytics
-            else:
-                gid_js_path = "https://www.google-analytics.com/analytics.js"
-                gid_script = f"""
-                    window.ga = window.ga || function () {{
-                        (ga.q = ga.q || []).push(arguments) }};
-                    ga.l = +new Date;
-                    ga('create', '{gid}', 'auto');
-                    ga('set', 'anonymizeIp', true);
-                    ga('send', 'pageview');
-                """
+            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
+            gid_script = f"""
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){{ dataLayer.push(arguments); }}
+                gtag('js', new Date());
+                gtag('config', '{gid}');
+            """
 
             # Link the JS files
             app.add_js_file(gid_js_path, loading_method="async")
             app.add_js_file(None, body=gid_script)
+
+    # Update ABlog configuration default if present
+    if "ablog" in app.config.extensions:
+        app.config.__dict__["fontawesome_included"] = True
 
 
 def prepare_html_config(app, pagename, templatename, context, doctree):
@@ -173,6 +169,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     event doesn't seem to update the values in context, so we manually update
     it here with our config.
     """
+
     # Prepare the logo config dictionary
     theme_logo = context.get("theme_logo")
     if not theme_logo:
@@ -191,6 +188,9 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
 
     context["theme_logo"] = theme_logo
 
+    # update version number
+    context["theme_version"] = __version__
+
 
 def update_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
@@ -198,6 +198,7 @@ def update_templates(app, pagename, templatename, context, doctree):
     template_sections = [
         "theme_navbar_start",
         "theme_navbar_center",
+        "theme_navbar_persistent",
         "theme_navbar_end",
         "theme_footer_items",
         "theme_secondary_sidebar_items",
@@ -334,14 +335,23 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                         else:
                             title += node.astext()
 
+                # set up the status of the link and the path
+                # if the path is relative then we use the context for the path
+                # resolution and the internal class.
+                # If it's an absolute one then we use the external class and
+                # the complete url.
+                is_absolute = bool(urlparse(page).netloc)
+                link_status = "external" if is_absolute else "internal"
+                link_href = page if is_absolute else context["pathto"](page)
+
                 # create the html output
                 links_html.append(
                     f"""
-                <li class="nav-item{current}">
-                  <a class="nav-link" href="{context["pathto"](page)}">
-                    {title}
-                  </a>
-                </li>
+                    <li class="nav-item{current}">
+                      <a class="nav-link nav-{link_status}" href="{link_href}">
+                        {title}
+                      </a>
+                    </li>
                 """
                 )
 
@@ -349,9 +359,12 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         for external_link in context["theme_external_links"]:
             links_html.append(
                 f"""
-            <li class="nav-item">
-                <a class="nav-link nav-external" href="{ external_link["url"] }">{ external_link["name"] }<i class="fa-solid fa-up-right-from-square"></i></a>
-            </li>"""  # noqa
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="{ external_link["url"] }">
+                    { external_link["name"] }
+                  </a>
+                </li>
+                """
             )
 
         # The first links will always be visible
@@ -364,7 +377,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
                 </button>
                 <div class="dropdown-menu">
@@ -517,10 +530,10 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             if not title.select(".toc-h2"):
                 out = ""
             else:
-                out = title.find("ul").prettify()
+                out = title.find("ul")
         # Else treat the h1 headers as sections
         else:
-            out = soup.prettify()
+            out = soup
 
         # Return the toctree object
         if kind == "html":
@@ -532,9 +545,9 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         """Return the class that aligns the navbar based on config."""
         align = context.get("theme_navbar_align", "content")
         align_options = {
-            "content": ("col-lg-9", "mr-auto"),
-            "left": ("", "mr-auto"),
-            "right": ("", "ml-auto"),
+            "content": ("col-lg-9", "me-auto"),
+            "left": ("", "me-auto"),
+            "right": ("", "ms-auto"),
         }
         if align not in align_options:
             raise ValueError(
@@ -855,42 +868,55 @@ def get_pygments_stylesheet(light_style, dark_style):
 
 def _overwrite_pygments_css(app, exception=None):
     """
-    Sphinx is not build to host multiple sphinx formatter and there is no way
-    to tell which one to use and when.
-    So yes, at build time we overwrite the pygment.css file so that it embeds
-    2 versions:
-    - the light theme prefixed with "[data-theme="light"]" using tango
-    - the dark theme prefixed with "[data-theme="dark"]" using monokai
+    Overwrite pygments.css to allow dynamic light/dark switching.
 
-    When the theme is switched, Pygments will be using one of the preset css
-    style.
+    Sphinx natively supports config variables `pygments_style` and
+    `pygments_dark_style`. However, quoting from
+    www.sphinx-doc.org/en/master/development/theming.html#creating-themes
+
+        The pygments_dark_style setting [...is used] when the CSS media query
+        (prefers-color-scheme: dark) evaluates to true.
+
+    This does not allow for dynamic switching by the user, so at build time we
+    overwrite the pygment.css file so that it embeds 2 versions:
+
+    - the light theme prefixed with "[data-theme="light"]"
+    - the dark theme prefixed with "[data-theme="dark"]"
+
+    Fallbacks are defined in this function in case the user-requested (or our
+    theme-specified) pygments theme is not available.
     """
-    default_light_theme = "tango"
-    default_dark_theme = "monokai"
-
     if exception is not None:
         return
 
     assert app.builder
 
-    # check the theme specified in the theme options
-    theme_options = app.config["html_theme_options"]
     pygments_styles = list(get_all_styles())
-    light_theme = theme_options.get("pygment_light_style", default_light_theme)
-    if light_theme not in pygments_styles:
-        logger.warning(
-            f"{light_theme}, is not part of the available pygments style,"
-            f' defaulting to "{default_light_theme}".'
-        )
-        light_theme = default_light_theme
-    dark_theme = theme_options.get("pygment_dark_style", default_dark_theme)
-    if dark_theme not in pygments_styles:
-        logger.warning(
-            f"{dark_theme}, is not part of the available pygments style,"
-            f' defaulting to "{default_dark_theme}".'
-        )
-        dark_theme = default_dark_theme
+    fallbacks = dict(light="tango", dark="monokai")
 
+    for light_or_dark, fallback in fallbacks.items():
+        # make sure our fallbacks work; if not fall(further)back to "default"
+        if fallback not in pygments_styles:
+            fallback = pygments_styles[0]  # should resolve to "default"
+
+        # see if user specified a light/dark pygments theme, if not, use the
+        # one we set in theme.conf
+        style_key = f"pygment_{light_or_dark}_style"
+        theme_name = app.config.html_theme_options.get(
+            style_key, app.builder.globalcontext.get(f"theme_{style_key}")
+        )
+        # make sure we can load the style
+        if theme_name not in pygments_styles:
+            logger.warning(
+                f"Color theme {theme_name} not found by pygments, falling back to {fallback}."
+            )
+            theme_name = fallback
+        # assign to the appropriate variable
+        if light_or_dark == "light":
+            light_theme = theme_name
+        else:
+            dark_theme = theme_name
+    # re-write pygments.css
     pygment_css = Path(app.builder.outdir) / "_static" / "pygments.css"
     with pygment_css.open("w") as f:
         f.write(get_pygments_stylesheet(light_theme, dark_theme))
@@ -946,37 +972,60 @@ class ShortenLinkTransform(SphinxPostTransform):
                 self.platform = self.supported_platform.get(uri.netloc)
                 if self.platform is not None:
                     node.attributes["classes"].append(self.platform)
-                    node.children[0] = nodes.Text(self.parse_url(uri.path))
+                    node.children[0] = nodes.Text(self.parse_url(uri))
 
-    def parse_url(self, path):
+    def parse_url(self, uri):
         """
         parse the content of the url with respect to the selected platform
         """
+        path = uri.path
 
-        # split the url content
-        # be careful the first one is a "/"
-        s = path.split("/")
+        if path == "":
+            # plain url passed, return platform only
+            return self.platform
+
+        # if the path is not empty it contains a leading "/", which we don't want to
+        # include in the parsed content
+        path = path.lstrip("/")
 
         # check the platform name and read the information accordingly
+        # as "<organisation>/<repository>#<element number>"
+        # or "<group>/<subgroup 1>/…/<subgroup N>/<repository>#<element number>"
         if self.platform == "github":
-            text = "github"
-            if len(s) > 1:
-                text = s[1]
-            if len(s) > 2:
-                text += f"/{s[2]}"
-            if len(s) > 3:
-                if s[3] in ["issues", "pull", "discussions"]:
-                    text += f"#{s[-1]}"
+            # split the url content
+            parts = path.split("/")
+
+            if parts[0] == "orgs" and "/projects" in path:
+                # We have a projects board link
+                # ref: `orgs/{org}/projects/{project-id}`
+                text = f"{parts[1]}/projects#{parts[3]}"
+            else:
+                # We have an issues, PRs, or repository link
+                if len(parts) > 0:
+                    text = parts[0]  # organisation
+                if len(parts) > 1:
+                    text += f"/{parts[1]}"  # repository
+                if len(parts) > 2:
+                    if parts[2] in ["issues", "pull", "discussions"]:
+                        text += f"#{parts[-1]}"  # element number
 
         elif self.platform == "gitlab":
-            text = "gitlab"
-            if len(s) > 1:
-                text = s[1]
-            if len(s) > 2:
-                text += f"/{s[2]}"
-            if len(s) > 3:
-                if s[4] in ["issues", "merge_requests"]:
-                    text += f"#{s[-1]}"
+            # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
+            if "/-/" in path and any(
+                map(uri.path.__contains__, ["issues", "merge_requests"])
+            ):
+                group_and_subgroups, parts, *_ = path.split("/-/")
+                parts = parts.split("/")
+                url_type, element_number, *_ = parts
+                if url_type == "issues":
+                    text = f"{group_and_subgroups}#{element_number}"
+                elif url_type == "merge_requests":
+                    text = f"{group_and_subgroups}!{element_number}"
+            else:
+                # display the whole uri (after "gitlab.com/") including parameters
+                # for example "<group>/<subgroup1>/<subgroup2>/<repository>"
+                text = uri._replace(netloc="", scheme="")  # remove platform
+                text = urlunparse(text)[1:]  # combine to string and strip leading "/"
 
         return text
 
@@ -999,7 +1048,7 @@ def setup(app):
     app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
     app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
 
-    app.connect("env-updated", update_config)
+    app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_templates)

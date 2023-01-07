@@ -59,3 +59,6 @@
 - title: EnOSlib
   website: https://discovery.gitlabpages.inria.fr/enoslib/
   img-bottom: ../_static/gallery/enoslib.png
+- title: Matplotlib
+  website: https://matplotlib.org/stable/
+  img-bottom: ../_static/gallery/matplotlib.png

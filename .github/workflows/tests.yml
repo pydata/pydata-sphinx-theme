@@ -62,15 +62,7 @@ jobs:
 
       - name: Check that there are no unexpected Sphinx warnings
         if: matrix.python-version == '3.9'
-        shell: python
-        run: |
-          from pathlib import Path
-          text = Path("./warnings.txt").read_text().strip()
-          print("\n=== Sphinx Warnings ===\n\n" + text)  # Print just for reference so we can look at the logs
-          unexpected = [ii for ii in text.split("\n") if all(i not in ii for i in ["frame.py", "_static", "parse.py"])]
-          for ii in unexpected:
-            print(f"Unexpected warning: \n{unexpected}\n\n")
-          assert len(unexpected) == 0
+        run: python tests/check_warnings.py
 
       - name: Run the tests
         run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}

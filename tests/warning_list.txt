@@ -1,0 +1,32 @@
+WARNING: undefined label: 'groupby.transform'
+WARNING: image file not readable: _static/gallery/pandas.png
+WARNING: image file not readable: _static/gallery/numpy.png
+WARNING: image file not readable: _static/gallery/scipy.png
+WARNING: image file not readable: _static/gallery/bokeh.png
+WARNING: image file not readable: _static/gallery/cupy.png
+WARNING: image file not readable: _static/gallery/pyvista.png
+WARNING: image file not readable: _static/gallery/mne-python.png
+WARNING: image file not readable: _static/gallery/networkx.png
+WARNING: image file not readable: _static/gallery/fairlearn.png
+WARNING: image file not readable: _static/gallery/jupyter_book.png
+WARNING: image file not readable: _static/gallery/binder.png
+WARNING: image file not readable: _static/gallery/jupyter.png
+WARNING: image file not readable: _static/gallery/megengine.png
+WARNING: image file not readable: _static/gallery/feature-engine.png
+WARNING: image file not readable: _static/gallery/arviz.png
+WARNING: image file not readable: _static/gallery/sepal.png
+WARNING: image file not readable: _static/gallery/enoslib.png
+WARNING: image file not readable: _static/gallery/matplotlib.png
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResult.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.ParseResultBytes.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.index'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'. Check your autosummary_generate setting.
+WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.index'. Check your autosummary_generate setting.
+ERROR: Unexpected indentation.
