@@ -106,6 +106,11 @@ ax.scatter(data[0], data[1], c=data[2], s=3)
 
 ## Jupyterlite
 
+```{warning}
+The jupyterLite lib is not yet providing a handle to switch from light to dark theme. If you consider using it in your documentation you should also enforce the light theme to your users.
+Follow https://github.com/jupyterlite/jupyterlite-sphinx/issues/69 for more information.
+```
+
 `jupyterlite-sphinx` brings the power of [JupyterLite](https://jupyterlite.readthedocs.io/en/latest/) to your Sphinx documentation. It makes a full JupyterLite deployment in your docs and provide some utilities for using that deployment easily.
 
 This section demonstrate how it displays in a pydata-sphinx-theme context:
