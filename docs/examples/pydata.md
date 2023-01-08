@@ -89,7 +89,7 @@ data = xr.DataArray(
 data
 ```
 
-## `jupyter-sphinx`
+## jupyter-sphinx
 
 Another common library is `jupyter-sphinx`.
 This section demonstrates a subset of functionality above to make sure it behaves as expected.
@@ -102,4 +102,16 @@ rng = np.random.default_rng()
 data = rng.standard_normal((3, 100))
 fig, ax = plt.subplots()
 ax.scatter(data[0], data[1], c=data[2], s=3)
+```
+
+## ipyleaflet
+
+`ipyleaflet` is a **Jupyter**/**Leaflet** bridge enabling interactive maps in the Jupyter notebook environment. this demonstrate how you can integrate maps in your documentation.
+
+```{jupyter-execute}
+from ipyleaflet import Map, basemaps
+
+# display a map centered on France
+m = Map(basemap=basemaps.Esri.WorldImagery,  zoom=5, center=[46.21, 2.21])
+m
 ```
