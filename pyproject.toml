@@ -43,7 +43,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-doc = [
+doc_base = [
   "numpydoc",
   "myst-nb",
   "linkify-it-py",  # for link shortening
@@ -61,22 +61,25 @@ doc = [
   "numpy",
   "xarray",
   "sphinx-copybutton",
-  "sphinx-design",
   "sphinx-togglebutton",
+  "ipyleaflet",
+]
+doc = [
+  "sphinx-design",
   # Install nbsphinx in case we want to test it locally even though we can't load
   # it at the same time as MyST-NB.
   "nbsphinx",
-  "ipyleaflet",
+  "pydata-sphinx-theme[doc_base]"
 ]
 test = [
   "pytest",
-  "pydata-sphinx-theme[doc]",
+  "pydata-sphinx-theme[doc_base]",
 ]
 coverage = [
   "pytest-cov",
   "codecov",
   "colorama",
-  "pydata-sphinx-theme[test]",
+  "pydata-sphinx-theme[doc]",
 ]
 dev = [
   "pyyaml",

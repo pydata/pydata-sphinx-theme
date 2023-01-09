@@ -8,7 +8,7 @@ from gallery_directive import GalleryDirective
 # -- Project information -----------------------------------------------------
 
 project = "PyData Theme"
-copyright = "2019, PyData Community"
+copyright = "2023, PyData Community"
 author = "PyData Community"
 
 import pydata_sphinx_theme
