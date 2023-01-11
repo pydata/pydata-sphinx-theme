@@ -931,8 +931,6 @@ def _overwrite_pygments_css(app, exception=None):
         theme_name = app.config.html_theme_options.get(style_key, None)
         if theme_name is None and hasattr(app.builder, "globalcontext"):
             theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
-        else:
-            theme_name = fallback
 
         # make sure we can load the style
         if theme_name not in pygments_styles:
