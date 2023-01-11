@@ -928,10 +928,9 @@ def _overwrite_pygments_css(app, exception=None):
         style_key = f"pygment_{light_or_dark}_style"
 
         # globalcontext sometimes doesn't exist so this ensures we do not error
-        if hasattr(app.builder, "globalcontext"):
-            theme_name = app.config.html_theme_options.get(
-                style_key, app.builder.globalcontext.get(f"theme_{style_key}")
-            )
+        theme_name = app.config.html_theme_options.get(style_key, None)
+        if theme_name is None and hasattr(app.builder, "globalcontext"):
+            theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
         else:
             theme_name = fallback
 
