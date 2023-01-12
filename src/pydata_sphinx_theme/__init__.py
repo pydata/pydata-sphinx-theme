@@ -218,29 +218,19 @@ def update_and_remove_templates(app, pagename, templatename, context, doctree):
                 if not os.path.splitext(template)[1]:
                     context[section][ii] = template + ".html"
 
-            # Remove templates if we know they've been disabled
-            def _filter_template_list(item):
-                # In case of `html_show_sourcelink = False`
-                if item.endswith("sourcelink.html"):
-                    if context.get("show_source", True) is False:
-                        return False
-                # In case of manually specifying False
-                elif item.endswith("edit-this-page.html"):
-                    if context.get("theme_use_edit_page_button", True) is False:
-                        return False
-                # If no conditions are hit then we keep the template
-                return True
-
-            context[section] = list(filter(_filter_template_list, context.get(section)))
-
             # If this is the page TOC, check if it is empty and remove it if so
-            def _remove_empty_pagetoc(item):
-                if item.endswith("page-toc.html"):
-                    if len(context["generate_toc_html"]()) == 0:
+            def _remove_empty_templates(tname):
+                # These templates take too long to render, so skip them.
+                # They should never be empty anyway.
+                SKIP_EMPTY_TEMPLATE_CHECKS = ["sidebar-nav-bs.html", "navbar-nav.html"]
+                if not any(tname.endswith(temp) for temp in SKIP_EMPTY_TEMPLATE_CHECKS):
+                    # Render the template and see if it is totally empty
+                    rendered = app.builder.templates.render(tname, context)
+                    if len(rendered.strip()) == 0:
                         return False
                 return True
 
-            context[section] = list(filter(_remove_empty_pagetoc, context[section]))
+            context[section] = list(filter(_remove_empty_templates, context[section]))
 
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
     # - theme.conf
@@ -1078,8 +1068,8 @@ def setup(app):
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
-    app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", prepare_html_config)
+    app.connect("html-page-context", update_and_remove_templates)
     app.connect("build-finished", _overwrite_pygments_css)
 
     # Include component templates
