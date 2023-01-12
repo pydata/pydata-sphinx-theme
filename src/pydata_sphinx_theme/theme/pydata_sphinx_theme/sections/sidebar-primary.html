@@ -1,4 +1,8 @@
 {% block docs_sidebar %}
+  {# This is empty and only shows up if text has been highlighted by the URL #}
+  {# We put it *both above and below the article* to be easier to find. #}
+  {% include "components/searchbox.html" %}
+
   {# Header items that will be displayed in the sidebar on mobile #}
   <div class="sidebar-header-items sidebar-primary__section">
     {# The header center items #}

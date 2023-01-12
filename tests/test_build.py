@@ -765,6 +765,8 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebar subpage
+    # This re-uses the same HTML template used above (w/o deprecated config)
+    # because they should still be the same.
     sidebar = subpage_html.select(".bd-sidebar")[0]
     file_regression.check(
         sidebar.prettify(), basename="sidebar_subpage", extension=".html"
