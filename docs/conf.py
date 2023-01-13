@@ -183,7 +183,37 @@ blog_authors = {
 todo_include_todos = True
 
 # -- favicon configuration -----------------------------------------------------
-favicons = [{"static-file": "logo.svg"}]  # -> /_static/logo.svg
+favicons = [
+    {
+        "rel": "apple-touch-icon",
+        "size": "180x180",
+        "static": "favicon/apple-touch-icon.png",
+    },
+    {
+        "rel": "icon",
+        "type": "image/png",
+        "size": "32x32",
+        "static": "favicon/favicon-32x32.png",
+    },
+    {
+        "rel": "icon",
+        "type": "image/png",
+        "size": "16x16",
+        "static": "favicon/favicon-16x16.png",
+    },
+    {
+        "rel": "mask-icon",
+        "static": "favicon/safari-pinned-tab.svg",
+        "color": "#459db9",
+    },
+    {"rel": "shortcut icon", "static": "favicon/favicon.ico"}
+    # soon supported (0.4)
+    # <link rel="manifest" href="/_static/favicon/site.webmanifest">
+    # <meta name="msapplication-TileColor" content="#459db9">
+    # <meta name="msapplication-config" content="/_static/favicon/browserconfig.xml">
+    # <meta name="theme-color" content="#ffffff">
+]
+
 
 # -- Application setup ---------------------------------------------------------
 def setup(app):
