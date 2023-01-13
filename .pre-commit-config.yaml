@@ -9,7 +9,7 @@ repos:
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
-        exclude: .+((\.html)|index\.(.+)\.css)$
+        exclude: .+((\.html)|index\.(.+)\.css)$|webpack.config.js
 
   - repo: https://github.com/psf/black
     rev: 22.12.0
