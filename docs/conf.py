@@ -190,14 +190,10 @@ favicons = [
         "static-file": "favicon/apple-touch-icon.png",
     },
     {
-        "rel": "icon",
-        "type": "image/png",
         "size": "32x32",
         "static-file": "favicon/favicon-32x32.png",
     },
     {
-        "rel": "icon",
-        "type": "image/png",
         "size": "16x16",
         "static-file": "favicon/favicon-16x16.png",
     },
@@ -206,7 +202,8 @@ favicons = [
         "static-file": "favicon/safari-pinned-tab.svg",
         "color": "#459db9",
     },
-    {"rel": "shortcut icon", "static-file": "favicon/favicon.ico"}
+    {"rel": "shortcut icon", "static-file": "favicon/favicon.ico"},
+    {"rel": "manifest", "static-file": "favicon/site.webmanifest"},
     # soon supported (0.4)
     # <link rel="manifest" href="/_static/favicon/site.webmanifest">
     # <meta name="msapplication-TileColor" content="#459db9">
