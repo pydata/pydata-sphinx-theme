@@ -1,20 +1,18 @@
-# -- Path setup --------------------------------------------------------------
+# -- Path setup ----------------------------------------------------------------
 import os
 import sys
 
-sys.path.append("scripts")
-from gallery_directive import GalleryDirective
+sys.path.append(".")
+from scripts.gallery_directive import GalleryDirective
+import pydata_sphinx_theme
 
-# -- Project information -----------------------------------------------------
+# -- Project information -------------------------------------------------------
 
 project = "PyData Theme"
 copyright = "2019, PyData Community"
 author = "PyData Community"
 
-import pydata_sphinx_theme
-
-
-# -- General configuration ---------------------------------------------------
+# -- General configuration -----------------------------------------------------
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -24,6 +22,7 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
+    "sphinx-favicon",
     # For extension examples and demos
     "ablog",
     "jupyter_sphinx",
@@ -34,43 +33,58 @@ extensions = [
     "sphinx_togglebutton",
 ]
 
-# -- Internationalization ------------------------------------------------
-# specifying the natural language populates some key tags
-language = "en"
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
+
+# -- Internationalization ------------------------------------------------------
+language = "en"  # specifying the natural language
+
+# -- Sitemap -------------------------------------------------------------------
 
 # ReadTheDocs has its own way of generating sitemaps, etc.
 if not os.environ.get("READTHEDOCS"):
     extensions += ["sphinx_sitemap"]
 
-    # -- Sitemap -------------------------------------------------------------
     html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
     sitemap_locales = [None]
     sitemap_url_scheme = "{link}"
 
-autosummary_generate = True
+# -- Options for HTML output ---------------------------------------------------
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
-
-# -- Extension options -------------------------------------------------------
-
-# This allows us to use ::: to denote directives, useful for admonitions
-myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
-
-# -- Options for HTML output -------------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
 html_theme = "pydata_sphinx_theme"
-html_logo = "_static/logo.svg"
-html_favicon = "_static/logo.svg"
 html_sourcelink_suffix = ""
+html_static_path = ["_static"]
+html_css_files = ["custom.css"]
+
+html_sidebars = {
+    "community/index": [
+        "sidebar-nav-bs",
+        "custom-template",
+    ],  # This ensures we test for custom sidebars
+    "examples/no-sidebar": [],  # Test what page looks like with no sidebar items
+    "examples/persistent-search-field": ["search-field"],
+    # Blog sidebars
+    # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
+    "examples/blog/*": [
+        "postcard.html",
+        "recentposts.html",
+        "tagcloud.html",
+        "categories.html",
+        "authors.html",
+        "languages.html",
+        "locations.html",
+        "archives.html",
+    ],
+}
+
+html_context = {
+    "github_user": "pydata",
+    "github_repo": "pydata-sphinx-theme",
+    "github_version": "main",
+    "doc_path": "docs",
+}
+
+# -- pydata-sphinx-theme configuration -----------------------------------------
 
 # Define the json_url for our version switcher.
 json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
@@ -90,6 +104,7 @@ if not version_match or version_match.isdigit():
     else:
         version_match = "v" + release
 
+# set the options
 html_theme_options = {
     "external_links": [
         {
@@ -125,6 +140,7 @@ html_theme_options = {
     "logo": {
         "text": "PyData Theme",
         "image_dark": "logo-dark.svg",
+        "image_light": "logo.svg",
         "alt_text": "PyData Theme",
     },
     "use_edit_page_button": True,
@@ -143,60 +159,32 @@ html_theme_options = {
         "json_url": json_url,
         "version_match": version_match,
     },
-    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
 }
 
-html_sidebars = {
-    "community/index": [
-        "sidebar-nav-bs",
-        "custom-template",
-    ],  # This ensures we test for custom sidebars
-    "examples/no-sidebar": [],  # Test what page looks like with no sidebar items
-    "examples/persistent-search-field": ["search-field"],
-    # Blog sidebars
-    # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
-    "examples/blog/*": [
-        "postcard.html",
-        "recentposts.html",
-        "tagcloud.html",
-        "categories.html",
-        "authors.html",
-        "languages.html",
-        "locations.html",
-        "archives.html",
-    ],
-}
+# -- Autosumary configuration --------------------------------------------------
+autosummary_generate = True
 
+# -- Myst configuration --------------------------------------------------------
+myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
 myst_heading_anchors = 2
 myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
 
-html_context = {
-    "github_user": "pydata",
-    "github_repo": "pydata-sphinx-theme",
-    "github_version": "main",
-    "doc_path": "docs",
-}
+# -- Rediraffe configuration ---------------------------------------------------
+rediraffe_redirects = {"contributing.rst": "community/index.rst"}
 
-rediraffe_redirects = {
-    "contributing.rst": "community/index.rst",
-}
-
-# ABlog configuration
+# -- ABlog configuration -------------------------------------------------------
 blog_path = "examples/blog/index"
 blog_authors = {
     "pydata": ("PyData", "https://pydata.org"),
     "jupyter": ("Jupyter", "https://jupyter.org"),
 }
 
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
-html_css_files = ["custom.css"]
+# -- todo configuration --------------------------------------------------------
 todo_include_todos = True
 
+# -- favicon configuration -----------------------------------------------------
+favicons = [{"static-file": "logo.svg"}]  # -> /_static/logo.svg
 
+# -- Application setup ---------------------------------------------------------
 def setup(app):
-    # Add the gallery directive
-    app.add_directive("gallery-grid", GalleryDirective)
+    app.add_directive("gallery-grid", GalleryDirective)  # Add the gallery directive

@@ -52,6 +52,7 @@ doc = [
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
+  "sphinx-favicon",
   # For examples section
   "ablog",
   "jupyter_sphinx",
