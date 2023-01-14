@@ -541,7 +541,7 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
 
     if edit_url is None:
-        with pytest.raises(sphinx.errors.ThemeError):
+        with pytest.raises(sphinx.errors.ExtensionError):
             sphinx_build.build()
         return
 
@@ -765,6 +765,8 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebar subpage
+    # This re-uses the same HTML template used above (w/o deprecated config)
+    # because they should still be the same.
     sidebar = subpage_html.select(".bd-sidebar")[0]
     file_regression.check(
         sidebar.prettify(), basename="sidebar_subpage", extension=".html"
@@ -783,3 +785,13 @@ def test_ablog(sphinx_build_factory):
     confoverrides = {"extensions": ["ablog"]}
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     assert sphinx_build.app.config.fontawesome_included is True
+
+
+def test_empty_templates(sphinx_build_factory):
+    """If a template is empty (e.g., via a config), it should be removed."""
+    # When configured to be gone, the template should be removed w/ its parent.
+    # ABlog needs to be added so we can test that template rendering works w/ it.
+    confoverrides = {"html_show_sourcelink": False, "extensions": ["ablog"]}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    toc_items = sphinx_build.html_tree("page1.html").select(".toc-item")
+    assert not any(ii.select(".tocsection.sourcelink") for ii in toc_items)

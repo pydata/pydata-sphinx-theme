@@ -66,7 +66,8 @@ doc = [
   "jupyterlite-sphinx",
   # Install nbsphinx in case we want to test it locally even though we can't load
   # it at the same time as MyST-NB.
-  "nbsphinx"
+  "nbsphinx",
+  "ipyleaflet",
 ]
 test = [
   "pytest",

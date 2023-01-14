@@ -53,23 +53,3 @@
     padding-left: 1rem;
   }
 }
-
-// The 'Hide Search Matches' link
-div#searchbox {
-  p.highlight-link {
-    // remove excess margin from p tag
-    margin-bottom: 0px;
-    a {
-      // add icon via CSS because the link is created by javascript
-      // match padding to .toc-item > i above
-      &:before {
-        content: var(--pst-icon-search-minus);
-        color: unset; // make sure it uses the same color as the text
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        padding-right: 0.5rem;
-        margin-right: 0;
-      }
-    }
-  }
-}

@@ -22,7 +22,7 @@ for collaborator in collaborators:
         {
             "header": f"@{collaborator['login']}",
             "image": f"https://avatars.githubusercontent.com/u/{collaborator['id']}",
-            "link": collaborator["html_url"],
+            "website": collaborator["html_url"],
         }
     )
 

@@ -192,7 +192,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     context["theme_version"] = __version__
 
 
-def update_templates(app, pagename, templatename, context, doctree):
+def update_and_remove_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
     # Allow for more flexibility in template names
     template_sections = [
@@ -217,6 +217,20 @@ def update_templates(app, pagename, templatename, context, doctree):
             for ii, template in enumerate(context.get(section)):
                 if not os.path.splitext(template)[1]:
                     context[section][ii] = template + ".html"
+
+            # If this is the page TOC, check if it is empty and remove it if so
+            def _remove_empty_templates(tname):
+                # These templates take too long to render, so skip them.
+                # They should never be empty anyway.
+                SKIP_EMPTY_TEMPLATE_CHECKS = ["sidebar-nav-bs.html", "navbar-nav.html"]
+                if not any(tname.endswith(temp) for temp in SKIP_EMPTY_TEMPLATE_CHECKS):
+                    # Render the template and see if it is totally empty
+                    rendered = app.builder.templates.render(tname, context)
+                    if len(rendered.strip()) == 0:
+                        return False
+                return True
+
+            context[section] = list(filter(_remove_empty_templates, context[section]))
 
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
     # - theme.conf
@@ -902,9 +916,12 @@ def _overwrite_pygments_css(app, exception=None):
         # see if user specified a light/dark pygments theme, if not, use the
         # one we set in theme.conf
         style_key = f"pygment_{light_or_dark}_style"
-        theme_name = app.config.html_theme_options.get(
-            style_key, app.builder.globalcontext.get(f"theme_{style_key}")
-        )
+
+        # globalcontext sometimes doesn't exist so this ensures we do not error
+        theme_name = app.config.html_theme_options.get(style_key, None)
+        if theme_name is None and hasattr(app.builder, "globalcontext"):
+            theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
+
         # make sure we can load the style
         if theme_name not in pygments_styles:
             logger.warning(
@@ -1051,8 +1068,8 @@ def setup(app):
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
-    app.connect("html-page-context", update_templates)
     app.connect("html-page-context", prepare_html_config)
+    app.connect("html-page-context", update_and_remove_templates)
     app.connect("build-finished", _overwrite_pygments_css)
 
     # Include component templates

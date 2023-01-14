@@ -89,7 +89,7 @@ data = xr.DataArray(
 data
 ```
 
-## `jupyter-sphinx`
+## jupyter-sphinx
 
 Another common library is `jupyter-sphinx`.
 This section demonstrates a subset of functionality above to make sure it behaves as expected.
@@ -121,4 +121,15 @@ This section demonstrate how it displays in a pydata-sphinx-theme context:
 :prompt: Try Replite!
 
 print("it's a test")
+
+## ipyleaflet
+
+`ipyleaflet` is a **Jupyter**/**Leaflet** bridge enabling interactive maps in the Jupyter notebook environment. this demonstrate how you can integrate maps in your documentation.
+
+```{jupyter-execute}
+from ipyleaflet import Map, basemaps
+
+# display a map centered on France
+m = Map(basemap=basemaps.Esri.WorldImagery,  zoom=5, center=[46.21, 2.21])
+m
 ```

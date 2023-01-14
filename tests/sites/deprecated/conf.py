@@ -24,7 +24,6 @@ html_theme_options = {
     "logo_text": "DOCS",
     "page_sidebar_items": [
         "page-toc.html",
-        "searchbox.html",
         "edit-this-page.html",
         "sourcelink.html",
     ],

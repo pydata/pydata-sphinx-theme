@@ -83,13 +83,10 @@ any other context values.
 View Source link
 ================
 
-You can add a button that will direct users to view the source of a page (i.e., the underlying ``reStructuredText`` or ``MyST Markdown`` for the page).
-To do so, add the following extension to your documentation:
+By default, this theme adds a button link to view the source of a page (i.e., the underlying ``reStructuredText`` or ``MyST Markdown`` for the page).
+To disable it, use the following configuration:
+
 
 .. code-block:: python
 
-    extensions = [
-        ...
-        "sphinx.ext.viewcode",
-        ...
-    ]
+    html_show_sourcelink = False
