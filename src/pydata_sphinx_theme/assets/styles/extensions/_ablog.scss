@@ -2,20 +2,25 @@
  * ABlog
  * ref: https://ablog.readthedocs.io/
  */
-// HACK: ABlog has no CSS selector, but directly inserts elements into the sidebar
-// So we make an assumption here that any *top-level* sidebar items that are ul/h2/h3
-// Are attached to ABlog. This is hacky and we should try to get top-level ablog
-// CSS wrappers into ABlog instead.
-.bd-sidebar-primary .sidebar-start-items__item {
-  > h3,
-  > h2 {
+
+/**
+ * Sidebar template components
+ */
+.ablog-sidebar-item {
+  h2,
+  h3 {
+    font-size: var(--pst-sidebar-header-font-size);
     // Remove unnecessary vertical whitespace
     margin-top: 0.5rem;
-    // Headers are too big by default
-    font-size: 1.7rem;
+
+    // The headers are all links, but this makes them hard to parse
+    // So we change the colors to make them look like headers
+    a {
+      color: var(--pst-color-text-base);
+    }
   }
 
-  > ul {
+  ul {
     // No bullet points for the primary sidebar items
     list-style: none;
     padding-left: 0;
@@ -25,36 +30,30 @@
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    margin-bottom: 0;
 
     // The ablog cloud should move horizontally
     &.ablog-cloud {
       flex-direction: row;
       flex-flow: wrap;
-      gap: 0;
+      gap: 0.25rem;
+
+      // Vertical-align tag clouds
+      li {
+        // Center the tag cloud items
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }
 
-// Vertical-align tag clouds
-ul.ablog-cloud {
-  li {
-    // Center the tag cloud items
-    display: flex;
-    align-items: center;
-  }
-}
-
-// HACK: ABlog articles always seem to have the structure:
-// <section id="POST-TITLE-ID">{{ POST CONTENT }}
-// <div class="section">
-//   <div class="section"
-//      <span>previous button
-//      <span>empty space
-//      <span>next button
-//
-// So these rules make that assumption
-article.bd-article > section + div.section {
+/**
+ * Previous / next buttons at the bottom
+ */
+.ablog__prev-next {
   font-size: 1.2em;
+  display: flex;
 
   // The bottom previous / next arrows
   span {
@@ -65,6 +64,8 @@ article.bd-article > section + div.section {
     gap: 0.5rem;
     align-items: center;
     // Remove the ABlog icons because we specify our own
+    // TODO: Instead just update the ABlog icon `content:` when the following is resolved:
+    //    https://github.com/sunpy/ablog/issues/194
     a i {
       display: none;
     }
@@ -90,6 +91,7 @@ article.bd-article > section + div.section {
 
   // The third span is aligned to the right
   span:last-child {
+    margin-left: auto;
     text-align: right;
     &:after {
       content: var(--pst-icon-angle-right);
@@ -99,26 +101,32 @@ article.bd-article > section + div.section {
   }
 }
 
-// Post metadata that is on the "posts" page
-ul.ablog-archive {
-  padding-left: 0;
-  font-size: 1.25rem;
-}
-
-// The post list when you use the {postlist} directive
-ul.postlist {
+/**
+ * {postlist} directive and posts page
+ */
+.ablog__collection,
+.postlist {
   padding-left: 0;
 
-  li.ablog-post {
+  .ablog-post {
     list-style: none;
+
+    // Post metadata
+    .ablog-archive {
+      list-style: none;
+      padding-left: 0;
+    }
 
     // Title line should be a bit bigger
     .ablog-post-title {
+      margin-top: 0;
       font-size: 1.5rem;
     }
-    // Create a bit more whitespace if there's an excerpt
-    .ablog-post-excerpt {
-      margin-bottom: 2em;
+
+    // Read more button should be a bit bigger
+    .ablog-post-expand {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
     }
   }
 }
