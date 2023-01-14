@@ -1051,7 +1051,7 @@ class ShortenLinkTransform(SphinxPostTransform):
 def setup_translators(app):
     """
     Add bootstrap HTML functionality if we are using an HTML translator.
-    
+
     This re-uses the pre-existing Sphinx translator and adds extra functionality defined
     in ``BootstrapHTML5TranslatorMixin``. This way we can retain the original translator's
     behavior and configuration, and _only_ add the extra bootstrap rules.
