@@ -6,6 +6,7 @@ import sphinx
 from sphinx.writers.html5 import HTML5Translator
 from sphinx.util import logging
 from sphinx.ext.autosummary import autosummary_table
+from docutils import nodes
 
 logger = logging.getLogger(__name__)
 
@@ -22,12 +23,30 @@ class BootstrapHTML5Translator(HTML5Translator):
         self.settings.table_style = "table"
 
     def starttag(self, *args, **kwargs):
-        """ensure an aria-level is set for any heading role"""
+        """
+        Perform small modification on specific tags:
+            - ensure an aria-level is set for any heading role
+            - include the pst_atts in the final attributes
+            - include the pst_class in the final classes
+        """
+        # update attributes using pst_atts
+        if hasattr(self, "pst_atts"):
+            for att, val in self.pst_atts.items():
+                kwargs[att] = kwargs.pop(att, val)
+
+        # update classes using pst_class
+        if hasattr(self, "pst_class"):
+            existing_classes = kwargs.get("CLASS", "").split(" ")
+            classes = list(set(existing_classes + self.pst_class))
+            kwargs["CLASS"] = " ".join(classes)
+
+        # ensure an aria-level is set for any heading role
         if kwargs.get("ROLE") == "heading" and "ARIA-LEVEL" not in kwargs:
             kwargs["ARIA-LEVEL"] = "2"
+
         return super().starttag(*args, **kwargs)
 
-    def visit_table(self, node):
+    def visit_table(self, node: nodes.Element) -> None:
         """
         copy of sphinx source to *not* add 'docutils' and 'align-default' classes
         but add 'table' class
@@ -58,3 +77,12 @@ class BootstrapHTML5Translator(HTML5Translator):
 
         tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
+
+    def visit_literal_block(self, node: nodes.Element) -> None:
+        """overwrite the literal-block element to make them focusable"""
+
+        # add tabindex to the node
+        pst_atts = getattr(node, "pst_atts", {})
+        self.pst_atts = {**pst_atts, "tabindex": "0"}
+
+        return super().visit_literal_block(node)
