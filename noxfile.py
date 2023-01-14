@@ -1,3 +1,9 @@
+"""Automatically build our documentation or run tests.
+
+Environments are re-used by default. Use the following-pattern to re-install them.
+
+nox -s docs -- -r
+"""
 import nox
 from pathlib import Path
 
@@ -29,6 +35,7 @@ def _should_install(session):
 
 @nox.session
 def compile(session):
+    """Compile the theme's web assets with sphinx-theme-builder."""
     if _should_install(session):
         session.install("-e", ".")
         session.install("sphinx-theme-builder[cli]")
@@ -37,6 +44,7 @@ def compile(session):
 
 @nox.session
 def docs(session):
+    """Build the documentation and place in docs/_build/html."""
     if _should_install(session):
         session.install("-e", ".[doc]")
     session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html")
@@ -44,6 +52,7 @@ def docs(session):
 
 @nox.session(name="docs-live")
 def docs_live(session):
+    """Build the docs with a live server that re-loads as you make changes."""
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
@@ -52,6 +61,7 @@ def docs_live(session):
 
 @nox.session(name="test")
 def test(session):
+    """Run the test suite. Use `-- -r` to re-build the environment."""
     if _should_install(session):
         session.install("-e", ".[test]")
     session.run("pytest", *session.posargs)
@@ -59,10 +69,7 @@ def test(session):
 
 @nox.session(name="profile")
 def profile(session):
-    """Generate a profile chart with py-spy.
-
-    The chart will be placed at profile.svg and can be viewed in the browser.
-    """
+    """Generate a profile chart with py-spy. The chart will be placed at profile.svg."""
     import shutil as sh
     import tempfile
     from textwrap import dedent

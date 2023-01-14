@@ -13,10 +13,6 @@ titles_only=True)
 {% if sidebar_nav_html | length == 0 %}
   {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
 {% endif %}
-{# Remove the page-toc from secondary sidebar if there are no links to show #}
-{% if generate_toc_html() | length == 0 %}
-  {% set theme_secondary_sidebar_items = theme_secondary_sidebar_items | reject("in", "page-toc.html") | list %}
-{% endif %}
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
 {% set remove_sidebar_secondary = (meta is defined and meta is not none
 and 'html_theme.sidebar_secondary.remove' in meta)
@@ -93,6 +89,8 @@ or not theme_secondary_sidebar_items %}
               <div class="bd-header-article">{% include "sections/header-article.html" %}</div>
               {# Article content #}
               {% block docs_body %}
+              {# This is empty and only shows up if text has been highlighted by the URL #}
+                {% include "components/searchbox.html" %}
                 <article class="bd-article" role="main">
                   {% block body %}{% endblock %}
                 </article>

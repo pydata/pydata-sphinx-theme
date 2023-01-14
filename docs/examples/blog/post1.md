@@ -4,7 +4,7 @@ date: Jan 01, 2022
 author: pydata
 location: World
 category: Manual
-tags: one
+tags: one, two, three
 language: English
 ---
 

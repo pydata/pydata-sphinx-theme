@@ -36,10 +36,6 @@ class BootstrapHTML5TranslatorMixin:
         # init the attributes
         atts = {}
 
-        # generate_targets_for_table is deprecated in 4.0
-        if Version(sphinx.__version__) < Version("4.0"):
-            self.generate_targets_for_table(node)
-
         if Version(sphinx.__version__) < Version("4.3"):
             self._table_row_index = 0
         else:
