@@ -235,50 +235,6 @@ def test_logo_external_image(sphinx_build_factory):
     assert f'src="{test_url}"' in index_str
 
 
-def test_favicons(sphinx_build_factory):
-    """Test that arbitrary favicons are included."""
-    html_theme_options_favicons = {
-        "favicons": [
-            {
-                "rel": "icon",
-                "sizes": "16x16",
-                "href": "https://secure.example.com/favicon/favicon-16x16.png",
-            },
-            {
-                "rel": "icon",
-                "sizes": "32x32",
-                "href": "favicon-32x32.png",
-            },
-            {
-                "rel": "apple-touch-icon",
-                "sizes": "180x180",
-                "href": "apple-touch-icon-180x180.png",
-            },
-        ]
-    }
-    confoverrides = {"html_theme_options": html_theme_options_favicons}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-
-    index_html = sphinx_build.html_tree("index.html")
-
-    icon_16 = (
-        '<link href="https://secure.example.com/favicon/favicon-16x16.png" '
-        'rel="icon" sizes="16x16" type="image/png"/>'
-    )
-    icon_32 = (
-        '<link href="_static/favicon-32x32.png" rel="icon" sizes="32x32" '
-        'type="image/png"/>'
-    )
-    icon_180 = (
-        '<link href="_static/apple-touch-icon-180x180.png" '
-        'rel="apple-touch-icon" sizes="180x180" type="image/png"/>'
-    )
-    print(index_html.select("head")[0])
-    assert icon_16 in str(index_html.select("head")[0])
-    assert icon_32 in str(index_html.select("head")[0])
-    assert icon_180 in str(index_html.select("head")[0])
-
-
 def test_navbar_align_default(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
     sphinx_build = sphinx_build_factory("base").build()
@@ -755,7 +711,7 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
 
     # check the deprecation warnings
     warnings = sphinx_build.warnings.split("WARNING: ")
-    assert len(warnings) == 5  # testing the text of the warning is not necessary here
+    assert len(warnings) == 6  # testing the text of the warning is not necessary here
 
     index_html = sphinx_build.html_tree("index.html")
     subpage_html = sphinx_build.html_tree("section1/index.html")
@@ -769,6 +725,14 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     file_regression.check(
         sidebar.prettify(), basename="sidebar_subpage", extension=".html"
     )
+
+    # the favicons
+    icon_16 = '<link href="https://secure.example.com/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>'  # fmt: skip
+    assert icon_16 in str(index_html.select("head")[0])
+    icon_32 = '<link href="_static/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>'  # fmt: skip
+    assert icon_32 in str(index_html.select("head")[0])
+    icon_180 = '<link href="_static/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180" type="image/png"/>'  # fmt: skip
+    assert icon_180 in str(index_html.select("head")[0])
 
     # Secondary sidebar should not have in-page TOC if it is empty
     assert not sphinx_build.html_tree("page1.html").select("div.onthispage")

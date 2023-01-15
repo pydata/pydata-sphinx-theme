@@ -28,6 +28,23 @@ html_theme_options = {
         "edit-this-page.html",
         "sourcelink.html",
     ],
+    "favicons": [
+        {
+            "rel": "icon",
+            "sizes": "16x16",
+            "href": "https://secure.example.com/favicon/favicon-16x16.png",
+        },
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "href": "favicon-32x32.png",
+        },
+        {
+            "rel": "apple-touch-icon",
+            "sizes": "180x180",
+            "href": "apple-touch-icon-180x180.png",
+        },
+    ],
 }
 
 html_sidebars = {"section1/index": ["sidebar-nav-bs.html"]}

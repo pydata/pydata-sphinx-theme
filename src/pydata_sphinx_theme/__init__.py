@@ -32,6 +32,14 @@ logger = logging.getLogger(__name__)
 def update_config(app):
     theme_options = app.config.html_theme_options
 
+    # DEPRECATE >= v0.15
+    if theme_options.get("favicons"):
+        logger.warning(
+            "Deprecated config `favicons` used."
+            "The favicon configuration have been droped in favor of the sphinx-favicon extention."
+            "Please see their documentation for more information."
+        )
+
     # DEPRECATE >= v0.10
     if theme_options.get("search_bar_position") == "navbar":
         logger.warning(
