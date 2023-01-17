@@ -62,3 +62,6 @@
 - title: Matplotlib
   website: https://matplotlib.org/stable/
   img-bottom: ../_static/gallery/matplotlib.png
+- title: Pastas
+  website: https://pastas.readthedocs.io/
+  img-bottom: ../_static/gallery/pastas.png
