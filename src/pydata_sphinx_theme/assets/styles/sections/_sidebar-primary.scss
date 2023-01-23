@@ -216,7 +216,6 @@ nav.bd-links {
 
   // Toctree captions
   p.caption {
-    font-size: var(--pst-sidebar-font-size);
     font-weight: var(--pst-sidebar-header-font-weight);
     position: relative;
     margin-top: 1.25rem;
@@ -224,6 +223,11 @@ nav.bd-links {
     color: var(--pst-color-text-base);
     &:first-child {
       margin-top: 0;
+    }
+
+    font-size: var(--pst-sidebar-font-size-mobile);
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      font-size: var(--pst-sidebar-font-size);
     }
   }
 }
