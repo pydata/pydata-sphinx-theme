@@ -370,7 +370,7 @@ if (themeSwitchBtns) {
 
 /**
  * intercept the RTD flyout and place it in the rtd-footer-container if existing
- * if not it stays where on top of the page
+ * if not it stays where it is, as an overlay in the bottom-right corner.
  */
 function initRTDObserver() {
   const mutatedCallback = (mutationList, observer) => {
@@ -384,7 +384,11 @@ function initRTDObserver() {
       }
       if (mutation.addedNodes[0].data.search("Inserted RTD Footer") != -1) {
         mutation.addedNodes.forEach((node) => {
-          document.getElementById("rtd-footer-container").append(node);
+          sidebar = document.getElementsByClassName("bd-sidebar-primary")[0];
+          if (sidebar.classList.contains("hide-on-wide")) {
+            return;
+          }
+          sidebar.getElementById("rtd-footer-container").append(node);
         });
       }
     });
