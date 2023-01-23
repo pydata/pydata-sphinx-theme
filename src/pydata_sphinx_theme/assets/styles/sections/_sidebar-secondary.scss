@@ -13,7 +13,15 @@
 
   font-size: var(--pst-sidebar-font-size-mobile);
   @include media-breakpoint-up($breakpoint-sidebar-secondary) {
-    font-size: var(--pst-sidebar-secondary-font-size);
+    font-size: var(--pst-sidebar-font-size);
+  }
+
+  // override bootstrap settings
+  .nav-link {
+    font-size: var(--pst-sidebar-font-size-mobile);
+    @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+      font-size: var(--pst-sidebar-font-size);
+    }
   }
 
   padding: 2rem 1rem 1rem 1rem;
