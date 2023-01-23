@@ -68,7 +68,7 @@ myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-html_logo = "logo.svg"
+html_logo = "_static/logo.svg"
 html_favicon = "_static/logo.svg"
 html_sourcelink_suffix = ""
 
