@@ -53,7 +53,7 @@ doc = [
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For examples section
-  "ablog@git+https://github.com/sunpy/ablog",  # UPDATE THIS AFTER NEW ABLOG RELEASE
+  "ablog>=0.11.0rc2",
   "jupyter_sphinx",
   "pandas",
   "plotly",

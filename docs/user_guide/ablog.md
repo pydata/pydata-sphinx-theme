@@ -4,7 +4,7 @@ The [ABlog extension](https://ablog.readthedocs.io/) allows you to tag pages as 
 It also has a number of sidebar templates to show off collections of your posts.
 
 :::{admonition} Minimum version ABlog v0.11.0
-Make sure you have `ABlog>=0.11.0rc1` in your dependencies.
+Make sure you have `ABlog>=0.11.0rc2` in your dependencies.
 :::
 
 This theme has styling support for ABlog, and demonstrates some of its functionality here.

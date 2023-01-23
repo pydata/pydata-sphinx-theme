@@ -54,49 +54,48 @@
 .ablog__prev-next {
   font-size: 1.2em;
   display: flex;
+  padding: 1rem 0;
 
   // The bottom previous / next arrows
-  span {
+  > span {
     // To ensure that the whole thing fits on one line even if there are long titles
-    max-width: 45%;
-    // Alignment with the prev/next arrows
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    // Remove the ABlog icons because we specify our own
-    // TODO: Instead just update the ABlog icon `content:` when the following is resolved:
-    //    https://github.com/sunpy/ablog/issues/194
-    a i {
-      display: none;
-    }
-    // If the span is empty, it means there's no previous/next page to go to
-    // so this prevents the arrow from showing up
-    &:empty {
-      display: none;
+    max-width: 45%;
+
+    // Links within each span have the collection of icon + text
+    a {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      gap: 1rem;
+      line-height: 1.5rem;
+
+      i:before {
+        color: var(--pst-color-text-base);
+      }
     }
   }
 
-  // The first span is the "previous" button
-  span:first-child:before {
-    content: var(--pst-icon-angle-left);
-    font-family: "Font Awesome 6 Free";
-    font-weight: 800;
+  // The first span is for the previous page and aligns to the left
+  span.ablog__prev {
+    i.fa-arrow-circle-left:before {
+      content: var(--pst-icon-angle-left);
+    }
   }
 
   // The second span is just an empty space so we remove it because we're
   // positioning with flex
-  span:first-child + span {
-    display: none !important;
+  span.ablog__spacer {
+    display: none;
   }
 
   // The third span is aligned to the right
-  span:last-child {
+  span.ablog__next {
     margin-left: auto;
     text-align: right;
-    &:after {
+
+    i.fa-arrow-circle-right:before {
       content: var(--pst-icon-angle-right);
-      font-family: "Font Awesome 6 Free";
-      font-weight: 800;
     }
   }
 }
