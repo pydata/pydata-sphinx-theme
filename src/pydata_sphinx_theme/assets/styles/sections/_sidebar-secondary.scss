@@ -34,6 +34,7 @@
   .onthispage {
     color: var(--pst-color-text-base);
     font-weight: var(--pst-sidebar-header-font-weight);
+    margin-bottom: 0.5rem;
   }
 
   @include scrollbar-style();
