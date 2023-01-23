@@ -62,3 +62,6 @@
 - title: Matplotlib
   website: https://matplotlib.org/stable/
   img-bottom: ../_static/gallery/matplotlib.png
+- title: cashocs
+  website: https://cashocs.readthedocs.io/en/latest/
+  img-bottom: ../_static/gallery/cashocs.png
