@@ -24,6 +24,11 @@
     font-size: var(--pst-sidebar-font-size);
   }
 
+  // override bootstrap when navlink are displayed in the sidebar
+  .nav-link {
+    font-size: var(--pst-sidebar-font-size-mobile);
+  }
+
   &.no-sidebar {
     border-right: 0;
   }
