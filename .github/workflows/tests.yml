@@ -11,6 +11,7 @@ on:
 
 env:
   COVERAGE_THRESHOLD: 60
+  DEFAULT_PY_VERSION: "3.9" # for the jobs that don't use a matrix
 
 jobs:
   lint:
@@ -19,7 +20,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ env.DEFAULT_PY_VERSION }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - uses: pre-commit/action@v3.0.0
@@ -30,17 +31,17 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11-dev"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         include:
           - os: macos-latest
-            python-version: "3.9"
+            python-version: ${{ env.DEFAULT_PY_VERSION }}
           - os: windows-latest
-            python-version: "3.9"
+            python-version: ${{ env.DEFAULT_PY_VERSION }}
 
     steps:
-      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -50,42 +51,35 @@ jobs:
         run: |
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[coverage]
-          python -m pip list
 
-      - name: Test Sphinx==4.2
-        if: matrix.python-version == '3.7'
-        run: |
-          python -m pip install sphinx==4.2
-          python -m pip list
+      - name: Show installed versions
+        run: python -m pip list
 
-      - name: Build docs to store
+      - name: Build docs
         run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
 
-      - name: Check that there are no unexpected Sphinx warnings
-        if: matrix.python-version == '3.9'
+      - name: Check for unexpected Sphinx warnings
+        if: matrix.python-version == ${{ env.DEFAULT_PY_VERSION }}
         run: python tests/check_warnings.py
 
-      - name: Run the tests
+      - name: Run tests
         run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
 
       - name: Upload coverage
-        if: ${{ always() }}
+        if: success() || failure() # always run, unless manually cancelled
         run: codecov
 
   # Run local Lighthouse audit against built site
   audit:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8"]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Set up Python ${{ env.DEFAULT_PY_VERSION }}
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ env.DEFAULT_PY_VERSION }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
 
@@ -110,7 +104,7 @@ jobs:
 
       # The lighthouse audit runs directly on the HTML files, no serving needed
       - name: Audit with Lighthouse
-        uses: treosh/lighthouse-ci-action@v9
+      - uses: treosh/lighthouse-ci-action@v9
         with:
           configPath: ".github/workflows/lighthouserc.json"
           temporaryPublicStorage: true
@@ -120,17 +114,14 @@ jobs:
   # Generate a profile of the code and upload as an artifact
   profile:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8"]
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - name: Set up Python ${{ env.DEFAULT_PY_VERSION }}
+      - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ env.DEFAULT_PY_VERSION }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
 
