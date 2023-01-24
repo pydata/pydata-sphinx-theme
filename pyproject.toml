@@ -45,7 +45,6 @@ classifiers = [
 [project.optional-dependencies]
 doc_base = [
   "numpydoc",
-  "myst-nb",
   "linkify-it-py",  # for link shortening
   "pytest",
   "pytest-regressions",
@@ -62,13 +61,17 @@ doc_base = [
   "xarray",
   "sphinx-copybutton",
   "sphinx-togglebutton",
-  "ipyleaflet",
-]
-doc = [
-  "sphinx-design",
   # Install nbsphinx in case we want to test it locally even though we can't load
   # it at the same time as MyST-NB.
   "nbsphinx",
+  "ipyleaflet",
+]
+doc = [
+  # these place an upper pin on Sphinx, so we separate them out and exclude
+  # them from the `[test]` set of dependencies so we can test against latest
+  # Sphinx.
+  "myst-nb",
+  "sphinx-design",
   "pydata-sphinx-theme[doc_base]"
 ]
 test = [
