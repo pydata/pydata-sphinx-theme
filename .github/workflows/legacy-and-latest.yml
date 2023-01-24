@@ -1,0 +1,52 @@
+name: "test legacy and latest versions"
+
+# This workflow tests our oldest supported Python and Sphinx versions, as well
+# as the newest (pre)released versions, on the three major OSes. When support
+# for a given version is dropped or a new version is (pre)released, update the
+# `matrix` includes in the `strategy` section.
+
+# Note that this only runs the tests, it does not do a full build of our own
+# docs. This is necessary because at present some of our build (but not test)
+# dependencies have an upper pin on the Sphinx version. See comments in
+# pyproject.toml
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - python-version: "3.7" # legacy
+            sphinx-version: "4.2" # legacy
+          - python-version: "3.12-dev" # latest
+            sphinx-version: "6.x-dev" # latest
+
+    steps:
+      - name: Set up Python ${{ matrix.python-version }}
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install -e .[test] sphinx==${{ matrix.sphinx-version }}
+
+      - name: Show installed versions
+        run: python -m pip list
+
+      - name: Run tests
+        run: pytest --color=yes pydata_sphinx_theme
