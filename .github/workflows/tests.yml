@@ -11,7 +11,6 @@ on:
 
 env:
   COVERAGE_THRESHOLD: 60
-  DEFAULT_PY: "3.9"
 
 jobs:
   lint:
@@ -20,8 +19,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: ./.github/workflows/pst-setup-python.yml
-        with:
-          python-version: ${{ env.DEFAULT_PY }}
       - uses: pre-commit/action@v3.0.0
 
   # run our test suite on various combinations of OS / Python / Sphinx version
@@ -35,9 +32,9 @@ jobs:
           - python-version: "3.7" # legacy
             sphinx-version: "4.2" # legacy
           - os: macos-latest
-            python-version: ${{ env.DEFAULT_PY }}
+            python-version: "3.9"
           - os: windows-latest
-            python-version: ${{ env.DEFAULT_PY }}
+            python-version: "3.9"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -71,8 +68,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: ./.github/workflows/pst-setup-python.yml
-        with:
-          python-version: ${{ env.DEFAULT_PY }}
       - name: Install dependencies
         run: python -m pip install -e .[doc]
       - name: Show installed versions
@@ -89,8 +84,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: ./.github/workflows/pst-setup-python.yml
-        with:
-          python-version: ${{ env.DEFAULT_PY }}
       - name: Install dependencies
         run: python -m pip install -e .[test]
       - name: Show installed versions
@@ -124,8 +117,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: ./.github/workflows/pst-setup-python.yml
-        with:
-          python-version: ${{ env.DEFAULT_PY }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade nox
