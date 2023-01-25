@@ -47,8 +47,6 @@ doc = [
   "numpydoc",
   "myst-nb",
   "linkify-it-py",  # for link shortening
-  "pytest",
-  "pytest-regressions",
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
@@ -70,19 +68,16 @@ doc = [
 ]
 test = [
   "pytest",
-  "pydata-sphinx-theme[doc]",
-]
-coverage = [
   "pytest-cov",
+  "pytest-regressions",
   "codecov",
   "colorama",
-  "pydata-sphinx-theme[test]",
 ]
 dev = [
   "pyyaml",
   "pre-commit",
   "nox",
-  "pydata-sphinx-theme[coverage]",
+  "pydata-sphinx-theme[doc,test]",
 ]
 
 [project.entry-points]
