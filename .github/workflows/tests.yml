@@ -86,7 +86,7 @@ jobs:
         shell: bash # avoid using PowerShell
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[doc]
+          PYTHONUTF8=1 python -m pip install -e .[doc]
       - name: Show installed versions
         run: python -m pip list
       - name: Build docs
