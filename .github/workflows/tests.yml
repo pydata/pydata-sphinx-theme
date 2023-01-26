@@ -1,5 +1,13 @@
 name: continuous-integration
 
+# README
+# ======
+#
+# All the jobs are defined with `matrix` for OS and Python version, even if we
+# only run them on one combination of OS/Python. The reason for this is you get
+# a nice side-effect that the OS and Python version of the job are listed in
+# parentheses next to the job name in the Actions UI.
+
 # This prevents workflows from being run twice on PRs
 # ref: https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
 on:
@@ -14,13 +22,17 @@ env:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - uses: pre-commit/action@v3.0.0
@@ -81,13 +93,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
@@ -107,13 +120,17 @@ jobs:
 
   # Run local Lighthouse audit against built site
   audit:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
@@ -146,13 +163,17 @@ jobs:
 
   # Generate a profile of the code and upload as an artifact
   profile:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
