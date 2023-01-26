@@ -33,7 +33,7 @@ def _should_install(session):
     return should_install
 
 
-@nox.session
+@nox.session(name="compile")
 def compile(session):
     """Compile the theme's web assets with sphinx-theme-builder."""
     if _should_install(session):
@@ -42,7 +42,7 @@ def compile(session):
     session.run("stb", "compile")
 
 
-@nox.session
+@nox.session(name="docs")
 def docs(session):
     """Build the documentation and place in docs/_build/html."""
     if _should_install(session):

@@ -12,12 +12,13 @@ import jinja2
 from bs4 import BeautifulSoup as bs
 from docutils import nodes
 from sphinx import addnodes
+from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
 from sphinx.errors import ExtensionError
-from sphinx.util import logging
+from sphinx.util import logging, isurl
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
@@ -1084,6 +1085,40 @@ def setup_translators(app):
             app.set_translator(name, translator, override=True)
 
 
+# ------------------------------------------------------------------------------
+# customize method for logo management
+# ------------------------------------------------------------------------------
+
+
+def setup_logo_path(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree: nodes.Node
+) -> None:
+    """Set up relative paths to logos independant from the version"""
+
+    # get informations from the context
+    pathto = context.get("pathto")
+    logo = context.get("logo")
+    theme_options = app.config.html_theme_options
+    image_light = theme_options.get("logo", {}).get("image_light")
+    image_dark = theme_options.get("logo", {}).get("image_dark")
+
+    # create the logo_url
+    if logo and not isurl(logo):
+        logo = pathto(f"_static/{logo}", resource=True)
+
+    # update light image with the appropriate url
+    if image_light and not isurl(image_light):
+        image_light = pathto(f"_static/{image_light}", resource=True)
+    image_light = image_light or logo
+    theme_options["logo"]["logo_light"] = image_light
+
+    # update dark image with the appropriate url
+    if image_dark and not isurl(image_dark):
+        image_dark = pathto(f"_static/{image_dark}", resource=True)
+    image_dark = image_dark or image_light
+    theme_options["logo"]["logo_dark"] = image_dark
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -1101,6 +1136,7 @@ def setup(app):
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", prepare_html_config)
     app.connect("html-page-context", update_and_remove_templates)
+    app.connect("html-page-context", setup_logo_path)
     app.connect("build-finished", _overwrite_pygments_css)
 
     # Include component templates
