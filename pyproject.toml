@@ -65,13 +65,13 @@ doc = [
   # it at the same time as MyST-NB.
   "nbsphinx",
   "ipyleaflet",
+  "colorama",
 ]
 test = [
   "pytest",
   "pytest-cov",
   "pytest-regressions",
   "codecov",
-  "colorama",
 ]
 dev = [
   "pyyaml",
