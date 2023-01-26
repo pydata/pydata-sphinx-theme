@@ -11,6 +11,8 @@ on:
 
 env:
   COVERAGE_THRESHOLD: 60
+  DEFAULT_PY: &default_py "3.10"
+  # not usable as ${{ env.DEFAULT_PY }} but might work as a YAML node anchor?
 
 jobs:
   lint:
@@ -20,7 +22,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: *default_py
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - uses: pre-commit/action@v3.0.0
@@ -31,14 +33,18 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         include:
-          - python-version: "3.7" # legacy
-            sphinx-version: "4.2" # legacy
+          # legacy test
+          - os: ubuntu-latest
+            python-version: "3.7"
+            sphinx-version: "4.2"
+          # macos test
           - os: macos-latest
-            python-version: "3.8"
+            python-version: *default_py
+          # windows test
           - os: windows-latest
-            python-version: "3.8"
+            python-version: *default_py
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -83,7 +89,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: *default_py
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
@@ -109,7 +115,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: *default_py
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
@@ -148,7 +154,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: *default_py
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
