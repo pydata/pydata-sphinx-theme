@@ -1098,13 +1098,12 @@ def setup_logo_path(
     # get informations from the context
     pathto = context.get("pathto")
     logo = context.get("logo")
-    theme_options = app.config.html_theme_options
-    image_light = theme_options.get("logo", {}).get("image_light")
-    image_dark = theme_options.get("logo", {}).get("image_dark")
+    image_light = context.get("theme_logo", {}).get("image_light")
+    image_dark = context.get("theme_logo", {}).get("image_dark")
 
     # create theme_options["logo"] if not existing
-    if "logo" not in theme_options:
-        theme_options["logo"] = {}
+    if "theme_logo" not in context:
+        context["theme_logo"] = {}
 
     # create the logo_url
     if logo and not isurl(logo):
@@ -1114,13 +1113,13 @@ def setup_logo_path(
     if image_light and not isurl(image_light):
         image_light = pathto(f"_static/{image_light}", resource=True)
     image_light = image_light or logo
-    theme_options["logo"]["logo_light"] = image_light
+    context["theme_logo"]["logo_light"] = image_light
 
     # update dark image with the appropriate url
     if image_dark and not isurl(image_dark):
         image_dark = pathto(f"_static/{image_dark}", resource=True)
     image_dark = image_dark or image_light
-    theme_options["logo"]["logo_dark"] = image_dark
+    context["theme_logo"]["logo_dark"] = image_dark
 
 
 # -----------------------------------------------------------------------------
