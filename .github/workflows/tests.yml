@@ -52,12 +52,16 @@ jobs:
         # if Sphinx version not specified in matrix, the constraints in the
         # pyproject.toml file determine Sphinx version
         if: false == matrix.sphinx-version
+        shell: bash
+        # setting shell to BASH and using PYTHONUTF8 env var makes the editable
+        # install work on Windows even though there are emoji in our README
         run: |
+          export PYTHONUTF8=1
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[test]
       - name: Install dependencies (legacy Sphinx)
         # here we override the pyproject.toml constraints to get a specific
-        # Sphinx version
+        # Sphinx version.
         if: matrix.sphinx-version
         run: |
           python -m pip install --upgrade pip wheel setuptools
@@ -84,6 +88,8 @@ jobs:
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
         shell: bash
+        # setting shell to BASH and using PYTHONUTF8 env var makes the editable
+        # install work on Windows even though there are emoji in our README
         run: |
           export PYTHONUTF8=1
           python -m pip install --upgrade pip wheel setuptools
