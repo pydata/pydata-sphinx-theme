@@ -1122,8 +1122,6 @@ def setup_logo_path(
     image_dark = image_dark or image_light
     theme_options["logo"]["logo_dark"] = image_dark
 
-    logger.warn(theme_options["logo"]["logo_light"])
-
 
 # -----------------------------------------------------------------------------
 
