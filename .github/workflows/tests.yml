@@ -82,11 +82,13 @@ jobs:
           python-version: "3.8"
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
+      - name: Allow emoji in README on Windows
+        if: runner.os == 'Windows'
+        run: $env:PYTHONUTF8 = 1
       - name: Install dependencies
-        shell: bash # avoid using PowerShell
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          PYTHONUTF8=1 python -m pip install -e .[doc]
+          python -m pip install -e .[doc]
       - name: Show installed versions
         run: python -m pip list
       - name: Build docs
