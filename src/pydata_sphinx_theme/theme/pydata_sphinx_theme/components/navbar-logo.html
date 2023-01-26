@@ -7,7 +7,7 @@
 {% endif %}
 <a class="navbar-brand logo" href="{{ href }}">
   {# get all the brand information from html_theme_option #}
-  {% set is_logo = theme_logo.get("logo_light") != "" %}
+  {% set is_logo = theme_logo.get("logo_light") is not  none %}
   {% set alt = theme_logo.get("alt_text", "Logo image") %}
   {% if is_logo %}
     <img src="{{ theme_logo.get('logo_light') }}" class="logo__image only-light" alt="{{ alt }}"/>

@@ -1102,6 +1102,10 @@ def setup_logo_path(
     image_light = theme_options.get("logo", {}).get("image_light")
     image_dark = theme_options.get("logo", {}).get("image_dark")
 
+    # create theme_options["logo"] if not existing
+    if "logo" not in theme_options:
+        theme_options["logo"] = {}
+
     # create the logo_url
     if logo and not isurl(logo):
         logo = pathto(f"_static/{logo}", resource=True)
@@ -1117,6 +1121,8 @@ def setup_logo_path(
         image_dark = pathto(f"_static/{image_dark}", resource=True)
     image_dark = image_dark or image_light
     theme_options["logo"]["logo_dark"] = image_dark
+
+    logger.warn(theme_options["logo"]["logo_light"])
 
 
 # -----------------------------------------------------------------------------

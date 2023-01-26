@@ -122,11 +122,11 @@ html_theme_options = {
             "attributes": {"target": "_blank"},
         },
     ],
-    "logo": {
-        "text": "PyData Theme",
-        "image_dark": "logo-dark.svg",
-        "alt_text": "PyData Theme",
-    },
+    # "logo": {
+    #    "text": "PyData Theme",
+    #    "image_dark": "logo-dark.svg",
+    #    "alt_text": "PyData Theme",
+    # },
     "use_edit_page_button": True,
     "show_toc_level": 1,
     "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
