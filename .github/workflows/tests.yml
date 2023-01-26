@@ -18,7 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
-        uses: ./.github/workflows/pst-setup-python.yml
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
       - uses: pre-commit/action@v3.0.0
 
   # run our test suite on various combinations of OS / Python / Sphinx version
@@ -27,7 +31,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         include:
           - python-version: "3.7" # legacy
             sphinx-version: "4.2" # legacy
@@ -39,19 +43,25 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
-        uses: ./.github/workflows/pst-setup-python.yml
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
         # if Sphinx version not specified in matrix, the constraints in the
         # pyproject.toml file determine Sphinx version
         if: false == matrix.sphinx-version
-        run: python -m pip install -e .[test]
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install -e .[test]
       - name: Install dependencies (legacy Sphinx)
         # here we override the pyproject.toml constraints to get a specific
         # Sphinx version
         if: matrix.sphinx-version
-        run: python -m pip install -e .[test] sphinx==${{ matrix.sphinx-version }}
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install -e .[test] sphinx==${{ matrix.sphinx-version }}
       - name: Show installed versions
         run: python -m pip list
       - name: Run tests
@@ -67,9 +77,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
-        uses: ./.github/workflows/pst-setup-python.yml
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
-        run: python -m pip install -e .[doc]
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install -e .[doc]
       - name: Show installed versions
         run: python -m pip list
       - name: Build docs
@@ -83,9 +99,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
-        uses: ./.github/workflows/pst-setup-python.yml
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
-        run: python -m pip install -e .[test]
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install -e .[doc]
       - name: Show installed versions
         run: python -m pip list
       # We want to run the audit on a simplified documentation build so that
@@ -116,10 +138,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Python
-        uses: ./.github/workflows/pst-setup-python.yml
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade nox
+          python -m pip install --upgrade pip wheel setuptools nox
           python -m pip install -e .[test]
       - name: Show installed versions
         run: python -m pip list
