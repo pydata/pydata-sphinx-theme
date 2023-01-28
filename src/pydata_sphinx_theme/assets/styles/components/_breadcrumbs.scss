@@ -1,0 +1,34 @@
+/**
+ * Breadcrumbs for parent pages meant for the article header
+ */
+ul.bd-breadcrumbs {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+
+  li.breadcrumb-item {
+    display: flex;
+    align-items: center;
+
+    // Items that aren't the home have a carot to the left
+    &:not(.breadcrumb-home):before {
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 0.8rem;
+      content: var(--pst-breadcrumb-divider);
+      color: var(--pst-color-text-muted);
+      padding: 0 0.5rem;
+    }
+
+    // Breadcrumb links should behave like navbar links
+    a {
+      color: var(--pst-color-text-muted);
+      transition: color 0.25s ease-out;
+
+      &:hover {
+        color: var(--pst-color-primary);
+        text-decoration: none;
+      }
+    }
+  }
+}
