@@ -1097,7 +1097,7 @@ def setup_logo_path(
 
     # get informations from the context
     pathto = context.get("pathto")
-    logo = context.get("logo_url") or context.get("logo")
+    logo = context.get("logo_url", "") or context.get("logo", "")
     image_light = context.get("theme_logo", {}).get("image_light")
     image_dark = context.get("theme_logo", {}).get("image_dark")
 
