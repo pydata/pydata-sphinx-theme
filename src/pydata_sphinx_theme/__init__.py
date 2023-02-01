@@ -1093,7 +1093,7 @@ def setup_translators(app):
 def setup_logo_path(
     app: Sphinx, pagename: str, templatename: str, context: dict, doctree: nodes.Node
 ) -> None:
-    """Set up relative paths to logos independant from the version"""
+    """Set up relative paths to logos (works for all Sphinx versions)."""
 
     # get informations from the context
     pathto = context.get("pathto")
