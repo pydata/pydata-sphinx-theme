@@ -1101,7 +1101,7 @@ def setup_logo_path(
     image_light = context.get("theme_logo", {}).get("image_light")
     image_dark = context.get("theme_logo", {}).get("image_dark")
 
-    # create theme_options["logo"] if not existing
+    # add the theme_logo to context to make it editable downstream
     if "theme_logo" not in context:
         context["theme_logo"] = {}
 
