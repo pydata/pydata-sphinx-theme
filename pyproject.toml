@@ -51,7 +51,7 @@ doc = [
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For examples section
-  "ablog",
+  "ablog>=0.11.0rc2",
   "jupyter_sphinx",
   "pandas",
   "plotly",

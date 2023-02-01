@@ -156,14 +156,14 @@ html_sidebars = {
     # Blog sidebars
     # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
     "examples/blog/*": [
-        "postcard.html",
-        "recentposts.html",
-        "tagcloud.html",
-        "categories.html",
-        "authors.html",
-        "languages.html",
-        "locations.html",
-        "archives.html",
+        "ablog/postcard.html",
+        "ablog/recentposts.html",
+        "ablog/tagcloud.html",
+        "ablog/categories.html",
+        "ablog/authors.html",
+        "ablog/languages.html",
+        "ablog/locations.html",
+        "ablog/archives.html",
     ],
 }
 
