@@ -47,7 +47,7 @@ def docs(session):
     """Build the documentation and place in docs/_build/html."""
     if _should_install(session):
         session.install("-e", ".[doc]")
-    session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html")
+    session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html", "-v")
 
 
 @nox.session(name="docs-live")

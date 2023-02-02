@@ -1095,31 +1095,37 @@ def setup_logo_path(
 ) -> None:
     """Set up relative paths to logos (works for all Sphinx versions)."""
 
-    # get informations from the context
+    # get information from the context "logo_url" for sphinx>=6, "logo" sphinx<6
     pathto = context.get("pathto")
-    logo = context.get("logo_url", "") or context.get("logo", "")
-    image_light = context.get("theme_logo", {}).get("image_light")
-    image_dark = context.get("theme_logo", {}).get("image_dark")
+    logo = context.get("logo_url") or context.get("logo")
 
-    # add the theme_logo to context to make it editable downstream
+    # logo image is copied to static if set from html_logo in version <6. "_static"
+    # is in the path and in older sphinx versions. to be compatible with all versions,
+    # we remove it manually.
+    logo = Path(logo).name if logo else ""
+
+    # if theme_logo is not set, create a default one
     if "theme_logo" not in context:
         context["theme_logo"] = {}
 
-    # create the logo_url
+    # reset the "logo" variable for each page
+    context["theme_logo"]["logo"] = {"light": "", "dark": ""}
+
+    # get user-specified light/dark logo versions (fallback to None)
+    image_light = context["theme_logo"].get("image_light")
+    image_dark = context["theme_logo"].get("image_dark")
+
+    # resolve URLs / paths
     if logo and not isurl(logo):
         logo = pathto(f"_static/{logo}", resource=True)
-
-    # update light image with the appropriate url
-    if image_light and not isurl(image_light):
-        image_light = pathto(f"_static/{image_light}", resource=True)
-    image_light = image_light or logo
-    context["theme_logo"]["logo_light"] = image_light
-
-    # update dark image with the appropriate url
     if image_dark and not isurl(image_dark):
         image_dark = pathto(f"_static/{image_dark}", resource=True)
-    image_dark = image_dark or image_light
-    context["theme_logo"]["logo_dark"] = image_dark
+    if image_light and not isurl(image_light):
+        image_light = pathto(f"_static/{image_light}", resource=True)
+
+    # fallback to logo if image_{light|dark} is None
+    context["theme_logo"]["logo"]["light"] = image_light or logo
+    context["theme_logo"]["logo"]["dark"] = image_dark or image_light or logo
 
 
 # -----------------------------------------------------------------------------
