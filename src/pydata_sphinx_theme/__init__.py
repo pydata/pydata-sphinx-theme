@@ -1125,7 +1125,7 @@ def setup_logo_path(
 
     # fallback to logo if image_{light|dark} is None
     context["theme_logo"]["logo"]["light"] = image_light or logo
-    context["theme_logo"]["logo"]["dark"] = image_dark or image_light or logo
+    context["theme_logo"]["logo"]["dark"] = image_dark or logo
 
 
 # -----------------------------------------------------------------------------
