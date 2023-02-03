@@ -75,7 +75,7 @@ def test_sphinx(session, sphinx):
     """Run the test suite with a specific version of Sphinx."""
     if _should_install(session):
         session.install("-e", ".[test]")
-        session.install(f"sphinx=={sphinx}")
+    session.install(f"sphinx=={sphinx}")
     session.run("pytest", *session.posargs)
 
 

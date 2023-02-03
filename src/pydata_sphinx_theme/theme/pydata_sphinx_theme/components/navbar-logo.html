@@ -10,7 +10,8 @@
 {#- Logo HTML and image #}
 <a class="navbar-brand logo" href="{{ href }}">
   {# get all the brand information from html_theme_option #}
-  {% set is_logo = theme_logo["image_light_relative"] != "" %}
+  {# ref: https://www.shellhacks.com/jinja2-check-if-variable-empty-exists-defined-true/ #}
+  {% set is_logo = theme_logo["image_light_relative"] is defined and theme_logo["image_light_relative"]|length %}
   {% set alt = theme_logo.get("alt_text", "Logo image") %}
   {% if is_logo %}
     <img src="{{ theme_logo['image_light_relative'] }}" class="logo__image only-light" alt="{{ alt }}"/>
