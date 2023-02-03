@@ -11,7 +11,7 @@ This can be replaced by a logo image, and optionally a custom ``html_title`` as 
 Single logo for light and dark mode
 -----------------------------------
 
-To use a **local image file**, use ``html_logo`` as specified in the `Sphinx documentation <https://pydata-sphinx-theme.readthedocs.io/en/latest/user_guide/branding.html>`__.
+To use a **local image file**, use ``html_logo`` as specified in the `Sphinx documentation <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_logo>`__.
 The file must be relative to ``conf.py``.
 For example, if your documentation had a logo in ``_static/logo.png``:
 
