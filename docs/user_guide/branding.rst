@@ -11,11 +11,10 @@ This can be replaced by a logo image, and optionally a custom ``html_title`` as 
 Single logo for light and dark mode
 -----------------------------------
 
-To use a local image file, put an image in a folder that is in `html_static_path`, and use the following configuration:
+To use a local image file, use ``html_logo`` as specified in the `Sphinx documentation <https://pydata-sphinx-theme.readthedocs.io/en/latest/user_guide/branding.html>`__. The file needs to be relative to `conf.py`:
 
 .. code:: python
 
-   html_static_path = ["_static"]
    html_logo = "logo.png"
 
 To use an external link to an image, make sure the ``html_logo`` begins with ``http``.
