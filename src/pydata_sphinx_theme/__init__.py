@@ -1,27 +1,27 @@
 """
 Bootstrap-based sphinx theme from the PyData community
 """
-import os
-from pathlib import Path
-from functools import lru_cache
 import json
-from urllib.parse import urlparse, urlunparse
+import os
 import types
+from functools import lru_cache
+from pathlib import Path
+from urllib.parse import urlparse, urlunparse
 
 import jinja2
+import requests
 from bs4 import BeautifulSoup as bs
 from docutils import nodes
-from sphinx import addnodes
-from sphinx.environment.adapters.toctree import TocTree
-from sphinx.addnodes import toctree as toctree_node
-from sphinx.transforms.post_transforms import SphinxPostTransform
-from sphinx.util.nodes import NodeMatcher
-from sphinx.errors import ExtensionError
-from sphinx.util import logging
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
-import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
+from sphinx import addnodes
+from sphinx.addnodes import toctree as toctree_node
+from sphinx.environment.adapters.toctree import TocTree
+from sphinx.errors import ExtensionError
+from sphinx.transforms.post_transforms import SphinxPostTransform
+from sphinx.util import logging
+from sphinx.util.nodes import NodeMatcher
 
 from .translator import BootstrapHTML5TranslatorMixin
 
@@ -737,7 +737,6 @@ def soup_to_python(soup, only_pages=False):
     #       ...
 
     def extract_level_recursive(ul, navs_list):
-
         for li in ul.find_all("li", recursive=False):
             ref = li.a
             url = ref["href"]
@@ -1030,7 +1029,7 @@ class ShortenLinkTransform(SphinxPostTransform):
         elif self.platform == "gitlab":
             # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
             if "/-/" in path and any(
-                map(uri.path.__contains__, ["issues", "merge_requests"])
+                map(uri.path.__contains__, ["issues/", "merge_requests/"])
             ):
                 group_and_subgroups, parts, *_ = path.split("/-/")
                 parts = parts.split("/")
