@@ -24,6 +24,8 @@ Page 1
     https://gitlab.com/gitlab-org/gitlab
     https://gitlab.com/gitlab-org/gitlab/-/issues/375583
     https://gitlab.com/gitlab-org/gitlab/issues/375583
+    https://gitlab.com/gitlab-org/gitlab/issues/
+    https://gitlab.com/gitlab-org/gitlab/issues
     https://gitlab.com/gitlab-org/gitlab/-/merge_requests/84669
     https://gitlab.com/gitlab-org/gitlab/-/pipelines/511894707
     https://gitlab.com/gitlab-com/gl-infra/production/-/issues/6788
