@@ -1123,8 +1123,9 @@ def setup_logo_path(
                 image_kind_name = Path(image_kind_logo).name
                 image_kind_out = pathto(f"_static/{image_kind_name}", resource=True)
                 theme_logo[f"image_{kind}_relative"] = image_kind_out
-        else:
+        elif isinstance(logo, str) and len(logo) > 0:
             # If there's no custom logo for this kind, just use `html_logo`
+            # If `logo` is also None, then do not add this key to context.
             theme_logo[f"image_{kind}_relative"] = logo
 
     # Update our context logo variables with the new image paths
