@@ -189,7 +189,7 @@ def test_logo_two_images(sphinx_build_factory):
         "html_theme_options": {
             "logo": {
                 "text": "Foo Title",
-                "image_dark": "emptydarklogo.png",
+                "image_dark": "_static/emptydarklogo.png",
             }
         },
     }
@@ -199,6 +199,23 @@ def test_logo_two_images(sphinx_build_factory):
     assert "emptylogo" in index_str
     assert "emptydarklogo" in index_str
     assert "Foo Title" in index_str
+
+
+def test_logo_missing_image(sphinx_build_factory):
+    """Test that a missing image will raise a warning."""
+    # Test with a specified title and a dark logo
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                # The logo is actually in _static
+                "image_dark": "emptydarklogo.png",
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
+        no_warning=False
+    )
+    assert "image logo does not exist" in escape_ansi(sphinx_build.warnings).strip()
 
 
 def test_logo_external_link(sphinx_build_factory):

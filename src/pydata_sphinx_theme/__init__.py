@@ -172,7 +172,7 @@ def update_config(app):
         path_image = logo.get(f"image_{kind}")
         if not path_image or isurl(path_image):
             continue
-        if not Path(path_image).exists():
+        if not (Path(app.srcdir) / path_image).exists():
             logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
         copy_asset_file(path_image, staticdir)
 
@@ -1122,22 +1122,17 @@ def setup_logo_path(
     theme_logo = context.get("theme_logo", {})
 
     # Light mode logo image path
-    image_light = theme_logo.get("image_light")
-    if image_light and not isurl(image_light):
-        image_light_name = Path(image_light).name
-        image_light_out = pathto(f"_static/{image_light_name}", resource=True)
-        theme_logo["image_light"] = image_light_out
-    else:
-        theme_logo["image_light"] = logo
-
-    # Dark mode logo image path
-    image_dark = theme_logo.get("image_dark")
-    if image_dark and not isurl(image_dark):
-        image_dark_name = Path(image_dark).name
-        image_dark_out = pathto(f"_static/{image_dark_name}", resource=True)
-        theme_logo["image_dark"] = image_dark_out
-    else:
-        theme_logo["image_dark"] = logo
+    for kind in ["light", "dark"]:
+        image_kind_logo = theme_logo.get(f"image_{kind}")
+        if image_kind_logo:
+            if isurl(image_kind_logo):
+                # If it's a URL, we don't modify at all
+                continue
+            image_kind_name = Path(image_kind_logo).name
+            image_kind_out = pathto(f"_static/{image_kind_name}", resource=True)
+            theme_logo[f"image_{kind}"] = image_kind_out
+        else:
+            theme_logo[f"image_{kind}"] = logo
 
     # Update our context logo variables with the new image paths
     context["theme_logo"] = theme_logo
