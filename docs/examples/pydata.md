@@ -3,6 +3,8 @@ file_format: mystnb
 kernelspec:
   name: python3
   display_name: Python 3
+mystnb:
+  execution_mode: cache
 ---
 
 % To test this file with nbsphinx we need to convert to ipynb. To do this:

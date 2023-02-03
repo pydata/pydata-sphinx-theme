@@ -12,12 +12,14 @@ import jinja2
 from bs4 import BeautifulSoup as bs
 from docutils import nodes
 from sphinx import addnodes
+from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
 from sphinx.errors import ExtensionError
-from sphinx.util import logging
+from sphinx.util import logging, isurl
+from sphinx.util.fileutil import copy_asset_file
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
@@ -1084,6 +1086,70 @@ def setup_translators(app):
             app.set_translator(name, translator, override=True)
 
 
+# ------------------------------------------------------------------------------
+# customize events for logo management
+# we use one event to copy over custom logo images to _static
+# and another even to link them in the html context
+# ------------------------------------------------------------------------------
+
+
+def setup_logo_path(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree: nodes.Node
+) -> None:
+    """Set up relative paths to logos in our HTML templates.
+
+    In Sphinx, the context["logo"] is a path to the `html_logo` image now in the output
+    `_static` folder.
+
+    If logo["image_light"] and logo["image_dark"] are given, we must modify them to
+    follow the same pattern. They have already been copied to the output folder
+    in the `update_config` event.
+    """
+
+    # get information from the context "logo_url" for sphinx>=6, "logo" sphinx<6
+    pathto = context.get("pathto")
+    logo = context.get("logo_url") or context.get("logo")
+    theme_logo = context.get("theme_logo", {})
+
+    # Define the final path to logo images in the HTML context
+    theme_logo["image_relative"] = {}
+    for kind in ["light", "dark"]:
+        image_kind_logo = theme_logo.get(f"image_{kind}")
+
+        # If it's a URL the "relative" path is just the URL
+        # else we need to calculate the relative path to a local file
+        if image_kind_logo:
+            if not isurl(image_kind_logo):
+                image_kind_name = Path(image_kind_logo).name
+                image_kind_logo = pathto(f"_static/{image_kind_name}", resource=True)
+            theme_logo["image_relative"][kind] = image_kind_logo
+
+        # If there's no custom logo for this kind, just use `html_logo`
+        # If `logo` is also None, then do not add this key to context.
+        elif isinstance(logo, str) and len(logo) > 0:
+            theme_logo["image_relative"][kind] = logo
+
+    # Update our context logo variables with the new image paths
+    context["theme_logo"] = theme_logo
+
+
+def copy_logo_images(app: Sphinx, exception=None) -> None:
+    """
+    If logo image paths are given, copy them to the `_static` folder
+    Then we can link to them directly in an html_page_context event
+    """
+    theme_options = app.config.html_theme_options
+    logo = theme_options.get("logo", {})
+    staticdir = Path(app.builder.outdir) / "_static"
+    for kind in ["light", "dark"]:
+        path_image = logo.get(f"image_{kind}")
+        if not path_image or isurl(path_image):
+            continue
+        if not (Path(app.srcdir) / path_image).exists():
+            logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
+        copy_asset_file(path_image, staticdir)
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -1101,7 +1167,9 @@ def setup(app):
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", prepare_html_config)
     app.connect("html-page-context", update_and_remove_templates)
+    app.connect("html-page-context", setup_logo_path)
     app.connect("build-finished", _overwrite_pygments_css)
+    app.connect("build-finished", copy_logo_images)
 
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))

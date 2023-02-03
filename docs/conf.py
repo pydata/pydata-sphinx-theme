@@ -124,7 +124,7 @@ html_theme_options = {
     ],
     "logo": {
         "text": "PyData Theme",
-        "image_dark": "logo-dark.svg",
+        "image_dark": "_static/logo-dark.svg",
         "alt_text": "PyData Theme",
     },
     "use_edit_page_button": True,
