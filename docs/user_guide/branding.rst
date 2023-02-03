@@ -30,21 +30,23 @@ Different logos for light and dark mode
 You may specify a different version of your logo image for "light" and "dark" modes.
 This is useful if your logo image is not adapted to a dark mode (light background, not enough contrast, etc...).
 
-To do so, put the 2 image files in a folder that is in ``html_static_path`` and configure the relative path to each image with ``logo["image_light"]`` and ``logo["image_dark"]`` in ``html_theme_options``, like so:
+To do so, use the ``logo["image_light"]`` and ``logo["image_dark"]`` options in ``html_theme_options``.
+For each, provide a path relative to ``conf.py`` like so:
 
 .. code-block:: python
 
-   html_static_path = ["_static"]
+   # Assuming your `conf.py` has a sibling folder called `_static` with these files
    html_theme_options = {
       "logo": {
-         "image_light": "logo-light.png",
-         "image_dark": "logo-dark.png",
+         "image_light": "_static/logo-light.png",
+         "image_dark": "_static/logo-dark.png",
       }
    }
 
 .. note::
 
-   ``image_light`` and ``image_dark`` will override the ``html_logo`` setting. If you only specify one of the light or dark variants, the un-specified variant will fall back to the value of ``html_logo``.
+   ``image_light`` and ``image_dark`` will override the ``html_logo`` setting.
+   If you only specify one of the light or dark variants, the un-specified variant will fall back to the value of ``html_logo``.
 
 Customize logo link
 -------------------
