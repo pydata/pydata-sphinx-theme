@@ -43,3 +43,8 @@ repos:
     hooks:
       - id: djlint-jinja
         types_or: ["html"]
+
+  - repo: https://github.com/PyCQA/doc8
+    rev: v1.1.1
+    hooks:
+      - id: doc8
