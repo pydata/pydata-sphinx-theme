@@ -19,6 +19,7 @@ from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
 from sphinx.errors import ExtensionError
 from sphinx.util import logging, isurl
+from sphinx.util.fileutil import copy_asset_file
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
@@ -162,6 +163,18 @@ def update_config(app):
     # Update ABlog configuration default if present
     if "ablog" in app.config.extensions:
         app.config.__dict__["fontawesome_included"] = True
+
+    # If logo image paths are given, copy them to the `_static` folder
+    # Then we can link to them directly in an html_page_context event
+    logo = theme_options.get("logo", {})
+    staticdir = Path(app.builder.outdir) / "_static"
+    for kind in ["light", "dark"]:
+        path_image = logo.get(f"image_{kind}")
+        if not path_image or isurl(path_image):
+            continue
+        if not Path(path_image).exists():
+            logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
+        copy_asset_file(path_image, staticdir)
 
 
 def prepare_html_config(app, pagename, templatename, context, doctree):
@@ -1093,39 +1106,41 @@ def setup_translators(app):
 def setup_logo_path(
     app: Sphinx, pagename: str, templatename: str, context: dict, doctree: nodes.Node
 ) -> None:
-    """Set up relative paths to logos (works for all Sphinx versions)."""
+    """Set up relative paths to logos (works for all Sphinx versions).
+
+    The `logo` key in context is a path to the `html_logo` image now in the output
+    `_static` folder *relative to the current page*.
+
+    If logo["image_light"] and logo["image_dark"] are given, we must modify them to
+    follow the same pattern. They have already been copied to the output folder
+    in the `update_config` event.
+    """
 
     # get information from the context "logo_url" for sphinx>=6, "logo" sphinx<6
     pathto = context.get("pathto")
     logo = context.get("logo_url") or context.get("logo")
+    theme_logo = context.get("theme_logo", {})
 
-    # logo image is copied to static if set from html_logo in version <6. "_static"
-    # is in the path and in older sphinx versions. to be compatible with all versions,
-    # we remove it manually.
-    logo = Path(logo).name if logo else ""
-
-    # if theme_logo is not set, create a default one
-    if "theme_logo" not in context:
-        context["theme_logo"] = {}
-
-    # reset the "logo" variable for each page
-    context["theme_logo"]["logo"] = {"light": "", "dark": ""}
-
-    # get user-specified light/dark logo versions (fallback to None)
-    image_light = context["theme_logo"].get("image_light")
-    image_dark = context["theme_logo"].get("image_dark")
-
-    # resolve URLs / paths
-    if logo and not isurl(logo):
-        logo = pathto(f"_static/{logo}", resource=True)
-    if image_dark and not isurl(image_dark):
-        image_dark = pathto(f"_static/{image_dark}", resource=True)
+    # Light mode logo image path
+    image_light = theme_logo.get("image_light")
     if image_light and not isurl(image_light):
-        image_light = pathto(f"_static/{image_light}", resource=True)
+        image_light_name = Path(image_light).name
+        image_light_out = pathto(f"_static/{image_light_name}", resource=True)
+        theme_logo["image_light"] = image_light_out
+    else:
+        theme_logo["image_light"] = logo
 
-    # fallback to logo if image_{light|dark} is None
-    context["theme_logo"]["logo"]["light"] = image_light or logo
-    context["theme_logo"]["logo"]["dark"] = image_dark or logo
+    # Dark mode logo image path
+    image_dark = theme_logo.get("image_dark")
+    if image_dark and not isurl(image_dark):
+        image_dark_name = Path(image_dark).name
+        image_dark_out = pathto(f"_static/{image_dark_name}", resource=True)
+        theme_logo["image_dark"] = image_dark_out
+    else:
+        theme_logo["image_dark"] = logo
+
+    # Update our context logo variables with the new image paths
+    context["theme_logo"] = theme_logo
 
 
 # -----------------------------------------------------------------------------

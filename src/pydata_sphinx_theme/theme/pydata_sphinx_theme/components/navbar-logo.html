@@ -7,11 +7,11 @@
 {% endif %}
 <a class="navbar-brand logo" href="{{ href }}">
   {# get all the brand information from html_theme_option #}
-  {% set is_logo = theme_logo.get("logo")["light"] != "" %}
+  {% set is_logo = theme_logo["image_light"] != "" %}
   {% set alt = theme_logo.get("alt_text", "Logo image") %}
   {% if is_logo %}
-    <img src="{{ theme_logo.get('logo')['light'] }}" class="logo__image only-light" alt="{{ alt }}"/>
-    <img src="{{ theme_logo.get('logo')['dark'] }}" class="logo__image only-dark" alt="{{ alt }}"/>
+    <img src="{{ theme_logo['image_light'] }}" class="logo__image only-light" alt="{{ alt }}"/>
+    <img src="{{ theme_logo['image_dark'] }}" class="logo__image only-dark" alt="{{ alt }}"/>
   {% endif %}
   {% if not is_logo or theme_logo.get("text") %}
     <p class="title logo__title">{{ theme_logo.get("text") or docstitle }}</p>
