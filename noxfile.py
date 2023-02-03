@@ -1,8 +1,10 @@
 """Automatically build our documentation or run tests.
 
-Environments are re-used by default. Use the following-pattern to re-install them.
+Environments are re-used by default.
 
-nox -s docs -- -r
+Re-install the environment from scratch:
+
+    nox -s docs -- -r
 """
 import nox
 from pathlib import Path
@@ -61,9 +63,19 @@ def docs_live(session):
 
 @nox.session(name="test")
 def test(session):
-    """Run the test suite. Use `-- -r` to re-build the environment."""
+    """Run the test suite."""
     if _should_install(session):
         session.install("-e", ".[test]")
+    session.run("pytest", *session.posargs)
+
+
+@nox.session(name="test-sphinx")
+@nox.parametrize("sphinx", ["4", "5", "6"])
+def test_sphinx(session, sphinx):
+    """Run the test suite with a specific version of Sphinx."""
+    if _should_install(session):
+        session.install("-e", ".[test]")
+        session.install(f"sphinx=={sphinx}")
     session.run("pytest", *session.posargs)
 
 

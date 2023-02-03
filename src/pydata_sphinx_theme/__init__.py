@@ -164,18 +164,6 @@ def update_config(app):
     if "ablog" in app.config.extensions:
         app.config.__dict__["fontawesome_included"] = True
 
-    # If logo image paths are given, copy them to the `_static` folder
-    # Then we can link to them directly in an html_page_context event
-    logo = theme_options.get("logo", {})
-    staticdir = Path(app.builder.outdir) / "_static"
-    for kind in ["light", "dark"]:
-        path_image = logo.get(f"image_{kind}")
-        if not path_image or isurl(path_image):
-            continue
-        if not (Path(app.srcdir) / path_image).exists():
-            logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
-        copy_asset_file(path_image, staticdir)
-
 
 def prepare_html_config(app, pagename, templatename, context, doctree):
     """Prepare some configuration values for the HTML build.
@@ -1099,17 +1087,19 @@ def setup_translators(app):
 
 
 # ------------------------------------------------------------------------------
-# customize method for logo management
+# customize events for logo management
+# we use one event to copy over custom logo images to _static
+# and another even to link them in the html context
 # ------------------------------------------------------------------------------
 
 
 def setup_logo_path(
     app: Sphinx, pagename: str, templatename: str, context: dict, doctree: nodes.Node
 ) -> None:
-    """Set up relative paths to logos (works for all Sphinx versions).
+    """Set up relative paths to logos in our HTML templates.
 
-    The `logo` key in context is a path to the `html_logo` image now in the output
-    `_static` folder *relative to the current page*.
+    In Sphinx, the context["logo"] is a path to the `html_logo` image now in the output
+    `_static` folder.
 
     If logo["image_light"] and logo["image_dark"] are given, we must modify them to
     follow the same pattern. They have already been copied to the output folder
@@ -1121,21 +1111,41 @@ def setup_logo_path(
     logo = context.get("logo_url") or context.get("logo")
     theme_logo = context.get("theme_logo", {})
 
-    # Light mode logo image path
+    # Define the final path to logo images in the HTML context
     for kind in ["light", "dark"]:
         image_kind_logo = theme_logo.get(f"image_{kind}")
         if image_kind_logo:
             if isurl(image_kind_logo):
-                # If it's a URL, we don't modify at all
-                continue
-            image_kind_name = Path(image_kind_logo).name
-            image_kind_out = pathto(f"_static/{image_kind_name}", resource=True)
-            theme_logo[f"image_{kind}"] = image_kind_out
+                # If it's a URL the "relative" path is just the URL
+                theme_logo[f"image_{kind}_relative"] = image_kind_logo
+            else:
+                # We need to calculate the relative path to a local file
+                image_kind_name = Path(image_kind_logo).name
+                image_kind_out = pathto(f"_static/{image_kind_name}", resource=True)
+                theme_logo[f"image_{kind}_relative"] = image_kind_out
         else:
-            theme_logo[f"image_{kind}"] = logo
+            # If there's no custom logo for this kind, just use `html_logo`
+            theme_logo[f"image_{kind}_relative"] = logo
 
     # Update our context logo variables with the new image paths
     context["theme_logo"] = theme_logo
+
+
+def copy_logo_images(app: Sphinx, exception=None) -> None:
+    """
+    If logo image paths are given, copy them to the `_static` folder
+    Then we can link to them directly in an html_page_context event
+    """
+    theme_options = app.config.html_theme_options
+    logo = theme_options.get("logo", {})
+    staticdir = Path(app.builder.outdir) / "_static"
+    for kind in ["light", "dark"]:
+        path_image = logo.get(f"image_{kind}")
+        if not path_image or isurl(path_image):
+            continue
+        if not (Path(app.srcdir) / path_image).exists():
+            logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
+        copy_asset_file(path_image, staticdir)
 
 
 # -----------------------------------------------------------------------------
@@ -1157,6 +1167,7 @@ def setup(app):
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", setup_logo_path)
     app.connect("build-finished", _overwrite_pygments_css)
+    app.connect("build-finished", copy_logo_images)
 
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))
