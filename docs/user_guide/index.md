@@ -54,6 +54,7 @@ keyboard-shortcuts
 theme-elements
 ablog
 web-components
+extending
 ```
 
 ```{toctree}
