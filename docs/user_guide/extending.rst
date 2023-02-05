@@ -7,7 +7,7 @@ This theme can be extended using other sphinx extentions, their interaction with
 Customize admonitions
 =====================
 
-Admonitions are based on the Sphinx admonition system described in :doc:`../examples/kitchen-sink/admonition`. They are fully customizable to render more complex configuration.
+Admonitions are based on the Sphinx admonition system described in :doc:`../examples/kitchen-sink/admonitions`. They are fully customizable to render more complex configuration.
 
 collapsing
 ----------
