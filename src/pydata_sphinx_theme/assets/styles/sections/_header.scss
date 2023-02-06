@@ -30,6 +30,7 @@
   // Hide the header items on mobile
   .navbar-header-items {
     display: none;
+    flex-shrink: 1;
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: flex;
       flex-grow: 1;
@@ -52,6 +53,7 @@
 
   // A little smaller because this is displayed by default on mobile
   #navbar-start {
+    flex-shrink: 0;
     margin-right: auto;
     gap: 0.5rem;
   }
