@@ -10,21 +10,27 @@
  * Jupyter Sphinx
  */
 
-// Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  div.jupyter_container {
-    // Background has slightly more custom background behavior because of hard-coded color
-    border: 1px solid var(--pst-color-border);
-    background-color: var(--pst-color-surface);
+.bd-content div.jupyter_container {
+  // We don't want borders around the whole container, just around code cells
+  border: none;
+  background-color: unset;
+  box-shadow: none;
+
+  // Code cells should have the same style as our other code objects
+  div.output,
+  div.highlight {
     border-radius: 0.25rem;
+  }
+  div.highlight {
+    background-color: var(--pst-color-surface);
+  }
 
-    div.output,
-    div.highlight {
-      border-radius: 0.25rem;
-    }
-
-    div.highlight {
-      background-color: var(--pst-color-surface);
+  // Ensure the style is the same as our code cells. Jupyter Sphinx makes it tiny.
+  .cell_input,
+  .cell_output {
+    border-radius: 0.25rem;
+    pre {
+      padding: 1rem;
     }
   }
 }
