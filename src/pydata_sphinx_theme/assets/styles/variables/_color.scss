@@ -94,10 +94,6 @@ $pst-semantic-colors: (
         $value: map-get($value, $mode);
       }
       --pst-color-#{$name}: #{$value};
-      // assign classes too, for runtime use of theme colors
-      .pst-color-#{$name} {
-        color: #{$value};
-      }
     }
     // assign the "duplicate" colors (ones that just reference other variables)
     --pst-color-link: var(--pst-color-primary);
@@ -131,5 +127,12 @@ $pst-semantic-colors: (
         fill: var(--pst-color-text-base);
       }
     }
+  }
+}
+
+// assign classes too, for runtime use of theme colors
+@each $name, $value in $pst-semantic-colors {
+  .pst-color-#{$name} {
+    color: var(--pst-color-#{$name});
   }
 }
