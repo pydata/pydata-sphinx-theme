@@ -6,6 +6,7 @@
     {{ _("Site Navigation") }}
   </p>
   <ul id="navbar-main-elements" class="navbar-nav">
-    {{ generate_header_nav_html(n_links_before_dropdown=theme_header_links_before_dropdown) }}
+    {% include "components/navbar-first-level-links.html" %}
+    {% include "components/dropdown-links.html" %}
   </ul>
 </nav>

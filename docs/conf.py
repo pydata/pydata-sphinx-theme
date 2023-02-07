@@ -91,18 +91,19 @@ if not version_match or version_match.isdigit():
         version_match = "v" + release
 
 html_theme_options = {
-    "external_links": [
+    "dropdown_links": [
         {
-            "url": "https://pydata.org",
-            "name": "PyData",
+            "url": "https://github.com/pydata/pydata-sphinx-theme/releases",
+            "name": "Changelog",
         },
+        {"url": "examples/gallery", "name": "Gallery"},
         {
-            "url": "https://numfocus.org/",
-            "name": "NumFocus",
-        },
-        {
-            "url": "https://numfocus.org/donate",
-            "name": "Donate to NumFocus",
+            "name": "Community links",
+            "items": [
+                {"url": "https://pydata.org", "name": "PyData"},
+                {"url": "https://numfocus.org/", "name": "NumFocus"},
+                {"url": "https://numfocus.org/donate", "name": "Donate to NumFocus"},
+            ],
         },
     ],
     "github_url": "https://github.com/pydata/pydata-sphinx-theme",

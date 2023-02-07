@@ -1,0 +1,44 @@
+{# One or more extra links and dropdown links with Bootstrap -#}
+
+{# A macro so we can save some boilerplate #}
+{%- macro dropdown_link(name, url, tooltip_placement="left") -%}
+
+{#- Parse the URL to determine if it is an internal document link or a URI #}
+{% if not url.startswith("http") %}
+{% set url=pathto(url) %}
+{% set extra_classes="" %}
+{% else %}
+{% set extra_classes=" nav-external" %}
+{% endif -%}
+
+<a class="nav-link{{ extra_classes }}" href="{{ url }}" data-bs-toggle="tooltip" data-bs-placement="{{ tooltip_placement }}" aria-label="{{ name }}">
+  {{ name }}
+</a>
+{%- endmacro %}
+
+{% if theme_dropdown_links %}
+{% for dropdown in theme_dropdown_links %}
+
+  {#- If "items" is in the list item then it is a dropdown with a collection of links #}
+  {% if "items" in dropdown %}
+  <div class="nav-item dropdown">
+    <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ dropdown["name"] }}
+    </button>
+    <div class="dropdown-menu">
+    {% for link in dropdown["items"] %}
+    <li class="nav-item">
+      {{ dropdown_link(link["name"], link["url"])}}
+    </li>
+    {% endfor %}
+    </div>
+  </div>
+
+  {% else %}
+  {# Otherwise assume it is just an extra link, not a dropdown -#}
+  <li class="nav-item">
+    {{ dropdown_link(dropdown["name"], dropdown["url"])}}
+  </li>
+  {% endif %}
+{% endfor %}
+{% endif %}

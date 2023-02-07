@@ -63,9 +63,3 @@ Several example pages to demonstrate the functionality of this theme when used a
 
 examples/index
 ```
-
-```{toctree}
-:hidden:
-
-Changelog <https://github.com/pydata/pydata-sphinx-theme/releases>
-```
