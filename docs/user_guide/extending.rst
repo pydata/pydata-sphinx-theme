@@ -2,197 +2,187 @@
 Extending the theme
 ===================
 
-This theme can be extended using other sphinx extentions, their interaction with the pydata-sphinx-theme is described in this section.
+There are many extensions available for Sphinx that can enhance your site or provide powerful customization abilities. Here we describe a few customizations that are popular with ``pydata-sphinx-theme`` users.
 
-Customize admonitions
-=====================
+Collapsible admonitions
+=======================
 
-Admonitions are based on the Sphinx admonition system described in :doc:`../examples/kitchen-sink/admonitions`. They are fully customizable to render more complex configuration.
-
-collapsing
-----------
-
-To make the admonitions collapsable, we suggest to rely on the `sphinx-togglebutton <https://sphinx-togglebutton.readthedocs.io/en/latest/>`__ extention. Follow the instalation instruction from their documentation and add it to the ``extentions`` in your ``conf.py``:
+The `sphinx-togglebutton <https://sphinx-togglebutton.readthedocs.io/en/latest/>`__ extension provides optional show/hide behavior for admonitions. Follow their installation instructions, then add it to the ``extentions`` list in your ``conf.py``:
 
 .. code-block:: python
 
-    extentions = [
+    extensions = [
         # [...]
         "sphinx_togglebutton"
     ]
 
-Then add the ``dropdown`` class to any admonition directive:
+Then add the ``dropdown`` class to any admonition directive (shown here on a ``note`` admonition):
 
+.. begin-example-dropdown
 .. note::
     :class: dropdown
 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+.. end-example-dropdown
 
 .. tab-set::
 
     .. tab-item:: rst
 
-        .. code-block:: rst
+        .. include:: ./extending.rst
+            :start-after: begin-example-dropdown
+            :end-before: .. end-example-dropdown
+            :literal:
+            :class: highlight-rst
 
-            .. note::
-                :class: dropdown
 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Custom admonition styles
+========================
 
-custom title
-------------
+A `limited set <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ of admonitions are built-in to docutils (the rST → HTML engine that underlies Sphinx). However, it is possible to create custom admonitions with their own default colors, icons, and titles.
 
-By design, admonitions are using an automatic title to display next to the icon. By using the generic ``admonition`` directive, the first argument will be used as admonition title.
-Default admonitions are rendered with your custom title, a :fas:`bell` icon and the "note" admonition coloring.
 
-.. admonition:: custom
+Customizing the title
+---------------------
+
+Although most admonitions have a default title like ``note`` or ``warning``, a generic ``admonition`` directive is built-in to docutils/Sphinx. In this theme, its color defaults to the same color as ``note`` admonitions, and it has a bell icon:
+
+.. begin-example-title
+.. admonition:: Custom title!
 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+.. end-example-title
+
+The title is specified on the same line as the ``.. admonition::`` directive:
 
 .. tab-set::
 
     .. tab-item:: rst
 
-        .. code-block:: rst
+        .. include:: ./extending.rst
+            :start-after: begin-example-title
+            :end-before: .. end-example-title
+            :literal:
+            :class: highlight-rst
 
-            .. admonition:: custom
 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Styling with semantic color names
+---------------------------------
 
-You can also use one of the predifined color-icon by adding one of the existing admonition class to your custom admonition. This theme supports:
+You can re-style any admonition to match any of the built-in admonition types using any of the semantic color names as a class (this is most useful for custom-titled admonitions):
 
--   ``attention``
--   ``caution``
--   ``warning``
--   ``danger``
--   ``error``
--   ``hint``
--   ``tip``
--   ``important``
--   ``note``
--   ``seealso``
--   ``admonition-todo``
-
-So to display the previous custom admonition with the "warning" styling, add the class ``warning`` to the directive:
-
-.. admonition:: custom
+.. begin-example-semantic
+.. admonition:: Custom title with "warning" style
     :class: warning
 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+.. end-example-semantic
+
+Note that it updates both the color and the icon.
 
 .. tab-set::
 
     .. tab-item:: rst
 
-        .. code-block:: rst
+        .. include:: ./extending.rst
+            :start-after: begin-example-semantic
+            :end-before: .. end-example-semantic
+            :literal:
+            :class: highlight-rst
 
-            .. admonition:: custom
-                :class: warning
+This theme defines classes for `the standard docutils admonition types <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ (``attention``, ``caution``, etc) and additionally supports ``seealso`` and ``todo`` admonitions (see :doc:`../examples/kitchen-sink/admonitions` for a demo of all built-in admonition styles).
 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-customize colors
-----------------
+Customizing the color
+---------------------
 
-If the available coloring are not fitting your requirements, create an extra css class in your ``custom.css`` file and update the colors of the admonition. Use the same color for both background and title the transparency is computed automatically by the theme.
+Besides the pre-defined semantic color classes (see previous section) you can also add a bespoke color to any admonition by defining your own CSS class. Example:
 
-.. admonition:: custom
+.. begin-example-color
+.. admonition:: Admonition with custom "olive" color
     :class: admonition-olive
 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+.. end-example-color
+
+Add the new class to your `custom.css <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_css_files>`__ file. As in the example below, be sure to use the same color for ``border-color``, ``background-color``, and ``color`` (the transparency effect is handled automatically by the theme).
 
 .. tab-set::
 
     .. tab-item:: rst
 
-        .. code-block:: rst
-
-            .. admonition:: custom
-                :class: admonition-olive
-
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        .. include:: ./extending.rst
+            :start-after: begin-example-color
+            :end-before: .. end-example-color
+            :literal:
+            :class: highlight-rst
 
     .. tab-item:: css
 
-        .. code-block:: css
+        .. include:: ../_static/custom.css
+            :start-after: begin-custom-color
+            :end-before: /* end-custom-color
+            :literal:
+            :class: highlight-css
 
-            /* <your static path>/custom.css */
 
-            div.admonition.admonition-olive {
-              border-color: olive;
-            }
-            div.admonition.admonition-olive > .admonition-title:before {
-              background-color: olive;
-            }
-            div.admonition.admonition-olive > .admonition-title:after {
-              color: olive;
-            }
+Using a custom icon
+-------------------
 
-customize icon
---------------
+Customizing the icon uses a similar process to customizing the color: create a new CSS class in your `custom.css <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_css_files>`__ file. The theme supports `fontawesome v6 icons <https://fontawesome.com/v6/search?o=r&m=free&f=brands>`__ ("free" and "brands" sets). To use an icon, copy its unicode value into your custom class as shown in the CSS tab below:
 
-If the default :fas:`bell` icon not fitting your requirements, create an extra css class in your ``custom.css`` file and update the icon of the admonition. The theme support natively fontawesome V6 icons so go to their `website <https://fontawesome.com>`__ and copy the unicode value of your custom icon and set it in your custom class:
-
-.. admonition:: custom
+.. begin-example-icon
+.. admonition:: Check out my custom icon
     :class: admonition-icon
 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+.. end-example-icon
 
 .. tab-set::
 
     .. tab-item:: rst
 
-        .. code-block:: rst
-
-            .. admonition:: custom
-                :class: admonition-icon
-
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        .. include:: ./extending.rst
+            :start-after: begin-example-icon
+            :end-before: .. end-example-icon
+            :literal:
+            :class: highlight-rst
 
     .. tab-item:: css
 
-        .. code-block:: css
+        .. include:: ../_static/custom.css
+            :start-after: begin-custom-icon
+            :end-before: /* end-custom-icon
+            :literal:
+            :class: highlight-css
 
-            /* <your static path>/custom.css */
 
-            div.admonition.admonition-icon > .admonition-title:after {
-              content: "\f24e" /* the fa-scale icon */
-            }
+Combining all three customizations
+----------------------------------
 
-complete customization
-----------------------
+Here we demonstrate an admonition with a custom icon, color, and title (and also make it collapsible). Note that the multiple admonition class names are space-separated:
 
-Combine all of the above to get a fully customized admonition:
-
-.. admonition:: youtube
+.. begin-example-youtube
+.. admonition:: YouTube
     :class: dropdown admonition-youtube
 
     ..  youtube:: dQw4w9WgXcQ
+.. end-example-youtube
 
 .. tab-set::
 
     .. tab-item:: rst
 
-        .. code-block:: rst
-
-            .. admonition:: youtube
-                :class: dropdown admonition-youtube
-
-                ..  youtube:: dQw4w9WgXcQ
+        .. include:: ./extending.rst
+            :start-after: begin-example-youtube
+            :end-before: .. end-example-youtube
+            :literal:
+            :class: highlight-rst
 
     .. tab-item:: css
 
-        .. code-block:: css
-
-            /* <your static path>/custom.css */
-
-            div.admonition.admonition-youtube {
-              border-color: #FF0000; /* the youtube red */
-            }
-            div.admonition.admonition-youtube > .admonition-title:before {
-              background-color: #FF0000;
-            }
-            div.admonition.admonition-youtube > .admonition-title:after {
-              color: #FF0000;
-              content: "\f26c"; /* fa-brands fa-tv */
-            }
+        .. include:: ../_static/custom.css
+            :start-after: begin-custom-youtube
+            :end-before: /* end-custom-youtube
+            :literal:
+            :class: highlight-css
