@@ -100,7 +100,6 @@ from ipyleaflet import Map, basemaps
 
 # display a map centered on France
 m = Map(basemap=basemaps.Esri.WorldImagery,  zoom=5, center=[46.21, 2.21])
-m
 ```
 
 ## jupyter-sphinx
