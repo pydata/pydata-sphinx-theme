@@ -306,7 +306,7 @@ function checkPageExistsAndRedirect(event) {
 
 // Populate the version switcher from the JSON config file
 var themeSwitchBtns = document.querySelectorAll("version-switcher__button");
-if (themeSwitchBtns) {
+if (themeSwitchBtns.length) {
   fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
     .then((res) => {
       return res.json();
