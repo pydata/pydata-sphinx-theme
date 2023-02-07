@@ -94,6 +94,10 @@ $pst-semantic-colors: (
         $value: map-get($value, $mode);
       }
       --pst-color-#{$name}: #{$value};
+      // assign classes too, for runtime use of theme colors
+      .pst-color-#{$name} {
+        color: #{$value};
+      }
     }
     // assign the "duplicate" colors (ones that just reference other variables)
     --pst-color-link: var(--pst-color-primary);
