@@ -104,11 +104,7 @@ jobs:
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
-        shell: bash
-        # setting shell to BASH and using PYTHONUTF8 env var makes the editable
-        # install work on Windows even though there are emoji in our README
         run: |
-          export PYTHONUTF8=1
           python -m pip install --upgrade pip wheel setuptools
           python -m pip install -e .[doc]
       - name: Show installed versions

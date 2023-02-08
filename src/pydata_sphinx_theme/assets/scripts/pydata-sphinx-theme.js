@@ -132,7 +132,7 @@ function scrollToActive() {
   // Inspired on source of revealjs.com
   let storedScrollTop = parseInt(
     sessionStorage.getItem("sidebar-scroll-top"),
-    10,
+    10
   );
 
   if (!isNaN(storedScrollTop)) {
@@ -184,7 +184,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search",
+        "div:not(.search-button__search-container) > form.bd-search"
       );
     }
     return form.querySelector("input");
@@ -235,7 +235,7 @@ var addEventListenerForSearchKeyboard = () => {
         toggleSearchField();
       }
     },
-    true,
+    true
   );
 };
 
@@ -247,7 +247,7 @@ var changeSearchShortcutKey = () => {
   var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
   if (isMac) {
     forms.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘"),
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
     );
   }
 };
@@ -306,7 +306,7 @@ function checkPageExistsAndRedirect(event) {
 
 // Populate the version switcher from the JSON config file
 var themeSwitchBtns = document.querySelectorAll("version-switcher__button");
-if (themeSwitchBtns) {
+if (themeSwitchBtns.length) {
   fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
     .then((res) => {
       return res.json();
@@ -331,7 +331,7 @@ if (themeSwitchBtns) {
         const node = document.createElement("a");
         node.setAttribute(
           "class",
-          "list-group-item list-group-item-action py-1",
+          "list-group-item list-group-item-action py-1"
         );
         node.setAttribute("href", `${entry.url}${currentFilePath}`);
         node.appendChild(span);

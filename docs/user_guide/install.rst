@@ -46,7 +46,7 @@ install it from the git repo:
 
 or in a conda environment yml file, you can add:
 
-.. code:: none
+.. code:: yaml
 
     - pip:
       - git+https://github.com/pydata/pydata-sphinx-theme.git@main

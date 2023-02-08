@@ -189,7 +189,7 @@ def test_logo_two_images(sphinx_build_factory):
         "html_theme_options": {
             "logo": {
                 "text": "Foo Title",
-                "image_dark": "emptydarklogo.png",
+                "image_dark": "_static/emptydarklogo.png",
             }
         },
     }
@@ -199,6 +199,23 @@ def test_logo_two_images(sphinx_build_factory):
     assert "emptylogo" in index_str
     assert "emptydarklogo" in index_str
     assert "Foo Title" in index_str
+
+
+def test_logo_missing_image(sphinx_build_factory):
+    """Test that a missing image will raise a warning."""
+    # Test with a specified title and a dark logo
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                # The logo is actually in _static
+                "image_dark": "emptydarklogo.png",
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
+        no_warning=False
+    )
+    assert "image logo does not exist" in escape_ansi(sphinx_build.warnings).strip()
 
 
 def test_logo_external_link(sphinx_build_factory):
@@ -787,3 +804,62 @@ def test_empty_templates(sphinx_build_factory):
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     toc_items = sphinx_build.html_tree("page1.html").select(".toc-item")
     assert not any(ii.select(".tocsection.sourcelink") for ii in toc_items)
+
+
+def test_translations(sphinx_build_factory):
+    """Test that basic translation functionality works.
+
+    This will build our test site with the French language, and test
+    that a few phrases are in French.
+
+    TODO: At first, we expect some of these phrases to be *incorrectly* in
+    English. This is because we haven't added translation files for them.
+    We should change this test to the appropriate French versions once we add
+    support for other languages.
+
+    Then, we use this test to catch regressions if we change wording without
+    changing the translation files."""
+
+    confoverrides = {
+        "language": "fr",
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            "use_edit_page_button": True,
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+    # Use a section page so that we have section navigation in the sidebar
+    index = sphinx_build.html_tree("section1/index.html")
+
+    # TODO: Add translations where there are english phrases below
+    sidebar_primary = index.select(".bd-sidebar-primary")[0]
+    assert "Site Navigation" in str(sidebar_primary)
+    assert "Section Navigation" in str(sidebar_primary)
+
+    # TODO: Add translations where there are english phrases below
+    sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
+    assert "Montrer le code source" in str(sidebar_secondary)
+    assert "Edit this page" in str(sidebar_secondary)
+
+    # TODO: Add translations where there are english phrases below
+    header = index.select(".bd-header")[0]
+    assert "light/dark" in str(header)
+
+    # TODO: Add translations where there are english phrases below
+    footer = index.select(".bd-footer")[0]
+    assert "Copyright" in str(footer)
+    assert "Created using" in str(footer)
+    assert "Built with the" in str(footer)
+
+    footer_article = index.select(".bd-footer-article")[0]
+    assert "précédent" in str(footer_article)
+    assert "suivant page" in str(footer_article)
+
+    # Search bar
+    # TODO: Add translations where there are english phrases below
+    assert "Search the docs" in str(index.select(".bd-search")[0])
