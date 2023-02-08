@@ -2,7 +2,7 @@
 {#- Only show breadcrumbs if we are nested under a top-level header #}
 {# Otherwise the breadcrumbs would just be the "home" button -#}
 {% if title and (parents | length >= 1) %}
-<ul class="bd-breadcrumbs" role="navigation" aria-label="{{ _('Breadcrumbs') }}">
+<ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
   <li class="breadcrumb-item breadcrumb-home">
     <a href="{{ pathto(root_doc) }}" class="nav-link" aria-label="Home">
       <i class="fa-solid fa-home"></i>
