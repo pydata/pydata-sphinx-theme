@@ -6,6 +6,9 @@ ul.bd-breadcrumbs {
   padding-left: 0;
   display: flex;
 
+  // Font size slightly smaller to avoid cluttering up space too much
+  font-size: 0.8em;
+
   li.breadcrumb-item {
     display: flex;
     align-items: center;

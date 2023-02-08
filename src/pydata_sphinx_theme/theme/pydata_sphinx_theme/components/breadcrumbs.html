@@ -1,16 +1,30 @@
 {%- block breadcrumbs %}
-{#- Only show breadcrumbs if we are nested under a top-level header #}
-{# Otherwise the breadcrumbs would just be the "home" button -#}
-{% if title and (parents | length >= 1) %}
-<ul class="bd-breadcrumbs" role="navigation" aria-label="{{ _('Breadcrumbs') }}">
-  <li class="breadcrumb-item breadcrumb-home">
-    <a href="{{ pathto(root_doc) }}" class="nav-link" aria-label="Home">
-      <i class="fa-solid fa-home"></i>
-    </a>
-  </li>
-  {%- for doc in parents %}
-  <li class="breadcrumb-item"><a href="{{ doc.link|e }}" class="nav-link">{{ doc.title }}</a></li>
-  {%- endfor %}
-</ul>
+{# Break the page parents into the first section and the last two sections #}
+{# This will let us put a break `...` into the breadcrumbs if we're really nested #}
+{% set parents_start=parents[:2] %}
+{% if parents|length>4 %}
+{# Length >4 is the point at which we want to start hiding the middle sections #}
+{% set parent_end=parents[-1] %}
+{% endif %}
+
+{#- Hide breadcrumbs on the home page #}
+{% if title and pagename != root_doc %}
+<nav aria-label="breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="{{ _('Breadcrumbs') }}">
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="{{ pathto(root_doc) }}" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    {%- for doc in parents_start %}
+    <li class="breadcrumb-item"><a href="{{ doc.link|e }}" class="nav-link">{{ doc.title }}</a></li>
+    {%- endfor %}
+    {% if parent_end %}
+    <li class="breadcrumb-item">...</li>
+    <li class="breadcrumb-item"><a href="{{ parent_end.link|e }}" class="nav-link">{{ parent_end.title }}</a></li>
+    {% endif %}
+    <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+  </ul>
+</nav>
 {% endif %}
 {%- endblock %}
