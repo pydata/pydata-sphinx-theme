@@ -61,10 +61,13 @@ a {
   }
 
   // set up a icon next to the shorten links from github and gitlab
-  &::before {
-    color: var(--pst-color-text-muted);
-    font-family: "Font Awesome 6 Brands";
-    margin-right: 0.25rem;
+  .github,
+  .gitlab {
+    &::before {
+      color: var(--pst-color-text-muted);
+      font-family: "Font Awesome 6 Brands";
+      margin-right: 0.25rem;
+    }
   }
 
   &.github::before {
