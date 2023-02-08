@@ -5,6 +5,7 @@ ul.bd-breadcrumbs {
   list-style: none;
   padding-left: 0;
   display: flex;
+  flex-wrap: wrap;
 
   // Font size slightly smaller to avoid cluttering up space too much
   font-size: 0.8em;
