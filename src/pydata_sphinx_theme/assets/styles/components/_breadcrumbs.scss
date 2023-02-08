@@ -14,6 +14,12 @@ ul.bd-breadcrumbs {
     display: flex;
     align-items: center;
 
+    // Style should look like heavier in-page links
+    font-weight: bold;
+    a {
+      color: var(--pst-color-link);
+    }
+
     // Items that aren't the home have a carot to the left
     &:not(.breadcrumb-home):before {
       font-family: "Font Awesome 6 Free";
@@ -22,17 +28,6 @@ ul.bd-breadcrumbs {
       content: var(--pst-breadcrumb-divider);
       color: var(--pst-color-text-muted);
       padding: 0 0.5rem;
-    }
-
-    // Breadcrumb links should behave like navbar links
-    a {
-      color: var(--pst-color-text-muted);
-      transition: color 0.25s ease-out;
-
-      &:hover {
-        color: var(--pst-color-primary);
-        text-decoration: none;
-      }
     }
   }
 }
