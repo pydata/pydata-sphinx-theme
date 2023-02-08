@@ -1,3 +1,11 @@
+"""Automatically build our documentation or run tests.
+
+Environments are re-used by default.
+
+Re-install the environment from scratch:
+
+    nox -s docs -- -r
+"""
 import nox
 from pathlib import Path
 
@@ -27,23 +35,26 @@ def _should_install(session):
     return should_install
 
 
-@nox.session
+@nox.session(name="compile")
 def compile(session):
+    """Compile the theme's web assets with sphinx-theme-builder."""
     if _should_install(session):
         session.install("-e", ".")
         session.install("sphinx-theme-builder[cli]")
     session.run("stb", "compile")
 
 
-@nox.session
+@nox.session(name="docs")
 def docs(session):
+    """Build the documentation and place in docs/_build/html."""
     if _should_install(session):
         session.install("-e", ".[doc]")
-    session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html")
+    session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html", "-v")
 
 
 @nox.session(name="docs-live")
 def docs_live(session):
+    """Build the docs with a live server that re-loads as you make changes."""
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
@@ -52,17 +63,25 @@ def docs_live(session):
 
 @nox.session(name="test")
 def test(session):
+    """Run the test suite."""
     if _should_install(session):
         session.install("-e", ".[test]")
     session.run("pytest", *session.posargs)
 
 
+@nox.session(name="test-sphinx")
+@nox.parametrize("sphinx", ["4", "5", "6"])
+def test_sphinx(session, sphinx):
+    """Run the test suite with a specific version of Sphinx."""
+    if _should_install(session):
+        session.install("-e", ".[test]")
+    session.install(f"sphinx=={sphinx}")
+    session.run("pytest", *session.posargs)
+
+
 @nox.session(name="profile")
 def profile(session):
-    """Generate a profile chart with py-spy.
-
-    The chart will be placed at profile.svg and can be viewed in the browser.
-    """
+    """Generate a profile chart with py-spy. The chart will be placed at profile.svg."""
     import shutil as sh
     import tempfile
     from textwrap import dedent

@@ -34,8 +34,13 @@ maintainers = [
 ]
 
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Framework :: Sphinx",
   "Framework :: Sphinx :: Theme",
   "License :: OSI Approved :: BSD License",
@@ -47,13 +52,11 @@ doc = [
   "numpydoc",
   "myst-nb",
   "linkify-it-py",  # for link shortening
-  "pytest",
-  "pytest-regressions",
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   # For examples section
-  "ablog",
+  "ablog>=0.11.0rc2",
   "jupyter_sphinx",
   "pandas",
   "plotly",
@@ -67,23 +70,23 @@ doc = [
   # it at the same time as MyST-NB.
   "nbsphinx",
   "ipyleaflet",
+  "colorama",
 ]
 test = [
   "pytest",
-  "pydata-sphinx-theme[doc]",
-]
-coverage = [
   "pytest-cov",
+  "pytest-regressions",
   "codecov",
-  "colorama",
-  "pydata-sphinx-theme[test]",
 ]
 dev = [
   "pyyaml",
   "pre-commit",
   "nox",
-  "pydata-sphinx-theme[coverage]",
+  "pydata-sphinx-theme[doc,test]",
 ]
 
 [project.entry-points]
 "sphinx.html_themes" = { pydata_sphinx_theme = "pydata_sphinx_theme" }
+
+[tool.doc8]
+ignore = ["D001"] # we follow a 1 line = 1 paragraph style

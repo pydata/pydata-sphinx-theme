@@ -24,6 +24,11 @@
     font-size: var(--pst-sidebar-font-size);
   }
 
+  // override bootstrap when navlink are displayed in the sidebar
+  .nav-link {
+    font-size: var(--pst-sidebar-font-size-mobile);
+  }
+
   &.no-sidebar {
     border-right: 0;
   }
@@ -32,6 +37,14 @@
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       display: none;
     }
+  }
+
+  // Headers shouldn't be colored in the sidebars and some extensions add headers
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--pst-color-text-base);
   }
 
   .sidebar-start-items__item,
@@ -213,11 +226,16 @@ nav.bd-links {
   p.caption {
     font-weight: var(--pst-sidebar-header-font-weight);
     position: relative;
-    margin-top: 1.25em;
-    margin-bottom: 0.5em;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
     color: var(--pst-color-text-base);
     &:first-child {
       margin-top: 0;
+    }
+
+    font-size: var(--pst-sidebar-font-size-mobile);
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      font-size: var(--pst-sidebar-font-size);
     }
   }
 }

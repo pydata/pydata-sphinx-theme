@@ -1,5 +1,13 @@
 name: continuous-integration
 
+# README
+# ======
+#
+# All the jobs are defined with `matrix` for OS and Python version, even if we
+# only run them on one combination of OS/Python. The reason for this is you get
+# a nice side-effect that the OS and Python version of the job are listed in
+# parentheses next to the job name in the Actions UI.
+
 # This prevents workflows from being run twice on PRs
 # ref: https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
 on:
@@ -14,85 +22,119 @@ env:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - uses: pre-commit/action@v3.0.0
 
-  tests:
-    runs-on: ${{ matrix.os }}
+  # run our test suite on various combinations of OS / Python / Sphinx version
+  run-pytest:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11-dev"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         include:
+          # legacy test
+          - os: ubuntu-latest
+            python-version: "3.7"
+            sphinx-version: "4.2"
+          # macos test
           - os: macos-latest
-            python-version: "3.9"
+            python-version: "3.11"
+          # windows test
           - os: windows-latest
-            python-version: "3.9"
-
+            python-version: "3.11"
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
+      - name: Install dependencies
+        # if Sphinx version not specified in matrix, the constraints in the
+        # pyproject.toml file determine Sphinx version
+        if: false == matrix.sphinx-version
+        shell: bash
+        # setting shell to BASH and using PYTHONUTF8 env var makes the editable
+        # install work on Windows even though there are emoji in our README
+        run: |
+          export PYTHONUTF8=1
+          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install -e .[test]
+      - name: Install dependencies (legacy Sphinx)
+        # here we override the pyproject.toml constraints to get a specific
+        # Sphinx version.
+        if: matrix.sphinx-version
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install -e .[test] sphinx==${{ matrix.sphinx-version }}
+      - name: Show installed versions
+        run: python -m pip list
+      - name: Run tests
+        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
 
+  # Build our site on the 3 major OSes and check for Sphinx warnings
+  build-site:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[coverage]
-          python -m pip list
-
-      - name: Test Sphinx==4.2
-        if: matrix.python-version == '3.7'
-        run: |
-          python -m pip install sphinx==4.2
-          python -m pip list
-
-      - name: Build docs to store
+          python -m pip install -e .[doc]
+      - name: Show installed versions
+        run: python -m pip list
+      - name: Build docs
         run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
-
-      - name: Check that there are no unexpected Sphinx warnings
-        if: matrix.python-version == '3.9'
+      - name: Check for unexpected Sphinx warnings
         run: python tests/check_warnings.py
-
-      - name: Run the tests
-        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
-
-      - name: Upload coverage
-        if: ${{ always() }}
-        run: codecov
 
   # Run local Lighthouse audit against built site
   audit:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8"]
-
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[coverage]
-
+          python -m pip install -e .[doc]
+      - name: Show installed versions
+        run: python -m pip list
       # We want to run the audit on a simplified documentation build so that
       # the audit results aren't affected by non-theme things like extensions.
       # Here we copy over just the kitchen sink into an empty docs site with
@@ -106,7 +148,6 @@ jobs:
           echo 'html_theme = "pydata_sphinx_theme"' > audit/site/conf.py
           echo '.. toctree::\n   :glob:\n\n   *' >> audit/site/index.rst
           sphinx-build audit/site audit/_build
-
       # The lighthouse audit runs directly on the HTML files, no serving needed
       - name: Audit with Lighthouse
         uses: treosh/lighthouse-ci-action@v9
@@ -118,30 +159,28 @@ jobs:
 
   # Generate a profile of the code and upload as an artifact
   profile:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8"]
-
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip wheel setuptools nox
-
+          python -m pip install -e .[test]
+      - name: Show installed versions
+        run: python -m pip list
       - name: Generate a profile
-        run: |
-          nox -s profile
+        run: nox -s profile
         continue-on-error: true
-
       - uses: actions/upload-artifact@v3
         with:
           name: profile-results

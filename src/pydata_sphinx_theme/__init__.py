@@ -6,25 +6,28 @@ from pathlib import Path
 from functools import lru_cache
 import json
 from urllib.parse import urlparse, urlunparse
+import types
 
 import jinja2
 from bs4 import BeautifulSoup as bs
 from docutils import nodes
 from sphinx import addnodes
+from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
 from sphinx.errors import ExtensionError
-from sphinx.util import logging
+from sphinx.util import logging, isurl
+from sphinx.util.fileutil import copy_asset_file
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 
-from .bootstrap_html_translator import BootstrapHTML5Translator
+from .translator import BootstrapHTML5TranslatorMixin
 
-__version__ = "0.12.1rc1.dev0"
+__version__ = "0.13.0rc2.dev0"
 
 logger = logging.getLogger(__name__)
 
@@ -192,7 +195,7 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     context["theme_version"] = __version__
 
 
-def update_templates(app, pagename, templatename, context, doctree):
+def update_and_remove_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
     # Allow for more flexibility in template names
     template_sections = [
@@ -217,6 +220,20 @@ def update_templates(app, pagename, templatename, context, doctree):
             for ii, template in enumerate(context.get(section)):
                 if not os.path.splitext(template)[1]:
                     context[section][ii] = template + ".html"
+
+            # If this is the page TOC, check if it is empty and remove it if so
+            def _remove_empty_templates(tname):
+                # These templates take too long to render, so skip them.
+                # They should never be empty anyway.
+                SKIP_EMPTY_TEMPLATE_CHECKS = ["sidebar-nav-bs.html", "navbar-nav.html"]
+                if not any(tname.endswith(temp) for temp in SKIP_EMPTY_TEMPLATE_CHECKS):
+                    # Render the template and see if it is totally empty
+                    rendered = app.builder.templates.render(tname, context)
+                    if len(rendered.strip()) == 0:
+                        return False
+                return True
+
+            context[section] = list(filter(_remove_empty_templates, context[section]))
 
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
     # - theme.conf
@@ -902,9 +919,12 @@ def _overwrite_pygments_css(app, exception=None):
         # see if user specified a light/dark pygments theme, if not, use the
         # one we set in theme.conf
         style_key = f"pygment_{light_or_dark}_style"
-        theme_name = app.config.html_theme_options.get(
-            style_key, app.builder.globalcontext.get(f"theme_{style_key}")
-        )
+
+        # globalcontext sometimes doesn't exist so this ensures we do not error
+        theme_name = app.config.html_theme_options.get(style_key, None)
+        if theme_name is None and hasattr(app.builder, "globalcontext"):
+            theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
+
         # make sure we can load the style
         if theme_name not in pygments_styles:
             logger.warning(
@@ -1030,6 +1050,106 @@ class ShortenLinkTransform(SphinxPostTransform):
         return text
 
 
+def setup_translators(app):
+    """
+    Add bootstrap HTML functionality if we are using an HTML translator.
+
+    This re-uses the pre-existing Sphinx translator and adds extra functionality defined
+    in ``BootstrapHTML5TranslatorMixin``. This way we can retain the original translator's
+    behavior and configuration, and _only_ add the extra bootstrap rules.
+    If we don't detect an HTML-based translator, then we do nothing.
+    """
+    if not app.registry.translators.items():
+        translator = types.new_class(
+            "BootstrapHTML5Translator",
+            (
+                BootstrapHTML5TranslatorMixin,
+                app.builder.default_translator_class,
+            ),
+            {},
+        )
+        app.set_translator(app.builder.name, translator, override=True)
+    else:
+        for name, klass in app.registry.translators.items():
+            if app.builder.format != "html":
+                # Skip translators that are not HTML
+                continue
+
+            translator = types.new_class(
+                "BootstrapHTML5Translator",
+                (
+                    BootstrapHTML5TranslatorMixin,
+                    klass,
+                ),
+                {},
+            )
+            app.set_translator(name, translator, override=True)
+
+
+# ------------------------------------------------------------------------------
+# customize events for logo management
+# we use one event to copy over custom logo images to _static
+# and another even to link them in the html context
+# ------------------------------------------------------------------------------
+
+
+def setup_logo_path(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree: nodes.Node
+) -> None:
+    """Set up relative paths to logos in our HTML templates.
+
+    In Sphinx, the context["logo"] is a path to the `html_logo` image now in the output
+    `_static` folder.
+
+    If logo["image_light"] and logo["image_dark"] are given, we must modify them to
+    follow the same pattern. They have already been copied to the output folder
+    in the `update_config` event.
+    """
+
+    # get information from the context "logo_url" for sphinx>=6, "logo" sphinx<6
+    pathto = context.get("pathto")
+    logo = context.get("logo_url") or context.get("logo")
+    theme_logo = context.get("theme_logo", {})
+
+    # Define the final path to logo images in the HTML context
+    theme_logo["image_relative"] = {}
+    for kind in ["light", "dark"]:
+        image_kind_logo = theme_logo.get(f"image_{kind}")
+
+        # If it's a URL the "relative" path is just the URL
+        # else we need to calculate the relative path to a local file
+        if image_kind_logo:
+            if not isurl(image_kind_logo):
+                image_kind_name = Path(image_kind_logo).name
+                image_kind_logo = pathto(f"_static/{image_kind_name}", resource=True)
+            theme_logo["image_relative"][kind] = image_kind_logo
+
+        # If there's no custom logo for this kind, just use `html_logo`
+        # If `logo` is also None, then do not add this key to context.
+        elif isinstance(logo, str) and len(logo) > 0:
+            theme_logo["image_relative"][kind] = logo
+
+    # Update our context logo variables with the new image paths
+    context["theme_logo"] = theme_logo
+
+
+def copy_logo_images(app: Sphinx, exception=None) -> None:
+    """
+    If logo image paths are given, copy them to the `_static` folder
+    Then we can link to them directly in an html_page_context event
+    """
+    theme_options = app.config.html_theme_options
+    logo = theme_options.get("logo", {})
+    staticdir = Path(app.builder.outdir) / "_static"
+    for kind in ["light", "dark"]:
+        path_image = logo.get(f"image_{kind}")
+        if not path_image or isurl(path_image):
+            continue
+        if not (Path(app.srcdir) / path_image).exists():
+            logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
+        copy_asset_file(path_image, staticdir)
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -1041,19 +1161,15 @@ def setup(app):
 
     app.add_post_transform(ShortenLinkTransform)
 
-    app.set_translator("html", BootstrapHTML5Translator)
-    # Read the Docs uses ``readthedocs`` as the name of the build, and also
-    # uses a special "dirhtml" builder so we need to replace these both with
-    # our custom HTML builder
-    app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
-    app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
-
+    app.connect("builder-inited", setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
-    app.connect("html-page-context", update_templates)
     app.connect("html-page-context", prepare_html_config)
+    app.connect("html-page-context", update_and_remove_templates)
+    app.connect("html-page-context", setup_logo_path)
     app.connect("build-finished", _overwrite_pygments_css)
+    app.connect("build-finished", copy_logo_images)
 
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))

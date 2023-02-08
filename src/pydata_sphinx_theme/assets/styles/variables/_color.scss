@@ -129,3 +129,10 @@ $pst-semantic-colors: (
     }
   }
 }
+
+// assign classes too, for runtime use of theme colors
+@each $name, $value in $pst-semantic-colors {
+  .pst-color-#{$name} {
+    color: var(--pst-color-#{$name});
+  }
+}
