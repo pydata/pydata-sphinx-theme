@@ -1,3 +1,9 @@
+{# We redefine <html/> for "basic/layout.html" to add a default `data-theme` attribute when
+ # a default mode has been set. This also improves compatibility when JavaScript is disabled.
+ #}
+{% set html_tag %}
+<html{% if not html5_doctype %} xmlns="http://www.w3.org/1999/xhtml"{% endif %}{% if language is not none %} lang="{{ language }}"{% endif %} {% if default_mode %}data-theme="{{ default_mode }}"{% endif %}>
+{% endset %}
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}
 {# Metadata and asset linking #}
@@ -64,10 +70,7 @@ or not theme_secondary_sidebar_items %}
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
   {%- if theme_announcement -%}
-    <div class="bd-header-announcement container-fluid"
-          id="header-announcement">
-      {% include "sections/announcement.html" %}
-    </div>
+    {% include "sections/announcement.html" %}
   {%- endif %}
   {% block docs_navbar %}
     <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main">

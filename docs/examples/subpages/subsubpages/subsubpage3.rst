@@ -1,4 +1,4 @@
-Sub-sub-page 3
+Sub sub page 3
 ==============
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lorem neque, interdum in ipsum nec,
