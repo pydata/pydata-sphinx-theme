@@ -9,7 +9,7 @@ Collapsible admonitions
 
 The `sphinx-togglebutton <https://sphinx-togglebutton.readthedocs.io/en/latest/>`__ extension provides optional show/hide behavior for admonitions. Follow their installation instructions, then add it to the ``extentions`` list in your ``conf.py``:
 
-.. code-block:: python
+.. code:: python
 
     extensions = [
         # [...]
@@ -32,7 +32,7 @@ Then add the ``dropdown`` class to any admonition directive (shown here on a ``n
         .. include:: ./extending.rst
             :start-after: begin-example-dropdown
             :end-before: .. end-example-dropdown
-            :literal:
+            :code: rst
             :class: highlight-rst
 
 
@@ -62,7 +62,7 @@ The title is specified on the same line as the ``.. admonition::`` directive:
         .. include:: ./extending.rst
             :start-after: begin-example-title
             :end-before: .. end-example-title
-            :literal:
+            :code: rst
             :class: highlight-rst
 
 
@@ -87,7 +87,7 @@ Note that it updates both the color and the icon.
         .. include:: ./extending.rst
             :start-after: begin-example-semantic
             :end-before: .. end-example-semantic
-            :literal:
+            :code: rst
             :class: highlight-rst
 
 This theme defines classes for `the standard docutils admonition types <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ (``attention``, ``caution``, etc) and additionally supports ``seealso`` and ``todo`` admonitions (see :doc:`../examples/kitchen-sink/admonitions` for a demo of all built-in admonition styles).
@@ -114,7 +114,7 @@ Add the new class to your `custom.css <https://www.sphinx-doc.org/en/master/usag
         .. include:: ./extending.rst
             :start-after: begin-example-color
             :end-before: .. end-example-color
-            :literal:
+            :code: rst
             :class: highlight-rst
 
     .. tab-item:: css
@@ -122,7 +122,7 @@ Add the new class to your `custom.css <https://www.sphinx-doc.org/en/master/usag
         .. include:: ../_static/custom.css
             :start-after: begin-custom-color
             :end-before: /* end-custom-color
-            :literal:
+            :code: css
             :class: highlight-css
 
 
@@ -145,7 +145,7 @@ Customizing the icon uses a similar process to customizing the color: create a n
         .. include:: ./extending.rst
             :start-after: begin-example-icon
             :end-before: .. end-example-icon
-            :literal:
+            :code: rst
             :class: highlight-rst
 
     .. tab-item:: css
@@ -153,7 +153,7 @@ Customizing the icon uses a similar process to customizing the color: create a n
         .. include:: ../_static/custom.css
             :start-after: begin-custom-icon
             :end-before: /* end-custom-icon
-            :literal:
+            :code: css
             :class: highlight-css
 
 
@@ -176,7 +176,7 @@ Here we demonstrate an admonition with a custom icon, color, and title (and also
         .. include:: ./extending.rst
             :start-after: begin-example-youtube
             :end-before: .. end-example-youtube
-            :literal:
+            :code: rst
             :class: highlight-rst
 
     .. tab-item:: css
@@ -184,5 +184,5 @@ Here we demonstrate an admonition with a custom icon, color, and title (and also
         .. include:: ../_static/custom.css
             :start-after: begin-custom-youtube
             :end-before: /* end-custom-youtube
-            :literal:
+            :code: css
             :class: highlight-css
