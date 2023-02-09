@@ -201,6 +201,51 @@ def test_logo_two_images(sphinx_build_factory):
     assert "Foo Title" in index_str
 
 
+def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory):
+    """Test that the primary logo image is light
+    (and secondary, written through JavaScript, is dark)
+    when no default mode is set."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-light") is not None
+    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+
+
+def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory):
+    """Test that the primary logo image is light
+    (and secondary, written through JavaScript, is dark)
+    when default mode is set to light."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {"default_mode": "light"},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-light") is not None
+    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+
+
+def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory):
+    """Test that the primary logo image is dark
+    (and secondary, written through JavaScript, is light)
+    when default mode is set to dark."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {"default_mode": "dark"},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-dark") is not None
+    assert navbar_brand.find("script", string=re.compile("only-light")) is not None
+
+
 def test_logo_missing_image(sphinx_build_factory):
     """Test that a missing image will raise a warning."""
     # Test with a specified title and a dark logo
@@ -665,7 +710,9 @@ def test_version_switcher(sphinx_build_factory, file_regression, url):
 
     if url == "switcher.json":  # this should work
         index = sphinx_build.html_tree("index.html")
-        switcher = index.select(".version-switcher__container")[0]
+        switcher = index.select(".navbar-header-items")[0].find(
+            "script", string=re.compile(".version-switcher__container")
+        )
         file_regression.check(
             switcher.prettify(), basename="navbar_switcher", extension=".html"
         )
@@ -683,7 +730,11 @@ def test_theme_switcher(sphinx_build_factory, file_regression):
     """Regression test the theme switcher btn HTML"""
 
     sphinx_build = sphinx_build_factory("base").build()
-    switcher = sphinx_build.html_tree("index.html").select(".theme-switch-button")[0]
+    switcher = (
+        sphinx_build.html_tree("index.html")
+        .find(string=re.compile("theme-switch-button"))
+        .find_parent("script")
+    )
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extension=".html"
     )
