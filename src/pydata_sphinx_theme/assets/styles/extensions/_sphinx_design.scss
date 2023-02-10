@@ -53,7 +53,8 @@ $extra-semantic-colors: (
   "dark": map-get($pst-semantic-colors, "text-base"),
   "muted": map-get($pst-semantic-colors, "text-muted"),
   "light": rgb(201, 201, 201),
-  "black": rgb(0, 0, 0),
+  "black": hsl(216, 20%, 10%),
+  //gray-900
   "white": rgb(255, 255, 255),
 );
 
