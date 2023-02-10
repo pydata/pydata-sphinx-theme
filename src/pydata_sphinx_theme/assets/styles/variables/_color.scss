@@ -78,24 +78,31 @@ $pst-semantic-colors: (
     ),
 );
 
-/*******************************************************************************
-* write the color rules for each theme (light/dark)
-*/
+@mixin create-color-var($key, $value, $identifier: "") {
+  //$identifier is an optional variable - used for the new system
+  @if $identifier != "" {
+    --pst-color-#{$key}-#{$identifier}: #{$value};
+  } @else {
+    --pst-color-#{$key}: #{$value};
+  }
+}
 
-/* NOTE:
- * Mixins enable us to reuse the same definitions for the different modes
- * https://sass-lang.com/documentation/at-rules/mixin
- * #{...} inserts a variable into a CSS selector or property name
- * https://sass-lang.com/documentation/interpolation
- */
 @mixin theme-colors($mode) {
-  // check if this color is defined differently for light/dark
   @each $name, $value in $pst-semantic-colors {
+    // check if there is a map (i.e. multiple light/dark definitions)
     @if type-of($value) == map {
-      $value: map-get($value, $mode);
-    }
-    & {
-      --pst-color-#{$name}: #{$value};
+      // support for single light/dark colour definitions
+      @if map-has-key($value, $mode) {
+        $value: map-get($value, $mode);
+        @include create-color-var($name, $value);
+      } // support for multiple light/dark colour definitions - as our new design system
+      @else {
+        @each $key, $val in $value {
+          @include create-color-var($key, $val, $name);
+        }
+      }
+    } @else {
+      @include create-color-var($name, $value);
     }
   }
   // assign the "duplicate" colors (ones that just reference other variables)
