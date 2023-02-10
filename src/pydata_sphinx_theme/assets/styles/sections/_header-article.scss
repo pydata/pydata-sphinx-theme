@@ -1,10 +1,16 @@
-.bd-header-article__inner {
+.header-article__inner {
   min-height: var(--pst-header-article-height);
   display: flex;
-  align-items: center;
   padding: 0 0.5rem;
 
-  .bd-header-article__end {
+  .header-article-items__start,
+  .header-article-items__end {
+    display: flex;
+    align-items: start;
+    gap: 0.5rem;
+  }
+
+  .header-article-items__end {
     margin-left: auto;
   }
 }
