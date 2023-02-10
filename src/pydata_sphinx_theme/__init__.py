@@ -27,7 +27,7 @@ from requests.exceptions import ConnectionError, HTTPError, RetryError
 
 from .translator import BootstrapHTML5TranslatorMixin
 
-__version__ = "0.13.0rc2"
+__version__ = "0.13.0rc3.dev0"
 
 logger = logging.getLogger(__name__)
 
