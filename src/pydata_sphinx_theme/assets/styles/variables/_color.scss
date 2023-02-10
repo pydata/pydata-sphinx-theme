@@ -5,21 +5,63 @@
 * NOTE: this theme defines "info == primary" and "warning == secondary"
 */
 $pst-semantic-colors: (
-  "primary": rgb(69, 157, 185),
-  "secondary": rgb(238, 144, 64),
-  "info": rgb(69, 157, 185),
-  "warning": rgb(238, 144, 64),
+  "primary": (
+    //WCAG AA compliant against dark bg
+    "50": #f4fbfc,
+    "100": #e9f6f8,
+    "200": #d0ecf1,
+    "300": #abdde6,
+    "400": #3fb1c5,
+    //WCAG AA compliant against light bg
+    "500": #0a7d91,
+    "600": #085d6c,
+    "700": #064752,
+    "800": #042c33,
+    "900": #021b1f,
+  ),
+  "secondary": (
+    //WCAG AA compliant against dark bg
+    "50": #fbf8fe,
+    "100": #f6f2fe,
+    "200": #ece3fc,
+    "300": #decdfa,
+    "400": #b691f5,
+    //WCAG AA compliant against light bg
+    "500": #894def,
+    "600": #6730c5,
+    "700": #4e2595,
+    "800": #31175f,
+    "900": #1e0e39,
+  ),
+  "info": (
+    "light": #276be9,
+    "light-bg": #eff4fd,
+    "dark": #79a3f2,
+    "dark-bg": #06245d,
+  ),
+  "warning": (
+    "light": #f66a0a,
+    "light-bg": #fff8f2,
+    "dark": #ff9245,
+    "dark-bg": #652a02,
+  ),
   "success": (
-    "light": rgb(40, 167, 69),
-    "dark": rgb(72, 135, 87),
+    "light": #00843f,
+    "light-bg": #ecf6f1,
+    "dark": #5fb488,
+    "dark-bg": #002f17,
   ),
   "attention": (
-    "light": rgb(255, 193, 7),
-    "dark": rgb(220, 169, 15),
+    "light": #f66a0a,
+    "light-bg": #fff8f2,
+    "dark": #ff9245,
+    "dark-bg": #652a02,
   ),
   "danger": (
-    "light": rgb(220, 53, 69),
-    "dark": rgb(203, 70, 83),
+    "light": #d72d47,
+    "light-bg": #fcf1f2,
+    "dark": #e78894,
+    "dark-bg": #4e111b,
   ),
   "text-base": (
     "light": rgb(50, 50, 50),
