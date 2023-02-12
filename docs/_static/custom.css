@@ -52,6 +52,6 @@ div.admonition.admonition-youtube > .admonition-title:before {
 }
 div.admonition.admonition-youtube > .admonition-title:after {
   color: #ff0000;
-  content: "\f26c"; /* fa-brands fa-tv */
+  content: "\f26c"; /* fa-solid fa-tv */
 }
 /* end-custom-youtube */
