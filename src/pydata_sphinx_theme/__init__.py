@@ -779,8 +779,8 @@ def soup_to_python(soup, only_pages=False):
 def setup_edit_url(app, pagename, templatename, context, doctree):
     """Add a function that jinja can access for returning the edit URL of a page."""
 
-    def get_edit_url():
-        """Return a URL for an "edit this page" link."""
+    def get_edit_provider_and_url():
+        """Return a provider name and a URL for an "edit this page" link."""
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -794,7 +794,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             "gitlab_url": "https://gitlab.com",
         }
 
-        edit_url_attrs = {}
+        edit_attrs = {}
 
         # ensure custom URL is checked first, if given
         url_template = context.get("edit_page_url_template")
@@ -806,21 +806,24 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                     "Ensure `file_name` appears in `edit_page_url_template`: "
                     f"{url_template}"
                 )
+            provider_name = context.get("edit_page_provider_name")
+            edit_attrs[("edit_page_url_template",)] = (provider_name, url_template)
 
-            edit_url_attrs[("edit_page_url_template",)] = url_template
-
-        edit_url_attrs.update(
+        edit_attrs.update(
             {
                 ("bitbucket_user", "bitbucket_repo", "bitbucket_version"): (
+                    "Bitbucket",
                     "{{ bitbucket_url }}/{{ bitbucket_user }}/{{ bitbucket_repo }}"
                     "/src/{{ bitbucket_version }}"
                     "/{{ doc_path }}{{ file_name }}?mode=edit"
                 ),
                 ("github_user", "github_repo", "github_version"): (
+                    "GitHub",
                     "{{ github_url }}/{{ github_user }}/{{ github_repo }}"
                     "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}"
                 ),
                 ("gitlab_user", "gitlab_repo", "gitlab_version"): (
+                    "GitLab",
                     "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
                     "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
                 ),
@@ -831,9 +834,9 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         doc_context.update(context)
         doc_context.update(doc_path=doc_path, file_name=file_name)
 
-        for attrs, url_template in edit_url_attrs.items():
+        for attrs, (provider, url_template) in edit_attrs.items():
             if all(doc_context.get(attr) not in [None, "None"] for attr in attrs):
-                return jinja2.Template(url_template).render(**doc_context)
+                return provider, jinja2.Template(url_template).render(**doc_context)
 
         raise ExtensionError(
             "Missing required value for `use_edit_page_button`. "
@@ -841,7 +844,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             f"configuration: {sorted(edit_url_attrs.keys())}"
         )
 
-    context["get_edit_url"] = get_edit_url
+    context["get_edit_provider_and_url"] = get_edit_provider_and_url
 
     # Ensure that the max TOC level is an integer
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
