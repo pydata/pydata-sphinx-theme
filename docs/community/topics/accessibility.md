@@ -8,4 +8,4 @@ The configuration for Lighthouse is in:
 - `.github/workflows/lighthouserc.json`
 
 For more information about configuring lighthouse, see [the lighthouse documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md).
-For more information about Accessibility in general, see [](../user_guide/accessibility.rst).
+For more information about Accessibility in general, see [](../../user_guide/accessibility.rst).
