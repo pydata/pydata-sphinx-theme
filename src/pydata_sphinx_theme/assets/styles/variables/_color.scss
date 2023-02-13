@@ -78,32 +78,12 @@ $theme-colors: (
 
 $pst-semantic-colors: (
   "primary": (
-    //WCAG AA compliant against dark bg
-    "50": #f4fbfc,
-    "100": #e9f6f8,
-    "200": #d0ecf1,
-    "300": #abdde6,
-    "400": #3fb1c5,
-    //WCAG AA compliant against light bg
-    "500": #0a7d91,
-    "600": #085d6c,
-    "700": #064752,
-    "800": #042c33,
-    "900": #021b1f,
+    light: var(--pst-light-blue-500),
+    dark: var(--pst-light-blue-400),
   ),
   "secondary": (
-    //WCAG AA compliant against dark bg
-    "50": #fbf8fe,
-    "100": #f6f2fe,
-    "200": #ece3fc,
-    "300": #decdfa,
-    "400": #b691f5,
-    //WCAG AA compliant against light bg
-    "500": #894def,
-    "600": #6730c5,
-    "700": #4e2595,
-    "800": #31175f,
-    "900": #1e0e39,
+    light: var(--pst-violet-500),
+    dark: var(--pst-violet-400),
   ),
   "info": (
     "light": #276be9,
@@ -136,17 +116,14 @@ $pst-semantic-colors: (
     "dark-bg": #4e111b,
   ),
   "text-base": (
-    "light": rgb(34, 40, 50),
-    // gray-800
+    "light": var(--pst-gray-800),
     // "dark": #e5e7ea
     "dark": #ced6dd,
     // gray-100
   ),
   "text-muted": (
-    "light": #48566b,
-    // gray-600
-    "dark": #d1d5da,
-    // gray-300
+    "light": var(--pst-gray-600),
+    "dark": var(--pst-gray-300),
   ),
   // TODO - update
   "shadow":
@@ -175,25 +152,22 @@ $pst-semantic-colors: (
   // background: color of the canvas / the furthest back layer
   "background":
     (
-      "light": rgb(255, 255, 255),
-      "dark": #14181e,
+      "light": var(--pst-color-white),
+      "dark": var(--pst-color-black),
     ),
   // on-background: provides slight contrast against background
   // (by use of shadows in light theme)
   "on-background":
     (
-      "light": rgb(255, 255, 255),
-      "dark": #222832,
-      // gray-800
+      "light": var(--pst-color-white),
+      "dark": var(--pst-color-gray-800),
     ),
   // surface: object set above the background (without shadows)
   // Uses JupyterLab cell background colors in light/dark theme
   "surface":
     (
-      "light": #f3f4f5,
-      // gray-100
-      "dark": #364150,
-      // gray-700
+      "light": var(--pst-gray-100),
+      "dark": var(--pst-gray-700),
     ),
   // on_surface: object on top of surface object (without shadows)
   //TODO - update
