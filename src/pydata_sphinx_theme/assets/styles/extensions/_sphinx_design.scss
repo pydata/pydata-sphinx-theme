@@ -16,12 +16,12 @@
   * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L31-L43
   */
 $sd-semantic-color-names: (
-  "primary",
-  "secondary",
-  "success",
-  "info",
-  "warning",
-  "danger",
+  // "primary",
+  // "secondary",
+  // "success",
+  // "info",
+  // "warning",
+  // "danger",
   "light",
   "muted",
   "dark",
@@ -33,8 +33,17 @@ $sd-semantic-color-names: (
   * function, to make sure that text is legible on colored buttons and badges.
   * https://github.com/executablebooks/sphinx-design/blob/9226a12a/style/_colors.scss#L45-L47
   */
+
 @function text-color($value) {
-  @return if(lightness($value) > 70, #000, #fff);
+  // Using WCAG luminance formula https://www.w3.org/TR/WCAG20/#relativeluminancedef
+  // this function will return text-colour that would meet WCAG AA contrast ratio
+  $luminance: (0.2126 * red($value)) + (0.7152 * green($value)) +
+    (0.0722 * blue($value));
+  @return if(
+    $luminance >= 0.1791,
+    "var(--pst-color-black)",
+    "var(--pst-color-black)"
+  );
 }
 
 /**
@@ -71,11 +80,14 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
       }
       // define the pst variables, so that downstream user overrides will work
       --pst-color-#{$name}: #{$value};
+      // TODO: update to allow for new scheme
       --pst-color-#{$name}-text: #{text-color($value)};
+      // TODO: check where highlight is used
       --pst-color-#{$name}-highlight: #{darken($value, 15%)};
       // override the sphinx-design variables
       --sd-color-#{$name}: var(--pst-color-#{$name});
       --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
+      // TODO: check where highlight is used
       --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
     }
   }
