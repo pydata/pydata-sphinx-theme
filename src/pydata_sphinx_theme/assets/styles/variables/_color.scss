@@ -2,8 +2,80 @@
 * master color map. Only the colors that actually differ between light and dark
 * themes are specified separately.
 *
-* NOTE: this theme defines "info == primary" and "warning == secondary"
 */
+
+/* PyData theme - adaptive color scheme */
+/* These are the base colors for the PyData Sphinx theme */
+$theme-colors: (
+  // Primary color
+  "light-blue":
+    (
+      "50": #f4fbfc,
+      "100": #e9f6f8,
+      "200": #d0ecf1,
+      "300": #abdde6,
+      "400": #3fb1c5,
+      "500": #0a7d91,
+      "600": #085d6c,
+      "700": #064752,
+      "800": #042c33,
+      "900": #021b1f,
+    ),
+  // Secondary color
+  "violet":
+    (
+      "50": #fbf8fe,
+      "100": #f6f2fe,
+      "200": #ece3fc,
+      "300": #decdfa,
+      "400": #b691f5,
+      "500": #894def,
+      "600": #6730c5,
+      "700": #4e2595,
+      "800": #31175f,
+      "900": #1e0e39,
+    ),
+  // Neutrals
+  "gray":
+    (
+      "50": #f9f9fa,
+      "100": #f3f4f5,
+      "200": #e5e7ea,
+      "300": #d1d5da,
+      "400": #9ca4af,
+      "500": #677384,
+      "600": #48566b,
+      "700": #364150,
+      "800": #222832,
+      "900": #14181e,
+    ),
+  // Accent color
+  "pink":
+    (
+      "50": #fcf8fd,
+      "100": #fcf0fa,
+      "200": #f8dff5,
+      "300": #f3c7ee,
+      "400": #e47fd7,
+      "500": #c132af,
+      "600": #912583,
+      "700": #6e1c64,
+      "800": #46123f,
+      "900": #2b0b27,
+    )
+);
+
+:root {
+  @each $group-color, $color in $theme-colors {
+    @each $color-name, $value in $color {
+      --pst-#{$group-color}-#{$color-name}: #{$value};
+    }
+  }
+  // Foundation colors
+  --pst-color-white: #ffffff;
+  --pst-color-black: var(--pst-gray-900);
+}
+
 $pst-semantic-colors: (
   "primary": (
     //WCAG AA compliant against dark bg
@@ -89,12 +161,10 @@ $pst-semantic-colors: (
       "light": rgba(23, 23, 26, 0.2),
       "dark": #48566b,
     ),
-  // TODO - update
-  "inline-code":
-    (
-      "light": rgb(232, 62, 140),
-      "dark": rgb(221, 158, 194),
-    ),
+  "inline-code": (
+    "light": var(--pydata-pink-400),
+    "dark": var(--pydata-pink-500),
+  ),
   // TODO - update
   "target":
     (
