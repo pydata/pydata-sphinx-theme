@@ -47,6 +47,7 @@ announcements
 version-dropdown
 search
 keyboard-shortcuts
+i18n
 ```
 
 ```{toctree}
