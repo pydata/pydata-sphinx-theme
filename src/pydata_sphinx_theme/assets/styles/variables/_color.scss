@@ -79,14 +79,15 @@ $pst-semantic-colors: (
   // TODO - update
   "shadow":
     (
-      "light": rgb(216, 216, 216),
-      "dark": rgb(33, 33, 33),
+      // "light": rgb(216, 216, 216),
+      "light": rgba(0, 0, 0, 0.1),
+      "dark": rgba(0, 0, 0, 0.2),
     ),
-  // TODO- update
+  // TODO- update (need muted and regular - this is muted)
   "border":
     (
-      "light": rgb(201, 201, 201),
-      "dark": rgb(192, 192, 192),
+      "light": rgba(23, 23, 26, 0.2),
+      "dark": #48566b,
     ),
   // TODO - update
   "inline-code":
