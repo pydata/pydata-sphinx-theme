@@ -495,7 +495,7 @@ good_edits = [
             "github_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://github.com/foo/bar/edit/HEAD/docs/index.rst",
+        ("Edit on GitHub", "https://github.com/foo/bar/edit/HEAD/docs/index.rst"),
     ],
     [
         {
@@ -504,7 +504,7 @@ good_edits = [
             "gitlab_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://gitlab.com/foo/bar/-/edit/HEAD/docs/index.rst",
+        ("Edit on GitLab", "https://gitlab.com/foo/bar/-/edit/HEAD/docs/index.rst"),
     ],
     [
         {
@@ -513,7 +513,10 @@ good_edits = [
             "bitbucket_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://bitbucket.org/foo/bar/src/HEAD/docs/index.rst?mode=edit",
+        (
+            "Edit on Bitbucket",
+            "https://bitbucket.org/foo/bar/src/HEAD/docs/index.rst?mode=edit",
+        ),
     ],
 ]
 
@@ -526,10 +529,10 @@ slash_edits = [
             key: f"{value}/" if key == "doc_path" else value
             for key, value in html_context.items()
         },
-        # the URL does not change
-        url,
+        # the text and URL do not change
+        text_and_url,
     ]
-    for html_context, url in good_edits
+    for html_context, text_and_url in good_edits
 ]
 
 # copy the "good" ones, provide a `<whatever>_url` based off the default
@@ -541,11 +544,14 @@ providers = [
             # add a provider url
             **{f"{provider}_url": f"https://{provider}.example.com"},
         ),
-        f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}""",
+        (
+            text,
+            f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}""",
+        ),
     ]
-    for html_context, url in good_edits
-    for provider in ["gitlab", "bitbucket", "github"]
-    if provider in url
+    for html_context, (text, url) in good_edits
+    for provider in ["github", "gitlab", "bitbucket"]
+    if provider in text.lower()
 ]
 
 # missing any of the values should fail
@@ -560,7 +566,7 @@ bad_edits = [
         },
         None,
     ]
-    for html_context, url in good_edits
+    for html_context, _ in good_edits
 ]
 
 # a good custom URL template
@@ -571,7 +577,20 @@ good_custom = [
                 "https://dvcs.example.com/foo/bar/edit/HEAD/{{ file_name }}"
             )
         },
-        "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst",
+        ("Edit", "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst"),
+    ]
+]
+
+# a good custom URL template with an additional provider name
+good_custom_with_provider = [
+    [
+        {
+            "edit_page_url_template": (
+                "https://dvcs.example.com/foo/bar/edit/HEAD/{{ file_name }}"
+            ),
+            "edit_page_provider_name": "FooProvider",
+        },
+        ("Edit on FooProvider", "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst"),
     ]
 ]
 
@@ -594,24 +613,31 @@ all_edits = [
 ]
 
 
-@pytest.mark.parametrize("html_context,edit_url", all_edits)
-def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
+@pytest.mark.parametrize("html_context,edit_text_and_url", all_edits)
+def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url):
     confoverrides = {
         "html_theme_options.use_edit_page_button": True,
         "html_context": html_context,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
 
-    if edit_url is None:
-        with pytest.raises(sphinx.errors.ExtensionError):
+    if edit_text_and_url is None:
+        with pytest.raises(
+            sphinx.errors.ExtensionError, match="Missing required value"
+        ):
             sphinx_build.build()
         return
 
+    edit_text, edit_url = edit_text_and_url
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
     edit_link = index_html.select(".editthispage a")
     assert edit_link, "no edit link found"
     assert edit_link[0].attrs["href"] == edit_url, f"edit link didn't match {edit_link}"
+    # First child is the icon
+    assert (
+        list(edit_link[0].strings)[1].strip() == edit_text
+    ), f"edit text didn't match {edit_text}"
 
 
 @pytest.mark.parametrize(
@@ -636,7 +662,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
     ],
 )
 def test_analytics(sphinx_build_factory, provider, tags):
-
     confoverrides = provider
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
@@ -895,7 +920,7 @@ def test_translations(sphinx_build_factory):
     # TODO: Add translations where there are english phrases below
     sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
     assert "Montrer le code source" in str(sidebar_secondary)
-    assert "Edit this page" in str(sidebar_secondary)
+    assert "Edit on GitHub" in str(sidebar_secondary)
 
     # TODO: Add translations where there are english phrases below
     header = index.select(".bd-header")[0]
