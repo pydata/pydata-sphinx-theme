@@ -100,10 +100,17 @@
 
     // Dropdowns for the extra links
     .dropdown {
-      button {
+      // The button that people click on
+      > button {
         display: unset;
         color: var(--pst-color-text-muted);
         border: none;
+
+        &:hover,
+        &:active,
+        &:focus {
+          color: var(--pst-color-primary);
+        }
       }
 
       .dropdown-menu {
