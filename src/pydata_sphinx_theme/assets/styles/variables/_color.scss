@@ -69,7 +69,7 @@ $theme-colors: (
   )
 );
 
-html {
+:root {
   // Add theme colours to the html element
   @each $group-color, $color in $theme-colors {
     @each $color-name, $value in $color {
@@ -111,6 +111,7 @@ $pst-semantic-colors: (
   ),
   "info": (
     "light": #276be9,
+    // TODO: update this to passs the bg colours
     "light-bg": #eff4fd,
     "dark": #79a3f2,
     "dark-bg": #06245d,
@@ -141,21 +142,16 @@ $pst-semantic-colors: (
   ),
   "text-base": (
     "light": #{map-deep-get($theme-colors, "gray", "800")},
-    // "dark": #e5e7ea
     "dark": #ced6dd,
-    // gray-100
   ),
   "text-muted": (
     "light": #{map-deep-get($theme-colors, "gray", "600")},
     "dark": #{map-deep-get($theme-colors, "gray", "300")},
   ),
-  // TODO - update
-  "shadow":
-    (
-      // "light": rgb(216, 216, 216),
-      "light": rgba(0, 0, 0, 0.1),
-      "dark": rgba(0, 0, 0, 0.2),
-    ),
+  "shadow": (
+    "light": rgba(0, 0, 0, 0.1),
+    "dark": rgba(0, 0, 0, 0.2),
+  ),
   // TODO- update (need muted and regular - this is muted)
   "border":
     (

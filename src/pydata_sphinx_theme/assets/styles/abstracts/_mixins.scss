@@ -72,6 +72,26 @@
 }
 
 /**
+ * Assign the admonition colours from our variables
+ */
+@mixin assign-background-color($color-variable) {
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: var(#{$color-variable}-bg);
+
+    // So that hovering over the text within background is still possible.
+    // Otherwise the background overlays the text and you cannot click or select easily.
+    // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
+    pointer-events: none;
+  }
+}
+
+/**
  * Set background of some cell outputs to white-ish to make sure colors work
  * This is because many libraries make output that only looks good on white
  */
@@ -80,4 +100,86 @@
   background-color: var(--pst-color-text-base);
   border-radius: 0.25rem;
   padding: 0.5rem;
+}
+
+/**
+* Function to calculate the contrast ratio between two colors - this is used to
+* determine the best color to use for text on a given background color. For example,
+* for buttons.
+*/
+@function color-contrast(
+  $background,
+  $color-contrast-dark: $color-contrast-dark,
+  $color-contrast-light: $color-contrast-light,
+  $min-contrast-ratio: $min-contrast-ratio
+) {
+  $foregrounds: $color-contrast-light, $color-contrast-dark, $white, $black;
+  $max-ratio: 0;
+  $max-ratio-color: null;
+
+  @each $color in $foregrounds {
+    $contrast-ratio: contrast-ratio($background, $color);
+    @if $contrast-ratio > $min-contrast-ratio {
+      @return $color;
+    } @else if $contrast-ratio > $max-ratio {
+      $max-ratio: $contrast-ratio;
+      $max-ratio-color: $color;
+    }
+  }
+
+  @warn "Found no color leading to #{$min-contrast-ratio}:1 contrast ratio against #{$background}...";
+
+  @return $max-ratio-color;
+}
+
+// Return WCAG2.1 relative luminance
+// See https://www.w3.org/TR/WCAG/#dfn-relative-luminance
+// See https://www.w3.org/TR/WCAG/#dfn-contrast-ratio
+@function luminance($color) {
+  $rgb: (
+    "r": red($color),
+    "g": green($color),
+    "b": blue($color),
+  );
+
+  @each $name, $value in $rgb {
+    $value: if(
+      divide($value, 255) < 0.04045,
+      divide(divide($value, 255), 12.92),
+      nth($_luminance-list, $value + 1)
+    );
+    $rgb: map-merge(
+      $rgb,
+      (
+        $name: $value,
+      )
+    );
+  }
+
+  @return (map-get($rgb, "r") * 0.2126) + (map-get($rgb, "g") * 0.7152) +
+    (map-get($rgb, "b") * 0.0722);
+}
+
+@function contrast-ratio($background, $foreground: $color-contrast-light) {
+  $l1: luminance($background);
+  $l2: luminance(opaque($background, $foreground));
+
+  @return if(
+    $l1 > $l2,
+    divide($l1 + 0.05, $l2 + 0.05),
+    divide($l2 + 0.05, $l1 + 0.05)
+  );
+}
+
+/**
+* Function to get items from nested maps
+*/
+// @param {Map} $map - Map
+// @param {Arglist} $keys - Keys to fetch
+// @return {*}
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
 }
