@@ -2,10 +2,10 @@
 * master color map. Only the colors that actually differ between light and dark
 * themes are specified separately.
 *
+* To see the full list of colors see https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1234%3A765&t=ifcFT1JtnrSshGfi-1
 */
 
-/* PyData theme - adaptive color scheme */
-/* These are the base colors for the PyData Sphinx theme */
+/* Assign base colors for the PyData theme */
 $theme-colors: (
   // Primary color
   "light-blue":
@@ -62,28 +62,52 @@ $theme-colors: (
       "700": #6e1c64,
       "800": #46123f,
       "900": #2b0b27,
-    )
+    ),
+  "foundation": (
+    "white": #ffffff,
+    "black": #14181e,
+  )
 );
 
-:root {
+html {
+  // Add theme colours to the html element
   @each $group-color, $color in $theme-colors {
     @each $color-name, $value in $color {
       --pst-#{$group-color}-#{$color-name}: #{$value};
     }
   }
-  // Foundation colors
-  --pst-color-white: #ffffff;
-  --pst-color-black: var(--pst-gray-900);
+
+  // Minimum contrast ratio used for the theme.
+  // Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
+  // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
+  $min-contrast-ratio: 4.5;
+
+  // Customize the light and dark text colors for use in our color contrast function.
+  $color-contrast-dark: #{pst-color-black};
+  $color-contrast-light: #{pst-color-white};
+}
+
+/**
+* Function to get items from nested maps
+*/
+// @param {Map} $map - Map
+// @param {Arglist} $keys - Keys to fetch
+// @return {*}
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
 }
 
 $pst-semantic-colors: (
   "primary": (
-    light: var(--pst-light-blue-500),
-    dark: var(--pst-light-blue-400),
+    light: #{map-deep-get($theme-colors, "light-blue", "500")},
+    dark: #{map-deep-get($theme-colors, "light-blue", "400")},
   ),
   "secondary": (
-    light: var(--pst-violet-500),
-    dark: var(--pst-violet-400),
+    light: #{map-deep-get($theme-colors, "violet", "500")},
+    dark: #{map-deep-get($theme-colors, "violet", "400")},
   ),
   "info": (
     "light": #276be9,
@@ -116,14 +140,14 @@ $pst-semantic-colors: (
     "dark-bg": #4e111b,
   ),
   "text-base": (
-    "light": var(--pst-gray-800),
+    "light": #{map-deep-get($theme-colors, "gray", "800")},
     // "dark": #e5e7ea
     "dark": #ced6dd,
     // gray-100
   ),
   "text-muted": (
-    "light": var(--pst-gray-600),
-    "dark": var(--pst-gray-300),
+    "light": #{map-deep-get($theme-colors, "gray", "600")},
+    "dark": #{map-deep-get($theme-colors, "gray", "300")},
   ),
   // TODO - update
   "shadow":
@@ -136,45 +160,42 @@ $pst-semantic-colors: (
   "border":
     (
       "light": rgba(23, 23, 26, 0.2),
-      "dark": #48566b,
+      "dark": #{map-deep-get($theme-colors, "gray", "600")},
     ),
   "inline-code": (
-    "light": var(--pydata-pink-400),
-    "dark": var(--pydata-pink-500),
+    "light": #{map-deep-get($theme-colors, "pink", "600")},
+    "dark": #{map-deep-get($theme-colors, "pink", "300")},
   ),
-  // TODO - update
-  "target":
-    (
-      "light": rgb(251, 229, 78),
-      "dark": rgb(71, 39, 0),
-    ),
+  "target": (
+    "light": #8b6e31,
+    "dark": #c79d41,
+  ),
   // DEPTH COLORS
   // background: color of the canvas / the furthest back layer
   "background":
     (
-      "light": var(--pst-color-white),
-      "dark": var(--pst-color-black),
+      "light": #{map-deep-get($theme-colors, "foundation", "white")},
+      "dark": #{map-deep-get($theme-colors, "foundation", "black")},
     ),
   // on-background: provides slight contrast against background
   // (by use of shadows in light theme)
   "on-background":
     (
-      "light": var(--pst-color-white),
-      "dark": var(--pst-color-gray-800),
+      "light": #{map-deep-get($theme-colors, "foundation", "white")},
+      "dark": #{map-deep-get($theme-colors, "gray", "800")},
     ),
   // surface: object set above the background (without shadows)
   // Uses JupyterLab cell background colors in light/dark theme
   "surface":
     (
-      "light": var(--pst-gray-100),
-      "dark": var(--pst-gray-700),
+      "light": #{map-deep-get($theme-colors, "gray", "100")},
+      "dark": #{map-deep-get($theme-colors, "gray", "700")},
     ),
   // on_surface: object on top of surface object (without shadows)
-  //TODO - update
   "on-surface":
     (
-      "light": rgb(225, 225, 225),
-      "dark": rgb(55, 55, 55),
+      "light": #{map-deep-get($theme-colors, "gray", "800")},
+      "dark": #ced6dd,
     ),
 );
 
@@ -208,7 +229,7 @@ $pst-semantic-colors: (
   // assign the "duplicate" colors (ones that just reference other variables)
   & {
     --pst-color-link: var(--pst-color-primary);
-    --pst-color-link-hover: var(--pst-color-warning);
+    --pst-color-link-hover: var(--pst-color-secondary);
   }
   // adapt to light/dark-specific content
   @if $mode == "light" {
