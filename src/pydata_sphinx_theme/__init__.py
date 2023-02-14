@@ -815,17 +815,17 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                     "Bitbucket",
                     "{{ bitbucket_url }}/{{ bitbucket_user }}/{{ bitbucket_repo }}"
                     "/src/{{ bitbucket_version }}"
-                    "/{{ doc_path }}{{ file_name }}?mode=edit"
+                    "/{{ doc_path }}{{ file_name }}?mode=edit",
                 ),
                 ("github_user", "github_repo", "github_version"): (
                     "GitHub",
                     "{{ github_url }}/{{ github_user }}/{{ github_repo }}"
-                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}"
+                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}",
                 ),
                 ("gitlab_user", "gitlab_repo", "gitlab_version"): (
                     "GitLab",
                     "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
-                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
+                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}",
                 ),
             }
         )
@@ -841,7 +841,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         raise ExtensionError(
             "Missing required value for `use_edit_page_button`. "
             "Ensure one set of the following in your `html_context` "
-            f"configuration: {sorted(edit_url_attrs.keys())}"
+            f"configuration: {sorted(edit_attrs.keys())}"
         )
 
     context["get_edit_provider_and_url"] = get_edit_provider_and_url

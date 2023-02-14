@@ -622,7 +622,9 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url):
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
 
     if edit_text_and_url is None:
-        with pytest.raises(sphinx.errors.ExtensionError):
+        with pytest.raises(
+            sphinx.errors.ExtensionError, match="Missing required value"
+        ):
             sphinx_build.build()
         return
 
