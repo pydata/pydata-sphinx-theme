@@ -73,7 +73,7 @@ def test_build_html(sphinx_build_factory, file_regression):
     subpage_html = sphinx_build.html_tree("section1/index.html")
 
     # Navbar structure
-    navbar = index_html.select("div#navbar-center")[0]
+    navbar = index_html.select("div.navbar-header-items__center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebar subpage
@@ -156,7 +156,7 @@ def test_icon_links(sphinx_build_factory, file_regression):
 
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     # Navbar should have the right icons
-    icon_links = sphinx_build.html_tree("index.html").select("#navbar-icon-links")[0]
+    icon_links = sphinx_build.html_tree("index.html").select(".navbar-icon-links")[0]
     file_regression.check(
         icon_links.prettify(), basename="navbar_icon_links", extension=".html"
     )
@@ -371,7 +371,10 @@ def test_navbar_align_right(sphinx_build_factory):
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("index.html")
     assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
-    assert "ms-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
+    assert (
+        "ms-auto"
+        in index_html.select("div.navbar-header-items__center")[0].attrs["class"]
+    )
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
@@ -379,7 +382,7 @@ def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
     sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
 
     index_html = sphinx_build.html_tree("index.html")
-    navbar = index_html.select("ul#navbar-main-elements")[0]
+    navbar = index_html.select("ul.bd-navbar-elements")[0]
     file_regression.check(navbar.prettify(), extension=".html")
 
 
@@ -396,7 +399,7 @@ def test_navbar_header_dropdown(sphinx_build_factory, file_regression, n_links):
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
-    navbar = index_html.select("ul#navbar-main-elements")[0]
+    navbar = index_html.select("ul.bd-navbar-elements")[0]
     if n_links == 0:
         # There should be *only* a dropdown and no standalone links
         assert navbar.select("div.dropdown") and not navbar.select(
@@ -420,7 +423,7 @@ def test_sidebars_captions(sphinx_build_factory, file_regression):
     subindex_html = sphinx_build.html_tree("section1/index.html")
 
     # Sidebar structure with caption
-    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
@@ -430,7 +433,7 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression):
     subindex_html = sphinx_build.html_tree("section1/subsection1/page1.html")
 
     # For nested (uncollapsed) page, the label included `checked=""`
-    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
@@ -442,7 +445,7 @@ def test_sidebars_level2(sphinx_build_factory, file_regression):
     subindex_html = sphinx_build.html_tree("section1/subsection1/index.html")
 
     # Sidebar structure
-    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
@@ -456,7 +459,7 @@ def test_sidebars_show_nav_level0(sphinx_build_factory, file_regression):
 
     # 1. Home Page
     index_html = sphinx_build.html_tree("section1/index.html")
-    sidebar = index_html.select("nav#bd-docs-nav")[0]
+    sidebar = index_html.select("nav.bd-docs-nav")[0]
 
     # check if top-level ul is present
     ul = sidebar.find("ul")
@@ -476,7 +479,7 @@ def test_sidebars_show_nav_level0(sphinx_build_factory, file_regression):
 
     # 2. Subsection Page
     subsection_html = sphinx_build.html_tree("section1/subsection1/index.html")
-    sidebar = subsection_html.select("nav#bd-docs-nav")[0]
+    sidebar = subsection_html.select("nav.bd-docs-nav")[0]
 
     # get all input elements
     input_elem = sidebar.select("input")
@@ -796,7 +799,7 @@ def test_math_header_item(sphinx_build_factory, file_regression):
     """regression test the math items in a header title"""
 
     sphinx_build = sphinx_build_factory("base").build()
-    li = sphinx_build.html_tree("page2.html").select("#navbar-main-elements li")[1]
+    li = sphinx_build.html_tree("page2.html").select(".bd-navbar-elements li")[1]
     file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
 
 
@@ -869,7 +872,7 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     subpage_html = sphinx_build.html_tree("section1/index.html")
 
     # Navbar structure
-    navbar = index_html.select("div#navbar-center")[0]
+    navbar = index_html.select("div.navbar-header-items__center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebar subpage

@@ -2,7 +2,25 @@
  * Icon links in the navbar
  */
 
-#navbar-icon-links {
+.navbar-icon-links {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+  flex-wrap: wrap;
+
+  // Remove the padding so that we can define it with flexbox gap above
+  li.nav-item a.nav-link {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // Spacing and centering
+  a span {
+    display: flex;
+    align-items: center;
+  }
+
+  // Icons styling
   i {
     &.fa-brands,
     &.fa-regular,
@@ -12,7 +30,7 @@
       font-size: var(--pst-font-size-icon);
     }
 
-    /* Social media buttons */
+    /* Social media buttons hard-code the brand color */
     &.fa-square-twitter:before {
       color: #55acee;
     }
@@ -26,29 +44,9 @@
     }
   }
 
+  // Force images to be icon-sized
   img.icon-link-image {
     height: 1.5em;
     border-radius: 0.2rem;
-  }
-
-  li:first-child a {
-    padding-left: 0;
-  }
-
-  a span {
-    display: flex;
-    align-items: center;
-  }
-
-  // inline the element in the navbar as long as they fit and use display block when collapsing
-  // One breakpoint less than $breakpoint-sidebar-primary.
-  // See variables/_layout.scss for more info.
-  @include media-breakpoint-down(lg) {
-    flex-direction: row;
-
-    // Use Bootstrap padding for these nav links to get the spacing right
-    a {
-      padding: 0rem 0.5rem;
-    }
   }
 }

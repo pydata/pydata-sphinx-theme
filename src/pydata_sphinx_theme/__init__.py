@@ -67,6 +67,13 @@ def update_config(app):
             "Use `secondary_sidebar_items`."
         )
 
+    # DEPRECATE after 0.14
+    if theme_options.get("footer_items"):
+        theme_options["footer_start"] = theme_options.get("footer_items")
+        logger.warning(
+            "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
+        )
+
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
@@ -205,7 +212,8 @@ def update_and_remove_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_end",
         "theme_article_header_start",
         "theme_article_header_end",
-        "theme_footer_items",
+        "theme_footer_start",
+        "theme_footer_end",
         "theme_secondary_sidebar_items",
         "theme_primary_sidebar_end",
         "sidebars",
