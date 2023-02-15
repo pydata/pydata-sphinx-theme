@@ -14,7 +14,8 @@ You can also configure some aspects of the search button and search field, descr
 Configure the search field position
 -----------------------------------
 
-The position of the search *button* is controlled by ``search-button`` and by default is included in ``html_theme_options["navbar_persistent"]``; you may move it elsewhere as befits your site's layout, or remove it. You can also add an always-visible search field to some/all pages in your site by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_items"]``, etc).
+The position of the search *button* is controlled by ``search-button`` and by default is included in ``html_theme_options["navbar_persistent"]``; you may move it elsewhere as befits your site's layout, or remove it.
+You can also add an always-visible search field to some/all pages in your site by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_start"]``, etc).
 
 For example, if you'd like the search field to be in your side-bar, add it to
 the sidebar templates like so:

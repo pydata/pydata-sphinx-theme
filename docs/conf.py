@@ -133,12 +133,13 @@ html_theme_options = {
     "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     "navbar_center": ["version-switcher", "navbar-nav"],
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
+    "footer_end": ["navbar-icon-links.html"],
     # "show_nav_level": 2,
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "navbar_persistent": ["search-button"],
     # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
-    # "footer_items": ["copyright", "sphinx-version"],
+    # "footer_start": ["test.html", "test.html"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,

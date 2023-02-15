@@ -36,9 +36,7 @@
     }
 
     // These items will define the height of the header
-    .navbar-start-item,
-    .navbar-center-item,
-    .navbar-end-item {
+    .navbar-item {
       height: var(--pst-header-height);
       max-height: var(--pst-header-height);
       display: flex;
@@ -126,7 +124,7 @@
 
 // inline the element in the navbar as long as they fit and use display block when collapsing
 @include media-breakpoint-up($breakpoint-sidebar-primary) {
-  .navbar-center-item {
+  .navbar-center-items .navbar-item {
     display: inline-block;
   }
 }

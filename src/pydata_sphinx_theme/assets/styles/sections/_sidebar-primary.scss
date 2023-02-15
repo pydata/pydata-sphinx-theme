@@ -47,9 +47,11 @@
     color: var(--pst-color-text-base);
   }
 
-  .sidebar-start-items__item,
-  .sidebar-end-items__item {
-    padding: 0.5rem 0;
+  .sidebar-start-items,
+  .sidebar-end-items {
+    .sidebar-primary-item {
+      padding: 0.5rem 0;
+    }
   }
 
   // Hide the sidebar header items on widescreen since they are visible in the header

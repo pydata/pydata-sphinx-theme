@@ -156,7 +156,7 @@ def test_icon_links(sphinx_build_factory, file_regression):
 
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     # Navbar should have the right icons
-    icon_links = sphinx_build.html_tree("index.html").select("#navbar-icon-links")[0]
+    icon_links = sphinx_build.html_tree("index.html").select(".navbar-icon-links")[0]
     file_regression.check(
         icon_links.prettify(), basename="navbar_icon_links", extension=".html"
     )
