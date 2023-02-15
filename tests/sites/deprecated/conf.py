@@ -20,7 +20,6 @@ html_sourcelink_suffix = ""
 # Base options, we can add other key/vals later
 html_theme_options = {
     "search_bar_position": "navbar",
-    "left_sidebar_end": ["sidebar-ethical-ads.html"],
     "logo_text": "DOCS",
     "page_sidebar_items": [
         "page-toc.html",
