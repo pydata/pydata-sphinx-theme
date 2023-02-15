@@ -866,7 +866,9 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
 
     # check the deprecation warnings
     warnings = sphinx_build.warnings.split("WARNING: ")
-    assert len(warnings) == 5  # testing the text of the warning is not necessary here
+    # testing the text of the warnings is not necessary here
+    expected_warnings = ("logo_text", "page_sidebar_items", "switcher:url_template")
+    assert len(warnings) == len(expected_warnings)
 
     index_html = sphinx_build.html_tree("index.html")
     subpage_html = sphinx_build.html_tree("section1/index.html")
