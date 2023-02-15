@@ -216,6 +216,21 @@ def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory):
     assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
 
 
+def test_primary_logo_is_light_when_default_mode_is_set_to_auto(sphinx_build_factory):
+    """Test that the primary logo image is light
+    (and secondary, written through JavaScript, is dark)
+    when default mode is explicitly set to auto."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {"default_mode": "auto"},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-light") is not None
+    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+
+
 def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory):
     """Test that the primary logo image is light
     (and secondary, written through JavaScript, is dark)

@@ -17,7 +17,7 @@
      # Thus we should add the extra image using JavaScript, defaulting
      # depending on the value of default_mode; and light if unset.
      #}
-    {% if default_mode is undefined %}
+    {% if default_mode is undefined or default_mode == "auto" %}
       {% set default_mode = "light" %}
     {% endif %}
     {% set js_mode = "light" if default_mode == "dark" else "dark" %}
