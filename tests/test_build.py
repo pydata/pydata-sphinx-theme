@@ -870,6 +870,7 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     expected_warnings = (
         "The configuration `logo_text` is deprecated",
         "The configuration `page_sidebar_items` is deprecated",
+        "`footer_items` is deprecated",
         "unsupported theme option 'logo_text'",
         "unsupported theme option 'page_sidebar_items'",
     )
