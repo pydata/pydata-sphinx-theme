@@ -457,7 +457,7 @@ By default, ``footer_end`` is empty, and ``footer_start`` has the following temp
 Within each subsection, components will stack **vertically**.
 If you'd like them to stack **horizontally** use a custom CSS rule like the following:
 
-.. code-block:: scss
+.. code-block:: css
 
    .footer-items__start, .footer-items__end {
      flex-direction: row;
