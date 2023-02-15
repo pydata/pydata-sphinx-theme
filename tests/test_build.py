@@ -865,10 +865,18 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
 
     # check the deprecation warnings
-    warnings = sphinx_build.warnings.split("WARNING: ")
-    # testing the text of the warnings is not necessary here
-    expected_warnings = ("logo_text", "page_sidebar_items", "switcher:url_template")
+    warnings = sphinx_build.warnings.strip("\n").split("\n")
+    warnings = [w.lstrip("\x1b[91m").rstrip("\x1b[39;49;00m\n") for w in warnings]
+    expected_warnings = (
+        "The configuration `logo_text` is deprecated",
+        "The configuration `page_sidebar_items` is deprecated",
+        "unsupported theme option 'left_sidebar_end'",
+        "unsupported theme option 'logo_text'",
+        "unsupported theme option 'page_sidebar_items'",
+    )
     assert len(warnings) == len(expected_warnings)
+    for exp_warn in expected_warnings:
+        assert exp_warn in sphinx_build.warnings
 
     index_html = sphinx_build.html_tree("index.html")
     subpage_html = sphinx_build.html_tree("section1/index.html")
