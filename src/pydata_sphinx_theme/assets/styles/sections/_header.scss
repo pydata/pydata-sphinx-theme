@@ -44,9 +44,9 @@
     }
   }
 
-  #navbar-end,
-  #navbar-center,
-  #navbar-start {
+  .navbar-header-items__end,
+  .navbar-header-items__center,
+  .navbar-header-items__start {
     display: flex;
     align-items: center;
     flex-flow: wrap;
@@ -54,19 +54,19 @@
     row-gap: 0;
   }
 
-  #navbar-end,
-  #navbar-center {
+  .navbar-header-items__end,
+  .navbar-header-items__center {
     column-gap: 1rem;
   }
 
   // A little smaller because this is displayed by default on mobile
-  #navbar-start {
+  .navbar-header-items__start {
     flex-shrink: 0;
     margin-right: auto;
     gap: 0.5rem;
   }
 
-  #navbar-end {
+  .navbar-header-items__end {
     // End navbar items should snap to the right
     justify-content: end;
   }
@@ -150,7 +150,7 @@
   }
 }
 
-#navbar-main-elements li.nav-item i {
+.bd-navbar-elements li.nav-item i {
   font-size: 0.7rem;
   padding-left: 2px;
   vertical-align: middle;

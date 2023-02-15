@@ -43,7 +43,7 @@ or not theme_secondary_sidebar_items %}
 {% block body_tag %}
   {# set up with scrollspy to update the toc as we scroll #}
   {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
-  <body data-bs-spy="scroll" data-bs-target="#bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="{{ default_mode }}">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="{{ default_mode }}">
 
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
@@ -73,7 +73,7 @@ or not theme_secondary_sidebar_items %}
     {% include "sections/announcement.html" %}
   {%- endif %}
   {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main">
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
       {%- include "sections/header.html" %}
     </nav>
   {% endblock docs_navbar %}
@@ -83,6 +83,7 @@ or not theme_secondary_sidebar_items %}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
+      {# Using an ID here so that the skip-link works #}
       <main id="main-content" class="bd-main">
         {# Main content area #}
         {% block docs_main %}

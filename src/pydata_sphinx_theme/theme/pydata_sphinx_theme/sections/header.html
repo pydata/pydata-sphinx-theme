@@ -4,7 +4,7 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   {% if theme_navbar_start %}
-  <div id="navbar-start" class="navbar-header-items__start">
+  <div class="navbar-header-items__start">
     {% for navbar_item in theme_navbar_start %}
       <div class="navbar-item">{% include navbar_item %}</div>
     {% endfor %}
@@ -13,14 +13,14 @@
   {% set navbar_class, navbar_align = navbar_align_class() %}
   <div class="{{ navbar_class }} navbar-header-items">
     {% if theme_navbar_center %}
-    <div id="navbar-center" class="{{ navbar_align }} navbar-header-items__center">
+    <div class="{{ navbar_align }} navbar-header-items__center">
       {% for navbar_item in theme_navbar_center %}
         <div class="navbar-item">{% include navbar_item %}</div>
       {% endfor %}
     </div>
     {% endif %}
     {% if theme_navbar_end or theme_navbar_persistent %}
-    <div id="navbar-end" class="navbar-header-items__end">
+    <div class="navbar-header-items__end">
       {% for navbar_item in theme_navbar_persistent %}
         <div class="navbar-item navbar-persistent--container">
           {% include navbar_item %}
