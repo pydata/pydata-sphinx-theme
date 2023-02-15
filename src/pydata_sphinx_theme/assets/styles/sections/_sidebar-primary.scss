@@ -47,8 +47,8 @@
     color: var(--pst-color-text-base);
   }
 
-  .sidebar-start-items,
-  .sidebar-end-items {
+  .sidebar-primary-items__start,
+  .sidebar-primary-items__end {
     .sidebar-primary-item {
       padding: 0.5rem 0;
     }
@@ -102,7 +102,7 @@
     }
   }
 
-  .sidebar-start-items {
+  .sidebar-primary-items__start {
     // Add a border on mobile to separate it from the header sidebar area
     border-top: 1px solid var(--pst-color-border);
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
@@ -110,7 +110,7 @@
     }
   }
 
-  .sidebar-end-items {
+  .sidebar-primary-items__end {
     margin-top: auto;
     margin-bottom: 1em;
   }

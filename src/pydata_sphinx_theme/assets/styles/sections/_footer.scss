@@ -1,9 +1,12 @@
 .bd-footer {
+  width: 100%;
+  border-top: 1px solid var(--pst-color-border);
+
   .bd-footer__inner {
-    border-top: 1px solid var(--pst-color-border);
-    padding: 1rem 2rem;
     display: flex;
     flex-grow: 1;
+    padding: 1rem;
+    margin: auto;
   }
 
   .footer-items__start,

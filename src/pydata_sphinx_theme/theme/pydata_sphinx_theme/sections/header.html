@@ -3,19 +3,24 @@
   <label class="sidebar-toggle primary-toggle" for="__primary">
     <span class="fa-solid fa-bars"></span>
   </label>
-  <div id="navbar-start">
+  {% if theme_navbar_start %}
+  <div id="navbar-start" class="navbar-header-items__start">
     {% for navbar_item in theme_navbar_start %}
       <div class="navbar-item">{% include navbar_item %}</div>
     {% endfor %}
   </div>
+  {% endif %}
   {% set navbar_class, navbar_align = navbar_align_class() %}
   <div class="{{ navbar_class }} navbar-header-items">
-    <div id="navbar-center" class="{{ navbar_align }}">
+    {% if theme_navbar_center %}
+    <div id="navbar-center" class="{{ navbar_align }} navbar-header-items__center">
       {% for navbar_item in theme_navbar_center %}
         <div class="navbar-item">{% include navbar_item %}</div>
       {% endfor %}
     </div>
-    <div id="navbar-end">
+    {% endif %}
+    {% if theme_navbar_end or theme_navbar_persistent %}
+    <div id="navbar-end" class="navbar-header-items__end">
       {% for navbar_item in theme_navbar_persistent %}
         <div class="navbar-item navbar-persistent--container">
           {% include navbar_item %}
@@ -25,6 +30,7 @@
         <div class="navbar-item">{% include navbar_item %}</div>
       {% endfor %}
     </div>
+    {% endif %}
   </div>
   {# A search button to show up only on mobile #}
   {% for navbar_item in theme_navbar_persistent %}
