@@ -40,6 +40,9 @@ a {
   color: var(--pst-color-link);
   text-decoration: none;
 
+  // So that really long links don't spill out of their container
+  word-wrap: break-word;
+
   &:hover {
     color: var(--pst-color-link-hover);
     text-decoration: underline;

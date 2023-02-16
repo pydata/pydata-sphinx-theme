@@ -25,6 +25,14 @@
     padding-right: 1rem;
   }
 
+  // These items will define the height of the header
+  .navbar-item {
+    height: var(--pst-header-height);
+    max-height: var(--pst-header-height);
+    display: flex;
+    align-items: center;
+  }
+
   // Hide the header items on mobile
   .navbar-header-items {
     display: none;
@@ -33,14 +41,6 @@
       display: flex;
       flex-grow: 1;
       padding: 0 0 0 0.5rem;
-    }
-
-    // These items will define the height of the header
-    .navbar-item {
-      height: var(--pst-header-height);
-      max-height: var(--pst-header-height);
-      display: flex;
-      align-items: center;
     }
   }
 
