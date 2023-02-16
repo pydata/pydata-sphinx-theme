@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-02-16 13:19-0500\n"
+"POT-Creation-Date: 2023-02-16 13:30-0500\n"
 "PO-Revision-Date: 2023-02-16 13:19-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -125,21 +125,29 @@ msgid "light/dark"
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:2
-msgid "Built with the"
+#, python-format
+msgid ""
+"Built with the <a href=\"https://pydata-sphinx-"
+"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+"%(version)s."
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:6
+msgid "previous page"
+msgstr ""
+
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:9
 msgid "previous"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:6
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:17
-msgid "page"
+msgid "next page"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:17
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:19
 msgid "next"
 msgstr ""
+
+#~ msgid "page"
+#~ msgstr ""
 
