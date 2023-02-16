@@ -1067,9 +1067,6 @@ def setup_translators(app):
             )
             app.set_translator(name, translator, override=True)
 
-    # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
-    app.add_message_catalog("sphinx", os.path.join(theme_path, "locale"))
-
 
 # ------------------------------------------------------------------------------
 # customize events for logo management
@@ -1155,6 +1152,9 @@ def setup(app):
     app.connect("html-page-context", setup_logo_path)
     app.connect("build-finished", _overwrite_pygments_css)
     app.connect("build-finished", copy_logo_images)
+
+    # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
+    app.add_message_catalog("sphinx", os.path.join(theme_path, "locale"))
 
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))
