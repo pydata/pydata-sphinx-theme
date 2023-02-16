@@ -35,21 +35,7 @@ logger = logging.getLogger(__name__)
 def update_config(app):
     theme_options = app.config.html_theme_options
 
-    # DEPRECATE >= v0.10
-    if theme_options.get("search_bar_position") == "navbar":
-        logger.warning(
-            "Deprecated config `search_bar_position` used."
-            "Use `search-field.html` in `navbar_end` template list instead."
-        )
-
-    # DEPRECATE >= 0.11
-    if theme_options.get("left_sidebar_end"):
-        theme_options["primary_sidebar_end"] = theme_options.get("left_sidebar_end")
-        logger.warning(
-            "The configuration `left_sidebar_end` is deprecated."
-            "Use `primary_sidebar_end`"
-        )
-
+    # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
         logo = theme_options.get("logo", {})
         logo["text"] = theme_options.get("logo_text")
@@ -58,6 +44,7 @@ def update_config(app):
             "The configuration `logo_text` is deprecated." "Use `'logo': {'text': }`."
         )
 
+    # TODO: deprecation; remove after 0.13 release
     if theme_options.get("page_sidebar_items"):
         theme_options["secondary_sidebar_items"] = theme_options.get(
             "page_sidebar_items"
@@ -86,6 +73,7 @@ def update_config(app):
     app.config.values["html_permalinks_icon"] = ("#", *icon_default[1:])
 
     # Raise a warning for a deprecated theme switcher config
+    # TODO: deprecation; remove after 0.13 release
     if "url_template" in theme_options.get("switcher", {}):
         logger.warning(
             "html_theme_options['switcher']['url_template'] is no longer supported."
@@ -187,14 +175,6 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
         theme_logo = {}
     if not isinstance(theme_logo, dict):
         raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
-
-    # DEPRECATE: >= 0.11
-    if context.get("theme_logo_link"):
-        logger.warning(
-            "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
-            "Use the `logo.link` configuration dictionary instead."
-        )
-        theme_logo = context.get("theme_logo_link")
 
     context["theme_logo"] = theme_logo
 
@@ -415,14 +395,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         return out
 
-    # TODO: Deprecate after v0.12
-    def generate_nav_html(*args, **kwargs):
-        logger.warning(
-            "`generate_nav_html` is deprecated and will be removed."
-            "Use `generate_toctree_html` instead."
-        )
-        generate_toctree_html(*args, **kwargs)
-
     # Cache this function because it is expensive to run, and becaues Sphinx
     # somehow runs this twice in some circumstances in unpredictable ways.
     @lru_cache(maxsize=None)
@@ -587,9 +559,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
-
-    # TODO: Deprecate after v0.12
-    context["generate_nav_html"] = generate_nav_html
 
 
 def _add_collapse_checkboxes(soup):
