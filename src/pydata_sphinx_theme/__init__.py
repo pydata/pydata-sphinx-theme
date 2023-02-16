@@ -1067,6 +1067,9 @@ def setup_translators(app):
             )
             app.set_translator(name, translator, override=True)
 
+    # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
+     app.add_message_catalog("sphinx", os.path.join(theme_path, "locale"))
+
 
 # ------------------------------------------------------------------------------
 # customize events for logo management

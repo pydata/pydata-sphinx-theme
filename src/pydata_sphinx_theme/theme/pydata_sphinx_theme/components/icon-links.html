@@ -13,11 +13,11 @@
           <a {{ attributeString }}>
             {%- if type == "fontawesome" -%}
             <span><i class="{{ icon }}"></i></span>
-            <label class="sr-only">{{ _(name) }}</label>
+            <label class="sr-only">{{ name }}</label>
             {%- elif type == "local" -%}
-            <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ _(name) }}"/>
+            <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ name }}"/>
             {%- elif type == "url" -%}
-            <img src="{{ icon }}" class="icon-link-image" alt="{{ _(name) }}"/>
+            <img src="{{ icon }}" class="icon-link-image" alt="{{ name }}"/>
             {%- else %}
             <span>Incorrectly configured icon link. Type must be `fontawesome`, `url` or `local`.</span>
             {%- endif -%}
@@ -26,12 +26,12 @@
   {%- endif -%}
 {%- endmacro -%}
 <ul class="navbar-icon-links navbar-nav"
-    aria-label="{{ _(theme_icon_links_label) }}">
+    aria-label="{{ theme_icon_links_label }}">
   {%- block icon_link_shortcuts -%}
-    {{ icon_link_nav_item(theme_github_url, "fa-brands fa-square-github", "GitHub", "fontawesome") -}}
-    {{ icon_link_nav_item(theme_gitlab_url, "fa-brands fa-square-gitlab", "GitLab", "fontawesome") -}}
-    {{ icon_link_nav_item(theme_bitbucket_url, "fa-brands fa-bitbucket", "Bitbucket", "fontawesome") -}}
-    {{ icon_link_nav_item(theme_twitter_url, "fa-brands fa-square-twitter", "Twitter", "fontawesome") -}}
+    {{ icon_link_nav_item(theme_github_url, "fa-brands fa-square-github", _("GitHub"), "fontawesome") -}}
+    {{ icon_link_nav_item(theme_gitlab_url, "fa-brands fa-square-gitlab", _("GitLab"), "fontawesome") -}}
+    {{ icon_link_nav_item(theme_bitbucket_url, "fa-brands fa-bitbucket", _("Bitbucket"), "fontawesome") -}}
+    {{ icon_link_nav_item(theme_twitter_url, "fa-brands fa-square-twitter", _("Twitter"), "fontawesome") -}}
   {% endblock icon_link_shortcuts -%}
   {%- for icon_link in theme_icon_links -%}
     {{ icon_link_nav_item(icon_link["url"], icon_link["icon"], icon_link["name"], icon_link.get("type", "fontawesome"), icon_link.get("attributes", {})) -}}
