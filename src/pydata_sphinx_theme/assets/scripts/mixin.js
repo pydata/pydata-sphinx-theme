@@ -9,5 +9,5 @@
  */
 export function documentReady(callback) {
   if (document.readyState != "loading") callback();
-  else document.addEventListener("DOMContentLoaded", callback());
+  else document.addEventListener("DOMContentLoaded", callback);
 }

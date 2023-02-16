@@ -27,7 +27,7 @@ from requests.exceptions import ConnectionError, HTTPError, RetryError
 
 from .translator import BootstrapHTML5TranslatorMixin
 
-__version__ = "0.13.0rc3.dev0"
+__version__ = "0.13.0rc4dev0"
 
 logger = logging.getLogger(__name__)
 
@@ -35,21 +35,7 @@ logger = logging.getLogger(__name__)
 def update_config(app):
     theme_options = app.config.html_theme_options
 
-    # DEPRECATE >= v0.10
-    if theme_options.get("search_bar_position") == "navbar":
-        logger.warning(
-            "Deprecated config `search_bar_position` used."
-            "Use `search-field.html` in `navbar_end` template list instead."
-        )
-
-    # DEPRECATE >= 0.11
-    if theme_options.get("left_sidebar_end"):
-        theme_options["primary_sidebar_end"] = theme_options.get("left_sidebar_end")
-        logger.warning(
-            "The configuration `left_sidebar_end` is deprecated."
-            "Use `primary_sidebar_end`"
-        )
-
+    # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
         logo = theme_options.get("logo", {})
         logo["text"] = theme_options.get("logo_text")
@@ -58,6 +44,7 @@ def update_config(app):
             "The configuration `logo_text` is deprecated." "Use `'logo': {'text': }`."
         )
 
+    # TODO: deprecation; remove after 0.13 release
     if theme_options.get("page_sidebar_items"):
         theme_options["secondary_sidebar_items"] = theme_options.get(
             "page_sidebar_items"
@@ -65,6 +52,13 @@ def update_config(app):
         logger.warning(
             "The configuration `page_sidebar_items` is deprecated."
             "Use `secondary_sidebar_items`."
+        )
+
+    # DEPRECATE after 0.14
+    if theme_options.get("footer_items"):
+        theme_options["footer_start"] = theme_options.get("footer_items")
+        logger.warning(
+            "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
         )
 
     # Validate icon links
@@ -79,6 +73,7 @@ def update_config(app):
     app.config.values["html_permalinks_icon"] = ("#", *icon_default[1:])
 
     # Raise a warning for a deprecated theme switcher config
+    # TODO: deprecation; remove after 0.13 release
     if "url_template" in theme_options.get("switcher", {}):
         logger.warning(
             "html_theme_options['switcher']['url_template'] is no longer supported."
@@ -181,14 +176,6 @@ def prepare_html_config(app, pagename, templatename, context, doctree):
     if not isinstance(theme_logo, dict):
         raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
 
-    # DEPRECATE: >= 0.11
-    if context.get("theme_logo_link"):
-        logger.warning(
-            "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
-            "Use the `logo.link` configuration dictionary instead."
-        )
-        theme_logo = context.get("theme_logo_link")
-
     context["theme_logo"] = theme_logo
 
     # update version number
@@ -205,7 +192,8 @@ def update_and_remove_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_end",
         "theme_article_header_start",
         "theme_article_header_end",
-        "theme_footer_items",
+        "theme_footer_start",
+        "theme_footer_end",
         "theme_secondary_sidebar_items",
         "theme_primary_sidebar_end",
         "sidebars",
@@ -407,14 +395,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         return out
 
-    # TODO: Deprecate after v0.12
-    def generate_nav_html(*args, **kwargs):
-        logger.warning(
-            "`generate_nav_html` is deprecated and will be removed."
-            "Use `generate_toctree_html` instead."
-        )
-        generate_toctree_html(*args, **kwargs)
-
     # Cache this function because it is expensive to run, and becaues Sphinx
     # somehow runs this twice in some circumstances in unpredictable ways.
     @lru_cache(maxsize=None)
@@ -579,9 +559,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
-
-    # TODO: Deprecate after v0.12
-    context["generate_nav_html"] = generate_nav_html
 
 
 def _add_collapse_checkboxes(soup):
@@ -779,8 +756,8 @@ def soup_to_python(soup, only_pages=False):
 def setup_edit_url(app, pagename, templatename, context, doctree):
     """Add a function that jinja can access for returning the edit URL of a page."""
 
-    def get_edit_url():
-        """Return a URL for an "edit this page" link."""
+    def get_edit_provider_and_url():
+        """Return a provider name and a URL for an "edit this page" link."""
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -794,7 +771,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             "gitlab_url": "https://gitlab.com",
         }
 
-        edit_url_attrs = {}
+        edit_attrs = {}
 
         # ensure custom URL is checked first, if given
         url_template = context.get("edit_page_url_template")
@@ -806,23 +783,26 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                     "Ensure `file_name` appears in `edit_page_url_template`: "
                     f"{url_template}"
                 )
+            provider_name = context.get("edit_page_provider_name")
+            edit_attrs[("edit_page_url_template",)] = (provider_name, url_template)
 
-            edit_url_attrs[("edit_page_url_template",)] = url_template
-
-        edit_url_attrs.update(
+        edit_attrs.update(
             {
                 ("bitbucket_user", "bitbucket_repo", "bitbucket_version"): (
+                    "Bitbucket",
                     "{{ bitbucket_url }}/{{ bitbucket_user }}/{{ bitbucket_repo }}"
                     "/src/{{ bitbucket_version }}"
-                    "/{{ doc_path }}{{ file_name }}?mode=edit"
+                    "/{{ doc_path }}{{ file_name }}?mode=edit",
                 ),
                 ("github_user", "github_repo", "github_version"): (
+                    "GitHub",
                     "{{ github_url }}/{{ github_user }}/{{ github_repo }}"
-                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}"
+                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}",
                 ),
                 ("gitlab_user", "gitlab_repo", "gitlab_version"): (
+                    "GitLab",
                     "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
-                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
+                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}",
                 ),
             }
         )
@@ -831,17 +811,17 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         doc_context.update(context)
         doc_context.update(doc_path=doc_path, file_name=file_name)
 
-        for attrs, url_template in edit_url_attrs.items():
+        for attrs, (provider, url_template) in edit_attrs.items():
             if all(doc_context.get(attr) not in [None, "None"] for attr in attrs):
-                return jinja2.Template(url_template).render(**doc_context)
+                return provider, jinja2.Template(url_template).render(**doc_context)
 
         raise ExtensionError(
             "Missing required value for `use_edit_page_button`. "
             "Ensure one set of the following in your `html_context` "
-            f"configuration: {sorted(edit_url_attrs.keys())}"
+            f"configuration: {sorted(edit_attrs.keys())}"
         )
 
-    context["get_edit_url"] = get_edit_url
+    context["get_edit_provider_and_url"] = get_edit_provider_and_url
 
     # Ensure that the max TOC level is an integer
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
