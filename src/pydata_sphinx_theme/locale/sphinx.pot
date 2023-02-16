@@ -155,4 +155,3 @@ msgstr ""
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:19
 msgid "next"
 msgstr ""
-
