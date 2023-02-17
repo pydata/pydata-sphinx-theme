@@ -22,7 +22,7 @@ const { Compilation } = require("webpack");
  * Compile our translation files
  */
 const { exec } = require("child_process");
-const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale")
+const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
 exec(`pybabel compile -d ${localePath} -D sphinx`);
 
 /*******************************************************************************
