@@ -61,7 +61,7 @@ Changing natural language text
 
    .. code-block:: bash
 
-      python setup.py update_catalog
+      pybabel update -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx
 
 .. _translating-the-theme:
 
