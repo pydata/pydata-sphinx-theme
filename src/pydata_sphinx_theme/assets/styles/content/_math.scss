@@ -38,7 +38,6 @@ div.math {
     padding-bottom: 0.2rem;
     overflow: auto;
     @include scrollbar-style();
-    
     // Set height to 0 so that it does not cause scrollbars to appear
     // ref: https://github.com/mathjax/MathJax/issues/2521
     .mjx-assistive-mml {
