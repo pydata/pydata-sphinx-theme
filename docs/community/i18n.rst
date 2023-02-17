@@ -83,7 +83,7 @@ To translate the theme to another language, replace ``es`` with the language's t
 
 .. code-block:: bash
 
-   python setup.py compile_catalog
+   pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx
 
 
 References
