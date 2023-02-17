@@ -11,6 +11,10 @@ Internationalization
    - https://github.com/pydata/pydata-sphinx-theme/issues/257
 
 Internationalization (I18N) and localization (L10N) is performed using `Gettext <https://docs.python.org/3/library/gettext.html>`__.
+
+Types of files
+--------------
+
 Gettext reads a program's source and extracts text that has been marked as translatable, known as "source strings.
 Gettext uses three types of files:
 
@@ -33,8 +37,8 @@ MO file (``.mo``)
 
 .. _adding-natural-language-text:
 
-Adding natural language text
-----------------------------
+Mark natural language text as translateable
+-------------------------------------------
 
 All natural language text must be marked as translatable, so that it can be extracted by Gettext and translated by humans.
 
@@ -42,36 +46,47 @@ Jinja2 provides a ``trans`` block and a ``_()`` function to mark text as transla
 `Please refer to the Jinja2 documentation <https://jinja.palletsprojects.com/en/2.11.x/templates/#i18n>`__.
 Remember to `manually escape <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ variables if needed.
 
-Then, complete the steps for :ref:`changing-natural-language-text`.
+Any text that is marked in this way will be discoverable by ``gettext`` and used to generate ``.po`` files (see below for information).
+Once you've marked text as translateable, complete the steps for :ref:`changing-natural-language-text`.
 
 .. _changing-natural-language-text:
 
-Changing natural language text
-------------------------------
+Add or change natural language text
+-----------------------------------
+
+These steps cover how to add or change text that has been marked as translateable.
 
 #. Edit the natural language text as desired.
+   Ensure that it is {ref}`marked as translateable <adding-natural-language-text>`.
 
-#. Update the message catalog template (POT file):
+#. Generate/update the message catalog template (``POT`` file) with `the PyBabel extract command <https://babel.pocoo.org/en/latest/cmdline.html#extract>`__:
 
    .. code-block:: bash
 
       pybabel extract . -F babel.cfg -o src/pydata_sphinx_theme/locale/sphinx.pot -k '_ __ l_ lazy_gettext'
 
-#. Update the message catalogs (PO files):
+#. Update the message catalogs (``PO`` files) with `the PyBabel update command <https://babel.pocoo.org/en/latest/cmdline.html#update>`__:
 
    .. code-block:: bash
 
       pybabel update -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx
 
+This will update these files with new information about the position and text of the language you have modified.
+
 .. _translating-the-theme:
 
-Translating the theme
----------------------
+Add translations to translateable text
+--------------------------------------
 
-These steps use the Spanish language as an example.
-To translate the theme to another language, replace ``es`` with the language's two-letter lowercase `ISO 639-1 code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`__.
+Once text has been marked as translateable, and ``PO`` files have been generated for it, we may add translations for new languages for the phrase.
+This section covers how to do so.
 
-#. If the language's code matches no sub-directory of the `pydata_sphinx_theme/locale <https://github.com/pydata/pydata-sphinx-theme/tree/main/pydata_sphinx_theme/locale>`__ directory, initialize the language's message catalog (PO file):
+.. note::
+
+   These steps use the Spanish language as an example.
+   To translate the theme to another language, replace ``es`` with the language's two-letter lowercase `ISO 639-1 code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`__.
+
+#. If the language's code matches no sub-directory of the `pydata_sphinx_theme/locale <https://github.com/pydata/pydata-sphinx-theme/tree/main/pydata_sphinx_theme/locale>`__ directory, initialize the language's message catalog (PO file) with `PyBabel init <https://babel.pocoo.org/en/latest/cmdline.html#init>`__:
 
    .. code-block:: bash
 
@@ -79,7 +94,7 @@ To translate the theme to another language, replace ``es`` with the language's t
 
 #. Edit the language's message catalog at ``pydata_sphinx_theme/locale/es/LC_MESSAGES/sphinx.po``. For each source string introduced by the ``msgid`` keyword, add its translation after the ``msgstr`` keyword.
 
-#. Compile the message catalogs of every language. This creates or updates the MO files:
+#. Compile the message catalogs of every language. This creates or updates the MO files with `PyBabel compile <https://babel.pocoo.org/en/latest/cmdline.html#compile>`__:
 
 .. code-block:: bash
 
