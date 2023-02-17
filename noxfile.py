@@ -8,6 +8,7 @@ Re-install the environment from scratch:
 """
 import nox
 from pathlib import Path
+from shlex import split
 
 nox.options.reuse_existing_virtualenvs = True
 
@@ -77,6 +78,40 @@ def test_sphinx(session, sphinx):
         session.install("-e", ".[test]")
     session.install(f"sphinx=={sphinx}")
     session.run("pytest", *session.posargs)
+
+
+@nox.session()
+def translate(session):
+    """Translation commands. Available commands after `--` : extract, update, compile"""
+    session.install("pybabel")
+    if "extract" in session.posargs:
+        session.run(
+            *split(
+                "pybabel extract . -F babel.cfg -o src/pydata_sphinx_theme/locale/sphinx.pot -k '_ __ l_ lazy_gettext'"
+            )
+        )
+    elif "update" in session.posargs:
+        session.run(
+            *split(
+                "pybabel update -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx"
+            )
+        )
+    elif "compile" in session.posargs:
+        session.run(
+            *split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx")
+        )
+    elif "init" in session.posargs:
+        language = session.posargs[-1]
+        session.run(
+            *split(
+                f"pybabel init -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx -l {language}"
+            )
+        )
+    else:
+        print(
+            "No translate command found. Use like: `nox -s translate -- COMMAND`."
+            "\n\n Available commands: extract, update, compile, init"
+        )
 
 
 @nox.session(name="profile")

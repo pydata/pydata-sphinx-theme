@@ -109,11 +109,15 @@ node_modules/
 .vscode
 .idea
 
+# MacOSX store files
+**/.DS_Store
+
+# THEME FILES
 # files from the gallery screenshots
 docs/_static/gallery
 
 # Our site profile tests
 profile.svg
 
-# MacOSX store files
-**/.DS_Store
+# Compiled translation files (are compiled at build time)
+src/pydata_sphinx_theme/locale/*/*/*.mo

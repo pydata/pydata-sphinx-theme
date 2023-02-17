@@ -65,13 +65,25 @@ These steps cover how to add or change text that has been marked as translateabl
 
       pybabel extract . -F babel.cfg -o src/pydata_sphinx_theme/locale/sphinx.pot -k '_ __ l_ lazy_gettext'
 
+   **To run this in ``.nox``**: ``nox -s translate -- extract``.
+
 #. Update the message catalogs (``PO`` files) with `the PyBabel update command <https://babel.pocoo.org/en/latest/cmdline.html#update>`__:
 
    .. code-block:: bash
 
       pybabel update -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx
 
+   **To run this in ``.nox``**: ``nox -s translate -- update``.
+
+
 This will update these files with new information about the position and text of the language you have modified.
+If you change non-translatable text, you can run pybabel and it will update the line numbers.
+However, this step is optional - the line numbers are to inform the human translator, not to perform the translation.
+
+If you change translatable text, pybabel will try to fuzzy match the new text with an existing translation.
+If so it will add a comment like `#, fuzzy`.
+Otherwise, the new text will simply be untranslated in the file.
+
 
 .. _translating-the-theme:
 
@@ -92,14 +104,36 @@ This section covers how to do so.
 
       pybabel init -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx -l es
 
+   **To run this in ``.nox``**: ``nox -s translate -- init es``
+
 #. Edit the language's message catalog at ``pydata_sphinx_theme/locale/es/LC_MESSAGES/sphinx.po``. For each source string introduced by the ``msgid`` keyword, add its translation after the ``msgstr`` keyword.
 
 #. Compile the message catalogs of every language. This creates or updates the MO files with `PyBabel compile <https://babel.pocoo.org/en/latest/cmdline.html#compile>`__:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx
+      pybabel compile -d src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/locale -D sphinx
 
+   **To run this in ``.nox``**: ``nox -s translate -- compile``.
+
+Translation tips
+----------------
+
+Translating words vs phrases
+````````````````````````````
+
+Full sentences and clauses must always be a single translatable string.
+Otherwise, you get ``next page`` translated as ``suivant page`` instead of ``page suivante`` etc.
+
+Dealing with names and non-translateable text in translations
+`````````````````````````````````````````````````````````````
+
+In some cases we must include non-translateable text within translations (e.g. ``GitHub``).
+It's important to include them in the translatable phrase so that word ordering is accounted for in the translations.
+To do so, use Jinja syntax to insert the name as a variable (``{{ variablename }}``).
+
+For example, Jinja like ```{% trans %}Hello {{ name }}{% endtrans %}``, is extracted as the plain Python format string ``Hello %(name)s``, such that it can be used in both Jinja templates and Python code.
+The translated text in each language must contain the ``%(name)s`` verbatim to be inserted.
 
 References
 ----------
