@@ -36,7 +36,7 @@ div.math {
   mjx-container {
     flex-grow: 1;
     padding-bottom: 0.2rem;
-    overflow-x: auto;
+    overflow-x: visible;
     @include scrollbar-style();
   }
 }

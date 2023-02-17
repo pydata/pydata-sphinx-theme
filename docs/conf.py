@@ -29,6 +29,7 @@ extensions = [
     "jupyter_sphinx",
     "matplotlib.sphinxext.plot_directive",
     "myst_nb",
+    "sphinxcontrib.youtube",
     # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
     "numpydoc",
     "sphinx_togglebutton",
@@ -137,7 +138,7 @@ html_theme_options = {
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "navbar_persistent": ["search-button"],
     # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
-    # "footer_items": ["copyright", "sphinx-version"],
+    # "footer_start": ["test.html", "test.html"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,

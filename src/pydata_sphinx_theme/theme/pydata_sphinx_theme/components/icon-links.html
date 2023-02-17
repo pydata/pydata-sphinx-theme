@@ -25,8 +25,7 @@
         </li>
   {%- endif -%}
 {%- endmacro -%}
-<ul id="navbar-icon-links"
-    class="navbar-nav"
+<ul class="navbar-icon-links navbar-nav"
     aria-label="{{ _(theme_icon_links_label) }}">
   {%- block icon_link_shortcuts -%}
     {{ icon_link_nav_item(theme_github_url, "fa-brands fa-square-github", "GitHub", "fontawesome") -}}

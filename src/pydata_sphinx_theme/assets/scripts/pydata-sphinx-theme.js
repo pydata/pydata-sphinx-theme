@@ -100,13 +100,13 @@ function addModeListener() {
  */
 function addTOCInteractivity() {
   window.addEventListener("activate.bs.scrollspy", function () {
-    const navLinks = document.querySelectorAll("#bd-toc-nav a");
+    const navLinks = document.querySelectorAll(".bd-toc-nav a");
 
     navLinks.forEach((navLink) => {
       navLink.parentElement.classList.remove("active");
     });
 
-    const activeNavLinks = document.querySelectorAll("#bd-toc-nav a.active");
+    const activeNavLinks = document.querySelectorAll(".bd-toc-nav a.active");
     activeNavLinks.forEach((navLink) => {
       navLink.parentElement.classList.add("active");
     });
@@ -122,7 +122,7 @@ function addTOCInteractivity() {
  */
 function scrollToActive() {
   // If the docs nav doesn't exist, do nothing (e.g., on search page)
-  if (!document.getElementById("bd-docs-nav")) {
+  if (!document.querySelector(".bd-docs-nav")) {
     return;
   }
 
@@ -141,7 +141,7 @@ function scrollToActive() {
     console.log("[PST]: Scrolled sidebar using stored browser position...");
   } else {
     // Otherwise, calculate a position to scroll to based on the lowest `active` link
-    var sidebarNav = document.getElementById("bd-docs-nav");
+    var sidebarNav = document.querySelector(".bd-docs-nav");
     var active_pages = sidebarNav.querySelectorAll(".active");
     if (active_pages.length > 0) {
       // Use the last active page as the offset since it's the page we're on
@@ -305,7 +305,7 @@ function checkPageExistsAndRedirect(event) {
 }
 
 // Populate the version switcher from the JSON config file
-var themeSwitchBtns = document.querySelectorAll("version-switcher__button");
+var themeSwitchBtns = document.querySelectorAll(".version-switcher__button");
 if (themeSwitchBtns.length) {
   fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
     .then((res) => {

@@ -3,11 +3,11 @@
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
 {%- if is_remote %}
 <script>
-document.write(`<div id="header-announcement"></div>`);
+document.write(`<div class="bd-header-announcement"></div>`);
 fetch("{{ theme_announcement }}")
   .then(res => {return res.text();})
   .then(data => {
-    div = document.querySelector("#header-announcement");
+    div = document.querySelector(".bd-header-announcement");
     div.classList.add(...{{ header_classes | tojson }});
     div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
   })
@@ -17,7 +17,7 @@ fetch("{{ theme_announcement }}")
 </script>
 {#- if announcement text is not remote, populate announcement w/ local content -#}
 {%- else %}
-  <div class="{{ header_classes | join(' ') }}" id="header-announcement">
+  <div class="{{ header_classes | join(' ') }} bd-header-announcement">
     <div class="bd-header-announcement__content">{{ theme_announcement }}</div>
   </div>
 {% endif %}

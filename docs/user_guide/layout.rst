@@ -10,7 +10,8 @@ Overview of theme layout
 
 Below is a brief overview of the major layout of this theme.
 Take a look at the diagram to understand what the major sections are called.
-You can click on section titles to learn more about them and some basic layout configuration.
+Where you can insert component templates in ``html_theme_options``, we include the variable name ``in inline code``.
+Click on section titles to learn more about them and some basic layout configuration.
 
 .. The directives below generate a grid-like layout that mimics the structure of this theme.
 .. It uses Sphinx Design grids: https://sphinx-design.readthedocs.io/en/latest/grids.html
@@ -52,17 +53,23 @@ You can click on section titles to learn more about them and some basic layout c
 
                 Logo
 
+                ``navbar_start``
+
             .. grid-item::
                 :padding: 2
                 :columns: 6
 
                 Section links
 
+                ``navbar_center``
+
             .. grid-item::
                 :padding: 2
                 :columns: 3
 
                 Components
+
+                ``navbar_end``
 
     .. grid-item::
         :padding: 2
@@ -78,6 +85,10 @@ You can click on section titles to learn more about them and some basic layout c
 
         Links between pages in the active section.
 
+        ``sidebars``
+
+        ``primary_sidebar_end``
+
     .. grid-item::
         :columns: 8
 
@@ -88,7 +99,7 @@ You can click on section titles to learn more about them and some basic layout c
             .. grid-item::
                 :class: content
                 :padding: 2
-                :columns: 8
+                :columns: 6
                 :outline:
 
                 .. button-ref:: layout-article-header
@@ -96,6 +107,9 @@ You can click on section titles to learn more about them and some basic layout c
                     :outline:
 
                     Article Header
+
+                ``article_header_start``
+                ``article_header_end``
 
                 **Article Content**
 
@@ -107,7 +121,7 @@ You can click on section titles to learn more about them and some basic layout c
 
             .. grid-item::
                 :padding: 2
-                :columns: 4
+                :columns: 6
                 :outline:
                 :class: sidebar-secondary
 
@@ -118,6 +132,8 @@ You can click on section titles to learn more about them and some basic layout c
                     Secondary Sidebar
 
                 Within-page header links
+
+                ``secondary_sidebar_items``
 
         .. grid::
             :margin: 0
@@ -149,7 +165,8 @@ You can click on section titles to learn more about them and some basic layout c
 
             Footer
 
-        Site-wide links.
+        ``footer_start``
+        ``footer_end``
 
 Horizontal spacing
 ------------------
@@ -425,17 +442,26 @@ Footer
 Located in ``sections/footer.html``.
 
 The footer is just below a page’s main content, and is configured in ``conf.py``
-with ``html_theme_options['footer_items']``.
+with ``html_theme_options['footer_start']`` and ``html_theme_options['footer_end']``.
 
-By default, it has the following templates:
+By default, ``footer_end`` is empty, and ``footer_start`` has the following templates:
 
 .. code-block:: python
 
     html_theme_options = {
       ...
-      "footer_items": ["copyright", "sphinx-version", "theme-version"],
+      "footer_start": ["copyright", "sphinx-version", "theme-version"],
       ...
     }
+
+Within each subsection, components will stack **vertically**.
+If you'd like them to stack **horizontally** use a custom CSS rule like the following:
+
+.. code-block:: css
+
+   .footer-items__start, .footer-items__end {
+     flex-direction: row;
+   }
 
 Change footer display
 ---------------------
