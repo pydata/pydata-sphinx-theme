@@ -75,6 +75,7 @@ doc = [
   "colorama",
 ]
 test = [
+  "pybabel",
   "pytest",
   "pytest-cov",
   "pytest-regressions",

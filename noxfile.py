@@ -36,6 +36,10 @@ def _should_install(session):
     return should_install
 
 
+def _compile_translations(session):
+    session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
+
+
 @nox.session(name="compile")
 def compile(session):
     """Compile the theme's web assets with sphinx-theme-builder."""
@@ -56,6 +60,7 @@ def docs(session):
 @nox.session(name="docs-live")
 def docs_live(session):
     """Build the docs with a live server that re-loads as you make changes."""
+    _compile_translations(session)
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
@@ -67,6 +72,7 @@ def test(session):
     """Run the test suite."""
     if _should_install(session):
         session.install("-e", ".[test]")
+    _compile_translations(session)
     session.run("pytest", *session.posargs)
 
 
@@ -97,9 +103,7 @@ def translate(session):
             )
         )
     elif "compile" in session.posargs:
-        session.run(
-            *split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx")
-        )
+        _compile_translations(session)
     elif "init" in session.posargs:
         language = session.posargs[-1]
         session.run(
