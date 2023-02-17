@@ -33,7 +33,12 @@ logger = logging.getLogger(__name__)
 
 
 def update_config(app):
-    theme_options = app.config.html_theme_options
+    """Update config with new default values and handle deprecated keys."""
+    # By the time `builder-inited` happens, `app.builder.theme_options` already exists.
+    # At this point, modifying app.config.html_theme_options will NOT update the
+    # page's HTML context (e.g. in jinja, `theme_keyword`).
+    # To do this, you must manually modify `app.builder.theme_options`.
+    theme_options = app.builder.theme_options
 
     # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
@@ -157,29 +162,16 @@ def update_config(app):
 
     # Update ABlog configuration default if present
     if "ablog" in app.config.extensions:
-        app.config.__dict__["fontawesome_included"] = True
-
-
-def prepare_html_config(app, pagename, templatename, context, doctree):
-    """Prepare some configuration values for the HTML build.
-
-    For some reason updating the html_theme_options in an earlier Sphinx
-    event doesn't seem to update the values in context, so we manually update
-    it here with our config.
-    """
+        app.config.values["fontawesome_included"] = True
 
     # Prepare the logo config dictionary
-    theme_logo = context.get("theme_logo")
+    theme_logo = theme_options.get("logo")
     if not theme_logo:
         # In case theme_logo is an empty string
         theme_logo = {}
     if not isinstance(theme_logo, dict):
         raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
-
-    context["theme_logo"] = theme_logo
-
-    # update version number
-    context["theme_version"] = __version__
+    theme_options["logo"] = theme_logo
 
 
 def update_and_remove_templates(app, pagename, templatename, context, doctree):
@@ -260,6 +252,9 @@ def update_and_remove_templates(app, pagename, templatename, context, doctree):
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
         """
         app.add_js_file(None, body=js)
+
+    # Update version number for the "made with version..." component
+    context["theme_version"] = __version__
 
 
 def add_inline_math(node):
@@ -903,7 +898,7 @@ def _overwrite_pygments_css(app, exception=None):
         style_key = f"pygment_{light_or_dark}_style"
 
         # globalcontext sometimes doesn't exist so this ensures we do not error
-        theme_name = app.config.html_theme_options.get(style_key, None)
+        theme_name = app.builder.theme_options.get(style_key, None)
         if theme_name is None and hasattr(app.builder, "globalcontext"):
             theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
 
@@ -1120,7 +1115,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
     If logo image paths are given, copy them to the `_static` folder
     Then we can link to them directly in an html_page_context event
     """
-    theme_options = app.config.html_theme_options
+    theme_options = app.builder.theme_options
     logo = theme_options.get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
     for kind in ["light", "dark"]:
@@ -1147,7 +1142,6 @@ def setup(app):
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
-    app.connect("html-page-context", prepare_html_config)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", setup_logo_path)
     app.connect("build-finished", _overwrite_pygments_css)
