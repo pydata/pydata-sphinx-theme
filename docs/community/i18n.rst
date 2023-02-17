@@ -55,7 +55,7 @@ Changing natural language text
 
    .. code-block:: bash
 
-      python setup.py extract_messages
+      pybabel extract . -F babel.cfg -o src/pydata_sphinx_theme/locale/sphinx.pot -k '_ __ l_ lazy_gettext'
 
 #. Update the message catalogs (PO files):
 
