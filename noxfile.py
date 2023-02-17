@@ -89,7 +89,7 @@ def test_sphinx(session, sphinx):
 @nox.session()
 def translate(session):
     """Translation commands. Available commands after `--` : extract, update, compile"""
-    session.install("pybabel")
+    session.install("Babel")
     if "extract" in session.posargs:
         session.run(
             *split(

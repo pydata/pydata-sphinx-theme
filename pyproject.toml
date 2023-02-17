@@ -25,7 +25,7 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
-  "pybabel",
+  "Babel",
   "pygments>=2.7",
   "accessible-pygments"
 ]
