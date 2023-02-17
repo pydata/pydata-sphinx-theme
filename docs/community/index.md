@@ -4,20 +4,23 @@ myst:
     "description lang=en": "How to become a contributor to the pydata-sphinx-theme."
 ---
 
-# Community Guide
+# Contributor Guide
 
 These pages contain information about the community that leads, supports, and develops this theme, including how you can contribute to the project.
 
 ```{toctree}
 :maxdepth: 2
-:caption: Contributor Guide
+:caption: Contributor guide
 
 setup
 structure
-topics
-manual
-i18n
-bootstrap
+topics/index
+```
+
+```{toctree}
+:caption: Team practices
+:glob:
+practices/*
 ```
 
 ```{toctree}
@@ -25,6 +28,5 @@ bootstrap
 :caption: About the project
 
 contributors
-policies
 inspiration
 ```
