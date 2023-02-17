@@ -75,7 +75,7 @@ To translate the theme to another language, replace ``es`` with the language's t
 
    .. code-block:: bash
 
-      python setup.py init_catalog -l es
+      pybabel init -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx -l es
 
 #. Edit the language's message catalog at ``pydata_sphinx_theme/locale/es/LC_MESSAGES/sphinx.po``. For each source string introduced by the ``msgid`` keyword, add its translation after the ``msgstr`` keyword.
 
