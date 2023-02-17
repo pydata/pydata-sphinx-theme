@@ -16,6 +16,7 @@ setup
 structure
 topics
 manual
+i18n
 bootstrap
 ```
 
