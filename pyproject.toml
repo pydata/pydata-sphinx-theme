@@ -25,6 +25,7 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
+  "pybabel",
   "pygments>=2.7",
   "accessible-pygments"
 ]
@@ -75,14 +76,12 @@ doc = [
   "colorama",
 ]
 test = [
-  "pybabel",
   "pytest",
   "pytest-cov",
   "pytest-regressions",
   "codecov",
 ]
 dev = [
-  "pybabel",
   "pyyaml",
   "pre-commit",
   "nox",
