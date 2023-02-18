@@ -77,12 +77,12 @@ These steps cover how to add or change text that has been marked as translateabl
 
 
 This will update these files with new information about the position and text of the language you have modified.
-If you change non-translatable text, you can run pybabel and it will update the line numbers.
-However, this step is optional - the line numbers are to inform the human translator, not to perform the translation.
 
-If you change translatable text, pybabel will try to fuzzy match the new text with an existing translation.
-If so it will add a comment like `#, fuzzy`.
-Otherwise, the new text will simply be untranslated in the file.
+If you *only* change non-translatable text (like HTML markup), the `extract` and `update` commands will only update the positions (line numbers) of the translatable strings. Updating positions is optional - the line numbers are to inform the human translator, not to perform the translation.
+
+If you change translatable strings, the `extract` command will extract the new or updated strings to the POT file, and the `update` command will try to fuzzy match the new or updated strings with existing translations in the PO files.
+If there is a fuzzy match, a comment like `#, fuzzy` is added before the matched entry.
+Otherwise, a new entry is added and needs to be translated.
 
 
 .. _translating-the-theme:
@@ -112,28 +112,34 @@ This section covers how to do so.
 
    .. code-block:: bash
 
-      pybabel compile -d src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static/locale -D sphinx
+      pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx
 
    **To run this in ``.nox``**: ``nox -s translate -- compile``.
 
 Translation tips
 ----------------
 
-Translating words vs phrases
+Translate phrases, not words
 ````````````````````````````
 
 Full sentences and clauses must always be a single translatable string.
-Otherwise, you get ``next page`` translated as ``suivant page`` instead of ``page suivante`` etc.
+Otherwise, you can get ``next page`` translated as ``suivant page`` instead of as ``page suivante``, etc.
 
-Dealing with names and non-translateable text in translations
+Deal with variables and markup in translations
 `````````````````````````````````````````````````````````````
 
-In some cases we must include non-translateable text within translations (e.g. ``GitHub``).
-It's important to include them in the translatable phrase so that word ordering is accounted for in the translations.
-To do so, use Jinja syntax to insert the name as a variable (``{{ variablename }}``).
+If a variable (like the ``edit_page_provider_name`` theme option) is used as part of a phrase, it must be included within the translatable string.
+Otherwise, the word order in other languages can be incorrect.
+In a Jinja template, simply surround the translatable string with ``{% trans variable=variable %}`` and ``{% endtrans %}}`.
+For example: ``{% trans provider=provider %}Edit on {{ provider }}{% endtrans %}``
+The translatable string is extracted as the Python format string ``Edit on %(provider)s``.
+This is so that the same translatable string can be used in both Python code and Jinja templates.
+It is the translator's responsibility to use ``%(provider)s`` verbatim in the translation.
 
-For example, Jinja like ```{% trans %}Hello {{ name }}{% endtrans %}``, is extracted as the plain Python format string ``Hello %(name)s``, such that it can be used in both Jinja templates and Python code.
-The translated text in each language must contain the ``%(name)s`` verbatim to be inserted.
+If a non-translatable word or token (like HTML markup) is used as part of a phrase, it must also be included within the translatable string.
+For example: ``{% trans theme_version=theme_version|e %}Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> {{ theme_version }}.{% endtrans %}``
+It is the translator's responsibility to use the HTML markup verbatim in the translation.
+
 
 References
 ----------

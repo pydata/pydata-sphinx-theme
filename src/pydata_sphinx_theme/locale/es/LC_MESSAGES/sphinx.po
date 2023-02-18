@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:50
 msgid "Skip to main content"
-msgstr "Passer au contenu principal"
+msgstr "Saltar al contenido principal"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:7
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:5

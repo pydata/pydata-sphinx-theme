@@ -1,7 +1,6 @@
-# English translations for PROJECT.
-# Copyright (C) 2023 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+# English translations for pydata-sphinx-theme.
+# Copyright (C) 2023 PyData developers
+# This file is distributed under the same license as the pydata-sphinx-theme project.
 #
 msgid ""
 msgstr ""
