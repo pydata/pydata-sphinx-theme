@@ -61,7 +61,7 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
   $target-color-contrast-dark: $foundation-black,
   $target-color-contrast-light: $base-light-text,
   $target-color-contrast-white: $foundation-white,
-  $min-contrast-ratio: $min-contrast-ratio
+  $min-contrast-ratio: $min-contrast-ratio-4
 ) {
   // will test against our two base foreground colors
   $foregrounds: $target-color-contrast-light, $target-color-contrast-dark;
@@ -71,7 +71,6 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
   @debug "Using AA #{$min-contrast-ratio}:1 contrast ratio for #{$bg} ♿️";
   @each $fg in $foregrounds {
     $contrast-ratio: get-contrast-ratio($bg, $fg);
-    @debug "Contrast ratio for #{$bg} and #{$fg} is #{$contrast-ratio}... 🔴";
     @if $contrast-ratio >= $min-contrast-ratio {
       @return $fg;
     } @else if $contrast-ratio > $max-ratio {
@@ -85,7 +84,6 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
 }
 
 @function get-contrast-ratio($bg, $foreground: #ced6dd) {
-  @debug "Calculating contrast ratio for #{$bg} 💡";
   $l1: luminance($bg);
   $l2: luminance($foreground);
 
@@ -102,7 +100,6 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
 // See https://www.w3.org/TR/WCAG/#dfn-contrast-ratio
 
 @function luminance($target-color) {
-  @debug "Calculating luminance for #{$target-color}";
   $rgb-col: (
     "r": red($target-color),
     "g": green($target-color),
@@ -165,10 +162,8 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
     @each $name in $sd-semantic-color-names {
       // check if this color is defined differently for light/dark
       $value: map-get($all-colors, $name);
-      @debug "Using #{$name}: #{$value} 🔴";
       @if type-of($value) == map {
         $value: #{map-get($value, $mode)};
-        @debug "Using #{$mode} for #{$name}: #{$value}";
       }
       // define the pst variables, so that downstream user overrides will work
       --pst-color-#{$name}: #{$value};

@@ -148,7 +148,7 @@ $pst-semantic-colors: (
   ),
   "text-base": (
     "light": #{map-deep-get($theme-colors, "gray", "800")},
-    "dark": #ced6dd,
+    "dark": $base-light-text,
   ),
   "text-muted": (
     "light": #{map-deep-get($theme-colors, "gray", "600")},
@@ -195,7 +195,7 @@ $pst-semantic-colors: (
   "on-surface":
     (
       "light": #{map-deep-get($theme-colors, "gray", "800")},
-      "dark": #ced6dd,
+      "dark": $base-light-text,
     ),
 );
 
