@@ -5,6 +5,19 @@
 * To see the full list of colors see https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1234%3A765&t=ifcFT1JtnrSshGfi-1
 */
 
+/**
+* Function to get items from nested maps
+*/
+// @param {Map} $map - Map
+// @param {Arglist} $keys - Keys to fetch
+// @return {*}
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
 /* Assign base colors for the PyData theme */
 $theme-colors: (
   // Primary color
@@ -76,32 +89,23 @@ $theme-colors: (
       --pst-#{$group-color}-#{$color-name}: #{$value};
     }
   }
-
-  // Minimum contrast ratio used for the theme.
-  // Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
-  // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
-  // 4.5 - is for text that is 14pt or less
-  $min-contrast-ratio-text: 4.5;
-  // 3 is for text that is 18pt or bold, or for non-text elements
-  $min-contrast-ratio: 4.5;
-
-  // Customize the light and dark text colors for use in our color contrast function.
-  $color-contrast-dark: #{pst-color-black};
-  $color-contrast-light: #{pst-color-white};
 }
 
-/**
-* Function to get items from nested maps
-*/
-// @param {Map} $map - Map
-// @param {Arglist} $keys - Keys to fetch
-// @return {*}
-@function map-deep-get($map, $keys...) {
-  @each $key in $keys {
-    $map: map-get($map, $key);
-  }
-  @return $map;
-}
+// Static SCSS variables used thoroughout the theme
+// Minimum contrast ratio used for the theme.
+// Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
+// See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
+// 4.5 - is for text that is 14pt or less
+$min-contrast-ratio-4: 4.5;
+// 3 is for text that is 18pt or bold, or for non-text elements
+$min-contrast-ratio-3: 3;
+
+// Customize the light and dark text colors for use in our color contrast function.
+$foundation-black: #14181e;
+$foundation-white: #ffffff;
+$base-light-text: #ced6dd;
+// used in sphinx_design - grey 100
+$foundation-light-grey: #f3f4f5;
 
 $pst-semantic-colors: (
   "primary": (
@@ -114,7 +118,6 @@ $pst-semantic-colors: (
   ),
   "info": (
     "light": #276be9,
-    // TODO: update this to passs the bg colours
     "light-bg": #eff4fd,
     "dark": #79a3f2,
     "dark-bg": #06245d,
@@ -199,14 +202,11 @@ $pst-semantic-colors: (
 @mixin theme-colors($mode) {
   // check if this color is defined differently for light/dark
   @each $name, $value in $pst-semantic-colors {
-    @debug "name: #{$name}";
     @if type-of($value) == map {
       @each $key, $val in $value {
         // since now we define the bg colours in the semantic colours and not
         // by changing opacity, we need to check if the key contains bg
         @if (str-index($key, "bg")) != null {
-          @debug "key: #{$key}";
-          @debug "val: #{$val}";
           --pst-color-#{$key}: #{$val};
         }
       }
