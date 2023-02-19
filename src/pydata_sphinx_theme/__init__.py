@@ -32,7 +32,7 @@ __version__ = "0.13.0rc5dev0"
 logger = logging.getLogger(__name__)
 
 
-def _was_provided_by_user(app, key):
+def _config_provided_by_user(app, key):
     return any(key in ii for ii in [app.config.overrides, app.config._raw_config])
 
 
@@ -78,7 +78,7 @@ def update_config(app):
         )
 
     # Set the anchor link default to be # if the user hasn't provided their own
-    if not _was_provided_by_user(app, "html_permalinks_icon"):
+    if not _config_provided_by_user(app, "html_permalinks_icon"):
         app.config.__dict__["html_permalinks_icon"] = "#"
 
     # Raise a warning for a deprecated theme switcher config
