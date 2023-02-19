@@ -32,6 +32,10 @@ __version__ = "0.13.0rc5dev0"
 logger = logging.getLogger(__name__)
 
 
+def _was_provided_by_user(app, key):
+    return any(key in ii for ii in [app.config.overrides, app.config._raw_config])
+
+
 def update_config(app):
     """Update config with new default values and handle deprecated keys."""
     # By the time `builder-inited` happens, `app.builder.theme_options` already exists.
@@ -73,9 +77,9 @@ def update_config(app):
             f"type {type(theme_options.get('icon_links'))}."
         )
 
-    # Update the anchor link (it's a tuple, so need to overwrite the whole thing)
-    icon_default = app.config.__dict__["html_permalinks_icon"]
-    app.config.__dict__["html_permalinks_icon"] = ("#", *icon_default[1:])
+    # Set the anchor link default to be # if the user hasn't provided their own
+    if not _was_provided_by_user(app, "html_permalinks_icon"):
+        app.config.__dict__["html_permalinks_icon"] = "#"
 
     # Raise a warning for a deprecated theme switcher config
     # TODO: deprecation; remove after 0.13 release
