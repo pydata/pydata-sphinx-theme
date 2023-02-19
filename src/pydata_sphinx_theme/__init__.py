@@ -74,8 +74,8 @@ def update_config(app):
         )
 
     # Update the anchor link (it's a tuple, so need to overwrite the whole thing)
-    icon_default = app.config.values["html_permalinks_icon"]
-    app.config.values["html_permalinks_icon"] = ("#", *icon_default[1:])
+    icon_default = app.config.__dict__["html_permalinks_icon"]
+    app.config.__dict__["html_permalinks_icon"] = ("#", *icon_default[1:])
 
     # Raise a warning for a deprecated theme switcher config
     # TODO: deprecation; remove after 0.13 release
@@ -162,7 +162,7 @@ def update_config(app):
 
     # Update ABlog configuration default if present
     if "ablog" in app.config.extensions:
-        app.config.values["fontawesome_included"] = True
+        app.config.__dict__["fontawesome_included"] = True
 
     # Prepare the logo config dictionary
     theme_logo = theme_options.get("logo")
