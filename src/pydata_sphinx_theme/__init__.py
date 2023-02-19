@@ -32,8 +32,19 @@ __version__ = "0.13.0rc5dev0"
 logger = logging.getLogger(__name__)
 
 
-def _config_provided_by_user(app, key):
-    return any(key in ii for ii in [app.config.overrides, app.config._raw_config])
+def _set_config_if_not_provided_by_user(app, key, value):
+    """Set a configuration value unless the user has provided their own.
+
+    Sphinx makes it hard to know which config attribute to update,
+    so just use this function.
+    """
+    # Check if the user has manually provided the config
+    if any(key in ii for ii in [app.config.overrides, app.config._raw_config]):
+        return
+
+    # If not, then set the config value
+    app.config.__dict__[key] = value
+    return app
 
 
 def update_config(app):
@@ -78,8 +89,7 @@ def update_config(app):
         )
 
     # Set the anchor link default to be # if the user hasn't provided their own
-    if not _config_provided_by_user(app, "html_permalinks_icon"):
-        app.config.__dict__["html_permalinks_icon"] = "#"
+    _set_config_if_not_provided_by_user(app, "html_permalinks_icon", "#")
 
     # Raise a warning for a deprecated theme switcher config
     # TODO: deprecation; remove after 0.13 release
@@ -166,7 +176,7 @@ def update_config(app):
 
     # Update ABlog configuration default if present
     if "ablog" in app.config.extensions:
-        app.config.__dict__["fontawesome_included"] = True
+        _set_config_if_not_provided_by_user(app, "fontawesome_included", True)
 
     # Prepare the logo config dictionary
     theme_logo = theme_options.get("logo")
