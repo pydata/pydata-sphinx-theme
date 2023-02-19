@@ -7,7 +7,7 @@ Here are some tips to do this the "right" way in Sphinx.
 
 ## Update config: use `app.config.__dict__`
 
-For example, `app.config.__dict__["foot"] = "bar"`.
+For example, `app.config.__dict__["foo"] = "bar"`.
 
 Even better, use our provided helper function:
 
@@ -23,3 +23,4 @@ For example, `app.builder.theme_options["logo"] = {"text": "Foo"}`.
 
 The `app.config._raw_config` attribute contains all of the **user-provided values**.
 Use this if you want to check whether somebody has manually specified something.
+For example, `"somekey" in app.config._raw_config` will be `False` if a user has _not_ provided that option.
