@@ -2,7 +2,7 @@
 
 This section covers the simplest way to get started developing this theme locally so that you can contribute.
 It uses automation and as few steps as possible to get things done.
-If you'd like to do more operations manually, see [](manual.md).
+If you'd like to do more operations manually, see [](topics/manual-dev.md).
 
 ## Workflow for contributing changes
 
@@ -47,7 +47,7 @@ In particular, `nox` can be used to automatically create isolated local developm
 The rest of this guide focuses on using `nox` to start with a basic environment.
 
 ```{seealso}
-The information on this page covers the basics to get you started, for information about manually compiling assets, see [](manual.md).
+The information on this page covers the basics to get you started, for information about manually compiling assets, see [](topics/manual-dev.md).
 ```
 
 ### Setup `nox`
