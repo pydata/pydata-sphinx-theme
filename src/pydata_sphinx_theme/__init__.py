@@ -1129,6 +1129,11 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
             continue
         if not (Path(app.srcdir) / path_image).exists():
             logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
+        if path_image.lower().endswith("_t"):
+            raise ExtensionError(
+                f"The {kind} logo path '{path_image}' looks like a Sphinx template; "
+                "please provide a static logo image."
+            )
         copy_asset_file(path_image, staticdir)
 
 
