@@ -312,6 +312,20 @@ def test_logo_external_image(sphinx_build_factory):
     assert f'src="{test_url}"' in index_str
 
 
+def test_logo_template_rejected(sphinx_build_factory):
+    """Test that dynamic Sphinx templates are not accepted as logo files"""
+    # Test with a specified external logo image source
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                "image_dark": "image_dark_t",
+            }
+        },
+    }
+    with pytest.raises(sphinx.errors.ExtensionError, match="static logo image"):
+        sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+
 def test_favicons(sphinx_build_factory):
     """Test that arbitrary favicons are included."""
     html_theme_options_favicons = {
