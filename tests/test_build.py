@@ -918,10 +918,17 @@ def test_empty_templates(sphinx_build_factory):
     """If a template is empty (e.g., via a config), it should be removed."""
     # When configured to be gone, the template should be removed w/ its parent.
     # ABlog needs to be added so we can test that template rendering works w/ it.
-    confoverrides = {"html_show_sourcelink": False}
+    confoverrides = {
+        "html_show_sourcelink": False,
+    }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    toc_items = sphinx_build.html_tree("page1.html").select(".toc-item")
-    assert not any(ii.select(".tocsection.sourcelink") for ii in toc_items)
+    html = sphinx_build.html_tree("page1.html")
+
+    # We've set this to fase in the config so the template shouldn't show up at all
+    assert not html.select(".tocsection.sourcelink")
+
+    # Should not be any icon link wrapper because none are given in conf
+    assert not html.select(".navbar-icon-links")
 
 
 def test_translations(sphinx_build_factory):

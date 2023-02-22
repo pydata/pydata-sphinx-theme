@@ -159,6 +159,28 @@ def update_config(app):
     if "ablog" in app.config.extensions:
         app.config.__dict__["fontawesome_included"] = True
 
+    # Handle icon link shortcuts
+    shortcuts = [
+        ("twitter_url", "fa-brands fa-square-twitter", "Twitter"),
+        ("bitbucket_url", "fa-brands fa-bitbucket", "Bitbucket"),
+        ("gitlab_url", "fa-brands fa-square-gitlab", "GitLab"),
+        ("github_url", "fa-brands fa-square-github", "GitHub"),
+    ]
+    # Add extra icon links entries if there were shortcuts present
+    # TODO: Deprecate this at some point in the future?
+    for url, icon, name in shortcuts:
+        if theme_options.get(url):
+            # This defaults to an empty list so we can always insert
+            theme_options["icon_links"].insert(
+                0,
+                {
+                    "url": theme_options.get(url),
+                    "icon": icon,
+                    "name": name,
+                    "type": "fontawesome",
+                },
+            )
+
 
 def prepare_html_config(app, pagename, templatename, context, doctree):
     """Prepare some configuration values for the HTML build.
@@ -718,7 +740,6 @@ def soup_to_python(soup, only_pages=False):
     #       ...
 
     def extract_level_recursive(ul, navs_list):
-
         for li in ul.find_all("li", recursive=False):
             ref = li.a
             url = ref["href"]
