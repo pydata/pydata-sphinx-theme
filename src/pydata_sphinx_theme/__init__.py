@@ -171,6 +171,28 @@ def update_config(app):
     ):
         app.config.fontawesome_included = True
 
+    # Handle icon link shortcuts
+    shortcuts = [
+        ("twitter_url", "fa-brands fa-square-twitter", "Twitter"),
+        ("bitbucket_url", "fa-brands fa-bitbucket", "Bitbucket"),
+        ("gitlab_url", "fa-brands fa-square-gitlab", "GitLab"),
+        ("github_url", "fa-brands fa-square-github", "GitHub"),
+    ]
+    # Add extra icon links entries if there were shortcuts present
+    # TODO: Deprecate this at some point in the future?
+    for url, icon, name in shortcuts:
+        if theme_options.get(url):
+            # This defaults to an empty list so we can always insert
+            theme_options["icon_links"].insert(
+                0,
+                {
+                    "url": theme_options.get(url),
+                    "icon": icon,
+                    "name": name,
+                    "type": "fontawesome",
+                },
+            )
+
     # Prepare the logo config dictionary
     theme_logo = theme_options.get("logo")
     if not theme_logo:
@@ -720,7 +742,6 @@ def soup_to_python(soup, only_pages=False):
     #       ...
 
     def extract_level_recursive(ul, navs_list):
-
         for li in ul.find_all("li", recursive=False):
             ref = li.a
             url = ref["href"]
