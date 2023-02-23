@@ -147,10 +147,10 @@ $pst-semantic-colors: (
   // This is is based on the warning color
   "attention":
     (
-      "light": var(--pst-colors-warning),
-      "bg-light": var(--pst-colors-warning-bg-light),
-      "dark": var(--pst-colors-warning),
-      "bg-dark": var(--pst-colors-warning-bg-dark),
+      "light": var(--pst-color-warning),
+      "bg-light": var(--pst-color-warning-bg-light),
+      "dark": var(--pst-color-warning),
+      "bg-dark": var(--pst-color-warning-bg-dark),
     ),
   "danger": (
     "light": #d72d47,
@@ -215,9 +215,7 @@ $pst-semantic-colors: (
 
 @mixin theme-colors($mode) {
   // check if this color is defined differently for light/dark
-  @debug "mode: #{$mode} 🌕";
   @each $col-name, $definition in $pst-semantic-colors {
-    @debug "key: #{$col-name}";
     @if type-of($definition) == map {
       @each $key, $val in $definition {
         @if str-index($key, $mode) != null {
@@ -225,16 +223,13 @@ $pst-semantic-colors: (
           // by changing opacity, we need to check if the key contains bg and the
           // correct mode (light/dark)
           @if str-index($key, "bg") != null {
-            --pst-color-bg-#{$col-name}: #{$val};
-            @debug "📡 Added name: --pst-color-bg-#{$col-name}: #{$val}";
+            --pst-color-#{$col-name}-bg: #{$val};
           } @else {
             --pst-color-#{$col-name}: #{$val};
-            @debug "📝 Added name: --pst-color-#{$col-name}: #{$val}";
           }
         }
       }
     } @else {
-      @debug "name: #{$col-name} - value: #{$definition}";
       --pst-color-#{$col-name}: #{$definition};
     }
   }

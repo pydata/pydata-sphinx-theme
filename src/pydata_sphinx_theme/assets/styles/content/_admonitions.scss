@@ -38,6 +38,7 @@ div.admonition,
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: var(--pst-font-weight-heading);
     position: relative;
+    background-color: var(--pst-color-info-bg);
 
     &:after {
       position: absolute;
@@ -51,7 +52,7 @@ div.admonition,
       opacity: 1;
     }
 
-    @include background-from-color-variable(--pst-color-info);
+    @include format-before(--pst-color-info);
 
     // Next element after title needs some extra upper-space
     + * {
@@ -62,9 +63,7 @@ div.admonition,
   &.attention {
     border-color: var(--pst-color-attention);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-attention);
-      }
+      background-color: var(--pst-color-warning-bg);
 
       &:after {
         color: var(--pst-color-attention);
@@ -76,9 +75,7 @@ div.admonition,
   &.caution {
     border-color: var(--pst-color-warning);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-warning);
-      }
+      background-color: var(--pst-color-warning-bg);
 
       &:after {
         color: var(--pst-color-warning);
@@ -90,9 +87,7 @@ div.admonition,
   &.warning {
     border-color: var(--pst-color-warning);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-warning);
-      }
+      background-color: var(--pst-color-warning-bg);
 
       &:after {
         color: var(--pst-color-warning);
@@ -104,9 +99,7 @@ div.admonition,
   &.danger {
     border-color: var(--pst-color-danger);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-danger);
-      }
+      background-color: var(--pst-color-danger-bg);
 
       &:after {
         color: var(--pst-color-danger);
@@ -118,9 +111,7 @@ div.admonition,
   &.error {
     border-color: var(--pst-color-danger);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-danger);
-      }
+      background-color: var(--pst-color-danger-bg);
 
       &:after {
         color: var(--pst-color-danger);
@@ -132,9 +123,7 @@ div.admonition,
   &.hint {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-success);
-      }
+      background-color: var(--pst-color-success-bg);
 
       &:after {
         color: var(--pst-color-success);
@@ -146,9 +135,7 @@ div.admonition,
   &.tip {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-success);
-      }
+      background-color: var(--pst-color-success-bg);
 
       &:after {
         color: var(--pst-color-success);
@@ -160,9 +147,7 @@ div.admonition,
   &.important {
     border-color: var(--pst-color-attention);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-attention);
-      }
+      background-color: var(--pst-color-warning-bg);
 
       &:after {
         color: var(--pst-color-attention);
@@ -174,9 +159,7 @@ div.admonition,
   &.note {
     border-color: var(--pst-color-info);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-info);
-      }
+      background-color: var(--pst-color-info-bg);
 
       &:after {
         color: var(--pst-color-info);
@@ -188,9 +171,7 @@ div.admonition,
   &.seealso {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-success);
-      }
+      background-color: var(--pst-color-success-bg);
 
       &:after {
         color: var(--pst-color-success);
@@ -200,14 +181,12 @@ div.admonition,
   }
 
   &.admonition-todo {
-    border-color: var(--pst-color-border);
+    border-color: var(--pst-color-secondary);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-border);
-      }
+      background-color: var(--pst-color-secondary-bg);
 
       &:after {
-        color: var(--pst-color-border);
+        color: var(--pst-color-secondary);
         content: var(--pst-icon-admonition-todo);
       }
     }
