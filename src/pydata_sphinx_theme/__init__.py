@@ -32,6 +32,19 @@ __version__ = "0.13.0rc5dev0"
 logger = logging.getLogger(__name__)
 
 
+def _get_theme_options(app):
+    """Return theme options for the application w/ a fallback if they don't exist."""
+    if hasattr(app.builder, "theme_options"):
+        # In most HTML build cases this will exists except for some circumstances.
+        return app.builder.theme_options
+    elif hasattr(app.config, "html_theme_options"):
+        # For example, linkcheck will have this configured but won't be in builder obj.
+        return app.config.html_theme_options
+    else:
+        # Empty dictionary as a fail-safe.
+        return {}
+
+
 def _config_provided_by_user(app, key):
     """Check if the user has manually provided the config."""
     return any(key in ii for ii in [app.config.overrides, app.config._raw_config])
@@ -43,7 +56,7 @@ def update_config(app):
     # At this point, modifying app.config.html_theme_options will NOT update the
     # page's HTML context (e.g. in jinja, `theme_keyword`).
     # To do this, you must manually modify `app.builder.theme_options`.
-    theme_options = app.builder.theme_options
+    theme_options = _get_theme_options(app)
 
     # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
@@ -905,7 +918,7 @@ def _overwrite_pygments_css(app, exception=None):
         style_key = f"pygment_{light_or_dark}_style"
 
         # globalcontext sometimes doesn't exist so this ensures we do not error
-        theme_name = app.builder.theme_options.get(style_key, None)
+        theme_name = _get_theme_options(app).get(style_key, None)
         if theme_name is None and hasattr(app.builder, "globalcontext"):
             theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
 
@@ -1122,7 +1135,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
     If logo image paths are given, copy them to the `_static` folder
     Then we can link to them directly in an html_page_context event
     """
-    theme_options = app.builder.theme_options
+    theme_options = _get_theme_options(app)
     logo = theme_options.get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
     for kind in ["light", "dark"]:
