@@ -85,7 +85,7 @@ a {
 .heading-style {
   margin: 2.75rem 0 1.05rem;
   font-family: var(--pst-font-family-heading);
-  font-weight: 400;
+  font-weight: var(--pst-font-weight-heading);
   line-height: 1.15;
 }
 
