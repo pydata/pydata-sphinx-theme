@@ -33,9 +33,12 @@ logger = logging.getLogger(__name__)
 
 
 def _get_theme_options(app):
-    """Return theme options for the application w/ a fallback if they don't exist."""
+    """Return theme options for the application w/ a fallback if they don't exist.
+    
+    In general we want to modify app.builder.theme_options if it exists, so prefer that first.
+    """
     if hasattr(app.builder, "theme_options"):
-        # In most HTML build cases this will exists except for some circumstances.
+        # In most HTML build cases this will exist except for some circumstances (see below).
         return app.builder.theme_options
     elif hasattr(app.config, "html_theme_options"):
         # For example, linkcheck will have this configured but won't be in builder obj.
