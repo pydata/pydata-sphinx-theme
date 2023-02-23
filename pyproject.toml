@@ -9,7 +9,8 @@ additional-compiled-static-assets = [
   "webpack-macros.html",
   "vendor/",
   "styles/bootstrap.css",
-  "scripts/bootstrap.js"
+  "scripts/bootstrap.js",
+  "locale/"
 ]
 
 [project]
@@ -24,6 +25,7 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
+  "Babel",
   "pygments>=2.7",
   "accessible-pygments"
 ]

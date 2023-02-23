@@ -1160,6 +1160,9 @@ def setup(app):
     app.connect("build-finished", _overwrite_pygments_css)
     app.connect("build-finished", copy_logo_images)
 
+    # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
+    app.add_message_catalog("sphinx", here / "locale")
+
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))
 
