@@ -84,6 +84,10 @@ jobs:
           python -m pip install -e .[test] sphinx==${{ matrix.sphinx-version }}
       - name: Show installed versions
         run: python -m pip list
+      - name: Compile MO files
+        run: |
+          pip install nox
+          nox -s compile
       - name: Run tests
         run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
 

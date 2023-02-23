@@ -26,7 +26,7 @@ html_theme_options = {
         "edit-this-page.html",
         "sourcelink.html",
     ],
-    "footer_items": ["test.html"],
+    "footer_items": ["page-toc.html"],
 }
 
 html_sidebars = {"section1/index": ["sidebar-nav-bs.html"]}
