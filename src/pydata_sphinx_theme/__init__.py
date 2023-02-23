@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 def _get_theme_options(app):
     """Return theme options for the application w/ a fallback if they don't exist.
-    
+
     In general we want to modify app.builder.theme_options if it exists, so prefer that first.
     """
     if hasattr(app.builder, "theme_options"):
