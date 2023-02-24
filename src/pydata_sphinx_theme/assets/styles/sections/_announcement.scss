@@ -18,15 +18,14 @@
     margin: 0;
   }
 
-  // The same background color transparency hack we use in admonitions
+  // Bg color is now defined in the theme color palette
   &:after {
     position: absolute;
     width: 100%;
     height: 100%;
     left: 0;
     top: 0;
-    background-color: var(--pst-color-info);
-    opacity: 0.2;
+    background-color: var(--pst-color-secondary-bg);
     content: "";
     z-index: -1; // So it doesn't hover over the content
   }
