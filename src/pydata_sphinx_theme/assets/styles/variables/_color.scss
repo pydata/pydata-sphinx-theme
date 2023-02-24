@@ -166,7 +166,7 @@ $pst-semantic-colors: (
   ),
   "text-muted": (
     "light": #{map-deep-get($color-palette, "gray", "600")},
-    "dark": #{map-deep-get($color-palette, "gray", "300")},
+    "dark": #{map-deep-get($color-palette, "gray", "400")},
   ),
   "heading-color": (
     "light": #{$foundation-white},
