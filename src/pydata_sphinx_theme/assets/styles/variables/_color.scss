@@ -37,15 +37,15 @@ $color-palette: (
   // Secondary color
   "violet":
     (
-      "50": #fbf8fe,
-      "100": #f6f2fe,
-      "200": #ece3fc,
-      "300": #decdfa,
-      "400": #b691f5,
-      "500": #894def,
-      "600": #6730c5,
-      "700": #4e2595,
-      "800": #31175f,
+      "50": #f4eefb,
+      "100": #e1cafe,
+      "200": #cda5ff,
+      "300": #b680ff,
+      "400": #9c5ffd,
+      "500": #8045e5,
+      "600": #6432bd,
+      "700": #4b258f,
+      "800": #341a61,
       "900": #1e0e39,
     ),
   // Neutrals
@@ -103,6 +103,8 @@ $min-contrast-ratio-3: 3;
 // Customize the light and dark text colors for use in our color contrast function.
 $foundation-black: #14181e;
 $foundation-white: #ffffff;
+// This is a custom - calculated  color between gray 100 and 200 - to reduce
+// the contrast ratio (avoid a jarring effect)
 $base-light-text: #ced6dd;
 // used in sphinx_design - grey 100
 $foundation-light-grey: #f3f4f5;
@@ -213,7 +215,7 @@ $pst-semantic-colors: (
   "on-surface":
     (
       "light": #{map-deep-get($color-palette, "gray", "800")},
-      "dark": $base-light-text,
+      "dark": $foundation-light-grey,
     ),
 );
 
