@@ -267,6 +267,11 @@ aside.topic {
     margin: 0 0 0.5rem 0;
   }
 
+  // Over-ride text color to ensure enough contrast
+  p {
+    color: var(--pst-color-on-surface) !important;
+  }
+
   // Over-ride large default padding
   ul.simple {
     padding-left: 1rem;

@@ -72,9 +72,9 @@
 }
 
 /**
- * Assign the admonition colours from our variables
+ * Format before pseudo element - TODO: decide if we still need this
  */
-@mixin assign-background-color($color-variable) {
+@mixin format-before($color-variable) {
   &:before {
     content: "";
     width: 100%;
@@ -82,7 +82,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: var(#{$color-variable}-bg);
 
     // So that hovering over the text within background is still possible.
     // Otherwise the background overlays the text and you cannot click or select easily.
