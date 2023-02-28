@@ -3,6 +3,8 @@ file_format: mystnb
 kernelspec:
   name: python3
   display_name: Python 3
+mystnb:
+  execution_mode: cache
 ---
 
 % To test this file with nbsphinx we need to convert to ipynb. To do this:
@@ -89,10 +91,22 @@ data = xr.DataArray(
 data
 ```
 
+## ipyleaflet
+
+`ipyleaflet` is a **Jupyter**/**Leaflet** bridge enabling interactive maps in the Jupyter notebook environment. this demonstrate how you can integrate maps in your documentation.
+
+```{code-cell}
+from ipyleaflet import Map, basemaps
+from IPython.display import display
+
+# display a map centered on France
+m = Map(basemap=basemaps.Esri.WorldImagery,  zoom=5, center=[46.21, 2.21])
+display(m)
+```
+
 ## jupyter-sphinx
 
-Another common library is `jupyter-sphinx`.
-This section demonstrates a subset of functionality above to make sure it behaves as expected.
+This theme has styling for [`jupyter-sphinx`](https://jupyter-sphinx.readthedocs.io/), which is often used for executing and displaying widgets with a Jupyter kernel.
 
 ```{jupyter-execute}
 import matplotlib.pyplot as plt
@@ -102,34 +116,4 @@ rng = np.random.default_rng()
 data = rng.standard_normal((3, 100))
 fig, ax = plt.subplots()
 ax.scatter(data[0], data[1], c=data[2], s=3)
-```
-
-## Jupyterlite
-
-```{warning}
-The jupyterLite lib is not yet providing a handle to switch from light to dark theme. If you consider using it in your documentation you should also enforce the light theme to your users.
-Follow https://github.com/jupyterlite/jupyterlite-sphinx/issues/69 for more information.
-```
-
-`jupyterlite-sphinx` brings the power of [JupyterLite](https://jupyterlite.readthedocs.io/en/latest/) to your Sphinx documentation. It makes a full JupyterLite deployment in your docs and provide some utilities for using that deployment easily.
-
-This section demonstrate how it displays in a pydata-sphinx-theme context:
-
-```{replite}
-:kernel: python
-:height: 600px
-:prompt: Try Replite!
-
-print("it's a test")
-
-## ipyleaflet
-
-`ipyleaflet` is a **Jupyter**/**Leaflet** bridge enabling interactive maps in the Jupyter notebook environment. this demonstrate how you can integrate maps in your documentation.
-
-```{jupyter-execute}
-from ipyleaflet import Map, basemaps
-
-# display a map centered on France
-m = Map(basemap=basemaps.Esri.WorldImagery,  zoom=5, center=[46.21, 2.21])
-m
 ```

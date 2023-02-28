@@ -36,7 +36,7 @@ div.admonition,
   > .admonition-title {
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
-    font-weight: var(--pst-font-weight-heading);
+    font-weight: var(--pst-admonition-font-weight-heading);
     position: relative;
 
     &:after {
@@ -320,7 +320,7 @@ aside.sidebar {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--pst-color-border);
     font-family: var(--pst-font-family-heading);
-    font-weight: var(--pst-font-weight-heading);
+    font-weight: var(--pst-admonition-font-weight-heading);
   }
 
   // Add margin to the first non-`.sidebar-title` item

@@ -73,7 +73,7 @@ def test_build_html(sphinx_build_factory, file_regression):
     subpage_html = sphinx_build.html_tree("section1/index.html")
 
     # Navbar structure
-    navbar = index_html.select("div#navbar-center")[0]
+    navbar = index_html.select("div.navbar-header-items__center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebar subpage
@@ -156,7 +156,7 @@ def test_icon_links(sphinx_build_factory, file_regression):
 
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     # Navbar should have the right icons
-    icon_links = sphinx_build.html_tree("index.html").select("#navbar-icon-links")[0]
+    icon_links = sphinx_build.html_tree("index.html").select(".navbar-icon-links")[0]
     file_regression.check(
         icon_links.prettify(), basename="navbar_icon_links", extension=".html"
     )
@@ -189,7 +189,7 @@ def test_logo_two_images(sphinx_build_factory):
         "html_theme_options": {
             "logo": {
                 "text": "Foo Title",
-                "image_dark": "emptydarklogo.png",
+                "image_dark": "_static/emptydarklogo.png",
             }
         },
     }
@@ -199,6 +199,83 @@ def test_logo_two_images(sphinx_build_factory):
     assert "emptylogo" in index_str
     assert "emptydarklogo" in index_str
     assert "Foo Title" in index_str
+
+
+def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory):
+    """Test that the primary logo image is light
+    (and secondary, written through JavaScript, is dark)
+    when no default mode is set."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-light") is not None
+    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+
+
+def test_primary_logo_is_light_when_default_mode_is_set_to_auto(sphinx_build_factory):
+    """Test that the primary logo image is light
+    (and secondary, written through JavaScript, is dark)
+    when default mode is explicitly set to auto."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {"default_mode": "auto"},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-light") is not None
+    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+
+
+def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory):
+    """Test that the primary logo image is light
+    (and secondary, written through JavaScript, is dark)
+    when default mode is set to light."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {"default_mode": "light"},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-light") is not None
+    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+
+
+def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory):
+    """Test that the primary logo image is dark
+    (and secondary, written through JavaScript, is light)
+    when default mode is set to dark."""
+    # Ensure no default mode is set
+    confoverrides = {
+        "html_context": {"default_mode": "dark"},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar_brand = index_html.select(".navbar-brand")[0]
+    assert navbar_brand.find("img", class_="only-dark") is not None
+    assert navbar_brand.find("script", string=re.compile("only-light")) is not None
+
+
+def test_logo_missing_image(sphinx_build_factory):
+    """Test that a missing image will raise a warning."""
+    # Test with a specified title and a dark logo
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                # The logo is actually in _static
+                "image_dark": "emptydarklogo.png",
+            }
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
+        no_warning=False
+    )
+    assert "image logo does not exist" in escape_ansi(sphinx_build.warnings).strip()
 
 
 def test_logo_external_link(sphinx_build_factory):
@@ -233,6 +310,20 @@ def test_logo_external_image(sphinx_build_factory):
     index_html = sphinx_build.html_tree("index.html")
     index_str = str(index_html.select(".navbar-brand")[0])
     assert f'src="{test_url}"' in index_str
+
+
+def test_logo_template_rejected(sphinx_build_factory):
+    """Test that dynamic Sphinx templates are not accepted as logo files"""
+    # Test with a specified external logo image source
+    confoverrides = {
+        "html_theme_options": {
+            "logo": {
+                "image_dark": "image_dark_t",
+            }
+        },
+    }
+    with pytest.raises(sphinx.errors.ExtensionError, match="static logo image"):
+        sphinx_build_factory("base", confoverrides=confoverrides).build()
 
 
 def test_favicons(sphinx_build_factory):
@@ -294,7 +385,10 @@ def test_navbar_align_right(sphinx_build_factory):
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("index.html")
     assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
-    assert "ms-auto" in index_html.select("div#navbar-center")[0].attrs["class"]
+    assert (
+        "ms-auto"
+        in index_html.select("div.navbar-header-items__center")[0].attrs["class"]
+    )
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
@@ -302,7 +396,7 @@ def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression):
     sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
 
     index_html = sphinx_build.html_tree("index.html")
-    navbar = index_html.select("ul#navbar-main-elements")[0]
+    navbar = index_html.select("ul.bd-navbar-elements")[0]
     file_regression.check(navbar.prettify(), extension=".html")
 
 
@@ -319,7 +413,7 @@ def test_navbar_header_dropdown(sphinx_build_factory, file_regression, n_links):
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
-    navbar = index_html.select("ul#navbar-main-elements")[0]
+    navbar = index_html.select("ul.bd-navbar-elements")[0]
     if n_links == 0:
         # There should be *only* a dropdown and no standalone links
         assert navbar.select("div.dropdown") and not navbar.select(
@@ -343,7 +437,7 @@ def test_sidebars_captions(sphinx_build_factory, file_regression):
     subindex_html = sphinx_build.html_tree("section1/index.html")
 
     # Sidebar structure with caption
-    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
@@ -353,7 +447,7 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression):
     subindex_html = sphinx_build.html_tree("section1/subsection1/page1.html")
 
     # For nested (uncollapsed) page, the label included `checked=""`
-    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
@@ -365,7 +459,7 @@ def test_sidebars_level2(sphinx_build_factory, file_regression):
     subindex_html = sphinx_build.html_tree("section1/subsection1/index.html")
 
     # Sidebar structure
-    sidebar = subindex_html.select("nav#bd-docs-nav")[0]
+    sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
@@ -379,7 +473,7 @@ def test_sidebars_show_nav_level0(sphinx_build_factory, file_regression):
 
     # 1. Home Page
     index_html = sphinx_build.html_tree("section1/index.html")
-    sidebar = index_html.select("nav#bd-docs-nav")[0]
+    sidebar = index_html.select("nav.bd-docs-nav")[0]
 
     # check if top-level ul is present
     ul = sidebar.find("ul")
@@ -399,7 +493,7 @@ def test_sidebars_show_nav_level0(sphinx_build_factory, file_regression):
 
     # 2. Subsection Page
     subsection_html = sphinx_build.html_tree("section1/subsection1/index.html")
-    sidebar = subsection_html.select("nav#bd-docs-nav")[0]
+    sidebar = subsection_html.select("nav.bd-docs-nav")[0]
 
     # get all input elements
     input_elem = sidebar.select("input")
@@ -433,7 +527,7 @@ good_edits = [
             "github_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://github.com/foo/bar/edit/HEAD/docs/index.rst",
+        ("Edit on GitHub", "https://github.com/foo/bar/edit/HEAD/docs/index.rst"),
     ],
     [
         {
@@ -442,7 +536,7 @@ good_edits = [
             "gitlab_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://gitlab.com/foo/bar/-/edit/HEAD/docs/index.rst",
+        ("Edit on GitLab", "https://gitlab.com/foo/bar/-/edit/HEAD/docs/index.rst"),
     ],
     [
         {
@@ -451,7 +545,10 @@ good_edits = [
             "bitbucket_version": "HEAD",
             "doc_path": "docs",
         },
-        "https://bitbucket.org/foo/bar/src/HEAD/docs/index.rst?mode=edit",
+        (
+            "Edit on Bitbucket",
+            "https://bitbucket.org/foo/bar/src/HEAD/docs/index.rst?mode=edit",
+        ),
     ],
 ]
 
@@ -464,10 +561,10 @@ slash_edits = [
             key: f"{value}/" if key == "doc_path" else value
             for key, value in html_context.items()
         },
-        # the URL does not change
-        url,
+        # the text and URL do not change
+        text_and_url,
     ]
-    for html_context, url in good_edits
+    for html_context, text_and_url in good_edits
 ]
 
 # copy the "good" ones, provide a `<whatever>_url` based off the default
@@ -479,11 +576,14 @@ providers = [
             # add a provider url
             **{f"{provider}_url": f"https://{provider}.example.com"},
         ),
-        f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}""",
+        (
+            text,
+            f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}""",
+        ),
     ]
-    for html_context, url in good_edits
-    for provider in ["gitlab", "bitbucket", "github"]
-    if provider in url
+    for html_context, (text, url) in good_edits
+    for provider in ["github", "gitlab", "bitbucket"]
+    if provider in text.lower()
 ]
 
 # missing any of the values should fail
@@ -498,7 +598,7 @@ bad_edits = [
         },
         None,
     ]
-    for html_context, url in good_edits
+    for html_context, _ in good_edits
 ]
 
 # a good custom URL template
@@ -509,7 +609,20 @@ good_custom = [
                 "https://dvcs.example.com/foo/bar/edit/HEAD/{{ file_name }}"
             )
         },
-        "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst",
+        ("Edit", "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst"),
+    ]
+]
+
+# a good custom URL template with an additional provider name
+good_custom_with_provider = [
+    [
+        {
+            "edit_page_url_template": (
+                "https://dvcs.example.com/foo/bar/edit/HEAD/{{ file_name }}"
+            ),
+            "edit_page_provider_name": "FooProvider",
+        },
+        ("Edit on FooProvider", "https://dvcs.example.com/foo/bar/edit/HEAD/index.rst"),
     ]
 ]
 
@@ -532,24 +645,31 @@ all_edits = [
 ]
 
 
-@pytest.mark.parametrize("html_context,edit_url", all_edits)
-def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
+@pytest.mark.parametrize("html_context,edit_text_and_url", all_edits)
+def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url):
     confoverrides = {
         "html_theme_options.use_edit_page_button": True,
         "html_context": html_context,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
 
-    if edit_url is None:
-        with pytest.raises(sphinx.errors.ExtensionError):
+    if edit_text_and_url is None:
+        with pytest.raises(
+            sphinx.errors.ExtensionError, match="Missing required value"
+        ):
             sphinx_build.build()
         return
 
+    edit_text, edit_url = edit_text_and_url
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
     edit_link = index_html.select(".editthispage a")
     assert edit_link, "no edit link found"
     assert edit_link[0].attrs["href"] == edit_url, f"edit link didn't match {edit_link}"
+    # First child is the icon
+    assert (
+        list(edit_link[0].strings)[1].strip() == edit_text
+    ), f"edit text didn't match {edit_text}"
 
 
 @pytest.mark.parametrize(
@@ -574,7 +694,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_url):
     ],
 )
 def test_analytics(sphinx_build_factory, provider, tags):
-
     confoverrides = provider
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
@@ -648,7 +767,9 @@ def test_version_switcher(sphinx_build_factory, file_regression, url):
 
     if url == "switcher.json":  # this should work
         index = sphinx_build.html_tree("index.html")
-        switcher = index.select(".version-switcher__container")[0]
+        switcher = index.select(".navbar-header-items")[0].find(
+            "script", string=re.compile(".version-switcher__container")
+        )
         file_regression.check(
             switcher.prettify(), basename="navbar_switcher", extension=".html"
         )
@@ -666,7 +787,11 @@ def test_theme_switcher(sphinx_build_factory, file_regression):
     """Regression test the theme switcher btn HTML"""
 
     sphinx_build = sphinx_build_factory("base").build()
-    switcher = sphinx_build.html_tree("index.html").select(".theme-switch-button")[0]
+    switcher = (
+        sphinx_build.html_tree("index.html")
+        .find(string=re.compile("theme-switch-button"))
+        .find_parent("script")
+    )
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extension=".html"
     )
@@ -688,7 +813,7 @@ def test_math_header_item(sphinx_build_factory, file_regression):
     """regression test the math items in a header title"""
 
     sphinx_build = sphinx_build_factory("base").build()
-    li = sphinx_build.html_tree("page2.html").select("#navbar-main-elements li")[1]
+    li = sphinx_build.html_tree("page2.html").select(".bd-navbar-elements li")[1]
     file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
 
 
@@ -754,14 +879,24 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
 
     # check the deprecation warnings
-    warnings = sphinx_build.warnings.split("WARNING: ")
-    assert len(warnings) == 5  # testing the text of the warning is not necessary here
+    warnings = sphinx_build.warnings.strip("\n").split("\n")
+    warnings = [w.lstrip("\x1b[91m").rstrip("\x1b[39;49;00m\n") for w in warnings]
+    expected_warnings = (
+        "The configuration `logo_text` is deprecated",
+        "The configuration `page_sidebar_items` is deprecated",
+        "`footer_items` is deprecated",
+        "unsupported theme option 'logo_text'",
+        "unsupported theme option 'page_sidebar_items'",
+    )
+    assert len(warnings) == len(expected_warnings)
+    for exp_warn in expected_warnings:
+        assert exp_warn in sphinx_build.warnings
 
     index_html = sphinx_build.html_tree("index.html")
     subpage_html = sphinx_build.html_tree("section1/index.html")
 
     # Navbar structure
-    navbar = index_html.select("div#navbar-center")[0]
+    navbar = index_html.select("div.navbar-header-items__center")[0]
     file_regression.check(navbar.prettify(), basename="navbar_ix", extension=".html")
 
     # Sidebar subpage
@@ -779,19 +914,68 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     assert not sphinx_build.html_tree("page2.html").select("div.bd-sidebar-secondary")
 
 
-def test_ablog(sphinx_build_factory):
-    """Ensure that we are over-riding the ABlog default FontAwesome config."""
-
-    confoverrides = {"extensions": ["ablog"]}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    assert sphinx_build.app.config.fontawesome_included is True
-
-
 def test_empty_templates(sphinx_build_factory):
     """If a template is empty (e.g., via a config), it should be removed."""
     # When configured to be gone, the template should be removed w/ its parent.
     # ABlog needs to be added so we can test that template rendering works w/ it.
-    confoverrides = {"html_show_sourcelink": False, "extensions": ["ablog"]}
+    confoverrides = {
+        "html_show_sourcelink": False,
+    }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    toc_items = sphinx_build.html_tree("page1.html").select(".toc-item")
-    assert not any(ii.select(".tocsection.sourcelink") for ii in toc_items)
+    html = sphinx_build.html_tree("page1.html")
+
+    # We've set this to fase in the config so the template shouldn't show up at all
+    assert not html.select(".tocsection.sourcelink")
+
+    # Should not be any icon link wrapper because none are given in conf
+    assert not html.select(".navbar-icon-links")
+
+
+def test_translations(sphinx_build_factory):
+    """Test that basic translation functionality works.
+
+    This will build our test site with the French language, and test
+    that a few phrases are in French.
+
+    We use this test to catch regressions if we change wording without
+    changing the translation files."""
+
+    confoverrides = {
+        "language": "fr",
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            "use_edit_page_button": True,
+        },
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+    # Use a section page so that we have section navigation in the sidebar
+    index = sphinx_build.html_tree("section1/index.html")
+
+    sidebar_primary = index.select(".bd-sidebar-primary")[0]
+    assert "Navigation du site" in str(sidebar_primary)
+    assert "Navigation de la section" in str(sidebar_primary)
+
+    sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
+    assert "Montrer le code source" in str(sidebar_secondary)
+    assert "Modifier sur GitHub" in str(sidebar_secondary)
+
+    header = index.select(".bd-header")[0]
+    assert "clair/sombre" in str(header)
+
+    footer = index.select(".bd-footer")[0]
+    assert "Copyright" in str(footer)
+    assert "Créé en utilisant" in str(footer)
+    assert "Construit avec le" in str(footer)
+
+    footer_article = index.select(".bd-footer-article")[0]
+    assert "précédent" in str(footer_article)
+    assert "page suivante" in str(footer_article)
+
+    # Search bar
+    # TODO: Add translations where there are english phrases below
+    assert "Search the docs" in str(index.select(".bd-search")[0])

@@ -32,9 +32,11 @@
 @import "./sections/sidebar-toggle";
 
 // Re-usable components across the theme
+@import "./components/breadcrumbs";
 @import "./components/icon-links";
 @import "./components/header/header-logo";
 @import "./components/navbar-links";
+@import "./components/page-toc";
 @import "./components/prev-next";
 @import "./components/search";
 @import "./components/searchbox";
@@ -67,7 +69,6 @@
 @import "./extensions/execution";
 @import "./extensions/pydata";
 @import "./extensions/sphinx_design";
-@import "./extensions/sphinx_panels";
 @import "./extensions/togglebutton";
 @import "./extensions/notebooks";
 @import "./extensions/leaflet";

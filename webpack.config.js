@@ -5,6 +5,7 @@
  *
  * - Generates a `webpack-macros.html` file that defines macros used
  *   to insert CSS / JS at various places in the main `layout.html` template.
+ * - Compiles our translation files into .mo files so they can be bundled with the theme
  * - Compiles our SCSS and JS and places them in the _static/ folder
  * - Downloads and links FontAwesome and some JS libraries (Bootstrap, etc)
  */
@@ -16,6 +17,13 @@ const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const dedent = require("dedent");
 const { Compilation } = require("webpack");
+
+/*******************************************************************************
+ * Compile our translation files
+ */
+const { exec } = require("child_process");
+const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
+exec(`pybabel compile -d ${localePath} -D sphinx`);
 
 /*******************************************************************************
  * Paths for various assets (sources and destinations)

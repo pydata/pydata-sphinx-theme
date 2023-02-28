@@ -1,3 +1,9 @@
+{# We redefine <html/> for "basic/layout.html" to add a default `data-theme` attribute when
+ # a default mode has been set. This also improves compatibility when JavaScript is disabled.
+ #}
+{% set html_tag %}
+<html{% if not html5_doctype %} xmlns="http://www.w3.org/1999/xhtml"{% endif %}{% if language is not none %} lang="{{ language }}"{% endif %} {% if default_mode %}data-theme="{{ default_mode }}"{% endif %}>
+{% endset %}
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}
 {# Metadata and asset linking #}
@@ -37,7 +43,7 @@ or not theme_secondary_sidebar_items %}
 {% block body_tag %}
   {# set up with scrollspy to update the toc as we scroll #}
   {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
-  <body data-bs-spy="scroll" data-bs-target="#bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="{{ default_mode }}">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="{{ default_mode }}">
 
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
@@ -64,13 +70,10 @@ or not theme_secondary_sidebar_items %}
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
   {%- if theme_announcement -%}
-    <div class="bd-header-announcement container-fluid"
-          id="header-announcement">
-      {% include "sections/announcement.html" %}
-    </div>
+    {% include "sections/announcement.html" %}
   {%- endif %}
   {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main">
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
       {%- include "sections/header.html" %}
     </nav>
   {% endblock docs_navbar %}
@@ -80,6 +83,7 @@ or not theme_secondary_sidebar_items %}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
+      {# Using an ID here so that the skip-link works #}
       <main id="main-content" class="bd-main">
         {# Main content area #}
         {% block docs_main %}

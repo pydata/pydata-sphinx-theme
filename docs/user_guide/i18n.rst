@@ -1,0 +1,74 @@
+Internationalization
+====================
+
+This theme contains translatable strings.
+There are two kinds of strings in this theme, with different steps to translate each.
+
+**Built-in strings** are hard-coded in the theme's templates.
+They will automatically be translated if the language is `supported <https://github.com/pydata/pydata-sphinx-theme/tree/master/pydata_sphinx_theme/locale>`__.
+To add another language, see :ref:`translating-the-theme`.
+
+**Configurable strings** are user-defined with the ``html_theme_options`` variable in your ``conf.py`` file (see other sections in :doc:`the user guide<index>` for examples).
+To translate these strings, see the section below.
+
+Translating configurable strings
+--------------------------------
+
+These instructions are for translating configurable strings (those that are customizable in ``html_theme_options``).
+
+These instructions assume that you store your translations in a ``locale`` directory under your documentation directory, and that you want to use ``theme`` as the name of the message catalog for these strings.
+
+#. In your ``conf.py`` file:
+
+   .. code-block:: python
+
+      import os.path
+      from sphinx.locale import get_translation
+
+      catalog = "theme"
+      _ = get_translation(catalog)
+
+      html_theme_options = {
+          "search_bar_text": _("Search the docs..."),
+
+          # You only need to translate the following if you use these features.
+          "icon_links_label": _("Quick Links"),
+          "icon_links": [
+              {
+                  "name": _("GitHub"),
+                  "url": "https://github.com/<your-org>/<your-repo>",
+                  "icon": "fab fa-github-square",
+              },
+          ],
+          "external_links": [
+              {
+                  "name": _("link-one-name"),
+                  "url": "https://<link-one>",
+              },
+          ],
+      }
+
+      def setup(app):
+         locale_dir = os.path.join(os.path.abspath(os.path.dirname(__file__), "locale")
+
+         app.add_message_catalog(catalog, locale_dir)
+
+#. Extract the strings to translate:
+
+   .. code-block:: bash
+
+      pybabel extract . -o locale/theme.pot
+
+#. Create a message catalog (changing the ``--locale`` option as desired):
+
+   .. code-block:: bash
+
+      pybabel init --input-file=locale/theme.pot --domain=theme --output-dir=locale --locale=fr
+
+#. Translate the message catalog by editing the file.
+
+#. Compile the message catalog:
+
+   .. code-block:: bash
+
+      pybabel compile --directory=locale --domain=theme

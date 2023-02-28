@@ -100,13 +100,13 @@ function addModeListener() {
  */
 function addTOCInteractivity() {
   window.addEventListener("activate.bs.scrollspy", function () {
-    const navLinks = document.querySelectorAll("#bd-toc-nav a");
+    const navLinks = document.querySelectorAll(".bd-toc-nav a");
 
     navLinks.forEach((navLink) => {
       navLink.parentElement.classList.remove("active");
     });
 
-    const activeNavLinks = document.querySelectorAll("#bd-toc-nav a.active");
+    const activeNavLinks = document.querySelectorAll(".bd-toc-nav a.active");
     activeNavLinks.forEach((navLink) => {
       navLink.parentElement.classList.add("active");
     });
@@ -122,7 +122,7 @@ function addTOCInteractivity() {
  */
 function scrollToActive() {
   // If the docs nav doesn't exist, do nothing (e.g., on search page)
-  if (!document.getElementById("bd-docs-nav")) {
+  if (!document.querySelector(".bd-docs-nav")) {
     return;
   }
 
@@ -132,7 +132,7 @@ function scrollToActive() {
   // Inspired on source of revealjs.com
   let storedScrollTop = parseInt(
     sessionStorage.getItem("sidebar-scroll-top"),
-    10,
+    10
   );
 
   if (!isNaN(storedScrollTop)) {
@@ -141,7 +141,7 @@ function scrollToActive() {
     console.log("[PST]: Scrolled sidebar using stored browser position...");
   } else {
     // Otherwise, calculate a position to scroll to based on the lowest `active` link
-    var sidebarNav = document.getElementById("bd-docs-nav");
+    var sidebarNav = document.querySelector(".bd-docs-nav");
     var active_pages = sidebarNav.querySelectorAll(".active");
     if (active_pages.length > 0) {
       // Use the last active page as the offset since it's the page we're on
@@ -184,7 +184,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search",
+        "div:not(.search-button__search-container) > form.bd-search"
       );
     }
     return form.querySelector("input");
@@ -235,7 +235,7 @@ var addEventListenerForSearchKeyboard = () => {
         toggleSearchField();
       }
     },
-    true,
+    true
   );
 };
 
@@ -247,7 +247,7 @@ var changeSearchShortcutKey = () => {
   var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
   if (isMac) {
     forms.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘"),
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
     );
   }
 };
@@ -305,8 +305,8 @@ function checkPageExistsAndRedirect(event) {
 }
 
 // Populate the version switcher from the JSON config file
-var themeSwitchBtns = document.querySelectorAll("version-switcher__button");
-if (themeSwitchBtns) {
+var themeSwitchBtns = document.querySelectorAll(".version-switcher__button");
+if (themeSwitchBtns.length) {
   fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
     .then((res) => {
       return res.json();
@@ -331,7 +331,7 @@ if (themeSwitchBtns) {
         const node = document.createElement("a");
         node.setAttribute(
           "class",
-          "list-group-item list-group-item-action py-1",
+          "list-group-item list-group-item-action py-1"
         );
         node.setAttribute("href", `${entry.url}${currentFilePath}`);
         node.appendChild(span);
