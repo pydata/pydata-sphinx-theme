@@ -62,3 +62,6 @@
 - title: Matplotlib
   website: https://matplotlib.org/stable/
   img-bottom: ../_static/gallery/matplotlib.png
+- title: DecentralChain
+  website: https://docs.decentralchain.io/en/master/
+  img-bottom: ../_static/gallery/decentralchain.png
