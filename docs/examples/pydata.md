@@ -3,8 +3,6 @@ file_format: mystnb
 kernelspec:
   name: python3
   display_name: Python 3
-mystnb:
-  execution_mode: cache
 ---
 
 % To test this file with nbsphinx we need to convert to ipynb. To do this:
@@ -95,25 +93,10 @@ data
 
 `ipyleaflet` is a **Jupyter**/**Leaflet** bridge enabling interactive maps in the Jupyter notebook environment. this demonstrate how you can integrate maps in your documentation.
 
-```{code-cell}
+```{jupyter-execute}
 from ipyleaflet import Map, basemaps
-from IPython.display import display
 
 # display a map centered on France
 m = Map(basemap=basemaps.Esri.WorldImagery,  zoom=5, center=[46.21, 2.21])
-display(m)
-```
-
-## jupyter-sphinx
-
-This theme has styling for [`jupyter-sphinx`](https://jupyter-sphinx.readthedocs.io/), which is often used for executing and displaying widgets with a Jupyter kernel.
-
-```{jupyter-execute}
-import matplotlib.pyplot as plt
-import numpy as np
-
-rng = np.random.default_rng()
-data = rng.standard_normal((3, 100))
-fig, ax = plt.subplots()
-ax.scatter(data[0], data[1], c=data[2], s=3)
+m
 ```
