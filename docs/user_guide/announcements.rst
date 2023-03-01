@@ -18,7 +18,7 @@ For example, the following configuration adds a simple ``<p>`` with an announcem
 
    html_theme_options = {
       ...
-      "announcement": "<p>Here's a <a href='https://pydata.org'>PyData Announcement!</a></p>",
+      "announcement": "Here's a <a href='https://pydata.org'>PyData Announcement!</a>",
    }
 
 Insert remote HTML with JavaScript
