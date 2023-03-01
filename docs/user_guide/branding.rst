@@ -113,6 +113,11 @@ This will appear just after your logo image if it is set.
 Add favicons
 ============
 
+.. deprecated:: 0.15
+
+   The support for complex and multiple favicons will be dropped in version 0.15. Instead you can use the `sphinx-favicon <https://sphinx-favicon.readthedocs.io/en/stable/>`__ extention that provide the same functionalities using more flexible parameters.
+
+
 ``pydata_sphinx_theme`` supports the `standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_, using ``html_favicon``.
 
 Additionally you may add any number of browser- or device-specific favicons of any size.
