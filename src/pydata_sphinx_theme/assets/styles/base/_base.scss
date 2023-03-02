@@ -40,6 +40,9 @@ a {
   color: var(--pst-color-link);
   text-decoration: none;
 
+  // So that really long links don't spill out of their container
+  word-wrap: break-word;
+
   &:hover {
     color: var(--pst-color-link-hover);
     text-decoration: underline;
@@ -61,10 +64,13 @@ a {
   }
 
   // set up a icon next to the shorten links from github and gitlab
-  &::before {
-    color: var(--pst-color-text-muted);
-    font-family: "Font Awesome 6 Brands";
-    margin-right: 0.25rem;
+  &.github,
+  &.gitlab {
+    &::before {
+      color: var(--pst-color-text-muted);
+      font-family: "Font Awesome 6 Brands";
+      margin-right: 0.25rem;
+    }
   }
 
   &.github::before {
@@ -79,7 +85,7 @@ a {
 .heading-style {
   margin: 2.75rem 0 1.05rem;
   font-family: var(--pst-font-family-heading);
-  font-weight: 400;
+  font-weight: var(--pst-font-weight-heading);
   line-height: 1.15;
 }
 

@@ -4,8 +4,8 @@ Source Buttons
 
 Source buttons are links to the source of your page's content (either on your site, or on hosting sites like GitHub).
 
-Add an Edit this Page button
-============================
+Add an edit button
+==================
 
 You can add a button to each page that will allow users to edit the page text
 directly and submit a pull request to update the documentation. To include this
@@ -80,16 +80,44 @@ any other context values.
        "some_other_arg": "?some-other-arg"
    }
 
+With the predefined providers, the link text reads "Edit on GitHub/GitLab/Bitbucket".
+By default, a simple "Edit" is used if you use a custom URL. However, you can set
+a provider name like this:
+
+.. code:: python
+
+   html_context = {
+       "edit_page_url_template": "...",
+       "edit_page_provider_name": "Provider",
+   }
+
+This will turn the link into "Edit on Provider".
+
+
+Custom link text
+----------------
+
+You can change the default text by extending the ``edit-this-page.html``
+template. For example, if you have ``templates_path = ["_templates"]``
+in your Sphinx configuration, you could put this code in
+`_templates/edit-this-page.html`:
+
+.. code:: html+jinja
+
+   {% extends "!components/edit-this-page.html" %}
+
+   {% block edit_this_page_text %}
+     Edit this page
+   {% endblock %}
+
+
 View Source link
 ================
 
-You can add a button that will direct users to view the source of a page (i.e., the underlying ``reStructuredText`` or ``MyST Markdown`` for the page).
-To do so, add the following extension to your documentation:
+By default, this theme adds a button link to view the source of a page (i.e., the underlying ``reStructuredText`` or ``MyST Markdown`` for the page).
+To disable it, use the following configuration:
+
 
 .. code-block:: python
 
-    extensions = [
-        ...
-        "sphinx.ext.viewcode",
-        ...
-    ]
+    html_show_sourcelink = False

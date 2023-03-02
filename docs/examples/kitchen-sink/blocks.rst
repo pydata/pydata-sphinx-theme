@@ -238,10 +238,10 @@ With line numbers
             "This is an intentionally very long line because I want to make sure that we are handling scrollable code blocks correctly."
         )
 
-With ``none`` highlighting
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Without highlighting
+~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: none
+.. code-block:: text
 
     # Taken from https://en.wikipedia.org/wiki/Pseudocode#Example
     algorithm ford-fulkerson is

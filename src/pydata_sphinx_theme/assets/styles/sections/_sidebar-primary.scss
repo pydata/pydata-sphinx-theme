@@ -24,6 +24,11 @@
     font-size: var(--pst-sidebar-font-size);
   }
 
+  // override bootstrap when navlink are displayed in the sidebar
+  .nav-link {
+    font-size: var(--pst-sidebar-font-size-mobile);
+  }
+
   &.no-sidebar {
     border-right: 0;
   }
@@ -34,9 +39,19 @@
     }
   }
 
-  .sidebar-start-items__item,
-  .sidebar-end-items__item {
-    padding: 0.5rem 0;
+  // Headers shouldn't be colored in the sidebars and some extensions add headers
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--pst-color-text-base);
+  }
+
+  .sidebar-primary-items__start,
+  .sidebar-primary-items__end {
+    .sidebar-primary-item {
+      padding: 0.5rem 0;
+    }
   }
 
   // Hide the sidebar header items on widescreen since they are visible in the header
@@ -87,7 +102,7 @@
     }
   }
 
-  .sidebar-start-items {
+  .sidebar-primary-items__start {
     // Add a border on mobile to separate it from the header sidebar area
     border-top: 1px solid var(--pst-color-border);
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
@@ -95,7 +110,7 @@
     }
   }
 
-  .sidebar-end-items {
+  .sidebar-primary-items__end {
     margin-top: auto;
     margin-bottom: 1em;
   }
@@ -213,11 +228,16 @@ nav.bd-links {
   p.caption {
     font-weight: var(--pst-sidebar-header-font-weight);
     position: relative;
-    margin-top: 1.25em;
-    margin-bottom: 0.5em;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
     color: var(--pst-color-text-base);
     &:first-child {
       margin-top: 0;
+    }
+
+    font-size: var(--pst-sidebar-font-size-mobile);
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      font-size: var(--pst-sidebar-font-size);
     }
   }
 }

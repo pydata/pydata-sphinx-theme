@@ -10,29 +10,21 @@
   position: sticky;
   top: var(--pst-header-height);
   max-height: calc(100vh - var(--pst-header-height));
-
-  font-size: var(--pst-sidebar-font-size-mobile);
-  @include media-breakpoint-up($breakpoint-sidebar-secondary) {
-    font-size: var(--pst-sidebar-secondary-font-size);
-  }
-
   padding: 2rem 1rem 1rem 1rem;
   width: var(--pst-sidebar-secondary);
+  font-size: var(--pst-sidebar-font-size-mobile);
+  @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+    font-size: var(--pst-sidebar-font-size);
+  }
 
   // Color and border
   background-color: var(--pst-color-background);
   overflow-y: auto;
 
-  .onthispage {
-    color: var(--pst-color-text-base);
-    font-weight: var(--pst-sidebar-header-font-weight);
-  }
-
   @include scrollbar-style();
 }
 
-// Each TOC item is wrapped in this
-.toc-item {
+.sidebar-secondary-item {
   padding: 0.5rem 0.5rem;
   @include media-breakpoint-up($breakpoint-sidebar-secondary) {
     border-left: 1px solid var(--pst-color-border);
@@ -41,35 +33,5 @@
 
   i {
     padding-right: 0.5rem;
-  }
-}
-
-// The list of in-page TOC
-.section-nav {
-  padding-left: 0;
-  border-bottom: none;
-
-  ul {
-    padding-left: 1rem;
-  }
-}
-
-// The 'Hide Search Matches' link
-div#searchbox {
-  p.highlight-link {
-    // remove excess margin from p tag
-    margin-bottom: 0px;
-    a {
-      // add icon via CSS because the link is created by javascript
-      // match padding to .toc-item > i above
-      &:before {
-        content: var(--pst-icon-search-minus);
-        color: unset; // make sure it uses the same color as the text
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        padding-right: 0.5rem;
-        margin-right: 0;
-      }
-    }
   }
 }

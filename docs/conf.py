@@ -28,6 +28,7 @@ extensions = [
     "jupyter_sphinx",
     "matplotlib.sphinxext.plot_directive",
     "myst_nb",
+    "sphinxcontrib.youtube",
     # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
     "numpydoc",
     "sphinx_togglebutton",
@@ -139,8 +140,7 @@ html_theme_options = {
     ],
     "logo": {
         "text": "PyData Theme",
-        "image_dark": "logo-dark.svg",
-        "image_light": "logo.svg",
+        "image_dark": "_static/logo-dark.svg",
         "alt_text": "PyData Theme",
     },
     "use_edit_page_button": True,
@@ -153,12 +153,33 @@ html_theme_options = {
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "navbar_persistent": ["search-button"],
     # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
-    # "footer_items": ["copyright", "sphinx-version"],
+    # "footer_start": ["test.html", "test.html"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,
     },
+}
+
+html_sidebars = {
+    "community/index": [
+        "sidebar-nav-bs",
+        "custom-template",
+    ],  # This ensures we test for custom sidebars
+    "examples/no-sidebar": [],  # Test what page looks like with no sidebar items
+    "examples/persistent-search-field": ["search-field"],
+    # Blog sidebars
+    # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
+    "examples/blog/*": [
+        "ablog/postcard.html",
+        "ablog/recentposts.html",
+        "ablog/tagcloud.html",
+        "ablog/categories.html",
+        "ablog/authors.html",
+        "ablog/languages.html",
+        "ablog/locations.html",
+        "ablog/archives.html",
+    ],
 }
 
 # -- Autosumary configuration --------------------------------------------------

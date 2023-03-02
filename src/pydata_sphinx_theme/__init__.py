@@ -6,55 +6,62 @@ from pathlib import Path
 from functools import lru_cache
 import json
 from urllib.parse import urlparse, urlunparse
+import types
 
 import jinja2
 from bs4 import BeautifulSoup as bs
 from docutils import nodes
 from sphinx import addnodes
+from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
 from sphinx.errors import ExtensionError
-from sphinx.util import logging
+from sphinx.util import logging, isurl
+from sphinx.util.fileutil import copy_asset_file
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 
-from .bootstrap_html_translator import BootstrapHTML5Translator
+from .translator import BootstrapHTML5TranslatorMixin
 
-__version__ = "0.12.1rc1.dev0"
+__version__ = "0.13.0dev0"
 
 logger = logging.getLogger(__name__)
 
 
+def _get_theme_options(app):
+    """Return theme options for the application w/ a fallback if they don't exist.
+
+    In general we want to modify app.builder.theme_options if it exists, so prefer that first.
+    """
+    if hasattr(app.builder, "theme_options"):
+        # In most HTML build cases this will exist except for some circumstances (see below).
+        return app.builder.theme_options
+    elif hasattr(app.config, "html_theme_options"):
+        # For example, linkcheck will have this configured but won't be in builder obj.
+        return app.config.html_theme_options
+    else:
+        # Empty dictionary as a fail-safe.
+        return {}
+
+
+def _config_provided_by_user(app, key):
+    """Check if the user has manually provided the config."""
+    return any(key in ii for ii in [app.config.overrides, app.config._raw_config])
+    
+
 def update_config(app):
-    theme_options = app.config.html_theme_options
+    """Update config with new default values and handle deprecated keys."""
+    # By the time `builder-inited` happens, `app.builder.theme_options` already exists.
+    # At this point, modifying app.config.html_theme_options will NOT update the
+    # page's HTML context (e.g. in jinja, `theme_keyword`).
+    # To do this, you must manually modify `app.builder.theme_options`.
+    theme_options = _get_theme_options(app)
 
-    # DEPRECATE >= v0.15
-    if theme_options.get("favicons"):
-        logger.warning(
-            "Deprecated config `favicons` used."
-            "The favicon configuration have been droped in favor of the sphinx-favicon extention."
-            "Please see their documentation for more information."
-        )
-
-    # DEPRECATE >= v0.10
-    if theme_options.get("search_bar_position") == "navbar":
-        logger.warning(
-            "Deprecated config `search_bar_position` used."
-            "Use `search-field.html` in `navbar_end` template list instead."
-        )
-
-    # DEPRECATE >= 0.11
-    if theme_options.get("left_sidebar_end"):
-        theme_options["primary_sidebar_end"] = theme_options.get("left_sidebar_end")
-        logger.warning(
-            "The configuration `left_sidebar_end` is deprecated."
-            "Use `primary_sidebar_end`"
-        )
-
+    # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
         logo = theme_options.get("logo", {})
         logo["text"] = theme_options.get("logo_text")
@@ -63,6 +70,7 @@ def update_config(app):
             "The configuration `logo_text` is deprecated." "Use `'logo': {'text': }`."
         )
 
+    # TODO: deprecation; remove after 0.13 release
     if theme_options.get("page_sidebar_items"):
         theme_options["secondary_sidebar_items"] = theme_options.get(
             "page_sidebar_items"
@@ -72,6 +80,21 @@ def update_config(app):
             "Use `secondary_sidebar_items`."
         )
 
+    # DEPRECATE after 0.14
+    if theme_options.get("footer_items"):
+        theme_options["footer_start"] = theme_options.get("footer_items")
+        logger.warning(
+            "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
+        )
+        
+    # DEPRECATE >= v0.15
+    if theme_options.get("favicons"):
+        logger.warning(
+            "Deprecated config `favicons` used."
+            "The favicon configuration have been droped in favor of the sphinx-favicon extention."
+            "Please see their documentation for more information."
+        )
+
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
@@ -79,11 +102,12 @@ def update_config(app):
             f"type {type(theme_options.get('icon_links'))}."
         )
 
-    # Update the anchor link (it's a tuple, so need to overwrite the whole thing)
-    icon_default = app.config.values["html_permalinks_icon"]
-    app.config.values["html_permalinks_icon"] = ("#", *icon_default[1:])
+    # Set the anchor link default to be # if the user hasn't provided their own
+    if not _config_provided_by_user(app, "html_permalinks_icon"):
+        app.config.html_permalinks_icon = "#"
 
     # Raise a warning for a deprecated theme switcher config
+    # TODO: deprecation; remove after 0.13 release
     if "url_template" in theme_options.get("switcher", {}):
         logger.warning(
             "html_theme_options['switcher']['url_template'] is no longer supported."
@@ -166,41 +190,44 @@ def update_config(app):
             app.add_js_file(None, body=gid_script)
 
     # Update ABlog configuration default if present
-    if "ablog" in app.config.extensions:
-        app.config.__dict__["fontawesome_included"] = True
+    if "ablog" in app.config.extensions and not _config_provided_by_user(
+        app, "fontawesome_included"
+    ):
+        app.config.fontawesome_included = True
 
-
-def prepare_html_config(app, pagename, templatename, context, doctree):
-    """Prepare some configuration values for the HTML build.
-
-    For some reason updating the html_theme_options in an earlier Sphinx
-    event doesn't seem to update the values in context, so we manually update
-    it here with our config.
-    """
+    # Handle icon link shortcuts
+    shortcuts = [
+        ("twitter_url", "fa-brands fa-square-twitter", "Twitter"),
+        ("bitbucket_url", "fa-brands fa-bitbucket", "Bitbucket"),
+        ("gitlab_url", "fa-brands fa-square-gitlab", "GitLab"),
+        ("github_url", "fa-brands fa-square-github", "GitHub"),
+    ]
+    # Add extra icon links entries if there were shortcuts present
+    # TODO: Deprecate this at some point in the future?
+    for url, icon, name in shortcuts:
+        if theme_options.get(url):
+            # This defaults to an empty list so we can always insert
+            theme_options["icon_links"].insert(
+                0,
+                {
+                    "url": theme_options.get(url),
+                    "icon": icon,
+                    "name": name,
+                    "type": "fontawesome",
+                },
+            )
 
     # Prepare the logo config dictionary
-    theme_logo = context.get("theme_logo")
+    theme_logo = theme_options.get("logo")
     if not theme_logo:
         # In case theme_logo is an empty string
         theme_logo = {}
     if not isinstance(theme_logo, dict):
         raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
-
-    # DEPRECATE: >= 0.11
-    if context.get("theme_logo_link"):
-        logger.warning(
-            "DEPRECATION: Config `logo_link` will be deprecated in v0.11. "
-            "Use the `logo.link` configuration dictionary instead."
-        )
-        theme_logo = context.get("theme_logo_link")
-
-    context["theme_logo"] = theme_logo
-
-    # update version number
-    context["theme_version"] = __version__
+    theme_options["logo"] = theme_logo
 
 
-def update_templates(app, pagename, templatename, context, doctree):
+def update_and_remove_templates(app, pagename, templatename, context, doctree):
     """Update template names and assets for page build."""
     # Allow for more flexibility in template names
     template_sections = [
@@ -208,7 +235,10 @@ def update_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_center",
         "theme_navbar_persistent",
         "theme_navbar_end",
-        "theme_footer_items",
+        "theme_article_header_start",
+        "theme_article_header_end",
+        "theme_footer_start",
+        "theme_footer_end",
         "theme_secondary_sidebar_items",
         "theme_primary_sidebar_end",
         "sidebars",
@@ -225,6 +255,20 @@ def update_templates(app, pagename, templatename, context, doctree):
             for ii, template in enumerate(context.get(section)):
                 if not os.path.splitext(template)[1]:
                     context[section][ii] = template + ".html"
+
+            # If this is the page TOC, check if it is empty and remove it if so
+            def _remove_empty_templates(tname):
+                # These templates take too long to render, so skip them.
+                # They should never be empty anyway.
+                SKIP_EMPTY_TEMPLATE_CHECKS = ["sidebar-nav-bs.html", "navbar-nav.html"]
+                if not any(tname.endswith(temp) for temp in SKIP_EMPTY_TEMPLATE_CHECKS):
+                    # Render the template and see if it is totally empty
+                    rendered = app.builder.templates.render(tname, context)
+                    if len(rendered.strip()) == 0:
+                        return False
+                return True
+
+            context[section] = list(filter(_remove_empty_templates, context[section]))
 
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
     # - theme.conf
@@ -261,6 +305,9 @@ def update_templates(app, pagename, templatename, context, doctree):
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
         """
         app.add_js_file(None, body=js)
+
+    # Update version number for the "made with version..." component
+    context["theme_version"] = __version__
 
 
 def add_inline_math(node):
@@ -395,14 +442,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             """  # noqa
 
         return out
-
-    # TODO: Deprecate after v0.12
-    def generate_nav_html(*args, **kwargs):
-        logger.warning(
-            "`generate_nav_html` is deprecated and will be removed."
-            "Use `generate_toctree_html` instead."
-        )
-        generate_toctree_html(*args, **kwargs)
 
     # Cache this function because it is expensive to run, and becaues Sphinx
     # somehow runs this twice in some circumstances in unpredictable ways.
@@ -569,9 +608,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
 
-    # TODO: Deprecate after v0.12
-    context["generate_nav_html"] = generate_nav_html
-
 
 def _add_collapse_checkboxes(soup):
     """Add checkboxes to collapse children in a toctree."""
@@ -730,7 +766,6 @@ def soup_to_python(soup, only_pages=False):
     #       ...
 
     def extract_level_recursive(ul, navs_list):
-
         for li in ul.find_all("li", recursive=False):
             ref = li.a
             url = ref["href"]
@@ -768,8 +803,8 @@ def soup_to_python(soup, only_pages=False):
 def setup_edit_url(app, pagename, templatename, context, doctree):
     """Add a function that jinja can access for returning the edit URL of a page."""
 
-    def get_edit_url():
-        """Return a URL for an "edit this page" link."""
+    def get_edit_provider_and_url():
+        """Return a provider name and a URL for an "edit this page" link."""
         file_name = f"{pagename}{context['page_source_suffix']}"
 
         # Make sure that doc_path has a path separator only if it exists (to avoid //)
@@ -783,7 +818,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
             "gitlab_url": "https://gitlab.com",
         }
 
-        edit_url_attrs = {}
+        edit_attrs = {}
 
         # ensure custom URL is checked first, if given
         url_template = context.get("edit_page_url_template")
@@ -795,23 +830,26 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
                     "Ensure `file_name` appears in `edit_page_url_template`: "
                     f"{url_template}"
                 )
+            provider_name = context.get("edit_page_provider_name")
+            edit_attrs[("edit_page_url_template",)] = (provider_name, url_template)
 
-            edit_url_attrs[("edit_page_url_template",)] = url_template
-
-        edit_url_attrs.update(
+        edit_attrs.update(
             {
                 ("bitbucket_user", "bitbucket_repo", "bitbucket_version"): (
+                    "Bitbucket",
                     "{{ bitbucket_url }}/{{ bitbucket_user }}/{{ bitbucket_repo }}"
                     "/src/{{ bitbucket_version }}"
-                    "/{{ doc_path }}{{ file_name }}?mode=edit"
+                    "/{{ doc_path }}{{ file_name }}?mode=edit",
                 ),
                 ("github_user", "github_repo", "github_version"): (
+                    "GitHub",
                     "{{ github_url }}/{{ github_user }}/{{ github_repo }}"
-                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}"
+                    "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}",
                 ),
                 ("gitlab_user", "gitlab_repo", "gitlab_version"): (
+                    "GitLab",
                     "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
-                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}"
+                    "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}",
                 ),
             }
         )
@@ -820,17 +858,17 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
         doc_context.update(context)
         doc_context.update(doc_path=doc_path, file_name=file_name)
 
-        for attrs, url_template in edit_url_attrs.items():
+        for attrs, (provider, url_template) in edit_attrs.items():
             if all(doc_context.get(attr) not in [None, "None"] for attr in attrs):
-                return jinja2.Template(url_template).render(**doc_context)
+                return provider, jinja2.Template(url_template).render(**doc_context)
 
         raise ExtensionError(
             "Missing required value for `use_edit_page_button`. "
             "Ensure one set of the following in your `html_context` "
-            f"configuration: {sorted(edit_url_attrs.keys())}"
+            f"configuration: {sorted(edit_attrs.keys())}"
         )
 
-    context["get_edit_url"] = get_edit_url
+    context["get_edit_provider_and_url"] = get_edit_provider_and_url
 
     # Ensure that the max TOC level is an integer
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
@@ -910,9 +948,12 @@ def _overwrite_pygments_css(app, exception=None):
         # see if user specified a light/dark pygments theme, if not, use the
         # one we set in theme.conf
         style_key = f"pygment_{light_or_dark}_style"
-        theme_name = app.config.html_theme_options.get(
-            style_key, app.builder.globalcontext.get(f"theme_{style_key}")
-        )
+
+        # globalcontext sometimes doesn't exist so this ensures we do not error
+        theme_name = _get_theme_options(app).get(style_key, None)
+        if theme_name is None and hasattr(app.builder, "globalcontext"):
+            theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
+
         # make sure we can load the style
         if theme_name not in pygments_styles:
             logger.warning(
@@ -1038,6 +1079,112 @@ class ShortenLinkTransform(SphinxPostTransform):
         return text
 
 
+def setup_translators(app):
+    """
+    Add bootstrap HTML functionality if we are using an HTML translator.
+
+    This re-uses the pre-existing Sphinx translator and adds extra functionality defined
+    in ``BootstrapHTML5TranslatorMixin``. This way we can retain the original translator's
+    behavior and configuration, and _only_ add the extra bootstrap rules.
+    If we don't detect an HTML-based translator, then we do nothing.
+    """
+    if not app.registry.translators.items():
+        translator = types.new_class(
+            "BootstrapHTML5Translator",
+            (
+                BootstrapHTML5TranslatorMixin,
+                app.builder.default_translator_class,
+            ),
+            {},
+        )
+        app.set_translator(app.builder.name, translator, override=True)
+    else:
+        for name, klass in app.registry.translators.items():
+            if app.builder.format != "html":
+                # Skip translators that are not HTML
+                continue
+
+            translator = types.new_class(
+                "BootstrapHTML5Translator",
+                (
+                    BootstrapHTML5TranslatorMixin,
+                    klass,
+                ),
+                {},
+            )
+            app.set_translator(name, translator, override=True)
+
+
+# ------------------------------------------------------------------------------
+# customize events for logo management
+# we use one event to copy over custom logo images to _static
+# and another even to link them in the html context
+# ------------------------------------------------------------------------------
+
+
+def setup_logo_path(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree: nodes.Node
+) -> None:
+    """Set up relative paths to logos in our HTML templates.
+
+    In Sphinx, the context["logo"] is a path to the `html_logo` image now in the output
+    `_static` folder.
+
+    If logo["image_light"] and logo["image_dark"] are given, we must modify them to
+    follow the same pattern. They have already been copied to the output folder
+    in the `update_config` event.
+    """
+
+    # get information from the context "logo_url" for sphinx>=6, "logo" sphinx<6
+    pathto = context.get("pathto")
+    logo = context.get("logo_url") or context.get("logo")
+    theme_logo = context.get("theme_logo", {})
+
+    # Define the final path to logo images in the HTML context
+    theme_logo["image_relative"] = {}
+    for kind in ["light", "dark"]:
+        image_kind_logo = theme_logo.get(f"image_{kind}")
+
+        # If it's a URL the "relative" path is just the URL
+        # else we need to calculate the relative path to a local file
+        if image_kind_logo:
+            if not isurl(image_kind_logo):
+                image_kind_name = Path(image_kind_logo).name
+                image_kind_logo = pathto(f"_static/{image_kind_name}", resource=True)
+            theme_logo["image_relative"][kind] = image_kind_logo
+
+        # If there's no custom logo for this kind, just use `html_logo`
+        # If `logo` is also None, then do not add this key to context.
+        elif isinstance(logo, str) and len(logo) > 0:
+            theme_logo["image_relative"][kind] = logo
+
+    # Update our context logo variables with the new image paths
+    context["theme_logo"] = theme_logo
+
+
+def copy_logo_images(app: Sphinx, exception=None) -> None:
+    """
+    If logo image paths are given, copy them to the `_static` folder
+    Then we can link to them directly in an html_page_context event
+    """
+    theme_options = _get_theme_options(app)
+    logo = theme_options.get("logo", {})
+    staticdir = Path(app.builder.outdir) / "_static"
+    for kind in ["light", "dark"]:
+        path_image = logo.get(f"image_{kind}")
+        if not path_image or isurl(path_image):
+            continue
+        if not (Path(app.srcdir) / path_image).exists():
+            logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
+        # Ensure templates cannot be passed for logo path to avoid security vulnerability
+        if path_image.lower().endswith("_t"):
+            raise ExtensionError(
+                f"The {kind} logo path '{path_image}' looks like a Sphinx template; "
+                "please provide a static logo image."
+            )
+        copy_asset_file(path_image, staticdir)
+
+
 # -----------------------------------------------------------------------------
 
 
@@ -1049,19 +1196,17 @@ def setup(app):
 
     app.add_post_transform(ShortenLinkTransform)
 
-    app.set_translator("html", BootstrapHTML5Translator)
-    # Read the Docs uses ``readthedocs`` as the name of the build, and also
-    # uses a special "dirhtml" builder so we need to replace these both with
-    # our custom HTML builder
-    app.set_translator("readthedocs", BootstrapHTML5Translator, override=True)
-    app.set_translator("readthedocsdirhtml", BootstrapHTML5Translator, override=True)
-
+    app.connect("builder-inited", setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
-    app.connect("html-page-context", update_templates)
-    app.connect("html-page-context", prepare_html_config)
+    app.connect("html-page-context", update_and_remove_templates)
+    app.connect("html-page-context", setup_logo_path)
     app.connect("build-finished", _overwrite_pygments_css)
+    app.connect("build-finished", copy_logo_images)
+
+    # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
+    app.add_message_catalog("sphinx", here / "locale")
 
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))
