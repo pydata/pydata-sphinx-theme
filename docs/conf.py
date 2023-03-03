@@ -213,7 +213,7 @@ favicons = [
     # msapplications
     {"name": "msapplication-TileColor", "content": "#459db9"},
     {"name": "theme-color", "content": "#ffffff"},
-    "mstile-150x150.png",
+    {"name": "msapplication-TileImage", "content": "mstile-150x150.png"},
 ]
 
 # -- application setup -------------------------------------------------------
