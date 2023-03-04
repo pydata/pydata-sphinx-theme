@@ -196,10 +196,11 @@ def update_config(app):
     ]
     # Add extra icon links entries if there were shortcuts present
     # TODO: Deprecate this at some point in the future?
+    icon_links = theme_options.get("icon_links", [])
     for url, icon, name in shortcuts:
         if theme_options.get(url):
             # This defaults to an empty list so we can always insert
-            theme_options["icon_links"].insert(
+            icon_links.insert(
                 0,
                 {
                     "url": theme_options.get(url),
@@ -208,6 +209,7 @@ def update_config(app):
                     "type": "fontawesome",
                 },
             )
+    theme_options["icon_links"] = icon_links
 
     # Prepare the logo config dictionary
     theme_logo = theme_options.get("logo")
