@@ -15,11 +15,22 @@ mysphinxsite/
 ```
 ````
 
-## Define a list of asset folders in `conf.py`
+## First: define your `html_static_path`
+
+Any folders that are listed in `html_static_path` will be treated as containing static assets for your build.
+All files within these folders will be copied to your build's `_static` folder at build time.
+For example, with an `html` builder, files will be copied to `_build/html/_static`.
+
+These files are _flattened_ when they are copied, so any folder hierarchies will be lost.
+
+Listing folders with your static assets must be done before any of the methods describe below.
+When you define asset names in the methods described below, they generally assume paths that are _relative to this `_static` output folder_.
+
+## Define a list of assets in `conf.py`
 
 The simplest way to add JS and CSS assets is to use [`html_css_files`](https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_css_files) and [`html_js_files`](https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_js_files) in your `conf.py` file.
 Each can be a list of paths, _relative to your `html_static_path`_.
-They will be added to the `<head>` of your site in order.
+They will be added to the end of the `<head>` of your site.
 
 For example:
 
@@ -77,6 +88,7 @@ For example:
 
 ```python
 html_static_path = ["_static"]
+
 def add_my_files(app, pagename, templatename, context, doctree):
   if pagename == "dontaddonthispage":
     return

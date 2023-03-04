@@ -25,6 +25,7 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     # For extension examples and demos
+    "ablog",
     "jupyter_sphinx",
     "matplotlib.sphinxext.plot_directive",
     "myst_nb",
@@ -155,6 +156,16 @@ html_sidebars = {
     "examples/persistent-search-field": ["search-field"],
     # Blog sidebars
     # ref: https://ablog.readthedocs.io/manual/ablog-configuration-options/#blog-sidebars
+    "examples/blog/*": [
+        "ablog/postcard.html",
+        "ablog/recentposts.html",
+        "ablog/tagcloud.html",
+        "ablog/categories.html",
+        "ablog/authors.html",
+        "ablog/languages.html",
+        "ablog/locations.html",
+        "ablog/archives.html",
+    ],
 }
 
 myst_heading_anchors = 2
