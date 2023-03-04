@@ -119,3 +119,33 @@
     font-size: var(--pst-font-size-icon);
   }
 }
+
+/**
+ * The search button component that looks like a field.
+ * Lives at components/search-button-field.html
+ */
+.search-button-field {
+  display: inline-flex;
+  align-items: center;
+  border: var(--pst-color-border) solid 1px;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  color: var(--pst-color-text-muted);
+
+  &:hover,
+  &:focus {
+    background-color: var(--pst-color-surface);
+    border-color: var(--pst-color-primary);
+  }
+
+  // Magnifying glass icon
+  i {
+    padding: 0 0.5rem;
+  }
+
+  // The keyboard shotcut text
+  .search-button__kbd-shortcut {
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+  }
+}
