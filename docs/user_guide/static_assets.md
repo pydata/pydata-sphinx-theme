@@ -28,7 +28,7 @@ For example:
 
 html_static_path = ["_static"]
 html_css_files = ["mycss.css"]
-html_js_files = ["mycss.css"]
+html_js_files = ["myjs.js"]
 ```
 
 This will cause each to be linked in your `<head>`.
