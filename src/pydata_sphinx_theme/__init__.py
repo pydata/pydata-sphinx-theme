@@ -1166,6 +1166,10 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
         path_image = logo.get(f"image_{kind}")
         if not path_image or isurl(path_image):
             continue
+        if (staticdir / Path(path_image).name).exists():
+            # file already exists in static dir e.g. because a theme has
+            # bundled the logo and installed it there
+            continue
         if not (Path(app.srcdir) / path_image).exists():
             logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
         # Ensure templates cannot be passed for logo path to avoid security vulnerability
