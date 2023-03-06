@@ -1,6 +1,7 @@
 # -- Path setup --------------------------------------------------------------
 import os
 import sys
+import pydata_sphinx_theme
 
 sys.path.append("scripts")
 from gallery_directive import GalleryDirective
@@ -10,9 +11,6 @@ from gallery_directive import GalleryDirective
 project = "PyData Theme"
 copyright = "2019, PyData Community"
 author = "PyData Community"
-
-import pydata_sphinx_theme
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -33,22 +31,8 @@ extensions = [
     # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
     "numpydoc",
     "sphinx_togglebutton",
+    "sphinx_favicon",
 ]
-
-# -- Internationalization ------------------------------------------------
-# specifying the natural language populates some key tags
-language = "en"
-
-# ReadTheDocs has its own way of generating sitemaps, etc.
-if not os.environ.get("READTHEDOCS"):
-    extensions += ["sphinx_sitemap"]
-
-    # -- Sitemap -------------------------------------------------------------
-    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
-    sitemap_locales = [None]
-    sitemap_url_scheme = "{link}"
-
-autosummary_generate = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -58,16 +42,44 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
-# -- Extension options -------------------------------------------------------
+# -- Sitemap -----------------------------------------------------------------
+
+# ReadTheDocs has its own way of generating sitemaps, etc.
+if not os.environ.get("READTHEDOCS"):
+    extensions += ["sphinx_sitemap"]
+
+    html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
+    sitemap_locales = [None]
+    sitemap_url_scheme = "{link}"
+
+
+# -- autosummary -------------------------------------------------------------
+
+autosummary_generate = True
+
+
+# -- Internationalization ----------------------------------------------------
+
+# specifying the natural language populates some key tags
+language = "en"
+
+# -- MyST options ------------------------------------------------------------
 
 # This allows us to use ::: to denote directives, useful for admonitions
 myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
+myst_heading_anchors = 2
+myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
+
+# -- Ablog options -----------------------------------------------------------
+
+blog_path = "examples/blog/index"
+blog_authors = {
+    "pydata": ("PyData", "https://pydata.org"),
+    "jupyter": ("Jupyter", "https://jupyter.org"),
+}
 
 # -- Options for HTML output -------------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
 html_theme = "pydata_sphinx_theme"
 html_logo = "_static/logo.svg"
 html_favicon = "_static/logo.svg"
@@ -168,9 +180,6 @@ html_sidebars = {
     ],
 }
 
-myst_heading_anchors = 2
-myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
-
 html_context = {
     "github_user": "pydata",
     "github_repo": "pydata-sphinx-theme",
@@ -182,14 +191,6 @@ rediraffe_redirects = {
     "contributing.rst": "community/index.rst",
 }
 
-# ABlog configuration
-blog_path = "examples/blog/index"
-blog_authors = {
-    "pydata": ("PyData", "https://pydata.org"),
-    "jupyter": ("Jupyter", "https://jupyter.org"),
-}
-
-
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
@@ -197,7 +198,28 @@ html_static_path = ["_static"]
 html_css_files = ["custom.css"]
 todo_include_todos = True
 
+# -- favicon options ---------------------------------------------------------
+
+# see https://sphinx-favicon.readthedocs.io for more information about the
+# sphinx-favicon extention
+favicons = [
+    # generic icons compatible with most browsers
+    "favicon-32x32.png",
+    "favicon-16x16.png",
+    {"rel": "shortcut icon", "sizes": "any", "href": "favicon.ico"},
+    # chrome specific
+    "android-chrome-192x192.png",
+    # apple icons
+    {"rel": "mask-icon", "color": "#459db9", "href": "safari-pinned-tab.svg"},
+    {"rel": "apple-touch-icon", "href": "apple-touch-icon.png"},
+    # msapplications
+    {"name": "msapplication-TileColor", "content": "#459db9"},
+    {"name": "theme-color", "content": "#ffffff"},
+    {"name": "msapplication-TileImage", "content": "mstile-150x150.png"},
+]
+
+# -- application setup -------------------------------------------------------
+
 
 def setup(app):
-    # Add the gallery directive
     app.add_directive("gallery-grid", GalleryDirective)

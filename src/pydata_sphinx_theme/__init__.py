@@ -80,11 +80,18 @@ def update_config(app):
             "Use `secondary_sidebar_items`."
         )
 
-    # DEPRECATE after 0.14
+    # TODO: DEPRECATE after 0.14
     if theme_options.get("footer_items"):
         theme_options["footer_start"] = theme_options.get("footer_items")
         logger.warning(
             "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
+        )
+
+    # TODO: DEPRECATE after v0.15
+    if theme_options.get("favicons"):
+        logger.warning(
+            "The configuration `favicons` is deprecated."
+            "Use the sphinx-favicon extention instead."
         )
 
     # Validate icon links
