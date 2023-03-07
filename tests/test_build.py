@@ -326,50 +326,6 @@ def test_logo_template_rejected(sphinx_build_factory):
         sphinx_build_factory("base", confoverrides=confoverrides).build()
 
 
-def test_favicons(sphinx_build_factory):
-    """Test that arbitrary favicons are included."""
-    html_theme_options_favicons = {
-        "favicons": [
-            {
-                "rel": "icon",
-                "sizes": "16x16",
-                "href": "https://secure.example.com/favicon/favicon-16x16.png",
-            },
-            {
-                "rel": "icon",
-                "sizes": "32x32",
-                "href": "favicon-32x32.png",
-            },
-            {
-                "rel": "apple-touch-icon",
-                "sizes": "180x180",
-                "href": "apple-touch-icon-180x180.png",
-            },
-        ]
-    }
-    confoverrides = {"html_theme_options": html_theme_options_favicons}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-
-    index_html = sphinx_build.html_tree("index.html")
-
-    icon_16 = (
-        '<link href="https://secure.example.com/favicon/favicon-16x16.png" '
-        'rel="icon" sizes="16x16" type="image/png"/>'
-    )
-    icon_32 = (
-        '<link href="_static/favicon-32x32.png" rel="icon" sizes="32x32" '
-        'type="image/png"/>'
-    )
-    icon_180 = (
-        '<link href="_static/apple-touch-icon-180x180.png" '
-        'rel="apple-touch-icon" sizes="180x180" type="image/png"/>'
-    )
-    print(index_html.select("head")[0])
-    assert icon_16 in str(index_html.select("head")[0])
-    assert icon_32 in str(index_html.select("head")[0])
-    assert icon_180 in str(index_html.select("head")[0])
-
-
 def test_navbar_align_default(sphinx_build_factory):
     """The navbar items align with the proper part of the page."""
     sphinx_build = sphinx_build_factory("base").build()
@@ -884,6 +840,7 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression):
     expected_warnings = (
         "The configuration `logo_text` is deprecated",
         "The configuration `page_sidebar_items` is deprecated",
+        "The configuration `favicons` is deprecated.",
         "`footer_items` is deprecated",
         "unsupported theme option 'logo_text'",
         "unsupported theme option 'page_sidebar_items'",
@@ -918,10 +875,17 @@ def test_empty_templates(sphinx_build_factory):
     """If a template is empty (e.g., via a config), it should be removed."""
     # When configured to be gone, the template should be removed w/ its parent.
     # ABlog needs to be added so we can test that template rendering works w/ it.
-    confoverrides = {"html_show_sourcelink": False}
+    confoverrides = {
+        "html_show_sourcelink": False,
+    }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    toc_items = sphinx_build.html_tree("page1.html").select(".toc-item")
-    assert not any(ii.select(".tocsection.sourcelink") for ii in toc_items)
+    html = sphinx_build.html_tree("page1.html")
+
+    # We've set this to fase in the config so the template shouldn't show up at all
+    assert not html.select(".tocsection.sourcelink")
+
+    # Should not be any icon link wrapper because none are given in conf
+    assert not html.select(".navbar-icon-links")
 
 
 def test_translations(sphinx_build_factory):
@@ -930,12 +894,7 @@ def test_translations(sphinx_build_factory):
     This will build our test site with the French language, and test
     that a few phrases are in French.
 
-    TODO: At first, we expect some of these phrases to be *incorrectly* in
-    English. This is because we haven't added translation files for them.
-    We should change this test to the appropriate French versions once we add
-    support for other languages.
-
-    Then, we use this test to catch regressions if we change wording without
+    We use this test to catch regressions if we change wording without
     changing the translation files."""
 
     confoverrides = {
@@ -954,29 +913,25 @@ def test_translations(sphinx_build_factory):
     # Use a section page so that we have section navigation in the sidebar
     index = sphinx_build.html_tree("section1/index.html")
 
-    # TODO: Add translations where there are english phrases below
     sidebar_primary = index.select(".bd-sidebar-primary")[0]
-    assert "Site Navigation" in str(sidebar_primary)
-    assert "Section Navigation" in str(sidebar_primary)
+    assert "Navigation du site" in str(sidebar_primary)
+    assert "Navigation de la section" in str(sidebar_primary)
 
-    # TODO: Add translations where there are english phrases below
     sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
     assert "Montrer le code source" in str(sidebar_secondary)
-    assert "Edit on GitHub" in str(sidebar_secondary)
+    assert "Modifier sur GitHub" in str(sidebar_secondary)
 
-    # TODO: Add translations where there are english phrases below
     header = index.select(".bd-header")[0]
-    assert "light/dark" in str(header)
+    assert "clair/sombre" in str(header)
 
-    # TODO: Add translations where there are english phrases below
     footer = index.select(".bd-footer")[0]
     assert "Copyright" in str(footer)
-    assert "Created using" in str(footer)
-    assert "Built with the" in str(footer)
+    assert "Créé en utilisant" in str(footer)
+    assert "Construit avec le" in str(footer)
 
     footer_article = index.select(".bd-footer-article")[0]
     assert "précédent" in str(footer_article)
-    assert "suivant page" in str(footer_article)
+    assert "page suivante" in str(footer_article)
 
     # Search bar
     # TODO: Add translations where there are english phrases below

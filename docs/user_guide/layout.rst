@@ -463,29 +463,6 @@ If you'd like them to stack **horizontally** use a custom CSS rule like the foll
      flex-direction: row;
    }
 
-Change footer display
----------------------
-
-Each footer element is wrapped in a ``<div>`` with a ``footer-item`` class, allowing you to style the structure of these items with custom CSS.
-
-For example, by default the footer items are displayed as blocks that stack vertically.
-To change this behavior so that they stack **horizontally**, add a rule like the following in your custom ``.css`` file.
-
-.. code-block:: css
-
-   /* Make each footer item in-line so they stack horizontally instead of vertically */
-   .footer-item {
-     display: inline-block;
-   }
-
-   /* Add a separating border line for all but the last item */
-   .footer-item:not(:last-child) {
-     border-right: 1px solid var(--pst-color-text-base);
-     margin-right: .5em;
-     padding-right: .5em;
-   }
-
-
 Built-in components to insert into sections
 ===========================================
 
