@@ -10,6 +10,7 @@
 {# Create the sidebar links HTML here to re-use in a few places #}
 {# If we have no sidebar links, pop the links component from the sidebar list #}
 {%- set sidebar_nav_html = generate_toctree_html("sidebar",
+startdepth=theme_navigation_startdepth|int,
 show_nav_level=theme_show_nav_level|int,
 maxdepth=theme_navigation_depth|int,
 collapse=theme_collapse_navigation|tobool,
