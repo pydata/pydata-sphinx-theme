@@ -804,9 +804,10 @@ def soup_to_python(soup, only_pages=False):
 
     return navs
 
-def resolve(self, docname: str, builder: "Builder", toctree: addnodes.toctree,
+def _resolve(self: TocTree, docname: str, builder: "Builder", toctree: addnodes.toctree,
             prune: bool = True, maxdepth: int = 0, titles_only: bool = False,
-            collapse: bool = False, includehidden: bool = False) -> Optional[Element]:
+            collapse: bool = False, includehidden: bool = False,
+            toc_caption_maxdepth: int = 1) -> Optional[Element]:
     """Resolve a *toctree* node into individual bullet lists with titles
     as items, returning None (if no containing titles are found) or
     a new node.
@@ -818,6 +819,11 @@ def resolve(self, docname: str, builder: "Builder", toctree: addnodes.toctree,
     If *collapse* is True, all branches not containing docname will
     be collapsed.
     """
+    # this is a copy of `TocTree.resolve`, but where the sphinx version
+    # only renders toctree captions for top-level toctree-nodes
+    # we here allow to set `toc_caption_maxdepth`
+    # for finer control of this behavior.
+
     if toctree.get('hidden', False) and not includehidden:
         return None
     generated_docnames: Dict[str, Tuple[str, str, str]] = self.env.domains['std'].initial_data['labels'].copy()  # NoQA: E501
@@ -875,8 +881,9 @@ def resolve(self, docname: str, builder: "Builder", toctree: addnodes.toctree,
                         subnode = subnode.parent
 
     def _entries_from_toctree(toctreenode: addnodes.toctree, parents: List[str],
-                                separate: bool = False, subtree: bool = False
-                                ) -> List[Element]:
+                                docname: str, separate: bool = False, 
+                                subtree: bool = False, toc_caption_maxdepth: int = 1,
+                                depth: int = 1) -> List[Element]:
         """Return TOC entries for a toctree node."""
         refs = [(e[0], e[1]) for e in toctreenode['entries']]
         entries: List[Element] = []
@@ -974,12 +981,29 @@ def resolve(self, docname: str, builder: "Builder", toctree: addnodes.toctree,
                 for subtocnode in list(toc.findall(addnodes.toctree)):
                     if not (subtocnode.get('hidden', False) and
                             not includehidden):
+
                         i = subtocnode.parent.index(subtocnode) + 1
-                        for entry in _entries_from_toctree(
-                                subtocnode, [refdoc] + parents,
-                                subtree=True):
-                            subtocnode.parent.insert(i, entry)
-                            i += 1
+                        toctree_entries = _entries_from_toctree(
+                            subtocnode,
+                            [refdoc] + parents,
+                            separate=separate,
+                            docname=docname,
+                            toc_caption_maxdepth=toc_caption_maxdepth,
+                            subtree=True,
+                            depth=depth + 1,
+                        )
+
+                        if depth >= toc_caption_maxdepth:
+                            for entry in toctree_entries:
+                                subtocnode.parent.insert(i, entry)
+                                i += 1
+                        else:
+                            newnode = addnodes.compact_paragraph('', '')
+                            newnode = _add_toctree_captions(
+                                subtocnode, newnode, toctree_entries
+                            )
+                            subtocnode.parent.insert(i, newnode)
+
                         subtocnode.parent.remove(subtocnode)
                 if separate:
                     entries.append(toc)
@@ -992,6 +1016,28 @@ def resolve(self, docname: str, builder: "Builder", toctree: addnodes.toctree,
             return [ret]
         return entries
 
+    def _add_toctree_captions(
+        toctree: addnodes.toctree,
+        node: addnodes.compact_paragraph,
+        tocentries: List[Element],
+    ):
+        caption = toctree.attributes.get("caption")
+
+        if caption:
+            caption_node = nodes.title(caption, '', *[nodes.Text(caption)])
+            caption_node.line = toctree.line
+            caption_node.source = toctree.source
+            caption_node.rawsource = toctree["rawcaption"]
+            if hasattr(toctree, "uid"):
+                # move uid to caption_node to translate it
+                caption_node.uid = toctree.uid  # type: ignore
+                del toctree.uid  # type: ignore
+            node += caption_node
+        node.extend(tocentries)
+        node["toctree"] = True
+
+        return node
+
     maxdepth = maxdepth or toctree.get('maxdepth', -1)
     if not titles_only and toctree.get('titlesonly', False):
         titles_only = True
@@ -1001,24 +1047,13 @@ def resolve(self, docname: str, builder: "Builder", toctree: addnodes.toctree,
     # NOTE: previously, this was separate=True, but that leads to artificial
     # separation when two or more toctree entries form a logical unit, so
     # separating mode is no longer used -- it's kept here for history's sake
-    tocentries = _entries_from_toctree(toctree, [], separate=False)
+    tocentries = _entries_from_toctree(toctree, [], separate=False,
+        docname=docname, toc_caption_maxdepth=toc_caption_maxdepth)
     if not tocentries:
         return None
 
     newnode = addnodes.compact_paragraph('', '')
-    caption = toctree.attributes.get('caption')
-    if caption:
-        caption_node = nodes.title(caption, '', *[nodes.Text(caption)])
-        caption_node.line = toctree.line
-        caption_node.source = toctree.source
-        caption_node.rawsource = toctree['rawcaption']
-        if hasattr(toctree, 'uid'):
-            # move uid to caption_node to translate it
-            caption_node.uid = toctree.uid  # type: ignore
-            del toctree.uid  # type: ignore
-        newnode += caption_node
-    newnode.extend(tocentries)
-    newnode['toctree'] = True
+    newnode = _add_toctree_captions(toctree, newnode, tocentries)
 
     # prune the tree to maxdepth, also set toc depth and current classes
     _toctree_add_classes(newnode, 1)
