@@ -490,11 +490,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
         HTML string (if kind == "sidebar") OR
         BeautifulSoup object (if kind == "raw")
         """
-        if startdepth == 0:
-            toc_sphinx = context["toctree"](**kwargs)
-        else:
-            # select the "active" subset of the navigation tree for the sidebar
-            toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
+        toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
 
         soup = bs(toc_sphinx, "html.parser")
 
@@ -701,7 +697,7 @@ def _get_local_toctree_for(
     # FIX: Can just use "findall" once docutils 0.18+ is required
     meth = "findall" if hasattr(doctree, "findall") else "traverse"
     for toctreenode in getattr(doctree, meth)(addnodes.toctree):
-        toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwargs)
+        toctree = _resolve(self, docname, builder, toctreenode, prune=True, **kwargs)
         if toctree:
             toctrees.append(toctree)
     if not toctrees:
@@ -734,14 +730,19 @@ def index_toctree(app, pagename: str, startdepth: int, collapse: bool = True, **
 
     toctree = TocTree(app.env)
     ancestors = toctree.get_toctree_ancestors(pagename)
-    try:
-        indexname = ancestors[-startdepth]
-    except IndexError:
-        # eg for index.rst, but also special pages such as genindex, py-modindex, search
-        # those pages don't have a "current" element in the toctree, so we can
-        # directly return an empty string instead of using the default sphinx
-        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
-        return ""
+
+    if startdepth == 0:
+        # Special case as the toplevel index.rst is not listed in the ancestors list.
+        indexname = "index"
+    else:
+        try:
+            indexname = ancestors[-startdepth]
+        except IndexError:
+            # eg for index.rst, but also special pages such as genindex, py-modindex, search
+            # those pages don't have a "current" element in the toctree, so we can
+            # directly return an empty string instead of using the default sphinx
+            # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
+            return ""
 
     toctree_element = _get_local_toctree_for(
         toctree, indexname, pagename, app.builder, collapse, **kwargs
