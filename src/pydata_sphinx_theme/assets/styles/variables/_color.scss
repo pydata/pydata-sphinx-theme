@@ -105,11 +105,13 @@ $pst-semantic-colors: (
   }
   // adapt to light/dark-specific content
   @if $mode == "light" {
-    .only-dark {
+    .only-dark,
+    .only-dark ~ figcaption {
       display: none !important;
     }
   } @else {
-    .only-light {
+    .only-light,
+    .only-light ~ figcaption {
       display: none !important;
     }
     /* Adjust images in dark mode (unless they have class .only-dark or
