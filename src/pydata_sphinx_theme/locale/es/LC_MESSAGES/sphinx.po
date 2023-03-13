@@ -125,7 +125,7 @@ msgstr "Mostrar el código"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sphinx-version.html:3
 #, python-format
 msgid ""
-"Created using <a href=\"https://sphinx-doc.org/\">Sphinx</a> "
+"Created using <a href=\"https://www.sphinx-doc.org/\">Sphinx</a> "
 "%(sphinx_version)s."
 msgstr ""
 "Creado usando <a href=\"https://www.sphinx-doc.org/\">Sphinx</a> "

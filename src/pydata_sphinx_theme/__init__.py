@@ -27,7 +27,7 @@ from requests.exceptions import ConnectionError, HTTPError, RetryError
 
 from .translator import BootstrapHTML5TranslatorMixin
 
-__version__ = "0.13.0dev0"
+__version__ = "0.13.2dev0"
 
 logger = logging.getLogger(__name__)
 
@@ -80,11 +80,18 @@ def update_config(app):
             "Use `secondary_sidebar_items`."
         )
 
-    # DEPRECATE after 0.14
+    # TODO: DEPRECATE after 0.14
     if theme_options.get("footer_items"):
         theme_options["footer_start"] = theme_options.get("footer_items")
         logger.warning(
             "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
+        )
+
+    # TODO: DEPRECATE after v0.15
+    if theme_options.get("favicons"):
+        logger.warning(
+            "The configuration `favicons` is deprecated."
+            "Use the sphinx-favicon extention instead."
         )
 
     # Validate icon links
@@ -196,10 +203,11 @@ def update_config(app):
     ]
     # Add extra icon links entries if there were shortcuts present
     # TODO: Deprecate this at some point in the future?
+    icon_links = theme_options.get("icon_links", [])
     for url, icon, name in shortcuts:
         if theme_options.get(url):
             # This defaults to an empty list so we can always insert
-            theme_options["icon_links"].insert(
+            icon_links.insert(
                 0,
                 {
                     "url": theme_options.get(url),
@@ -208,6 +216,7 @@ def update_config(app):
                     "type": "fontawesome",
                 },
             )
+    theme_options["icon_links"] = icon_links
 
     # Prepare the logo config dictionary
     theme_logo = theme_options.get("logo")
@@ -1165,6 +1174,10 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
     for kind in ["light", "dark"]:
         path_image = logo.get(f"image_{kind}")
         if not path_image or isurl(path_image):
+            continue
+        if (staticdir / Path(path_image).name).exists():
+            # file already exists in static dir e.g. because a theme has
+            # bundled the logo and installed it there
             continue
         if not (Path(app.srcdir) / path_image).exists():
             logger.warning(f"Path to {kind} image logo does not exist: {path_image}")

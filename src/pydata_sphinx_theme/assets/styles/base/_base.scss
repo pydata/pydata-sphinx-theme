@@ -68,7 +68,7 @@ a {
   &.gitlab {
     &::before {
       color: var(--pst-color-text-muted);
-      font-family: "Font Awesome 6 Brands";
+      font: var(--fa-font-brands);
       margin-right: 0.25rem;
     }
   }
