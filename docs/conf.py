@@ -118,10 +118,20 @@ html_theme_options = {
             "name": "Donate to NumFocus",
         },
     ],
-    "github_url": "https://github.com/pydata/pydata-sphinx-theme",
-    "twitter_url": "https://twitter.com/PyData",
+    # "github_url": "https://github.com/pydata/pydata-sphinx-theme",
+    # "twitter_url": "https://twitter.com/PyData",
     "header_links_before_dropdown": 4,
     "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/pydata/pydata-sphinx-theme",
+            "icon": "fa-brands fa-github",
+        },
+        {
+            "name": "Twitter",
+            "url": "https://twitter.com/PyData",
+            "icon": "fa-brands fa-twitter",
+        },
         {
             "name": "PyPI",
             "url": "https://pypi.org/project/pydata-sphinx-theme",
