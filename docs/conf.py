@@ -125,7 +125,7 @@ html_theme_options = {
         {
             "name": "PyPI",
             "url": "https://pypi.org/project/pydata-sphinx-theme",
-            "icon": "fa-solid fa-box",
+            "icon": "fa-brands fa-python",
         },
         {
             "name": "PyData",
