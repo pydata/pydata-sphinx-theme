@@ -47,10 +47,50 @@ If your ``toctree`` does not have a caption defined, then all of the pages under
 (the same as the default theme behavior). See `the toctree documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree>`_
 for more details.
 
+.. image:: /_static/demo-show_nav_level-0.gif
+
 .. note::
 
    In some Sphinx sites, the top-level ``toctree`` groupings make up "parts" in the documentation, with
    each page beneath making up a "chapter".
+
+.. _toc-caption-levels:
+
+Categorize sub-pages with toctree captions
+------------------------------------------
+
+It is possible to categorize pages in the :ref:`Primary Sidebar<layout-sidebar-primary>` by placing all pages on a specific topic in their own ``toctree`` with a ``:caption:`` that is used as the category title. 
+
+An example that will generate output similar to this website may look something like this:
+
+.. code:: restructuredtext
+
+   .. toctree::
+      :caption: Get started
+
+      install
+      layout
+
+   .. toctree::
+      :caption: Navigation and links
+
+      navigation
+      page-toc
+
+By default, this behavior is only present for pages on the second navigation level 
+(i.e. the first navigation level that is shown in the primary sidebar). 
+To show categories at deeper levels, set the ``toc_caption_maxdepth`` option to your desired depth:
+
+.. code:: python
+
+   html_theme_options = {
+     "toc_caption_maxdepth": 3
+   }
+
+.. image:: /_static/demo-toc_caption_maxdepth-3.gif
+
+.. note::
+   Changing the ``toc_caption_maxdepth`` is not supported when collapsible toc captions are enabled with ``"show_nav_level": 0``
 
 .. _navigation-levels:
 
@@ -66,6 +106,31 @@ in the sidebar (with a default of 4):
      "navigation_depth": 2
    }
 
+Control the navigation startdepth
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+   This functionality is not supported when collapsible toc captions are enabled with ``"show_nav_level": 0``
+
+By default, the ``toctree`` displayed in the :ref:`Primary Sidebar<layout-sidebar-primary>` starts at the second navigation level, while the first navigation level is shown only in the :ref:`layout-header`.  
+It is possible to override this behavior by explicitly setting a navigation startdepth:
+
+.. code:: python
+
+   html_theme_options = {
+     "navigation_startdepth": 0
+   }
+
+To preserve the default behavior for categories made with toctree captions (see :ref:`toc-caption-levels`), it is necessary to edit the ``toc_caption_maxdepth`` parameter correspondingly (default = 1):
+
+.. code:: python
+
+   html_theme_options = {
+     "navigation_startdepth": 0,
+     "toc_caption_maxdepth": 2
+   }
+
+.. image:: /_static/demo-navigation_startdepth-0.gif
 
 Remove reveal buttons for sidebar items
 ---------------------------------------
