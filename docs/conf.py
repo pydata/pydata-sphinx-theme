@@ -123,14 +123,14 @@ html_theme_options = {
     "header_links_before_dropdown": 4,
     "icon_links": [
         {
-            "name": "GitHub",
-            "url": "https://github.com/pydata/pydata-sphinx-theme",
-            "icon": "fa-brands fa-github",
-        },
-        {
             "name": "Twitter",
             "url": "https://twitter.com/PyData",
             "icon": "fa-brands fa-twitter",
+        },
+        {
+            "name": "GitHub",
+            "url": "https://github.com/pydata/pydata-sphinx-theme",
+            "icon": "fa-brands fa-github",
         },
         {
             "name": "PyPI",

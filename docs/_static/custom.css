@@ -55,3 +55,19 @@ div.admonition.admonition-youtube > .admonition-title:after {
   content: "\f26c"; /* fa-solid fa-tv */
 }
 /* end-custom-youtube */
+
+/* custom colors for the icon-links in the navbar */
+html[data-theme="dark"] .navbar-icon-links .fa-github {
+  color: white;
+}
+html[data-theme="light"] .navbar-icon-links .fa-github {
+  color: #333;
+}
+
+.navbar-icon-links .fa-twitter {
+  color: #1da1f2;
+}
+
+.navbar-icon-links .fa-python {
+  color: #4584b6;
+}
