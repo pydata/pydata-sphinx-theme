@@ -857,7 +857,7 @@ def _resolve(self: TocTree, docname: str, builder: "Builder", toctree: addnodes.
             if isinstance(subnode, (addnodes.compact_paragraph,
                                     nodes.list_item)):
                 # for <p> and <li>, indicate the depth level and recurse
-                subnode['classes'].append('toctree-l%d' % (depth - 1))
+                subnode['classes'].append(f'toctree-l{depth - 1}')
                 _toctree_add_classes(subnode, depth)
             elif isinstance(subnode, nodes.bullet_list):
                 # for <ul>, just recurse
@@ -932,10 +932,22 @@ def _resolve(self: TocTree, docname: str, builder: "Builder", toctree: addnodes.
                                         location=ref, type='toc', subtype='circular')
                         continue
                     refdoc = ref
-                    toc = self.env.tocs[ref].deepcopy()
+
                     maxdepth = self.env.metadata[ref].get('tocdepth', 0)
-                    if ref not in toctree_ancestors or (prune and maxdepth > 0):
-                        self._toctree_prune(toc, 2, maxdepth, collapse)
+                    # FIX: _toctree_prune was removed somewhere between Sphinx 5.3.0 and 6.1.3
+                    # We want to support both versions.
+                    has_prune = hasattr(self, "_toctree_prune")
+                    if has_prune:
+                        toc = self.env.tocs[ref].deepcopy()
+                        if ref not in toctree_ancestors or (prune and maxdepth > 0):
+                            self._toctree_prune(toc, 2, maxdepth, collapse)
+                    else:
+                        toc = self.env.tocs[ref]
+                        if ref not in toctree_ancestors or (prune and maxdepth > 0):
+                            toc = self._toctree_copy(toc, 2, maxdepth, collapse)
+                        else:
+                            toc = toc.deepcopy()
+                        
                     process_only_nodes(toc, builder.tags)
                     if title and toc.children and len(toc.children) == 1:
                         child = toc.children[0]
@@ -1056,7 +1068,14 @@ def _resolve(self: TocTree, docname: str, builder: "Builder", toctree: addnodes.
 
     # prune the tree to maxdepth, also set toc depth and current classes
     _toctree_add_classes(newnode, 1)
-    self._toctree_prune(newnode, 1, maxdepth if prune else 0, collapse)
+
+    # FIX: _toctree_prune was removed somewhere between Sphinx 5.3.0 and 6.1.3
+    # We want to support both versions.
+    has_prune = hasattr(self, "_toctree_prune")
+    if has_prune:
+        self._toctree_prune(newnode, 1, maxdepth if prune else 0, collapse)
+    else:
+        newnode = self._toctree_copy(newnode, 1, maxdepth if prune else 0, collapse)
 
     if isinstance(newnode[-1], nodes.Element) and len(newnode[-1]) == 0:  # No titles found
         return None
