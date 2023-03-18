@@ -939,7 +939,7 @@ def _resolve(self: TocTree, docname: str, builder: "Builder", toctree: addnodes.
                     process_only_nodes(toc, builder.tags)
                     if title and toc.children and len(toc.children) == 1:
                         child = toc.children[0]
-                        for refnode in child.findall(nodes.reference):
+                        for refnode in _traverse_or_findall(child, nodes.reference):
                             if refnode['refuri'] == ref and \
                                 not refnode['anchorname']:
                                 refnode.children = [nodes.Text(title)]
@@ -973,13 +973,13 @@ def _resolve(self: TocTree, docname: str, builder: "Builder", toctree: addnodes.
                     for toplevel in children:
                         # nodes with length 1 don't have any children anyway
                         if len(toplevel) > 1:
-                            subtrees = list(toplevel.findall(addnodes.toctree))
+                            subtrees = list(_traverse_or_findall(toplevel, addnodes.toctree))
                             if subtrees:
                                 toplevel[1][:] = subtrees  # type: ignore
                             else:
                                 toplevel.pop(1)
                 # resolve all sub-toctrees
-                for subtocnode in list(toc.findall(addnodes.toctree)):
+                for subtocnode in list(_traverse_or_findall(toc, addnodes.toctree)):
                     if not (subtocnode.get('hidden', False) and
                             not includehidden):
 
@@ -1065,7 +1065,7 @@ def _resolve(self: TocTree, docname: str, builder: "Builder", toctree: addnodes.
 
     # set the target paths in the toctrees (they are not known at TOC
     # generation time)
-    for refnode in newnode.findall(nodes.reference):
+    for refnode in _traverse_or_findall(newnode, nodes.reference):
         if not url_re.match(refnode['refuri']):
             refnode['refuri'] = builder.get_relative_uri(
                 docname, refnode['refuri']) + refnode['anchorname']
