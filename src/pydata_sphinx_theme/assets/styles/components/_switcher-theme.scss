@@ -21,8 +21,8 @@
   &:hover,
   &:active {
     // overide bootstrap settings
-    background-color: var(--pst-color-on-surface) !important;
-    border-color: var(--pst-color-on-background) !important;
+    background-color: var(--pst-color-border) !important;
+    border-color: var(--pst-color-border) !important;
     a {
       color: var(--pst-color-text-muted);
     }

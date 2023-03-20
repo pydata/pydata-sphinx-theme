@@ -50,7 +50,6 @@ $extra-semantic-colors: (
 );
 
 $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
-@debug "sd-semantic-color-names: #{$sd-semantic-color-names}";
 
 // Now we override the --sd-color-* variables.
 @each $mode in (light, dark) {
