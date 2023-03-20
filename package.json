@@ -5,7 +5,9 @@
     "build": "webpack"
   },
   "devDependencies": {
+    "axe-core": "^4.6.3",
     "copy-webpack-plugin": "^5.1.1",
+    "core-js": "^3.29.1",
     "css-loader": "^3.4.2",
     "dedent": "^0.7.0",
     "extract-loader": "^4.0.3",
