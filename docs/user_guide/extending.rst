@@ -39,7 +39,7 @@ Then add the ``dropdown`` class to any admonition directive (shown here on a ``n
 Custom admonition styles
 ========================
 
-A `limited set <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ of admonitions are built-in to docutils (the rST → HTML engine that underlies Sphinx). However, it is possible to create custom admonitions with their own default colors, icons, and titles.
+A `limited set <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ of admonitions are built-in to docutils (the ``rST`` → ``HTML`` engine that underlies Sphinx). However, it is possible to create custom admonitions with their own default colors, icons, and titles.
 
 
 Customizing the title
@@ -91,7 +91,6 @@ Note that it updates both the color and the icon.
             :class: highlight-rst
 
 This theme defines classes for `the standard docutils admonition types <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ (``attention``, ``caution``, etc) and additionally supports ``seealso`` and ``todo`` admonitions (see :doc:`../examples/kitchen-sink/admonitions` for a demo of all built-in admonition styles).
-
 
 Customizing the color
 ---------------------

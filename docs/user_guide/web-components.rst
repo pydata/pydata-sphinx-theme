@@ -23,7 +23,7 @@ Badges and buttons
 Here are some of the available badges:
 
 :bdg-primary:`primary`
-:bdg-secondary:`secondary``
+:bdg-secondary:`secondary`
 :bdg-success:`success`
 :bdg-primary-line:`primary outline`
 :bdg-secondary-line:`secondary outline`
