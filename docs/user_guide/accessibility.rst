@@ -8,8 +8,7 @@
 Accessibility
 *************
 
-Creating and publishing content that does not exclude audiences with limited abilities
-of various kinds is challenging, but also important, to achieve and then maintain.
+Creating and publishing content that does not exclude disabled users is a complex and iterative task.
 
 While there is no one-size-fits-all solution to maintaining accessible content, this
 theme and documentation site use some techniques to avoid common content shortcomings.
@@ -34,12 +33,17 @@ page that lacks metadata, please open a pull request to add it!
 Colors
 ======
 
-Our default code highlighting styles are ``a11y-high-contrast-light`` and
-``a11y-high-contrast-dark`` from https://github.com/Quansight-Labs/accessible-pygments.
-These styles are designed to be more accessible to users with limited visual abilities.
-If you don't like the look of our default code highlighting styles, there are several more
-to choose from at https://github.com/Quansight-Labs/accessible-pygments.
-
+* Our default code highlighting styles are ``a11y-high-contrast-light`` and
+  ``a11y-high-contrast-dark`` from https://github.com/Quansight-Labs/accessible-pygments.
+  These styles are designed to meet WCAG 2 AA or AAA contrast requirements.
+  If you don't like the look of our default code highlighting styles, there are several more
+  to choose from at https://github.com/Quansight-Labs/accessible-pygments.
+* We recently revisited the PyData Sphinx theme color palette to ensure that
+  the colors we use meet WCAG 2 AA or AAA contrast requirements.
+* We also re-defined our ``primary`` and ``secondary`` colors to be more accessible and distinct from semantic colors used
+  to denote success, warning, info, and danger situations.
+* We simplified the color palette and removed some colors that were problematic to meet WCAG 2 AA or AAA contrast requirements
+  and for certain types of colorblindness.
 
 What You Can Do
 ^^^^^^^^^^^^^^^

@@ -17,8 +17,8 @@ Any rules in this style-sheet will over-ride the default theme rules.
 
 To add a custom stylesheet, follow these steps:
 
-1. **Create a CSS stylesheet** in ``_static/css/custom.css``, and add the CSS rules you wish.
-2. **Attach the stylesheet to your Sphinx build**. Add the following to ``conf.py``
+1. **Create a CSS stylesheet** in ``_static/css/custom.css``, and update the CSS rules as desired.
+2. **Attach the stylesheet to your Sphinx build**. Add the following to ``conf.py``:
 
    .. code-block:: python
 
@@ -37,16 +37,15 @@ This theme defines several `CSS variables <css-variable-help_>`_ that can be
 used to quickly control behavior and display across your documentation.
 
 These are based on top of the basic `Bootstrap CSS variables <https://getbootstrap.com/docs/4.0/getting-started/theming/#css-variables>`_
-extended with some theme specific variables.
+extended with some theme-specific variables.
 
-base variables
+Base variables
 --------------
 
-In order to change a variable, follow these steps:
+Follow these steps to update the base variables:
 
 1. :ref:`Add a custom CSS stylesheet <custom-css>`. This is where we'll configure the variables.
-2. Underneath a ``html`` section, add the variables you wish to update. For example, to update
-   the base font size, you might add this to ``custom.css``:
+2. Underneath a ``html`` section, add the variables you wish to update. For example, to change the base font size you would add the following to your ``custom.css`` file :
 
    .. code-block:: css
 
@@ -60,6 +59,7 @@ In order to change a variable, follow these steps:
    `SASS variables <https://sass-lang.com/documentation/variables>`_.
    The theme is defined with CSS variables, not SASS variables! Refer to the previous section if
    you desire a different behavior between the light and dark theme.
+.. TODO: add correct reference to light and dark theme @trallard
 
 For a complete list of the theme variables that you may override, see the
 `theme variables defaults CSS file <pydata-css-variables_>`_:
@@ -82,20 +82,20 @@ For a complete list of the theme variables that you may override, see the
 Color variables
 ---------------
 
-There are two special color variables for primary and secondary theme colors (``--pst-color-primary`` and ``--pst-color-secondary``, respectively).
+This theme specifies color variables for the primary and secondary colors (``--pst-color-primary`` and ``--pst-color-secondary``, respectively).
 These are meant to complement one another visually across the theme, if you modify these, choose colors that look good when paired with one another.
-There are also several other color variables that control color for admonitions, links, menu items, etc.
+There are also several other color variables that control the color for admonitions, links, menu items, etc.
 
 Each color variable has two values, one corresponding to the "light" and one for the "dark" theme.
 These are used throughout many of the theme elements to define text color, background color, etc.
 
 Here is an overview of the colors available in the theme (change theme mode to switch from light to dark versions).
 
+
 .. raw:: html
 
     <style>
-      span.pst-badge {border: 1px solid var(--pst-color-text-base);}
-      span.pst-primary {background-color: var(--pst-color-primary);}
+      span.pst-primary {background-color: var(--pst-color-primary); color: #{a11y-combination(--pst-color-primary)}}
       span.pst-secondary {background-color: var(--pst-color-secondary);}
       span.pst-success {background-color: var(--pst-color-success);}
       span.pst-info {background-color: var(--pst-color-info);}
@@ -140,7 +140,7 @@ It defines 4 color variables that help build overlays in your documentation.
 
 - :code:`background`: color of the back-most surface of the documentation
 - :code:`on-background` elements that are set on top of this background (e.g. the header navbar on dark mode).
-- :code:`surface` elements set on the background with a light-grey color in the light theme mode. this color has been kept in the dark theme (e.g. code-block directives).
+- :code:`surface` elements set on the background with a light-grey color in the light theme mode. This color has been kept in the dark theme (e.g. code-block directives).
 - :code:`on-surface` elements that are on top of :code:`surface` elements (e.g. sidebar directives).
 
 The following image should help you understand these overlays:
@@ -184,7 +184,8 @@ For a complete list of the theme colors that you may override, see the :download
 Configure pygments theme
 ========================
 
-As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``. You can check available Pygments colors on this `page <https://pygments.org/styles/>`__.
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``.
+You can check available Pygments colors on this `pygments demo page <https://pygments.org/styles/>`__.
 
 .. code-block:: python
 
@@ -193,6 +194,10 @@ As the Sphinx theme supports multiple modes, the code highlighting colors can be
       "pygment_light_style": "tango",
       "pygment_dark_style": "monokai"
    }
+
+Note that the PyData Sphinx theme uses the `accessible pygments styles <https://github.com/Quansight-Labs/accessible-pygments>`__ for its default syntax highlighting themes.
+The accessible pygments themes are designed to meet `WCAG <https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html>`__ AA or AAA standards for contrast and some themes are also suitable for colorblind users
+or low light conditions. You can check all the available styles at the `accessible pygments demo page <https://quansight-labs.github.io/accessible-pygments/>`__.
 
 .. danger::
 
