@@ -12,7 +12,7 @@ Provide local HTML in your theme
 
 By default, the value of your ``html_theme_options["announcement"]`` will be inserted directly into your announcement banner as raw HTML.
 
-For example, the following configuration adds a simple ``<p>`` with an announcement.
+For example, the following configuration adds a simple block of text (``<p>``) with an announcement.
 
 .. code-block:: python
 

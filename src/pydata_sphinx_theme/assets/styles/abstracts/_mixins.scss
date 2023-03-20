@@ -1,7 +1,7 @@
 /*********************************************
 * SASS Mixins
 *********************************************/
-
+@use "sass:color";
 /**
 * Scrollbars should be thinner and slightly rounded, with a grey background
 * ref: https://www.nngroup.com/articles/scrolling-and-scrollbars/
@@ -22,7 +22,8 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--pst-color-on-surface);
+    // ensure we have a 3:1 contrast ratio
+    background: var(--pst-gray-500);
   }
 
   // Hovering behavior for the scrollbar
@@ -75,18 +76,15 @@
  * Format before pseudo element - TODO: decide if we still need this
  */
 @mixin format-before($color-variable) {
-  &:before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-
-    // So that hovering over the text within background is still possible.
-    // Otherwise the background overlays the text and you cannot click or select easily.
-    // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
-    pointer-events: none;
+  @if (str-index($color-variable, "bg") != null) {
+    background-color: var(#{$color-variable});
+  } @else {
+    // $color: change-color(var(#{$color-variable}), $lightness: 30%);
+    background-color: adjust-color(
+      var(#{$color-variable}),
+      $lightness: +20%,
+      $alpha: -0.4
+    );
   }
 }
 
@@ -211,7 +209,6 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
   $max-ratio: 0;
   $max-ratio-color: null;
 
-  @debug "Using AA #{$min-contrast-ratio}:1 contrast ratio for #{$bg} ♿️";
   @each $fg in $foregrounds {
     $contrast-ratio: get-contrast-ratio($bg, $fg);
     @if $contrast-ratio >= $min-contrast-ratio {
