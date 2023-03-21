@@ -31,7 +31,7 @@ Here are some of the available badges:
 
 Here are some buttons, also using semantic color names.
 
-If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, e.g., ``primary``, ``danger``, etc.), badges and buttons will automatically use the custom color.
+If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
 
 .. grid:: auto
 
@@ -43,6 +43,15 @@ If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom p
             :shadow:
 
             Info
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: success
+            :shadow:
+
+            Success
 
     .. grid-item::
 
