@@ -5,9 +5,14 @@
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/"
   },
   {
-    "name": "0.12.0 (stable)",
+    "name": "0.13.0 (stable)",
     "version": "stable",
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/stable/"
+  },
+  {
+    "name": "0.12.0",
+    "version": "v0.12.0",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.12.0/"
   },
   {
     "name": "0.11.0",
@@ -23,10 +28,5 @@
     "name": "0.9.0",
     "version": "v0.9.0",
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.9.0/"
-  },
-  {
-    "name": "0.8.1",
-    "version": "v0.8.1",
-    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.8.1/"
   }
 ]

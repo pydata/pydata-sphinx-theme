@@ -36,7 +36,7 @@ div.admonition,
   > .admonition-title {
     margin: 0 -0.6rem;
     padding: 0.4rem 0.6rem 0.4rem 2rem;
-    font-weight: var(--pst-font-weight-heading);
+    font-weight: var(--pst-admonition-font-weight-heading);
     position: relative;
     @include background-from-color-variable(--pst-color-info-bg);
     // now that we use solid colors we want the title on top
@@ -48,8 +48,8 @@ div.admonition,
       width: 1rem;
       height: 1rem;
       color: var(--pst-color-info);
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
+      font: var(--fa-font-solid);
+      line-height: inherit;
       content: var(--pst-icon-admonition-default);
       opacity: 1;
     }
@@ -304,7 +304,7 @@ aside.sidebar {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--pst-color-border);
     font-family: var(--pst-font-family-heading);
-    font-weight: var(--pst-font-weight-heading);
+    font-weight: var(--pst-admonition-font-weight-heading);
   }
 
   // Add margin to the first non-`.sidebar-title` item
