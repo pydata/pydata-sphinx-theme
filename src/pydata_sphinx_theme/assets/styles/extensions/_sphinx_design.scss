@@ -161,7 +161,7 @@ details.sd-dropdown {
       border: 0;
     }
   }
-
+  // TODO: colour should match admonitions
   // Drop shadow should behave same as admonitions
   @include box-shadow();
 

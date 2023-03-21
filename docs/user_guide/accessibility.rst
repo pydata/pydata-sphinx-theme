@@ -44,6 +44,8 @@ Colors
   to denote success, warning, info, and danger situations.
 * We simplified the color palette and removed some colors that were problematic to meet WCAG 2 AA or AAA contrast requirements
   and for certain types of colorblindness.
+* We have improved how we assign text colors to interactive elements such as buttons and dropdowns to ensure that they meet
+  WCAG 2 AA or AAA contrast requirements.
 
 What You Can Do
 ^^^^^^^^^^^^^^^
@@ -114,14 +116,6 @@ If you have a logo, you can add alt-text to it by adding the following to your
 
 Note the use of `home` to indicate that the logo is also a link to the home page.
 
-In Your Source
-==============
-
-
-.. Note::
-
-    Stay tuned for more ideas here as we learn more working on this site!
-
 In the Browser
 ==============
 
@@ -152,8 +146,10 @@ WAVE
 ----
 
 `WAVE <https://wave.webaim.org/extension/>`__ is a proprietary (but *gratis*)
-browser extension which can highlight a large number of issues.
+browser extension which can highlight multiple issues.
 
+.. Warning::
+  Note that automated testing and extensions such as the mentioned above will at best catch 30-40% of accessibility issues. They are not a replacement for manual testing and having a perfect score on either of these tools does not mean your site is accessible but instead signal that it follows some accessibility best practices.
 
 In Continuous Integration
 =========================
