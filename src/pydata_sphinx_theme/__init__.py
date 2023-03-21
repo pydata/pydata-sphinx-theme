@@ -238,6 +238,8 @@ def update_and_remove_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_end",
         "theme_article_header_start",
         "theme_article_header_end",
+        "theme_article_footer_items",
+        "theme_content_footer_items",
         "theme_footer_start",
         "theme_footer_end",
         "theme_secondary_sidebar_items",
