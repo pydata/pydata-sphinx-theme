@@ -6,7 +6,6 @@
  * same for our overrides to have any effect.
  */
 @use "../variables/color" as pst-color;
-@use "sass:color" as color;
 
 /*******************************************************************************
   * Color and variables
@@ -42,11 +41,12 @@ $sd-semantic-color-names: (
   * already define for our own needs.
   */
 $extra-semantic-colors: (
+  // TODO need to better adjust these colours (dark and muted)
   "dark": map-get($pst-semantic-colors, "text-base"),
   "muted": map-get($pst-semantic-colors, "text-muted"),
   "light": $foundation-light-grey,
   "black": $foundation-black,
-  "white": $foundation-white,
+  "white": $foundation-white
 );
 
 $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
@@ -173,7 +173,6 @@ details.sd-dropdown {
     font-weight: 600;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    color: var(--pst-color-text) !important;
 
     // Set a variable that we can re-use for colors later
     // We must set this in the current and content sibling container
