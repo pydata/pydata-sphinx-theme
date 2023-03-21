@@ -72,6 +72,7 @@ def test(session):
     """Run the test suite."""
     if _should_install(session):
         session.install("-e", ".[test]")
+        session.run("playwright", "install")
     _compile_translations(session)
     session.run("pytest", *session.posargs)
 

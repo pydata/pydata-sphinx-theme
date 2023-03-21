@@ -175,9 +175,11 @@ test will fail. If we _expect_ the structure to differ, then delete the file on
 disk and run the test. A new file will be created, and subsequent tests will
 pass.
 
-To run the tests with `nox`, run the following command:
+To run the tests with `nox`, run the following commands:
 
 ```console
+$ nox -s compile
+$ nox -s docs
 $ nox -s test
 ```
 
