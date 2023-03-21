@@ -351,8 +351,7 @@ if (themeSwitchBtns.length) {
         // also highlight the dropdown entry for the currently-viewed
         // version's entry
         if (
-          entry.version ==
-          "DOCUMENTATION_OPTIONS.version_switcher_version_match"
+          entry.version == DOCUMENTATION_OPTIONS.version_switcher_version_match
         ) {
           node.classList.add("active");
           themeSwitchBtns.forEach((btn) => {
