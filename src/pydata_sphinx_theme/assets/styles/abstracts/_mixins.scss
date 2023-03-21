@@ -1,7 +1,7 @@
 /*********************************************
 * SASS Mixins
 *********************************************/
-@use "sass:color";
+// @use "sass:color";
 /**
 * Scrollbars should be thinner and slightly rounded, with a grey background
 * ref: https://www.nngroup.com/articles/scrolling-and-scrollbars/
@@ -48,13 +48,9 @@
 }
 
 /**
- * create a low opacity background behind object using our variable colors
+ * set background color from a color variable
  */
-@mixin background-from-color-variable($color-variable, $opacity: 0.1) {
-  // This is a hack to create a light background with controlled opacity
-  // using our css color variables
-  // ref: https://stackoverflow.com/a/56951626/6734243
-
+@mixin background-from-color-variable($color-variable) {
   &:before {
     content: "";
     width: 100%;
@@ -63,28 +59,12 @@
     left: 0;
     top: 0;
     background-color: var(#{$color-variable});
-    opacity: $opacity;
+    z-index: -1;
 
     // So that hovering over the text within background is still possible.
     // Otherwise the background overlays the text and you cannot click or select easily.
     // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
     pointer-events: none;
-  }
-}
-
-/**
- * Format before pseudo element - TODO: decide if we still need this
- */
-@mixin format-before($color-variable) {
-  @if (str-index($color-variable, "bg") != null) {
-    background-color: var(#{$color-variable});
-  } @else {
-    // $color: change-color(var(#{$color-variable}), $lightness: 30%);
-    background-color: adjust-color(
-      var(#{$color-variable}),
-      $lightness: +20%,
-      $alpha: -0.4
-    );
   }
 }
 
@@ -209,6 +189,7 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
   $max-ratio: 0;
   $max-ratio-color: null;
 
+  @debug "Using AA #{$min-contrast-ratio}:1 contrast ratio for #{$bg} ♿️";
   @each $fg in $foregrounds {
     $contrast-ratio: get-contrast-ratio($bg, $fg);
     @if $contrast-ratio >= $min-contrast-ratio {

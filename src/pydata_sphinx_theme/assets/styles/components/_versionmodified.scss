@@ -17,8 +17,6 @@ div.deprecated {
   > p {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
-
-    @include format-before(--pst-color-info);
   }
 }
 
