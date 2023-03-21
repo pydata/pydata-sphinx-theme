@@ -86,7 +86,8 @@ If you run `app.add_js_file` or `app.add_css_file`, it will _only be added for t
 
 For example:
 
-```python
+```{code-block} python
+:caption: conf.py
 html_static_path = ["_static"]
 
 def add_my_files(app, pagename, templatename, context, doctree):
@@ -104,7 +105,8 @@ def setup(app):
 Finally, you can add CSS or JS directly to a page's content.
 If you're using reStructuredText or MyST Markdown, you can use the `raw` directive:
 
-```rst
+```{code-block} rst
+:caption: some_page_in_my_site.rst
 .. raw:: html
 
    <style>
@@ -122,7 +124,8 @@ If you're using MyST Markdown, you may also simply directly include any HTML / s
 
 For example:
 
-```md
+```{code-block} md
+:caption: other_page_in_my_site.md
 # My title
 
 Some text
