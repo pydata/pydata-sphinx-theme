@@ -18,6 +18,10 @@
   opacity: 0.1;
 }
 
+.version-switcher__button[data-active-version-name*="dev"] {
+  background-color: var(--pst-color-secondary);
+}
+
 /* custom CSS classes (used in docs/user_guide/extending.rst) NOTE: the begin
  *  and end markers are necessary for partial file includes! don't remove them.
  */
