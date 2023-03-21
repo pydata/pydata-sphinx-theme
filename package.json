@@ -5,7 +5,7 @@
     "build": "webpack"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^3.4.2",
     "dedent": "^0.7.0",
     "extract-loader": "^4.0.3",
@@ -13,7 +13,7 @@
     "html-webpack-plugin": "^4.3.0",
     "imports-loader": "^0.8.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^7.0.3",
+    "node-sass": "^8.0.0",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "postcss": "^8.1",
     "postcss-loader": "^4.0.3",
