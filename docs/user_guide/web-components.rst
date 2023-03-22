@@ -29,9 +29,7 @@ Here are some of the available badges:
 :bdg-secondary-line:`secondary outline`
 :bdg-success-line:`success outline`
 
-Here are some buttons, also using semantic color names.
-
-If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
+Here are some of the available buttons, also using semantic colors:
 
 .. grid:: auto
 
@@ -79,6 +77,8 @@ If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom p
             :shadow:
 
             Muted
+
+If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
 
 Cards
 =====
@@ -128,7 +128,6 @@ Cards
         panel 2 content
         ++++++++++++++
         panel 2 footer
-
 
 Tabs
 ====
