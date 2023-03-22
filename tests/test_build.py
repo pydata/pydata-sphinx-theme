@@ -881,7 +881,7 @@ def test_empty_templates(sphinx_build_factory):
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     html = sphinx_build.html_tree("page1.html")
 
-    # We've set this to fase in the config so the template shouldn't show up at all
+    # We've set this to false in the config so the template shouldn't show up at all
     assert not html.select(".tocsection.sourcelink")
 
     # Should not be any icon link wrapper because none are given in conf

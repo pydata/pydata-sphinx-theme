@@ -71,7 +71,7 @@ const fa_fonts = [
 /*******************************************************************************
  * Cache-busting Jinja2 macros (`webpack-macros.html`) used in `layout.html`
  *
- * @param  {Compilation} the compilation instace to extract the hash
+ * @param  {Compilation} the compilation instance to extract the hash
  * @return {String} the macro to inject in layout.html
  */
 function macroTemplate({ compilation }) {
