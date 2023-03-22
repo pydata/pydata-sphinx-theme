@@ -178,8 +178,6 @@ pass.
 To run the tests with `nox`, run the following commands:
 
 ```console
-$ nox -s compile
-$ nox -s docs
 $ nox -s test
 ```
 

@@ -71,9 +71,10 @@ def docs_live(session):
 def test(session):
     """Run the test suite."""
     if _should_install(session):
-        session.install("-e", ".[test]")
+        session.install("-e", ".[test,doc]")
         session.run("playwright", "install")
     _compile_translations(session)
+    session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html", "-v")
     session.run("pytest", *session.posargs)
 
 
