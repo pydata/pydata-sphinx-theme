@@ -93,7 +93,18 @@
 }
 
 /**
-* Function to convert the string represenation of a color to a color type
+* Function to check if the color needs converting to a "color" type
+*/
+// @param {String/Color} $color - Color definition from map
+@function check-color($color) {
+  @if type-of($color) == string {
+    $color: from-hex($color);
+  }
+  @return $color;
+}
+
+/**
+* Function to convert the string representation of a color to a color type
 */
 // @param {String} $string - String representation of a color
 @function from-hex($string) {
@@ -189,7 +200,6 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
   $max-ratio: 0;
   $max-ratio-color: null;
 
-  @debug "Using AA #{$min-contrast-ratio}:1 contrast ratio for #{$bg} ♿️";
   @each $fg in $foregrounds {
     $contrast-ratio: get-contrast-ratio($bg, $fg);
     @if $contrast-ratio >= $min-contrast-ratio {

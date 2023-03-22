@@ -63,7 +63,9 @@ div.admonition,
   &.attention {
     border-color: var(--pst-color-attention);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-warning-bg);
+      &:before {
+        background-color: var(--pst-color-attention-bg);
+      }
 
       &:after {
         color: var(--pst-color-attention);
@@ -75,7 +77,9 @@ div.admonition,
   &.caution {
     border-color: var(--pst-color-warning);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-warning-bg);
+      &:before {
+        background-color: var(--pst-color-warning-bg);
+      }
 
       &:after {
         color: var(--pst-color-warning);
@@ -87,7 +91,9 @@ div.admonition,
   &.warning {
     border-color: var(--pst-color-warning);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-warning-bg);
+      &:before {
+        background-color: var(--pst-color-warning-bg);
+      }
 
       &:after {
         color: var(--pst-color-warning);
@@ -99,7 +105,9 @@ div.admonition,
   &.danger {
     border-color: var(--pst-color-danger);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-danger-bg);
+      &:before {
+        background-color: var(--pst-color-danger-bg);
+      }
 
       &:after {
         color: var(--pst-color-danger);
@@ -111,7 +119,9 @@ div.admonition,
   &.error {
     border-color: var(--pst-color-danger);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-danger-bg);
+      &:before {
+        background-color: var(--pst-color-danger-bg);
+      }
 
       &:after {
         color: var(--pst-color-danger);
@@ -123,7 +133,9 @@ div.admonition,
   &.hint {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-success-bg);
+      &:before {
+        background-color: var(--pst-color-success-bg);
+      }
 
       &:after {
         color: var(--pst-color-success);
@@ -135,7 +147,9 @@ div.admonition,
   &.tip {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-success-bg);
+      &:before {
+        background-color: var(--pst-color-success-bg);
+      }
 
       &:after {
         color: var(--pst-color-success);
@@ -147,7 +161,9 @@ div.admonition,
   &.important {
     border-color: var(--pst-color-attention);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-warning-bg);
+      &:before {
+        background-color: var(--pst-color-warning-bg);
+      }
 
       &:after {
         color: var(--pst-color-attention);
@@ -159,7 +175,9 @@ div.admonition,
   &.note {
     border-color: var(--pst-color-info);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-info-bg);
+      &:before {
+        background-color: var(--pst-color-info-bg);
+      }
 
       &:after {
         color: var(--pst-color-info);
@@ -171,7 +189,9 @@ div.admonition,
   &.seealso {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-success-bg);
+      &:before {
+        background-color: var(--pst-color-success-bg);
+      }
 
       &:after {
         color: var(--pst-color-success);
@@ -183,7 +203,9 @@ div.admonition,
   &.admonition-todo {
     border-color: var(--pst-color-secondary);
     > .admonition-title {
-      @include background-from-color-variable(--pst-color-secondary-bg);
+      &:before {
+        background-color: var(--pst-color-secondary-bg);
+      }
 
       &:after {
         color: var(--pst-color-secondary);

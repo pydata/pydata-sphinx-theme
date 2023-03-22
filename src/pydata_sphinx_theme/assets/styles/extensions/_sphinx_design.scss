@@ -51,30 +51,53 @@ $extra-semantic-colors: (
 
 $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
 
+@mixin create-sd-colors($value, $name) {
+  // define the pst variables, so that downstream user overrides will work
+  --pst-color-#{$name}: #{$value};
+  @debug "created color 🌱";
+  // we are now using a11y-combination to calculate the text color - this is based
+  // on the WCAG color contrast guidelines
+  --pst-color-#{$name}-text: #{a11y-combination($value)};
+  // // TODO: check where highlight is used
+  --pst-color-#{$name}-highlight: #{darken($value, 15%)};
+  // override the sphinx-design variables
+  --sd-color-#{$name}: var(--pst-color-#{$name});
+  --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
+  // adding bg colors - needed for dropdowns
+  // --sd-color-#{$name}-bg: var(--pst-color-#{$name});
+  // TODO: check where highlight is used
+  --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
+}
+
 // Now we override the --sd-color-* variables.
 @each $mode in (light, dark) {
   html[data-theme="#{$mode}"] {
+    // check if this color is defined differently for light/dark
     @each $name in $sd-semantic-color-names {
-      // check if this color is defined differently for light/dark
-      $value: map-get($all-colors, $name);
-      @if type-of($value) == map {
-        $value: map-get($value, $mode);
-        @if type-of($value) == string {
-          $value: from-hex($value);
+      @debug "name: #{$name} ✨";
+      $definition: map-get($all-colors, $name);
+      @if type-of($definition) == map {
+        @each $key, $value in $definition {
+          @debug "key: #{$key} value: #{$value} definition: #{$definition} ✨";
+          @if str-index($key, $mode) != null {
+            // since now we define the bg colours in the semantic colours and not
+            // by changing opacity, we need to check if the key contains bg and the
+            // correct mode (light/dark)
+            @if str-index($key, "bg") != null {
+              @debug "bg color ✨ #{$value}";
+              --sd-color-#{$name}-bg: #{$value};
+            } @else {
+              $value: check-color($value);
+              @include create-sd-colors($value, $name);
+            }
+          }
         }
+      } @else {
+        @debug "not a map ✨";
+        $value: map-get($all-colors, $name);
+        @debug "value: #{$value} name: #{$name} ✨";
+        @include create-sd-colors($value, $name);
       }
-      // define the pst variables, so that downstream user overrides will work
-      --pst-color-#{$name}: #{$value};
-      // TODO: the text might be best set in the component itself - for now I am leaving
-      // the previous approach of using the a11y-combination function
-      --pst-color-#{$name}-text: #{a11y-combination($value)};
-      // // TODO: check where highlight is used
-      --pst-color-#{$name}-highlight: #{darken($value, 15%)};
-      // override the sphinx-design variables
-      --sd-color-#{$name}: var(--pst-color-#{$name});
-      --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
-      // TODO: check where highlight is used
-      --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
     }
   }
 }
