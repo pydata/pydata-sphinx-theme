@@ -203,7 +203,7 @@ todo_include_todos = True
 # -- favicon options ---------------------------------------------------------
 
 # see https://sphinx-favicon.readthedocs.io for more information about the
-# sphinx-favicon extention
+# sphinx-favicon extension
 favicons = [
     # generic icons compatible with most browsers
     "favicon-32x32.png",
