@@ -959,9 +959,11 @@ def _overwrite_pygments_css(app, exception=None):
 
         # make sure we can load the style
         if theme_name not in pygments_styles:
-            logger.warning(
-                f"Color theme {theme_name} not found by pygments, falling back to {fallback}."
-            )
+            # only warn if user asked for a highlight theme that we can't find
+            if theme_name is not None:
+                logger.warning(
+                    f"Color theme {theme_name} not found by pygments, falling back to {fallback}."
+                )
             theme_name = fallback
         # assign to the appropriate variable
         if light_or_dark == "light":
