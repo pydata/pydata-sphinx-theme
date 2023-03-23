@@ -13,8 +13,8 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const dedent = require("dedent");
 const { Compilation } = require("webpack");
 
@@ -144,17 +144,17 @@ module.exports = {
     "bootstrap": resolve(scriptPath, "bootstrap.js"),
   },
   output: {filename: "scripts/[name].js", path: staticPath},
-  optimization: {minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})]},
+  optimization: {minimizer: ['...', new CssMinimizerPlugin()]},
   module: {
     rules: [{
       test: /\.scss$/,
       use: [
         {loader: "file-loader", options: {name: "styles/[name].css"}},
-        {loader: "extract-loader"},
+        {loader: MiniCssExtractPlugin.loader},
         {loader: "css-loader?-url"}, //url()-inlining turned off}
         {loader: "sass-loader",},
       ],
     }],
   },
-  plugins: [htmlWebpackPlugin, copyPlugin],
+  plugins: [htmlWebpackPlugin, copyPlugin, new MiniCssExtractPlugin()],
 };
