@@ -85,7 +85,7 @@ $pst-semantic-colors: (
 /* NOTE:
  * Mixins enable us to reuse the same definitions for the different modes
  * https://sass-lang.com/documentation/at-rules/mixin
- * #{...} inserts a variable into a CSS selector or property name
+ * #{something} inserts a variable into a CSS selector or property name
  * https://sass-lang.com/documentation/interpolation
  */
 @mixin theme-colors($mode) {
