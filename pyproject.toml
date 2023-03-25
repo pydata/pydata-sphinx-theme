@@ -102,3 +102,13 @@ ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 # W605: invalid escape sequence | we escape specific characters for sphinx
 ignore = ["E203", "E501", "W503", "W605"]
 exclude = ["setup.py", "docs/conf.py", "node_modules", "docs", "build", "dist"]
+
+[tool.djlint]
+profile = "jinja"
+extension = "html"
+indent = 2
+max_line_length = 120
+use_gitignore = true
+format_js = true
+format_css = true
+ignore = "H006,J018,T003,H025"
