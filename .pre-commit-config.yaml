@@ -9,7 +9,8 @@ repos:
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
-        exclude: .+\.html
+        # exclude also the webpack.congo.js file has it embed complete url dificult to prettify
+        exclude: .+\.html|webpack\.config\.js
 
   - repo: https://github.com/psf/black
     rev: 22.12.0
@@ -20,6 +21,7 @@ repos:
     rev: 6.0.0
     hooks:
       - id: flake8
+        additional_dependencies: [Flake8-pyproject]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
