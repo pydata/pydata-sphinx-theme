@@ -951,12 +951,9 @@ def _overwrite_pygments_css(app, exception=None):
         # see if user specified a light/dark pygments theme, if not, use the
         # one we set in theme.conf
         style_key = f"pygment_{light_or_dark}_style"
-
-        # globalcontext sometimes doesn't exist so this ensures we do not error
         theme_name = _get_theme_options(app).get(style_key, None)
-        if theme_name is None and hasattr(app.builder, "globalcontext"):
-            theme_name = app.builder.globalcontext.get(f"theme_{style_key}")
-
+        if theme_name is None:
+            theme_name = app.builder.theme.get_options()[style_key]
         # make sure we can load the style
         if theme_name not in pygments_styles:
             # only warn if user asked for a highlight theme that we can't find
@@ -1207,11 +1204,11 @@ def setup(app):
 
     app.connect("builder-inited", setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("builder-inited", _overwrite_pygments_css)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", setup_logo_path)
-    app.connect("build-finished", _overwrite_pygments_css)
     app.connect("build-finished", copy_logo_images)
 
     # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
