@@ -155,5 +155,7 @@ module.exports = {
       ],
     }],
   },
-  plugins: [htmlWebpackPlugin, copyPlugin, new MiniCssExtractPlugin()],
+  plugins: [htmlWebpackPlugin, copyPlugin, new MiniCssExtractPlugin({
+    filename: "styles/[name].css"
+  })],
 };
