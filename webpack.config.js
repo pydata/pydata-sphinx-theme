@@ -149,9 +149,8 @@ module.exports = {
     rules: [{
       test: /\.scss$/,
       use: [
-        {loader: "file-loader", options: {name: "styles/[name].css"}},
         {loader: MiniCssExtractPlugin.loader},
-        {loader: "css-loader?-url"}, //url()-inlining turned off}
+        {loader: "css-loader?-url"}, //url()-inlining turned off
         {loader: "sass-loader",},
       ],
     }],
