@@ -1204,11 +1204,11 @@ def setup(app):
 
     app.connect("builder-inited", setup_translators)
     app.connect("builder-inited", update_config)
-    app.connect("builder-inited", _overwrite_pygments_css)
     app.connect("html-page-context", setup_edit_url)
     app.connect("html-page-context", add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", setup_logo_path)
+    app.connect("build-finished", _overwrite_pygments_css)
     app.connect("build-finished", copy_logo_images)
 
     # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
