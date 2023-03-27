@@ -150,9 +150,9 @@ $pst-semantic-colors: (
   "attention":
     (
       "light": var(--pst-color-warning),
-      "bg-light": var(--pst-color-warning-bg-light),
+      "bg-light": var(--pst-color-warning-bg),
       "dark": var(--pst-color-warning),
-      "bg-dark": var(--pst-color-warning-bg-dark),
+      "bg-dark": var(--pst-color-warning-bg),
     ),
   "danger": (
     "light": #d72d47,
