@@ -8,14 +8,14 @@ in a helper-directive to generate it with a single YAML configuration file.
 It currently exists for maintainers of the pydata-sphinx-theme,
 but might be abstracted into a standalone package if it proves useful.
 """
-from yaml import safe_load
-from typing import List
 from pathlib import Path
+from typing import List
 
 from docutils import nodes
 from docutils.parsers.rst import directives
-from sphinx.util.docutils import SphinxDirective
 from sphinx.util import logging
+from sphinx.util.docutils import SphinxDirective
+from yaml import safe_load
 
 logger = logging.getLogger(__name__)
 

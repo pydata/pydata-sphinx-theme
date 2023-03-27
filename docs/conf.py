@@ -1,7 +1,17 @@
+"""Configuration file for the Sphinx documentation builder.
+
+This file only contains a selection of the most common options. For a full
+list see the documentation:
+https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""
+
 # -- Path setup --------------------------------------------------------------
 import os
 import sys
+from typing import Any, Dict
+
 import pydata_sphinx_theme
+from sphinx.application import Sphinx
 
 sys.path.append("scripts")
 from gallery_directive import GalleryDirective
@@ -56,7 +66,6 @@ if not os.environ.get("READTHEDOCS"):
 # -- autosummary -------------------------------------------------------------
 
 autosummary_generate = True
-
 
 # -- Internationalization ----------------------------------------------------
 
@@ -223,9 +232,11 @@ favicons = [
 # -- application setup -------------------------------------------------------
 
 
-def setup_to_main(app, pagename, templatename, context, doctree):
+def setup_to_main(
+    app: Sphinx, pagename: str, templatename: str, context, doctree
+) -> None:
     def to_main(link: str) -> str:
-        """Transform "edit on github" links and make sure they always point to the main branch
+        """Transform "edit on github" links and make sure they always point to the main branch.
 
         Args:
             link: the link to the github edit interface
@@ -240,6 +251,18 @@ def setup_to_main(app, pagename, templatename, context, doctree):
     context["to_main"] = to_main
 
 
-def setup(app):
+def setup(app: Sphinx) -> Dict[str, Any]:
+    """Add custom configuration to sphinx app.
+
+    Args:
+        app: the Sphinx application
+    Returns:
+        the 2 parralel parameters set to ``True``.
+    """
     app.add_directive("gallery-grid", GalleryDirective)
     app.connect("html-page-context", setup_to_main)
+
+    return {
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }

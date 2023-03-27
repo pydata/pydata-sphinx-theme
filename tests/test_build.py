@@ -13,7 +13,7 @@ path_tests = Path(__file__).parent
 
 
 def escape_ansi(string):
-    """helper function to remove ansi coloring from sphinx warnings"""
+    """helper function to remove ansi coloring from sphinx warnings."""
     ansi_escape = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]")
     return ansi_escape.sub("", string)
 
@@ -62,7 +62,6 @@ def sphinx_build_factory(make_app, tmp_path):
 
 def test_build_html(sphinx_build_factory, file_regression):
     """Test building the base html template and config."""
-
     sphinx_build = sphinx_build_factory("base")  # type: SphinxBuild
 
     # Basic build with defaults
@@ -204,7 +203,8 @@ def test_logo_two_images(sphinx_build_factory):
 def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory):
     """Test that the primary logo image is light
     (and secondary, written through JavaScript, is dark)
-    when no default mode is set."""
+    when no default mode is set.
+    """
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {},
@@ -219,7 +219,8 @@ def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory):
 def test_primary_logo_is_light_when_default_mode_is_set_to_auto(sphinx_build_factory):
     """Test that the primary logo image is light
     (and secondary, written through JavaScript, is dark)
-    when default mode is explicitly set to auto."""
+    when default mode is explicitly set to auto.
+    """
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "auto"},
@@ -234,7 +235,8 @@ def test_primary_logo_is_light_when_default_mode_is_set_to_auto(sphinx_build_fac
 def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory):
     """Test that the primary logo image is light
     (and secondary, written through JavaScript, is dark)
-    when default mode is set to light."""
+    when default mode is set to light.
+    """
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "light"},
@@ -249,7 +251,8 @@ def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory):
 def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory):
     """Test that the primary logo image is dark
     (and secondary, written through JavaScript, is light)
-    when default mode is set to dark."""
+    when default mode is set to dark.
+    """
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "dark"},
@@ -313,7 +316,7 @@ def test_logo_external_image(sphinx_build_factory):
 
 
 def test_logo_template_rejected(sphinx_build_factory):
-    """Test that dynamic Sphinx templates are not accepted as logo files"""
+    """Test that dynamic Sphinx templates are not accepted as logo files."""
     # Test with a specified external logo image source
     confoverrides = {
         "html_theme_options": {
@@ -374,17 +377,17 @@ def test_navbar_header_dropdown(sphinx_build_factory, file_regression, n_links):
         # There should be *only* a dropdown and no standalone links
         assert navbar.select("div.dropdown") and not navbar.select(
             ".navbar-nav > li.nav-item"
-        )  # noqa
+        )
     if n_links == 4:
         # There should be at least one standalone link, and a dropdown
         assert navbar.select(".navbar-nav > li.nav-item") and navbar.select(
             "div.dropdown"
-        )  # noqa
+        )
     if n_links == 8:
         # There should be no dropdown and only standalone links
         assert navbar.select(".navbar-nav > li.nav-item") and not navbar.select(
             "div.dropdown"
-        )  # noqa
+        )
 
 
 def test_sidebars_captions(sphinx_build_factory, file_regression):
@@ -408,7 +411,7 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression):
 
 
 def test_sidebars_level2(sphinx_build_factory, file_regression):
-    """Sidebars in a second-level page w/ children"""
+    """Sidebars in a second-level page w/ children."""
     confoverrides = {"templates_path": ["_templates_sidebar_level2"]}
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
@@ -731,17 +734,16 @@ def test_version_switcher(sphinx_build_factory, file_regression, url):
         )
 
     elif url == "http://a.b/switcher.json":  # this file doesn't exist"
-        not_read = 'WARNING: The version switcher "http://a.b/switcher.json" file cannot be read due to the following error:\n'  # noqa
+        not_read = 'WARNING: The version switcher "http://a.b/switcher.json" file cannot be read due to the following error:\n'
         assert not_read in escape_ansi(sphinx_build.warnings).strip()
 
     elif url == "missing_url.json":  # this file is missing the url key for one version
-        missing_url = 'WARNING: The version switcher "missing_url.json" file is malformed at least one of the items is missing the "url" or "version" key'  # noqa
+        missing_url = 'WARNING: The version switcher "missing_url.json" file is malformed at least one of the items is missing the "url" or "version" key'
         assert escape_ansi(sphinx_build.warnings).strip() == missing_url
 
 
 def test_theme_switcher(sphinx_build_factory, file_regression):
-    """Regression test the theme switcher btn HTML"""
-
+    """Regression test the theme switcher btn HTML."""
     sphinx_build = sphinx_build_factory("base").build()
     switcher = (
         sphinx_build.html_tree("index.html")
@@ -754,8 +756,7 @@ def test_theme_switcher(sphinx_build_factory, file_regression):
 
 
 def test_shorten_link(sphinx_build_factory, file_regression):
-    """regression test the shorten links html"""
-
+    """regression test the shorten links html."""
     sphinx_build = sphinx_build_factory("base").build()
 
     github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
@@ -766,8 +767,7 @@ def test_shorten_link(sphinx_build_factory, file_regression):
 
 
 def test_math_header_item(sphinx_build_factory, file_regression):
-    """regression test the math items in a header title"""
-
+    """regression test the math items in a header title."""
     sphinx_build = sphinx_build_factory("base").build()
     li = sphinx_build.html_tree("page2.html").select(".bd-navbar-elements li")[1]
     file_regression.check(li.prettify(), basename="math_header_item", extension=".html")
@@ -826,8 +826,7 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors):
 
 
 def test_deprecated_build_html(sphinx_build_factory, file_regression):
-    """Test building the base html template with all the deprecated configs"""
-
+    """Test building the base html template with all the deprecated configs."""
     sphinx_build = sphinx_build_factory("deprecated")  # type: SphinxBuild
 
     # Basic build with defaults
@@ -895,8 +894,8 @@ def test_translations(sphinx_build_factory):
     that a few phrases are in French.
 
     We use this test to catch regressions if we change wording without
-    changing the translation files."""
-
+    changing the translation files.
+    """
     confoverrides = {
         "language": "fr",
         "html_context": {

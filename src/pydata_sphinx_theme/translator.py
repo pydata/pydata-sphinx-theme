@@ -1,18 +1,16 @@
-"""
-A custom Sphinx HTML Translator for Bootstrap layout
-"""
-from packaging.version import Version
+"""A custom Sphinx HTML Translator for Bootstrap layout."""
 
 import sphinx
-from sphinx.util import logging
+from packaging.version import Version
 from sphinx.ext.autosummary import autosummary_table
+from sphinx.util import logging
 
 logger = logging.getLogger(__name__)
 
 
 class BootstrapHTML5TranslatorMixin:
-    """
-    Mixin HTML Translator for a Bootstrap-ified Sphinx layout.
+    """Mixin HTML Translator for a Bootstrap-ified Sphinx layout.
+
     Only a couple of functions have been overridden to produce valid HTML to be
     directly styled with Bootstrap, and fulfill acessibility best practices.
     """
@@ -22,17 +20,16 @@ class BootstrapHTML5TranslatorMixin:
         self.settings.table_style = "table"
 
     def starttag(self, *args, **kwargs):
-        """ensure an aria-level is set for any heading role"""
+        """Ensure an aria-level is set for any heading role."""
         if kwargs.get("ROLE") == "heading" and "ARIA-LEVEL" not in kwargs:
             kwargs["ARIA-LEVEL"] = "2"
         return super().starttag(*args, **kwargs)
 
     def visit_table(self, node):
-        """
-        copy of sphinx source to *not* add 'docutils' and 'align-default' classes
-        but add 'table' class
-        """
+        """Custom visit table method.
 
+        Copy of sphinx source to *not* add 'docutils' and 'align-default' classes but add 'table' class.
+        """
         # init the attributes
         atts = {}
 

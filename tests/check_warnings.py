@@ -1,5 +1,5 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from colorama import Fore, init
 
@@ -10,7 +10,7 @@ init()
 def check_warnings(file):
     """
     Check the list of warnings produced by the GitHub CI tests
-    raise errors if there are unexpected ones and/or if some are missing
+    raise errors if there are unexpected ones and/or if some are missing.
 
     Args:
         file (pathlib.Path): the path to the generated warning.txt file from
@@ -20,7 +20,6 @@ def check_warnings(file):
         0 if the warnings are all there
         1 if some warning are not registered or unexpected
     """
-
     # print some log
     print("\n=== Sphinx Warnings test ===\n")
 

@@ -103,6 +103,21 @@ ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 ignore = ["E203", "E501", "W503", "W605"]
 exclude = ["setup.py", "docs/conf.py", "node_modules", "docs", "build", "dist"]
 
+[tool.ruff]
+ignore-init-module-imports = true
+fix = true
+select = ["E", "F", "W", "I", "D", "RUF"]
+ignore = [
+    "E501",  # line too long | Black take care of it
+    "D107",  # Missing docstring in `__init__` | set the docstring in the class
+]
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
 [tool.djlint]
 profile = "jinja"
 extension = "html"

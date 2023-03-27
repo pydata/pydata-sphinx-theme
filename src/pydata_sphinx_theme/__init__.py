@@ -1,29 +1,28 @@
-"""
-Bootstrap-based sphinx theme from the PyData community
-"""
-import os
-from pathlib import Path
-from functools import lru_cache
+"""Bootstrap-based sphinx theme from the PyData community."""
+
 import json
-from urllib.parse import urlparse, urlunparse
+import os
 import types
+from functools import lru_cache
+from pathlib import Path
+from urllib.parse import urlparse, urlunparse
 
 import jinja2
+import requests
 from bs4 import BeautifulSoup as bs
 from docutils import nodes
-from sphinx import addnodes
-from sphinx.application import Sphinx
-from sphinx.environment.adapters.toctree import TocTree
-from sphinx.addnodes import toctree as toctree_node
-from sphinx.transforms.post_transforms import SphinxPostTransform
-from sphinx.util.nodes import NodeMatcher
-from sphinx.errors import ExtensionError
-from sphinx.util import logging, isurl
-from sphinx.util.fileutil import copy_asset_file
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
-import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
+from sphinx import addnodes
+from sphinx.addnodes import toctree as toctree_node
+from sphinx.application import Sphinx
+from sphinx.environment.adapters.toctree import TocTree
+from sphinx.errors import ExtensionError
+from sphinx.transforms.post_transforms import SphinxPostTransform
+from sphinx.util import isurl, logging
+from sphinx.util.fileutil import copy_asset_file
+from sphinx.util.nodes import NodeMatcher
 
 from .translator import BootstrapHTML5TranslatorMixin
 
@@ -315,13 +314,13 @@ def update_and_remove_templates(app, pagename, templatename, context, doctree):
 
 def add_inline_math(node):
     """Render a node with HTML tags that activate MathJax processing.
+
     This is meant for use with rendering section titles with math in them, because
     math outputs are ignored by pydata-sphinx-theme's header.
 
     related to the behaviour of a normal math node from:
     https://github.com/sphinx-doc/sphinx/blob/master/sphinx/ext/mathjax.py#L28
     """
-
     return (
         '<span class="math notranslate nohighlight">' rf"\({node.astext()}\)" "</span>"
     )
@@ -332,8 +331,8 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
     @lru_cache(maxsize=None)
     def generate_header_nav_html(n_links_before_dropdown=5):
-        """
-        Generate top-level links that are meant for the header navigation.
+        """Generate top-level links that are meant for the header navigation.
+
         We use this function instead of the TocTree-based one used for the
         sidebar because this one is much faster for generating the links and
         we don't need the complexity of the full Sphinx TocTree.
@@ -352,7 +351,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
             The number of links to show before nesting the remaining links in
             a Dropdown element.
         """
-
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
         except Exception:
@@ -442,7 +440,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
                     {links_dropdown_html}
                 </div>
             </div>
-            """  # noqa
+            """
 
         return out
 
@@ -450,10 +448,11 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     # somehow runs this twice in some circumstances in unpredictable ways.
     @lru_cache(maxsize=None)
     def generate_toctree_html(kind, startdepth=1, show_nav_level=1, **kwargs):
-        """
-        Return the navigation link structure in HTML. This is similar to Sphinx's
-        own default TocTree generation, but it is modified to generate TocTrees
-        for *second*-level pages and below (not supported by default in Sphinx).
+        """Return the navigation link structure in HTML.
+
+        This is similar to Sphinx's own default TocTree generation, but it is modified
+        to generate TocTrees for *second*-level pages and below (not supported
+        by default in Sphinx).
         This is used for our sidebar, which starts at the second-level page.
 
         It also modifies the generated TocTree slightly for Bootstrap classes
@@ -480,7 +479,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         kwargs: passed to the Sphinx `toctree` template function.
 
-        Returns
+        Returns:
         -------
         HTML string (if kind == "sidebar") OR
         BeautifulSoup object (if kind == "raw")
@@ -544,7 +543,6 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
     @lru_cache(maxsize=None)
     def generate_toc_html(kind="html"):
         """Return the within-page TOC links in HTML."""
-
         if "toc" not in context:
             return ""
 
@@ -708,9 +706,7 @@ def _get_local_toctree_for(
 
 
 def index_toctree(app, pagename: str, startdepth: int, collapse: bool = True, **kwargs):
-    """
-    Returns the "local" (starting at `startdepth`) TOC tree containing the
-    current page, rendered as HTML bullet lists.
+    """Returns the "local" (starting at `startdepth`) TOC tree containing the current page, rendered as HTML bullet lists.
 
     This is the equivalent of `context["toctree"](**kwargs)` in sphinx
     templating, but using the startdepth-local instead of global TOC tree.
@@ -745,8 +741,7 @@ def index_toctree(app, pagename: str, startdepth: int, collapse: bool = True, **
 
 
 def soup_to_python(soup, only_pages=False):
-    """
-    Convert the toctree html structure to python objects which can be used in Jinja.
+    """Convert the toctree html structure to python objects which can be used in Jinja.
 
     Parameters
     ----------
@@ -755,7 +750,7 @@ def soup_to_python(soup, only_pages=False):
         Only include items for full pages in the output dictionary. Exclude
         anchor links (TOC items with a URL that starts with #)
 
-    Returns
+    Returns:
     -------
     nav : list of dicts
         The toctree, converted into a dictionary with key/values that work
@@ -886,10 +881,7 @@ def setup_edit_url(app, pagename, templatename, context, doctree):
 
 
 def _get_styles(formatter, prefix):
-    """
-    Get styles out of a formatter, where everything has the correct prefix.
-    """
-
+    """Get styles out of a formatter, where everything has the correct prefix."""
     for line in formatter.get_linenos_style_defs():
         yield f"{prefix} {line}"
     yield from formatter.get_background_style_defs(prefix)
@@ -897,9 +889,9 @@ def _get_styles(formatter, prefix):
 
 
 def get_pygments_stylesheet(light_style, dark_style):
-    """
-    Generate the theme-specific pygments.css.
-    There is no way to tell Sphinx how the theme handles modes
+    """Generate the theme-specific pygments.css.
+
+    There is no way to tell Sphinx how the theme handles modes.
     """
     light_formatter = HtmlFormatter(style=light_style)
     dark_formatter = HtmlFormatter(style=dark_style)
@@ -916,8 +908,7 @@ def get_pygments_stylesheet(light_style, dark_style):
 
 
 def _overwrite_pygments_css(app, exception=None):
-    """
-    Overwrite pygments.css to allow dynamic light/dark switching.
+    """Overwrite pygments.css to allow dynamic light/dark switching.
 
     Sphinx natively supports config variables `pygments_style` and
     `pygments_dark_style`. However, quoting from
@@ -981,8 +972,9 @@ def _overwrite_pygments_css(app, exception=None):
 
 def _traverse_or_findall(node, condition, **kwargs):
     """Triage node.traverse (docutils <0.18.1) vs node.findall.
+
     TODO: This check can be removed when the minimum supported docutils version
-    for numpydoc is docutils>=0.18.1
+    for numpydoc is docutils>=0.18.1.
     """
     return (
         node.findall(condition, **kwargs)
@@ -992,9 +984,8 @@ def _traverse_or_findall(node, condition, **kwargs):
 
 
 class ShortenLinkTransform(SphinxPostTransform):
-    """
-    Shorten link when they are coming from github or gitlab and add an extra class to the tag
-    for further styling.
+    """Shorten link when they are coming from github or gitlab and add an extra class to the tag for further styling.
+
     Before::
         <a class="reference external" href="https://github.com/2i2c-org/infrastructure/issues/1329">
             https://github.com/2i2c-org/infrastructure/issues/1329
@@ -1003,7 +994,7 @@ class ShortenLinkTransform(SphinxPostTransform):
         <a class="reference external github" href="https://github.com/2i2c-org/infrastructure/issues/1329">
             2i2c-org/infrastructure#1329
         </a>
-    """  # noqa
+    """
 
     default_priority = 400
     formats = ("html",)
@@ -1027,9 +1018,7 @@ class ShortenLinkTransform(SphinxPostTransform):
                     node.children[0] = nodes.Text(self.parse_url(uri))
 
     def parse_url(self, uri):
-        """
-        parse the content of the url with respect to the selected platform
-        """
+        """Parse the content of the url with respect to the selected platform."""
         path = uri.path
 
         if path == "":
@@ -1083,8 +1072,7 @@ class ShortenLinkTransform(SphinxPostTransform):
 
 
 def setup_translators(app):
-    """
-    Add bootstrap HTML functionality if we are using an HTML translator.
+    """Add bootstrap HTML functionality if we are using an HTML translator.
 
     This re-uses the pre-existing Sphinx translator and adds extra functionality defined
     in ``BootstrapHTML5TranslatorMixin``. This way we can retain the original translator's
@@ -1137,7 +1125,6 @@ def setup_logo_path(
     follow the same pattern. They have already been copied to the output folder
     in the `update_config` event.
     """
-
     # get information from the context "logo_url" for sphinx>=6, "logo" sphinx<6
     pathto = context.get("pathto")
     logo = context.get("logo_url") or context.get("logo")
@@ -1166,10 +1153,7 @@ def setup_logo_path(
 
 
 def copy_logo_images(app: Sphinx, exception=None) -> None:
-    """
-    If logo image paths are given, copy them to the `_static` folder
-    Then we can link to them directly in an html_page_context event
-    """
+    """If logo image paths are given, copy them to the `_static` folder Then we can link to them directly in an html_page_context event."""
     theme_options = _get_theme_options(app)
     logo = theme_options.get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
@@ -1196,6 +1180,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
 
 
 def setup(app):
+    """setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
