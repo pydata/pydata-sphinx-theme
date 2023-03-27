@@ -168,14 +168,8 @@ html[data-theme="light"] {
 }
 
 /*******************************************************************************
-  * Dropdowns
-  */
-
-@mixin dropdown-colors($name) {
-  --pst-sd-dropdown-color: var(--sd-color-#{$name});
-  --pst-sd-dropdown-bg-color: var(--sd-color-#{$name}-bg);
-  --pst-sd-dropdown-text-color: var(--sd-color-#{$name}-bg-text);
-}
+* Dropdowns
+*/
 
 details.sd-dropdown {
   // Remove all borders to over-ride SD behavior, and we'll add our own later
