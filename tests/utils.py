@@ -15,15 +15,9 @@ def pretty_axe_results(results: dict) -> str:
     string += f"Found {len(violations)} accessibility violations:"
     for violation in violations:
         string += (
-            "\n\n\nRule Violated:\n"
-            + violation["id"]
-            + " - "
-            + violation["description"]
-            + "\n\tURL: "
-            + violation["helpUrl"]
-            + "\n\tImpact Level: "
-            + violation["impact"]
-            + "\n\tTags:"
+            f"\n\n\nRule Violated:\n {violation["id"]} - {violation["description"]} \n\t"
+            f"URL: {violation["helpUrl"]} \n\t"
+            f"Impact Level: {violation["impact"]} \n\tTags:"
         )
         for tag in violation["tags"]:
             string += " " + tag
