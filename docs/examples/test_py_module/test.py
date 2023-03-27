@@ -77,8 +77,7 @@ class Foo:
         return myvalue.upper()
 
     def another_function(self, a, b, **kwargs):
-        """
-        Here is another function.
+        """Here is another function.
 
         :param a: The number of green hats you own.
         :type a: int

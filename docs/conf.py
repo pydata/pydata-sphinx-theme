@@ -8,8 +8,8 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 # -- Path setup --------------------------------------------------------------
 import os
 import sys
-from typing import Any, Dict
 from pathlib import Path
+from typing import Any, Dict
 
 import pydata_sphinx_theme
 from sphinx.application import Sphinx
@@ -236,6 +236,8 @@ favicons = [
 def setup_to_main(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
+    """Wrapping setup method."""
+
     def to_main(link: str) -> str:
         """Transform "edit on github" links and make sure they always point to the main branch.
 
@@ -260,7 +262,6 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     Returns:
         the 2 parralel parameters set to ``True``.
     """
-
     app.connect("html-page-context", setup_to_main)
 
     return {

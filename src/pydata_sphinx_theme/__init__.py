@@ -1002,6 +1002,7 @@ class ShortenLinkTransform(SphinxPostTransform):
     platform = None
 
     def run(self, **kwargs):
+        """run the Transform object."""
         matcher = NodeMatcher(nodes.reference)
         # TODO: just use "findall" once docutils min version >=0.18.1
         for node in _traverse_or_findall(self.document, matcher):
@@ -1180,7 +1181,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
 
 
 def setup(app):
-    """setup the Sphinx application."""
+    """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
 

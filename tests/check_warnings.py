@@ -1,3 +1,5 @@
+"""Check the list of warnings produced by a doc build."""
+
 import sys
 from pathlib import Path
 
@@ -7,16 +9,16 @@ from colorama import Fore, init
 init()
 
 
-def check_warnings(file):
-    """
-    Check the list of warnings produced by the GitHub CI tests
-    raise errors if there are unexpected ones and/or if some are missing.
+def check_warnings(file: Path) -> bool:
+    """Check the list of warnings produced by a doc build.
 
-    Args:
-        file (pathlib.Path): the path to the generated warning.txt file from
+    Raise errors if there are unexpected ones and/or if some are missing.
+
+    Parameters:
+        file: the path to the generated warning.txt file from
             the CI build
 
-    Return:
+    Returns:
         0 if the warnings are all there
         1 if some warning are not registered or unexpected
     """
