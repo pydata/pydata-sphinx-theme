@@ -100,7 +100,7 @@ Here is an overview of the colors available in the theme (change theme mode to s
 .. raw:: html
 
     <style>
-      span.pst-primary {background-color: var(--pst-color-primary); color: #{a11y-combination(--pst-color-primary)}}
+      span.pst-primary {background-color: var(--pst-color-primary);
       span.pst-secondary {background-color: var(--pst-color-secondary);}
       span.pst-success {background-color: var(--pst-color-success);}
       span.pst-info {background-color: var(--pst-color-info);}

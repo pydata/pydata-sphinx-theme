@@ -72,18 +72,17 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
   html[data-theme="#{$mode}"] {
     // check if this color is defined differently for light/dark
     @each $name in $sd-semantic-color-names {
-      @debug "name: #{$name} ✨";
       $definition: map-get($all-colors, $name);
       @if type-of($definition) == map {
         @each $key, $value in $definition {
-          @debug "key: #{$key} value: #{$value} definition: #{$definition} ✨";
           @if str-index($key, $mode) != null {
             // since now we define the bg colours in the semantic colours and not
             // by changing opacity, we need to check if the key contains bg and the
             // correct mode (light/dark)
             @if str-index($key, "bg") != null {
-              @debug "bg color ✨ #{$value}";
               --sd-color-#{$name}-bg: #{$value};
+              $value: check-color($value);
+              --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
             } @else {
               $value: check-color($value);
               @include create-sd-colors($value, $name);
@@ -91,9 +90,7 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
           }
         }
       } @else {
-        @debug "not a map ✨";
         $value: map-get($all-colors, $name);
-        @debug "value: #{$value} name: #{$name} ✨";
         @include create-sd-colors($value, $name);
       }
     }
@@ -173,6 +170,13 @@ html[data-theme="light"] {
 /*******************************************************************************
   * Dropdowns
   */
+
+@mixin dropdown-colors($name) {
+  --pst-sd-dropdown-color: var(--sd-color-#{$name});
+  --pst-sd-dropdown-bg-color: var(--sd-color-#{$name}-bg);
+  --pst-sd-dropdown-text-color: var(--sd-color-#{$name}-bg-text);
+}
+
 details.sd-dropdown {
   // Remove all borders to over-ride SD behavior, and we'll add our own later
   border: 0px !important;
@@ -182,7 +186,6 @@ details.sd-dropdown {
       border: 0;
     }
   }
-  // TODO: colour should match admonitions
   // Drop shadow should behave same as admonitions
   @include box-shadow();
 
@@ -205,24 +208,30 @@ details.sd-dropdown {
     @each $name in $sd-semantic-color-names {
       &.sd-bg-#{$name} {
         --pst-sd-dropdown-color: var(--sd-color-#{$name});
+        --pst-sd-dropdown-bg-color: var(--sd-color-#{$name}-bg);
         // Otherwise it won't be defined in the sibling element
         & + div.sd-summary-content {
           --pst-sd-dropdown-color: var(--sd-color-#{$name});
+          --pst-sd-dropdown-bg-color: var(--sd-color-#{$name}-bg);
         }
+      }
+      &.sd-bg-text-#{$name} {
+        color: var(--sd-color-#{$name}-bg-text) !important;
       }
     }
 
     // Background color and border are grey by default
     background-color: unset !important;
-    @include background-from-color-variable(--pst-sd-dropdown-color);
+    @include background-from-color-variable(--pst-sd-dropdown-bg-color);
 
     // Add a left border with the same structure as our admonitions
     border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
     & + div.sd-summary-content {
       border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
       border-bottom-left-radius: calc(0.25rem - 1px);
+      background-color: var(--pst-color-on-background);
     }
-    phi span.sd-summary-icon {
+    span.sd-summary-icon {
       display: inline-flex;
       align-items: center;
       color: var(--pst-sd-dropdown-color) !important;
