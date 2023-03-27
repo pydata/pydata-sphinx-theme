@@ -19,8 +19,8 @@ blockquote {
   p:last-child {
     margin-bottom: 0;
   }
-  // TODO replace colour
-  @include background-from-color-variable(--pst-color-border);
+
+  @include background-from-color-variable(--pst-color-on-background);
 
   //hack to make the text in the blockquote selectable
   &:before {
