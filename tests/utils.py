@@ -12,7 +12,7 @@ def pretty_axe_results(results: dict) -> str:
     """
     violations = results["violations"]
     string = ""
-    string += "Found " + str(len(violations)) + " accessibility violations:"
+    string += f"Found {len(violations)} accessibility violations:"
     for violation in violations:
         string += (
             "\n\n\nRule Violated:\n"
