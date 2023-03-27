@@ -189,14 +189,21 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
   0.8714 0.8796 0.8879 0.8963 0.9047 0.9131 0.9216 0.9301 0.9387 0.9473 0.956
   0.9647 0.9734 0.9823 0.9911 1;
 
+/**
+* Get color combinations that meet a minimum contrast ratio as per WCAG 2
+*/
+// @param {color} $bg - Background color of the element
+// @param {color} optional $target-color-contrast-dark $target-color-contrast-light  - Target text colors, defaul to our
+// $foundation-black and $foundation-white colors
+// @return {color} $max-ratio-color - The color that has the highest contrast ratio
 @function a11y-combination(
   $bg,
   $target-color-contrast-dark: $foundation-black,
-  $target-color-contrast-white: $foundation-white,
+  $target-color-contrast-light: $foundation-white,
   $min-contrast-ratio: $min-contrast-ratio-4
 ) {
   // will test against the specified foreground colors
-  $foregrounds: $target-color-contrast-white, $target-color-contrast-dark;
+  $foregrounds: $target-color-contrast-light, $target-color-contrast-dark;
   $max-ratio: 0;
   $max-ratio-color: null;
 
