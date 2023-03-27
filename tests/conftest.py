@@ -3,12 +3,13 @@
 import re
 from pathlib import Path
 from shutil import copytree
-from typing import Callable, Self
+from typing import Callable
 
 import pytest
 from bs4 import BeautifulSoup
 from sphinx.testing.path import path as sphinx_path
 from sphinx.testing.util import SphinxTestApp
+from typing_extensions import Self
 
 pytest_plugins = "sphinx.testing.fixtures"
 

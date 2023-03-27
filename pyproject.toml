@@ -27,7 +27,8 @@ dependencies = [
   "packaging",
   "Babel",
   "pygments>=2.7",
-  "accessible-pygments"
+  "accessible-pygments",
+  "typing-extensions"
 ]
 
 license = { file = "LICENSE" }

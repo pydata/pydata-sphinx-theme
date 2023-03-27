@@ -236,7 +236,7 @@ favicons = [
 def setup_to_main(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
-    """Wrapping setup method."""
+    """Add a function that jinja can access for returning an "edit this page" link pointing to `main`."""
 
     def to_main(link: str) -> str:
         """Transform "edit on github" links and make sure they always point to the main branch.

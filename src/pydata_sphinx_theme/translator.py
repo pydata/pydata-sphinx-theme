@@ -1,7 +1,10 @@
 """A custom Sphinx HTML Translator for Bootstrap layout."""
 
+import types
+
 import sphinx
 from packaging.version import Version
+from sphinx.application import Sphinx
 from sphinx.ext.autosummary import autosummary_table
 from sphinx.util import logging
 
@@ -55,3 +58,38 @@ class BootstrapHTML5TranslatorMixin:
 
         tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
+
+
+def setup_translators(app: Sphinx):
+    """Add bootstrap HTML functionality if we are using an HTML translator.
+
+    This re-uses the pre-existing Sphinx translator and adds extra functionality defined
+    in ``BootstrapHTML5TranslatorMixin``. This way we can retain the original translator's
+    behavior and configuration, and _only_ add the extra bootstrap rules.
+    If we don't detect an HTML-based translator, then we do nothing.
+    """
+    if not app.registry.translators.items():
+        translator = types.new_class(
+            "BootstrapHTML5Translator",
+            (
+                BootstrapHTML5TranslatorMixin,
+                app.builder.default_translator_class,
+            ),
+            {},
+        )
+        app.set_translator(app.builder.name, translator, override=True)
+    else:
+        for name, klass in app.registry.translators.items():
+            if app.builder.format != "html":
+                # Skip translators that are not HTML
+                continue
+
+            translator = types.new_class(
+                "BootstrapHTML5Translator",
+                (
+                    BootstrapHTML5TranslatorMixin,
+                    klass,
+                ),
+                {},
+            )
+            app.set_translator(name, translator, override=True)
