@@ -1,6 +1,7 @@
 # Accessibility checks
 
-Note 22-March-2023: we are currently
+```{note} 
+22-March-2023: we are currently
 [re-evaluating how we do accessibility checks](https://github.com/pydata/pydata-sphinx-theme/issues/1168)
 and reporting, so this may change soon.
 
