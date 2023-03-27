@@ -39,6 +39,7 @@ jobs:
 
   # run our test suite on various combinations of OS / Python / Sphinx version
   run-pytest:
+    needs: [lint]
     strategy:
       fail-fast: false
       matrix:
@@ -93,6 +94,7 @@ jobs:
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:
+    needs: [lint]
     strategy:
       fail-fast: false
       matrix:
@@ -120,6 +122,7 @@ jobs:
 
   # Run local Lighthouse audit against built site
   audit:
+    needs: [build-site]
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -163,6 +166,7 @@ jobs:
 
   # Generate a profile of the code and upload as an artifact
   profile:
+    needs: [build-site, run-pytest]
     strategy:
       matrix:
         os: [ubuntu-latest]
