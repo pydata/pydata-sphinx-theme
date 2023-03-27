@@ -21,5 +21,5 @@ then visiting the "Kitchen Sink" example pages with
 loading and manipulating pages with various browsers, such as Chrome (chromium),
 Firefox (gecko), Safari (WebKit). The ["Kitchen Sink"
 examples](https://pydata-sphinx-theme.readthedocs.io/en/stable/examples/kitchen-sink/index.html)
-are a section of the PyData Sphinx Theme docs that showcase the different visual
+are taken from [sphinx-themes.org](https://sphinx-themes.org/) and showcase
 components of the PyData Sphinx Theme, such as admonitions, lists, and headings.
