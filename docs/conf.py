@@ -9,12 +9,12 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 import os
 import sys
 from typing import Any, Dict
+from pathlib import Path
 
 import pydata_sphinx_theme
 from sphinx.application import Sphinx
 
-sys.path.append("scripts")
-from gallery_directive import GalleryDirective
+sys.path.append(str(Path(".").resolve()))
 
 # -- Project information -----------------------------------------------------
 
@@ -32,6 +32,7 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
+    "_extention.gallery_directive",
     # For extension examples and demos
     "ablog",
     "jupyter_sphinx",
@@ -259,7 +260,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     Returns:
         the 2 parralel parameters set to ``True``.
     """
-    app.add_directive("gallery-grid", GalleryDirective)
+
     app.connect("html-page-context", setup_to_main)
 
     return {

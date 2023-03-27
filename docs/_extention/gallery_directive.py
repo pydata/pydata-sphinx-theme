@@ -9,12 +9,13 @@ It currently exists for maintainers of the pydata-sphinx-theme,
 but might be abstracted into a standalone package if it proves useful.
 """
 from pathlib import Path
-from typing import List
+from typing import List, Dict, Any
 
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
+from sphinx.application import Sphinx
 from yaml import safe_load
 
 logger = logging.getLogger(__name__)
@@ -142,3 +143,19 @@ class GalleryDirective(SphinxDirective):
         if self.options.get("container-class", []):
             container.attributes["classes"] += self.options.get("class", [])
         return [container]
+
+
+def setup(app: Sphinx) -> Dict[str, Any]:
+    """Add custom configuration to sphinx app.
+
+    Args:
+        app: the Sphinx application
+    Returns:
+        the 2 parralel parameters set to ``True``.
+    """
+    app.add_directive("gallery-grid", GalleryDirective)
+
+    return {
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
