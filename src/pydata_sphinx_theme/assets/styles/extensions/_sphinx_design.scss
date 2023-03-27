@@ -48,7 +48,7 @@ $extra-semantic-colors: (
   "black": $foundation-black,
 );
 
-$all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
+$all-colors: map-merge(pstcol.$pst-semantic-colors, $extra-semantic-colors);
 
 @mixin create-sd-colors($value, $name) {
   // define the pst variables, so that downstream user overrides will work

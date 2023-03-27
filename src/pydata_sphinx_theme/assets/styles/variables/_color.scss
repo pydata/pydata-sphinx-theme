@@ -224,6 +224,16 @@ $pst-semantic-colors: (
     ),
 );
 
+/*******************************************************************************
+* write the color rules for each theme (light/dark)
+*/
+
+/* NOTE:
+ * Mixins enable us to reuse the same definitions for the different modes
+ * https://sass-lang.com/documentation/at-rules/mixin
+ * #{something} inserts a variable into a CSS selector or property name
+ * https://sass-lang.com/documentation/interpolation
+ */
 @mixin theme-colors($mode) {
   // check if this color is defined differently for light/dark
   @each $col-name, $definition in $pst-semantic-colors {
