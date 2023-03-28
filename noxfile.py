@@ -88,7 +88,7 @@ def test(session):
     if _should_install(session):
         session.install("-e", ".[test]")
     _compile_translations(session)
-    session.run("pytest", *session.posargs)
+    session.run("pytest", "-k", "not a11y", *session.posargs)
 
 
 @nox.session(name="a11y")
