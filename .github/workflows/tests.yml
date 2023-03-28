@@ -116,7 +116,7 @@ jobs:
       - name: Build docs
         run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
       - name: Check for unexpected Sphinx warnings
-        run: python tests/check_warnings.py
+        run: python tests/utils/check_warnings.py
 
   # Run local Lighthouse audit against built site
   audit:

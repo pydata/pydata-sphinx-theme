@@ -7,8 +7,15 @@ Re-install the environment from scratch:
     nox -s docs -- -r
 """
 import nox
+import sys
 from pathlib import Path
 from shlex import split
+
+# fmt: off
+sys.path.append(".")
+from tests.test_a11y import path_docs_build as path_docs_build_for_a11y # isort:skip  # noqa
+sys.path.pop()
+# fmt: on
 
 nox.options.reuse_existing_virtualenvs = True
 
@@ -54,7 +61,13 @@ def docs(session):
     """Build the documentation and place in docs/_build/html."""
     if _should_install(session):
         session.install("-e", ".[doc]")
-    session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html", "-v")
+    session.run(
+        "sphinx-build",
+        "-b=html",
+        session.posargs[0] if 0 < len(session.posargs) else "docs/",
+        session.posargs[1] if 1 < len(session.posargs) else "docs/_build/html",
+        "-v",
+    )
 
 
 @nox.session(name="docs-live")
@@ -71,11 +84,30 @@ def docs_live(session):
 def test(session):
     """Run the test suite."""
     if _should_install(session):
-        session.install("-e", ".[test,doc]")
-        session.run("playwright", "install")
+        session.install("-e", ".[test]")
     _compile_translations(session)
-    session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html", "-v")
     session.run("pytest", *session.posargs)
+
+
+@nox.session(name="a11y")
+def a11y(session):
+    """Run the accessibility test suite."""
+    if _should_install(session):
+        session.install("-e", ".[test]")
+        # Install the drivers that Playwright needs to control the browsers
+        session.run("playwright", "install")
+    # Build the docs so we can run accessibility tests against them. If a base
+    # url is provided via the command line (see pytest-base-url plugin), then no
+    # need to build the docs, for example:
+    #
+    # ```console
+    # $ nox -s a11y -- --base-url="https://pydata-sphinx-theme.readthedocs.io/en/latest"
+    # ```
+    if not any(arg.startswith("--base-url") for arg in session.posargs):
+        session.run("nox", "-s", "docs", "--", "docs/", path_docs_build_for_a11y)
+    # The next step would be to open a server to the docs for Playwright, but
+    # that is done in the test file, along with the accessibility checks.
+    session.run("pytest", "-k", "a11y", *session.posargs)
 
 
 @nox.session(name="test-sphinx")

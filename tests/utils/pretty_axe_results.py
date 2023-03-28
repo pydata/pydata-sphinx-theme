@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
 # This code taken from:
 # https://github.com/mozilla-services/axe-selenium-python/blob/3cfbdd67c9b40ab03f37b3ba2521f77c2071827b/axe_selenium_python/axe.py
 # Typical usage:
@@ -15,9 +19,9 @@ def pretty_axe_results(results: dict) -> str:
     string += f"Found {len(violations)} accessibility violations:"
     for violation in violations:
         string += (
-            f"\n\n\nRule Violated:\n {violation["id"]} - {violation["description"]} \n\t"
-            f"URL: {violation["helpUrl"]} \n\t"
-            f"Impact Level: {violation["impact"]} \n\tTags:"
+            f"\n\n\nRule Violated:\n {violation['id']} - {violation['description']} \n\t"
+            f"URL: {violation['helpUrl']} \n\t"
+            f"Impact Level: {violation['impact']} \n\tTags:"
         )
         for tag in violation["tags"]:
             string += " " + tag

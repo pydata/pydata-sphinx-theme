@@ -81,6 +81,7 @@ test = [
   "pytest-cov",
   "pytest-regressions",
   "pytest-playwright",
+  "pytest-base-url",
   "codecov",
 ]
 dev = [
@@ -95,3 +96,8 @@ dev = [
 
 [tool.doc8]
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
+
+[tool.pytest.ini_options]
+markers = [
+    "url_path(path): associate a url path with a test",
+]
