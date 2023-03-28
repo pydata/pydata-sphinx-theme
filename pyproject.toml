@@ -96,14 +96,6 @@ dev = [
 [tool.doc8]
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 
-[tool.flake8]
-# E203: space before ":" | needed for how black formats slicing
-# E501: line too long | Black take care of it
-# W503: line break before binary operator | Black take care of it
-# W605: invalid escape sequence | we escape specific characters for sphinx
-ignore = ["E203", "E501", "W503", "W605"]
-exclude = ["setup.py", "docs/conf.py", "node_modules", "docs", "build", "dist"]
-
 [tool.ruff]
 ignore-init-module-imports = true
 fix = true
