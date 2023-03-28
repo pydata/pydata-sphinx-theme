@@ -1,4 +1,4 @@
-"""Custom inline math to include inline math in headers."""
+"""Methods to build the toctree used in the html pages."""
 
 from functools import lru_cache
 from typing import List, Union
