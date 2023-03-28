@@ -1171,8 +1171,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
     If logo image paths are given, copy them to the `_static` folder
     Then we can link to them directly in an html_page_context event
     """
-    theme_options = _get_theme_options_dict(app)
-    logo = theme_options.get("logo", {})
+    logo = _get_theme_options_dict(app).get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
     for kind in ["light", "dark"]:
         path_image = logo.get(f"image_{kind}")
