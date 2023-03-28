@@ -32,19 +32,20 @@ __version__ = "0.13.2dev0"
 logger = logging.getLogger(__name__)
 
 
-def _get_theme_options(app):
-    """Return theme options for the application w/ a fallback if they don't exist.
+def _get_theme_options_dict(app):
+    """Get the Sphinx theme options dictionary (or fallback to an empty dict).
 
-    In general we want to modify app.builder.theme_options if it exists, so prefer that first.
+    The "top-level" mapping (the one we should usually check first, and modify
+    if desired) is ``app.builder.theme_options``. It is created by Sphinx as a
+    copy of ``app.config.html_theme_options`` (containing user-configs from
+    their ``conf.py``); sometimes that copy never occurs though which is why we
+    check both.
     """
     if hasattr(app.builder, "theme_options"):
-        # In most HTML build cases this will exist except for some circumstances (see below).
         return app.builder.theme_options
     elif hasattr(app.config, "html_theme_options"):
-        # For example, linkcheck will have this configured but won't be in builder obj.
         return app.config.html_theme_options
     else:
-        # Empty dictionary as a fail-safe.
         return {}
 
 
@@ -59,7 +60,7 @@ def update_config(app):
     # At this point, modifying app.config.html_theme_options will NOT update the
     # page's HTML context (e.g. in jinja, `theme_keyword`).
     # To do this, you must manually modify `app.builder.theme_options`.
-    theme_options = _get_theme_options(app)
+    theme_options = _get_theme_options_dict(app)
 
     # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
@@ -951,7 +952,7 @@ def _overwrite_pygments_css(app, exception=None):
         # see if user specified a light/dark pygments theme, if not, use the
         # one we set in theme.conf
         style_key = f"pygment_{light_or_dark}_style"
-        theme_name = _get_theme_options(app).get(style_key, None)
+        theme_name = _get_theme_options_dict(app).get(style_key, None)
         if theme_name is None:
             theme_name = app.builder.theme.get_options()[style_key]
         # make sure we can load the style
@@ -1169,7 +1170,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
     If logo image paths are given, copy them to the `_static` folder
     Then we can link to them directly in an html_page_context event
     """
-    theme_options = _get_theme_options(app)
+    theme_options = _get_theme_options_dict(app)
     logo = theme_options.get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
     for kind in ["light", "dark"]:
