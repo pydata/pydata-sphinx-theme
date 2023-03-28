@@ -137,71 +137,71 @@ def test_axe_core_kitchen_sink_blocks(page: Page):
     assert len(results["violations"]) == 0, pretty_axe_results(results)
 
 
-# def test_axe_core_kitchen_sink_generic_items(setup_page):
-#     """
-#     Using Axe-core, scan the Kitchen Sink - Generic items page for accessibility
-#     violations.
-#     """
-#     page = setup_page("/examples/kitchen-sink/generic.html")
-#     results = page.evaluate("axe.run('#generic-items')")
-#     assert len(results["violations"]) == 0, pretty_axe_results(results)
+def test_axe_core_kitchen_sink_generic_items(setup_page):
+    """
+    Using Axe-core, scan the Kitchen Sink - Generic items page for accessibility
+    violations.
+    """
+    page = setup_page("/examples/kitchen-sink/generic.html")
+    results = page.evaluate("axe.run('#generic-items')")
+    assert len(results["violations"]) == 0, pretty_axe_results(results)
 
 
-# def test_axe_core_kitchen_sink_images_figures(setup_page):
-#     """
-#     Using Axe-core, scan the Kitchen Sink - Images & Figures page for
-#     accessibility violations.
-#     """
-#     page = setup_page("/examples/kitchen-sink/images.html")
-#     results = page.evaluate("axe.run('#images-figures')")
-#     assert len(results["violations"]) == 0, pretty_axe_results(results)
+def test_axe_core_kitchen_sink_images_figures(setup_page):
+    """
+    Using Axe-core, scan the Kitchen Sink - Images & Figures page for
+    accessibility violations.
+    """
+    page = setup_page("/examples/kitchen-sink/images.html")
+    results = page.evaluate("axe.run('#images-figures')")
+    assert len(results["violations"]) == 0, pretty_axe_results(results)
 
 
-# def test_axe_core_kitchen_sink_lists(setup_page):
-#     """
-#     Using Axe-core, scan the Kitchen Sink - Lists page for accessibility
-#     violations.
-#     """
-#     page = setup_page("/examples/kitchen-sink/lists.html")
-#     results = page.evaluate("axe.run('#lists')")
-#     assert len(results["violations"]) == 0, pretty_axe_results(results)
+def test_axe_core_kitchen_sink_lists(setup_page):
+    """
+    Using Axe-core, scan the Kitchen Sink - Lists page for accessibility
+    violations.
+    """
+    page = setup_page("/examples/kitchen-sink/lists.html")
+    results = page.evaluate("axe.run('#lists')")
+    assert len(results["violations"]) == 0, pretty_axe_results(results)
 
 
-# def test_axe_core_kitchen_sink_structural_elements(setup_page):
-#     """
-#     Using Axe-core, scan the Kitchen Sink - Structural Elements page for
-#     accessibility violations.
-#     """
-#     page = setup_page("/examples/kitchen-sink/structure.html")
-#     results = page.evaluate("axe.run('#structural-elements')")
-#     assert len(results["violations"]) == 0, pretty_axe_results(results)
+def test_axe_core_kitchen_sink_structural_elements(setup_page):
+    """
+    Using Axe-core, scan the Kitchen Sink - Structural Elements page for
+    accessibility violations.
+    """
+    page = setup_page("/examples/kitchen-sink/structure.html")
+    results = page.evaluate("axe.run('#structural-elements')")
+    assert len(results["violations"]) == 0, pretty_axe_results(results)
 
 
-# def test_axe_core_kitchen_sink_structural_elements_2(setup_page):
-#     """
-#     Using Axe-core, scan the Kitchen Sink - Structural Elements page (2nd
-#     section) for accessibility violations.
-#     """
-#     page = setup_page("/examples/kitchen-sink/structure.html")
-#     results = page.evaluate("axe.run('#structural-elements-2')")
-#     assert len(results["violations"]) == 0, pretty_axe_results(results)
+def test_axe_core_kitchen_sink_structural_elements_2(setup_page):
+    """
+    Using Axe-core, scan the Kitchen Sink - Structural Elements page (2nd
+    section) for accessibility violations.
+    """
+    page = setup_page("/examples/kitchen-sink/structure.html")
+    results = page.evaluate("axe.run('#structural-elements-2')")
+    assert len(results["violations"]) == 0, pretty_axe_results(results)
 
 
-# def test_axe_core_kitchen_sink_tables(setup_page):
-#     """
-#     Using Axe-core, scan the Kitchen Sink - Tables page for accessibility
-#     violations.
-#     """
-#     page = setup_page("/examples/kitchen-sink/tables.html")
-#     results = page.evaluate("axe.run('#tables')")
-#     assert len(results["violations"]) == 0, pretty_axe_results(results)
+def test_axe_core_kitchen_sink_tables(setup_page):
+    """
+    Using Axe-core, scan the Kitchen Sink - Tables page for accessibility
+    violations.
+    """
+    page = setup_page("/examples/kitchen-sink/tables.html")
+    results = page.evaluate("axe.run('#tables')")
+    assert len(results["violations"]) == 0, pretty_axe_results(results)
 
 
-# def test_axe_core_kitchen_sink_typography(setup_page):
-#     """
-#     Using Axe-core, scan the Kitchen Sink - Typography page for accessibility
-#     violations.
-#     """
-#     page = setup_page("/examples/kitchen-sink/typography.html")
-#     results = page.evaluate("axe.run('#typography')")
-#     assert len(results["violations"]) == 0, pretty_axe_results(results)
+def test_axe_core_kitchen_sink_typography(setup_page):
+    """
+    Using Axe-core, scan the Kitchen Sink - Typography page for accessibility
+    violations.
+    """
+    page = setup_page("/examples/kitchen-sink/typography.html")
+    results = page.evaluate("axe.run('#typography')")
+    assert len(results["violations"]) == 0, pretty_axe_results(results)
