@@ -11,14 +11,14 @@ stored in `test_build/`. In other words, it uses
 the output created during the test run with a previous known and verified output
 (stored under `test_build`) to make sure nothing has changed.
 
-`test_accessibility.py` checks PyData Sphinx Theme components for accessibility
-issues. It's important to note that [only a fraction of accessibility issues can
-be caught with automated
+`test_a11y.py` checks PyData Sphinx Theme components for accessibility issues.
+It's important to note that [only a fraction of accessibility issues can be
+caught with automated
 testing](https://accessibility.blog.gov.uk/2017/02/24/what-we-found-when-we-tested-tools-on-the-worlds-least-accessible-webpage/).
-In contrast to `test_build`, `test_accessibility` checks components as they
-appear in the browser, meaning with any CSS and JavaScript applied. It does this
-by building the PyData Sphinx Theme docs, launching a local server to the docs,
-then visiting the "Kitchen Sink" example pages with
+In contrast to build test suite, the accessibility suite checks components as
+they appear in the browser, meaning with any CSS and JavaScript applied. It does
+this by building the PyData Sphinx Theme docs, launching a local server to the
+docs, then visiting the "Kitchen Sink" example pages with
 [Playwright](https://playwright.dev), a program for developers that allows
 loading and manipulating pages with various browsers, such as Chrome (chromium),
 Firefox (gecko), Safari (WebKit). The ["Kitchen Sink"

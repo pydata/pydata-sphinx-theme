@@ -164,7 +164,7 @@ will cause the development server to do the following:
 This theme uses `pytest` for its testing. There is a lightweight fixture defined
 in the `test_build.py` script that makes it easy to run a Sphinx build using
 this theme and inspect the results. There are also accessibility checks in
-`test_accessibilty.py`.
+`test_a11y.py`.
 
 In addition, we use
 [pytest-regressions](https://pytest-regressions.readthedocs.io/en/latest/) to
@@ -175,14 +175,14 @@ test will fail. If we _expect_ the structure to differ, then delete the file on
 disk and run the test. A new file will be created, and subsequent tests will
 pass.
 
-To run the tests with `nox`, run the following command:
+To run the build tests with `nox`, run the following command:
 
 ```console
 $ nox -s test
 ```
 
-To run just the accessibility tests:
+To run the accessibility checks:
 
 ```console
-$ nox -s test -- -k accessibility
+$ nox -s a11y
 ```
