@@ -32,7 +32,7 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
-    "_extention.gallery_directive",
+    "_extension.gallery_directive",
     # For extension examples and demos
     "ablog",
     "jupyter_sphinx",
