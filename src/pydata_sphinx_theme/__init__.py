@@ -949,25 +949,26 @@ def _overwrite_pygments_css(app, exception=None):
         if fallback not in pygments_styles:
             fallback = pygments_styles[0]  # should resolve to "default"
 
-        # see if user specified a light/dark pygments theme, if not, use the
-        # one we set in theme.conf
+        # see if user specified a light/dark pygments theme:
         style_key = f"pygment_{light_or_dark}_style"
-        theme_name = _get_theme_options_dict(app).get(style_key, None)
-        if theme_name is None:
-            theme_name = app.builder.theme.get_options()[style_key]
+        style_name = _get_theme_options_dict(app).get(style_key, None)
+        # if not, use the one we set in `theme.conf`:
+        if style_name is None and hasattr(app.builder, "theme"):
+            style_name = app.builder.theme.get_options()[style_key]
         # make sure we can load the style
-        if theme_name not in pygments_styles:
+        if style_name not in pygments_styles:
             # only warn if user asked for a highlight theme that we can't find
-            if theme_name is not None:
+            if style_name is not None:
                 logger.warning(
-                    f"Color theme {theme_name} not found by pygments, falling back to {fallback}."
+                    f"Highlighting style {style_name} not found by pygments, "
+                    f"falling back to {fallback}."
                 )
-            theme_name = fallback
+            style_name = fallback
         # assign to the appropriate variable
         if light_or_dark == "light":
-            light_theme = theme_name
+            light_theme = style_name
         else:
-            dark_theme = theme_name
+            dark_theme = style_name
     # re-write pygments.css
     pygment_css = Path(app.builder.outdir) / "_static" / "pygments.css"
     with pygment_css.open("w") as f:
