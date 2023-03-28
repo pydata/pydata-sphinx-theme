@@ -150,6 +150,8 @@ html_theme_options = {
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "navbar_persistent": ["search-button"],
     # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
+    # "article_footer_items": ["prev-next.html", "test.html", "test.html"],
+    # "content_footer_items": ["prev-next.html", "test.html", "test.html"],
     # "footer_start": ["test.html", "test.html"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
@@ -201,7 +203,7 @@ todo_include_todos = True
 # -- favicon options ---------------------------------------------------------
 
 # see https://sphinx-favicon.readthedocs.io for more information about the
-# sphinx-favicon extention
+# sphinx-favicon extension
 favicons = [
     # generic icons compatible with most browsers
     "favicon-32x32.png",
@@ -221,5 +223,23 @@ favicons = [
 # -- application setup -------------------------------------------------------
 
 
+def setup_to_main(app, pagename, templatename, context, doctree):
+    def to_main(link: str) -> str:
+        """Transform "edit on github" links and make sure they always point to the main branch
+
+        Args:
+            link: the link to the github edit interface
+
+        Returns:
+            the link to the tip of the main branch for the same file
+        """
+        links = link.split("/")
+        idx = links.index("edit")
+        return "/".join(links[: idx + 1]) + "/main/" + "/".join(links[idx + 2 :])
+
+    context["to_main"] = to_main
+
+
 def setup(app):
     app.add_directive("gallery-grid", GalleryDirective)
+    app.connect("html-page-context", setup_to_main)

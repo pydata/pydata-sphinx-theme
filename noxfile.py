@@ -53,14 +53,16 @@ def compile(session):
     if _should_install(session):
         session.install("-e", ".")
         session.install("sphinx-theme-builder[cli]")
-    session.run("stb", "compile")
 
 
 @nox.session(name="docs")
 def docs(session):
-    """Build the documentation and place in docs/_build/html."""
+    """Build the documentation and place in docs/_build/html. Use --no-compile to skip compilation."""
     if _should_install(session):
         session.install("-e", ".[doc]")
+        session.install("sphinx-theme-builder[cli]")
+    if "no-compile" not in session.posargs:
+        session.run("stb", "compile")
     session.run(
         "sphinx-build",
         "-b=html",

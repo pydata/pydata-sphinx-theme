@@ -91,7 +91,7 @@ def update_config(app):
     if theme_options.get("favicons"):
         logger.warning(
             "The configuration `favicons` is deprecated."
-            "Use the sphinx-favicon extention instead."
+            "Use the sphinx-favicon extension instead."
         )
 
     # Validate icon links
@@ -238,6 +238,8 @@ def update_and_remove_templates(app, pagename, templatename, context, doctree):
         "theme_navbar_end",
         "theme_article_header_start",
         "theme_article_header_end",
+        "theme_article_footer_items",
+        "theme_content_footer_items",
         "theme_footer_start",
         "theme_footer_end",
         "theme_secondary_sidebar_items",
@@ -444,7 +446,7 @@ def add_toctree_functions(app, pagename, templatename, context, doctree):
 
         return out
 
-    # Cache this function because it is expensive to run, and becaues Sphinx
+    # Cache this function because it is expensive to run, and because Sphinx
     # somehow runs this twice in some circumstances in unpredictable ways.
     @lru_cache(maxsize=None)
     def generate_toctree_html(kind, startdepth=1, show_nav_level=1, **kwargs):

@@ -85,7 +85,7 @@ $pst-semantic-colors: (
 /* NOTE:
  * Mixins enable us to reuse the same definitions for the different modes
  * https://sass-lang.com/documentation/at-rules/mixin
- * #{...} inserts a variable into a CSS selector or property name
+ * #{something} inserts a variable into a CSS selector or property name
  * https://sass-lang.com/documentation/interpolation
  */
 @mixin theme-colors($mode) {
@@ -105,11 +105,13 @@ $pst-semantic-colors: (
   }
   // adapt to light/dark-specific content
   @if $mode == "light" {
-    .only-dark {
+    .only-dark,
+    .only-dark ~ figcaption {
       display: none !important;
     }
   } @else {
-    .only-light {
+    .only-light,
+    .only-light ~ figcaption {
       display: none !important;
     }
     /* Adjust images in dark mode (unless they have class .only-dark or

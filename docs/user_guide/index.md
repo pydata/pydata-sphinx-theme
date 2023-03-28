@@ -72,6 +72,7 @@ light-dark
 
 accessibility
 analytics
+static_assets
 performance
 readthedocs
 ```
