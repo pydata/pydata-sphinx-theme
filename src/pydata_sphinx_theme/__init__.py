@@ -12,13 +12,7 @@ from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
 
-from .edit_this_page import setup_edit_url
-from .logo import copy_logo_images, setup_logo_path
-from .pygment import overwrite_pygments_css
-from .short_link import ShortenLinkTransform
-from .toctree import add_toctree_functions
-from .translator import setup_translators
-from .utils import config_provided_by_user, get_theme_options
+from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
 
 __version__ = "0.13.2dev0"
 
@@ -31,7 +25,7 @@ def update_config(app):
     # At this point, modifying app.config.html_theme_options will NOT update the
     # page's HTML context (e.g. in jinja, `theme_keyword`).
     # To do this, you must manually modify `app.builder.theme_options`.
-    theme_options = get_theme_options(app)
+    theme_options = utils.get_theme_options(app)
 
     # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
@@ -74,7 +68,7 @@ def update_config(app):
         )
 
     # Set the anchor link default to be # if the user hasn't provided their own
-    if not config_provided_by_user(app, "html_permalinks_icon"):
+    if not utils.config_provided_by_user(app, "html_permalinks_icon"):
         app.config.html_permalinks_icon = "#"
 
     # Raise a warning for a deprecated theme switcher config
@@ -161,9 +155,8 @@ def update_config(app):
             app.add_js_file(None, body=gid_script)
 
     # Update ABlog configuration default if present
-    if "ablog" in app.config.extensions and not config_provided_by_user(
-        app, "fontawesome_included"
-    ):
+    fa_provided = utils.config_provided_by_user(app, "fontawesome_included")
+    if "ablog" in app.config.extensions and not fa_provided:
         app.config.fontawesome_included = True
 
     # Handle icon link shortcuts
@@ -294,16 +287,16 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    app.add_post_transform(ShortenLinkTransform)
+    app.add_post_transform(short_link.ShortenLinkTransform)
 
-    app.connect("builder-inited", setup_translators)
+    app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
-    app.connect("html-page-context", setup_edit_url)
-    app.connect("html-page-context", add_toctree_functions)
+    app.connect("html-page-context", edit_this_page.setup_edit_url)
+    app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
-    app.connect("html-page-context", setup_logo_path)
-    app.connect("build-finished", overwrite_pygments_css)
-    app.connect("build-finished", copy_logo_images)
+    app.connect("html-page-context", logo.setup_logo_path)
+    app.connect("build-finished", pygment.overwrite_pygments_css)
+    app.connect("build-finished", logo.copy_logo_images)
 
     # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
     app.add_message_catalog("sphinx", here / "locale")
