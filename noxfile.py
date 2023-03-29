@@ -91,7 +91,6 @@ def test(session):
     session.run("pytest", "-k", "not a11y", *session.posargs)
 
 
-@nox.session(name="a11y")
 def a11y(session):
     """Run the accessibility test suite."""
     if _should_install(session):
