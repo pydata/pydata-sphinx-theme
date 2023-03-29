@@ -14,10 +14,9 @@ from sphinx.util import logging
 
 from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
 
-__version__ = "0.13.2dev0"
+__version__ = "0.13.3dev0"
 
 logger = logging.getLogger(__name__)
-
 
 def update_config(app):
     """Update config with new default values and handle deprecated keys."""
@@ -279,9 +278,9 @@ def update_and_remove_templates(
     # Update version number for the "made with version..." component
     context["theme_version"] = __version__
 
-
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
+
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
