@@ -11,7 +11,7 @@ from sphinx.errors import ExtensionError
 from sphinx.util import isurl, logging
 from sphinx.util.fileutil import copy_asset_file
 
-from .utils import get_theme_options
+from .utils import get_theme_options_dict
 
 logger = logging.getLogger(__name__)
 
@@ -60,8 +60,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
 
     If logo image paths are given, copy them to the `_static` folder Then we can link to them directly in an html_page_context event.
     """
-    theme_options = get_theme_options(app)
-    logo = theme_options.get("logo", {})
+    logo = get_theme_options_dict(app).get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
     for kind in ["light", "dark"]:
         path_image = logo.get(f"image_{kind}")

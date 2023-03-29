@@ -6,19 +6,20 @@ from bs4 import BeautifulSoup, ResultSet
 from sphinx.application import Sphinx
 
 
-def get_theme_options(app: Sphinx) -> Dict[str, Any]:
+def get_theme_options_dict(app: Sphinx) -> Dict[str, Any]:
     """Return theme options for the application w/ a fallback if they don't exist.
 
-    In general we want to modify app.builder.theme_options if it exists, so prefer that first.
+    The "top-level" mapping (the one we should usually check first, and modify
+    if desired) is ``app.builder.theme_options``. It is created by Sphinx as a
+    copy of ``app.config.html_theme_options`` (containing user-configs from
+    their ``conf.py``); sometimes that copy never occurs though which is why we
+    check both.
     """
     if hasattr(app.builder, "theme_options"):
-        # In most HTML build cases this will exist except for some circumstances (see below).
         return app.builder.theme_options
     elif hasattr(app.config, "html_theme_options"):
-        # For example, linkcheck will have this configured but won't be in builder obj.
         return app.config.html_theme_options
     else:
-        # Empty dictionary as a fail-safe.
         return {}
 
 

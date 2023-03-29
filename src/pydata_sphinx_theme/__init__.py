@@ -18,13 +18,14 @@ __version__ = "0.13.3dev0"
 
 logger = logging.getLogger(__name__)
 
+
 def update_config(app):
     """Update config with new default values and handle deprecated keys."""
     # By the time `builder-inited` happens, `app.builder.theme_options` already exists.
     # At this point, modifying app.config.html_theme_options will NOT update the
     # page's HTML context (e.g. in jinja, `theme_keyword`).
     # To do this, you must manually modify `app.builder.theme_options`.
-    theme_options = utils.get_theme_options(app)
+    theme_options = utils.get_theme_options_dict(app)
 
     # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
@@ -278,9 +279,9 @@ def update_and_remove_templates(
     # Update version number for the "made with version..." component
     context["theme_version"] = __version__
 
+
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
-
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
 
