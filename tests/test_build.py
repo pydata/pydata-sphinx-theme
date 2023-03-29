@@ -170,7 +170,7 @@ def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory) -> Non
 def test_primary_logo_is_light_when_default_mode_is_set_to_auto(
     sphinx_build_factory,
 ) -> None:
-    """Test that the primary logo image is light whzn default is set to auto."""
+    """Test that the primary logo image is light when default is set to auto."""
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "auto"},
@@ -183,7 +183,7 @@ def test_primary_logo_is_light_when_default_mode_is_set_to_auto(
 
 
 def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory) -> None:
-    """Test that the primary logo image is light when default mode is set to ligh."""
+    """Test that the primary logo image is light when default mode is set to light."""
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "light"},
@@ -295,7 +295,7 @@ def test_navbar_align_right(sphinx_build_factory) -> None:
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression) -> None:
-    """Test No are in page headers."""
+    """Test navbar elements did not change (regression test)."""
     # https://github.com/pydata/pydata-sphinx-theme/issues/302
     sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
 
@@ -358,7 +358,7 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression) -> None:
 
 
 def test_sidebars_level2(sphinx_build_factory, file_regression) -> None:
-    """Sidebars in a second-level page w/ children."""
+    """Test sidebars in a second-level page w/ children."""
     confoverrides = {"templates_path": ["_templates_sidebar_level2"]}
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
@@ -691,7 +691,7 @@ def test_version_switcher(sphinx_build_factory, file_regression, url) -> None:
 
 
 def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
-    """Regression test the theme switcher btn HTML."""
+    """Regression test for the theme switcher button."""
     sphinx_build = sphinx_build_factory("base").build()
     switcher = (
         sphinx_build.html_tree("index.html")
@@ -704,7 +704,7 @@ def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
 
 
 def test_shorten_link(sphinx_build_factory, file_regression) -> None:
-    """Regression test the shorten links html."""
+    """Regression test for "edit on <provider>" link shortening."""
     sphinx_build = sphinx_build_factory("base").build()
 
     github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
@@ -715,7 +715,7 @@ def test_shorten_link(sphinx_build_factory, file_regression) -> None:
 
 
 def test_math_header_item(sphinx_build_factory, file_regression) -> None:
-    """Regression test the math items in a header title."""
+    """Regression test for math items in a header title."""
     sphinx_build = sphinx_build_factory("base").build()
     li = sphinx_build.html_tree("page2.html").select(".bd-navbar-elements li")[1]
     file_regression.check(li.prettify(), basename="math_header_item", extension=".html")

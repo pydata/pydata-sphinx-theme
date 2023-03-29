@@ -151,7 +151,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     Args:
         app: the Sphinx application
     Returns:
-        the 2 parralel parameters set to ``True``.
+        the 2 parallel parameters set to ``True``.
     """
     app.add_directive("gallery-grid", GalleryDirective)
 
