@@ -1,25 +1,12 @@
 """A custom Transform object to shorten github and gitlab links."""
 
-from typing import Iterator
 from urllib.parse import ParseResult, urlparse, urlunparse
 
 from docutils import nodes
-from docutils.nodes import Node
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
 
-
-def traverse_or_findall(node: Node, condition: str, **kwargs) -> Iterator[Node]:
-    """Triage node.traverse (docutils <0.18.1) vs node.findall.
-
-    TODO: This check can be removed when the minimum supported docutils version
-    for numpydoc is docutils>=0.18.1.
-    """
-    return (
-        node.findall(condition, **kwargs)
-        if hasattr(node, "findall")
-        else node.traverse(condition, **kwargs)
-    )
+from .utils import traverse_or_findall
 
 
 class ShortenLinkTransform(SphinxPostTransform):

@@ -1,8 +1,9 @@
 """General helpers for the management of config parameters."""
 
-from typing import Any, Dict
+from typing import Any, Dict, Iterator
 
 from bs4 import BeautifulSoup, ResultSet
+from docutils.nodes import Node
 from sphinx.application import Sphinx
 
 
@@ -75,3 +76,16 @@ def soup_to_python(soup: BeautifulSoup, only_pages: bool = False) -> Dict[str, A
         extract_level_recursive(ul, navs)
 
     return navs
+
+
+def traverse_or_findall(node: Node, condition: str, **kwargs) -> Iterator[Node]:
+    """Triage node.traverse (docutils <0.18.1) vs node.findall.
+
+    TODO: This check can be removed when the minimum supported docutils version
+    for numpydoc is docutils>=0.18.1.
+    """
+    return (
+        node.findall(condition, **kwargs)
+        if hasattr(node, "findall")
+        else node.traverse(condition, **kwargs)
+    )
