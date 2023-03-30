@@ -119,6 +119,8 @@ Click on section titles to learn more about them and some basic layout configura
 
                     Article Footer
 
+                ``article_footer_items``
+
             .. grid-item::
                 :padding: 2
                 :columns: 6
@@ -150,6 +152,8 @@ Click on section titles to learn more about them and some basic layout configura
                     :outline:
 
                     Footer content
+
+                ``content_footer_items``
 
 
 
@@ -421,6 +425,15 @@ Article Footer
 Located in ``sections/footer-article.html``.
 
 The article footer exists just below your page's article, and is primarily used for navigating between adjacent sections / pages.
+By default, it has the following templates:
+
+.. code-block:: python
+
+    html_theme_options = {
+      ...
+      "article_footer_items": ["prev-next.html"],
+      ...
+    }
 
 Hide the previous and next buttons
 ----------------------------------
@@ -433,6 +446,23 @@ at the bottom. You can hide these buttons with the following configuration:
    html_theme_options = {
      "show_prev_next": False
    }
+
+
+Content Footer
+==============
+
+Located in ``sections/footer-content.html``.
+
+The content footer exists below your page's article and secondary sidebar.
+By default it is empty, but you can add templates to it with the following configuration:
+
+.. code-block:: python
+
+    html_theme_options = {
+      ...
+      "content_footer_items": ["your-template.html"],
+      ...
+    }
 
 .. _layout-footer:
 
@@ -462,29 +492,6 @@ If you'd like them to stack **horizontally** use a custom CSS rule like the foll
    .footer-items__start, .footer-items__end {
      flex-direction: row;
    }
-
-Change footer display
----------------------
-
-Each footer element is wrapped in a ``<div>`` with a ``footer-item`` class, allowing you to style the structure of these items with custom CSS.
-
-For example, by default the footer items are displayed as blocks that stack vertically.
-To change this behavior so that they stack **horizontally**, add a rule like the following in your custom ``.css`` file.
-
-.. code-block:: css
-
-   /* Make each footer item in-line so they stack horizontally instead of vertically */
-   .footer-item {
-     display: inline-block;
-   }
-
-   /* Add a separating border line for all but the last item */
-   .footer-item:not(:last-child) {
-     border-right: 1px solid var(--pst-color-text-base);
-     margin-right: .5em;
-     padding-right: .5em;
-   }
-
 
 Built-in components to insert into sections
 ===========================================

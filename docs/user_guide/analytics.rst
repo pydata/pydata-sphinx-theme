@@ -3,7 +3,7 @@ Analytics and usage services
 ============================
 
 The theme supports several web analytics services via the ``analytics`` option. It is configured
-by passing a dictionary with options. See the sections bellow for relevant
+by passing a dictionary with options. See the sections below for relevant
 options depending on the analytics provider that you want to use.
 
 .. code:: python

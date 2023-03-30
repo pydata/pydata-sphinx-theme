@@ -47,7 +47,7 @@ Customize the CSS of light and dark themes
 
 .. danger::
 
-    Theming is still a beta feature so the variables related to color theming are likely to change in the future. No backward compatibily is guaranteed when customization is done.
+    Theming is still a beta feature so the variables related to color theming are likely to change in the future. No backward compatibility is guaranteed when customization is done.
 
 
 To customize the CSS of page elements in a theme-dependent manner, use the ``html[data-theme='<THEME>']`` CSS selector.

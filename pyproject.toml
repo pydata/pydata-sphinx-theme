@@ -1,5 +1,5 @@
 [build-system]
-requires = ["sphinx-theme-builder >= 0.2.0a7"]
+requires = ["sphinx-theme-builder >= 0.2.0b2"]
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
@@ -9,7 +9,8 @@ additional-compiled-static-assets = [
   "webpack-macros.html",
   "vendor/",
   "styles/bootstrap.css",
-  "scripts/bootstrap.js"
+  "scripts/bootstrap.js",
+  "locale/"
 ]
 
 [project]
@@ -24,8 +25,10 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
+  "Babel",
   "pygments>=2.7",
-  "accessible-pygments"
+  "accessible-pygments",
+  "typing-extensions"
 ]
 
 license = { file = "LICENSE" }
@@ -67,6 +70,7 @@ doc = [
   "sphinx-design",
   "sphinx-togglebutton",
   "sphinxcontrib-youtube",
+  "sphinx-favicon>=1.0.1",
   # Install nbsphinx in case we want to test it locally even though we can't load
   # it at the same time as MyST-NB.
   "nbsphinx",
@@ -91,3 +95,28 @@ dev = [
 
 [tool.doc8]
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
+
+[tool.ruff]
+ignore-init-module-imports = true
+fix = true
+select = ["E", "F", "W", "I", "D", "RUF"]
+ignore = [
+    "E501",  # line too long | Black take care of it
+    "D107",  # Missing docstring in `__init__` | set the docstring in the class
+]
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.djlint]
+profile = "jinja"
+extension = "html"
+indent = 2
+max_line_length = 120
+use_gitignore = true
+format_js = true
+format_css = true
+ignore = "H006,J018,T003,H025"

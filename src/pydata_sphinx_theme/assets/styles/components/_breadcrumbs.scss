@@ -22,8 +22,7 @@ ul.bd-breadcrumbs {
 
     // Items that aren't the home have a carot to the left
     &:not(.breadcrumb-home):before {
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
+      font: var(--fa-font-solid);
       font-size: 0.8rem;
       content: var(--pst-breadcrumb-divider);
       color: var(--pst-color-text-muted);
