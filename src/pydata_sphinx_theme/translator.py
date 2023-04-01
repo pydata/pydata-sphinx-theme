@@ -2,13 +2,12 @@
 
 import types
 from functools import partial
-from packaging.version import Version
 
 import sphinx
+from docutils.nodes import Element
 from packaging.version import Version
 from sphinx.application import Sphinx
 from sphinx.ext.autosummary import autosummary_table
-from docutils.nodes import Element
 from sphinx.util import logging
 
 logger = logging.getLogger(__name__)
@@ -62,21 +61,28 @@ class BootstrapHTML5TranslatorMixin:
         tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
 
-    def visit_section(self, node):
-        """Handle section nodes, parsing ``ids`` to replace dots with underscores.
+    # NOTE: `visit_section`, `visit_desc_signature` & `visit_reference` are extended
+    # here to resolve #1026 & #1207. There is an open issue with Sphinx to address this:
+    # https://github.com/sphinx-doc/sphinx/issues/11208
+    # If the issue is resolved within Sphinx, these methods can be removed.
 
-        This will modify the ``id`` of HTML ``<section>`` tags, e.g. where Python modules are documented.
-        Replacing dots with underscores allows the tags to be recognized as navigation targets by ScrollSpy.
+    def visit_section(self, node):
+        """Handle section nodes to replace dots with underscores.
+
+        This will modify the ``id`` of HTML ``<section>`` tags, where Python modules
+        are documented. Replacing dots with underscores allows the tags to be recognized
+        as navigation targets by ScrollSpy.
         """
         if "ids" in node:
             node["ids"] = [id_.replace(".", "_") for id_ in node["ids"]]
         super().visit_section(node)
 
     def visit_desc_signature(self, node):
-        """Handle function & method signature nodes, parsing ``ids`` to replace dots with underscores.
+        """Handle function & method signature nodes to replace dots with underscores.
 
-        This will modify the ``id`` attribute of HTML ``<dt>`` & ``<dd>`` tags, where Python functions are documented.
-        Replacing dots with underscores allows the tags to be recognized as navigation targets by ScrollSpy.
+        This will modify the ``id`` attribute of HTML ``<dt>`` & ``<dd>`` tags, where
+        Python functions are documented. Replacing dots with underscores allows the tags
+        to be recognized as navigation targets by ScrollSpy.
         """
         if "ids" in node:
             ids = node["ids"]
@@ -85,9 +91,10 @@ class BootstrapHTML5TranslatorMixin:
         super().visit_desc_signature(node)
 
     def visit_reference(self, node):
-        """Handle reference nodes, parsing ``refuri`` and ``anchorname`` attributes to replace dots with underscores.
+        """Handle reference nodes to replace dots with underscores.
 
-        This will modify the ``href`` attribute of internal HTML ``<a>`` tags, e.g. the sidebar navigation links.
+        This will modify the ``href`` attribute of any internal HTML ``<a>`` tags, e.g.
+        the sidebar navigation links.
         """
         try:
             # We are only interested in internal anchor references
@@ -110,19 +117,22 @@ class BootstrapHTML5TranslatorMixin:
                         and (search_id in node["ids"])
                     )
 
-                # NOTE: Replacing with underscores creates the possibility for conflicting references
-                # We should check for these and warn the user if any are found
+                # NOTE: Replacing with underscores creates the possibility for
+                # conflicting references. We should check for these and warn the
+                # user if any are found.
                 if any(document.traverse(condition=partial(find_target, sanitized_id))):
                     logger.warning(
-                        f'Sanitized reference "{sanitized_id}" for "{target_id}" conflicts with an existing reference!'
+                        f'Sanitized reference "{sanitized_id}" for "{target_id}" '
+                        "conflicts with an existing reference!"
                     )
 
                 # Find nodes with the given ID (there should only be one)
                 targets = document.traverse(condition=partial(find_target, target_id))
                 # Replace dots with underscores in the target node ID
                 for target in targets:
-                    # NOTE: By itself, modifying the target `ids` here seems to be insufficient, however it helps
-                    # ensure that the reference `refuri` and target `ids` remain consistent during the build process
+                    # NOTE: By itself, modifying the target `ids` here seems to be
+                    # insufficient, however it helps ensure that the reference `refuri`
+                    # and target `ids` remain consistent during the build process
                     target["ids"] = [
                         sanitized_id if id_ == target_id else id_
                         for id_ in target["ids"]
@@ -130,6 +140,7 @@ class BootstrapHTML5TranslatorMixin:
         except KeyError:
             pass
         super().visit_reference(node)
+
 
 def setup_translators(app: Sphinx):
     """Add bootstrap HTML functionality if we are using an HTML translator.
