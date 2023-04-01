@@ -15,7 +15,11 @@
 
   i.fa-solid.fa-magnifying-glass {
     position: absolute;
-    left: 1.6rem;
+    // Roughly center within the padding of the input element, taking the search
+    // container's negative margins into account.
+    // The search-icon is ~0.8em wide (its font-size depends on location,
+    // adjusted by the rules below)
+    left: calc(15px + (2.5rem - 0.8em) / 2);
     color: var(--pst-color-text-muted);
   }
 
@@ -50,7 +54,8 @@
   .search-button__kbd-shortcut {
     display: flex;
     position: absolute;
-    right: 2em;
+    // Similarly to the search icon include the margins of the search bar
+    right: calc(15px + 0.5rem);
     color: var(--pst-color-border);
   }
 }
