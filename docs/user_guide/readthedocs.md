@@ -2,6 +2,18 @@
 
 This theme comes with support for {{ rtd }}, a popular service for hosting documentation in the scientific Python community.
 
+## Version switcher
+
+Rather than using the [version switcher that this theme provides](version-dropdown.rst),
+this theme also supports the ReadTheDocs version switcher by default.
+
+```{warning}
+Currently the ReadTheDocs version switcher is located in the left sidebar, which
+is only visible on mobile or on pages which implement sectioning (hence
+displaying the left sidebar). Future work is to
+[include the ReadTheDocs version switcher in the top navigation bar](https://github.com/pydata/pydata-sphinx-theme/issues/705).
+```
+
 ## Add ethical advertisements to your sidebar
 
 If you're hosting your documentation on ReadTheDocs, you should consider
