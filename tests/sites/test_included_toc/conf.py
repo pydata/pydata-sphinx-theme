@@ -1,3 +1,5 @@
+"""Test conf file."""
+
 # -- Project information -----------------------------------------------------
 
 project = "Test"
