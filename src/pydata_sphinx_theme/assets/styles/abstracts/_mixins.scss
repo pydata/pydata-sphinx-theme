@@ -1,11 +1,14 @@
 /*********************************************
 * SASS Mixins
 *********************************************/
-// @use "sass:color";
 /**
 * Scrollbars should be thinner and slightly rounded, with a grey background
 * ref: https://www.nngroup.com/articles/scrolling-and-scrollbars/
 */
+
+// loading the math module
+@use "sass:math";
+
 @mixin scrollbar-style() {
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -94,8 +97,10 @@
 
 /**
 * Function to check if the color needs converting to a "color" type
+* if it is a string we cannot use other color manipulation functions
 */
 // @param {String/Color} $color - Color definition from map
+// @return {Color} - Color type (in hex)
 @function check-color($color) {
   @if type-of($color) == string {
     $color: from-hex($color);
@@ -104,7 +109,7 @@
 }
 
 /**
-* Function to convert the string representation of a color to a color type
+* Function to convert the string representation of a color to a color type (hex)
 */
 // @param {String} $string - String representation of a color
 @function from-hex($string) {
@@ -227,9 +232,9 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
 
   // return the relative contrast ratio
   @if $l1 > $l2 {
-    @return ($l1 + 0.05) / ($l2 + 0.05);
+    @return math.div(($l1 + 0.05), ($l2 + 0.05));
   } @else {
-    @return ($l2 + 0.05) / ($l1 + 0.05);
+    @return math.div(($l2 + 0.05), ($l1 + 0.05));
   }
 }
 
@@ -246,11 +251,11 @@ $_luminance-list: 0.0008 0.001 0.0011 0.0013 0.0015 0.0017 0.002 0.0022 0.0025
 
   @each $channel, $value in $rgb-col {
     // here we get RsRGB, GsRGB, and BsRGB
-    @if $value / 255 <=0.03928 {
+    @if math.div($value, 255) <=0.03928 {
       $rgb-col: map-merge(
         $rgb-col,
         (
-          $channel: $value / 255 / 12.92,
+          $channel: math.div(math.div($value, 255), 12.92),
         )
       );
     } @else {

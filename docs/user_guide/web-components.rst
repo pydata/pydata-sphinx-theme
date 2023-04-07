@@ -78,6 +78,24 @@ Here are some of the available buttons, also using semantic colors:
 
             Muted
 
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: light
+            :shadow:
+
+            Light
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: dark
+            :shadow:
+
+            Dark
+
 If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
 
 Cards
@@ -97,13 +115,13 @@ Cards
 
         Content of the third card.
 
-        :bdg-primary:`example`
+        :bdg-primary:`Sample badge`
 
 .. grid::
 
     .. grid-item-card:: A card with a dropdown menu
 
-        .. dropdown:: :fa:`eye me-1` third card
+        .. dropdown:: :fa:`eye me-1` Click to expand dropdown
 
             Hidden content
 
@@ -190,7 +208,7 @@ See `the Sphinx Design Dropdown documentation <https://sphinx-design.readthedocs
 
    And some content!
 
-.. dropdown:: With a title
+.. dropdown:: With a title and icon
    :icon: unlock
 
    And some content and an icon!

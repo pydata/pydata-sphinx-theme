@@ -6,6 +6,8 @@
  * same for our overrides to have any effect.
  */
 @use "../variables/color" as pst-color;
+@use "sass:meta";
+@use "sass:color";
 
 /*******************************************************************************
   * Color and variables
@@ -39,11 +41,22 @@ $sd-semantic-color-names: (
   * First, define the extra keys needed to cover the full range of semantic
   * color names used in sphinx-design, then merge them with the names we
   * already define for our own needs.
+  * see https://sphinx-design.readthedocs.io/en/latest/css_variables.html
   */
 $extra-semantic-colors: (
   "white": $foundation-white,
-  "light": $foundation-light-gray,
-  "muted": $foundation-muted-gray,
+  "light": (
+    light: $foundation-light-gray,
+    bg-light: color.scale($foundation-light-gray, $lightness: 30%),
+    dark: $foundation-light-gray,
+    bg-dark: color.scale($foundation-light-gray, $lightness: -30%),
+  ),
+  "muted": (
+    light: $foundation-muted-gray,
+    bg-light: color.scale($foundation-muted-gray, $lightness: 30%),
+    dark: $foundation-light-gray,
+    bg-dark: color.scale($foundation-muted-gray, $lightness: -30%),
+  ),
   "dark": $foundation-dark-gray,
   "black": $foundation-black,
 );
@@ -61,8 +74,6 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
   // override the sphinx-design variables
   --sd-color-#{$name}: var(--pst-color-#{$name});
   --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
-  // adding bg colors - needed for dropdowns
-  // --sd-color-#{$name}-bg: var(--pst-color-#{$name});
   // TODO: check where highlight is used
   --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
 }
@@ -81,6 +92,8 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
             // correct mode (light/dark)
             @if str-index($key, "bg") != null {
               --sd-color-#{$name}-bg: #{$value};
+              // create local variable
+              $bg-var: --sd-color-#{$name}-bg;
               $value: check-color($value);
               --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
             } @else {
@@ -123,6 +136,7 @@ html[data-theme="light"] {
 .bd-content .sd-card {
   border: 1px solid var(--pst-color-border);
 
+  // TODO - --pst-color-panel-background is not defined... where is this coming from?
   .sd-card-header {
     background-color: var(--pst-color-panel-background);
     border-bottom: 1px solid var(--pst-color-border);
@@ -148,7 +162,7 @@ html[data-theme="light"] {
       color: var(--pst-color-primary);
     }
 
-    // hover label
+    // Hover label
     &:not(:checked) + label:hover {
       border-color: var(--pst-color-secondary);
       color: var(--pst-color-secondary);
@@ -196,6 +210,7 @@ details.sd-dropdown {
     // We must set this in the current and content sibling container
     // so that it is defined in both places
     --pst-sd-dropdown-color: var(--sd-color-card-border);
+    --pst-sd-dropdown-bg-color: var(--pst-color-surface);
     & + div.sd-summary-content {
       --pst-sd-dropdown-color: var(--sd-color-card-border);
     }
@@ -210,6 +225,7 @@ details.sd-dropdown {
         }
       }
       &.sd-bg-text-#{$name} {
+        // Use the WCAG conformant text color
         color: var(--sd-color-#{$name}-bg-text) !important;
       }
     }
