@@ -5,7 +5,7 @@ Branding and logo
 Customize logo and title
 ========================
 
-By default the theme will use the value of ``project`` on the left side of the header navbar.
+By default, the theme will use the value of ``project`` on the left side of the header navbar.
 This can be replaced by a logo image, and optionally a custom ``html_title`` as well.
 
 Single logo for light and dark mode
@@ -80,9 +80,10 @@ To reference an external website, make sure your link starts with ``http``:
 Customize logo alternative text
 -------------------------------
 
-You may set a custom ``alt text`` to use with your logo to replace the default ("logo image").
-This can make the logo more accessible to those using screen readers or other assistive tech.
-To do so, use ``html_teme_options["logo"]["alt_text"]`` as in the following example:
+You may set a custom ``alt text`` for your logo to replace the default ``"logo image"`` generic description.
+Adding a descriptive ``alt text`` can help make your documentation more accessible to readers using screen readers or other assistive tech.
+
+To do so, customize the ``html_teme_options["logo"]["alt_text"]`` configuration option as in the following example:
 
 .. code-block:: python
    :caption: conf.py
@@ -96,7 +97,7 @@ To do so, use ``html_teme_options["logo"]["alt_text"]`` as in the following exam
 Add a logo title
 ----------------
 
-To add a title in the brand section of your documentation, define a value for ``html_theme_options.logo["text"]``
+To add a title in the brand section of your documentation, define a value for ``html_theme_options.logo["text"]``.
 This will appear just after your logo image if it is set.
 
 .. code-block:: python

@@ -193,6 +193,11 @@ $pst-semantic-colors: (
     "light": #{map-deep-get($color-palette, "pink", "600")},
     "dark": #{map-deep-get($color-palette, "pink", "300")},
   ),
+  "inline-code-links": (
+    // need to make sure there is enough contrast agains the code bg
+    "light": #{map-deep-get($color-palette, "teal", "700")},
+    "dark": #{map-deep-get($color-palette, "teal", "300")},
+  ),
   "target": (
     "light": #8b6e31,
     "dark": #c79d41,
