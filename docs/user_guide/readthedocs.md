@@ -4,14 +4,12 @@ This theme comes with support for {{ rtd }}, a popular service for hosting docum
 
 ## Version switcher
 
-Rather than using the [version switcher that this theme provides](version-dropdown.rst),
-this theme also supports the ReadTheDocs version switcher by default.
+Projects hosted on {{ rtd }} can use the {{ rtd }} supplied version switcher instead of the [version switcher that this theme provides](version-dropdown.rst).
+Its presence will be automatically detected by this theme, and placed in the `rtd-footer-container` node inside the primary sidebar.
 
 ```{warning}
-Currently the ReadTheDocs version switcher is located in the left sidebar, which
-is only visible on mobile or on pages which implement sectioning (hence
-displaying the left sidebar). Future work is to
-[include the ReadTheDocs version switcher in the top navigation bar](https://github.com/pydata/pydata-sphinx-theme/issues/705).
+The {{ rtd }} version switcher will be hidden any time the primary sidebar is hidden (see [this section](#layout-sidebar-primary) for discussion of when the primary sidebar might get hidden automatically and how to hide it purposely).
+We intend to make {{ rtd }} switcher placement more flexible; you can track progress toward that in [this issue](https://github.com/pydata/pydata-sphinx-theme/issues/705).
 ```
 
 ## Add ethical advertisements to your sidebar
