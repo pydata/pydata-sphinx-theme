@@ -62,6 +62,9 @@ const theme_scripts = [
 const fa_stylesheets = [
   `vendor/fontawesome/${vendorVersions.fontAwesome}/css/all.min.css`,
 ];
+const fa_scripts = [
+  `vendor/fontawesome/${vendorVersions.fontAwesome}/js/all.min.js`,
+];
 const fa_fonts = [
   `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-solid-900.woff2`,
   `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-brands-400.woff2`,
@@ -95,6 +98,7 @@ function macroTemplate({ compilation }) {
     {% macro head_js_preload() %}
       <!-- Pre-loaded scripts that we'll load fully later -->
       ${theme_scripts.map(preload.bind(compilation)).join("\n")}
+      ${fa_scripts.map(script.bind(compilation)).join("\n")}
     {% endmacro %}
 
     {% macro body_post() %}
@@ -126,6 +130,11 @@ const copyPlugin = new CopyPlugin([ // fontawesome
     context: "./node_modules/@fortawesome/fontawesome-free/css",
     from: "all.min.css",
     to: resolve(faPath.fontAwesome, "css"),
+  },
+  {
+    context: "./node_modules/@fortawesome/fontawesome-free/js",
+    from: "all.min.js",
+    to: resolve(faPath.fontAwesome, "js"),
   },
   {
     context: "./node_modules/@fortawesome/fontawesome-free",
