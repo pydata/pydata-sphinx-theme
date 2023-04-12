@@ -1,6 +1,6 @@
 # Accessibility checks
 
-```{note} 
+```{note}
 22-March-2023: we are currently
 [re-evaluating how we do accessibility checks](https://github.com/pydata/pydata-sphinx-theme/issues/1168)
 and reporting, so this may change soon.
@@ -14,3 +14,4 @@ The configuration for Lighthouse is in:
 
 For more information about configuring lighthouse, see [the lighthouse documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md).
 For more information about Accessibility in general, see [](../../user_guide/accessibility.rst).
+```
