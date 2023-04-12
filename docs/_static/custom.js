@@ -1,7 +1,7 @@
 FontAwesome.library.add(
   (faListOldStyle = {
-    prefix: "fac",
-    iconName: "list-old-style",
+    prefix: "fa-custom",
+    iconName: "pypi",
     icon: [
       17.413, // viewBox width
       20.139, // viewBox height
