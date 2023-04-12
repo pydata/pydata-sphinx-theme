@@ -92,7 +92,7 @@ jobs:
       - name: Run tests
         run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report xml:cov.xml --cov-report= term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
       - name: Upload to Codecov
-        if: matrix.python-version == "3.11"
+        if: matrix.python-version == '3.11'
         uses: codecov/codecov-action@v3.1.2
         with:
           files: cov.xml
