@@ -88,7 +88,7 @@ def test(session: nox.Session) -> None:
     if _should_install(session):
         session.install("-e", ".[test]")
     session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
-    session.run("pytest", *session.posargs)
+    session.run("pytest", "-k", "not a11y", *session.posargs)
 
 
 @nox.session()
@@ -109,7 +109,7 @@ def a11y(session: nox.Session) -> None:
     session.run("nox", "-s", "docs")
     # The next step would be to open a server to the docs for Playwright, but
     # that is done in the test file, along with the accessibility checks.
-    session.run("pytest", "--axe", *session.posargs)
+    session.run("pytest", "-k", "a11y", *session.posargs)
 
 
 @nox.session(name="test-sphinx")
