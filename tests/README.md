@@ -15,7 +15,7 @@ the output created during the test run with a previous known and verified output
 It's important to note that [only a fraction of accessibility issues can be
 caught with automated
 testing](https://accessibility.blog.gov.uk/2017/02/24/what-we-found-when-we-tested-tools-on-the-worlds-least-accessible-webpage/).
-In contrast to build test suite, the accessibility suite checks components as
+In contrast to the build test suite, the accessibility suite checks components as
 they appear in the browser, meaning with any CSS and JavaScript applied. It does
 this by building the PyData Sphinx Theme docs, launching a local server to the
 docs, then visiting the "Kitchen Sink" example pages with
