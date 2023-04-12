@@ -81,7 +81,6 @@ test = [
   "pytest-cov",
   "pytest-regressions",
   "pytest-playwright",
-  "pytest-base-url",
   "codecov",
 ]
 dev = [

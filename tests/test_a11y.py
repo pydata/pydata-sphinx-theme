@@ -21,23 +21,14 @@ from .utils.pretty_axe_results import pretty_axe_results
 # pitfalls.
 
 path_repo = Path(__file__).parent.parent
-path_docs_build = path_repo / "docs" / "_build_a11y_test" / "html"
+path_docs_build = path_repo / "docs" / "_build" / "html"
 
 
 @pytest.fixture(scope="module")
-def url_base(base_url):
+def url_base():
     """
-    Return the the base URL provided via pytest-base-url plugin, or if the base
-    URL is not provided, then try starting a local server and if successful,
-    return the localhost URL to that server as the base URL.
+    Try starting a local server and if successful, return the localhost URL as the base URL.
     """
-
-    # If the base_url was already specified on the command line, use it instead
-    # of firing up a server on localhost
-    if base_url:
-        yield base_url
-        return
-
     # Use a port that is not commonly used during development or else you will
     # force the developer to stop running their dev server in order to run the
     # tests.
