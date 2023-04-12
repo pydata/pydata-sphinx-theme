@@ -36,6 +36,6 @@ def pretty_axe_results(results: dict) -> str:
             for item in node["any"]:
                 string += "\n\t\t" + item["message"]
             for item in node["none"]:
-                string += "\n\t\t" + item["message"]
+                string += f"\n\t\t {item["message"]}"
         string += "\n\n\n"
     return string
