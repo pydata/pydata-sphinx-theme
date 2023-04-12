@@ -92,6 +92,15 @@ jobs:
       - name: Run tests
         run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
 
+  upload-coverage:
+    needs: [run-pytest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.2
+        with:
+          fail_ci_if_error: true
+
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:
     needs: [lint]
