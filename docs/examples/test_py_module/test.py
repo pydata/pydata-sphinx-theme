@@ -2,7 +2,6 @@
 
 
 class Foo:
-
     """Docstring for class Foo.
 
     This text tests for the formatting of docstrings generated from output
@@ -65,7 +64,6 @@ class Foo:
         :rtype: int
 
         """
-
         return val1 + val2
 
     def capitalize(self, myvalue):
@@ -76,12 +74,10 @@ class Foo:
         :rtype: string
 
         """
-
         return myvalue.upper()
 
     def another_function(self, a, b, **kwargs):
-        """
-        Here is another function.
+        """Here is another function.
 
         :param a: The number of green hats you own.
         :type a: int
