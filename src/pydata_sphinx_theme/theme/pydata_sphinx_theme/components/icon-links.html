@@ -12,7 +12,7 @@
           {% set attributeString = attributeString | join(" ") -%}
           <a {{ attributeString }}>
             {%- if type == "fontawesome" -%}
-            <span><i class="{{ icon }}"></i></span>
+            <span><i class="{{ icon }} fa-lg"></i></span>
             <label class="sr-only">{{ name }}</label>
             {%- elif type == "local" -%}
             <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ name }}"/>
