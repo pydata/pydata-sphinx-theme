@@ -5,6 +5,7 @@ Re-install the environment from scratch:
 
     nox -s docs -- -r
 """
+import os
 import shutil as sh
 import tempfile
 from pathlib import Path
@@ -95,7 +96,16 @@ def a11y(session: nox.Session) -> None:
     """Run the accessibility test suite."""
     if _should_install(session):
         session.install("-e", ".[test]")
-        # Install the drivers that Playwright needs to control the browsers
+        # Install the drivers that Playwright needs to control the browsers.
+        if os.environ.get("CI") or os.environ.get("GITPOD_WORKSPACE_ID"):
+            # CI and other cloud environments are potentially missing system
+            # dependencies, so we tell Playwright to also install the system
+            # dependencies
+            session.run("playwright", "install", "--with-deps")
+        else:
+            # But most dev environments have the needed system dependencies
+            session.run("playwright", "install")
+
         session.run("playwright", "install")
     # Build the docs so we can run accessibility tests against them.
     session.run("nox", "-s", "docs")
