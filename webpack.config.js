@@ -120,28 +120,30 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   templateContent: macroTemplate,
 });
 
-const copyPlugin = new CopyPlugin([ // fontawesome
-  {
-    context: "./node_modules/@fortawesome/fontawesome-free",
-    from: "LICENSE.txt",
-    to: resolve(faPath.fontAwesome, "LICENSE.txt"),
-  },
-  {
-    context: "./node_modules/@fortawesome/fontawesome-free/css",
-    from: "all.min.css",
-    to: resolve(faPath.fontAwesome, "css"),
-  },
-  {
-    context: "./node_modules/@fortawesome/fontawesome-free/js",
-    from: "all.min.js",
-    to: resolve(faPath.fontAwesome, "js"),
-  },
-  {
-    context: "./node_modules/@fortawesome/fontawesome-free",
-    from: "webfonts",
-    to: resolve(faPath.fontAwesome, "webfonts"),
-  },
-]);
+const copyPlugin = new CopyPlugin({ // fontawesome
+  patterns: [
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free",
+      from: "LICENSE.txt",
+      to: resolve(faPath.fontAwesome, "LICENSE.txt"),
+    },
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free/css",
+      from: "all.min.css",
+      to: resolve(faPath.fontAwesome, "css"),
+    },
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free/js",
+      from: "all.min.js",
+      to: resolve(faPath.fontAwesome, "js"),
+    },
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free",
+      from: "webfonts",
+      to: resolve(faPath.fontAwesome, "webfonts"),
+    },
+  ]
+});
 
 module.exports = {
   mode: "production",
