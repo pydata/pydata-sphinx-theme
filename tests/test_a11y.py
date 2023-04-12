@@ -1,10 +1,14 @@
-import pytest
+"""Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
+
 import time
-from pathlib import Path
-from subprocess import Popen, PIPE
 from http.client import HTTPConnection
-from playwright.sync_api import Page
+from pathlib import Path
+from subprocess import PIPE, Popen
 from urllib.parse import urljoin
+
+import pytest
+from playwright.sync_api import Page
+
 from .utils.pretty_axe_results import pretty_axe_results
 
 # Important note: automated accessibility scans can only find a fraction of
@@ -26,9 +30,7 @@ path_docs_build = path_repo / "docs" / "_build" / "html"
 
 @pytest.fixture(scope="module")
 def url_base():
-    """
-    Try starting a local server and if successful, return the localhost URL as the base URL.
-    """
+    """Start local server and return the localhost URL as the base URL."""
     # Use a port that is not commonly used during development or else you will
     # force the developer to stop running their dev server in order to run the
     # tests.
@@ -67,132 +69,42 @@ def url_base():
         process.wait()
 
 
-@pytest.fixture(params=["light", "dark"])
-def page(request, page: Page, url_base: str) -> Page:
-    """
-    Takes the pytest-playwright provided page and the provided url base, loads
-    the page at the URL path marked on the currently running test, injects
-    Axe-core into the page, sets the light/dark theme on the page, and then
-    returns the page, ready for testing.
-    """
-
-    # Get the URL path from the metadata marked on the currently running test
-    url_path = request.node.get_closest_marker("url_path").args[0]
-
+@pytest.mark.parametrize("theme", ["light", "dark"])
+@pytest.mark.parametrize(
+    "url_page,selector",
+    [
+        ("admonitions.html", "#admonitions"),
+        ("api.html", "#api-documentation"),
+        ("blocks.html", "#blocks"),
+        ("generic.html", "#generic-items"),
+        ("images.html", "#images-figures"),
+        ("lists.html", "#lists"),
+        ("structure.html", "#structural-elements"),
+        ("structure.html", "#structural-elements-2"),
+        ("tables.html", "#tables"),
+        ("typography.html", "#typography"),
+    ],
+)
+def test_axe_core_kitchen_sink(
+    page: Page, theme: str, url_base: str, url_page: str, selector: str
+):
+    """Should have no Axe-core violations at provided theme/page."""
     # Load the page at the provided path
-    page.goto(urljoin(url_base, url_path))
+    url_base_kitchen_sink = urljoin(url_base, "/examples/kitchen-sink/")
+    url_full = urljoin(url_base_kitchen_sink, url_page)
+    page.goto(url_full)
 
     # Run a line of JavaScript that sets the light/dark theme on the page
-    page.evaluate(f"document.documentElement.dataset.theme = '{request.param}'")
+    page.evaluate(f"document.documentElement.dataset.theme = '{theme}'")
 
     # Inject the Axe-core JavaScript library into the page
     page.add_script_tag(path="node_modules/axe-core/axe.min.js")
-
-    return page
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/admonitions.html")
-def test_axe_core_kitchen_sink_admonitions(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Admonitions page for accessibility
-    violations.
-    """
 
     # Run the Axe-core library against the Admonitions section of the page
     # (Don't run it against the whole page because in this test we're not trying
     # to find accessibility violations in the nav, sidebar, footer, or other
     # parts of the PyData Sphinx Theme documentation website.)
-    results = page.evaluate("axe.run('#admonitions')")
+    results = page.evaluate(f"axe.run('{selector}')")
 
     # Expect Axe-core to have found 0 accessibility violations
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/api.html")
-def test_axe_core_kitchen_sink_api_documentation(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - API documentation page for
-    accessibility violations.
-    """
-    results = page.evaluate("axe.run('#api-documentation')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/blocks.html")
-def test_axe_core_kitchen_sink_blocks(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Blocks page for accessibility
-    violations.
-    """
-    results = page.evaluate("axe.run('#blocks')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/generic.html")
-def test_axe_core_kitchen_sink_generic_items(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Generic items page for accessibility
-    violations.
-    """
-    results = page.evaluate("axe.run('#generic-items')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/images.html")
-def test_axe_core_kitchen_sink_images_figures(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Images & Figures page for
-    accessibility violations.
-    """
-    results = page.evaluate("axe.run('#images-figures')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/lists.html")
-def test_axe_core_kitchen_sink_lists(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Lists page for accessibility
-    violations.
-    """
-    results = page.evaluate("axe.run('#lists')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/structure.html")
-def test_axe_core_kitchen_sink_structural_elements(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Structural Elements page for
-    accessibility violations.
-    """
-    results = page.evaluate("axe.run('#structural-elements')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/structure.html")
-def test_axe_core_kitchen_sink_structural_elements_2(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Structural Elements page (2nd
-    section) for accessibility violations.
-    """
-    results = page.evaluate("axe.run('#structural-elements-2')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/tables.html")
-def test_axe_core_kitchen_sink_tables(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Tables page for accessibility
-    violations.
-    """
-    results = page.evaluate("axe.run('#tables')")
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
-
-
-@pytest.mark.url_path("/examples/kitchen-sink/typography.html")
-def test_axe_core_kitchen_sink_typography(page: Page):
-    """
-    Using Axe-core, scan the Kitchen Sink - Typography page for accessibility
-    violations.
-    """
-    results = page.evaluate("axe.run('#typography')")
     assert len(results["violations"]) == 0, pretty_axe_results(results)
