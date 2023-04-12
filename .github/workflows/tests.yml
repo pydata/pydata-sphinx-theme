@@ -90,7 +90,13 @@ jobs:
           pip install nox
           nox -s compile
       - name: Run tests
-        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report xml:cov.xml --cov-report= --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+      - name: Upload to Codecov
+        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        uses: codecov/codecov-action@v3.1.2
+        with:
+          files: cov.xml
+          fail_ci_if_error: true
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:

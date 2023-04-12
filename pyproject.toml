@@ -80,9 +80,8 @@ doc = [
 test = [
   "pytest",
   "pytest-cov",
-  "pytest-regressions",
   "pytest-playwright",
-  "codecov",
+  "pytest-regressions",
 ]
 dev = [
   "pyyaml",
