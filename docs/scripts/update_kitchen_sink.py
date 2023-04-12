@@ -1,5 +1,7 @@
-from urllib.request import urlopen
+"""Script run to update the kitchen sink from https://sphinx-themes.org."""
+
 from pathlib import Path
+from urllib.request import urlopen
 
 EXTRA_MESSAGE = """\
 .. note::
@@ -11,7 +13,7 @@ EXTRA_MESSAGE = """\
       :color: primary
 
       Go to Sphinx Themes
-"""  # noqa
+"""
 
 kitchen_sink_files = [
     "admonitions.rst",
@@ -29,7 +31,7 @@ kitchen_sink_files = [
 path_sink = Path(__file__).parent.parent / "examples" / "kitchen-sink"
 for ifile in kitchen_sink_files:
     print(f"Reading {ifile}...")
-    url = f"https://github.com/sphinx-themes/sphinx-themes.org/raw/master/sample-docs/kitchen-sink/{ifile}"  # noqa
+    url = f"https://github.com/sphinx-themes/sphinx-themes.org/raw/master/sample-docs/kitchen-sink/{ifile}"
     text = urlopen(url).read().decode()
     # The sphinx-themes docs expect Furo to be installed, so we overwrite w/ PST
     text = text.replace("src/furo", "src/pydata_sphinx_theme")

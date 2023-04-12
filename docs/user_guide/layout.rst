@@ -119,6 +119,8 @@ Click on section titles to learn more about them and some basic layout configura
 
                     Article Footer
 
+                ``article_footer_items``
+
             .. grid-item::
                 :padding: 2
                 :columns: 6
@@ -150,6 +152,8 @@ Click on section titles to learn more about them and some basic layout configura
                     :outline:
 
                     Footer content
+
+                ``content_footer_items``
 
 
 
@@ -229,12 +233,12 @@ By default, the following configuration is used:
 .. code-block:: python
 
    html_theme_options = {
-   ...
+   # ...
    "navbar_start": ["navbar-logo"],
    "navbar_center": ["navbar-nav"],
    "navbar_end": ["navbar-icon-links"],
    "navbar_persistent": ["search-button"]
-   ...
+   # ...
    }
 
 .. warning::
@@ -250,9 +254,9 @@ page. This equals the following default configuration:
 .. code-block:: python
 
    html_theme_options = {
-      ...
+      # ...
       "navbar_align": "content"
-      ...
+      # ...
    }
 
 If instead you'd like these items to snap to the left (closer to the logo), use this
@@ -261,9 +265,9 @@ configuration:
 .. code-block:: python
 
    html_theme_options = {
-      ...
+      # ...
       "navbar_align": "left"
-      ...
+      # ...
    }
 
 If you'd like these items to snap to the right of the page, use this configuration:
@@ -271,9 +275,9 @@ If you'd like these items to snap to the right of the page, use this configurati
 .. code-block:: python
 
    html_theme_options = {
-      ...
+      # ...
       "navbar_align": "right"
-      ...
+      # ...
    }
 
 
@@ -346,9 +350,9 @@ By default, it has the following templates:
 .. code-block:: python
 
     html_theme_options = {
-      ...
+      # ...
       "primary_sidebar_end": ["sidebar-ethical-ads"],
-      ...
+      # ...
     }
 
 Remove the primary sidebar from pages
@@ -406,9 +410,9 @@ By default, it has the following templates:
 .. code-block:: python
 
     html_theme_options = {
-      ...
+      # ...
       "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
-      ...
+      # ...
     }
 
 To learn how to further customize or remove the secondary sidebar, please check :doc:`page-toc`.
@@ -421,6 +425,15 @@ Article Footer
 Located in ``sections/footer-article.html``.
 
 The article footer exists just below your page's article, and is primarily used for navigating between adjacent sections / pages.
+By default, it has the following templates:
+
+.. code-block:: python
+
+    html_theme_options = {
+      # ...
+      "article_footer_items": ["prev-next.html"],
+      # ...
+    }
 
 Hide the previous and next buttons
 ----------------------------------
@@ -433,6 +446,23 @@ at the bottom. You can hide these buttons with the following configuration:
    html_theme_options = {
      "show_prev_next": False
    }
+
+
+Content Footer
+==============
+
+Located in ``sections/footer-content.html``.
+
+The content footer exists below your page's article and secondary sidebar.
+By default it is empty, but you can add templates to it with the following configuration:
+
+.. code-block:: python
+
+    html_theme_options = {
+      # ...
+      "content_footer_items": ["your-template.html"],
+      # ...
+    }
 
 .. _layout-footer:
 
@@ -449,9 +479,10 @@ By default, ``footer_end`` is empty, and ``footer_start`` has the following temp
 .. code-block:: python
 
     html_theme_options = {
-      ...
-      "footer_start": ["copyright", "sphinx-version", "theme-version"],
-      ...
+      #...
+      "footer_start": ["copyright", "sphinx-version"],
+      "footer_end": ["theme-version"]
+      #...
     }
 
 Within each subsection, components will stack **vertically**.
@@ -516,7 +547,7 @@ could do so with the following steps:
    .. code-block:: python
 
       html_theme_options = {
-      ...
+      # ...
       "navbar_start": ["navbar-logo", "version"],
-      ...
+      # ...
       }

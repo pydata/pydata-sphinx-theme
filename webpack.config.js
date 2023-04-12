@@ -13,8 +13,8 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const dedent = require("dedent");
 const { Compilation } = require("webpack");
 
@@ -74,7 +74,7 @@ const fa_fonts = [
 /*******************************************************************************
  * Cache-busting Jinja2 macros (`webpack-macros.html`) used in `layout.html`
  *
- * @param  {Compilation} the compilation instace to extract the hash
+ * @param  {Compilation} the compilation instance to extract the hash
  * @return {String} the macro to inject in layout.html
  */
 function macroTemplate({ compilation }) {
@@ -151,17 +151,18 @@ module.exports = {
     "bootstrap": resolve(scriptPath, "bootstrap.js"),
   },
   output: {filename: "scripts/[name].js", path: staticPath},
-  optimization: {minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})]},
+  optimization: {minimizer: ['...', new CssMinimizerPlugin()]},
   module: {
     rules: [{
       test: /\.scss$/,
       use: [
-        {loader: "file-loader", options: {name: "styles/[name].css"}},
-        {loader: "extract-loader"},
-        {loader: "css-loader?-url"}, //url()-inlining turned off}
+        {loader: MiniCssExtractPlugin.loader},
+        {loader: "css-loader?-url"}, //url()-inlining turned off
         {loader: "sass-loader",},
       ],
     }],
   },
-  plugins: [htmlWebpackPlugin, copyPlugin],
+  plugins: [htmlWebpackPlugin, copyPlugin, new MiniCssExtractPlugin({
+    filename: "styles/[name].css"
+  })],
 };

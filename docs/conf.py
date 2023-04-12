@@ -1,10 +1,20 @@
+"""Configuration file for the Sphinx documentation builder.
+
+This file only contains a selection of the most common options. For a full
+list see the documentation:
+https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""
+
 # -- Path setup --------------------------------------------------------------
 import os
 import sys
-import pydata_sphinx_theme
+from pathlib import Path
+from typing import Any, Dict
 
-sys.path.append("scripts")
-from gallery_directive import GalleryDirective
+import pydata_sphinx_theme
+from sphinx.application import Sphinx
+
+sys.path.append(str(Path(".").resolve()))
 
 # -- Project information -----------------------------------------------------
 
@@ -22,6 +32,7 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
+    "_extension.gallery_directive",
     # For extension examples and demos
     "ablog",
     "jupyter_sphinx",
@@ -56,7 +67,6 @@ if not os.environ.get("READTHEDOCS"):
 # -- autosummary -------------------------------------------------------------
 
 autosummary_generate = True
-
 
 # -- Internationalization ----------------------------------------------------
 
@@ -161,6 +171,8 @@ html_theme_options = {
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "navbar_persistent": ["search-button"],
     # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
+    # "article_footer_items": ["prev-next.html", "test.html", "test.html"],
+    # "content_footer_items": ["prev-next.html", "test.html", "test.html"],
     # "footer_start": ["test.html", "test.html"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
@@ -213,7 +225,7 @@ todo_include_todos = True
 # -- favicon options ---------------------------------------------------------
 
 # see https://sphinx-favicon.readthedocs.io for more information about the
-# sphinx-favicon extention
+# sphinx-favicon extension
 favicons = [
     # generic icons compatible with most browsers
     "favicon-32x32.png",
@@ -233,5 +245,38 @@ favicons = [
 # -- application setup -------------------------------------------------------
 
 
-def setup(app):
-    app.add_directive("gallery-grid", GalleryDirective)
+def setup_to_main(
+    app: Sphinx, pagename: str, templatename: str, context, doctree
+) -> None:
+    """Add a function that jinja can access for returning an "edit this page" link pointing to `main`."""
+
+    def to_main(link: str) -> str:
+        """Transform "edit on github" links and make sure they always point to the main branch.
+
+        Args:
+            link: the link to the github edit interface
+
+        Returns:
+            the link to the tip of the main branch for the same file
+        """
+        links = link.split("/")
+        idx = links.index("edit")
+        return "/".join(links[: idx + 1]) + "/main/" + "/".join(links[idx + 2 :])
+
+    context["to_main"] = to_main
+
+
+def setup(app: Sphinx) -> Dict[str, Any]:
+    """Add custom configuration to sphinx app.
+
+    Args:
+        app: the Sphinx application
+    Returns:
+        the 2 parralel parameters set to ``True``.
+    """
+    app.connect("html-page-context", setup_to_main)
+
+    return {
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
