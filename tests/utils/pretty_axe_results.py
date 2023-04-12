@@ -24,17 +24,17 @@ def pretty_axe_results(results: dict) -> str:
             f"Impact Level: {violation['impact']} \n\tTags:"
         )
         for tag in violation["tags"]:
-            string += " " + tag
+            string += f" {tag}"
         string += "\n\tElements Affected:"
         i = 1
         for node in violation["nodes"]:
             for target in node["target"]:
-                string += "\n\t" + str(i) + ") Target: " + target
+                string += f"\n\t {i} Target: {target}"
                 i += 1
             for item in node["all"]:
-                string += "\n\t\t" + item["message"]
+                string += f"\n\t\t {item["message"]}"
             for item in node["any"]:
-                string += "\n\t\t" + item["message"]
+                string += f"\n\t\t {item["message"]}"
             for item in node["none"]:
                 string += f"\n\t\t {item["message"]}"
         string += "\n\n\n"

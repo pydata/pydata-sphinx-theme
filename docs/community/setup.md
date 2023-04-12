@@ -163,7 +163,7 @@ will cause the development server to do the following:
 
 This theme uses `pytest` for its testing. There is a lightweight fixture defined
 in the `test_build.py` script that makes it easy to run a Sphinx build using
-this theme and inspect the results. There are also accessibility checks in
+this theme and inspect the results. There are also a number of automated accessibility checks in
 `test_a11y.py`.
 
 In addition, we use
