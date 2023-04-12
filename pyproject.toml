@@ -121,8 +121,3 @@ use_gitignore = true
 format_js = true
 format_css = true
 ignore = "H006,J018,T003,H025"
-
-[tool.pytest.ini_options]
-markers = [
-    "url_path(path): associate a url path with a test",
-]
