@@ -105,8 +105,6 @@ def a11y(session: nox.Session) -> None:
         else:
             # But most dev environments have the needed system dependencies
             session.run("playwright", "install")
-
-        session.run("playwright", "install")
     # Build the docs so we can run accessibility tests against them.
     session.run("nox", "-s", "docs")
     # The next step would be to open a server to the docs for Playwright, but
