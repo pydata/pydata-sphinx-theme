@@ -88,7 +88,7 @@ def url_base():
 def test_axe_core_kitchen_sink(
     page: Page, theme: str, url_base: str, url_page: str, selector: str
 ):
-    """Should have no Axe-core violations at provided theme/page."""
+    """Should have no Axe-core violations at the provided theme and page section."""
     # Load the page at the provided path
     url_base_kitchen_sink = urljoin(url_base, "/examples/kitchen-sink/")
     url_full = urljoin(url_base_kitchen_sink, url_page)
