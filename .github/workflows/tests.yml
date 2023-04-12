@@ -90,20 +90,12 @@ jobs:
           pip install nox
           nox -s compile
       - name: Run tests
-        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
-
-  upload-coverage:
-    needs: [run-pytest]
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.11"]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Codecov
+        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report xml:cov.xml --cov-report= term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+      - name: Upload to Codecov
+        if: matrix.python-version == "3.11"
         uses: codecov/codecov-action@v3.1.2
         with:
+          files: cov.xml
           fail_ci_if_error: true
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
