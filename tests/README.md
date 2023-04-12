@@ -18,7 +18,7 @@ testing](https://accessibility.blog.gov.uk/2017/02/24/what-we-found-when-we-test
 In contrast to the build test suite, the accessibility suite checks components as
 they appear in the browser, meaning with any CSS and JavaScript applied. It does
 this by building the PyData Sphinx Theme docs, launching a local server to the
-docs, then visiting the "Kitchen Sink" example pages with
+docs, then checking the "Kitchen Sink" example pages with
 [Playwright](https://playwright.dev), a program for developers that allows
 loading and manipulating pages with various browsers, such as Chrome (chromium),
 Firefox (gecko), Safari (WebKit).
