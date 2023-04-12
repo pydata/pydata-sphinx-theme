@@ -118,8 +118,6 @@ html_theme_options = {
             "name": "Donate to NumFocus",
         },
     ],
-    # "github_url": "https://github.com/pydata/pydata-sphinx-theme",
-    # "twitter_url": "https://twitter.com/PyData",
     "header_links_before_dropdown": 4,
     "icon_links": [
         {
@@ -145,6 +143,9 @@ html_theme_options = {
             "attributes": {"target": "_blank"},
         },
     ],
+    # alternative way to set twitter and github header icons
+    # "github_url": "https://github.com/pydata/pydata-sphinx-theme",
+    # "twitter_url": "https://twitter.com/PyData",
     "logo": {
         "text": "PyData Theme",
         "image_dark": "_static/logo-dark.svg",
@@ -206,7 +207,7 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_js_files = ["custom.js"]
+html_js_files = ["custom-icon.js"]
 todo_include_todos = True
 
 # -- favicon options ---------------------------------------------------------

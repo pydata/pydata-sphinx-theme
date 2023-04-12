@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Set a custom icon for pypi as it's not available in the fa built-in brands
+ */
 FontAwesome.library.add(
   (faListOldStyle = {
     prefix: "fa-custom",
