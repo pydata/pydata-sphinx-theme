@@ -94,6 +94,11 @@ jobs:
 
   upload-coverage:
     needs: [run-pytest]
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: Codecov
