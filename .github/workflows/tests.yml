@@ -97,6 +97,13 @@ jobs:
         with:
           files: cov.xml
           fail_ci_if_error: true
+      - name: Run accessibility tests with playwright
+        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        run: |
+          playwright install --with-deps
+          stb compile
+          sphinx-build -b=html docs/ docs/_build/html
+          pytest -k a11y
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:
