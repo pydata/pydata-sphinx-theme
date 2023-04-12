@@ -100,10 +100,10 @@ def test_axe_core_kitchen_sink(
     # Inject the Axe-core JavaScript library into the page
     page.add_script_tag(path="node_modules/axe-core/axe.min.js")
 
-    # Run the Axe-core library against the Admonitions section of the page
-    # (Don't run it against the whole page because in this test we're not trying
-    # to find accessibility violations in the nav, sidebar, footer, or other
-    # parts of the PyData Sphinx Theme documentation website.)
+    # Run the Axe-core library against a section of the page. (Don't run it
+    # against the whole page because in this test we're not trying to find
+    # accessibility violations in the nav, sidebar, footer, or other parts of
+    # the PyData Sphinx Theme documentation website.)
     results = page.evaluate(f"axe.run('{selector}')")
 
     # Expect Axe-core to have found 0 accessibility violations
