@@ -30,7 +30,7 @@ path_docs_build = path_repo / "docs" / "_build" / "html"
 
 @pytest.fixture(scope="module")
 def url_base():
-    """Start local server and return the localhost URL as the base URL."""
+    """Start local server on built docs and return the localhost URL as the base URL."""
     # Use a port that is not commonly used during development or else you will
     # force the developer to stop running their dev server in order to run the
     # tests.
