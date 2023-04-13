@@ -3,9 +3,7 @@
  */
 .bd-search {
   position: relative;
-  padding: 1rem 15px;
-  margin-right: -15px;
-  margin-left: -15px;
+  padding: 1rem 0;
 
   .icon {
     position: absolute;
@@ -15,7 +13,7 @@
 
   i.fa-solid.fa-magnifying-glass {
     position: absolute;
-    left: 1.6rem;
+    left: calc((2.5rem - 0.7em) / 2);
     color: var(--pst-color-text-muted);
   }
 
@@ -50,7 +48,7 @@
   .search-button__kbd-shortcut {
     display: flex;
     position: absolute;
-    right: 2em;
+    right: 0.5rem;
     color: var(--pst-color-border);
   }
 }
