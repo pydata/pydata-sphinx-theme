@@ -12,7 +12,7 @@ This section covers a few ways that you can control the look and feel of your th
 Custom CSS Stylesheets
 ======================
 
-You may customize the theme's CSS by creating a custom stylesheet that Sphinx uses to build your site.
+You can customize the theme's CSS by creating a custom stylesheet. This stylesheet will be used by Sphinx while building your site.
 Any rules in this style-sheet will over-ride the default theme rules.
 
 .. seealso::
@@ -60,9 +60,10 @@ Follow these steps to update the base variables:
 
 .. important::
 
-   Note that these are `CSS variables <css-variable-help_>`_ and not
-   `SASS variables <https://sass-lang.com/documentation/variables>`_.
-   The theme is defined with CSS variables, not SASS variables! Refer to the previous section if
+   Note that the theme is defined with `CSS variables <css-variable-help_>`_
+   and **not** `SASS variables <https://sass-lang.com/documentation/variables>`_.
+
+   Refer to the previous section if
    you desire a different behavior between the light and dark theme.
 .. TODO: add correct reference to light and dark theme @trallard
 
@@ -100,8 +101,9 @@ Here is an overview of the colors available in the theme (change theme mode to s
 .. raw:: html
 
     <style>
-      span.pst-primary {background-color: var(--pst-color-primary);
+      span.pst-primary {background-color: var(--pst-color-primary);}
       span.pst-secondary {background-color: var(--pst-color-secondary);}
+      span.pst-accent {background-color: var(--pst-color-accent);}
       span.pst-success {background-color: var(--pst-color-success);}
       span.pst-info {background-color: var(--pst-color-info);}
       span.pst-warning {background-color: var(--pst-color-warning);}
@@ -114,17 +116,18 @@ Here is an overview of the colors available in the theme (change theme mode to s
     </style>
 
     <p>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-primary">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-secondary">secondary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-success">success</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-info">info</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-warning">warning</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-danger">danger</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-primary sd-bg-text-primary">primary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-secondary sd-bg-text-secondary">secondary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-accent sd-bg-text-secondary">secondary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-success sd-bg-text-success">success</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-info sd-bg-text-info">info</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-warning sd-bg-text-warning">warning</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-danger sd-bg-text-danger">danger</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-background">background</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-on-background">on-background</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-surface">surface</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-on-surface">on-surface</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-target">target</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-on-surface sd-bg-text-primary">on-surface</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-target sd-bg-text-primary">target</span>
     </p>
 
 
@@ -174,7 +177,7 @@ The following image should help you understand these overlays:
         <p class="label">surface</p>
       </div>
       <div class="pst-overlay pst-on-surface">
-        <p class="label">on-surface</p>
+        <p class="label sd-bg-text-primary">on-surface</p>
       </div>
     </div>
 
@@ -201,8 +204,9 @@ You can check available Pygments colors on this `pygments demo page <https://pyg
    }
 
 Note that the PyData Sphinx theme uses the `accessible pygments styles <https://github.com/Quansight-Labs/accessible-pygments>`__ for its default syntax highlighting themes.
-The accessible pygments themes are designed to meet `WCAG <https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html>`__ AA or AAA standards for contrast and some themes are also suitable for colorblind users
-or low light conditions. You can check all the available styles at the `accessible pygments demo page <https://quansight-labs.github.io/accessible-pygments/>`__.
+The accessible pygments themes are designed to meet `WCAG AA or AAA standards for color contrast <https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html>`__ and some included themes are also suitable for colorblind users
+or low-light conditions.
+You can check all the available styles at the `accessible pygments demo page <https://quansight-labs.github.io/accessible-pygments/>`__.
 
 .. danger::
 

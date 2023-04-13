@@ -10,16 +10,16 @@ Dropping **JQuery**
 Bootstrap Dropped its **JQuery** dependency and rewrote plugins to be in regular JavaScript.
 Sphinx *v6* will do the same (https://github.com/sphinx-doc/sphinx/issues/10070).
 As a consequence, we also rewrote all our javascript to only use vanilla **JavaScript**.
-Any documentation relying on **JQuery** in their ``custom.js`` files will need to rewrite it or specifically import **JQuery**.
+Any documentation relying on **JQuery** in their ``custom.js`` files will need to rewrite or specifically import **JQuery**.
 
 Breaking changes
 ----------------
 
 ‼️ Relevant for those using a ``custom.css`` and/or a ``custom.js`` file!
 
-Bootstrap changed a number of CSS classes, so if you wrote custom rules of JS logic that depended on them, it may have changed.
+Bootstrap changed several CSS classes, so if you wrote custom rules of JS logic that depended on them, it may have changed.
 
-All of the changes from *v4* to *v5* are `listed in their documentation <https://getbootstrap.com/docs/5.0/migration/>`_.
+All the changes from *v4* to *v5* are `listed in their documentation <https://getbootstrap.com/docs/5.0/migration/>`_.
 Below list the ones that had consequences on ``pydata-sphinx-theme`` components.
 
 Sass
@@ -57,4 +57,4 @@ Utilities
 JavaScript
 ^^^^^^^^^^
 
--   Data attributes for all JavaScript plugins are now namespaced to help distinguish Bootstrap functionality from third parties and your own code. For example, we use ``data-bs-toggle`` instead of ``data-toggle``.
+-   Data attributes for all JavaScript plugins are now name spaced to help distinguish Bootstrap functionality from third parties and your code. For example, we use ``data-bs-toggle`` instead of ``data-toggle``.

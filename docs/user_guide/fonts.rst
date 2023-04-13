@@ -4,14 +4,14 @@ Fonts and FontAwesome
 The theme includes the `FontAwesome 6 Free <https://fontawesome.com/icons?m=free>`__
 icon font (the ``.fa-solid, .fa-regular, .fa-brands`` styles, which are used for
 :ref:`icon links <icon-links>` and admonitions).
-This is the only *vendored* font, and otherwise the theme by default relies on
+This is the only *vendored* font, and otherwise, the theme by default relies on
 available system fonts for normal body text and headers.
 
 The default body and header fonts can be changed as follows:
 
-- Using :ref:`custom-css`, you can specify which fonts to use for body, header
-  and monospace text. For example, the following can be added to a custom
-  css file:
+- Using:ref:`custom-css`, you can specify which fonts to use for the body, header,
+  and monospaced text. For example, the following can be added to a custom
+  CSS file:
 
   .. code-block:: css
 
@@ -21,7 +21,7 @@ The default body and header fonts can be changed as follows:
           --pst-font-family-monospace: Courier, var(--pst-font-family-monospace-system);
       }
 
-  The ``*-system`` variables are available to use as fallback to the default fonts.
+  The ``*-system`` variables are available to use as a fallback to the default fonts.
 
 - If the font you want to specify in the section above is not generally available
   by default, you will additionally need to ensure the font is loaded.

@@ -2,7 +2,7 @@ Announcement banners
 ====================
 
 You can add an announcement banner that draws extra attention from your reader.
-It will be displayed at the top of the screen, but will disappear once they start scrolling.
+It will be displayed at the top of the screen but will disappear once they start scrolling.
 
 To add an announcement banner, use the ``html_theme_options["announcement"]`` configuration.
 There are two ways to use this.

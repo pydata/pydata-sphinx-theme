@@ -9,7 +9,7 @@ Navigation Bar External links
 =============================
 
 You can add external links to your navigation bar. These will show up to the right
-of your site's main links, and will have a small icon indicating that they point to
+of your site's main links and will have a small icon indicating that they point to
 an external site. You can add external links to the nav bar like so:
 
 .. code:: python
@@ -27,7 +27,7 @@ Navigation bar dropdown links
 
 By default, this theme will display the first **five** navigation links in the header (including both top-level links and external links).
 It will place the remaining header links in a **dropdown menu** titled "More".
-This prevents the header links from taking up so much space that they crowd out the UI components or spill off screen.
+This prevents the header links from taking up so much space that they crowd out the UI components or spill off-screen.
 
 To control how many header links are displayed before being placed in the dropdown, use the ``header_links_before_dropdown`` theme configuration variable.
 For example, to change the number of displayed header links to be ``4`` instead of ``5``:abbr:
@@ -84,7 +84,7 @@ FontAwesome icons
 
 `FontAwesome <https://fontawesome.com/>`_ is a collection of icons that are
 commonly used in websites. They include both generic shape icons (e.g., "arrow-down"),
-as well as brand-specific icons (e.g. "github").
+and brand-specific icons (e.g. "GitHub").
 
 You can use FontAwesome icons by specifying ``"type": "fontawesome"``, and
 specifying a FontAwesome class in the ``icon`` value.
@@ -116,7 +116,7 @@ Here are several examples:
                "name": "Twitter",
                "url": "https://twitter.com/<your-handle>",
                "icon": "fa-brands fa-square-twitter",
-               # The default for `type` is `fontawesome` so it is not actually required in any of the above examples as it is shown here
+               # The default for `type` is `fontawesome`, so it is not required in any of the above examples as it shown here
            },
            {
                "name": "Mastodon",
@@ -215,7 +215,7 @@ You can add custom attributes to the link element (``<a>``) of your icon links.
 This is helpful if you need to add custom link behavior.
 To do so, use the pattern ``"attributes": {"attribute1": "value1"}`` in a given icon link entry.
 
-For example, to specify a custom ``target`` and ``rel`` attribute, and to define your own custom link classes:
+For example, to specify a custom ``target`` and ``rel`` attribute, and to define your custom link classes:
 
 .. code:: python
 
@@ -228,7 +228,7 @@ For example, to specify a custom ``target`` and ``rel`` attribute, and to define
                "icon": "_static/pydata-logo-square.png",
                "type": "local",
                # Add additional attributes to the href link.
-               # The defaults of target, rel, class, title and href may be overwritten.
+               # The defaults of the target, rel, class, title, and href may be overwritten.
                "attributes": {
                   "target" : "_blank",
                   "rel" : "noopener me",
@@ -240,4 +240,4 @@ For example, to specify a custom ``target`` and ``rel`` attribute, and to define
    }
 
 .. warning::
-   This might make your icon links behave unexpectedly and might over-ride default behavior, so make sure you know what you're doing!
+   This might make your icon links behave unexpectedly and might override the default behavior, so make sure you know what you're doing!

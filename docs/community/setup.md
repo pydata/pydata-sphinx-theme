@@ -18,7 +18,7 @@ of:
 For each pull request, the documentation is built and deployed to make it easier to review the changes in the PR.
 To access this, click on the {{ rtd }} preview in the CI/CD jobs.
 
-The sections below cover the steps to do this in more detail.
+The sections below cover the steps to take in more detail.
 
 ## Clone the repository
 
@@ -39,11 +39,11 @@ You can clone it for local development like so:
 Building a Sphinx site uses a combination of Python and Jinja to manage HTML, SCSS, and Javascript.
 To simplify this process, we use a few helper tools:
 
-- [The Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) to automatically perform compilation of web assets.
+- [The Sphinx [Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) automatically perform the compilation of web assets.
 - [pre-commit](https://pre-commit.com/) for automatically enforcing code standards and quality checks before commits.
 - [nox](https://nox.thea.codes/), for automating common development tasks.
 
-In particular, `nox` can be used to automatically create isolated local development environments with all of the correct packages installed to work on the theme.
+In particular, `nox` can be used to automatically create isolated local development environments with all the correct packages installed to work on the theme.
 The rest of this guide focuses on using `nox` to start with a basic environment.
 
 ```{seealso}
@@ -58,9 +58,9 @@ To start, install `nox`:
 $ pip install nox
 ```
 
-You can call `nox` from the command line in order to perform common actions that are needed in building the theme.
-`nox` operates with isolated environments, so each action has its own packages installed in a local directory (`.nox`).
-For common development actions, you'll simply need to use `nox` and won't need to set up any other packages.
+You can call `nox` from the command line to perform common actions that are needed in building the theme.
+`nox` operates with isolated environments, so each action has its packages installed in a local directory (`.nox`).
+For common development actions, you'll only need to use `nox` and won't need to set up any other packages.
 
 ### Setup `pre-commit`
 

@@ -19,11 +19,11 @@ mysphinxsite/
 
 Any folders that are listed in `html_static_path` will be treated as containing static assets for your build.
 All files within these folders will be copied to your build's `_static` folder at build time.
-For example, with an `html` builder, files will be copied to `_build/html/_static`.
+For example, with an HTML builder, files will be copied to `_build/html/_static`.
 
 These files are _flattened_ when they are copied, so any folder hierarchies will be lost.
 
-Listing folders with your static assets must be done before any of the methods describe below.
+Listing folders with your static assets must be done before any of the methods described below.
 When you define asset names in the methods described below, they generally assume paths that are _relative to this `_static` output folder_.
 
 ## Define a list of assets in `conf.py`
@@ -44,9 +44,9 @@ html_js_files = ["myjs.js"]
 
 This will cause each to be linked in your `<head>`.
 
-## Add assets in your setup function
+## Add assets to your setup function
 
-Additionally you may add assets manually, to do so, use the `app` object in [the Sphinx `setup()` function](https://www.sphinx-doc.org/en/master/extdev/appapi.html#extension-setup).
+Additionally, you may add assets manually, to do so, use the `app` object in [the Sphinx `setup()` function](https://www.sphinx-doc.org/en/master/extdev/appapi.html#extension-setup).
 The `app` object has two relevant methods here:
 
 [**`app.add_css_file`**](https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_css_file) allows you to add CSS files directly.
@@ -77,7 +77,7 @@ def setup(app):
 
 ## Use an event to add it to specific pages
 
-If you'd like to use logic to only add a script to certain pages, or to trigger different behavior depending on the page, use [a Sphinx event hook](https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events).
+If you'd like to use logic to only add a script to certain pages or to trigger different behavior depending on the page, use [a Sphinx event hook](https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events).
 This involves defining a function that runs when a particular event is emitted in the Sphinx build, and using [`app.connect()`](https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.connect) to connect it to your build.
 
 The event you'll likely want to use is [`html-page-context`](https://www.sphinx-doc.org/en/master/extdev/appapi.html#event-html-page-context).
@@ -120,7 +120,7 @@ If you're using reStructuredText or MyST Markdown, you can use the `raw` directi
    </script>
 ```
 
-If you're using MyST Markdown, you may also simply directly include any HTML / style / script blocks in your content without using a directive.
+If you're using MyST Markdown, you may also directly include any HTML / style / script blocks in your content without using a directive.
 
 For example:
 

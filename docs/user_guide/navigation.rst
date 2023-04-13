@@ -3,7 +3,7 @@
 Navigation depth and collapsing sidebars
 ========================================
 
-By default, this theme enables to expand/collapse subsections in the primary
+By default, this theme enables to expand/collapse of subsections in the primary
 sidebar navigation (without actually navigating to the page itself), and this extends
 up to 4 levels deep:
 
@@ -24,10 +24,10 @@ default, you can use the following configuration in ``conf.py``:
      "show_nav_level": 2
    }
 
-This will make the first two navigations show up by default (AKA, top-level
+This will make the first two navigation levels show up by default (AKA, top-level
 pages and their immediate children).
 
-Collapse entire toctree captions / parts
+Collapse entire toctree captions/parts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your ``toctree`` elements have captions assigned to them (with ``:caption:``), you may
@@ -43,7 +43,7 @@ To enable this behavior, set the ``show_nav_level`` value to 0, like below:
    }
 
 You can only collapse your ``toctree`` items underneath their caption if a caption is defined for them!
-If your ``toctree`` does not have a caption defined, then all of the pages underneath it will be displayed
+If your ``toctree`` does not have a caption defined, then all the pages underneath it will be displayed
 (the same as the default theme behavior). See `the toctree documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree>`_
 for more details.
 
