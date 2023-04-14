@@ -69,6 +69,7 @@ def url_base():
         process.wait()
 
 
+@pytest.mark.a11y
 @pytest.mark.parametrize("theme", ["light", "dark"])
 @pytest.mark.parametrize(
     "url_page,selector",

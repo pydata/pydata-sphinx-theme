@@ -88,28 +88,24 @@ def test(session: nox.Session) -> None:
     if _should_install(session):
         session.install("-e", ".[test]")
     session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
-    session.run("pytest", "-k", "not a11y", *session.posargs)
+    session.run("pytest", "-m", "not a11y", *session.posargs)
 
 
 @nox.session()
 def a11y(session: nox.Session) -> None:
-    """Run the accessibility test suite."""
+    """Run the accessibility test suite only."""
     if _should_install(session):
-        session.install("-e", ".[test]")
+        session.install("-e", ".[test, a11y]")
         # Install the drivers that Playwright needs to control the browsers.
-        if os.environ.get("CI") or os.environ.get("GITPOD_WORKSPACE_ID"):
-            # CI and other cloud environments are potentially missing system
-            # dependencies, so we tell Playwright to also install the system
-            # dependencies
-            session.run("playwright", "install", "--with-deps")
-        else:
-            # But most dev environments have the needed system dependencies
+        if not (os.environ.get("CI") or os.environ.get("GITPOD_WORKSPACE_ID")):
+            # Assuming that most local dev environments have the needed system dependencies
+            # for playwright to work
             session.run("playwright", "install")
     # Build the docs so we can run accessibility tests against them.
     session.run("nox", "-s", "docs")
     # The next step would be to open a server to the docs for Playwright, but
     # that is done in the test file, along with the accessibility checks.
-    session.run("pytest", "-k", "a11y", *session.posargs)
+    session.run("pytest", "-m", "a11y", *session.posargs)
 
 
 @nox.session(name="test-sphinx")
