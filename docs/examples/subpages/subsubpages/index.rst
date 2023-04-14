@@ -1,4 +1,4 @@
-Section with sub-sub-pages
+Section with sub sub pages
 ==========================
 
 To create an additional level of nesting in the sidebar, construct a

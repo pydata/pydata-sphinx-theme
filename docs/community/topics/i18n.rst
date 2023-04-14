@@ -1,0 +1,150 @@
+Internationalization
+====================
+
+.. warning::
+
+   This theme is still in the process of setting up internationalization.
+   Some of the text below may not yet be correct (for example, we do not yet have a ``locales/`` directory).
+   Follow these issues to track progress:
+
+   - https://github.com/pydata/pydata-sphinx-theme/issues/1162
+   - https://github.com/pydata/pydata-sphinx-theme/issues/257
+
+Internationalization (I18N) and localization (L10N) is performed using `Gettext <https://docs.python.org/3/library/gettext.html>`__.
+
+Types of files
+--------------
+
+Gettext reads a program's source and extracts text that has been marked as translatable, known as "source strings.
+Gettext uses three types of files:
+
+PO file (``.po``)
+  A `Portable Object (PO) file <https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`__ is made up of many entries.
+  Each entry holds the relation between a source string and its translation.
+  ``msgid`` contains the **source string**, and ``msgstr`` contains the **translation**.
+  In a given PO file, all translations are expressed in a single target language.
+  PO files are also known as "message catalogs".
+
+  Entries begin with comments, on lines starting with the character ``#``.
+  Comments are created and maintained by Gettext.
+  Comment lines starting with ``#:`` contain references to the program's source.
+  These references allow a human translator to find the source strings in their original context.
+  Comment lines starting with ``#,`` contain flags like ``python-format``, which indicates that the source string contains placeholders like ``%(copyright)s``.
+POT file (``.pot``)
+  A Portable Object Template (POT) file is the same as a PO file, except the translations are empty, so that it can be used as a template for new languages.
+MO file (``.mo``)
+  A Machine Object (MO) file is a binary version of a PO file. PO files are compiled to MO files, which are required by Gettext.
+
+.. _adding-natural-language-text:
+
+Mark natural language text as translateable
+-------------------------------------------
+
+All natural language text must be marked as translatable, so that it can be extracted by Gettext and translated by humans.
+
+Jinja2 provides a ``trans`` block and a ``_()`` function to mark text as translatable.
+`Please refer to the Jinja2 documentation <https://jinja.palletsprojects.com/en/2.11.x/templates/#i18n>`__.
+Remember to `manually escape <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ variables if needed.
+
+Any text that is marked in this way will be discoverable by ``gettext`` and used to generate ``.po`` files (see below for information).
+Once you've marked text as translateable, complete the steps for :ref:`changing-natural-language-text`.
+
+.. _changing-natural-language-text:
+
+Add or change natural language text
+-----------------------------------
+
+These steps cover how to add or change text that has been marked as translateable.
+
+#. Edit the natural language text as desired.
+   Ensure that it is {ref}`marked as translateable <adding-natural-language-text>`.
+
+#. Generate/update the message catalog template (``POT`` file) with `the PyBabel extract command <https://babel.pocoo.org/en/latest/cmdline.html#extract>`__:
+
+   .. code-block:: bash
+
+      pybabel extract . -F babel.cfg -o src/pydata_sphinx_theme/locale/sphinx.pot -k '_ __ l_ lazy_gettext'
+
+   **To run this in ``.nox``**: ``nox -s translate -- extract``.
+
+#. Update the message catalogs (``PO`` files) with `the PyBabel update command <https://babel.pocoo.org/en/latest/cmdline.html#update>`__:
+
+   .. code-block:: bash
+
+      pybabel update -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx
+
+   **To run this in ``.nox``**: ``nox -s translate -- update``.
+
+
+This will update these files with new information about the position and text of the language you have modified.
+
+If you *only* change non-translatable text (like HTML markup), the `extract` and `update` commands will only update the positions (line numbers) of the translatable strings. Updating positions is optional - the line numbers are to inform the human translator, not to perform the translation.
+
+If you change translatable strings, the `extract` command will extract the new or updated strings to the POT file, and the `update` command will try to fuzzy match the new or updated strings with existing translations in the PO files.
+If there is a fuzzy match, a comment like `#, fuzzy` is added before the matched entry.
+Otherwise, a new entry is added and needs to be translated.
+
+
+.. _translating-the-theme:
+
+Add translations to translateable text
+--------------------------------------
+
+Once text has been marked as translateable, and ``PO`` files have been generated for it, we may add translations for new languages for the phrase.
+This section covers how to do so.
+
+.. note::
+
+   These steps use the Spanish language as an example.
+   To translate the theme to another language, replace ``es`` with the language's two-letter lowercase `ISO 639-1 code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`__.
+
+#. If the language's code matches no sub-directory of the `pydata_sphinx_theme/locale <https://github.com/pydata/pydata-sphinx-theme/tree/main/pydata_sphinx_theme/locale>`__ directory, initialize the language's message catalog (PO file) with `PyBabel init <https://babel.pocoo.org/en/latest/cmdline.html#init>`__:
+
+   .. code-block:: bash
+
+      pybabel init -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx -l es
+
+   **To run this in ``.nox``**: ``nox -s translate -- init es``
+
+#. Edit the language's message catalog at ``pydata_sphinx_theme/locale/es/LC_MESSAGES/sphinx.po``. For each source string introduced by the ``msgid`` keyword, add its translation after the ``msgstr`` keyword.
+
+#. Compile the message catalogs of every language. This creates or updates the MO files with `PyBabel compile <https://babel.pocoo.org/en/latest/cmdline.html#compile>`__:
+
+   .. code-block:: bash
+
+      pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx
+
+   **To run this in ``.nox``**: ``nox -s translate -- compile``.
+
+Translation tips
+----------------
+
+Translate phrases, not words
+````````````````````````````
+
+Full sentences and clauses must always be a single translatable string.
+Otherwise, you can get ``next page`` translated as ``suivant page`` instead of as ``page suivante``, etc.
+
+Deal with variables and markup in translations
+`````````````````````````````````````````````````````````````
+
+If a variable (like the ``edit_page_provider_name`` theme option) is used as part of a phrase, it must be included within the translatable string.
+Otherwise, the word order in other languages can be incorrect.
+In a Jinja template, simply surround the translatable string with ``{% trans variable=variable %}`` and ``{% endtrans %}}`.
+For example: ``{% trans provider=provider %}Edit on {{ provider }}{% endtrans %}``
+The translatable string is extracted as the Python format string ``Edit on %(provider)s``.
+This is so that the same translatable string can be used in both Python code and Jinja templates.
+It is the translator's responsibility to use ``%(provider)s`` verbatim in the translation.
+
+If a non-translatable word or token (like HTML markup) is used as part of a phrase, it must also be included within the translatable string.
+For example: ``{% trans theme_version=theme_version|e %}Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> {{ theme_version }}.{% endtrans %}``
+It is the translator's responsibility to use the HTML markup verbatim in the translation.
+
+
+References
+----------
+
+I18N and L10N are deep topics. Here, we only cover the bare minimum needed to fulfill basics technical tasks. You might like:
+
+-  `Internationalis(z)ing Code <https://www.youtube.com/watch?v=0j74jcxSunY>`__ by Computerphile on YouTube
+-  `Falsehoods Programmers Believe About Language <http://garbled.benhamill.com/2017/04/18/falsehoods-programmers-believe-about-language>`__ by Ben Hamill

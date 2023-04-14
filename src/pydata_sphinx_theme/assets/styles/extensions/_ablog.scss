@@ -36,7 +36,7 @@
     &.ablog-cloud {
       flex-direction: row;
       flex-flow: wrap;
-      gap: 0.25rem;
+      gap: 0.5rem;
 
       // Vertical-align tag clouds
       li {
@@ -110,21 +110,29 @@
   .ablog-post {
     list-style: none;
 
-    // Post metadata
+    // Post metadata tags (author, links ,etc) should be a bit smaller
     .ablog-archive {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
       list-style: none;
+      font-size: 0.75rem;
       padding-left: 0;
     }
 
-    // Title line should be a bit bigger
+    // Title line should be a bit bigger and bold to stand out
     .ablog-post-title {
       margin-top: 0;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+
+      a {
+        font-weight: bold;
+      }
     }
 
     // Read more button should be a bit bigger
     .ablog-post-expand {
-      font-size: 1.25rem;
       margin-bottom: 0.5rem;
     }
   }

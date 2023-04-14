@@ -12,12 +12,12 @@
           {% set attributeString = attributeString | join(" ") -%}
           <a {{ attributeString }}>
             {%- if type == "fontawesome" -%}
-            <span><i class="{{ icon }}"></i></span>
-            <label class="sr-only">{{ _(name) }}</label>
+            <span><i class="{{ icon }} fa-lg"></i></span>
+            <label class="sr-only">{{ name }}</label>
             {%- elif type == "local" -%}
-            <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ _(name) }}"/>
+            <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ name }}"/>
             {%- elif type == "url" -%}
-            <img src="{{ icon }}" class="icon-link-image" alt="{{ _(name) }}"/>
+            <img src="{{ icon }}" class="icon-link-image" alt="{{ name }}"/>
             {%- else %}
             <span>Incorrectly configured icon link. Type must be `fontawesome`, `url` or `local`.</span>
             {%- endif -%}
@@ -25,16 +25,11 @@
         </li>
   {%- endif -%}
 {%- endmacro -%}
-<ul id="navbar-icon-links"
-    class="navbar-nav"
-    aria-label="{{ _(theme_icon_links_label) }}">
-  {%- block icon_link_shortcuts -%}
-    {{ icon_link_nav_item(theme_github_url, "fa-brands fa-square-github", "GitHub", "fontawesome") -}}
-    {{ icon_link_nav_item(theme_gitlab_url, "fa-brands fa-square-gitlab", "GitLab", "fontawesome") -}}
-    {{ icon_link_nav_item(theme_bitbucket_url, "fa-brands fa-bitbucket", "Bitbucket", "fontawesome") -}}
-    {{ icon_link_nav_item(theme_twitter_url, "fa-brands fa-square-twitter", "Twitter", "fontawesome") -}}
-  {% endblock icon_link_shortcuts -%}
+{%- if theme_icon_links -%}
+<ul class="navbar-icon-links navbar-nav"
+    aria-label="{{ theme_icon_links_label }}">
   {%- for icon_link in theme_icon_links -%}
     {{ icon_link_nav_item(icon_link["url"], icon_link["icon"], icon_link["name"], icon_link.get("type", "fontawesome"), icon_link.get("attributes", {})) -}}
   {%- endfor %}
 </ul>
+{%- endif -%}

@@ -12,13 +12,13 @@ Provide local HTML in your theme
 
 By default, the value of your ``html_theme_options["announcement"]`` will be inserted directly into your announcement banner as raw HTML.
 
-For example, the following configuration adds a simple ``<p>`` with an announcement.
+For example, the following configuration adds a simple announcement.
 
 .. code-block:: python
 
    html_theme_options = {
       ...
-      "announcement": "<p>Here's a <a href='https://pydata.org'>PyData Announcement!</a></p>",
+      "announcement": "Here's a <a href='https://pydata.org'>PyData Announcement!</a>",
    }
 
 Insert remote HTML with JavaScript

@@ -10,7 +10,8 @@ Overview of theme layout
 
 Below is a brief overview of the major layout of this theme.
 Take a look at the diagram to understand what the major sections are called.
-You can click on section titles to learn more about them and some basic layout configuration.
+Where you can insert component templates in ``html_theme_options``, we include the variable name ``in inline code``.
+Click on section titles to learn more about them and some basic layout configuration.
 
 .. The directives below generate a grid-like layout that mimics the structure of this theme.
 .. It uses Sphinx Design grids: https://sphinx-design.readthedocs.io/en/latest/grids.html
@@ -52,17 +53,23 @@ You can click on section titles to learn more about them and some basic layout c
 
                 Logo
 
+                ``navbar_start``
+
             .. grid-item::
                 :padding: 2
                 :columns: 6
 
                 Section links
 
+                ``navbar_center``
+
             .. grid-item::
                 :padding: 2
                 :columns: 3
 
                 Components
+
+                ``navbar_end``
 
     .. grid-item::
         :padding: 2
@@ -78,6 +85,10 @@ You can click on section titles to learn more about them and some basic layout c
 
         Links between pages in the active section.
 
+        ``sidebars``
+
+        ``primary_sidebar_end``
+
     .. grid-item::
         :columns: 8
 
@@ -88,7 +99,7 @@ You can click on section titles to learn more about them and some basic layout c
             .. grid-item::
                 :class: content
                 :padding: 2
-                :columns: 8
+                :columns: 6
                 :outline:
 
                 .. button-ref:: layout-article-header
@@ -96,6 +107,9 @@ You can click on section titles to learn more about them and some basic layout c
                     :outline:
 
                     Article Header
+
+                ``article_header_start``
+                ``article_header_end``
 
                 **Article Content**
 
@@ -105,9 +119,11 @@ You can click on section titles to learn more about them and some basic layout c
 
                     Article Footer
 
+                ``article_footer_items``
+
             .. grid-item::
                 :padding: 2
-                :columns: 4
+                :columns: 6
                 :outline:
                 :class: sidebar-secondary
 
@@ -118,6 +134,8 @@ You can click on section titles to learn more about them and some basic layout c
                     Secondary Sidebar
 
                 Within-page header links
+
+                ``secondary_sidebar_items``
 
         .. grid::
             :margin: 0
@@ -135,6 +153,8 @@ You can click on section titles to learn more about them and some basic layout c
 
                     Footer content
 
+                ``content_footer_items``
+
 
 
     .. grid-item::
@@ -149,7 +169,8 @@ You can click on section titles to learn more about them and some basic layout c
 
             Footer
 
-        Site-wide links.
+        ``footer_start``
+        ``footer_end``
 
 Horizontal spacing
 ------------------
@@ -192,8 +213,9 @@ which they appear. This page describes the major areas that you can customize.
 Header / Navigation Bar
 =======================
 
-The header is at the top of the page above all other content, and contains site-level information.
+Located in ``sections/header.html``.
 
+The header is at the top of the page above all other content, and contains site-level information.
 
 Header sections
 ---------------
@@ -211,12 +233,12 @@ By default, the following configuration is used:
 .. code-block:: python
 
    html_theme_options = {
-   ...
+   # ...
    "navbar_start": ["navbar-logo"],
    "navbar_center": ["navbar-nav"],
    "navbar_end": ["navbar-icon-links"],
    "navbar_persistent": ["search-button"]
-   ...
+   # ...
    }
 
 .. warning::
@@ -232,9 +254,9 @@ page. This equals the following default configuration:
 .. code-block:: python
 
    html_theme_options = {
-      ...
+      # ...
       "navbar_align": "content"
-      ...
+      # ...
    }
 
 If instead you'd like these items to snap to the left (closer to the logo), use this
@@ -243,9 +265,9 @@ configuration:
 .. code-block:: python
 
    html_theme_options = {
-      ...
+      # ...
       "navbar_align": "left"
-      ...
+      # ...
    }
 
 If you'd like these items to snap to the right of the page, use this configuration:
@@ -253,9 +275,9 @@ If you'd like these items to snap to the right of the page, use this configurati
 .. code-block:: python
 
    html_theme_options = {
-      ...
+      # ...
       "navbar_align": "right"
-      ...
+      # ...
    }
 
 
@@ -264,13 +286,22 @@ If you'd like these items to snap to the right of the page, use this configurati
 Article Header
 ==============
 
+Located in ``sections/header-article.html``.
+
 The article header is a narrow bar just above the article's content.
-It does not contain anything immediately viewable to the reader, but is kept as a placeholder in case theme developers wish to re-use it in the future.
+There are two sub-sections that can have component templates added to them:
+
+- ``article_header_start`` is aligned to the beginning (left) of the article header.
+  By default, this section has the ``breadcrumbs.html`` component which displays links to parent pages of the current page.
+- ``article_header_end`` is aligned to the end (right) of the article header.
+  By default, this section is empty.
 
 .. _layout-sidebar-primary:
 
 Primary sidebar (left)
 ======================
+
+Located in ``sections/sidebar-primary.html``.
 
 The primary sidebar is just to the left of a page's main content.
 It is primarily used for between-section navigation.
@@ -319,9 +350,9 @@ By default, it has the following templates:
 .. code-block:: python
 
     html_theme_options = {
-      ...
+      # ...
       "primary_sidebar_end": ["sidebar-ethical-ads"],
-      ...
+      # ...
     }
 
 Remove the primary sidebar from pages
@@ -358,6 +389,8 @@ use this pattern:
 Footer Content
 ==============
 
+Located in ``sections/footer-content.html``.
+
 The footer content is a narrow bar spanning the article’s content and secondary sidebar.
 It does not contain anything immediately viewable to the reader, but is kept as a placeholder in case theme developers wish to re-use it in the future.
 
@@ -367,6 +400,8 @@ It does not contain anything immediately viewable to the reader, but is kept as 
 Secondary Sidebar (right)
 =========================
 
+Located in ``sections/sidebar-secondary.html``.
+
 The in-page sidebar is just to the right of a page's article content, and is
 configured in ``conf.py`` with ``html_theme_options['secondary_sidebar_items']``.
 
@@ -375,9 +410,9 @@ By default, it has the following templates:
 .. code-block:: python
 
     html_theme_options = {
-      ...
+      # ...
       "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
-      ...
+      # ...
     }
 
 To learn how to further customize or remove the secondary sidebar, please check :doc:`page-toc`.
@@ -387,7 +422,18 @@ To learn how to further customize or remove the secondary sidebar, please check 
 Article Footer
 ==============
 
+Located in ``sections/footer-article.html``.
+
 The article footer exists just below your page's article, and is primarily used for navigating between adjacent sections / pages.
+By default, it has the following templates:
+
+.. code-block:: python
+
+    html_theme_options = {
+      # ...
+      "article_footer_items": ["prev-next.html"],
+      # ...
+    }
 
 Hide the previous and next buttons
 ----------------------------------
@@ -401,46 +447,52 @@ at the bottom. You can hide these buttons with the following configuration:
      "show_prev_next": False
    }
 
+
+Content Footer
+==============
+
+Located in ``sections/footer-content.html``.
+
+The content footer exists below your page's article and secondary sidebar.
+By default it is empty, but you can add templates to it with the following configuration:
+
+.. code-block:: python
+
+    html_theme_options = {
+      # ...
+      "content_footer_items": ["your-template.html"],
+      # ...
+    }
+
 .. _layout-footer:
 
 Footer
 ======
 
-The footer is just below a page’s main content, and is configured in ``conf.py``
-with ``html_theme_options['footer_items']``.
+Located in ``sections/footer.html``.
 
-By default, it has the following templates:
+The footer is just below a page’s main content, and is configured in ``conf.py``
+with ``html_theme_options['footer_start']`` and ``html_theme_options['footer_end']``.
+
+By default, ``footer_end`` is empty, and ``footer_start`` has the following templates:
 
 .. code-block:: python
 
     html_theme_options = {
-      ...
-      "footer_items": ["copyright", "sphinx-version", "theme-version"],
-      ...
+      #...
+      "footer_start": ["copyright", "sphinx-version"],
+      "footer_end": ["theme-version"]
+      #...
     }
 
-Change footer display
----------------------
-
-Each footer element is wrapped in a ``<div>`` with a ``footer-item`` class, allowing you to style the structure of these items with custom CSS.
-
-For example, by default the footer items are displayed as blocks that stack vertically.
-To change this behavior so that they stack **horizontally**, add a rule like the following in your custom ``.css`` file.
+Within each subsection, components will stack **vertically**.
+If you'd like them to stack **horizontally** use a custom CSS rule like the following:
 
 .. code-block:: css
 
-   /* Make each footer item in-line so they stack horizontally instead of vertically */
-   .footer-item {
-     display: inline-block;
+   .footer-items__start, .footer-items__end {
+     flex-direction: row;
    }
-
-   /* Add a separating border line for all but the last item */
-   .footer-item:not(:last-child) {
-     border-right: 1px solid var(--pst-color-text-base);
-     margin-right: .5em;
-     padding-right: .5em;
-   }
-
 
 Built-in components to insert into sections
 ===========================================
@@ -451,6 +503,7 @@ will be named accordingly).
 
 .. refer to files in: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/
 
+- ``breadcrumbs.html``
 - ``copyright.html``
 - ``edit-this-page.html``
 - ``footer-article/prev-next.html``
@@ -494,7 +547,7 @@ could do so with the following steps:
    .. code-block:: python
 
       html_theme_options = {
-      ...
+      # ...
       "navbar_start": ["navbar-logo", "version"],
-      ...
+      # ...
       }

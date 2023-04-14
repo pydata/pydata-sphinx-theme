@@ -23,7 +23,7 @@ The switcher requires the following configuration steps:
 
 3. Specify where to place the switcher in your page layout. For example, add
    the ``"version-switcher"`` template to one of the layout lists in
-   ``html_theme_options`` (e.g., ``navbar_end``, ``footer_items``, etc).
+   ``html_theme_options`` (e.g., ``navbar_end``, ``footer_start``, etc).
 
 Below is a more in-depth description of each of these configuration steps.
 
@@ -49,19 +49,19 @@ Here is an example JSON file:
         {
             "name": "v2.1 (stable)",
             "version": "2.1",
-            "url": "https://mysite.org/en/2.1/index.html"
+            "url": "https://mysite.org/en/2.1/"
         },
         {
             "version": "2.1rc1",
-            "url": "https://mysite.org/en/2.1rc1/index.html"
+            "url": "https://mysite.org/en/2.1rc1/"
         },
         {
             "version": "2.0",
-            "url": "https://mysite.org/en/2.0/index.html"
+            "url": "https://mysite.org/en/2.0/"
         },
         {
             "version": "1.0",
-            "url": "https://mysite.org/en/1.0/index.html"
+            "url": "https://mysite.org/en/1.0/"
         }
     ]
 
@@ -156,7 +156,7 @@ Specify where to display the switcher
 Finally, tell the theme where on your site's pages you want the switcher to
 appear. There are many choices here: you can add ``"version-switcher"`` to one
 of the locations in ``html_theme_options`` (e.g., ``navbar_end``,
-``footer_items``, etc). For example:
+``footer_start``, etc). For example:
 
 .. code:: python
 

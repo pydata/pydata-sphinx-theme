@@ -6,7 +6,7 @@
  * same for our overrides to have any effect.
  */
 
-@use "../variables/color" as *;
+@use "../variables/color" as pstcol;
 
 /*******************************************************************************
   * Color and variables
@@ -50,14 +50,14 @@ $sd-semantic-color-names: (
   * already define for our own needs.
   */
 $extra-semantic-colors: (
-  "dark": map-get($pst-semantic-colors, "text-base"),
-  "muted": map-get($pst-semantic-colors, "text-muted"),
+  "dark": map-get(pstcol.$pst-semantic-colors, "text-base"),
+  "muted": map-get(pstcol.$pst-semantic-colors, "text-muted"),
   "light": rgb(201, 201, 201),
   "black": rgb(0, 0, 0),
   "white": rgb(255, 255, 255),
 );
 
-$all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
+$all-colors: map-merge(pstcol.$pst-semantic-colors, $extra-semantic-colors);
 
 // Now we override the --sd-color-* variables.
 @each $mode in (light, dark) {

@@ -36,13 +36,10 @@ div#searchbox {
         text-decoration: none;
       }
 
-      // add icon via CSS because the link is created by javascript
-      // match padding to .toc-item > i above
       &:before {
         content: var(--pst-icon-search-minus);
         color: unset;
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
+        font: var(--fa-font-solid);
         margin-right: 0.5rem;
       }
     }

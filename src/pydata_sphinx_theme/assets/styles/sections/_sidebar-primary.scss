@@ -47,9 +47,11 @@
     color: var(--pst-color-text-base);
   }
 
-  .sidebar-start-items__item,
-  .sidebar-end-items__item {
-    padding: 0.5rem 0;
+  .sidebar-primary-items__start,
+  .sidebar-primary-items__end {
+    .sidebar-primary-item {
+      padding: 0.5rem 0;
+    }
   }
 
   // Hide the sidebar header items on widescreen since they are visible in the header
@@ -100,7 +102,7 @@
     }
   }
 
-  .sidebar-start-items {
+  .sidebar-primary-items__start {
     // Add a border on mobile to separate it from the header sidebar area
     border-top: 1px solid var(--pst-color-border);
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
@@ -108,7 +110,7 @@
     }
   }
 
-  .sidebar-end-items {
+  .sidebar-primary-items__end {
     margin-top: auto;
     margin-bottom: 1em;
   }
@@ -198,8 +200,7 @@ nav.bd-links {
 
     &.reference.external {
       &:after {
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
+        font: var(--fa-font-solid);
         content: var(--pst-icon-external-link);
         font-size: 0.75em;
         margin-left: 0.3em;
