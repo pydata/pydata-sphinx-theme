@@ -56,9 +56,9 @@ jobs:
           # windows test
           - os: windows-latest
             python-version: "3.11"
-    # needed to cache the browsers for the accessibility tests 
+    # needed to cache the browsers for the accessibility tests
     env:
-      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/pw-browsers        
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/pw-browsers
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -101,14 +101,14 @@ jobs:
           files: cov.xml
           fail_ci_if_error: true
 
-      # note I am setting this on top of the Python cache as I could not find 
+      # note I am setting this on top of the Python cache as I could not find
       # how to set the hash key on the python one
       - name: Set up browser cache (for accessibility tests)
         uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/pw-browsers
-          key: ${{ runner.os }}-pw-${{ hashFiles('pyproject.toml') }}  
+          key: ${{ runner.os }}-pw-${{ hashFiles('pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-pw-
 
