@@ -115,6 +115,7 @@ jobs:
       - name: Run accessibility tests with playwright
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         run: |
+          python -m pip install -e .[doc,test,a11y]
           pip install playwright
           python -m playwright install --with-deps
           stb compile
