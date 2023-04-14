@@ -25,7 +25,6 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
-  "Babel",
   "pygments>=2.7",
   "accessible-pygments",
   "typing-extensions"
@@ -87,6 +86,7 @@ dev = [
   "pre-commit",
   "nox",
   "pydata-sphinx-theme[doc,test]",
+  "Babel",
 ]
 
 [project.entry-points]

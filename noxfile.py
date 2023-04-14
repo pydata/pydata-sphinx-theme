@@ -14,7 +14,27 @@ from textwrap import dedent
 import nox
 
 nox.options.reuse_existing_virtualenvs = True
-ROOT = Path(__file__).parent
+nox.options.sessions = []
+
+# strctural folders usefulm for translation related sessions
+root_dir = Path(__file__).parent
+locale_dir = root_dir / "src" / "pydata_sphinx_theme" / "locale"
+babel_cfg = root_dir / "babel.cfg"
+pot_file = locale_dir / "sphinx.pot"
+
+
+def session(default: bool = True, **kwargs):
+    """Extend session function to add a default parameter.
+
+    related to https://github.com/wntrblm/nox/issues/654
+    """
+
+    def _session(fn):
+        if default:
+            nox.options.sessions.append(kwargs.get("name", fn.__name__))
+        return nox.session(**kwargs)(fn)
+
+    return _session
 
 
 def _should_install(session: nox.Session) -> bool:
@@ -43,24 +63,26 @@ def _should_install(session: nox.Session) -> bool:
     return should_install
 
 
-@nox.session(reuse_venv=True)
+@session()
 def lint(session: nox.Session) -> None:
     """Check the themes pre-commit before any other session."""
     session.install("pre-commit")
     session.run("pre-commit", "run", "-a")
 
 
-@nox.session()
+@session()
 def compile(session: nox.Session) -> None:
-    """Compile the theme's web assets with sphinx-theme-builder."""
+    """Compile the theme's web assets."""
     if _should_install(session):
         session.install("-e", ".")
         session.install("sphinx-theme-builder[cli]")
+        session.install("Babel")
 
     session.run("stb", "compile")
+    session.run("pybabel", "compile", "-d", str(locale_dir), "-D", "sphinx")
 
 
-@nox.session()
+@session()
 def docs(session: nox.Session) -> None:
     """Build the documentation and place in docs/_build/html. Use --no-compile to skip compilation."""
     if _should_install(session):
@@ -68,10 +90,11 @@ def docs(session: nox.Session) -> None:
         session.install("sphinx-theme-builder[cli]")
     if "no-compile" not in session.posargs:
         session.run("stb", "compile")
+
     session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html", "-v")
 
 
-@nox.session(name="docs-live")
+@session(name="docs-live", default=False)
 def docs_live(session: nox.Session) -> None:
     """Build the docs with a live server that re-loads as you make changes."""
     session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
@@ -81,7 +104,7 @@ def docs_live(session: nox.Session) -> None:
     session.run("stb", "serve", "docs", "--open-browser")
 
 
-@nox.session()
+@session()
 def test(session: nox.Session) -> None:
     """Run the test suite."""
     if _should_install(session):
@@ -90,7 +113,7 @@ def test(session: nox.Session) -> None:
     session.run("pytest", *session.posargs)
 
 
-@nox.session(name="test-sphinx")
+@session(name="test-sphinx", default=False)
 @nox.parametrize("sphinx", ["4", "5", "6"])
 def test_sphinx(session: nox.Session, sphinx: int) -> None:
     """Run the test suite with a specific version of Sphinx."""
@@ -100,53 +123,62 @@ def test_sphinx(session: nox.Session, sphinx: int) -> None:
     session.run("pytest", *session.posargs)
 
 
-@nox.session()
+@session()
 def translate(session: nox.Session) -> None:
-    """Translation commands. Available commands after `--` : extract, update, compile, init."""
-    # get the command from posargs, default to "update"
-    pybabel_cmd, found = ("update", False)
-    for c in ["extract", "update", "compile", "init"]:
-        if c in session.posargs:
-            pybabel_cmd, found = (c, True)
+    """Update translation related files."""
+    session.install("Babel", "jinja2")
 
-    if found is False:
-        print(
-            "No translate command found. Use like: `nox -s translate -- COMMAND`."
-            "\ndefaulting to `update`"
-            "\nAvailable commands: extract, update, compile, init"
-        )
+    # fmt: off
+    session.run(  # generate/update the .pot file
+        "pybabel", "extract", ".",
+        "-F", str(babel_cfg.relative_to(root_dir)),
+        "-o", str(pot_file.relative_to(root_dir)),
+        #"-k", "'_ __ l_ lazy_gettext'",
+    )
+    # fmt: on
 
-    # get the language from parameters default to en.
-    # it can be deceiving but we don't have a table of accepted languages yet
-    lan = "en" if len(session.posargs) < 2 else session.posargs[-1]
+    # update the message catalog (.po)
+    languages = [f.stem for f in locale_dir.glob("*") if f.is_dir()]
+    # fmt: off
+    cmd = [
+        "pybabel", "update",
+        "-i", str(pot_file.relative_to(root_dir)),
+        "-d", str(locale_dir.relative_to(root_dir)),
+        "-D", "sphinx"
+    ]
+    # fmt: on
+    for lan in languages:
+        session.run(*cmd, "-l", lan)
 
-    # get the path to the differnet local related pieces
-    locale_dir = str(ROOT / "src" / "pydata_sphinx_theme" / "locale")
-    babel_cfg = str(ROOT / "babel.cfg")
-    pot_file = str(locale_dir / "sphinx.pot")
 
-    # install deps
+@session(default=False)
+def add_language(session: nox.Session) -> None:
+    """Add a language to the catalog using posargs."""
     session.install("Babel")
 
-    # build the command from the parameters
-    cmd = ["pybabel", pybabel_cmd]
+    # get the language name from posargs
+    if len(session.posargs) != 1:
+        raise ValueError(
+            f"There should be only one posargs: the ISO code of the languge, {len(session.posargs)} given."
+        )
+    lan = session.posargs[0]
 
-    if pybabel_cmd == "extract":
-        cmd += [ROOT, "-F", babel_cfg, "-o", pot_file, "-k", "_ __ l_ lazy_gettext"]
+    # init new language
+    session.run(
+        "pybabel",
+        "init",
+        "-i",
+        str(pot_file),
+        "-d",
+        str(locale_dir),
+        "-D",
+        "sphinx",
+        "-l",
+        lan,
+    )
 
-    elif pybabel_cmd == "update":
-        cmd += ["-i", pot_file, "-d", locale_dir, "-D", "sphinx"]
 
-    elif pybabel_cmd == "compile":
-        cmd += ["-d", locale_dir, "-D", "sphinx"]
-
-    elif pybabel_cmd == "init":
-        cmd += ["-i", pot_file, "-d", locale_dir, "-D", "sphinx", "-l", lan]
-
-    session.run(cmd)
-
-
-@nox.session()
+@session()
 def profile(session: nox.Session) -> None:
     """Generate a profile chart with py-spy. The chart will be placed at profile.svg."""
     if _should_install(session):
