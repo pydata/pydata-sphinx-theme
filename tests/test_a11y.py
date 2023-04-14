@@ -87,7 +87,7 @@ def url_base():
 )
 def test_axe_core_kitchen_sink(theme: str, url_base: str, url_page: str, selector: str):
     """Should have no Axe-core violations at the provided theme and page section."""
-    # Using importtoskip ensures that the test is skipped if not running within
+    # Using importorskip ensures that the test is skipped if not running within
     # the a11y session
     page = pytest.importorskip("playwright.sync_api.Page")
 
