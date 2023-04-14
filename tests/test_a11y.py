@@ -7,7 +7,6 @@ from subprocess import PIPE, Popen
 from urllib.parse import urljoin
 
 import pytest
-from playwright.sync_api import Page
 
 from .utils.pretty_axe_results import pretty_axe_results
 
@@ -86,10 +85,12 @@ def url_base():
         ("typography.html", "#typography"),
     ],
 )
-def test_axe_core_kitchen_sink(
-    page: Page, theme: str, url_base: str, url_page: str, selector: str
-):
+def test_axe_core_kitchen_sink(theme: str, url_base: str, url_page: str, selector: str):
     """Should have no Axe-core violations at the provided theme and page section."""
+    # Using importtoskip ensures that the test is skipped if not running within
+    # the a11y session
+    page = pytest.importtoskip("playwright.sync_api.Page")
+
     # Load the page at the provided path
     url_base_kitchen_sink = urljoin(url_base, "/examples/kitchen-sink/")
     url_full = urljoin(url_base_kitchen_sink, url_page)
