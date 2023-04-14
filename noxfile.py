@@ -95,11 +95,15 @@ def test(session: nox.Session) -> None:
 def a11y(session: nox.Session) -> None:
     """Run the accessibility test suite only."""
     if _should_install(session):
-        session.install("-e", ".[test, a11y]")
+        session.install("-e", ".[test]")
         # Install the drivers that Playwright needs to control the browsers.
-        if not (os.environ.get("CI") or os.environ.get("GITPOD_WORKSPACE_ID")):
-            # Assuming that most local dev environments have the needed system dependencies
-            # for playwright to work
+        if os.environ.get("CI") or os.environ.get("GITPOD_WORKSPACE_ID"):
+            # CI and other cloud environments are potentially missing system
+            # dependencies, so we tell Playwright to also install the system
+            # dependencies
+            session.run("playwright", "install", "--with-deps")
+        else:
+            # But most dev environments have the needed system dependencies
             session.run("playwright", "install")
     # Build the docs so we can run accessibility tests against them.
     session.run("nox", "-s", "docs")
