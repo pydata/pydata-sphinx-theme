@@ -2,7 +2,7 @@
 
 ## Trigger the search bar
 
-You can trigger the search bar pop-up with <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>K</kbd>.
+You can trigger the search bar pop-up with <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd>.
 
 ## Change pages
 

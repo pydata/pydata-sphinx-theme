@@ -13,7 +13,7 @@ Custom CSS Stylesheets
 ======================
 
 You can customize the theme's CSS by creating a custom stylesheet. This stylesheet will be used by Sphinx while building your site.
-Any rules in this style-sheet will over-ride the default theme rules.
+Any rules in this style sheet will override the default theme rules.
 
 .. seealso::
 
