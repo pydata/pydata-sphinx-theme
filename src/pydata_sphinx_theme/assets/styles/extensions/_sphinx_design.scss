@@ -209,7 +209,7 @@ details.sd-dropdown {
     // Set a variable that we can re-use for colors later
     // We must set this in the current and content sibling container
     // so that it is defined in both places
-    --pst-sd-dropdown-color: var(--sd-color-card-border);
+    --pst-sd-dropdown-color: var(--pst-gray-500);
     --pst-sd-dropdown-bg-color: var(--pst-color-surface);
     & + div.sd-summary-content {
       --pst-sd-dropdown-color: var(--sd-color-card-border);
@@ -245,6 +245,9 @@ details.sd-dropdown {
       display: inline-flex;
       align-items: center;
       color: var(--pst-sd-dropdown-color) !important;
+      svg {
+        opacity: 1;
+      }
     }
 
     // Positioning of the caret

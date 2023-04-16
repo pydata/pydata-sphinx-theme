@@ -196,7 +196,7 @@ $pst-semantic-colors: (
   "inline-code-links": (
     // need to make sure there is enough contrast agains the code bg
     "light": #{map-deep-get($color-palette, "teal", "700")},
-    "dark": #{map-deep-get($color-palette, "teal", "300")},
+    "dark": #{map-deep-get($color-palette, "teal", "500")},
   ),
   "target": (
     "light": #8b6e31,
