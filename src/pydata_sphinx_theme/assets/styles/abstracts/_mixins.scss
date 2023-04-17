@@ -6,7 +6,7 @@
 * ref: https://www.nngroup.com/articles/scrolling-and-scrollbars/
 */
 
-// loading the math module
+// loading the math module - needed for a11y-combination
 @use "sass:math";
 
 @mixin scrollbar-style() {
@@ -63,13 +63,21 @@
     top: 0;
     background-color: var(#{$color-variable});
     z-index: -1;
-    // TODO: check for colour contrast bg vs text
-    // color: #{a11y-combination($color-variable)};
-
     // So that hovering over the text within background is still possible.
     // Otherwise the background overlays the text and you cannot click or select easily.
     // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
     pointer-events: none;
+    color: is-color(var(#{$color-variable}));
+  }
+}
+
+@function is-color($value) {
+  @if type-of($value) == "color" {
+    @return #{a11y-combination($value)};
+    @debug "is a color: #{$value}✨ ";
+  } @else {
+    @debug "not a color: #{$value}";
+    @return --pst-color-text-base;
   }
 }
 
@@ -100,6 +108,7 @@
 /**
 * Function to check if the color needs converting to a "color" type
 * if it is a string we cannot use other color manipulation functions
+* It is used to create the sphinx-design colours as these are often interpolated
 */
 // @param {String/Color} $color - Color definition from map
 // @return {Color} - Color type (in hex)
@@ -202,7 +211,7 @@
   @return $max-ratio-color;
 }
 
-@function get-contrast-ratio($bg, $foreground: #ced6dd) {
+@function get-contrast-ratio($bg, $foreground) {
   $l1: luminance($bg);
   $l2: luminance($foreground);
 
