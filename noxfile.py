@@ -133,7 +133,6 @@ def translate(session: nox.Session) -> None:
         "pybabel", "extract", ".",
         "-F", str(babel_cfg.relative_to(root_dir)),
         "-o", str(pot_file.relative_to(root_dir)),
-        #"-k", "'_ __ l_ lazy_gettext'",
     )
     # fmt: on
 
@@ -144,7 +143,6 @@ def translate(session: nox.Session) -> None:
         "pybabel", "update",
         "-i", str(pot_file.relative_to(root_dir)),
         "-d", str(locale_dir.relative_to(root_dir)),
-        "-D", "sphinx"
     ]
     # fmt: on
     for lan in languages:
@@ -164,18 +162,14 @@ def add_language(session: nox.Session) -> None:
     lan = session.posargs[0]
 
     # init new language
+    # fmt: off
     session.run(
-        "pybabel",
-        "init",
-        "-i",
-        str(pot_file),
-        "-d",
-        str(locale_dir),
-        "-D",
-        "sphinx",
-        "-l",
-        lan,
+        "pybabel", "init",
+        "-i", str(pot_file),
+        "-d", str(locale_dir),
+        "-l", lan,
     )
+    # fmt: on
 
 
 @session()
