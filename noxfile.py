@@ -24,7 +24,10 @@ pot_file = locale_dir / "sphinx.pot"
 
 
 def session(default: bool = True, **kwargs):
-    """Extend session function to add a default parameter.
+    """Wrap the `nox.session` decorator to add a `default` parameter.
+    
+    Setting `default=False` will exclude a session from running when `nox` is
+    invoked without a `--session` argument.
 
     related to https://github.com/wntrblm/nox/issues/654
     """
