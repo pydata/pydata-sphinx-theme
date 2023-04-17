@@ -5,6 +5,7 @@
     "build": "webpack"
   },
   "devDependencies": {
+    "axe-core": "^4.6.3",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^3.4.2",
     "css-minimizer-webpack-plugin": "^4.2.2",
