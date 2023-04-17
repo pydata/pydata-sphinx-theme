@@ -58,13 +58,13 @@ These steps cover how to add or change text that has been marked as translatable
 
    .. code-block:: console
 
-      pybabel extract . -F babel.cfg -o src/pydata_sphinx_theme/locale/sphinx.pot -k '_ __ l_ lazy_gettext'
+      pybabel extract . -F babel.cfg -o src/pydata_sphinx_theme/locale/messages.pot
 
 #. Update the message catalogs (``PO`` files) with `the PyBabel update command <https://babel.pocoo.org/en/latest/cmdline.html#update>`__:
 
    .. code-block:: console
 
-      pybabel update -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx
+      pybabel update -i src/pydata_sphinx_theme/locale/messages.pot -d src/pydata_sphinx_theme/locale
 
 .. admonition:: nox session
 
