@@ -1,18 +1,17 @@
-# English translations for pydata-sphinx-theme.
-# Copyright (C) 2023 PyData developers
-# This file is distributed under the same license as the pydata-sphinx-theme
-# project.
+# Translations template for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-14 11:36+0200\n"
-"PO-Revision-Date: 2023-02-16 13:19-0500\n"
+"POT-Creation-Date: 2023-04-17 07:26+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: en\n"
-"Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -140,16 +139,4 @@ msgid ""
 "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
-
-#~ msgid "GitHub"
-#~ msgstr ""
-
-#~ msgid "GitLab"
-#~ msgstr ""
-
-#~ msgid "Bitbucket"
-#~ msgstr ""
-
-#~ msgid "Twitter"
-#~ msgstr ""
 

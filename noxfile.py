@@ -21,12 +21,12 @@ nox.options.sessions = []
 root_dir = Path(__file__).parent
 locale_dir = root_dir / "src" / "pydata_sphinx_theme" / "locale"
 babel_cfg = root_dir / "babel.cfg"
-pot_file = locale_dir / "sphinx.pot"
+pot_file = locale_dir / "messages.pot"
 
 
 def session(default: bool = True, **kwargs):
     """Wrap the `nox.session` decorator to add a `default` parameter.
-    
+
     Setting `default=False` will exclude a session from running when `nox` is
     invoked without a `--session` argument.
 
@@ -83,7 +83,7 @@ def compile(session: nox.Session) -> None:
         session.install("Babel")
 
     session.run("stb", "compile")
-    session.run("pybabel", "compile", "-d", str(locale_dir), "-D", "sphinx")
+    session.run("pybabel", "compile", "-d", str(locale_dir))
 
 
 @session()
@@ -101,7 +101,7 @@ def docs(session: nox.Session) -> None:
 @session(name="docs-live", default=False)
 def docs_live(session: nox.Session) -> None:
     """Build the docs with a live server that re-loads as you make changes."""
-    session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
+    session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale"))
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
@@ -113,7 +113,7 @@ def test(session: nox.Session) -> None:
     """Run the test suite."""
     if _should_install(session):
         session.install("-e", ".[test]")
-    session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
+    session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale"))
     session.run("pytest", "-m", "not a11y", *session.posargs)
 
 

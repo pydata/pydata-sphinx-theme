@@ -23,7 +23,7 @@ const { Compilation } = require("webpack");
  */
 const { exec } = require("child_process");
 const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
-exec(`pybabel compile -d ${localePath} -D sphinx`);
+exec(`pybabel compile -d ${localePath}`);
 
 /*******************************************************************************
  * Paths for various assets (sources and destinations)

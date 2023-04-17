@@ -1,15 +1,14 @@
-# French translations for pydata-sphinx-theme.
+# French translations for PROJECT.
 # Copyright (C) 2023 ORGANIZATION
-# This file is distributed under the same license as the pydata-sphinx-theme
-# project.
+# This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pydata-sphinx-theme VERSION\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-14 11:36+0200\n"
-"PO-Revision-Date: 2023-04-14 10:21+0200\n"
+"POT-Creation-Date: 2023-04-17 07:26+0200\n"
+"PO-Revision-Date: 2023-04-17 07:25+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -62,7 +61,7 @@ msgstr ""
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:9
 #, python-format
 msgid "Edit on %(provider)s"
-msgstr "Editer sur %(provider)s"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:11
 msgid "Edit"
