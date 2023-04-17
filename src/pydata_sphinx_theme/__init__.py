@@ -12,7 +12,16 @@ from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
 
-from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
+from . import (
+    edit_this_page,
+    i18n,
+    logo,
+    pygment,
+    short_link,
+    toctree,
+    translator,
+    utils,
+)
 
 __version__ = "0.13.4dev0"
 
@@ -284,6 +293,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
+    app.i18n_catalog_added = False
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
@@ -295,6 +305,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
+    app.connect("html-page-context", i18n.compile_translation)
     app.connect("build-finished", pygment.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 

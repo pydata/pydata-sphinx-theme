@@ -9,7 +9,6 @@ import os
 import shutil as sh
 import tempfile
 from pathlib import Path
-from shlex import split
 from textwrap import dedent
 
 import nox
@@ -80,10 +79,8 @@ def compile(session: nox.Session) -> None:
     if _should_install(session):
         session.install("-e", ".")
         session.install("sphinx-theme-builder[cli]")
-        session.install("Babel")
 
     session.run("stb", "compile")
-    session.run("pybabel", "compile", "-d", str(locale_dir))
 
 
 @session()
@@ -101,7 +98,6 @@ def docs(session: nox.Session) -> None:
 @session(name="docs-live", default=False)
 def docs_live(session: nox.Session) -> None:
     """Build the docs with a live server that re-loads as you make changes."""
-    session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale"))
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
@@ -113,7 +109,6 @@ def test(session: nox.Session) -> None:
     """Run the test suite."""
     if _should_install(session):
         session.install("-e", ".[test]")
-    session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale"))
     session.run("pytest", "-m", "not a11y", *session.posargs)
 
 

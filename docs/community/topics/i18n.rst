@@ -99,7 +99,7 @@ This section covers how to do so.
 
    .. code-block:: bash
 
-      pybabel init -i src/pydata_sphinx_theme/locale/sphinx.pot -d src/pydata_sphinx_theme/locale -D sphinx -l es
+      pybabel init -i src/pydata_sphinx_theme/locale/messages.pot -d src/pydata_sphinx_theme/locale -l es
 
 .. admonition:: nox session
 
@@ -121,11 +121,9 @@ Compile the message catalogs of every language. This creates or updates the MO f
 
    pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx
 
-.. admonition:: nox session
+.. note::
 
-   .. code-block:: console
-
-      nox -s compile
+   The .mo file are automatically build my the theme at build time so you should never manually run this command.
 
 Translation tips
 ----------------
