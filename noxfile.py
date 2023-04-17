@@ -138,7 +138,7 @@ def translate(session: nox.Session) -> None:
     # fmt: on
 
     # update the message catalog (.po)
-    languages = [f.stem for f in locale_dir.glob("*") if f.is_dir()]
+    languages = [f.stem for f in locale_dir.iterdir() if f.is_dir()]
     # fmt: off
     cmd = [
         "pybabel", "update",
