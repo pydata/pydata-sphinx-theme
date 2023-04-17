@@ -16,7 +16,7 @@ import nox
 nox.options.reuse_existing_virtualenvs = True
 nox.options.sessions = []
 
-# strctural folders usefulm for translation related sessions
+# folders useful for translation-related sessions
 root_dir = Path(__file__).parent
 locale_dir = root_dir / "src" / "pydata_sphinx_theme" / "locale"
 babel_cfg = root_dir / "babel.cfg"
