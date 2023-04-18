@@ -67,17 +67,6 @@
     // Otherwise the background overlays the text and you cannot click or select easily.
     // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
     pointer-events: none;
-    color: is-color(var(#{$color-variable}));
-  }
-}
-
-@function is-color($value) {
-  @if type-of($value) == "color" {
-    @return #{a11y-combination($value)};
-    @debug "is a color: #{$value}✨ ";
-  } @else {
-    @debug "not a color: #{$value}";
-    @return --pst-color-text-base;
   }
 }
 
