@@ -128,9 +128,10 @@
   display: inline-flex;
   align-items: center;
   border: var(--pst-color-border) solid 1px;
-  padding: 0.5rem;
-  border-radius: 1.5rem;
+  border-radius: 1.5em;
   color: var(--pst-color-text-muted);
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
 
   &:hover,
   &:focus {
@@ -140,12 +141,17 @@
 
   // Magnifying glass icon
   i {
-    padding: 0 0.5rem;
+    padding-right: 0.5em;
   }
 
   // The keyboard shotcut text
   .search-button__kbd-shortcut {
-    font-size: 1.25rem;
-    margin-right: 0.5rem;
+    font-size: var(--bs-nav-link-font-size);
+    font-weight: var(--bs-nav-link-font-weight);
+    margin-right: 0.5em;
+  }
+
+  .kbd-shortcut__modifier {
+    font-size: 0.75em;
   }
 }
