@@ -861,6 +861,7 @@ def test_translations(sphinx_build_factory) -> None:
     index = sphinx_build.html_tree("section1/index.html")
 
     sidebar_primary = index.select(".bd-sidebar-primary")[0]
+    print(sidebar_primary)
     assert "Navigation du site" in str(sidebar_primary)
     assert "Navigation de la section" in str(sidebar_primary)
 

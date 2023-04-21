@@ -10,6 +10,8 @@ import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
+
+# from sphinx.locale import get_translation
 from sphinx.util import logging
 
 from . import (
@@ -301,11 +303,11 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("html-page-context", i18n.compile_translation)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
-    app.connect("html-page-context", i18n.compile_translation)
     app.connect("build-finished", pygment.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 
