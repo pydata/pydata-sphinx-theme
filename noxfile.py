@@ -10,7 +10,6 @@ import shutil as sh
 import tempfile
 from pathlib import Path
 from shlex import split
-import tempfile
 from textwrap import dedent
 
 import nox
@@ -79,19 +78,8 @@ def docs_live(session: nox.Session) -> None:
     session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
     if _should_install(session):
         session.install("-e", ".[doc]")
-        session.install("sphinx-autobuild")
-
-    with tempfile.TemporaryDirectory() as destination:
-        session.run(
-            "sphinx-autobuild",
-            "--watch=./docs/",
-            "--port=0",
-            "--open-browser",
-            "-b=dirhtml",
-            "-a",
-            "docs/",
-            destination,
-        )
+        session.install("sphinx-theme-builder[cli]")
+    session.run("stb", "serve", "docs", "--open-browser" "--re-ignore=locale")
 
 
 @nox.session()
