@@ -182,7 +182,7 @@ jobs:
           sphinx-build audit/site audit/_build
       # The lighthouse audit runs directly on the HTML files, no serving needed
       - name: Audit with Lighthouse
-        uses: treosh/lighthouse-ci-action@v9
+        uses: treosh/lighthouse-ci-action@v10
         with:
           configPath: ".github/workflows/lighthouserc.json"
           temporaryPublicStorage: true
