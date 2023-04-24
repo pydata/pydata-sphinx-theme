@@ -345,14 +345,17 @@ if (themeSwitchBtns.length) {
         node.dataset["versionName"] = entry.name;
         node.dataset["version"] = entry.version;
 
-        document.querySelector(".version-switcher__menu").append(node);
+        menus = document.querySelectorAll(".version-switcher__menu");
+        for (let m of menus)
+        {
+          m.append(node);
+        }
         // replace dropdown button text with the preferred display name of
         // this version, rather than using sphinx's {{ version }} variable.
         // also highlight the dropdown entry for the currently-viewed
         // version's entry
         if (
-          entry.version ==
-          "DOCUMENTATION_OPTIONS.version_switcher_version_match"
+          entry.version == DOCUMENTATION_OPTIONS.theme_switcher_version_match
         ) {
           node.classList.add("active");
           themeSwitchBtns.forEach((btn) => {
