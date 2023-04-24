@@ -345,11 +345,6 @@ if (themeSwitchBtns.length) {
         node.dataset["versionName"] = entry.name;
         node.dataset["version"] = entry.version;
 
-        menus = document.querySelectorAll(".version-switcher__menu");
-        for (let m of menus)
-        {
-          m.append(node);
-        }
         // replace dropdown button text with the preferred display name of
         // this version, rather than using sphinx's {{ version }} variable.
         // also highlight the dropdown entry for the currently-viewed
@@ -363,6 +358,13 @@ if (themeSwitchBtns.length) {
             btn.dataset["activeVersion"] = entry.version;
           });
         }
+        
+        const menus = document.querySelectorAll(".version-switcher__menu");
+        for (let m of menus)
+        {
+          m.append(node.cloneNode(true));
+        }
+
       });
     });
 }
