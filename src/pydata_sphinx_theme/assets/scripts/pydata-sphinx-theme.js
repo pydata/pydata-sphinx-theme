@@ -358,10 +358,9 @@ if (themeSwitchBtns.length) {
             btn.dataset["activeVersion"] = entry.version;
           });
         }
-        
+
         const menus = document.querySelectorAll(".version-switcher__menu");
-        for (let m of menus)
-        {
+        for (let m of menus) {
           m.append(node.cloneNode(true));
         }
 
