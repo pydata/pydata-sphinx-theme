@@ -363,7 +363,6 @@ if (themeSwitchBtns.length) {
         for (let m of menus) {
           m.append(node.cloneNode(true));
         }
-
       });
     });
 }
