@@ -10,6 +10,8 @@ from sphinx.application import Sphinx
 from sphinx.ext.autosummary import autosummary_table
 from sphinx.util import logging
 
+from .utils import traverse_or_findall
+
 logger = logging.getLogger(__name__)
 
 
@@ -118,16 +120,22 @@ class BootstrapHTML5TranslatorMixin:
                     )
 
                 # NOTE: Replacing with underscores creates the possibility for
-                # conflicting references. We should check for these and warn the
+                # conflicting references. Here we check for these and warn the
                 # user if any are found.
-                if any(document.traverse(condition=partial(find_target, sanitized_id))):
+                if any(
+                    traverse_or_findall(
+                        document, condition=partial(find_target, sanitized_id)
+                    )
+                ):
                     logger.warning(
                         f'Sanitized reference "{sanitized_id}" for "{target_id}" '
                         "conflicts with an existing reference!"
                     )
 
                 # Find nodes with the given ID (there should only be one)
-                targets = document.traverse(condition=partial(find_target, target_id))
+                targets = traverse_or_findall(
+                    document, condition=partial(find_target, target_id)
+                )
                 # Replace dots with underscores in the target node ID
                 for target in targets:
                     # NOTE: By itself, modifying the target `ids` here seems to be
