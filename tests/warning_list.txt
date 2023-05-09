@@ -1,4 +1,5 @@
 WARNING: undefined label: 'groupby.transform'
+WARNING: undefined label: 'advanced.shown_levels'
 WARNING: image file not readable: _static/gallery/pandas.png
 WARNING: image file not readable: _static/gallery/numpy.png
 WARNING: image file not readable: _static/gallery/scipy.png
