@@ -181,15 +181,25 @@ The ``primary sidebar`` will snap to the left, the ``secondary sidebar`` will sn
 - If one of the sidebars is not present, then the ``article content`` will be centered between the other sidebar and the side of the page.
 - If neither sidebar is present, the ``article content`` will be in the middle of the page.
 
-If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` and ``flex-grow`` CSS variables with the ``.bd-content`` selector.
-For example, to make the content grow to fit all available width, add a custom CSS rule like:
+If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` CSS property with the following selectors:
 
 .. code-block:: css
 
-   .bd-content {
-     flex-grow: 1;
-     max-width: 100%;
+   .bd-main .bd-content .bd-article-container {
+     max-width: 100%;  /* default is 60em */
    }
+
+The above rule will set the article content max width to the same width as the top navigation bar.
+To truly use *all* of the available page width, you also need to set the following CSS rule:
+
+.. code-block:: css
+
+    .bd-page-width {
+      max-width: 100%;  /* default is 88rem */
+    }
+
+This will affect both the article content and the top navigation bar.
+
 
 Templates and components
 ========================
