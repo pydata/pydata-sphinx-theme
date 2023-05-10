@@ -10,7 +10,7 @@ import pytest
 
 from .utils.pretty_axe_results import pretty_axe_results
 
-# Using importorskip to ensure these tests ar only loaded if Playwright is installed.
+# Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
 from playwright.sync_api import Page  # noqa: E402
 
