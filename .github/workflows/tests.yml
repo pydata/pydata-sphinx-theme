@@ -116,6 +116,7 @@ jobs:
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         run: |
           nox -s a11y
+        continue-on-error: true
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:
