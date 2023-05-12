@@ -355,7 +355,8 @@ if (themeSwitchBtns.length) {
         ) {
           node.classList.add("active");
           themeSwitchBtns.forEach((btn) => {
-            btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+            btn.innerText = entry.name;
+            btn.dataset["activeVersionName"] = entry.name;
             btn.dataset["activeVersion"] = entry.version;
           });
         }
