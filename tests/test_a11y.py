@@ -12,7 +12,7 @@ from .utils.pretty_axe_results import pretty_axe_results
 
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
-from playwright.sync_api import Page  # noqa: E402
+from playwright.sync_api import Page, expect  # noqa: E402
 
 # Important note: automated accessibility scans can only find a fraction of
 # potential accessibility issues.
@@ -112,3 +112,18 @@ def test_axe_core_kitchen_sink(
 
     # Expect Axe-core to have found 0 accessibility violations
     assert len(results["violations"]) == 0, pretty_axe_results(results)
+
+
+def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
+    """This isn't an a11y test, but needs a served site for Javascript to inject the version menu."""
+    page.goto(url=url_base)
+    button = page.get_by_role("button", name="dev")
+    active_version_name = button.get_attribute("data-active-version-name")
+    entries = page.get_by_role("menuitem", include_hidden=True).filter(
+        has_text=active_version_name
+    )
+    assert (
+        entries.count() == 2
+    )  # sidebar menu and topbar menu each have a matching entry
+    for entry in entries.all():
+        expect(entry).to_have_css("color", "rgb(69, 157, 185)")
