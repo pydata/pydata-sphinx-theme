@@ -334,6 +334,7 @@ if (themeSwitchBtns.length) {
           "list-group-item list-group-item-action py-1"
         );
         node.setAttribute("href", `${entry.url}${currentFilePath}`);
+        node.setAttribute("role", "menuitem");
         node.appendChild(span);
 
         // on click, AJAX calls will check if the linked page exists before
