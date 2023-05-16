@@ -200,6 +200,14 @@ To truly use *all* of the available page width, you also need to set the followi
 
 This will affect both the article content and the top navigation bar.
 
+.. note::
+
+    If you use both of the custom CSS rules above, *be sure to keep them as separate
+    rules* in your CSS file.
+    If you combine them, the result will be a CSS selector that is *less specific*
+    than the two default rules in the theme, and your custom CSS will fail to
+    override the theme defaults.
+
 
 Templates and components
 ========================
