@@ -242,6 +242,11 @@ favicons = [
     {"name": "msapplication-TileImage", "content": "mstile-150x150.png"},
 ]
 
+# -- Options for autosummary/autodoc output ------------------------------------
+autosummary_generate = True
+autoclass_content = "both"
+autodoc_typehints = "description"
+
 # -- application setup -------------------------------------------------------
 
 
