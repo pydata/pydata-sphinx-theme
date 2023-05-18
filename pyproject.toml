@@ -1,5 +1,5 @@
 [build-system]
-requires = ["sphinx-theme-builder >= 0.2.0a7"]
+requires = ["sphinx-theme-builder >= 0.2.0b2"]
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
@@ -18,7 +18,6 @@ name = "pydata-sphinx-theme"
 description = "Bootstrap-based Sphinx theme from the PyData community"
 dynamic = ["version"]
 readme = "README.md"
-
 requires-python = ">=3.7"
 dependencies = [
   "sphinx>=4.2",
@@ -27,14 +26,13 @@ dependencies = [
   "packaging",
   "Babel",
   "pygments>=2.7",
-  "accessible-pygments"
+  "accessible-pygments",
+  "typing-extensions"
 ]
-
 license = { file = "LICENSE" }
 maintainers = [
   { name = "Joris Van den Bossche", email = "jorisvandenbossche@gmail.com" },
 ]
-
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3",
@@ -53,7 +51,7 @@ classifiers = [
 doc = [
   "numpydoc",
   "myst-nb",
-  "linkify-it-py",  # for link shortening
+  "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
@@ -70,27 +68,48 @@ doc = [
   "sphinx-togglebutton",
   "jupyterlite-sphinx",
   "sphinxcontrib-youtube",
+  "sphinx-favicon>=1.0.1",
   # Install nbsphinx in case we want to test it locally even though we can't load
   # it at the same time as MyST-NB.
   "nbsphinx",
   "ipyleaflet",
   "colorama",
 ]
-test = [
-  "pytest",
-  "pytest-cov",
-  "pytest-regressions",
-  "codecov",
-]
-dev = [
-  "pyyaml",
-  "pre-commit",
-  "nox",
-  "pydata-sphinx-theme[doc,test]",
-]
+test = ["pytest", "pytest-cov", "pytest-regressions"]
+dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]"]
+a11y = ["pytest-playwright"]
 
 [project.entry-points]
 "sphinx.html_themes" = { pydata_sphinx_theme = "pydata_sphinx_theme" }
 
 [tool.doc8]
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
+
+[tool.ruff]
+ignore-init-module-imports = true
+fix = true
+select = ["E", "F", "W", "I", "D", "RUF"]
+ignore = [
+  "E501", # line too long | Black take care of it
+  "D107", # Missing docstring in `__init__` | set the docstring in the class
+
+]
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.djlint]
+profile = "jinja"
+extension = "html"
+indent = 2
+max_line_length = 120
+use_gitignore = true
+format_js = true
+format_css = true
+ignore = "H006,J018,T003,H025"
+
+[tool.pytest.ini_options]
+markers = "a11y: mark a test as an accessibility test"

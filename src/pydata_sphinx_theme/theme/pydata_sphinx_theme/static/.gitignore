@@ -6,6 +6,7 @@ styles/pydata-sphinx-theme.css.map
 
 # bootstrap generated webpack outputs
 scripts/bootstrap.js
+scripts/bootstrap.js.LICENSE.txt
 scripts/bootstrap.js.map
 styles/bootstrap.css
 styles/bootstrap.css.map

@@ -39,6 +39,7 @@ jobs:
 
   # run our test suite on various combinations of OS / Python / Sphinx version
   run-pytest:
+    needs: [lint]
     strategy:
       fail-fast: false
       matrix:
@@ -55,6 +56,9 @@ jobs:
           # windows test
           - os: windows-latest
             python-version: "3.11"
+    # needed to cache the browsers for the accessibility tests
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/pw-browsers
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -89,10 +93,34 @@ jobs:
           pip install nox
           nox -s compile
       - name: Run tests
-        run: pytest --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report term-missing:skip-covered --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+        run: pytest -m "not a11y" --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report xml:cov.xml --cov-report= --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+      - name: Upload to Codecov
+        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        uses: codecov/codecov-action@v3.1.3
+        with:
+          files: cov.xml
+          fail_ci_if_error: true
+
+      # note I am setting this on top of the Python cache as I could not find
+      # how to set the hash key on the python one
+      - name: Set up browser cache (for accessibility tests)
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/pw-browsers
+          key: ${{ runner.os }}-pw-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pw-
+
+      - name: Run accessibility tests with playwright
+        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        run: |
+          nox -s a11y
+        continue-on-error: true
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:
+    needs: [lint]
     strategy:
       fail-fast: false
       matrix:
@@ -116,10 +144,11 @@ jobs:
       - name: Build docs
         run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
       - name: Check for unexpected Sphinx warnings
-        run: python tests/check_warnings.py
+        run: python tests/utils/check_warnings.py
 
   # Run local Lighthouse audit against built site
   audit:
+    needs: [build-site]
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -154,7 +183,7 @@ jobs:
           sphinx-build audit/site audit/_build
       # The lighthouse audit runs directly on the HTML files, no serving needed
       - name: Audit with Lighthouse
-        uses: treosh/lighthouse-ci-action@v9
+        uses: treosh/lighthouse-ci-action@v10
         with:
           configPath: ".github/workflows/lighthouserc.json"
           temporaryPublicStorage: true
@@ -163,6 +192,7 @@ jobs:
 
   # Generate a profile of the code and upload as an artifact
   profile:
+    needs: [build-site, run-pytest]
     strategy:
       matrix:
         os: [ubuntu-latest]

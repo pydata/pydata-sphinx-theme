@@ -1,5 +1,7 @@
-from pathlib import Path
+"""Check the list of warnings produced by a doc build."""
+
 import sys
+from pathlib import Path
 
 from colorama import Fore, init
 
@@ -7,25 +9,24 @@ from colorama import Fore, init
 init()
 
 
-def check_warnings(file):
-    """
-    Check the list of warnings produced by the GitHub CI tests
-    raise errors if there are unexpected ones and/or if some are missing
+def check_warnings(file: Path) -> bool:
+    """Check the list of warnings produced by a doc build.
 
-    Args:
-        file (pathlib.Path): the path to the generated warning.txt file from
+    Raise errors if there are unexpected ones and/or if some are missing.
+
+    Parameters:
+        file: the path to the generated warning.txt file from
             the CI build
 
-    Return:
+    Returns:
         0 if the warnings are all there
         1 if some warning are not registered or unexpected
     """
-
     # print some log
     print("\n=== Sphinx Warnings test ===\n")
 
     # find the file where all the known warnings are stored
-    warning_file = Path(__file__).parent / "warning_list.txt"
+    warning_file = Path(__file__).parent.parent / "warning_list.txt"
 
     test_warnings = file.read_text().strip().split("\n")
     ref_warnings = warning_file.read_text().strip().split("\n")
