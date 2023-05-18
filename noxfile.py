@@ -69,6 +69,9 @@ def docs(session: nox.Session) -> None:
         session.install("sphinx-theme-builder[cli]")
     if "no-compile" not in session.posargs:
         session.run("stb", "compile")
+    session.run(
+        "sphinx-apidoc", "-o", "docs/api", "src/pydata_sphinx_theme", "--separate"
+    )
     session.run("sphinx-build", "-b=html", "docs/", "docs/_build/html", "-v")
 
 
