@@ -93,7 +93,7 @@ data
 
 `ipyleaflet` is a **Jupyter**/**Leaflet** bridge enabling interactive maps in the Jupyter notebook environment. this demonstrate how you can integrate maps in your documentation.
 
-```{jupyter-execute}
+```{code-cell}
 from ipyleaflet import Map, basemaps
 
 # display a map centered on France
