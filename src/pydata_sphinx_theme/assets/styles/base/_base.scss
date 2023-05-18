@@ -177,3 +177,13 @@ pre {
     padding-right: 10px;
   }
 }
+
+// the back to top btn
+#pst-back-to-top {
+  z-index: $zindex-tooltip;
+  position: fixed;
+  display: none;
+  top: calc(var(--pst-header-height) + 1rem);
+  left: 50%;
+  transform: translate(-50%);
+}
