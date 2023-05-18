@@ -79,6 +79,9 @@ def docs(session: nox.Session) -> None:
 def docs_live(session: nox.Session) -> None:
     """Build the docs with a live server that re-loads as you make changes."""
     session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
+    session.run(
+        "sphinx-apidoc", "-o", "docs/api", "src/pydata_sphinx_theme", "--separate"
+    )
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
