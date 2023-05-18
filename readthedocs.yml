@@ -13,7 +13,6 @@ build:
       - pip install playwright
       - playwright install chromium
       - python ./docs/scripts/generate_gallery_images.py
-      - sphinx-apidoc -o docs/api src/pydata_sphinx_theme --separate
 
 python:
   install:

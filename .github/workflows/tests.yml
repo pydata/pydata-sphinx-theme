@@ -142,9 +142,7 @@ jobs:
       - name: Show installed versions
         run: python -m pip list
       - name: Build docs
-        run: |
-          sphinx-apidoc -o docs/api src/pydata_sphinx_theme --separate
-          sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
+        run: sphinx-build -b html docs/ docs/_build/html --keep-going -w warnings.txt
       - name: Check for unexpected Sphinx warnings
         run: python tests/utils/check_warnings.py
 
