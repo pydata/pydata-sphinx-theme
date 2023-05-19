@@ -186,4 +186,7 @@ pre {
   top: calc(var(--pst-header-height) + 1rem);
   left: 50%;
   transform: translate(-50%);
+  color: var(--pst-color-primary);
+  background-color: var(--pst-color-background);
+  border: 1px solid var(--pst-color-border);
 }
