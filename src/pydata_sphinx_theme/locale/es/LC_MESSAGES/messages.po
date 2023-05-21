@@ -1,7 +1,9 @@
-# Spanish translations for PROJECT.
-# Copyright (C) 2023 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+# English translations for pydata-sphinx-theme.
+# Copyright (C) 2023 PyData developers
+# This file is distributed under the same license as the pydata-sphinx-theme project.
+#
+# Translators:
+# Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
 #
 msgid ""
 msgstr ""
@@ -14,7 +16,7 @@ msgstr ""
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
@@ -34,7 +36,8 @@ msgstr "Error"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr "Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
+msgstr ""
+"Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:12
 msgid "Breadcrumbs"

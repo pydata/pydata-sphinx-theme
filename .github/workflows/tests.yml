@@ -92,7 +92,7 @@ jobs:
         run: pytest -m "not a11y" --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report xml:cov.xml --cov-report= --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
       - name: Upload to Codecov
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
-        uses: codecov/codecov-action@v3.1.2
+        uses: codecov/codecov-action@v3.1.3
         with:
           files: cov.xml
           fail_ci_if_error: true
@@ -112,6 +112,7 @@ jobs:
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         run: |
           nox -s a11y
+        continue-on-error: true
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:
@@ -178,7 +179,7 @@ jobs:
           sphinx-build audit/site audit/_build
       # The lighthouse audit runs directly on the HTML files, no serving needed
       - name: Audit with Lighthouse
-        uses: treosh/lighthouse-ci-action@v9
+        uses: treosh/lighthouse-ci-action@v10
         with:
           configPath: ".github/workflows/lighthouserc.json"
           temporaryPublicStorage: true

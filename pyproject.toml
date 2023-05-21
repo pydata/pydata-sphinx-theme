@@ -65,6 +65,7 @@ doc = [
   "sphinx-copybutton",
   "sphinx-design",
   "sphinx-togglebutton",
+  "jupyterlite-sphinx",
   "sphinxcontrib-youtube",
   "sphinx-favicon>=1.0.1",
   # Install nbsphinx in case we want to test it locally even though we can't load
