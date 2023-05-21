@@ -876,7 +876,7 @@ def test_translations(sphinx_build_factory) -> None:
     assert "Créé en utilisant" in str(footer)
     assert "Construit avec le" in str(footer)
 
-    footer_article = index.select(".bd-footer-article")[0]
+    footer_article = index.select(".prev-next-footer")[0]
     assert "précédent" in str(footer_article)
     assert "page suivante" in str(footer_article)
 
