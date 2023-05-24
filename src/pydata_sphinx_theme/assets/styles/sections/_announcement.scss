@@ -1,4 +1,5 @@
-.bd-header-announcement {
+.bd-header-announcement,
+.bd-header-version-warning {
   min-height: 3rem;
   width: 100%;
   display: flex;
@@ -25,7 +26,6 @@
     height: 100%;
     left: 0;
     top: 0;
-    background-color: var(--pst-color-info);
     opacity: 0.2;
     content: "";
     z-index: -1; // So it doesn't hover over the content
@@ -33,5 +33,17 @@
 
   &:empty {
     display: none;
+  }
+}
+
+.bd-header-announcement {
+  &:after {
+    background-color: var(--pst-color-info);
+  }
+}
+
+.bd-header-version-warning {
+  &:after {
+    background-color: var(--pst-color-danger);
   }
 }
