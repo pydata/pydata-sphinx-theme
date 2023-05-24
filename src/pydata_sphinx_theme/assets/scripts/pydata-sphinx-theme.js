@@ -1,5 +1,6 @@
 // Define the custom behavior of the page
 import { documentReady } from "./mixin";
+import { compare } from "compare-versions";
 
 import "../styles/pydata-sphinx-theme.scss";
 
@@ -419,11 +420,9 @@ function showVersionWarningBanner() {
         setTimeout(showVersionWarningBanner, 250);
         return;
     }
-    // convert version string to number (the .split is in case the version
+    // isolate version string (the .split is in case the version
     // string is something like "1.3 (stable)")
-    stableRelease = parseFloat(
-        stableReleaseFromMenu.getAttribute("data-version-name").split(" ")[0]
-    );
+    stableRelease = stableReleaseFromMenu.getAttribute("data-version-name").split(" ")[0];
     // now construct the warning banner
     if (version !== "stable") {
         var outer = document.createElement("div");
@@ -432,9 +431,9 @@ function showVersionWarningBanner() {
         const bold = document.createElement("strong");
 
         // Someday maybe we can add a button that pulls its target URL from
-        // the relevant "stable" entry of the version switcher menu...
+        // the relevant "stable" entry of the version switcher menu:
         // const button = document.createElement("a");
-        // button.href = `https://mne.tools/stable/${filePath}`;
+        // button.href = `https://whatever/stable/${filePath}`;
         // button.innerText = "Switch to latest stable version";
         // button.classList = "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-3 align-baseline";
 
@@ -446,7 +445,7 @@ function showVersionWarningBanner() {
         middle.appendChild(inner);
         // for less-than comparison: "dev" → NaN → false (which is what we want)
         inner.innerText = "This is documentation for ";
-        if (parseFloat(version) < stableRelease) {
+        if (compare(version, stableRelease, "<")) {
             inner.innerText += "an "
             bold.innerText = `old version (${version})`;
         } else {
