@@ -38,3 +38,28 @@ For example, the following configuration tells the theme to load the ``custom-te
       ...
       "announcement": "https://github.com/pydata/pydata-sphinx-theme/raw/main/docs/_templates/custom-template.html",
    }
+
+Version warning banners
+-----------------------
+
+In addition to the general-purpose announcement banner, the theme includes a built-in banner to warn users when they are viewing versions of your docs other than the latest stable version. To use this feature, add the following to your ``conf.py``:
+
+.. code-block:: python
+
+    html_theme_options = {
+        ...
+        "show_version_warning_banner": True,
+    }
+
+.. warning::
+
+    This functionality relies on the :ref:`version switcher <version switcher dropdowns>` to determine the version number of the latest stable release.
+    *It will only work* if your version switcher ``.json`` has an entry with the version ``"stable"`` and a name that begins with a version string, for example:
+
+    .. code-block:: json
+
+        {
+            "name": "9.9.9 (current)",
+            "version": "stable",
+            "url": "https://anything"
+        }
