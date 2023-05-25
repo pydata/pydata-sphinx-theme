@@ -53,7 +53,7 @@ In addition to the general-purpose announcement banner, the theme includes a bui
 
 .. warning::
 
-    This functionality relies on the :ref:`version switcher <version switcher dropdowns>` to determine the version number of the latest stable release.
+    This functionality relies on the :ref:`version switcher <version-dropdowns>` to determine the version number of the latest stable release.
     *It will only work* if your version switcher ``.json`` has an entry with the version ``"stable"`` and a name that begins with a version string, for example:
 
     .. code-block:: json
