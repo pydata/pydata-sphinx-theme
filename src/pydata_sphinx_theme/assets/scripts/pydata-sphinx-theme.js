@@ -400,63 +400,69 @@ function initRTDObserver() {
  * Warning banner when viewing non-stable version of the docs.
  */
 function showVersionWarningBanner() {
-    // adapted 2023-05 from https://mne.tools/versionwarning.js, which was
-    // originally adapted 2020-05 from https://scikit-learn.org/versionwarning.js
-    const version = DOCUMENTATION_OPTIONS.VERSION;
-    // figure out what latest stable version is
-    var stableRelease = Infinity;
-    const menu = document.querySelector(".version-switcher__menu");
-    // fail early if not using the version selector
-    if (menu == null) {
-        return;
-    }
-    // from the menu, get the version number of the stable release
-    const releases = Array.from(menu.children);
-    const stableReleaseFromMenu = releases.filter(
-        ver => ver.getAttribute("data-version") == "stable"
-    )[0]
-    // hack to make sure the menu has been populated before we parse it
-    if (typeof stableReleaseFromMenu == "undefined") {
-        setTimeout(showVersionWarningBanner, 250);
-        return;
-    }
-    // isolate version string (the .split is in case the version
-    // string is something like "1.3 (stable)")
-    stableRelease = stableReleaseFromMenu.getAttribute("data-version-name").split(" ")[0];
-    // now construct the warning banner
-    if (version !== "stable") {
-        var outer = document.createElement("div");
-        const middle = document.createElement("div");
-        const inner = document.createElement("div");
-        const bold = document.createElement("strong");
+  // adapted 2023-05 from https://mne.tools/versionwarning.js, which was
+  // originally adapted 2020-05 from https://scikit-learn.org/versionwarning.js
+  const version = DOCUMENTATION_OPTIONS.VERSION;
+  // figure out what latest stable version is
+  var stableRelease = Infinity;
+  const menu = document.querySelector(".version-switcher__menu");
+  // fail early if not using the version selector
+  if (menu == null) {
+    return;
+  }
+  // from the menu, get the version number of the stable release
+  const releases = Array.from(menu.children);
+  const stableReleaseFromMenu = releases.filter(
+    (ver) => ver.getAttribute("data-version") == "stable"
+  )[0];
+  // hack to make sure the menu has been populated before we parse it
+  if (typeof stableReleaseFromMenu == "undefined") {
+    setTimeout(showVersionWarningBanner, 250);
+    return;
+  }
+  // isolate version string (the .split is in case the version
+  // string is something like "1.3 (stable)")
+  stableRelease = stableReleaseFromMenu
+    .getAttribute("data-version-name")
+    .split(" ")[0];
+  // now construct the warning banner
+  if (version !== "stable") {
+    var outer = document.createElement("div");
+    const middle = document.createElement("div");
+    const inner = document.createElement("div");
+    const bold = document.createElement("strong");
 
-        // Someday maybe we can add a button that pulls its target URL from
-        // the relevant "stable" entry of the version switcher menu:
-        // const button = document.createElement("a");
-        // button.href = `https://whatever/stable/${filePath}`;
-        // button.innerText = "Switch to latest stable version";
-        // button.classList = "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-3 align-baseline";
+    // Someday maybe we can add a button that pulls its target URL from
+    // the relevant "stable" entry of the version switcher menu:
+    // const button = document.createElement("a");
+    // button.href = `https://whatever/stable/${filePath}`;
+    // button.innerText = "Switch to latest stable version";
+    // button.classList = "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-3 align-baseline";
 
-        // these classes exist since pydata-sphinx-theme v0.10.0
-        outer.classList = "bd-header-version-warning container-fluid";
-        middle.classList = "bd-header-announcement__content";
-        inner.classList = "sidebar-message";
-        outer.appendChild(middle);
-        middle.appendChild(inner);
-        // for less-than comparison: "dev" → NaN → false (which is what we want)
-        inner.innerText = "This is documentation for ";
-        if (version.includes("dev") || compare(version, stableRelease, ">")) {
-            inner.innerText += "the "
-            bold.innerText = "unstable development version";
-        } else {
-            inner.innerText += "an "
-            bold.innerText = `old version (${version})`;
-        }
-        inner.appendChild(bold);
-        inner.appendChild(document.createTextNode(`. Use the version switcher dropdown to select the stable version.`))
-        // inner.appendChild(button);
-        document.body.prepend(outer);
+    // these classes exist since pydata-sphinx-theme v0.10.0
+    outer.classList = "bd-header-version-warning container-fluid";
+    middle.classList = "bd-header-announcement__content";
+    inner.classList = "sidebar-message";
+    outer.appendChild(middle);
+    middle.appendChild(inner);
+    // for less-than comparison: "dev" → NaN → false (which is what we want)
+    inner.innerText = "This is documentation for ";
+    if (version.includes("dev") || compare(version, stableRelease, ">")) {
+      inner.innerText += "the ";
+      bold.innerText = "unstable development version";
+    } else {
+      inner.innerText += "an ";
+      bold.innerText = `old version (${version})`;
     }
+    inner.appendChild(bold);
+    inner.appendChild(
+      document.createTextNode(
+        `. Use the version switcher dropdown to select the stable version.`
+      )
+    );
+    // inner.appendChild(button);
+    document.body.prepend(outer);
+  }
 }
 
 /*******************************************************************************
@@ -469,5 +475,5 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 if (DOCUMENTATION_OPTIONS.show_version_warning_banner) {
-    documentReady(showVersionWarningBanner);
+  documentReady(showVersionWarningBanner);
 }
