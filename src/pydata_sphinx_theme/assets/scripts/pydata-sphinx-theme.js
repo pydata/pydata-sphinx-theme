@@ -445,12 +445,12 @@ function showVersionWarningBanner() {
         middle.appendChild(inner);
         // for less-than comparison: "dev" → NaN → false (which is what we want)
         inner.innerText = "This is documentation for ";
-        if (compare(version, stableRelease, "<")) {
-            inner.innerText += "an "
-            bold.innerText = `old version (${version})`;
-        } else {
+        if (version.includes("dev") || compare(version, stableRelease, ">")) {
             inner.innerText += "the "
             bold.innerText = "unstable development version";
+        } else {
+            inner.innerText += "an "
+            bold.innerText = `old version (${version})`;
         }
         inner.appendChild(bold);
         inner.appendChild(document.createTextNode(`. Use the version switcher dropdown to select the stable version.`))
