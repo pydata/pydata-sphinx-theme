@@ -9,8 +9,6 @@ table {
   max-width: 100%;
   overflow: auto;
 
-  @include scrollbar-style();
-
   // default to table-center
   margin-left: auto;
   margin-right: auto;
