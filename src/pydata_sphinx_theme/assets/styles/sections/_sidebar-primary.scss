@@ -17,7 +17,6 @@
   border-right: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-background);
   overflow-y: auto;
-  @include scrollbar-style();
 
   font-size: var(--pst-sidebar-font-size-mobile);
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
