@@ -120,6 +120,7 @@ Click on section titles to learn more about them and some basic layout configura
                     Article Footer
 
                 ``article_footer_items``
+                ``prev_next_area``
 
             .. grid-item::
                 :padding: 2
@@ -154,8 +155,6 @@ Click on section titles to learn more about them and some basic layout configura
                     Footer content
 
                 ``content_footer_items``
-
-
 
     .. grid-item::
         :padding: 2
@@ -442,14 +441,13 @@ Article Footer
 
 Located in ``sections/footer-article.html``.
 
-The article footer exists just below your page's article, and is primarily used for navigating between adjacent sections / pages.
-By default, it has the following templates:
+The article footer exists just below your page's article. By default, It does not contain anything immediately viewable to the reader, but is kept as a placeholder for custom or built-in templates.
 
 .. code-block:: python
 
     html_theme_options = {
       # ...
-      "article_footer_items": ["prev-next.html"],
+      "article_footer_items": [],
       # ...
     }
 
@@ -457,7 +455,7 @@ Hide the previous and next buttons
 ----------------------------------
 
 By default, each page of your site will have "previous" and "next" buttons
-at the bottom. You can hide these buttons with the following configuration:
+at the bottom displayed in the ``prev_next_area``. You can hide these buttons with the following configuration:
 
 .. code:: python
 
