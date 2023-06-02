@@ -10,9 +10,20 @@ import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
+
+# from sphinx.locale import get_translation
 from sphinx.util import logging
 
-from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
+from . import (
+    edit_this_page,
+    i18n,
+    logo,
+    pygment,
+    short_link,
+    toctree,
+    translator,
+    utils,
+)
 
 __version__ = "0.13.4dev0"
 
@@ -284,6 +295,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
+    app.i18n_catalog_added = False
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
@@ -291,6 +303,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("html-page-context", i18n.compile_translation)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)

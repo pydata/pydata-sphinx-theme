@@ -24,7 +24,6 @@ dependencies = [
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
-  "Babel",
   "pygments>=2.7",
   "accessible-pygments",
   "typing-extensions"
@@ -76,7 +75,7 @@ doc = [
   "colorama",
 ]
 test = ["pytest", "pytest-cov", "pytest-regressions"]
-dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]"]
+dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]", "Babel"]
 a11y = ["pytest-playwright"]
 
 [project.entry-points]

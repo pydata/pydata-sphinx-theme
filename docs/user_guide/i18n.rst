@@ -57,13 +57,13 @@ These instructions assume that you store your translations in a ``locale`` direc
 
    .. code-block:: bash
 
-      pybabel extract . -o locale/theme.pot
+      pybabel extract . -o locale/messages.pot
 
 #. Create a message catalog (changing the ``--locale`` option as desired):
 
    .. code-block:: bash
 
-      pybabel init --input-file=locale/theme.pot --domain=theme --output-dir=locale --locale=fr
+      pybabel init --input-file=locale/messages.pot --domain=theme --output-dir=locale --locale=fr
 
 #. Translate the message catalog by editing the file.
 
@@ -71,4 +71,4 @@ These instructions assume that you store your translations in a ``locale`` direc
 
    .. code-block:: bash
 
-      pybabel compile --directory=locale --domain=theme
+      pybabel compile --directory=locale

@@ -88,10 +88,6 @@ jobs:
           python -m pip install -e .[test] sphinx==${{ matrix.sphinx-version }}
       - name: Show installed versions
         run: python -m pip list
-      - name: Compile MO files
-        run: |
-          pip install nox
-          nox -s compile
       - name: Run tests
         run: pytest -m "not a11y" --color=yes --cov pydata_sphinx_theme --cov-branch --cov-report xml:cov.xml --cov-report= --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
       - name: Upload to Codecov
