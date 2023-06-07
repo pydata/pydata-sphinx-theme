@@ -287,8 +287,8 @@ var setupSearchButtons = () => {
  * @param {event} event the event that trigger the check
  */
 function checkPageExistsAndRedirect(event) {
-  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`,
-    tryUrl = event.target.getAttribute("href");
+  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const tryUrl = event.target.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
 
   fetch(tryUrl, { method: "HEAD" })
@@ -304,10 +304,24 @@ function checkPageExistsAndRedirect(event) {
   return false;
 }
 
+/**
+ * Check if the corresponding url is absolute and make a absolute path from root if necessary
+ *
+ * @param {string} url the url to check
+ */
+function makeAbsoluteUrl(url) {
+  // Regular expression pattern to match relative URLs
+  const pattern = /^(?!(?:[a-z]+:)?\/\/)/i;
+  const base_url = window.location.origin;
+  url = pattern.test(url) ? base_url + "/" + url : url;
+
+  return url;
+}
+
 // Populate the version switcher from the JSON config file
 var themeSwitchBtns = document.querySelectorAll(".version-switcher__button");
 if (themeSwitchBtns.length) {
-  fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
+  fetch(makeAbsoluteUrl(DOCUMENTATION_OPTIONS.theme_switcher_json_url))
     .then((res) => {
       return res.json();
     })
