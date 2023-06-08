@@ -321,7 +321,9 @@ function makeAbsoluteUrl(url) {
 // Populate the version switcher from the JSON config file
 var themeSwitchBtns = document.querySelectorAll(".version-switcher__button");
 if (themeSwitchBtns.length) {
-  fetch(makeAbsoluteUrl(DOCUMENTATION_OPTIONS.theme_switcher_json_url))
+  var url = makeAbsoluteUrl(DOCUMENTATION_OPTIONS.theme_switcher_json_url);
+  console.log(`[PST]version json url: ${url}`);
+  fetch(url)
     .then((res) => {
       return res.json();
     })
