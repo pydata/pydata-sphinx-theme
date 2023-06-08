@@ -41,7 +41,7 @@ function setTheme(mode) {
   // save mode and theme
   localStorage.setItem("mode", mode);
   localStorage.setItem("theme", theme);
-  console.log(`[PST]: Changed to ${mode} mode using the ${theme} theme.`);
+  // console.log(`[PST]: Changed to ${mode} mode using the ${theme} theme.`);
 
   // add a listener if set on auto
   prefersDark.onchange = mode == "auto" ? autoTheme : "";
@@ -138,7 +138,7 @@ function scrollToActive() {
   if (!isNaN(storedScrollTop)) {
     // If we've got a saved scroll position, just use that
     sidebar.scrollTop = storedScrollTop;
-    console.log("[PST]: Scrolled sidebar using stored browser position...");
+    // console.log("[PST]: Scrolled sidebar using stored browser position...");
   } else {
     // Otherwise, calculate a position to scroll to based on the lowest `active` link
     var sidebarNav = document.querySelector(".bd-docs-nav");
@@ -153,7 +153,7 @@ function scrollToActive() {
       if (latest_active.getBoundingClientRect().y > window.innerHeight * 0.5) {
         let buffer = 0.25; // Buffer so we have some space above the scrolled item
         sidebar.scrollTop = offset - sidebar.clientHeight * buffer;
-        console.log("[PST]: Scrolled sidebar using last active link...");
+        // console.log("[PST]: Scrolled sidebar using last active link...");
       }
     }
   }
