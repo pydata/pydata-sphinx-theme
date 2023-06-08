@@ -79,7 +79,7 @@ def docs_live(session: nox.Session) -> None:
     if _should_install(session):
         session.install("-e", ".[doc]")
         session.install("sphinx-theme-builder[cli]")
-    session.run("stb", "serve", "docs", "--open-browser")
+    session.run("stb", "serve", "docs", "--open-browser" "--re-ignore=locale")
 
 
 @nox.session()
