@@ -315,6 +315,13 @@ function makeAbsoluteUrl(url) {
   const base_url = window.location.origin;
   url = pattern.test(url) ? base_url + "/" + url : url;
 
+  // workaround for redirecting url like https://pydata-sphinx-theme.readthedocs.io
+  // fetch is automatically following redirection so it work in every builder as RDT
+  // or Github actions
+  fetch(url, { method: "HEAD" }).then((res) => {
+    url = res.url;
+  });
+
   return url;
 }
 
