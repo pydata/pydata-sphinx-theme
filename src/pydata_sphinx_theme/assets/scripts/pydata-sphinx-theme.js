@@ -309,82 +309,82 @@ function checkPageExistsAndRedirect(event) {
  *
  * @param {string} url the url to check
  */
-function makeAbsoluteUrl(url) {
-  // Regular expression pattern to match relative URLs
-  const pattern = /^(?!(?:[a-z]+:)?\/\/)/i;
-  const base_url = window.location.origin;
-  url = pattern.test(url) ? base_url + "/" + url : url;
-
-  // workaround for redirecting url like https://pydata-sphinx-theme.readthedocs.io
-  // fetch is automatically following redirection so it work in every builder as RDT
-  // or Github actions
-  fetch(url, { method: "HEAD" }).then((res) => {
-    url = res.url;
+async function fetchVersionSwitcherJSON(url) {
+  // first check if it's a valid URL
+  console.log(`[PST] possibly non-absolute URL: ${url}`);
+  try {
+    var result = new URL(url);
+  } catch (err) {
+    // if not, assume relative path and fix accordingly
+    if (err instanceof TypeError) {
+      result = new URL(url, window.location.origin);
+      console.log(`[PST] possibly fixed URL: ${result}`);
+    } else {
+      console.log("[PST] error was not caught properly");
+      throw err;
+    }
+  }
+  // workaround for redirects like https://pydata-sphinx-theme.readthedocs.io
+  // fetch() automatically follows redirects so it should work in every builder
+  // (RDT, GitHub actions, etc)
+  const finalURL = await fetch(result, { method: "HEAD" }).then((res) => {
+    return res.url;
   });
-
-  return url;
+  const response = await fetch(finalURL);
+  const data = await response.json();
+  return data;
 }
 
 // Populate the version switcher from the JSON config file
 var themeSwitchBtns = document.querySelectorAll(".version-switcher__button");
 if (themeSwitchBtns.length) {
-  var url = makeAbsoluteUrl(DOCUMENTATION_OPTIONS.theme_switcher_json_url);
-  console.log(`[PST]version json url: ${url}`);
-  fetch(url)
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const data = await fetchVersionSwitcherJSON(
+    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+  );
+  console.log(`[PST]: JSON data: ${data}`);
+  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  themeSwitchBtns.forEach((btn) => {
+    // Set empty strings by default so that these attributes exist and can be used in CSS selectors
+    btn.dataset["activeVersionName"] = "";
+    btn.dataset["activeVersion"] = "";
+  });
+  // create links to the corresponding page in the other docs versions
+  data.forEach((entry) => {
+    // if no custom name specified (e.g., "latest"), use version string
+    if (!("name" in entry)) {
+      entry.name = entry.version;
+    }
+    // create the node
+    const span = document.createElement("span");
+    span.textContent = `${entry.name}`;
+
+    const node = document.createElement("a");
+    node.setAttribute("class", "list-group-item list-group-item-action py-1");
+    node.setAttribute("href", `${entry.url}${currentFilePath}`);
+    node.appendChild(span);
+
+    // on click, AJAX calls will check if the linked page exists before
+    // trying to redirect, and if not, will redirect to the homepage
+    // for that version of the docs.
+    node.onclick = checkPageExistsAndRedirect;
+    // Add dataset values for the version and name in case people want
+    // to apply CSS styling based on this information.
+    node.dataset["versionName"] = entry.name;
+    node.dataset["version"] = entry.version;
+
+    document.querySelector(".version-switcher__menu").append(node);
+    // replace dropdown button text with the preferred display name of
+    // this version, rather than using sphinx's {{ version }} variable.
+    // also highlight the dropdown entry for the currently-viewed
+    // version's entry
+    if (entry.version == DOCUMENTATION_OPTIONS.version_switcher_version_match) {
+      node.classList.add("active");
       themeSwitchBtns.forEach((btn) => {
-        // Set empty strings by default so that these attributes exist and can be used in CSS selectors
-        btn.dataset["activeVersionName"] = "";
-        btn.dataset["activeVersion"] = "";
+        btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+        btn.dataset["activeVersion"] = entry.version;
       });
-      // create links to the corresponding page in the other docs versions
-      data.forEach((entry) => {
-        // if no custom name specified (e.g., "latest"), use version string
-        if (!("name" in entry)) {
-          entry.name = entry.version;
-        }
-        // create the node
-        const span = document.createElement("span");
-        span.textContent = `${entry.name}`;
-
-        const node = document.createElement("a");
-        node.setAttribute(
-          "class",
-          "list-group-item list-group-item-action py-1"
-        );
-        node.setAttribute("href", `${entry.url}${currentFilePath}`);
-        node.appendChild(span);
-
-        // on click, AJAX calls will check if the linked page exists before
-        // trying to redirect, and if not, will redirect to the homepage
-        // for that version of the docs.
-        node.onclick = checkPageExistsAndRedirect;
-        // Add dataset values for the version and name in case people want
-        // to apply CSS styling based on this information.
-        node.dataset["versionName"] = entry.name;
-        node.dataset["version"] = entry.version;
-
-        document.querySelector(".version-switcher__menu").append(node);
-        // replace dropdown button text with the preferred display name of
-        // this version, rather than using sphinx's {{ version }} variable.
-        // also highlight the dropdown entry for the currently-viewed
-        // version's entry
-        if (
-          entry.version ==
-          "DOCUMENTATION_OPTIONS.version_switcher_version_match"
-        ) {
-          node.classList.add("active");
-          themeSwitchBtns.forEach((btn) => {
-            btn.innerText = btn.dataset["activeVersionName"] = entry.name;
-            btn.dataset["activeVersion"] = entry.version;
-          });
-        }
-      });
-    });
+    }
+  });
 }
 
 /*******************************************************************************
