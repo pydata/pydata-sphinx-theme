@@ -311,16 +311,13 @@ function checkPageExistsAndRedirect(event) {
  */
 async function fetchVersionSwitcherJSON(url) {
   // first check if it's a valid URL
-  console.log(`[PST] possibly non-absolute URL: ${url}`);
   try {
     var result = new URL(url);
   } catch (err) {
     // if not, assume relative path and fix accordingly
     if (err instanceof TypeError) {
       result = new URL(url, window.location.origin);
-      console.log(`[PST] possibly fixed URL: ${result}`);
     } else {
-      console.log("[PST] error was not caught properly");
       throw err;
     }
   }
@@ -341,7 +338,6 @@ if (themeSwitchBtns.length) {
   const data = await fetchVersionSwitcherJSON(
     DOCUMENTATION_OPTIONS.theme_switcher_json_url
   );
-  console.log(`[PST]: JSON data: ${data}`);
   const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
   themeSwitchBtns.forEach((btn) => {
     // Set empty strings by default so that these attributes exist and can be used in CSS selectors
