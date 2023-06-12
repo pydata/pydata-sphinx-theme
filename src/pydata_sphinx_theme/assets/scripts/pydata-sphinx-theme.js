@@ -316,18 +316,21 @@ async function fetchVersionSwitcherJSON(url) {
   } catch (err) {
     // if not, assume relative path and fix accordingly
     if (err instanceof TypeError) {
-      result = new URL(url, window.location.origin);
+      // workaround for redirects like https://pydata-sphinx-theme.readthedocs.io
+      // fetch() automatically follows redirects so it should work in every builder
+      // (RDT, GitHub actions, etc)
+      const origin = await fetch(window.location.origin, {
+        method: "HEAD",
+      }).then((res) => {
+        return res.url;
+      });
+      result = new URL(url, origin);
     } else {
       throw err;
     }
   }
-  // workaround for redirects like https://pydata-sphinx-theme.readthedocs.io
-  // fetch() automatically follows redirects so it should work in every builder
-  // (RDT, GitHub actions, etc)
-  const finalURL = await fetch(result, { method: "HEAD" }).then((res) => {
-    return res.url;
-  });
-  const response = await fetch(finalURL);
+
+  const response = await fetch(result);
   const data = await response.json();
   return data;
 }
