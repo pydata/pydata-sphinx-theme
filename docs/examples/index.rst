@@ -7,10 +7,8 @@ They should help you understand how this theme behaves and how others are using 
 See the sections in the primary sidebar and below to explore.
 
 .. toctree::
-    :caption: Real-world examples
 
     gallery
-    example_pandas
 
 
 .. toctree::
