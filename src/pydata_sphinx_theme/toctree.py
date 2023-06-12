@@ -285,9 +285,9 @@ def add_toctree_functions(
         """Return the class that aligns the navbar based on config."""
         align = context.get("theme_navbar_align", "content")
         align_options = {
-            "content": ("col-lg-9", "me-auto"),
-            "left": ("", "me-auto"),
-            "right": ("", "ms-auto"),
+            "content": ("col-lg-3", "col-lg-9", "me-auto"),
+            "left": ("", "", "me-auto"),
+            "right": ("", "", "ms-auto"),
         }
         if align not in align_options:
             raise ValueError(

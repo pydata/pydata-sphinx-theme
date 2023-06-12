@@ -17,6 +17,8 @@ See the sections in the primary sidebar and below to explore.
 
     kitchen-sink/index
     pydata
+    execution
+    api
 
 
 .. Note: the caption below is intentionally long in order to test out what long captions look like.

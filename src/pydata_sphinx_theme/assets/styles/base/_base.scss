@@ -13,8 +13,6 @@ body {
   display: flex;
   flex-direction: column;
 
-  @include scrollbar-style();
-
   // hack to avoid the black background on some browser including Safari
   &::-webkit-scrollbar-track {
     background: var(--pst-color-background);
@@ -169,8 +167,6 @@ pre {
   line-height: 1.2em;
   border: 1px solid var(--pst-color-border);
   border-radius: $admonition-border-radius;
-
-  @include scrollbar-style();
 
   .linenos {
     opacity: 0.5;
