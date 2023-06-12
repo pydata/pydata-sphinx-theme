@@ -353,36 +353,44 @@ if (themeSwitchBtns.length) {
     if (!("name" in entry)) {
       entry.name = entry.version;
     }
-    // create the node
-    const span = document.createElement("span");
-    span.textContent = `${entry.name}`;
 
-    const node = document.createElement("a");
-    node.setAttribute("class", "list-group-item list-group-item-action py-1");
-    node.setAttribute("href", `${entry.url}${currentFilePath}`);
-    node.appendChild(span);
+    document.querySelectorAll(".version-switcher__menu").forEach((menu) => {
+      // There may be multiple version-switcher elements, e.g. one
+      // in a slide-over panel displayed on smaller screens.
+      // create the node
+      const span = document.createElement("span");
+      span.textContent = `${entry.name}`;
 
-    // on click, AJAX calls will check if the linked page exists before
-    // trying to redirect, and if not, will redirect to the homepage
-    // for that version of the docs.
-    node.onclick = checkPageExistsAndRedirect;
-    // Add dataset values for the version and name in case people want
-    // to apply CSS styling based on this information.
-    node.dataset["versionName"] = entry.name;
-    node.dataset["version"] = entry.version;
+      const node = document.createElement("a");
+      node.setAttribute("class", "list-group-item list-group-item-action py-1");
+      node.setAttribute("href", `${entry.url}${currentFilePath}`);
+      node.appendChild(span);
 
-    document.querySelector(".version-switcher__menu").append(node);
-    // replace dropdown button text with the preferred display name of
-    // this version, rather than using sphinx's {{ version }} variable.
-    // also highlight the dropdown entry for the currently-viewed
-    // version's entry
-    if (entry.version == DOCUMENTATION_OPTIONS.version_switcher_version_match) {
-      node.classList.add("active");
-      themeSwitchBtns.forEach((btn) => {
-        btn.innerText = btn.dataset["activeVersionName"] = entry.name;
-        btn.dataset["activeVersion"] = entry.version;
-      });
-    }
+      // on click, AJAX calls will check if the linked page exists before
+      // trying to redirect, and if not, will redirect to the homepage
+      // for that version of the docs.
+      node.onclick = checkPageExistsAndRedirect;
+      // Add dataset values for the version and name in case people want
+      // to apply CSS styling based on this information.
+      node.dataset["versionName"] = entry.name;
+      node.dataset["version"] = entry.version;
+
+      // replace dropdown button text with the preferred display name of
+      // this version, rather than using sphinx's {{ version }} variable.
+      // also highlight the dropdown entry for the currently-viewed
+      // version's entry
+      if (
+        entry.version == DOCUMENTATION_OPTIONS.version_switcher_version_match
+      ) {
+        node.classList.add("active");
+        themeSwitchBtns.forEach((btn) => {
+          btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+          btn.dataset["activeVersion"] = entry.version;
+        });
+      }
+
+      menu.append(node);
+    });
   });
 }
 
