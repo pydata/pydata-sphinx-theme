@@ -33,4 +33,8 @@
   &:empty {
     display: none;
   }
+
+  a {
+    color: var(--pst-color-inline-code-links);
+  }
 }
