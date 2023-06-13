@@ -1,6 +1,10 @@
 /*********************************************
 * SASS Mixins
 *********************************************/
+
+// loading the math module
+@use "sass:math";
+
 /**
  * A consistent box shadow style we apply across elements.
  */
