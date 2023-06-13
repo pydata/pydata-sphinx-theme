@@ -78,8 +78,11 @@ def docs_live(session: nox.Session) -> None:
     session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
     if _should_install(session):
         session.install("-e", ".[doc]")
-        session.install("sphinx-theme-builder[cli]")
-    session.run("stb", "serve", "docs", "--open-browser" "--re-ignore=locale")
+        # quick hack to get the patched version of stb - need to remove once a stb release is cut
+        session.install(
+            "sphinx-theme-builder[cli]@git+https://github.com/pradyunsg/sphinx-theme-builder#egg=d9f620b"
+        )
+    session.run("stb", "serve", "docs", "--open-browser", "--re-ignore=locale")
 
 
 @nox.session()
