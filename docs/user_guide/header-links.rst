@@ -89,7 +89,7 @@ and brand-specific icons (e.g. "GitHub").
 You can use FontAwesome icons by specifying ``"type": "fontawesome"``, and
 specifying a FontAwesome class in the ``icon`` value.
 The value of ``icon`` can be any full
-`FontAwesome 6 Free <https://fontawesome.com/icons?d=gallery&m=free>`__ icon.
+`FontAwesome 6 Free <https://fontawesome.com/search?o=r&m=free>`__ icon.
 In addition to the main icon class, e.g. ``fa-cat``, the "style" class must
 also be provided e.g. `fa-brands` for *branding*, or `fa-solid` for *solid*.
 

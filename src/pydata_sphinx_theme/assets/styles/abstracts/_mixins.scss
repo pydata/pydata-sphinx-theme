@@ -2,47 +2,6 @@
 * SASS Mixins
 *********************************************/
 /**
-* Scrollbars should be thinner and slightly rounded, with a grey background
-* ref: https://www.nngroup.com/articles/scrolling-and-scrollbars/
-*/
-
-// loading the math module - needed for a11y-combination
-@use "sass:math";
-
-@mixin scrollbar-style() {
-  &::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--pst-color-text-muted);
-    border-radius: 0.25rem;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    // ensure we have a 3:1 contrast ratio
-    background: var(--pst-gray-500);
-  }
-
-  // Hovering behavior for the scrollbar
-  // Include both hovering on the parent and on the thumb in case thumb is outside parent
-  &:hover {
-    &::-webkit-scrollbar-thumb {
-      background: var(--pst-color-text-muted);
-    }
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--pst-color-text-muted);
-  }
-}
-
-/**
  * A consistent box shadow style we apply across elements.
  */
 @mixin box-shadow() {

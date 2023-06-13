@@ -10,6 +10,10 @@ import pytest
 
 from .utils.pretty_axe_results import pretty_axe_results
 
+# Using importorskip to ensure these tests are only loaded if Playwright is installed.
+playwright = pytest.importorskip("playwright")
+from playwright.sync_api import Page  # noqa: E402
+
 # Important note: automated accessibility scans can only find a fraction of
 # potential accessibility issues.
 #
@@ -85,12 +89,10 @@ def url_base():
         ("typography.html", "#typography"),
     ],
 )
-def test_axe_core_kitchen_sink(theme: str, url_base: str, url_page: str, selector: str):
+def test_axe_core_kitchen_sink(
+    theme: str, url_base: str, url_page: str, selector: str, page: Page
+):
     """Should have no Axe-core violations at the provided theme and page section."""
-    # Using importorskip ensures that the test is skipped if not running within
-    # the a11y session
-    page = pytest.importorskip("playwright.sync_api.Page")
-
     # Load the page at the provided path
     url_base_kitchen_sink = urljoin(url_base, "/examples/kitchen-sink/")
     url_full = urljoin(url_base_kitchen_sink, url_page)

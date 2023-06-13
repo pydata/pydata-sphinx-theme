@@ -120,6 +120,7 @@ Click on section titles to learn more about them and some basic layout configura
                     Article Footer
 
                 ``article_footer_items``
+                ``prev_next_area``
 
             .. grid-item::
                 :padding: 2
@@ -155,8 +156,6 @@ Click on section titles to learn more about them and some basic layout configura
 
                 ``content_footer_items``
 
-
-
     .. grid-item::
         :padding: 2
         :outline:
@@ -181,15 +180,33 @@ The ``primary sidebar`` will snap to the left, the ``secondary sidebar`` will sn
 - If one of the sidebars is not present, then the ``article content`` will be centered between the other sidebar and the side of the page.
 - If neither sidebar is present, the ``article content`` will be in the middle of the page.
 
-If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` and ``flex-grow`` CSS variables with the ``.bd-content`` selector.
-For example, to make the content grow to fit all available widths, add a custom CSS rule like:
+If you'd like the ``article content`` to take up more width than its default, use the ``max-width`` CSS property with the following selectors:
 
 .. code-block:: css
 
-   .bd-content {
-     flex-grow: 1;
-     max-width: 100%;
+   .bd-main .bd-content .bd-article-container {
+     max-width: 100%;  /* default is 60em */
    }
+
+The above rule will set the article content max width to the same width as the top navigation bar.
+To truly use *all* of the available page width, you also need to set the following CSS rule:
+
+.. code-block:: css
+
+    .bd-page-width {
+      max-width: 100%;  /* default is 88rem */
+    }
+
+This will affect both the article content and the top navigation bar.
+
+.. note::
+
+    If you use both of the custom CSS rules above, *be sure to keep them as separate
+    rules* in your CSS file.
+    If you combine them, the result will be a CSS selector that is *less specific*
+    than the two default rules in the theme, and your custom CSS will fail to
+    override the theme defaults.
+
 
 Templates and components
 ========================
@@ -424,14 +441,13 @@ Article Footer
 
 Located in ``sections/footer-article.html``.
 
-The article footer exists just below your page's article and is primarily used for navigating between adjacent sections/pages.
-By default, it has the following templates:
+The article footer exists just below your page's article. By default, It does not contain anything immediately viewable to the reader, but is kept as a placeholder for custom or built-in templates.
 
 .. code-block:: python
 
     html_theme_options = {
       # ...
-      "article_footer_items": ["prev-next.html"],
+      "article_footer_items": [],
       # ...
     }
 
@@ -439,7 +455,7 @@ Hide the previous and next buttons
 ----------------------------------
 
 By default, each page of your site will have "previous" and "next" buttons
-at the bottom. You can hide these buttons with the following configuration:
+at the bottom displayed in the ``prev_next_area``. You can hide these buttons with the following configuration:
 
 .. code:: python
 
