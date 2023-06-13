@@ -273,25 +273,27 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
         sphinx_build_factory("base", confoverrides=confoverrides).build()
 
 
-def test_navbar_align_default(sphinx_build_factory) -> None:
+@pytest.mark.parametrize(
+    "align,klass",
+    [
+        ("content", ("col-lg-3", "col-lg-9", "me-auto")),
+        ("left", ("", "", "me-auto")),
+        ("right", ("", "", "ms-auto")),
+    ],
+)
+def test_navbar_align(align, klass, sphinx_build_factory) -> None:
     """The navbar items align with the proper part of the page."""
-    sphinx_build = sphinx_build_factory("base").build()
-    index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" in index_html.select(".navbar-header-items")[0].attrs["class"]
-
-
-def test_navbar_align_right(sphinx_build_factory) -> None:
-    """The navbar items align with the proper part of the page."""
-    confoverrides = {"html_theme_options.navbar_align": "right"}
+    confoverrides = {"html_theme_options.navbar_align": align}
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-
-    # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
-    assert (
-        "ms-auto"
-        in index_html.select("div.navbar-header-items__center")[0].attrs["class"]
-    )
+    if klass[0]:
+        header_start = index_html.select(".navbar-header-items__start")[0]
+        assert klass[0] in header_start.attrs["class"]
+    if klass[1]:
+        header_items = index_html.select(".navbar-header-items")[0]
+        assert klass[1] in header_items.attrs["class"]
+    header_center = index_html.select(".navbar-header-items__center")[0]
+    assert klass[2] in header_center.attrs["class"]
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression) -> None:
@@ -876,7 +878,7 @@ def test_translations(sphinx_build_factory) -> None:
     assert "Créé en utilisant" in str(footer)
     assert "Construit avec le" in str(footer)
 
-    footer_article = index.select(".bd-footer-article")[0]
+    footer_article = index.select(".prev-next-footer")[0]
     assert "précédent" in str(footer_article)
     assert "page suivante" in str(footer_article)
 

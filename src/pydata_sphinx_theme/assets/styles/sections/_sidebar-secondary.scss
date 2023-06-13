@@ -20,8 +20,6 @@
   // Color and border
   background-color: var(--pst-color-background);
   overflow-y: auto;
-
-  @include scrollbar-style();
 }
 
 .sidebar-secondary-item {

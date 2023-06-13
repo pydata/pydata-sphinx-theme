@@ -100,9 +100,15 @@ or not theme_secondary_sidebar_items %}
                 </article>
               {% endblock docs_body %}
               {# Article Footer #}
-              {% if theme_show_prev_next %}
+              {% if theme_article_footer_items %}
                 <footer class="bd-footer-article">
                   {% include "sections/footer-article.html" %}
+                </footer>
+              {% endif %}
+              {# prev-next buttons #}
+              {% if theme_show_prev_next %}
+                <footer class="prev-next-footer">
+                  {% include "components/prev-next.html" %}
                 </footer>
               {% endif %}
             </div>

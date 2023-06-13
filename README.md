@@ -1,6 +1,6 @@
 # The PyData Sphinx Theme
 
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-yellow.svg)](https://github.com/pydata/pydata-sphinx-theme/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-yellow?logo=opensourceinitiative&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/blob/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/pydata-sphinx-theme?logo=python&logoColor=white&color=orange)](https://pypi.org/project/pydata-sphinx-theme/)
 [![conda-forge](https://img.shields.io/conda/vn/conda-forge/pydata-sphinx-theme.svg?logo=anaconda&logoColor=white&color=orange)](https://anaconda.org/conda-forge/pydata-sphinx-theme)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pydata/pydata-sphinx-theme/tests.yml?logo=github&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml)

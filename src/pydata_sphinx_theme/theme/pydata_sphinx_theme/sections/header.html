@@ -3,14 +3,14 @@
   <label class="sidebar-toggle primary-toggle" for="__primary">
     <span class="fa-solid fa-bars"></span>
   </label>
+  {% set navbar_start, navbar_class, navbar_align = navbar_align_class() %}
   {% if theme_navbar_start %}
-  <div class="navbar-header-items__start">
+  <div class="{{ navbar_start }} navbar-header-items__start">
     {% for navbar_item in theme_navbar_start %}
       <div class="navbar-item">{% include navbar_item %}</div>
     {% endfor %}
   </div>
   {% endif %}
-  {% set navbar_class, navbar_align = navbar_align_class() %}
   <div class="{{ navbar_class }} navbar-header-items">
     {% if theme_navbar_center %}
     <div class="{{ navbar_align }} navbar-header-items__center">
