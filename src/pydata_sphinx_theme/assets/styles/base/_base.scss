@@ -169,7 +169,8 @@ pre {
   border-radius: $admonition-border-radius;
 
   .linenos {
-    opacity: 0.5;
+    // minimum opacity to make the line numbers WCAG AA conformant
+    opacity: 0.8;
     padding-right: 10px;
   }
 }
