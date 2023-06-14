@@ -337,6 +337,7 @@ async function fetchVersionSwitcherJSON(url) {
 var versionSwitcherBtns = document.querySelectorAll(
   ".version-switcher__button"
 );
+
 if (versionSwitcherBtns.length) {
   const data = await fetchVersionSwitcherJSON(
     DOCUMENTATION_OPTIONS.theme_switcher_json_url
