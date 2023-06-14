@@ -167,4 +167,7 @@ module.exports = {
   plugins: [htmlWebpackPlugin, copyPlugin, new MiniCssExtractPlugin({
     filename: "styles/[name].css"
   })],
+  experiments: {
+    topLevelAwait: true,
+  },
 };

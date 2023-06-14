@@ -287,8 +287,8 @@ var setupSearchButtons = () => {
  * @param {event} event the event that trigger the check
  */
 function checkPageExistsAndRedirect(event) {
-  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`,
-    tryUrl = event.target.getAttribute("href");
+  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
 
   fetch(tryUrl, { method: "HEAD" })
@@ -304,68 +304,90 @@ function checkPageExistsAndRedirect(event) {
   return false;
 }
 
+/**
+ * Check if the corresponding url is absolute and make a absolute path from root if necessary
+ *
+ * @param {string} url the url to check
+ */
+async function fetchVersionSwitcherJSON(url) {
+  // first check if it's a valid URL
+  try {
+    var result = new URL(url);
+  } catch (err) {
+    // if not, assume relative path and fix accordingly
+    if (err instanceof TypeError) {
+      // workaround for redirects like https://pydata-sphinx-theme.readthedocs.io
+      // fetch() automatically follows redirects so it should work in every builder
+      // (RDT, GitHub actions, etc)
+      const origin = await fetch(window.location.origin, {
+        method: "HEAD",
+      });
+      result = new URL(url, origin.url);
+    } else {
+      throw err;
+    }
+  }
+
+  const response = await fetch(result);
+  const data = await response.json();
+  return data;
+}
+
 // Populate the version switcher from the JSON config file
-var themeSwitchBtns = document.querySelectorAll(".version-switcher__button");
-if (themeSwitchBtns.length) {
-  fetch(DOCUMENTATION_OPTIONS.theme_switcher_json_url)
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
-      themeSwitchBtns.forEach((btn) => {
-        // Set empty strings by default so that these attributes exist and can be used in CSS selectors
-        btn.dataset["activeVersionName"] = "";
-        btn.dataset["activeVersion"] = "";
+var versionSwitcherBtns = document.querySelectorAll(
+  ".version-switcher__button"
+);
+if (versionSwitcherBtns.length) {
+  const data = await fetchVersionSwitcherJSON(
+    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+  );
+  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  versionSwitcherBtns.forEach((btn) => {
+    // Set empty strings by default so that these attributes exist and can be used in CSS selectors
+    btn.dataset["activeVersionName"] = "";
+    btn.dataset["activeVersion"] = "";
+  });
+  // create links to the corresponding page in the other docs versions
+  data.forEach((entry) => {
+    // if no custom name specified (e.g., "latest"), use version string
+    if (!("name" in entry)) {
+      entry.name = entry.version;
+    }
+    // create the node
+    const anchor = document.createElement("a");
+    anchor.setAttribute("class", "list-group-item list-group-item-action py-1");
+    anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
+    const span = document.createElement("span");
+    span.textContent = `${entry.name}`;
+    anchor.appendChild(span);
+    // Add dataset values for the version and name in case people want
+    // to apply CSS styling based on this information.
+    anchor.dataset["versionName"] = entry.name;
+    anchor.dataset["version"] = entry.version;
+    // replace dropdown button text with the preferred display name of
+    // this version, rather than using sphinx's {{ version }} variable.
+    // also highlight the dropdown entry for the currently-viewed
+    // version's entry
+    if (entry.version == DOCUMENTATION_OPTIONS.version_switcher_version_match) {
+      anchor.classList.add("active");
+      versionSwitcherBtns.forEach((btn) => {
+        btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+        btn.dataset["activeVersion"] = entry.version;
       });
-      // create links to the corresponding page in the other docs versions
-      data.forEach((entry) => {
-        // if no custom name specified (e.g., "latest"), use version string
-        if (!("name" in entry)) {
-          entry.name = entry.version;
-        }
-        // create the node
-        const span = document.createElement("span");
-        span.textContent = `${entry.name}`;
-
-        const node = document.createElement("a");
-        node.setAttribute(
-          "class",
-          "list-group-item list-group-item-action py-1"
-        );
-        node.setAttribute("href", `${entry.url}${currentFilePath}`);
-        node.appendChild(span);
-
-        // on click, AJAX calls will check if the linked page exists before
-        // trying to redirect, and if not, will redirect to the homepage
-        // for that version of the docs.
-        node.onclick = checkPageExistsAndRedirect;
-        // Add dataset values for the version and name in case people want
-        // to apply CSS styling based on this information.
-        node.dataset["versionName"] = entry.name;
-        node.dataset["version"] = entry.version;
-
-        document.querySelectorAll(".version-switcher__menu").forEach((menu) => {
-          // There may be multiple version-switcher elements, e.g. one
-          // in a slide-over panel displayed on smaller screens.
-          menu.append(node);
-        });
-        // replace dropdown button text with the preferred display name of
-        // this version, rather than using sphinx's {{ version }} variable.
-        // also highlight the dropdown entry for the currently-viewed
-        // version's entry
-        if (
-          entry.version ==
-          "DOCUMENTATION_OPTIONS.version_switcher_version_match"
-        ) {
-          node.classList.add("active");
-          themeSwitchBtns.forEach((btn) => {
-            btn.innerText = btn.dataset["activeVersionName"] = entry.name;
-            btn.dataset["activeVersion"] = entry.version;
-          });
-        }
-      });
+    }
+    // There may be multiple version-switcher elements, e.g. one
+    // in a slide-over panel displayed on smaller screens.
+    document.querySelectorAll(".version-switcher__menu").forEach((menu) => {
+      // we need to clone the node for each menu, but onclick attributes are not
+      // preserved by `.cloneNode()` so we add onclick here after cloning.
+      let node = anchor.cloneNode(true);
+      node.onclick = checkPageExistsAndRedirect;
+      // on click, AJAX calls will check if the linked page exists before
+      // trying to redirect, and if not, will redirect to the homepage
+      // for that version of the docs.
+      menu.append(node);
     });
+  });
 }
 
 /*******************************************************************************
