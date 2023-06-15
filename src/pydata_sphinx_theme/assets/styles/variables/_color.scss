@@ -38,9 +38,9 @@ $color-palette: (
   "violet":
     (
       "50": #f4eefb,
-      "100": #e1cafe,
-      "200": #cda5ff,
-      "300": #b680ff,
+      "100": #e0c7ff,
+      "200": #d5b4fd,
+      "300": #b780ff,
       "400": #9c5ffd,
       "500": #8045e5,
       "600": #6432bd,
@@ -117,7 +117,7 @@ $foundation-dark-gray: #222832;
 $pst-semantic-colors: (
   "primary": (
     "light": #{map-deep-get($color-palette, "teal", "500")},
-    "bg-light": #{map-deep-get($color-palette, "teal", "100")},
+    "bg-light": #{map-deep-get($color-palette, "teal", "200")},
     "dark": #{map-deep-get($color-palette, "teal", "400")},
     "bg-dark": #{map-deep-get($color-palette, "teal", "800")},
   ),
@@ -129,25 +129,25 @@ $pst-semantic-colors: (
   ),
   "accent": (
     "light": #{map-deep-get($color-palette, "pink", "500")},
-    "bg-light": #{map-deep-get($color-palette, "pink", "100")},
+    "bg-light": #{map-deep-get($color-palette, "pink", "200")},
     "dark": #{map-deep-get($color-palette, "pink", "400")},
     "bg-dark": #{map-deep-get($color-palette, "pink", "800")},
   ),
   "info": (
     "light": #276be9,
-    "bg-light": #eff4fd,
+    "bg-light": #dce7fc,
     "dark": #79a3f2,
     "bg-dark": #06245d,
   ),
   "warning": (
     "light": #f66a0a,
-    "bg-light": #fff8f2,
+    "bg-light": #f8e3d0,
     "dark": #ff9245,
     "bg-dark": #652a02,
   ),
   "success": (
     "light": #00843f,
-    "bg-light": #ecf6f1,
+    "bg-light": #d6ece1,
     "dark": #5fb488,
     "bg-dark": #002f17,
   ),
@@ -161,7 +161,7 @@ $pst-semantic-colors: (
     ),
   "danger": (
     "light": #d72d47,
-    "bg-light": #fcf1f2,
+    "bg-light": #f9e1e4,
     "dark": #e78894,
     "bg-dark": #4e111b,
   ),
@@ -183,11 +183,11 @@ $pst-semantic-colors: (
   ),
   "border": (
     "light": #{map-deep-get($color-palette, "gray", "300")},
-    "dark": #{map-deep-get($color-palette, "gray", "500")},
+    "dark": #{map-deep-get($color-palette, "gray", "600")},
   ),
   "border-muted": (
     "light": rgba(23, 23, 26, 0.2),
-    "dark": #{map-deep-get($color-palette, "gray", "600")},
+    "dark": #{map-deep-get($color-palette, "gray", "700")},
   ),
   "inline-code": (
     "light": #{map-deep-get($color-palette, "pink", "600")},

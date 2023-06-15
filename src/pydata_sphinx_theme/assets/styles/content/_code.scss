@@ -61,7 +61,11 @@ a > code {
 
 // Fix for Sphinx's "highlight" directive - this is an issue with our accessible pygments theme
 // and the colour we are using for the background of the code blocks.
-
 html[data-theme="light"] .highlight .nf {
   color: #0078a1 !important;
+}
+
+// Minimum opacity needed for linenos to be WCAG AA conformant
+span.linenos {
+  opacity: 0.8 !important;
 }

@@ -14,8 +14,3 @@ div.doctest > div.highlight span.gp {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
 }
-
-// Minimum opacity needed for linenos to be WCAG AA conformant
-span.linenos {
-  opacity: 0.8;
-}
