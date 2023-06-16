@@ -17,7 +17,7 @@ Any rules in this style sheet will override the default theme rules.
 
 .. seealso::
 
-   For a more in-depth guide in linking static CSS and JS assets in your site, see {doc}`static_assets`.
+   For a more in-depth guide in linking static CSS and JS assets in your site, see :doc:`static_assets`.
 
 
 To add a custom stylesheet, follow these steps:
@@ -63,9 +63,8 @@ Follow these steps to update the base variables:
    Note that the theme is defined with `CSS variables <css-variable-help_>`_
    and **not** `SASS variables <https://sass-lang.com/documentation/variables>`_.
 
-   Refer to the previous section if
+   Refer to :ref:`the managing themes section in this documentation <manage-themes>`
    you desire a different behavior between the light and dark theme.
-.. TODO: add correct reference to light and dark theme @trallard
 
 For a complete list of the theme variables that you may override, see the
 `theme variables defaults CSS file <pydata-css-variables_>`_:
@@ -84,6 +83,8 @@ For a complete list of the theme variables that you may override, see the
 
 .. literalinclude:: ../../src/pydata_sphinx_theme/assets/styles/variables/_versionmodified.scss
   :language: scss
+
+.. _color-variables:
 
 Color variables
 ---------------

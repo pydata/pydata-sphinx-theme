@@ -90,7 +90,8 @@ To do so, customize the ``html_teme_options["logo"]["alt_text"]`` configuration 
 
    html_theme_options = {
        "logo": {
-           "alt_text": "foo",
+           # It is a good practice to indicate where the logo links to using the alt text such as - Home
+           "alt_text": "foo - Home",
        }
    }
 
