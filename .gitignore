@@ -121,3 +121,6 @@ profile.svg
 
 # Compiled translation files (are compiled at build time)
 src/pydata_sphinx_theme/locale/*/*/*.mo
+
+# jupyterlite db
+.jupyterlite.doit.db
