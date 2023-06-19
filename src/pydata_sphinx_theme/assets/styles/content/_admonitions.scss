@@ -162,7 +162,7 @@ div.admonition,
     border-color: var(--pst-color-attention);
     > .admonition-title {
       &:before {
-        background-color: var(--pst-color-warning-bg);
+        background-color: var(--pst-color-attention-bg);
       }
 
       &:after {

@@ -69,12 +69,12 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
   // we are now using a11y-combination to calculate the text color - this is based
   // on the WCAG color contrast guidelines
   --pst-color-#{$name}-text: #{a11y-combination($value)};
-  // // TODO: check where highlight is used
+  //TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
   --pst-color-#{$name}-highlight: #{darken($value, 15%)};
   // override the sphinx-design variables
   --sd-color-#{$name}: var(--pst-color-#{$name});
   --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
-  // TODO: check where highlight is used
+  //TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
   --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
 }
 
