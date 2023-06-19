@@ -12,6 +12,8 @@ from sphinx.addnodes import toctree as toctree_node
 from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
 
+from .utils import traverse_or_findall
+
 
 def add_inline_math(node: Node) -> str:
     """Render a node with HTML tags that activate MathJax processing.
@@ -72,9 +74,8 @@ def add_toctree_functions(
         # Iterate through each toctree node in the root document
         # Grab the toctree pages and find the relative link + title.
         links_html = []
-        # TODO: just use "findall" once docutils min version >=0.18.1
-        meth = "findall" if hasattr(root, "findall") else "traverse"
-        for toc in getattr(root, meth)(toctree_node):
+        # TODO: use `root.findall(toctree_node)` once docutils min version >=0.18.1
+        for toc in traverse_or_findall(root, toctree_node):
             for title, page in toc.attributes["entries"]:
                 # if the page is using "self" use the correct link
                 page = toc.attributes["parent"] if page == "self" else page
@@ -284,9 +285,9 @@ def add_toctree_functions(
         """Return the class that aligns the navbar based on config."""
         align = context.get("theme_navbar_align", "content")
         align_options = {
-            "content": ("col-lg-9", "me-auto"),
-            "left": ("", "me-auto"),
-            "right": ("", "ms-auto"),
+            "content": ("col-lg-3", "col-lg-9", "me-auto"),
+            "left": ("", "", "me-auto"),
+            "right": ("", "", "ms-auto"),
         }
         if align not in align_options:
             raise ValueError(
@@ -382,9 +383,8 @@ def get_local_toctree_for(
         kwargs["maxdepth"] = int(kwargs["maxdepth"])
     kwargs["collapse"] = collapse
 
-    # FIX: Can just use "findall" once docutils 0.18+ is required
-    meth = "findall" if hasattr(doctree, "findall") else "traverse"
-    for toctreenode in getattr(doctree, meth)(addnodes.toctree):
+    # TODO: use `doctree.findall(addnodes.toctree)` once docutils min version >=0.18.1
+    for toctreenode in traverse_or_findall(doctree, addnodes.toctree):
         toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwargs)
         if toctree:
             toctrees.append(toctree)
