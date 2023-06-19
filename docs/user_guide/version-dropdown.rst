@@ -7,7 +7,7 @@ switcher will differ depending on which page of the docs is being viewed. For
 example, on the page ``https://mysite.org/en/v2.0/changelog.html``, the
 switcher links will go to ``changelog.html`` in the other versions of your
 docs. When clicked, the switcher will check for the existence of that page, and
-if it doesn't exist, redirect to the homepage of that docs' version instead.
+if it doesn't exist, will redirect to the homepage instead (in the requested version of the docs).
 
 The switcher requires the following configuration steps:
 

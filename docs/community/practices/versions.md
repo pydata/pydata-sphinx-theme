@@ -14,7 +14,7 @@ We define "support" as testing against each of these versions so that users can 
 For example, if we made a minor release tomorrow, we'd [look at the EOL schedule for Python](https://endoflife.date/python) and support all the versions that fall within a 3.5-year window.
 
 [^1]: Our support for Python versions is inspired by [NEP 029](https://numpy.org/neps/nep-0029-deprecation_policy.html).
-[^2]: These policies are goals, but no promises. We are a volunteer-led community with limited time. Consider these sections to be our intention, but we recognize that we may not always be able to meet these criteria if we cannot do so. We welcome contributions from others to help us more sustainably meet these goals!
+[^2]: These policies are goals, not promises. We are a volunteer-led community with limited time. Consider these sections to be our intention, but we recognize that we may not always be able to meet these criteria if we cannot do so. We welcome contributions from others to help us more sustainably meet these goals!
 
 ## Supported Sphinx versions
 

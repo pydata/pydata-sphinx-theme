@@ -9,7 +9,7 @@ available system fonts for normal body text and headers.
 
 The default body and header fonts can be changed as follows:
 
-- Using:ref:`custom-css`, you can specify which fonts to use for the body, header,
+- Using :ref:`custom-css`, you can specify which fonts to use for the body, header,
   and monospaced text. For example, the following can be added to a custom
   CSS file:
 

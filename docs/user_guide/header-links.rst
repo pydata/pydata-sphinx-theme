@@ -30,7 +30,7 @@ It will place the remaining header links in a **dropdown menu** titled "More".
 This prevents the header links from taking up so much space that they crowd out the UI components or spill off-screen.
 
 To control how many header links are displayed before being placed in the dropdown, use the ``header_links_before_dropdown`` theme configuration variable.
-For example, to change the number of displayed header links to be ``4`` instead of ``5``:abbr:
+For example, to change the number of displayed header links to be ``4`` instead of ``5``:
 
 .. code-block:: python
 
@@ -116,7 +116,7 @@ Here are several examples:
                "name": "Twitter",
                "url": "https://twitter.com/<your-handle>",
                "icon": "fa-brands fa-square-twitter",
-               # The default for `type` is `fontawesome`, so it is not required in any of the above examples as it shown here
+               # The default for `type` is `fontawesome`, so it is not required in the above examples
            },
            {
                "name": "Mastodon",

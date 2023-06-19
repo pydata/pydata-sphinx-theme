@@ -212,7 +212,7 @@ Templates and components
 ========================
 
 There are a few major theme sections that you can customize to add/remove
-components or add your components. Each section is configured with a
+built-in components or add your own components. Each section is configured with a
 list of *HTML templates* — these are snippets of HTML that are inserted into
 the section by Sphinx.
 

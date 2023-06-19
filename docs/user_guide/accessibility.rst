@@ -66,7 +66,7 @@ identify if the content is in a language the reader understands.
 
 .. Hint::
 
-    Specifying a ``language`` will propagate to the top-level `HTML` tag.
+    Specifying a ``language`` will propagate to the top-level ``HTML`` tag.
 
     .. code-block:: Python
 
@@ -114,7 +114,7 @@ If you have a logo, you can add alt-text to it by adding the following to your
       "alt_text": "PyData Theme home",
   },
 
-Note the use of `home` to indicate that the logo is also a link to the home page.
+Note the use of "home" in the alt text to indicate that the logo is also a link to the home page.
 
 In the Browser
 ==============
@@ -128,10 +128,9 @@ Built-in tools
 
 
 Most major browsers, including `Firefox <https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector>`__
-and `Chrome <https://developers.google.com/web/tools/chrome-devtools/accessibility/reference>`__
-include significant accessibility tooling in their development experience. Exploring
-these, and the modes they offer can help to quickly pinpoint issues and often
-include links to standards.
+and `Chrome <https://developers.google.com/web/tools/chrome-devtools/accessibility/reference>`__,
+have accessibility tools built-in as part of their web developer tools.
+These tools can help to quickly identify accessibility issues and often include links to standards.
 
 
 tota11y

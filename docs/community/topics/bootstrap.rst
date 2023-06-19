@@ -57,4 +57,4 @@ Utilities
 JavaScript
 ^^^^^^^^^^
 
--   Data attributes for all JavaScript plugins are now name spaced to help distinguish Bootstrap functionality from third parties and your code. For example, we use ``data-bs-toggle`` instead of ``data-toggle``.
+-   Data attributes for all JavaScript plugins are now namespaced to help distinguish Bootstrap functionality from third parties and your code. For example, we use ``data-bs-toggle`` instead of ``data-toggle``.

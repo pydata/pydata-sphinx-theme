@@ -63,7 +63,7 @@ Follow these steps to update the base variables:
    Note that the theme is defined with `CSS variables <css-variable-help_>`_
    and **not** `SASS variables <https://sass-lang.com/documentation/variables>`_.
 
-   Refer to :ref:`the managing themes section in this documentation <manage-themes>`
+   Refer to :ref:`the managing themes section in this documentation <manage-themes>` if
    you desire a different behavior between the light and dark theme.
 
 For a complete list of the theme variables that you may override, see the
@@ -119,7 +119,7 @@ Here is an overview of the colors available in the theme (change theme mode to s
     <p>
       <span class="sd-sphinx-override sd-badge pst-badge pst-primary sd-bg-text-primary">primary</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-secondary sd-bg-text-secondary">secondary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-accent sd-bg-text-secondary">secondary</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-accent sd-bg-text-secondary">accent</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-success sd-bg-text-success">success</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-info sd-bg-text-info">info</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-warning sd-bg-text-warning">warning</span>
@@ -128,7 +128,7 @@ Here is an overview of the colors available in the theme (change theme mode to s
       <span class="sd-sphinx-override sd-badge pst-badge pst-on-background">on-background</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-surface">surface</span>
       <span class="sd-sphinx-override sd-badge pst-badge pst-on-surface sd-bg-text-primary">on-surface</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-target sd-bg-text-primary">target</span>
+      <span class="sd-sphinx-override sd-badge pst-badge pst-target">target</span>
     </p>
 
 

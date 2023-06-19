@@ -83,15 +83,15 @@ Customize logo alternative text
 You may set a custom ``alt text`` for your logo to replace the default ``"logo image"`` generic description.
 Adding a descriptive ``alt text`` can help make your documentation more accessible to readers using screen readers or another assistive tech.
 
-To do so, customize the ``html_teme_options["logo"]["alt_text"]`` configuration option as in the following example:
+To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration option as in the following example:
 
 .. code-block:: python
    :caption: conf.py
 
    html_theme_options = {
        "logo": {
-           # It is a good practice to indicate where the logo links to using the alt text such as - Home
-           "alt_text": "foo - Home",
+           # Because the logo is also a homepage link, including "home" in the alt text is good practice
+           "alt_text": "My Project Name - Home",
        }
    }
 

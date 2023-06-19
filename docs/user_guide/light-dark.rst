@@ -4,7 +4,7 @@
 Light and dark themes
 =====================
 
-You can change the major background/foreground colors of this theme according to the "dark" and "light" modes.
+You can change the major background/foreground colors of this theme using built-in "dark" and "light" modes.
 These are controlled by a button in the navigation header, with the following options:
 
 - A ``light`` theme with a bright background and dark text / UI elements
