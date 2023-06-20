@@ -1,5 +1,6 @@
 // Define the custom behavior of the page
 import { documentReady } from "./mixin";
+import { compare } from "compare-versions";
 
 import "../styles/pydata-sphinx-theme.scss";
 
@@ -330,15 +331,8 @@ async function fetchVersionSwitcherJSON(url) {
   return data;
 }
 
-// Populate the version switcher from the JSON config file
-var versionSwitcherBtns = document.querySelectorAll(
-  ".version-switcher__button"
-);
-
-if (versionSwitcherBtns.length) {
-  const data = await fetchVersionSwitcherJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url
-  );
+// Populate the version switcher from the JSON data
+function populateVersionSwitcher(data, versionSwitcherBtns) {
   const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
   versionSwitcherBtns.forEach((btn) => {
     // Set empty strings by default so that these attributes exist and can be used in CSS selectors
@@ -371,6 +365,7 @@ if (versionSwitcherBtns.length) {
       anchor.classList.add("active");
       versionSwitcherBtns.forEach((btn) => {
         btn.innerText = entry.name;
+        entry.name;
         btn.dataset["activeVersionName"] = entry.name;
         btn.dataset["activeVersion"] = entry.version;
       });
@@ -388,6 +383,66 @@ if (versionSwitcherBtns.length) {
       menu.append(node);
     });
   });
+}
+
+/*******************************************************************************
+ * Warning banner when viewing non-stable version of the docs.
+ */
+
+/**
+ * Show a warning banner when viewing a non-stable version of the docs.
+ *
+ * adapted 2023-06 from https://mne.tools/versionwarning.js, which was
+ * originally adapted 2020-05 from https://scikit-learn.org/versionwarning.js
+ *
+ * @param {Array} data The version data used to populate the switcher menu.
+ */
+function showVersionWarningBanner(data) {
+  const version = DOCUMENTATION_OPTIONS.VERSION;
+  // figure out what latest stable version is
+  var preferredEntries = data.filter((entry) => entry.preferred);
+  if (preferredEntries.length !== 1) {
+    const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
+    throw new Error(
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON`
+    );
+  }
+  const preferredVersion = preferredEntries[0].version;
+  const preferredURL = preferredEntries[0].url;
+  // if already on preferred version, nothing to do
+  if (!version.includes("dev") && compare(version, preferredVersion, "=")) {
+    return;
+  }
+  // now construct the warning banner
+  var outer = document.createElement("div");
+  const middle = document.createElement("div");
+  const inner = document.createElement("div");
+  const bold = document.createElement("strong");
+  const button = document.createElement("a");
+  // these classes exist since pydata-sphinx-theme v0.10.0
+  outer.classList = "bd-header-version-warning container-fluid";
+  middle.classList = "bd-header-announcement__content";
+  inner.classList = "sidebar-message";
+  button.classList =
+    "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-1 align-baseline";
+  button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
+  button.innerText = "Switch to latest stable version";
+  button.onclick = checkPageExistsAndRedirect;
+  // add the version-dependent text
+  inner.innerText = "This is documentation for ";
+  if (version.includes("dev") || compare(version, preferredVersion, ">")) {
+    inner.innerText += "the ";
+    bold.innerText = "unstable development version";
+  } else {
+    inner.innerText += "an ";
+    bold.innerText = `old version (${version})`;
+  }
+  outer.appendChild(middle);
+  middle.appendChild(inner);
+  inner.appendChild(bold);
+  inner.appendChild(document.createTextNode("."));
+  inner.appendChild(button);
+  document.body.prepend(outer);
 }
 
 /*******************************************************************************
@@ -419,6 +474,27 @@ function initRTDObserver() {
   const observer = new MutationObserver(mutatedCallback);
   const config = { childList: true };
   observer.observe(document.body, config);
+}
+
+// fetch the JSON version data (only once), then use it to populate the version
+// switcher and maybe show the version warning bar
+var versionSwitcherBtns = document.querySelectorAll(
+  ".version-switcher__button"
+);
+const hasSwitcherMenu = themeSwitchBtns.length > 0;
+const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
+  "theme_switcher_json_url"
+);
+const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
+
+if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
+  const data = await fetchVersionSwitcherJSON(
+    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+  );
+  populateVersionSwitcher(data, versionSwitcherBtns);
+  if (wantsWarningBanner) {
+    showVersionWarningBanner(data);
+  }
 }
 
 /*******************************************************************************
