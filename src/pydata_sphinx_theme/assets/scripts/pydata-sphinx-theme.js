@@ -481,7 +481,7 @@ function initRTDObserver() {
 var versionSwitcherBtns = document.querySelectorAll(
   ".version-switcher__button"
 );
-const hasSwitcherMenu = themeSwitchBtns.length > 0;
+const hasSwitcherMenu = versionSwitcherBtns.length > 0;
 const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
   "theme_switcher_json_url"
 );
