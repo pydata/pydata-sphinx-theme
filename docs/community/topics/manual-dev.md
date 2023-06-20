@@ -51,7 +51,7 @@ $ sphinx-build docs docs/_build/html
 
 ## Compile web assets (JS/CSS)
 
-To compile the javascript and CSS assets for the theme, run the following command:
+To compile the JavaScript and CSS assets for the theme, run the following command:
 
 ```console
 $ stb compile
@@ -59,7 +59,7 @@ $ stb compile
 
 This will compile everything in the `src/pydata_sphinx_theme/assets` folder and place them in the appropriate places in our theme's folder structure.
 
-## Start a live-server to build and serve your documentation
+## Start a live server to build and serve your documentation
 
 To manually open a server to watch your documentation for changes, build them, and display them locally in a browser, run this command:
 

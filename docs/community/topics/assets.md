@@ -38,7 +38,7 @@ This is configured in the `webpack.config.js` file, and imported in the respecti
 ## FontAwesome icons
 
 Three "styles" of the [FontAwesome 6 Free](https://fontawesome.com/icons?m=free)
-icon font are used for {ref}`icon links <icon-links>` and admonitions, and is
+icon font are used for {ref}`icon links <icon-links>` and admonitions and is
 the only `vendored` font.
 
 - It is managed as a dependency in `package.json`
@@ -50,7 +50,7 @@ the only `vendored` font.
 
 Our Webpack build generates a collection of [Jinja macros](https://jinja.palletsprojects.com/en/3.0.x/templates/#macros) in the `static/webpack-macros.html` file.
 
-These macros are imported in the main `layout.html` file, and then inserted at various places in the page to link the static assets.
+These macros are imported in the main `layout.html` file, and then inserted at various places on the page to link the static assets.
 
-Some of the assets [are "preloaded"](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload), meaning that the browser begins requesting these resources before they're actually needed.
-In particular, our JavaScript assets are preloaded in `<head>`, and the scripts are actually loaded at the end of `<body>`.
+Some assets [are "preloaded"](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload), meaning that the browser begins requesting these resources before they're needed.
+In particular, our JavaScript assets are preloaded in `<head>`, and the scripts are loaded at the end of `<body>`.

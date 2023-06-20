@@ -4,11 +4,14 @@
 Sphinx Design Components
 ========================
 
-Cards and tabs provide some extra UI flexibility for your content. This theme provides custom CSS to ensure that `sphinx-design <https://sphinx-design.readthedocs.io/en/latest/index.html>`__ elements look and feel consistent with this theme.
+The PyData Sphinx Theme uses `sphinx-design <https://sphinx-design.readthedocs.io/en/latest/index.html>`__
+to add several UI components and provide extra flexibility for content creation.
+These include badges, buttons, cards, and tabs, among other components.
+This theme provides custom CSS to ensure that `sphinx-design <https://sphinx-design.readthedocs.io/en/latest/index.html>`__ elements look and feel consistent with this theme.
 
 .. seealso::
 
-   For more about how to use these extensions, see `the sphinx-design documentation <https://sphinx-design.readthedocs.io/en/latest/index.html>`_.
+    For more information about how to use these extensions, see `the sphinx-design documentation <https://sphinx-design.readthedocs.io/en/latest/index.html>`_.
 
 Below you can find some examples of the components created with the :code:`sphinx-design` extension.
 
@@ -18,6 +21,7 @@ Badges and buttons
 ==================
 
 Here are some of the available badges:
+
 :bdg-primary:`primary`
 :bdg-secondary:`secondary`
 :bdg-success:`success`
@@ -25,8 +29,7 @@ Here are some of the available badges:
 :bdg-secondary-line:`secondary outline`
 :bdg-success-line:`success outline`
 
-Here are some buttons, also using semantic color names. **Note:** in this theme, ``info`` is defined to be the same color as ``primary``, and ``warning`` is the same color as ``secondary``.
-If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, e.g., ``primary``, ``danger``, etc), badges and buttons will automatically use the custom color.
+Here are some of the available buttons, also using semantic colors:
 
 .. grid:: auto
 
@@ -38,6 +41,15 @@ If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom p
             :shadow:
 
             Info
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: success
+            :shadow:
+
+            Success
 
     .. grid-item::
 
@@ -66,6 +78,26 @@ If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom p
 
             Muted
 
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: light
+            :shadow:
+
+            Light
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: dark
+            :shadow:
+
+            Dark
+
+If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
+
 Cards
 =====
 
@@ -83,13 +115,13 @@ Cards
 
         Content of the third card.
 
-        :bdg-primary:`example`
+        :bdg-primary:`Sample badge`
 
 .. grid::
 
     .. grid-item-card:: A card with a dropdown menu
 
-        .. dropdown:: :fa:`eye me-1` third card
+        .. dropdown:: :fa:`eye me-1` Click to expand dropdown
 
             Hidden content
 
@@ -114,7 +146,6 @@ Cards
         panel 2 content
         ++++++++++++++
         panel 2 footer
-
 
 Tabs
 ====
@@ -162,7 +193,7 @@ Tabs
 Dropdowns
 =========
 
-Dropdowns should look similar to admonitions, but clickable.
+Dropdowns look similar to admonitions, but they are clickable interactive elements that can be used to hide content.
 See `the Sphinx Design Dropdown documentation <https://sphinx-design.readthedocs.io/en/latest/dropdowns.html>`__ for more information.
 
 .. admonition:: An admonition for reference.
@@ -177,18 +208,18 @@ See `the Sphinx Design Dropdown documentation <https://sphinx-design.readthedocs
 
    And some content!
 
-.. dropdown:: With a title
+.. dropdown:: With a title and icon
    :icon: unlock
 
    And some content and an icon!
 
-.. dropdown:: A primary title and color
+.. dropdown:: A primary color dropdown
    :color: primary
    :icon: unlock
 
    And some content!
 
-.. dropdown:: A secondary title and color
+.. dropdown:: A secondary color dropdown
    :color: secondary
    :icon: unlock
 

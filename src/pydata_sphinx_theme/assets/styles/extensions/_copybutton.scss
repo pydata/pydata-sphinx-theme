@@ -22,6 +22,7 @@ div.highlight button.copybtn {
   &:hover {
     &:not(.success) {
       color: var(--pst-color-text);
+      background-color: var(--pst-color-shadow);
     }
   }
 

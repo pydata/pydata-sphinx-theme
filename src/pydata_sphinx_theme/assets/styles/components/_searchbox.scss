@@ -24,8 +24,7 @@ div#searchbox {
       font-size: 1.25rem;
       padding: 0.75rem;
       background-color: var(--pst-color-primary);
-      // Button text is always white with Sphinx Design buttons
-      color: white;
+      color: var(--pst-color-primary-text);
 
       // The box shadow is inset so that it darkens the button on hover
       transition: box-shadow 0.25s ease-out;
