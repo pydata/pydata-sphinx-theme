@@ -188,14 +188,8 @@ nav.bd-links {
 
   li > a {
     display: block;
-    padding: 0.25rem 0;
-    color: var(--pst-color-text-muted);
-
-    &:hover {
-      color: var(--pst-color-primary);
-      text-decoration: none;
-      background-color: transparent;
-    }
+    padding: 0.25rem 0.25rem;
+    @include link-sidebar-style;
 
     &.reference.external {
       &:after {
@@ -208,6 +202,8 @@ nav.bd-links {
   }
 
   .active {
+    color: var(--pst-color-link);
+    border-left: 3px solid var(--pst-color-link);
     > a,
     &:hover > a {
       font-weight: 600;
