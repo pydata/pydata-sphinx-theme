@@ -36,14 +36,13 @@ p {
 
 a {
   color: var(--pst-color-link);
-  text-decoration: none;
-
   // So that really long links don't spill out of their container
   word-wrap: break-word;
+  @include link-decoration;
 
   &:hover {
     color: var(--pst-color-link-hover);
-    text-decoration: underline;
+    @include link-hover-decoration;
   }
 
   &.headerlink {
@@ -58,6 +57,7 @@ a {
 
     &:hover {
       opacity: 1;
+      @include link-hover-decoration;
     }
   }
 
