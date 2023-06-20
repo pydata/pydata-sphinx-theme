@@ -20,7 +20,7 @@ ul.bd-breadcrumbs {
       color: var(--pst-color-link);
     }
 
-    // Items that aren't the home have a carot to the left
+    // Items that aren't the home have a caret to the left
     &:not(.breadcrumb-home):before {
       font: var(--fa-font-solid);
       font-size: 0.8rem;
