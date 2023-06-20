@@ -296,6 +296,9 @@ function checkPageExistsAndRedirect(event) {
       location.href = tryUrl;
     }) // if the page exists, go there
     .catch((error) => {
+      console.log(
+        `[PST]page does not exist, redirecting to: ${otherDocsHomepage}`
+      );
       location.href = otherDocsHomepage;
     });
 
