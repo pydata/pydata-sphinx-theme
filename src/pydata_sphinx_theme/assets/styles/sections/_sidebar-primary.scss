@@ -202,12 +202,10 @@ nav.bd-links {
   }
 
   .active {
-    color: var(--pst-color-link);
-    border-left: 3px solid var(--pst-color-link);
     > a,
     &:hover > a {
       font-weight: 600;
-      color: var(--pst-color-primary);
+      box-shadow: inset 2px 0px 0px var(--pst-color-link);
     }
   }
 

@@ -24,9 +24,6 @@
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
       @include link-style-text;
-      &:hover {
-        border-style: none;
-      }
 
       &:focus {
         color: var(--pst-color-primary);
@@ -36,8 +33,7 @@
     // Active page is always underline - using the same underline style as hover
     &.current > a {
       font-weight: 600;
-      color: var(--pst-color-primary);
-      @include link-hover-decoration;
+      color: var(--pst-color-link);
     }
   }
 
@@ -71,4 +67,11 @@
 // Don't display the `site navigation` in the header menu
 .bd-header .navbar-nav > p.sidebar-header-items__title {
   display: none;
+}
+
+// Ensure navbar links have the correct styling
+.bd-header .navbar-nav > .active > .nav-link {
+  color: var(--pst-color-link);
+  font-weight: 600;
+  @include link-hover-decoration;
 }

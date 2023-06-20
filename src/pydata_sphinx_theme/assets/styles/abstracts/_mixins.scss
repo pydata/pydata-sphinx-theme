@@ -303,8 +303,14 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
   &:hover {
     color: var(--pst-color-link-hover);
-    border-left: 3px solid var(--pst-color-link-hover);
+    box-shadow: inset 2px 0px 0px var(--pst-color-link-hover);
     text-decoration: none;
     background-color: transparent;
+  }
+
+  &:active {
+    color: var(--pst-color-link);
+    background-color: transparent;
+    box-shadow: inset 2px 0px 0px var(--pst-color-link);
   }
 }
