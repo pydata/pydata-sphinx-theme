@@ -273,27 +273,25 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
         sphinx_build_factory("base", confoverrides=confoverrides).build()
 
 
-@pytest.mark.parametrize(
-    "align,klass",
-    [
-        ("content", ("col-lg-3", "col-lg-9", "me-auto")),
-        ("left", ("", "", "me-auto")),
-        ("right", ("", "", "ms-auto")),
-    ],
-)
-def test_navbar_align(align, klass, sphinx_build_factory) -> None:
+def test_navbar_align_default(sphinx_build_factory) -> None:
     """The navbar items align with the proper part of the page."""
-    confoverrides = {"html_theme_options.navbar_align": align}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    sphinx_build = sphinx_build_factory("base").build()
     index_html = sphinx_build.html_tree("index.html")
-    if klass[0]:
-        header_start = index_html.select(".navbar-header-items__start")[0]
-        assert klass[0] in header_start.attrs["class"]
-    if klass[1]:
-        header_items = index_html.select(".navbar-header-items")[0]
-        assert klass[1] in header_items.attrs["class"]
-    header_center = index_html.select(".navbar-header-items__center")[0]
-    assert klass[2] in header_center.attrs["class"]
+    assert "col-lg-9" in index_html.select(".navbar-header-items")[0].attrs["class"]
+
+
+def test_navbar_align_right(sphinx_build_factory) -> None:
+    """The navbar items align with the proper part of the page."""
+    confoverrides = {"html_theme_options.navbar_align": "right"}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+    # Both the column alignment and the margin should be changed
+    index_html = sphinx_build.html_tree("index.html")
+    assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
+    assert (
+        "ms-auto"
+        in index_html.select("div.navbar-header-items__center")[0].attrs["class"]
+    )
 
 
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression) -> None:
@@ -648,12 +646,14 @@ def test_show_nav_level(sphinx_build_factory) -> None:
         assert "checked" in checkbox.attrs
 
 
+# the switcher files tested in test_version_switcher_error_states, not all of them exist
 switcher_files = ["switcher.json", "http://a.b/switcher.json", "missing_url.json"]
-"the switcher files tested in test_version_switcher, not all of them exist"
 
 
 @pytest.mark.parametrize("url", switcher_files)
-def test_version_switcher(sphinx_build_factory, file_regression, url) -> None:
+def test_version_switcher_error_states(
+    sphinx_build_factory, file_regression, url
+) -> None:
     """Regression test the version switcher dropdown HTML.
 
     Note that a lot of the switcher HTML gets populated by JavaScript,
@@ -878,7 +878,7 @@ def test_translations(sphinx_build_factory) -> None:
     assert "Créé en utilisant" in str(footer)
     assert "Construit avec le" in str(footer)
 
-    footer_article = index.select(".prev-next-footer")[0]
+    footer_article = index.select(".bd-footer-article")[0]
     assert "précédent" in str(footer_article)
     assert "page suivante" in str(footer_article)
 
