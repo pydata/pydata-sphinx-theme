@@ -299,34 +299,32 @@ function checkPageExistsAndRedirect(event) {
       location.href = otherDocsHomepage;
     });
 
-  // ensure we don't follow the initial link
+  // ↓ this prevents the browser from following the href of the clicked node
+  // ↓ (which is fine because this function takes care of redirecting)
   event.preventDefault();
 }
 
 /**
- * Check if the corresponding url is absolute and make a absolute path from root if necessary
+ * Load and parse the version switcher JSON file from an absolute or relative URL.
  *
- * @param {string} url the url to check
+ * @param {string} url The URL to load version switcher entries from.
  */
 async function fetchVersionSwitcherJSON(url) {
   // first check if it's a valid URL
   try {
     var result = new URL(url);
   } catch (err) {
-    // if not, assume relative path and fix accordingly
     if (err instanceof TypeError) {
-      // workaround for redirects like https://pydata-sphinx-theme.readthedocs.io
-      // fetch() automatically follows redirects so it should work in every builder
-      // (RDT, GitHub actions, etc)
-      const origin = await fetch(window.location.origin, {
-        method: "HEAD",
-      });
+      // assume we got a relative path, and fix accordingly. But first, we need to
+      // use `fetch()` to follow redirects so we get the correct final base URL
+      const origin = await fetch(window.location.origin, { method: "HEAD" });
       result = new URL(url, origin.url);
     } else {
+      // something unexpected happened
       throw err;
     }
   }
-
+  // load and return the JSON
   const response = await fetch(result);
   const data = await response.json();
   return data;
