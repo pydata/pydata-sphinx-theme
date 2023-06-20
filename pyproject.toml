@@ -83,7 +83,6 @@ a11y = ["pytest-playwright"]
 "sphinx.html_themes" = { pydata_sphinx_theme = "pydata_sphinx_theme" }
 
 [tool.doc8]
-ignore-path="docs/api"
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 
 [tool.ruff]
