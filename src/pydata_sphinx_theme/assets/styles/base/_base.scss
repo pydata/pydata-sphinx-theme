@@ -35,13 +35,10 @@ p {
 }
 
 a {
-  color: var(--pst-color-link);
-  // So that really long links don't spill out of their container
-  word-wrap: break-word;
+  @include link-style-default;
   @include link-decoration;
 
   &:hover {
-    color: var(--pst-color-link-hover);
     @include link-hover-decoration;
   }
 

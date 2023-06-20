@@ -21,13 +21,11 @@
       display: flex;
       align-items: center;
       height: 100%;
-      color: var(--pst-color-text-muted);
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
+      @include link-style-text;
       &:hover {
-        color: var(--pst-color-primary);
         border-style: none;
-        text-decoration-line: none;
       }
 
       &:focus {
@@ -35,10 +33,11 @@
       }
     }
 
-    // Active page is always highlighted
+    // Active page is always underline - using the same underline style as hover
     &.current > a {
       font-weight: 600;
       color: var(--pst-color-primary);
+      @include link-hover-decoration;
     }
   }
 
