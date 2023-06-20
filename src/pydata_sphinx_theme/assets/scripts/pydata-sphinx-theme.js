@@ -296,17 +296,11 @@ function checkPageExistsAndRedirect(event) {
       location.href = tryUrl;
     }) // if the page exists, go there
     .catch((error) => {
-      // do not remove the log
-      // https://github.com/pydata/pydata-sphinx-theme/pull/1350
-      console.log(
-        `[PST]page does not exist, redirecting to: ${otherDocsHomepage}`
-      );
       location.href = otherDocsHomepage;
     });
 
-  // this prevents the browser from following the href of the clicked node
-  // (which is fine because this function takes care of redirecting)
-  return false;
+  // ensure we don't follow the initial link
+  event.preventDefault();
 }
 
 /**
