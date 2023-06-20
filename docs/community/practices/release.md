@@ -5,7 +5,7 @@
 ## Our goals
 
 Our release policy describes how we decide when to make a new public release of the theme so that other projects may use new features and improvements.
-It tries to balance between these goals:
+It tries to balance these goals:
 
 - Release relatively frequently, so that we provide a continuous stream of improvement to projects that use the theme, and minimize the effort needed to upgrade.
 - Do not surprise people (especially with negative surprises) and provide time for projects to provide feedback about upcoming features.

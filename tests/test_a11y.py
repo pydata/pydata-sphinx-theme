@@ -111,4 +111,4 @@ def test_axe_core_kitchen_sink(
     results = page.evaluate(f"axe.run('{selector}')")
 
     # Expect Axe-core to have found 0 accessibility violations
-    assert len(results["violations"]) == 0, pretty_axe_results(results)
+    assert len(results["violations"]) == 0, pretty_axe_results(results, selector)

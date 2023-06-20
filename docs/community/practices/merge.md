@@ -1,20 +1,20 @@
 # Merge and review policy
 
 Our policy for merging and reviewing describes how we review one another's work, and when we allow others to merge changes into our main codebase.
-It tries to balance between a few goals:
+It tries to balance a few goals:
 
 - Iterate on PRs and merge them relatively quickly, so that we reduce the debt associated with long-lasting PRs.
 - Give enough time for others to provide their input and guide the PR itself, and to ensure that we aren't creating a problem with the PR.
 - Value iterative improvement over creating the perfect Pull Request, so that we do not burden contributors with cumbersome discussion and minor revision requests.
 - Recognize that we all have limited time and resources, and so cannot guarantee a full quality assurance process each time.
-- Give general preference to the opinions from maintainers of projects in the PyData ecosystem, as a key stakeholder community of this theme.
+- Give general preference to the opinions of maintainers of projects in the PyData ecosystem, as a key stakeholder community of this theme.
 
-We follow these guidelines in order to achieve these goals:
+We follow these guidelines to achieve these goals:
 
 - Assume that all maintainers are acting in good faith and will use their best judgment to make decisions in the best interests of the repository.
-- We can and will make mistakes, and so encourage best practices in testing and documentation to guard against this.
-- It's important to share information, so give a best effort at telling others about work that you're doing.
-- It's best to discuss and agree on important decisions at a high level before implementation, so give a best effort at providing time and invitation for others to provide feedback.
+- We can and will make mistakes, so encourage best practices in testing and documentation to guard against this.
+- It's important to share information, so give your best effort at telling others about the work that you're doing.
+- It's best to discuss and agree on important decisions at a high level before implementation, so give the best effort at providing time and invitation for others to provide feedback.
 
 ## Policy for moderate changes
 
@@ -35,7 +35,7 @@ They can be merged when the above conditions are met, and one of these things ha
 
 These are changes that significantly alter the experience of the user, or that add significant complexity to the codebase.
 
-All of the above, but PRs **must** have approval from at least one other core maintainer before merging.
+All the above, but PRs **must** have approval from at least one other core maintainer before merging.
 In addition, the PR author should put extra effort into ensuring that the relevant stakeholders are notified about a change, so they can gauge its impact and provide feedback.
 
 ## Policy For minor changes and bugfixes

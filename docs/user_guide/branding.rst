@@ -5,7 +5,7 @@ Branding and logo
 Customize logo and title
 ========================
 
-By default the theme will use the value of ``project`` on the left side of the header navbar.
+By default, the theme will use the value of ``project`` on the left side of the header navigation bar.
 This can be replaced by a logo image, and optionally a custom ``html_title`` as well.
 
 Single logo for light and dark mode
@@ -80,24 +80,26 @@ To reference an external website, make sure your link starts with ``http``:
 Customize logo alternative text
 -------------------------------
 
-You may set a custom ``alt text`` to use with your logo to replace the default ("logo image").
-This can make the logo more accessible to those using screen readers or other assistive tech.
-To do so, use ``html_teme_options["logo"]["alt_text"]`` as in the following example:
+You may set a custom ``alt text`` for your logo to replace the default ``"logo image"`` generic description.
+Adding a descriptive ``alt text`` can help make your documentation more accessible to readers using screen readers or another assistive tech.
+
+To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration option as in the following example:
 
 .. code-block:: python
    :caption: conf.py
 
    html_theme_options = {
        "logo": {
-           "alt_text": "foo",
+           # Because the logo is also a homepage link, including "home" in the alt text is good practice
+           "alt_text": "My Project Name - Home",
        }
    }
 
 Add a logo title
 ----------------
 
-To add a title in the brand section of your documentation, define a value for ``html_theme_options.logo["text"]``
-This will appear just after your logo image if it is set.
+To add a title in the brand section of your documentation, define a value for ``html_theme_options.logo["text"]``.
+This title will appear next to the logo image if set.
 
 .. code-block:: python
 
@@ -115,12 +117,13 @@ Add favicons
 
 .. deprecated:: 0.15
 
-   Support for complex and multiple favicons will be dropped in version 0.15. Instead use the `sphinx-favicon <https://sphinx-favicon.readthedocs.io/en/stable/>`__ extension. It provides the same functionality using more flexible parameters.
+   Support for complex and multiple favicons will be dropped in version 0.15. Instead, use the `sphinx-favicon <https://sphinx-favicon.readthedocs.io/en/stable/>`__ extension.
+   It provides the same functionality using more flexible parameters.
 
 
 ``pydata_sphinx_theme`` supports the `standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_, using ``html_favicon``.
 
-Additionally you may add any number of browser- or device-specific favicons of any size.
+Additionally, you may add any number of browser- or device-specific favicons of any size.
 To do so, use the ``html_theme_options["favicons"]`` configuration key.
 The only required argument is ``href``, which can be either an absolute URL (beginning with ``http``) or a local path relative to your ``html_static_path``.
 In addition, you may specify a size with ``sizes``, specify a ``rel`` value, and specify a ``color``.

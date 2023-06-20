@@ -1,7 +1,7 @@
 # Theme-specific elements
 
 There are a few elements that are unique or particularly important to this theme.
-Some of these are triggered with configuration or markdown syntax that is unique to the theme, and we cover them below.
+Some of these are triggered with configuration or Markdown syntax that is unique to the theme, and we cover them below.
 
 ```{contents} Page contents
 :local:
@@ -9,11 +9,10 @@ Some of these are triggered with configuration or markdown syntax that is unique
 
 ## Mathematics
 
-Most Sphinx sites support math, but it is particularly important for scientific computing and so we illustrate support here as well.
+Most Sphinx sites support math, but it is particularly important for scientific computing, so we illustrate support here as well.
 
 Here is an inline equation: {math}`X_{0:5} = (X_0, X_1, X_2, X_3, X_4)` and {math}`another` and {math}`x^2 x^3 x^4` another. And here's one to test vertical height {math}`\frac{\partial^2 f}{\partial \phi^2}`.
-
-Here is block-level equation:
+Here is a block-level equation:
 
 ```{math}
 :label: My label
@@ -45,7 +44,7 @@ And here is a really long equation with a label!
 \frac{1}{r^2 \sin^2\theta} \frac{\partial^2 f}{\partial \phi^2}
 ```
 
-You can add a link to equations like the one above: {eq}`My label` and {eq}`My label 2`.
+You can add a link to equations like the one above {eq}`My label` and {eq}`My label 2`.
 
 ## Code blocks
 
@@ -58,7 +57,7 @@ print("A regular code block")
 print("A regular code block")
 ```
 
-You can also provide captions with code blocks, which will be displayed just above the code.
+You can also provide captions with code blocks, which will be displayed right above the code.
 For example, the following code:
 
 ````md
@@ -104,7 +103,7 @@ print("A code block with a caption and line numbers.")
 
 ## Inline code
 
-When used directly, the `code` role just displays the text without syntax highlighting, as a literal. As mentioned in the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#inline-code-highlighting) you can also enable syntax highlighting by defining a custom role. It will then use the same highligther as in the `code-block` directive.
+When used directly, the `code` role just displays the text without syntax highlighting, as a literal. As mentioned in the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#inline-code-highlighting) you can also enable syntax highlighting by defining a custom role. It will then use the same highlighter as in the `code-block` directive.
 
 ```{code-block} rst
 
@@ -147,13 +146,13 @@ Here's one footnote[^1] and another footnote [^2] and a named footenote[^named],
 
 ## Version changes
 
-This theme supports a short-hand way of making **admonitions behave like sidebars**.
+This theme supports a shorthand way of making **admonitions behave like sidebars**.
 This can be a helpful way of highlighting content that lives to the side of your main text without interrupting the vertical flow as much.
 
 For example, look to the right of an "admonition sidebar" and a traditional Sphinx sidebar.
 
 To make an admonition behave like a sidebar, add the `sidebar` class to its list of classes.
-For example, the admonition sidebar was created with the following markdown:
+For example, the admonition sidebar was created with the following Markdown:
 
 ````md
 ```{admonition} A sidebar admonition!
@@ -169,7 +168,7 @@ Instead of displaying these as raw links, this theme does some lightweight forma
 
 In **reStructuredText**, URLs are automatically converted to links, so this works automatically.
 
-In **MyST Markdown**, by default you must define a standard markdown link and duplicate the URL in the link text.
+In **MyST Markdown**, by default, you must define a standard Markdown link and duplicate the URL in the link text.
 You may skip the need to manually define the link text by [activating the MyST Linkify extension](https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#linkify).
 
 For example:

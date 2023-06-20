@@ -4,7 +4,7 @@
 Light and dark themes
 =====================
 
-You can change the major background / foreground colors of this theme according to "dark" and "light" modes.
+You can change the major background/foreground colors of this theme using built-in "dark" and "light" modes.
 These are controlled by a button in the navigation header, with the following options:
 
 - A ``light`` theme with a bright background and dark text / UI elements
@@ -47,7 +47,7 @@ Customize the CSS of light and dark themes
 
 .. danger::
 
-    Theming is still a beta feature so the variables related to color theming are likely to change in the future. No backward compatibility is guaranteed when customization is done.
+    Theming is still a beta feature, so the variables related to color theming are likely to change in the future. No backward compatibility is guaranteed when customization is done.
 
 
 To customize the CSS of page elements in a theme-dependent manner, use the ``html[data-theme='<THEME>']`` CSS selector.
@@ -74,8 +74,8 @@ A complete list of the colors used in this theme can be found in the :doc:`CSS s
 Theme-dependent images and content
 ----------------------------------
 
-It is possible to use different content for light and dark mode, so that the content only shows up when a particular theme is active.
-This is useful if your content depends on the theme's style, such as a PNG image with a light or a dark background.
+It is possible to use different content for light and dark modes so that the content only shows up when a particular theme is active.
+This is useful if your content depends on the theme's style, such as a PNG image with a light or dark background.
 
 There are **two CSS helper classes** to specify items on the page as theme-specific.
 These are:
@@ -109,7 +109,7 @@ visible, and their brightness will be reduced by a filter.
 
 If your image is suitable for the dark theme, add the CSS class
 :code:`only-dark` as noted above. If your image is suitable for both light and
-dark theme, add the CSS class :code:`dark-light` to make your image
+dark themes, add the CSS class :code:`dark-light` to make your image
 theme-agnostic.
 
 For example, here's an image without adding this helper class.

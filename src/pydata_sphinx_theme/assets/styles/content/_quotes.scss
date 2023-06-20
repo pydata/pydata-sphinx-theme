@@ -7,7 +7,7 @@ blockquote {
   position: relative;
 
   p {
-    color: var(--pst-color-text-muted);
+    color: var(--pst-color-text-base);
   }
 
   // remove padding from included line-block to avoid duplication
@@ -20,7 +20,7 @@ blockquote {
     margin-bottom: 0;
   }
 
-  @include background-from-color-variable(--pst-color-border);
+  @include background-from-color-variable(--pst-color-on-background);
 
   //hack to make the text in the blockquote selectable
   &:before {
