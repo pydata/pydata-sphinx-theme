@@ -18,6 +18,10 @@
   a span {
     display: flex;
     align-items: center;
+    &:hover {
+      color: var(--pst-color-link-hover);
+      @include link-hover-decoration;
+    }
   }
 
   // Icons styling
