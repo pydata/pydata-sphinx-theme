@@ -234,7 +234,7 @@ $link-underline-offset: 0.1578em !default;
 //  - 0.12em (relative to the link's text size)
 $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
-//  Ensures links have an underline decoration
+//  Ensures links have an underline decoration by default
 @mixin link-decoration {
   text-decoration: underline;
 
@@ -247,6 +247,8 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   }
 }
 
+// Ensures links have an underline decoration on hover - distinct from the
+// default behaviour
 @mixin link-hover-decoration {
   @if $link-hover-underline-thickness {
     text-decoration-thickness: $link-hover-underline-thickness;
@@ -264,15 +266,16 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 @mixin link-style-default {
   &:link {
     color: var(--pst-color-link);
+    @include link-decoration;
   }
 
   &:visited {
-    color: var(--pst-color-inline-code);
-    // TODO: @trallard replace with accent colour
+    color: var(--pst-color-accent);
   }
 
   &:hover {
     color: var(--pst-color-link-hover);
+    @include link-hover-decoration;
   }
 
   &:active {
@@ -285,10 +288,23 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 // Text link styles
 //
 // Makes links use the base text colour. Use this mixin for
-// navigation components, such as breadcrumbs.
+// navigation components, such as navigation bar links.
 
 @mixin link-style-text {
   color: var(--pst-color-text-muted);
+
+  &:hover {
+    @include link-hover-decoration;
+    color: var(--pst-color-link-hover);
+  }
+}
+// Navigation link styles
+//
+// Use this mixin for navigation components, such as breadcrumbs.
+
+@mixin link-style-navigation {
+  color: var(--pst-color-link);
+  @include link-decoration;
 
   &:hover {
     @include link-hover-decoration;
@@ -370,8 +386,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   }
 
   &:visited {
-    color: var(--pst-color-inline-code);
-    // TODO: @trallard replace with accent colour
+    color: var(--pst-color-accent);
   }
 
   &:hover {
@@ -388,7 +403,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 // Text link styles
 //
 // Makes links use the base text colour. Use this mixin for
-// navigation components, such as breadcrumbs.
+// navbar links.
 
 @mixin link-style-text {
   color: var(--pst-color-text-muted);
@@ -400,6 +415,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 }
 
 // Sidebar and TOC links
+// These will have the non-colour decoration on the side of the link instead of underneath
 @mixin link-sidebar-style {
   color: var(--pst-color-text-muted);
   text-decoration: none;

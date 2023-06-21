@@ -23,13 +23,16 @@
     text-decoration: none;
 
     p.prev-next-title {
-      color: var(--pst-color-primary);
+      @include link-style-navigation;
       font-weight: var(--pst-admonition-font-weight-heading);
       font-size: 1.1em;
     }
 
     &:hover p.prev-next-title {
-      text-decoration: underline;
+      @include link-hover-decoration;
+    }
+    &:visited p.prev-next-title {
+      color: var(--pst-color-link);
     }
 
     .prev-next-info {

@@ -36,11 +36,6 @@ p {
 
 a {
   @include link-style-default;
-  @include link-decoration;
-
-  &:hover {
-    @include link-hover-decoration;
-  }
 
   &.headerlink {
     color: var(--pst-color-secondary);

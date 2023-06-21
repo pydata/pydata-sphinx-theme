@@ -17,7 +17,7 @@ ul.bd-breadcrumbs {
     // Style should look like heavier in-page links
     font-weight: bold;
     a {
-      color: var(--pst-color-link);
+      @include link-style-navigation;
     }
 
     // Items that aren't the home have a caret to the left

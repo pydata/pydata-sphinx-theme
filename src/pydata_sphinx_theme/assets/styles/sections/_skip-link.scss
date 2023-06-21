@@ -9,9 +9,9 @@
   left: 0;
   right: 0;
   text-align: center;
-  // TODO: @trallard to update colours after #1174 is merged
-  background-color: var(--pst-color-secondary);
-  color: var(--pst-color-text-base);
+  background-color: var(--pst-color-warning);
+  // Ensure we are using a WCAG conformant colour
+  color: var(--pst-color-warning-text) !important;
   padding: 0.5rem;
   z-index: $zindex-modal;
   border-bottom: 1px solid var(--pst-color-border);
