@@ -216,6 +216,9 @@
  * Consistent styling for links
  **/
 
+/**
+* Define some useful variables for links styling consistency
+*/
 //  Thickness of the underline for links
 // the default will be either:
 //  - 1px
@@ -234,7 +237,8 @@ $link-underline-offset: 0.1578em !default;
 //  - 0.12em (relative to the link's text size)
 $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
-//  Ensures links have an underline decoration by default
+//  Ensures links have an underline decoration by default - needed to meet
+// WCAG SC 1.4.1
 @mixin link-decoration {
   text-decoration: underline;
 
@@ -261,8 +265,8 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
 // Default link styles
 //
-// Makes links use the default unvisited, visited, hover and active colours.
-
+// Defines: default unvisited, visited, hover, and active.
+// TODO: @trallard to add focus styles in subsequent PR
 @mixin link-style-default {
   &:link {
     color: var(--pst-color-link);
@@ -289,7 +293,6 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 //
 // Makes links use the base text colour. Use this mixin for
 // navigation components, such as navigation bar links.
-
 @mixin link-style-text {
   color: var(--pst-color-text-muted);
 
@@ -298,10 +301,10 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     color: var(--pst-color-link-hover);
   }
 }
+
 // Navigation link styles
 //
 // Use this mixin for navigation components, such as breadcrumbs.
-
 @mixin link-style-navigation {
   color: var(--pst-color-link);
   @include link-decoration;

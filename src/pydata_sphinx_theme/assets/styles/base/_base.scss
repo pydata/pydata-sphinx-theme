@@ -60,6 +60,8 @@ a {
       color: var(--pst-color-text-muted);
       font: var(--fa-font-brands);
       margin-right: 0.25rem;
+      // remove the underline inherited from the links style
+      text-decoration: none;
     }
   }
 

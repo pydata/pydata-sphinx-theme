@@ -80,20 +80,20 @@
     }
 
     li a.nav-link {
-      color: var(--pst-color-text-muted);
-
-      &:hover {
-        color: var(--pst-color-primary);
-      }
+      @include link-style-text;
 
       &:focus {
         color: var(--pst-color-primary);
       }
     }
 
+    // Active page is always underline - using the same underline style as hover
+    // with the primary colour
     > .active > .nav-link {
       font-weight: 600;
       color: var(--pst-color-primary);
+      @include link-hover-decoration;
+      text-decoration-color: var(--pst-color-primary);
     }
 
     // Dropdowns for the extra links

@@ -31,9 +31,10 @@
     }
 
     // Active page is always underline - using the same underline style as hover
+    // with the primary colour
     &.current > a {
       font-weight: 600;
-      color: var(--pst-color-link);
+      color: var(--pst-color-primary);
     }
   }
 
@@ -67,11 +68,4 @@
 // Don't display the `site navigation` in the header menu
 .bd-header .navbar-nav > p.sidebar-header-items__title {
   display: none;
-}
-
-// Ensure navbar links have the correct styling
-.bd-header .navbar-nav > .active > .nav-link {
-  color: var(--pst-color-link);
-  font-weight: 600;
-  @include link-hover-decoration;
 }
