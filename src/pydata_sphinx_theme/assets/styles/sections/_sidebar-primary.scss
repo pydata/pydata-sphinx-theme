@@ -201,6 +201,7 @@ nav.bd-links {
     }
   }
 
+  // Hover should still work on top of the active link
   .active {
     > a,
     &:hover > a {

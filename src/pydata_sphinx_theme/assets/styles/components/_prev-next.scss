@@ -29,8 +29,10 @@
     }
 
     &:hover p.prev-next-title {
-      @include link-hover-decoration;
+      @include link-decoration-hover;
+      color: var(--pst-color-link-hover);
     }
+    // Exception here - keep visited in the primary colour
     &:visited p.prev-next-title {
       color: var(--pst-color-link);
     }
