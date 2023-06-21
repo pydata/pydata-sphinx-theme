@@ -25,6 +25,7 @@ author = "PyData Community"
 # -- General configuration ---------------------------------------------------
 
 extensions = [
+    "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.todo",
@@ -32,6 +33,7 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
+    "autoapi.extension",
     "_extension.gallery_directive",
     # For extension examples and demos
     "ablog",
@@ -63,11 +65,6 @@ if not os.environ.get("READTHEDOCS"):
     html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
     sitemap_locales = [None]
     sitemap_url_scheme = "{link}"
-
-
-# -- autosummary -------------------------------------------------------------
-
-autosummary_generate = True
 
 # -- Internationalization ----------------------------------------------------
 
@@ -242,6 +239,18 @@ favicons = [
     {"name": "theme-color", "content": "#ffffff"},
     {"name": "msapplication-TileImage", "content": "mstile-150x150.png"},
 ]
+
+# -- Options for autosummary/autodoc output ------------------------------------
+autosummary_generate = True
+autodoc_typehints = "description"
+autodoc_member_order = "groupwise"
+
+# -- Options for autoapi -------------------------------------------------------
+autoapi_type = "python"
+autoapi_dirs = ["../src/pydata_sphinx_theme"]
+autoapi_keep_files = True
+autoapi_root = "api"
+autoapi_member_order = "groupwise"
 
 # -- application setup -------------------------------------------------------
 
