@@ -87,13 +87,12 @@
       }
     }
 
-    // Active page is always underline - using the same underline style as hover
+    // Active page is always underlined - using the same underline style as hover
     // with the primary colour
     > .active > .nav-link {
       font-weight: 600;
+      @include link-decoration-hover;
       color: var(--pst-color-primary);
-      @include link-hover-decoration;
-      text-decoration-color: var(--pst-color-primary);
     }
 
     // Dropdowns for the extra links
@@ -133,12 +132,14 @@
   font-weight: 600;
   color: var(--pst-color-primary);
   background-color: transparent;
-  border-left: 2px solid var(--pst-color-primary);
+  box-shadow: inset 2px 0px 0px var(--pst-color-primary);
 }
 
 .nav-link {
   &:hover {
-    border-style: none;
+    color: var(--pst-color-link-hover);
+    @include link-decoration;
+    @include link-decoration-hover;
   }
 
   &.nav-external:after {

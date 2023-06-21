@@ -12,7 +12,7 @@
     }
   }
 
-  // Default link styles
+  // Navbar links - do not have an underline by default
   li {
     display: flex;
     flex-direction: column;
@@ -30,11 +30,13 @@
       }
     }
 
-    // Active page is always underline - using the same underline style as hover
+    // Active page is always underlined - using the same underline style as hover
     // with the primary colour
     &.current > a {
+      @include link-decoration-hover;
       font-weight: 600;
       color: var(--pst-color-primary);
+      text-decoration-color: var(--pst-color-primary);
     }
   }
 

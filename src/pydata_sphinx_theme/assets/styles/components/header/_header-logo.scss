@@ -22,4 +22,9 @@
     height: 100%;
     width: auto;
   }
+
+  // remove underline from brand title
+  a {
+    text-decoration: none;
+  }
 }
