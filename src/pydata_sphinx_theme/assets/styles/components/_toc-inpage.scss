@@ -25,6 +25,9 @@ nav.page-toc {
 // Each entry of the in-page TOC
 .toc-entry {
   display: block;
+  a > code {
+    color: var(--pst-color-text-muted);
+  }
 
   a.nav-link {
     display: block;

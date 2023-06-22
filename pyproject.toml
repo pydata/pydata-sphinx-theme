@@ -55,6 +55,7 @@ doc = [
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
+  "sphinx-autoapi",
   # For examples section
   "ablog>=0.11.0rc2",
   "jupyter_sphinx",

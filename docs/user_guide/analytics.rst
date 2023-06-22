@@ -13,7 +13,7 @@ options depending on the analytics provider that you want to use.
        "analytics": analytics_options,
    }
 
-Generally speaking we recommend using Plausible over Google Analytics because
+Generally speaking, we recommend using Plausible over Google Analytics because
 it has a better story around user security and privacy. In addition, it is more
 open-source and transparent. In fact,
 `you can self-host a Plausible server <https://www.elvisduru.com/blog/how-to-self-host-plausible-analytics>`__.
@@ -36,7 +36,7 @@ and privacy-friendly analytics for the site. To configure, you will need to prov
 - A URL pointing to the JavaScript analytics script that is served by your Plausible server
 - A domain that reflects where your documentation lives
 
-Plausible's javascript will be included in all html pages to gather metrics.
+Plausible's JavaScript will be included in all HTML pages to gather metrics.
 The dashboard with analytics results will be accessible at ``https://<plausible-url>/<my-domain>``.
 
 .. code:: python
@@ -56,9 +56,9 @@ Google Analytics
 ================
 
 If the ``google_analytics_id`` config option is specified (like ``G-XXXXXXXXXX``),
-Google Analytics' javascript is included in the html pages.
+Google Analytics' JavaScript is included in the HTML pages.
 
-.. code:: python
+.. code:: Python
 
    html_theme_options["analytics"] = {
        "google_analytics_id": "G-XXXXXXXXXX",

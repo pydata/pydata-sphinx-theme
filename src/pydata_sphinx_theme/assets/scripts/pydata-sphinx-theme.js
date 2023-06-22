@@ -299,9 +299,8 @@ function checkPageExistsAndRedirect(event) {
       location.href = otherDocsHomepage;
     });
 
-  // this prevents the browser from following the href of the clicked node
-  // (which is fine because this function takes care of redirecting)
-  return false;
+  // ensure we don't follow the initial link
+  event.preventDefault();
 }
 
 /**
@@ -337,6 +336,7 @@ async function fetchVersionSwitcherJSON(url) {
 var versionSwitcherBtns = document.querySelectorAll(
   ".version-switcher__button"
 );
+
 if (versionSwitcherBtns.length) {
   const data = await fetchVersionSwitcherJSON(
     DOCUMENTATION_OPTIONS.theme_switcher_json_url

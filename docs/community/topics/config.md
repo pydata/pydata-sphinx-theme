@@ -8,7 +8,7 @@ Here are some tips to do this the "right" way in Sphinx.
 ## Update config: use `app.config`
 
 For example, `app.config.foo = "bar"`.
-For some reason, when Sphinx sets things it directly uses `__dict__` but this doesn't seem to be different from the pattern described here.
+For some reason, when Sphinx sets things it directly uses `__dict__`, but this doesn't seem to be different from the pattern described here.
 
 ## Update theme options: use `app.builder.theme_options`
 

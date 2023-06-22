@@ -10,7 +10,7 @@
 # assert(len(results["violations"])) == 0, pretty_axe_results(results)
 
 
-def pretty_axe_results(results: dict) -> str:
+def pretty_axe_results(results: dict, selector: str) -> str:
     """Create readable string that can be printed to console from the Axe-core results object.
 
     :param results: The object promised by `axe.run()`.
@@ -30,6 +30,7 @@ def pretty_axe_results(results: dict) -> str:
         )
         for tag in violation["tags"]:
             string += f" {tag}"
+        string += f"\n\tTested selector: {selector}"
         string += "\n\tElements Affected:"
         i = 1
         for node in violation["nodes"]:

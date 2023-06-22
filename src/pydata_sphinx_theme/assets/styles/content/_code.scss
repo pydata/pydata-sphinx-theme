@@ -51,6 +51,21 @@ div.literal-block-wrapper {
 code.literal {
   padding: 0.1rem 0.25rem;
   background-color: var(--pst-color-surface);
-  border: 1px solid var(--pst-color-on-surface);
+  border: 1px solid var(--pst-color-border);
   border-radius: 0.25rem;
+}
+
+a > code {
+  color: var(--pst-color-inline-code-links);
+}
+
+// Fix for Sphinx's "highlight" directive - this is an issue with our accessible pygments theme
+// and the colour we are using for the background of the code blocks.
+html[data-theme="light"] .highlight .nf {
+  color: #0078a1 !important;
+}
+
+// Minimum opacity needed for linenos to be WCAG AA conformant
+span.linenos {
+  opacity: 0.8 !important;
 }

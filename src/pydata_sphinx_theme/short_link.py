@@ -12,14 +12,19 @@ from .utils import traverse_or_findall
 class ShortenLinkTransform(SphinxPostTransform):
     """Shorten link when they are coming from github or gitlab and add an extra class to the tag for further styling.
 
-    Before::
-        <a class="reference external" href="https://github.com/2i2c-org/infrastructure/issues/1329">
-            https://github.com/2i2c-org/infrastructure/issues/1329
-        </a>
-    After::
-        <a class="reference external github" href="https://github.com/2i2c-org/infrastructure/issues/1329">
-            2i2c-org/infrastructure#1329
-        </a>
+    Before:
+        .. code-block:: html
+
+            <a class="reference external" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+              https://github.com/2i2c-org/infrastructure/issues/1329
+            </a>
+
+    After:
+        .. code-block:: html
+
+            <a class="reference external github" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+               2i2c-org/infrastructure#1329
+            </a>
     """
 
     default_priority = 400
@@ -45,7 +50,14 @@ class ShortenLinkTransform(SphinxPostTransform):
                     node.children[0] = nodes.Text(self.parse_url(uri))
 
     def parse_url(self, uri: ParseResult) -> str:
-        """Parse the content of the url with respect to the selected platform."""
+        """Parse the content of the url with respect to the selected platform.
+
+        Args:
+            uri: the link to the platform content
+
+        Returns:
+            the reformated url title
+        """
         path = uri.path
 
         if path == "":

@@ -17,33 +17,22 @@ div.deprecated {
   > p {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
-
-    @include background-from-color-variable(--pst-color-info);
   }
 }
 
 div.versionadded {
   border-color: var(--pst-color-success);
-
-  p:before {
-    background-color: var(--pst-color-success);
-  }
+  background-color: var(--pst-color-success-bg);
 }
 
 div.versionchanged {
   border-color: var(--pst-color-warning);
-
-  p:before {
-    background-color: var(--pst-color-warning);
-  }
+  background-color: var(--pst-color-warning-bg);
 }
 
 div.deprecated {
   border-color: var(--pst-color-danger);
-
-  p:before {
-    background-color: var(--pst-color-danger);
-  }
+  background-color: var(--pst-color-danger-bg);
 }
 
 span.versionmodified {

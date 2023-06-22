@@ -39,7 +39,7 @@ Then add the ``dropdown`` class to any admonition directive (shown here on a ``n
 Custom admonition styles
 ========================
 
-A `limited set <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ of admonitions are built-in to docutils (the rST → HTML engine that underlies Sphinx). However, it is possible to create custom admonitions with their own default colors, icons, and titles.
+A `limited set <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ of admonitions are built-in to docutils (the ``rST`` → ``HTML`` engine that underlies Sphinx). However, it is possible to create custom admonitions with their own default colors, icons, and titles.
 
 
 Customizing the title
@@ -69,7 +69,7 @@ The title is specified on the same line as the ``.. admonition::`` directive:
 Styling with semantic color names
 ---------------------------------
 
-You can re-style any admonition to match any of the built-in admonition types using any of the semantic color names as a class (this is most useful for custom-titled admonitions):
+You can re-style any admonition to match any of the built-in admonition types using any of the :ref:`theme's semantic color names <color-variables>` as a class (this is most useful for custom-titled admonitions):
 
 .. begin-example-semantic
 .. admonition:: Custom title with "warning" style
@@ -78,7 +78,7 @@ You can re-style any admonition to match any of the built-in admonition types us
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 .. end-example-semantic
 
-Note that it updates both the color and the icon.
+Note that it updates both the color and the icon. See :doc:`./styling` for a list of all semantic color names.
 
 .. tab-set::
 
@@ -92,7 +92,6 @@ Note that it updates both the color and the icon.
 
 This theme defines classes for `the standard docutils admonition types <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ (``attention``, ``caution``, etc) and additionally supports ``seealso`` and ``todo`` admonitions (see :doc:`../examples/kitchen-sink/admonitions` for a demo of all built-in admonition styles).
 
-
 Customizing the color
 ---------------------
 
@@ -105,7 +104,8 @@ Besides the pre-defined semantic color classes (see previous section) you can al
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 .. end-example-color
 
-Add the new class to your `custom.css <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_css_files>`__ file. As in the example below, be sure to use the same color for ``border-color``, ``background-color``, and ``color`` (the transparency effect is handled automatically by the theme).
+To do this, you will need to add a class to your `custom.css <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_css_files>`__ file, as in the example below.
+Be sure to use the same color for ``border-color`` and ``color`` and a different shade for ``background-color``:
 
 .. tab-set::
 

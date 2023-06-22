@@ -12,7 +12,7 @@ span.guilabel {
   margin: auto 2px;
   position: relative;
 
-  @include background-from-color-variable(--pst-color-info);
+  @include background-from-color-variable(--pst-color-info-bg);
 }
 
 a.reference.download:before {

@@ -4,8 +4,8 @@ Page Table of Contents
 Show more levels of the in-page TOC by default
 ----------------------------------------------
 
-Normally only the 2nd-level headers of a page are show in the right
-table of contents, and deeper levels are only shown when they are part
+Normally only the 2nd-level headers of a page are shown in the right
+table of contents and deeper levels are only shown when they are part
 of an active section (when it is scrolled on screen).
 
 You can show deeper levels by default by using the following configuration, indicating how many levels should be displayed:
