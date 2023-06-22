@@ -1,6 +1,7 @@
 # Read the Docs functionality
 
 This theme comes with support for {{ rtd }}, a popular service for hosting documentation in the scientific Python community.
+Below are the supported integrations with {{ rtd }} functionality.
 
 ## Add ethical advertisements to your sidebar
 
@@ -18,3 +19,11 @@ html_sidebars = {
     "**": ["search-field.html", "sidebar-nav-bs.html", "sidebar-ethical-ads.html"]
 }
 ```
+
+## Version switcher
+
+{{ rtd }} has a built-in version switcher that normally appears in the bottom-right corner of the screen.
+If your site is hosted on {{ rtd }} and you enabled the theme's native version switcher, the {{ rtd }} version switcher will be suppressed.
+If your site is hosted on {{ rtd }} and you _did not_ enable the theme's native version switcher,
+the {{ rtd }} version switcher will appear at the bottom of the left sidebar,
+unless you have suppressed the left sidebar in which case it will be in {{ rtd }}'s default (bottom right corner) position.
