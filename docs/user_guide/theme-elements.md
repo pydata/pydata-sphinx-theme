@@ -135,24 +135,13 @@ I was made with the `{admonition}` directive and a `sidebar` class.
 I was made with the `{sidebar}` directive.
 ```
 
-## Footnotes
-
-Here's one footnote[^1] and another footnote [^2] and a named footenote[^named], symbol [^*].
-
-[^1]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
-[^2]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
-[^named]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
-[^*]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
-
-## Version changes
-
 This theme supports a shorthand way of making **admonitions behave like sidebars**.
-This can be a helpful way of highlighting content that lives to the side of your main text without interrupting the vertical flow as much.
+This can be a helpful way of highlighting content without interrupting the vertical flow as much.
 
-For example, look to the right of an "admonition sidebar" and a traditional Sphinx sidebar.
+For example, on the right are an "admonition sidebar" and a traditional Sphinx sidebar.
 
 To make an admonition behave like a sidebar, add the `sidebar` class to its list of classes.
-For example, the admonition sidebar was created with the following Markdown:
+The admonition sidebar in this section was created with the following Markdown:
 
 ````md
 ```{admonition} A sidebar admonition!
@@ -160,6 +149,16 @@ For example, the admonition sidebar was created with the following Markdown:
 Some sidebar content.
 ```
 ````
+
+## Footnotes
+
+Here's a numeric footnote[^1], another one (preceded by a space) [^2], a named footnote[^named], and a symbolic one[^*].
+All will end up as numbers in the rendered HTML, but in the source they look like `[^1]`, `[^2]`, `[^named]` and `[^*]`.
+
+[^1]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
+[^2]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
+[^named]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
+[^*]: Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar. Foo bar foo bar.
 
 ## Link shortening for git repository services
 
