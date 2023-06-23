@@ -371,14 +371,9 @@ if (themeSwitchBtns) {
 /**
  * intercept the RTD version switcher flyout and place it in the rtd-footer-container
  * (if it exists). If not the flyout stays where it is (as an overlay in the
- * bottom-right corner) unless the theme's native version switcher is enabled (in which
- * case the RTD switcher is suppressed entirely).
+ * bottom-right corner).
  */
 function initRTDObserver() {
-  // we'll want to suppress RTD flyout if user enabled the theme's native version switcher
-  const hasVersionSwitcherFromTheme =
-    document.querySelectorAll(".version-switcher__button").length > 0;
-
   const mutatedCallback = (mutationList, observer) => {
     mutationList.forEach((mutation) => {
       // Check whether the mutation is for RTD, which will have a specific structure
@@ -394,9 +389,7 @@ function initRTDObserver() {
           if (sidebar.classList.contains("hide-on-wide")) {
             return;
           }
-          if (!hasVersionSwitcherFromTheme) {
-            sidebar.getElementById("rtd-footer-container").append(node);
-          }
+          sidebar.getElementById("rtd-footer-container").append(node);
         });
       }
     });
