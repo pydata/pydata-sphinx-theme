@@ -296,20 +296,6 @@ def test_navbar_align(align, klass, sphinx_build_factory) -> None:
     assert klass[2] in header_center.attrs["class"]
 
 
-def test_navbar_align_right(sphinx_build_factory) -> None:
-    """The navbar items align with the proper part of the page."""
-    confoverrides = {"html_theme_options.navbar_align": "right"}
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-
-    # Both the column alignment and the margin should be changed
-    index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" not in index_html.select(".navbar-header-items")[0].attrs["class"]
-    assert (
-        "ms-auto"
-        in index_html.select("div.navbar-header-items__center")[0].attrs["class"]
-    )
-
-
 def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression) -> None:
     """Test navbar elements did not change (regression test)."""
     # https://github.com/pydata/pydata-sphinx-theme/issues/302
