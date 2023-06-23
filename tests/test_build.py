@@ -273,11 +273,27 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
         sphinx_build_factory("base", confoverrides=confoverrides).build()
 
 
-def test_navbar_align_default(sphinx_build_factory) -> None:
+@pytest.mark.parametrize(
+    "align,klass",
+    [
+        ("content", ("col-lg-3", "col-lg-9", "me-auto")),
+        ("left", ("", "", "me-auto")),
+        ("right", ("", "", "ms-auto")),
+    ],
+)
+def test_navbar_align(align, klass, sphinx_build_factory) -> None:
     """The navbar items align with the proper part of the page."""
-    sphinx_build = sphinx_build_factory("base").build()
+    confoverrides = {"html_theme_options.navbar_align": align}
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
-    assert "col-lg-9" in index_html.select(".navbar-header-items")[0].attrs["class"]
+    if klass[0]:
+        header_start = index_html.select(".navbar-header-items__start")[0]
+        assert klass[0] in header_start.attrs["class"]
+    if klass[1]:
+        header_items = index_html.select(".navbar-header-items")[0]
+        assert klass[1] in header_items.attrs["class"]
+    header_center = index_html.select(".navbar-header-items__center")[0]
+    assert klass[2] in header_center.attrs["class"]
 
 
 def test_navbar_align_right(sphinx_build_factory) -> None:
