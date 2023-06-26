@@ -91,7 +91,7 @@ def docs_live(session: nox.Session) -> None:
         session.install(
             "sphinx-theme-builder[cli]@git+https://github.com/pradyunsg/sphinx-theme-builder#egg=d9f620b"
         )
-    session.run("stb", "serve", "docs", "--open-browser", "--re-ignore=locale")
+    session.run("stb", "serve", "docs", "--open-browser", "--re-ignore=locale|api")
 
 
 @nox.session()
