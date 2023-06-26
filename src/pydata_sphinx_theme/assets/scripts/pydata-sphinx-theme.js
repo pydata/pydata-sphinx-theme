@@ -357,7 +357,7 @@ if (versionSwitcherBtns.length) {
     const anchor = document.createElement("a");
     anchor.setAttribute("class", "list-group-item list-group-item-action py-1");
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
-    anchor.setAttribute("role", "menuitem");
+    anchor.setAttribute("role", "option");
     const span = document.createElement("span");
     span.textContent = `${entry.name}`;
     anchor.appendChild(span);
