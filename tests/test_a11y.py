@@ -118,10 +118,10 @@ def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
     """This isn't an a11y test, but needs a served site for Javascript to inject the version menu."""
     page.goto(url=url_base)
     # no need to include_hidden here ↓↓↓, we just need to get the active version name
-    button = page.get_by_role("button", name="dev")
+    button = page.get_by_role("button").filter(has_text="dev")
     active_version_name = button.get_attribute("data-active-version-name")
     # here we do include_hidden, so sidebar & topbar menus should each have a matching entry:
-    entries = page.get_by_role("menuitem", include_hidden=True).filter(
+    entries = page.get_by_role("option", include_hidden=True).filter(
         has_text=active_version_name
     )
     assert entries.count() == 2
