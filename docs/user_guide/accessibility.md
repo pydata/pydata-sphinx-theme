@@ -47,7 +47,7 @@ specifying at least the baseline natural language will help assistive technology
 identify if the content is in a language the reader understands.
 
 :::{hint}
-Specifying a `language` will propagate to the top-level `HTML` tag.
+In your `conf.py` file, [specifying the language your docs are written in](https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language) will propagate to the top-level `HTML` tag.
 
 ```python
   language = "en"
