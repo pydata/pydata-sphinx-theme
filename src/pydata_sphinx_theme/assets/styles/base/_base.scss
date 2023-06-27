@@ -184,7 +184,7 @@ pre {
   position: fixed;
   display: none;
   top: calc(var(--pst-header-height) + 1rem);
-  left: 50%;
+  left: auto;
   transform: translate(-50%);
   color: var(--pst-color-primary);
   background-color: var(--pst-color-on-background);
