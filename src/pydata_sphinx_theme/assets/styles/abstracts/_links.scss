@@ -1,0 +1,124 @@
+/**
+ * Consistent styling for links
+ **/
+
+// Define some useful variables for links styling consistency
+//
+//  Thickness of the underline for links
+// the default will be either:
+//  - 1px
+// - 0.0625rem if it's thicker than 1px because the user has changed the text
+//   size in their browser
+$link-underline-thickness: unquote("max(1px, .0625rem)") !default;
+// Offset of link underlines from text baseline
+// The default is 3px expressed as ems, as calculated against the default body
+// font size (on desktop).
+$link-underline-offset: 0.1578em !default;
+// Thickness of link underlines in hover state
+// The default for each link will be the thickest of the following:
+//  - 3px
+//  - 0.1875rem, if it's thicker than 3px because the user has changed the text
+//    size in their browser
+//  - 0.12em (relative to the link's text size)
+$link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
+
+//  Ensures links have an underline decoration by default - needed to meet
+// WCAG SC 1.4.1
+@mixin link-decoration {
+  text-decoration: underline;
+
+  @if $link-underline-thickness {
+    text-decoration-thickness: $link-underline-thickness;
+  }
+
+  @if $link-underline-offset {
+    text-underline-offset: $link-underline-offset;
+  }
+}
+
+// Ensures links have an underline decoration on hover - distinct from the
+// default behaviour
+@mixin link-decoration-hover {
+  @if $link-hover-underline-thickness {
+    text-decoration-thickness: $link-hover-underline-thickness;
+    // Disable ink skipping on underlines on hover. Browsers haven't
+    // standardised on this part of the spec yet, so set both properties
+    text-decoration-skip-ink: none; // Chromium, Firefox
+    text-decoration-skip: none; // Safari
+  }
+}
+
+// Default link styles
+//
+// Defines: default unvisited, visited, hover, and active.
+// TODO: @trallard to add focus styles in subsequent PR
+@mixin link-style-default {
+  // So that really long links don't spill out of their container
+  word-wrap: break-word;
+
+  color: var(--pst-color-link);
+  @include link-decoration;
+
+  &:hover {
+    color: var(--pst-color-link-hover);
+    @include link-decoration-hover;
+  }
+
+  &:active {
+    color: var(--pst-color-link);
+  }
+  &:visited {
+    color: var(--pst-color-accent);
+  }
+}
+
+// Text link styles
+//
+// Makes links use the muted text colour and removes the underline.
+// Use this mixin for navigation bar links.
+@mixin link-style-text {
+  color: var(--pst-color-text-muted);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--pst-color-link-hover);
+    @include link-decoration;
+    @include link-decoration-hover;
+  }
+}
+
+// Navigation link styles
+//
+// Use this mixin for navigation components, such as breadcrumbs.
+@mixin link-style-navigation {
+  color: var(--pst-color-link);
+  @include link-decoration;
+
+  &:hover {
+    color: var(--pst-color-link-hover);
+    @include link-decoration-hover;
+  }
+}
+
+// Sidebar and TOC links
+//
+// Makes links use the muted text colour and removes the underline.
+// Use this mixin for navigation the primary sidebar and table of contents.
+// Active and hover should work together rather than one overriding the other.
+@mixin link-sidebar-style {
+  color: var(--pst-color-text-muted);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    background-color: transparent;
+    color: var(--pst-color-link-hover);
+    @include link-decoration-hover;
+  }
+
+  &:active {
+    color: var(--pst-color-primary);
+    background-color: transparent;
+    box-shadow: inset 3px 0px 0px var(--pst-color-link);
+  }
+}
