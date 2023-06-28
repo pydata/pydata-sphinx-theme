@@ -183,10 +183,10 @@ pre {
   z-index: $zindex-tooltip;
   position: fixed;
   display: none;
-  top: calc(var(--pst-header-height) + 1rem);
+  top: 80vh;
   left: 50vw;
   transform: translate(-50%);
-  color: var(--pst-color-primary);
-  background-color: var(--pst-color-on-background);
+  color: var(--pst-color-text-base);
+  background-color: var(--pst-color-primary);
   border: 1px solid var(--pst-color-border);
 }
