@@ -12,6 +12,9 @@
   li.nav-item a.nav-link {
     padding-left: 0;
     padding-right: 0;
+    &:hover {
+      color: var(--pst-color-link-hover);
+    }
   }
 
   // Spacing and centering

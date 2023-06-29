@@ -35,6 +35,9 @@
     // Exception here - keep visited in the primary colour
     &:visited p.prev-next-title {
       color: var(--pst-color-link);
+      &:hover {
+        color: var(--pst-color-link-hover);
+      }
     }
 
     .prev-next-info {
