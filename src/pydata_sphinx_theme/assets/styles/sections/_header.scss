@@ -91,7 +91,7 @@
     // with the underline on hover
     > .current > .nav-link {
       @include link-sidebar-current;
-      box-shadow: inset 0px -3px 0px;
+      box-shadow: inset 0px -3px 0px var(--pst-color-primary);
     }
 
     // Dropdowns for the extra links

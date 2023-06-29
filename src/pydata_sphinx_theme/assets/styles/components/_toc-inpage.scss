@@ -42,6 +42,13 @@ nav.page-toc {
     &.active {
       @include link-sidebar-current;
       background-color: transparent;
+
+      // .active {
+      //   > a,
+      &:hover {
+        color: var(--pst-color-link-hover);
+      }
     }
+    // }
   }
 }

@@ -208,14 +208,6 @@ nav.bd-links {
       background-color: transparent;
     }
   }
-  // Hover should still work on top of the active link
-  .active {
-    > a,
-    &:hover > a {
-      font-weight: 600;
-      box-shadow: inset 3px 0px 0px var(--pst-color-link);
-    }
-  }
 
   // Title
   p.bd-links__title {
