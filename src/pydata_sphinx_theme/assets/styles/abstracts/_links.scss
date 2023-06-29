@@ -106,7 +106,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 // Makes links use the muted text colour and removes the underline.
 // Use this mixin for navigation the primary sidebar and table of contents.
 // Active and hover should work together rather than one overriding the other.
-@mixin link-sidebar-style {
+@mixin link-sidebar {
   color: var(--pst-color-text-muted);
   text-decoration: none;
 
@@ -125,7 +125,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   // }
 }
 
-@mixin link-sidebar-current-style {
+@mixin link-sidebar-current {
   font-weight: 600;
   box-shadow: inset 3px 0px 0px var(--pst-color-primary);
   color: var(--pst-color-primary);

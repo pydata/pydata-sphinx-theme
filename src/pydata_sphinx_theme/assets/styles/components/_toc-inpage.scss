@@ -37,10 +37,10 @@ nav.page-toc {
     padding-left: 1rem;
     margin-left: -1rem;
 
-    @include link-sidebar-style;
+    @include link-sidebar;
 
     &.active {
-      @include link-sidebar-current-style;
+      @include link-sidebar-current;
       background-color: transparent;
     }
   }

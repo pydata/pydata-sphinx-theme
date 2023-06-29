@@ -189,7 +189,7 @@ nav.bd-links {
   li > a {
     display: block;
     padding: 0.25rem 0.65rem;
-    @include link-sidebar-style;
+    @include link-sidebar;
     box-shadow: none;
 
     &.reference.external {
@@ -204,8 +204,7 @@ nav.bd-links {
 
   .current {
     > a {
-      box-shadow: inset 3px 0px 0px var(--pst-color-link);
-      color: var(--pst-color-primary);
+      @include link-sidebar-current;
       background-color: transparent;
     }
   }

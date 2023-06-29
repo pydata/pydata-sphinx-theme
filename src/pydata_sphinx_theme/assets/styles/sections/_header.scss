@@ -90,7 +90,8 @@
     // Current page is always underlined - this is an inset shadow to not interfere
     // with the underline on hover
     > .current > .nav-link {
-      @include link-sidebar-current-style;
+      @include link-sidebar-current;
+      box-shadow: inset 0px -3px 0px;
     }
 
     // Dropdowns for the extra links
