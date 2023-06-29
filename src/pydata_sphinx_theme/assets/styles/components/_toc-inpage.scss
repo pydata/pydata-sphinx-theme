@@ -40,7 +40,8 @@ nav.page-toc {
     @include link-sidebar-style;
 
     &.active {
-      font-weight: 600;
+      @include link-sidebar-current-style;
+      background-color: transparent;
     }
   }
 }

@@ -37,6 +37,7 @@ p {
 a {
   @include link-style-default;
 
+  // The # anchor that appears on hover over headings
   &.headerlink {
     color: var(--pst-color-secondary);
     opacity: 0.7;

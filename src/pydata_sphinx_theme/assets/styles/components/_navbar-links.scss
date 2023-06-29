@@ -29,15 +29,6 @@
         color: var(--pst-color-primary);
       }
     }
-
-    // Active page is always underlined - using the same underline style as hover
-    // with the primary colour
-    &.current > a {
-      @include link-decoration-hover;
-      font-weight: 600;
-      color: var(--pst-color-primary);
-      text-decoration-color: var(--pst-color-primary);
-    }
   }
 
   /**

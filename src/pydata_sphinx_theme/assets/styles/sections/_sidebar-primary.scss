@@ -190,6 +190,7 @@ nav.bd-links {
     display: block;
     padding: 0.25rem 0.65rem;
     @include link-sidebar-style;
+    box-shadow: none;
 
     &.reference.external {
       &:after {
@@ -201,6 +202,13 @@ nav.bd-links {
     }
   }
 
+  .current {
+    > a {
+      box-shadow: inset 3px 0px 0px var(--pst-color-link);
+      color: var(--pst-color-primary);
+      background-color: transparent;
+    }
+  }
   // Hover should still work on top of the active link
   .active {
     > a,

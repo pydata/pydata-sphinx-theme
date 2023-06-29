@@ -87,12 +87,10 @@
       }
     }
 
-    // Active page is always underlined - using the same underline style as hover
-    // with the primary colour
-    > .active > .nav-link {
-      font-weight: 600;
-      @include link-decoration-hover;
-      color: var(--pst-color-primary);
+    // Current page is always underlined - this is an inset shadow to not interfere
+    // with the underline on hover
+    > .current > .nav-link {
+      @include link-sidebar-current-style;
     }
 
     // Dropdowns for the extra links
@@ -126,13 +124,6 @@
   .navbar-center-items .navbar-item {
     display: inline-block;
   }
-}
-
-.toc-entry > .nav-link.active {
-  font-weight: 600;
-  color: var(--pst-color-primary);
-  background-color: transparent;
-  box-shadow: inset 2px 0px 0px var(--pst-color-primary);
 }
 
 .nav-link {

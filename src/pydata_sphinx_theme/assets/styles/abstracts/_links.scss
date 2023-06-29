@@ -67,6 +67,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:active {
     color: var(--pst-color-link);
   }
+
   &:visited {
     color: var(--pst-color-accent);
   }
@@ -116,9 +117,16 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     @include link-decoration-hover;
   }
 
-  &:active {
-    color: var(--pst-color-primary);
-    background-color: transparent;
-    box-shadow: inset 3px 0px 0px var(--pst-color-link);
-  }
+  // TODO: @trallard to update active styles
+  // &:active {
+  //   color: var(--pst-color-primary);
+  //   background-color: transparent;
+  //   box-shadow: inset 3px 0px 0px var(--pst-color-link);
+  // }
+}
+
+@mixin link-sidebar-current-style {
+  font-weight: 600;
+  box-shadow: inset 3px 0px 0px var(--pst-color-primary);
+  color: var(--pst-color-primary);
 }
