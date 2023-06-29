@@ -70,6 +70,9 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
   &:visited {
     color: var(--pst-color-accent);
+    &:hover {
+      color: var(--pst-color-link-hover);
+    }
   }
 }
 
