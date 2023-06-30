@@ -7,15 +7,14 @@
   margin: 0 -0.5rem;
   padding: 0; // We pad the `span` not the container
   color: var(--pst-color-text-muted);
+  @include focus-indicator;
 
   span {
     display: none;
     padding: 0.5em;
 
     @include icon-navbar-hover;
-    // TODO: @trallard to fix focus in subsequent PR
-    &:active,
-    &:focus {
+    &:active {
       text-decoration: none;
       color: var(--pst-color-link-hover);
     }

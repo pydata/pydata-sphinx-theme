@@ -85,11 +85,6 @@
 
     li a.nav-link {
       @include link-style-text;
-
-      // TODO: @trallard to fix focus in subsequent PR
-      &:focus {
-        color: var(--pst-color-primary);
-      }
     }
 
     // Current page is always underlined in the navbar
@@ -104,6 +99,7 @@
         color: var(--pst-color-text-muted);
         border: none;
         @include link-style-hover;
+        @include focus-indicator;
       }
 
       .dropdown-menu {
@@ -179,9 +175,8 @@
         display: none;
       }
     }
-    &:hover {
-      @include icon-navbar-hover;
-    }
+    @include icon-navbar-hover;
+    @include focus-indicator;
   }
 
   // Hide the navbar header items on mobile because they're in the sidebar

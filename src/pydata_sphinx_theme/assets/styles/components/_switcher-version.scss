@@ -7,9 +7,8 @@ button.btn.version-switcher__button {
     margin-bottom: unset;
   }
 
-  &:hover {
-    @include link-style-hover;
-  }
+  @include link-style-hover;
+  @include focus-indicator;
   &:active {
     color: var(--pst-color-text-base);
     border-color: var(--pst-color-border);

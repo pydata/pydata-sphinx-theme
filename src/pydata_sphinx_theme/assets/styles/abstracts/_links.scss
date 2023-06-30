@@ -61,7 +61,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 // Default link styles
 //
 // Defines: default unvisited, visited, hover, and active.
-// TODO: @trallard to add focus styles in subsequent PR
+// TODO: @trallard to improve focus styles in subsequent PR
 @mixin link-style-default {
   // So that really long links don't spill out of their container
   word-wrap: break-word;
@@ -86,6 +86,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
       color: var(--pst-color-link-hover);
     }
   }
+  @include focus-indicator;
 }
 
 // Text link styles
@@ -101,6 +102,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     @include link-decoration;
     @include link-decoration-hover;
   }
+  @include focus-indicator;
 }
 
 // Sidebar and TOC links
@@ -155,5 +157,12 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:hover {
     color: var(--pst-color-link-hover);
     box-shadow: inset 0px -3px 0px var(--pst-color-link-hover);
+  }
+}
+
+// Focus indicator
+@mixin focus-indicator {
+  &:focus-visible {
+    outline: 2px solid var(--pst-color-accent);
   }
 }

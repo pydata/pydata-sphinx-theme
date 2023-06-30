@@ -30,8 +30,7 @@
     }
 
     // Background should always be same color regardless of active or not
-    &:active,
-    &:focus {
+    &:active {
       background-color: var(--pst-color-background);
       color: var(--pst-color-text-base);
     }
@@ -67,6 +66,7 @@
   padding: 0 0 0.25rem 0;
   border-radius: 0;
   @include icon-navbar-hover;
+  @include focus-indicator;
 
   i {
     font-size: 1.3rem;

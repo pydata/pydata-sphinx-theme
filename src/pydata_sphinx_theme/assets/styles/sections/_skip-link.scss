@@ -21,5 +21,7 @@
   transition: transform 150ms ease-in-out;
   &:focus {
     transform: translateY(0%);
+    // ensure this is visible
+    outline: 3px solid $foundation-black;
   }
 }
