@@ -27,11 +27,16 @@
     width: auto;
   }
 
-  // remove underline from brand title
+  // remove underline from brand title on default state
   a {
     text-decoration: none;
-    &:hover {
-      @include link-style-hover;
-    }
   }
+  &:hover {
+    text-decoration: underline;
+  }
+  // &:visited {
+  //   &:hover {
+  //     @include link-style-hover;
+  //   }
+  // }
 }

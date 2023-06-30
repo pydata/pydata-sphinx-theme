@@ -147,3 +147,13 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   border-bottom: $link-hover-underline-thickness solid var(--pst-color-primary);
   color: var(--pst-color-primary);
 }
+
+// Navigation bar icon links hover styles
+//
+// Adds a bottom box-shadow - since there is no text we cannot use text-decoration
+@mixin icon-navbar-hover {
+  &:hover {
+    color: var(--pst-color-link-hover);
+    box-shadow: inset 0px -3px 0px var(--pst-color-link-hover);
+  }
+}
