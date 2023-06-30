@@ -11,7 +11,7 @@
     left: 25px;
   }
 
-  i.fa-solid.fa-magnifying-glass {
+  .fa-solid.fa-magnifying-glass {
     position: absolute;
     left: calc((2.5rem - 0.7em) / 2);
     color: var(--pst-color-text-muted);
@@ -123,7 +123,7 @@
   }
 
   // Font and input text a bit bigger
-  i,
+  svg,
   input {
     font-size: var(--pst-font-size-icon);
   }
