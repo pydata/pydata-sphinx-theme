@@ -160,7 +160,7 @@
   }
 
   // Only the icon should be visible on narrow screens
-  :not(i) {
+  :not(svg) {
     display: none;
 
     @include media-breakpoint-up(lg) {
