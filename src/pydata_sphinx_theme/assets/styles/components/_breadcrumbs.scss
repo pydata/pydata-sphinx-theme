@@ -19,12 +19,6 @@ ul.bd-breadcrumbs {
     font-weight: bold;
     a {
       @include link-style-text;
-      &:visited {
-        color: var(--pst-color-link);
-        &:hover {
-          color: var(--pst-color-link-hover);
-        }
-      }
     }
 
     // Items that aren't the home have a caret to the left

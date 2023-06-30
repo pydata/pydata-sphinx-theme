@@ -32,11 +32,11 @@
     text-decoration: none;
   }
   &:hover {
-    text-decoration: underline;
+    @include link-style-hover;
   }
-  // &:visited {
-  //   &:hover {
-  //     @include link-style-hover;
-  //   }
-  // }
+  &:visited {
+    &:hover {
+      @include link-style-hover;
+    }
+  }
 }

@@ -7,6 +7,7 @@
   margin: 0 -0.5rem;
   padding: 0; // We pad the `span` not the container
   color: var(--pst-color-text-muted);
+  border-radius: 0;
   @include focus-indicator;
 
   span {

@@ -2,6 +2,7 @@
 .version-switcher__container a[data-version-name*="stable"] {
   position: relative;
   background-color: var(--pst-color-success-bg);
+  box-shadow: inset 3px 0px 0px var(--pst-color-success);
 }
 
 .version-switcher__container a[data-version-name*="stable"] span {

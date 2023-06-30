@@ -81,7 +81,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
   // Visited should still be hoverable
   &:visited {
-    color: var(--pst-color-accent);
+    color: var(--pst-color-link);
     &:hover {
       color: var(--pst-color-link-hover);
     }
@@ -121,12 +121,10 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     @include link-decoration-hover;
   }
 
-  // TODO: @trallard to update active styles
-  // &:active {
-  //   color: var(--pst-color-primary);
-  //   background-color: transparent;
-  //   box-shadow: inset 3px 0px 0px var(--pst-color-link);
-  // }
+  // TODO: @trallard to update active styles in subsequent PR
+  &:active {
+    color: var(--pst-color-link-hover);
+  }
 }
 
 // Sidebar current page link styles
@@ -136,8 +134,14 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 // Used on the primary sidebar and the TOC.
 @mixin link-sidebar-current {
   font-weight: 600;
-  box-shadow: inset 3px 0px 0px var(--pst-color-primary);
   color: var(--pst-color-primary);
+  @if $link-underline-thickness {
+    box-shadow: inset
+      $link-underline-thickness
+      0px
+      0px
+      var(--pst-color-primary);
+  }
 }
 
 // Navigation bar current page link styles
@@ -156,7 +160,7 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 @mixin icon-navbar-hover {
   &:hover {
     color: var(--pst-color-link-hover);
-    box-shadow: inset 0px -3px 0px var(--pst-color-link-hover);
+    box-shadow: 0px $link-underline-thickness 0px var(--pst-color-hover);
   }
 }
 
