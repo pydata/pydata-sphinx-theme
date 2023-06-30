@@ -130,8 +130,7 @@
   border: var(--pst-color-border) solid 1px;
   border-radius: 1.5em;
   color: var(--pst-color-text-muted);
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
+  padding: 0.5em;
 
   &:hover,
   &:focus {
@@ -139,19 +138,24 @@
     border-color: var(--pst-color-primary);
   }
 
-  // Magnifying glass icon
-  i {
-    padding-right: 0.5em;
-  }
-
   // The keyboard shotcut text
   .search-button__kbd-shortcut {
     font-size: var(--bs-nav-link-font-size);
     font-weight: var(--bs-nav-link-font-weight);
     margin-right: 0.5em;
+    margin-left: 0.5em;
   }
 
   .kbd-shortcut__modifier {
     font-size: 0.75em;
+  }
+
+  // Only the icon should be visible on narrow screens
+  :not(i) {
+    display: none;
+
+    @include media-breakpoint-up(lg) {
+      display: flex;
+    }
   }
 }
