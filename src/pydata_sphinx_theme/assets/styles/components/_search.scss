@@ -3,7 +3,8 @@
  **/
 .bd-search {
   position: relative;
-  padding: 1rem;
+  padding-left: .5rem;
+  gap: .5rem;
   background-color: var(--pst-color-background);
   border-radius: $admonition-border-radius;
   border: 1px solid var(--pst-color-border);
