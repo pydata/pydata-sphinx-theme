@@ -1,3 +1,7 @@
+/**
+ * Logo in the navbar
+ */
+
 .navbar-brand {
   position: relative;
   height: var(--pst-header-height);
@@ -26,5 +30,8 @@
   // remove underline from brand title
   a {
     text-decoration: none;
+    &:hover {
+      @include link-style-hover;
+    }
   }
 }

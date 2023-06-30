@@ -14,6 +14,7 @@
     padding-right: 0;
     &:hover {
       color: var(--pst-color-link-hover);
+      box-shadow: inset 0 -3px 0 var(--pst-color-link-hover);
     }
   }
 

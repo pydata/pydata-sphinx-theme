@@ -1,4 +1,7 @@
-// the icons for theme change
+/**
+ * Light/dark theme switcher
+ */
+
 .theme-switch-button {
   // overide bootstrap settings
   margin: 0 -0.5rem;
@@ -9,7 +12,11 @@
     display: none;
     padding: 0.5em;
 
-    &:hover,
+    &:hover {
+      color: var(--pst-color-link-hover);
+      box-shadow: inset 0 -3px 0 var(--pst-color-link-hover);
+    }
+    // TODO: @trallard to fix focus in subsequent PR
     &:active,
     &:focus {
       text-decoration: none;
