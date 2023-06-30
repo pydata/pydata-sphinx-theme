@@ -18,7 +18,7 @@ ul.bd-breadcrumbs {
     // keeping visited in the default link colour
     font-weight: bold;
     a {
-      @include link-style-default;
+      @include link-style-text;
       &:visited {
         color: var(--pst-color-link);
         &:hover {
