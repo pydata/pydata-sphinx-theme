@@ -159,8 +159,13 @@
     font-size: 0.75em;
   }
 
+  // Ensures that all the text lines up in the middle
+  > * {
+    align-items: center;
+  }
+
   // Only the icon should be visible on narrow screens
-  :not(svg) {
+  >:not(svg) {
     display: none;
 
     @include media-breakpoint-up(lg) {
