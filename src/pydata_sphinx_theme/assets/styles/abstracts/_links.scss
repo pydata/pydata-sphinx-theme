@@ -48,6 +48,16 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   }
 }
 
+// Simple hover style - can be used alone or in conjunction with other mixins
+// Add the text underline and change in thickness on hover
+@mixin link-style-hover {
+  &:hover {
+    @include link-decoration;
+    @include link-decoration-hover;
+    color: var(--pst-color-link-hover);
+  }
+}
+
 // Default link styles
 //
 // Defines: default unvisited, visited, hover, and active.
@@ -64,10 +74,12 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     @include link-decoration-hover;
   }
 
+  // TODO: @trallard to add active styles in subsequent PR
   &:active {
     color: var(--pst-color-link);
   }
 
+  // Visited should still be hoverable
   &:visited {
     color: var(--pst-color-accent);
     &:hover {
@@ -87,19 +99,6 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:hover {
     color: var(--pst-color-link-hover);
     @include link-decoration;
-    @include link-decoration-hover;
-  }
-}
-
-// Navigation link styles
-//
-// Use this mixin for navigation components, such as breadcrumbs.
-@mixin link-style-navigation {
-  color: var(--pst-color-link);
-  @include link-decoration;
-
-  &:hover {
-    color: var(--pst-color-link-hover);
     @include link-decoration-hover;
   }
 }
@@ -128,8 +127,23 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   // }
 }
 
+// Sidebar current page link styles
+//
+// Adds a vertical line on the left hand side of the link to indicate that
+// it's the current page. Note this is distinct from an active state.
+// Used on the primary sidebar and the TOC.
 @mixin link-sidebar-current {
   font-weight: 600;
   box-shadow: inset 3px 0px 0px var(--pst-color-primary);
+  color: var(--pst-color-primary);
+}
+
+// Navigation bar current page link styles
+//
+// Adds a bottom underline, this leaves enough space for the hover state without
+// cluttering the navbar.
+@mixin link-navbar-current {
+  font-weight: 600;
+  border-bottom: $link-hover-underline-thickness solid var(--pst-color-primary);
   color: var(--pst-color-primary);
 }

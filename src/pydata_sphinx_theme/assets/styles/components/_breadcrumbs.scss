@@ -15,9 +15,16 @@ ul.bd-breadcrumbs {
     align-items: baseline;
 
     // Style should look like heavier in-page links
+    // keeping visited in the default link colour
     font-weight: bold;
     a {
-      @include link-style-navigation;
+      @include link-style-default;
+      &:visited {
+        color: var(--pst-color-link);
+        &:hover {
+          color: var(--pst-color-link-hover);
+        }
+      }
     }
 
     // Items that aren't the home have a caret to the left

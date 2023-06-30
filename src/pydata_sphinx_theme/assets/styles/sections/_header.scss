@@ -1,5 +1,6 @@
 /**
- * The header at the top of the page.
+ * Header at the top of the page
+ * It includes the announcement bar and the navigation bar.
  */
 
 // If we want the shadow to only point downward in the future, set
@@ -71,6 +72,7 @@
     justify-content: end;
   }
 
+  // Contains the navigation links within the navbar
   .navbar-nav {
     display: flex;
 
@@ -82,16 +84,15 @@
     li a.nav-link {
       @include link-style-text;
 
+      // TODO: @trallard to fix focus in subsequent PR
       &:focus {
         color: var(--pst-color-primary);
       }
     }
 
-    // Current page is always underlined - this is an inset shadow to not interfere
-    // with the underline on hover
+    // Current page is always underlined in the navbar
     > .current > .nav-link {
-      @include link-sidebar-current;
-      box-shadow: inset 0px -3px 0px var(--pst-color-primary);
+      @include link-navbar-current;
     }
 
     // Dropdowns for the extra links
@@ -100,6 +101,7 @@
         display: unset;
         color: var(--pst-color-text-muted);
         border: none;
+        @include link-style-hover;
       }
 
       .dropdown-menu {
@@ -128,11 +130,7 @@
 }
 
 .nav-link {
-  &:hover {
-    color: var(--pst-color-link-hover);
-    @include link-decoration;
-    @include link-decoration-hover;
-  }
+  @include link-style-hover;
 
   &.nav-external:after {
     font: var(--fa-font-solid);
