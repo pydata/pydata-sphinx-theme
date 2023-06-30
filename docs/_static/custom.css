@@ -1,6 +1,8 @@
 /* Background of stable should be green */
 .version-switcher__container a[data-version-name*="stable"] {
   position: relative;
+  background-color: var(--pst-color-success-bg);
+  box-shadow: inset 3px 0px 0px var(--pst-color-success);
 }
 
 .version-switcher__container a[data-version-name*="stable"] span {
@@ -14,8 +16,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  background-color: var(--pst-color-success);
-  opacity: 0.1;
 }
 
 /* custom CSS classes (used in docs/user_guide/extending.rst) NOTE: the begin

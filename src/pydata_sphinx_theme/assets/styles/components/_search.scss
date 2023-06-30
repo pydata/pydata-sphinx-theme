@@ -1,6 +1,6 @@
-/*************************
+/**
  * Search field
- */
+ **/
 .bd-search {
   position: relative;
   padding: 1rem 0;
@@ -26,14 +26,13 @@
 
     // Inner-text of the search bar
     &::placeholder {
-      color: var(--pst-color-border);
+      color: var(--pst-color-text-muted);
     }
 
     // Background should always be same color regardless of active or not
-    &:active,
-    &:focus {
+    &:active {
       background-color: var(--pst-color-background);
-      color: var(--pst-color-text-base);
+      color: var(--pst-color-text-muted);
     }
 
     // Remove the little "x" that pops up when you start typing
@@ -53,20 +52,32 @@
   }
 }
 
-/*************************
- * Search button
+.form-control {
+  &:focus,
+  &:focus-visible {
+    border: none;
+    box-shadow: none;
+    outline: 3px solid var(--pst-color-accent);
+    background-color: var(--pst-color-background);
+    color: var(--pst-color-text-muted);
+  }
+}
+
+/**
+ * Search button - located in the navbar
  */
+
 // Search link icon should be a bit bigger since it is separate from icon links
 .search-button {
   display: flex;
   align-items: center;
   align-content: center;
-  padding: 0;
   color: var(--pst-color-text-muted);
-
-  &:hover {
-    color: var(--pst-color-primary);
-  }
+  // Needed to match other icons hover
+  padding: 0 0 0.25rem 0;
+  border-radius: 0;
+  @include icon-navbar-hover;
+  @include focus-indicator;
 
   i {
     font-size: 1.3rem;

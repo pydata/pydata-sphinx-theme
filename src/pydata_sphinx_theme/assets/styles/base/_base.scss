@@ -35,17 +35,9 @@ p {
 }
 
 a {
-  color: var(--pst-color-link);
-  text-decoration: none;
+  @include link-style-default;
 
-  // So that really long links don't spill out of their container
-  word-wrap: break-word;
-
-  &:hover {
-    color: var(--pst-color-link-hover);
-    text-decoration: underline;
-  }
-
+  // The # anchor that appears on hover over headings
   &.headerlink {
     color: var(--pst-color-secondary);
     opacity: 0.7;

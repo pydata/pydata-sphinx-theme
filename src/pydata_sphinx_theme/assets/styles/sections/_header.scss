@@ -1,6 +1,9 @@
 /**
- * The header at the top of the page.
+ * Header at the top of the page
+ * It includes the announcement bar and the navigation bar.
  */
+
+// Styling for the Icon links can be found in components/_icon-links.scss
 
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
@@ -71,6 +74,7 @@
     justify-content: end;
   }
 
+  // Contains the navigation links within the navbar
   .navbar-nav {
     display: flex;
 
@@ -80,20 +84,12 @@
     }
 
     li a.nav-link {
-      color: var(--pst-color-text-muted);
-
-      &:hover {
-        color: var(--pst-color-primary);
-      }
-
-      &:focus {
-        color: var(--pst-color-primary);
-      }
+      @include link-style-text;
     }
 
-    > .active > .nav-link {
-      font-weight: 600;
-      color: var(--pst-color-primary);
+    // Current page is always underlined in the navbar
+    > .current > .nav-link {
+      @include link-navbar-current;
     }
 
     // Dropdowns for the extra links
@@ -102,6 +98,8 @@
         display: unset;
         color: var(--pst-color-text-muted);
         border: none;
+        @include link-style-hover;
+        @include focus-indicator;
       }
 
       .dropdown-menu {
@@ -129,17 +127,8 @@
   }
 }
 
-.toc-entry > .nav-link.active {
-  font-weight: 600;
-  color: var(--pst-color-primary);
-  background-color: transparent;
-  border-left: 2px solid var(--pst-color-primary);
-}
-
 .nav-link {
-  &:hover {
-    border-style: none;
-  }
+  @include link-style-hover;
 
   &.nav-external:after {
     font: var(--fa-font-solid);
@@ -158,6 +147,7 @@
 /**
  * Showing and hiding the sidebar toggle buttons and header items
  */
+
 // Hide the header items on mobile
 .bd-header {
   // Toggle labels
@@ -169,21 +159,24 @@
       align-items: center;
       color: var(--pst-color-muted);
       margin-bottom: 0;
+      padding-bottom: 0.25rem;
     }
 
     &.primary-toggle {
-      padding-right: 1rem;
+      margin-left: 1rem;
       @include media-breakpoint-up($breakpoint-sidebar-primary) {
         display: none;
       }
     }
 
     &.secondary-toggle {
-      padding-left: 1rem;
+      margin-left: 1rem;
       @include media-breakpoint-up($breakpoint-sidebar-secondary) {
         display: none;
       }
     }
+    @include icon-navbar-hover;
+    @include focus-indicator;
   }
 
   // Hide the navbar header items on mobile because they're in the sidebar

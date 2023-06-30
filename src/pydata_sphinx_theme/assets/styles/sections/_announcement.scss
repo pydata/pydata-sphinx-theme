@@ -34,6 +34,7 @@
     display: none;
   }
 
+  // Ensure there is enough contrast against the background
   a {
     color: var(--pst-color-inline-code-links);
   }
