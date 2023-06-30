@@ -14,7 +14,6 @@ WARNING: image file not readable: _static/gallery/megengine.png
 WARNING: image file not readable: _static/gallery/feature-engine.png
 WARNING: image file not readable: _static/gallery/arviz.png
 WARNING: image file not readable: _static/gallery/sepal.png
-WARNING: image file not readable: _static/gallery/enoslib.png
 WARNING: image file not readable: _static/gallery/matplotlib.png
 WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
 WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.index'. Check your autosummary_generate setting.
