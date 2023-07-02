@@ -8,12 +8,12 @@ This is [similar to how the TOML language defines nested configuration](https://
 For example, to remove the secondary sidebar, we use a page metadata key like this:
 
 `````{tab-set}
-````{tab-item}
+````{tab-item} rst
 ```rst
 :html_theme.sidebar_secondary.remove: true
 ```
 ````
-````{tab-item}
+````{tab-item} markdown
 ```md
 ---
 html_theme.sidebar_secondary.remove: true
