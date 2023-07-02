@@ -60,39 +60,25 @@ print("A regular code block")
 You can also provide captions with code blocks, which will be displayed right above the code.
 For example, the following code:
 
-````{tab-set}
-
-```{tab-item} rst
+`````{tab-set}
+````{tab-item} rst
 ```rst
 .. code-block:: python
     :caption: python.py
 
     print("A code block with a caption.")
+```
 ````
-
-````
-
-```{tab-item} markdown
+````{tab-item} markdown
 ```md
 ```{code-block} python
 :caption: python.py
 
 print("A code block with a caption.")
-````
-
 ```
-
-```
-
-::::
-
-````md
-```{code-block} python
-:caption: python.py
-
-print("A code block with a caption.")
 ```
 ````
+`````
 
 results in:
 
