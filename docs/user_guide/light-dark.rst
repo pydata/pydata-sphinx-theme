@@ -207,7 +207,6 @@ For example, to change an image source (e.g., logo) whenever the ``data-theme`` 
 
         .. code-block:: md
 
-            ```{raw} html
             <script type="text/javascript">
             var observer = new MutationObserver(function(mutations) {
                 const dark = document.documentElement.dataset.theme == 'dark';
@@ -216,7 +215,6 @@ For example, to change an image source (e.g., logo) whenever the ``data-theme`` 
             observer.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
             </script>
             <link rel="preload" href="_static/my_logo_dark.svg" as="image">
-            ```
 
             ```{image} _static/my_logo_light.svg
             :alt: My Logo
