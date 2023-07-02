@@ -13,7 +13,7 @@ For example, to remove the secondary sidebar, we use a page metadata key like th
 :html_theme.sidebar_secondary.remove: true
 ```
 ````
-````tab-item
+````{tab-item}
 ```md
 ---
 html_theme.sidebar_secondary.remove: true
