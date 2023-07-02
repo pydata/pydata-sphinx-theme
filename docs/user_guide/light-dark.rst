@@ -86,13 +86,29 @@ These are:
 For example, the following page content defines two images, each of which uses a different one of the classes above.
 Change the theme and a new image should be displayed.
 
-.. code-block:: rst
+.. tab-set::
 
-    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
-        :class: only-dark
+    .. tab-item:: rst
 
-    .. image:: https://source.unsplash.com/200x200/daily?cute+dog
-        :class: only-light
+        .. code-block:: rst
+
+            .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+                :class: only-dark
+
+            .. image:: https://source.unsplash.com/200x200/daily?cute+dog
+                :class: only-light
+
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{image} https://source.unsplash.com/200x200/daily?cute+cat
+            :class: only-dark
+            ```
+
+            ```{image} https://source.unsplash.com/200x200/daily?cute+dog
+            :class: only-light
+            ```
 
 .. image:: https://source.unsplash.com/200x200/daily?cute+cat
     :class: only-dark
@@ -115,20 +131,45 @@ theme-agnostic.
 For example, here's an image without adding this helper class.
 Change to the dark theme and a grey background will be present.
 
-.. code-block:: rst
+.. tab-set::
 
-    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
-        :class: p-2
+    .. tab-item:: rst
+
+        .. code-block:: rst
+
+            .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+                :class: p-2
+
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{image} https://source.unsplash.com/200x200/daily?cute+cat
+            :class: p-2
+            ```
+
 
 .. image:: https://source.unsplash.com/200x200/daily?cute+cat
     :class: p-2
 
 Here's the same image with this class added:
 
-.. code-block:: rst
+.. tab-set::
 
-    .. image:: https://source.unsplash.com/200x200/daily?cute+cat
-        :class: dark-light p-2
+    .. tab-item:: rst
+
+        .. code-block:: rst
+
+            .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+                :class: dark-light
+
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{image} https://source.unsplash.com/200x200/daily?cute+cat
+            :class: dark-light p-2
+            ```
 
 .. image:: https://source.unsplash.com/200x200/daily?cute+cat
     :class: dark-light p-2
@@ -140,23 +181,48 @@ You can define a JavaScript event hook that will run your code any time the them
 This is useful if you need to change elements of your page that cannot be defined by CSS rules.
 For example, to change an image source (e.g., logo) whenever the ``data-theme`` changes, a snippet like this can be used:
 
-.. code-block:: rst
+.. tab-set::
 
-  .. raw:: html
+    .. tab-item:: rst
 
-    <script type="text/javascript">
-      var observer = new MutationObserver(function(mutations) {
-        const dark = document.documentElement.dataset.theme == 'dark';
-        document.getElementsByClassName('mainlogo')[0].src = dark ? '_static/my_logo_dark.svg' : "_static/my_logo_light.svg";
-      })
-      observer.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
-    </script>
-    <link rel="preload" href="_static/my_logo_dark.svg" as="image">
+        .. code-block:: rst
 
-  .. image:: _static/my_logo_light.svg
-     :alt: My Logo
-     :class: logo, mainlogo
-     :align: center
+            .. raw:: html
+
+                <script type="text/javascript">
+                var observer = new MutationObserver(function(mutations) {
+                    const dark = document.documentElement.dataset.theme == 'dark';
+                    document.getElementsByClassName('mainlogo')[0].src = dark ? '_static/my_logo_dark.svg' : "_static/my_logo_light.svg";
+                })
+                observer.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+                </script>
+                <link rel="preload" href="_static/my_logo_dark.svg" as="image">
+
+            .. image:: _static/my_logo_light.svg
+                :alt: My Logo
+                :class: logo, mainlogo
+                :align: center
+
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{raw} html
+            <script type="text/javascript">
+            var observer = new MutationObserver(function(mutations) {
+                const dark = document.documentElement.dataset.theme == 'dark';
+                document.getElementsByClassName('mainlogo')[0].src = dark ? '_static/my_logo_dark.svg' : "_static/my_logo_light.svg";
+            })
+            observer.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+            </script>
+            <link rel="preload" href="_static/my_logo_dark.svg" as="image">
+            ```
+
+            ```{image} _static/my_logo_light.svg
+            :alt: My Logo
+            :class: logo, mainlogo
+            :align: center
+            ```
 
 The JavaScript reacts to ``data-theme`` changes to alter ``img``, and the ``link`` is used to preload the dark image.
 See the `MutationObserver documentation <https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver>`_ for more information.
