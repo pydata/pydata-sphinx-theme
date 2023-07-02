@@ -107,7 +107,7 @@ If you're using either the raw directive (reStructuredText) or pure html (MyST M
 
 ``````{tab-set}
 `````{tab-item} rst
-````rst
+````{ code-block} rst
 :caption: some_page_in_my_site.rst
 .. raw:: html
 
@@ -123,7 +123,7 @@ If you're using either the raw directive (reStructuredText) or pure html (MyST M
 ````
 `````
 `````{tab-item} markdown
-````md
+````{code-block} md
 :caption: other_page_in_my_site.md
 # My title
 
