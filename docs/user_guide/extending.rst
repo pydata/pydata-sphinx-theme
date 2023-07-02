@@ -35,7 +35,7 @@ Then add the ``dropdown`` class to any admonition directive (shown here on a ``n
             :code: rst
             :class: highlight-rst
 
-    .. tab-index:: markdown
+    .. tab-item:: markdown
 
         .. code-block:: md
 
@@ -77,7 +77,7 @@ The title is specified on the same line as the ``.. admonition::`` directive:
 
     .. tab-item:: markdown
 
-        ..code-block:: md
+        .. code-block:: md
 
             ```{admonition} Custom title!
 
@@ -155,14 +155,13 @@ Be sure to use the same color for ``border-color`` and ``color`` and a different
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             ```
 
+And add the following to your ``custom.css`` file:
 
-    .. tab-item:: css
-
-        .. include:: ../_static/custom.css
-            :start-after: begin-custom-color
-            :end-before: /* end-custom-color
-            :code: css
-            :class: highlight-css
+.. include:: ../_static/custom.css
+    :start-after: begin-custom-color
+    :end-before: /* end-custom-color
+    :code: css
+    :class: highlight-css
 
 
 Using a custom icon
@@ -197,7 +196,7 @@ Customizing the icon uses a similar process to customizing the color: create a n
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             ```
 
-And add the following css to your custom.css file:
+And add the following css to your ``custom.css`` file:
 
 .. include:: ../_static/custom.css
     :start-after: begin-custom-icon
@@ -230,7 +229,7 @@ Here we demonstrate an admonition with a custom icon, color, and title (and also
 
     .. tab-item:: markdown
 
-        ..code-block:: md
+        .. code-block:: md
 
             ````{admonition} YouTube
             :class: dropdown admonition-youtube
