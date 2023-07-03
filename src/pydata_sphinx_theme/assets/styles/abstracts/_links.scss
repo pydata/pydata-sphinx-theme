@@ -20,7 +20,7 @@ $link-underline-offset: 0.1578em !default;
 //  - 0.1875rem, if it's thicker than 3px because the user has changed the text
 //    size in their browser
 //  - 0.12em (relative to the link's text size)
-$link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
+$link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
 //  Ensures links have an underline decoration by default - needed to meet
 // WCAG SC 1.4.1
@@ -39,8 +39,8 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 // Ensures links have an underline decoration on hover - distinct from the
 // default behaviour
 @mixin link-decoration-hover {
-  @if $link-hover-underline-thickness {
-    text-decoration-thickness: $link-hover-underline-thickness;
+  @if $link-hover-decoration-thickness {
+    text-decoration-thickness: $link-hover-decoration-thickness;
     // Disable ink skipping on underlines on hover. Browsers haven't
     // standardised on this part of the spec yet, so set both properties
     text-decoration-skip-ink: none; // Chromium, Firefox
@@ -132,12 +132,13 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 // Adds a vertical line on the left hand side of the link to indicate that
 // it's the current page. Note this is distinct from an active state.
 // Used on the primary sidebar and the TOC.
+// We want the side box shadow to have the same thickness as the hover underline
 @mixin link-sidebar-current {
   font-weight: 600;
   color: var(--pst-color-primary);
-  @if $link-underline-thickness {
+  @if $link-hover-decoration-thickness {
     box-shadow: inset
-      $link-underline-thickness
+      $link-hover-decoration-thickness
       0px
       0px
       var(--pst-color-primary);
@@ -148,19 +149,30 @@ $link-hover-underline-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 //
 // Adds a bottom underline, this leaves enough space for the hover state without
 // cluttering the navbar.
+// We want the side box shadow to have the same thickness as the hover underline
 @mixin link-navbar-current {
   font-weight: 600;
-  border-bottom: $link-hover-underline-thickness solid var(--pst-color-primary);
   color: var(--pst-color-primary);
+  @if $link-hover-decoration-thickness {
+    border-bottom: $link-hover-decoration-thickness
+      solid
+      var(--pst-color-primary);
+  }
 }
 
 // Navigation bar icon links hover styles
 //
 // Adds a bottom box-shadow - since there is no text we cannot use text-decoration
+// We want the side box shadow to have the same thickness as the hover underline
 @mixin icon-navbar-hover {
   &:hover {
     color: var(--pst-color-link-hover);
-    box-shadow: 0px $link-underline-thickness 0px var(--pst-color-hover);
+    @if $link-hover-decoration-thickness {
+      box-shadow: 0px
+        $link-hover-decoration-thickness
+        0px
+        var(--pst-color-link-hover);
+    }
   }
 }
 
