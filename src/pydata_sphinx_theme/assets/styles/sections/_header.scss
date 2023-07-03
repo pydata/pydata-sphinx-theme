@@ -163,7 +163,7 @@
     }
 
     &.primary-toggle {
-      margin-left: 1rem;
+      margin-right: 1rem;
       @include media-breakpoint-up($breakpoint-sidebar-primary) {
         display: none;
       }
