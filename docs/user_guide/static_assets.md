@@ -103,9 +103,11 @@ def setup(app):
 ## Add it directly to the page content
 
 Finally, you can add CSS or JS directly to a page's content.
-If you're using reStructuredText or MyST Markdown, you can use the `raw` directive:
+If you're using either the raw directive (reStructuredText) or pure html (MyST Markdown).
 
-```{code-block} rst
+``````{tab-set}
+`````{tab-item} rst
+````{code-block} rst
 :caption: some_page_in_my_site.rst
 .. raw:: html
 
@@ -118,13 +120,10 @@ If you're using reStructuredText or MyST Markdown, you can use the `raw` directi
    <script>
    console.log("hi!")
    </script>
-```
-
-If you're using MyST Markdown, you may also directly include any HTML / style / script blocks in your content without using a directive.
-
-For example:
-
-```{code-block} md
+````
+`````
+`````{tab-item} markdown
+````{code-block} md
 :caption: other_page_in_my_site.md
 # My title
 
@@ -140,4 +139,6 @@ Some text
 ## A bigger title
 
 Some other text
-```
+````
+`````
+``````

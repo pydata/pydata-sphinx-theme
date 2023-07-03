@@ -7,9 +7,20 @@ This is [similar to how the TOML language defines nested configuration](https://
 
 For example, to remove the secondary sidebar, we use a page metadata key like this:
 
+`````{tab-set}
+````{tab-item} rst
 ```rst
 :html_theme.sidebar_secondary.remove: true
 ```
+````
+````{tab-item} markdown
+```md
+---
+html_theme.sidebar_secondary.remove: true
+---
+```
+````
+`````
 
 Note how the period naturally separates nested sections, and looks very similar to what we'd expect if we put this in a Python dictionary in `conf.py`:
 

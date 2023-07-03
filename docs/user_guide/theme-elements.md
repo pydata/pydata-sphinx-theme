@@ -60,6 +60,16 @@ print("A regular code block")
 You can also provide captions with code blocks, which will be displayed right above the code.
 For example, the following code:
 
+``````{tab-set}
+`````{tab-item} rst
+````rst
+.. code-block:: python
+    :caption: python.py
+
+    print("A code block with a caption.")
+````
+`````
+`````{tab-item} markdown
 ````md
 ```{code-block} python
 :caption: python.py
@@ -67,6 +77,8 @@ For example, the following code:
 print("A code block with a caption.")
 ```
 ````
+`````
+``````
 
 results in:
 
@@ -79,6 +91,19 @@ print("A code block with a caption.")
 You can also display line numbers.
 For example, the following code:
 
+``````{tab-set}
+`````{tab-item} rst
+````rst
+..  code-block:: python
+    :caption: python.py
+    :linenos:
+
+    print("A code block with a caption and line numbers.")
+    print("A code block with a caption and line numbers.")
+    print("A code block with a caption and line numbers.")
+````
+`````
+`````{tab-item} markdown
 ````md
 ```{code-block} python
 :caption: python.py
@@ -89,6 +114,8 @@ print("A code block with a caption and line numbers.")
 print("A code block with a caption and line numbers.")
 ```
 ````
+`````
+``````
 
 results in:
 
@@ -105,13 +132,25 @@ print("A code block with a caption and line numbers.")
 
 When used directly, the `code` role just displays the text without syntax highlighting, as a literal. As mentioned in the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#inline-code-highlighting) you can also enable syntax highlighting by defining a custom role. It will then use the same highlighter as in the `code-block` directive.
 
-```{code-block} rst
-
+``````{tab-set}
+`````{tab-item} rst
+````rst
 .. role:: python(code)
    :language: python
 
 In Python you can :python:`import sphinx`.
+````
+`````
+`````{tab-item} markdown
+````md
+```{role} python(code)
+:language: python
 ```
+
+In Python you can {python}`import sphinx`.
+````
+`````
+``````
 
 ```{role} python(code)
 :language: python
@@ -143,12 +182,24 @@ For example, on the right are an "admonition sidebar" and a traditional Sphinx s
 To make an admonition behave like a sidebar, add the `sidebar` class to its list of classes.
 The admonition sidebar in this section was created with the following Markdown:
 
+``````{tab-set}
+`````{tab-item} rst
+````rst
+.. admonition:: A sidebar admonition!
+    :class: sidebar note
+
+    Some sidebar content.
+````
+`````
+`````{tab-item} markdown
 ````md
 ```{admonition} A sidebar admonition!
 :class: sidebar note
 Some sidebar content.
 ```
 ````
+`````
+``````
 
 ## Footnotes
 
