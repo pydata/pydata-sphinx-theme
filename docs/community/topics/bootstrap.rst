@@ -15,7 +15,7 @@ Any documentation relying on **JQuery** in their ``custom.js`` files will need t
 Breaking changes
 ----------------
 
-.. important:: 
+.. important::
 
     Relevant for those using a ``custom.css`` and/or a ``custom.js`` file!
 
