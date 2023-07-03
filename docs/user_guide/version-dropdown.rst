@@ -1,3 +1,5 @@
+.. _version-dropdowns:
+
 Version switcher dropdowns
 ==========================
 
