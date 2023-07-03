@@ -61,7 +61,7 @@ You can also provide captions with code blocks, which will be displayed right ab
 For example, the following code:
 
 ``````{tab-set}
-`````{tab-item} rst
+`````{tab-item} rST
 ````rst
 .. code-block:: python
     :caption: python.py
@@ -69,7 +69,7 @@ For example, the following code:
     print("A code block with a caption.")
 ````
 `````
-`````{tab-item} markdown
+`````{tab-item} Markdown
 ````md
 ```{code-block} python
 :caption: python.py
@@ -92,7 +92,7 @@ You can also display line numbers.
 For example, the following code:
 
 ``````{tab-set}
-`````{tab-item} rst
+`````{tab-item} rST
 ````rst
 ..  code-block:: python
     :caption: python.py
@@ -103,7 +103,7 @@ For example, the following code:
     print("A code block with a caption and line numbers.")
 ````
 `````
-`````{tab-item} markdown
+`````{tab-item} Markdown
 ````md
 ```{code-block} python
 :caption: python.py
@@ -183,7 +183,7 @@ To make an admonition behave like a sidebar, add the `sidebar` class to its list
 The admonition sidebar in this section was created with the following Markdown:
 
 ``````{tab-set}
-`````{tab-item} rst
+`````{tab-item} rST
 ````rst
 .. admonition:: A sidebar admonition!
     :class: sidebar note
@@ -191,7 +191,7 @@ The admonition sidebar in this section was created with the following Markdown:
     Some sidebar content.
 ````
 `````
-`````{tab-item} markdown
+`````{tab-item} Markdown
 ````md
 ```{admonition} A sidebar admonition!
 :class: sidebar note

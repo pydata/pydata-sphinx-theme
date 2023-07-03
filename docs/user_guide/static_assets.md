@@ -106,7 +106,7 @@ Finally, you can add CSS or JS directly to a page's content.
 If you're using either the raw directive (reStructuredText) or pure html (MyST Markdown).
 
 ``````{tab-set}
-`````{tab-item} rst
+`````{tab-item} rST
 ````{code-block} rst
 :caption: some_page_in_my_site.rst
 .. raw:: html
@@ -122,7 +122,7 @@ If you're using either the raw directive (reStructuredText) or pure html (MyST M
    </script>
 ````
 `````
-`````{tab-item} markdown
+`````{tab-item} Markdown
 ````{code-block} md
 :caption: other_page_in_my_site.md
 # My title
