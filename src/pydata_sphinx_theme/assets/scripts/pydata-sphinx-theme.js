@@ -365,7 +365,6 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
       anchor.classList.add("active");
       versionSwitcherBtns.forEach((btn) => {
         btn.innerText = entry.name;
-        entry.name;
         btn.dataset["activeVersionName"] = entry.name;
         btn.dataset["activeVersion"] = entry.version;
       });
