@@ -144,7 +144,7 @@
   &:hover,
   &:focus {
     background-color: var(--pst-color-surface);
-    border-color: var(--pst-color-primary);
+    border: 2px solid var(--pst-color-link-hover);
   }
 
   // The keyboard shotcut text
