@@ -648,12 +648,14 @@ def test_show_nav_level(sphinx_build_factory) -> None:
         assert "checked" in checkbox.attrs
 
 
+# the switcher files tested in test_version_switcher_error_states, not all of them exist
 switcher_files = ["switcher.json", "http://a.b/switcher.json", "missing_url.json"]
-"the switcher files tested in test_version_switcher, not all of them exist"
 
 
 @pytest.mark.parametrize("url", switcher_files)
-def test_version_switcher(sphinx_build_factory, file_regression, url) -> None:
+def test_version_switcher_error_states(
+    sphinx_build_factory, file_regression, url
+) -> None:
     """Regression test the version switcher dropdown HTML.
 
     Note that a lot of the switcher HTML gets populated by JavaScript,
@@ -878,7 +880,7 @@ def test_translations(sphinx_build_factory) -> None:
     assert "Créé en utilisant" in str(footer)
     assert "Construit avec le" in str(footer)
 
-    footer_article = index.select(".prev-next-footer")[0]
+    footer_article = index.select(".prev-next-area")[0]
     assert "précédent" in str(footer_article)
     assert "page suivante" in str(footer_article)
 
