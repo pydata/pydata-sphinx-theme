@@ -141,10 +141,12 @@
   color: var(--pst-color-text-muted);
   padding: 0.5em;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: var(--pst-color-surface);
     border: 2px solid var(--pst-color-link-hover);
+  }
+  &:focus-visible {
+    border: 2px solid var(--pst-color-accent);
   }
 
   // The keyboard shotcut text
