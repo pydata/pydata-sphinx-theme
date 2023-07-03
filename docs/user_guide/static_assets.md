@@ -35,7 +35,9 @@ They will be added to the end of the `<head>` of your site.
 For example:
 
 ```{code-block} python
-:caption: conf.py
+---
+caption: '`conf.py`'
+---
 
 html_static_path = ["_static"]
 html_css_files = ["mycss.css"]
@@ -59,7 +61,9 @@ In addition, `app.add_js_file` allows you to add _raw JavaScript_ in addition to
 For example:
 
 ```{code-block} python
-:caption: conf.py
+---
+caption: '`conf.py`'
+---
 
 html_static_path = ["_static"]
 
@@ -87,7 +91,9 @@ If you run `app.add_js_file` or `app.add_css_file`, it will _only be added for t
 For example:
 
 ```{code-block} python
-:caption: conf.py
+---
+caption: '`conf.py`'
+---
 html_static_path = ["_static"]
 
 def add_my_files(app, pagename, templatename, context, doctree):
