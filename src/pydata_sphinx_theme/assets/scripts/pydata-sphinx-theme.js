@@ -408,6 +408,9 @@ function showVersionWarningBanner(data) {
   }
   const preferredVersion = preferredEntries[0].version;
   const preferredURL = preferredEntries[0].url;
+  // TODO: make the below logic more forgiving:
+  //       - don't fail if version string not semVer-parsable
+  //       - if not semVer parsable make message more generic
   // if already on preferred version, nothing to do
   if (!version.includes("dev") && compare(version, preferredVersion, "=")) {
     return;
