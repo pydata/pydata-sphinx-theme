@@ -158,7 +158,7 @@ html[data-theme="light"] {
   > input {
     // Active tab label
     &:checked + label {
-      border-color: var(--pst-color-primary);
+      border-color: transparent transparent var(--pst-color-primary); // top LR bottom
       color: var(--pst-color-primary);
     }
 
@@ -172,7 +172,8 @@ html[data-theme="light"] {
   // Tab label
   > label {
     color: var(--pst-color-text-muted);
-
+    border-top: 0.125rem solid transparent; // so hover isn't just color change
+    padding-top: 0.5em; // same as bottom padding, so hover overline looks OK
     // Hovered label
     html &:hover {
       color: var(--pst-color-secondary);
