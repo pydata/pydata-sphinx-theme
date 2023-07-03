@@ -1,11 +1,11 @@
 # The PyData Sphinx Theme
 
-[![License](https://img.shields.io/badge/License-BSD_3--Clause-yellow?logo=opensourceinitiative&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/blob/main/LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/pydata-sphinx-theme?logo=python&logoColor=white&color=orange)](https://pypi.org/project/pydata-sphinx-theme/)
-[![conda-forge](https://img.shields.io/conda/vn/conda-forge/pydata-sphinx-theme.svg?logo=anaconda&logoColor=white&color=orange)](https://anaconda.org/conda-forge/pydata-sphinx-theme)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pydata/pydata-sphinx-theme/tests.yml?logo=github&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml)
+[![License badge](https://img.shields.io/badge/License-BSD_3--Clause-yellow?logo=opensourceinitiative&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/blob/main/LICENSE)
+[![PyPI version badge](https://img.shields.io/pypi/v/pydata-sphinx-theme?logo=python&logoColor=white&color=orange)](https://pypi.org/project/pydata-sphinx-theme/)
+[![conda-forge license badge](https://img.shields.io/conda/vn/conda-forge/pydata-sphinx-theme.svg?logo=anaconda&logoColor=white&color=orange)](https://anaconda.org/conda-forge/pydata-sphinx-theme)
+[![GitHub Workflow Status - build](https://img.shields.io/github/actions/workflow/status/pydata/pydata-sphinx-theme/tests.yml?logo=github&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml)
 [![Read the Docs (version)](https://img.shields.io/readthedocs/pydata-sphinx-theme/latest?logo=readthedocs&logoColor=white)](https://readthedocs.org/projects/pydata-sphinx-theme/builds/)
-[![Codecov](https://img.shields.io/codecov/c/github/pydata/pydata-sphinx-theme?logo=codecov&logoColor=white)](https://codecov.io/gh/pydata/pydata-sphinx-theme)
+[![Codecov badge](https://img.shields.io/codecov/c/github/pydata/pydata-sphinx-theme?logo=codecov&logoColor=white)](https://codecov.io/gh/pydata/pydata-sphinx-theme)
 
 A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData community](https://pydata.org).
 
@@ -13,7 +13,7 @@ A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData commu
 - :bulb: Examples: https://pydata-sphinx-theme.readthedocs.io/en/stable/examples
 - :raised_hands: Contribute: https://pydata-sphinx-theme.readthedocs.io/en/stable/community
 
-[![Example documentation with this theme](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
+[![PyData theme - Configure the search position demo image showcasing both the light and dark theme in a single image.](./docs/_static/theme-demo-screenshot.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
 ## Installation and usage
 
