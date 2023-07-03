@@ -15,7 +15,9 @@ Any documentation relying on **JQuery** in their ``custom.js`` files will need t
 Breaking changes
 ----------------
 
-‼️ Relevant for those using a ``custom.css`` and/or a ``custom.js`` file!
+.. important::
+
+    Relevant for those using a ``custom.css`` and/or a ``custom.js`` file!
 
 Bootstrap changed several CSS classes, so if you wrote custom rules of JS logic that depended on them, it may have changed.
 
