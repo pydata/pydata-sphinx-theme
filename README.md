@@ -22,7 +22,7 @@ and use as follows:
 
 - Install the `pydata-sphinx-theme` in your doc build environment:
 
-  ```
+  ```bash
   pip install pydata-sphinx-theme
   # or
   conda install pydata-sphinx-theme --channel conda-forge
@@ -31,7 +31,7 @@ and use as follows:
 - Then, in the `conf.py` of your sphinx docs, you update the `html_theme`
   configuration option:
 
-  ```
+  ```python
   html_theme = "pydata_sphinx_theme"
   ```
 
@@ -46,7 +46,7 @@ And that's it!
 ## Contribute to and develop the theme
 
 Contributions are very welcome! Installing the development version, building
-the example docs and developing the css/js of the theme, etc, is explained in
+the example docs and developing the `CSS/JS` of the theme, etc., is explained in
 more detail in the contributing section of the documentation:
 
 - [Community and contributing documentation](https://pydata-sphinx-theme.readthedocs.io/en/latest/community/index.html)
