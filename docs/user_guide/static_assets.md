@@ -35,7 +35,9 @@ They will be added to the end of the `<head>` of your site.
 For example:
 
 ```{code-block} python
-:caption: conf.py
+---
+caption: '`conf.py`'
+---
 
 html_static_path = ["_static"]
 html_css_files = ["mycss.css"]
@@ -59,7 +61,9 @@ In addition, `app.add_js_file` allows you to add _raw JavaScript_ in addition to
 For example:
 
 ```{code-block} python
-:caption: conf.py
+---
+caption: '`conf.py`'
+---
 
 html_static_path = ["_static"]
 
@@ -87,7 +91,9 @@ If you run `app.add_js_file` or `app.add_css_file`, it will _only be added for t
 For example:
 
 ```{code-block} python
-:caption: conf.py
+---
+caption: '`conf.py`'
+---
 html_static_path = ["_static"]
 
 def add_my_files(app, pagename, templatename, context, doctree):
@@ -103,28 +109,35 @@ def setup(app):
 ## Add it directly to the page content
 
 Finally, you can add CSS or JS directly to a page's content.
-If you're using either the raw directive (reStructuredText) or pure html (MyST Markdown).
+If you're using reStructuredText you can use the `.. raw::` directive; if you're using MyST Markdown you can simply include the HTML content in-line with your Markdown-formatted content.
 
 ``````{tab-set}
-`````{tab-item} rst
+`````{tab-item} rST
 ````{code-block} rst
 :caption: some_page_in_my_site.rst
+My title
+========
+
+Some text
+
 .. raw:: html
 
-   <style>
-   .myclass {
-    font-size: 2rem;
-   }
+    <style>
+      /* Make h2 bigger */
+      h2 {
+        font-size: 3rem;
+      }
+    </style>
 
-   </style>
-   <script>
-   console.log("hi!")
-   </script>
+A bigger title
+--------------
+
+Some other text
 ````
 `````
-`````{tab-item} markdown
+`````{tab-item} Markdown
 ````{code-block} md
-:caption: other_page_in_my_site.md
+:caption: some_page_in_my_site.md
 # My title
 
 Some text
