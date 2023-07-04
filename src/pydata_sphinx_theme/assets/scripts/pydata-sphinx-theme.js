@@ -1,6 +1,6 @@
 // Define the custom behavior of the page
 import { documentReady } from "./mixin";
-import { compare } from "compare-versions";
+import { compare, validate } from "compare-versions";
 
 import "../styles/pydata-sphinx-theme.scss";
 
@@ -408,11 +408,9 @@ function showVersionWarningBanner(data) {
   }
   const preferredVersion = preferredEntries[0].version;
   const preferredURL = preferredEntries[0].url;
-  // TODO: make the below logic more forgiving:
-  //       - don't fail if version string not semVer-parsable
-  //       - if not semVer parsable make message more generic
   // if already on preferred version, nothing to do
-  if (!version.includes("dev") && compare(version, preferredVersion, "=")) {
+  const versionsAreComparable = validate(version) && validate(preferredVersion);
+  if (versionsAreComparable && compare(version, preferredVersion, "=")) {
     return;
   }
   // now construct the warning banner
@@ -431,13 +429,16 @@ function showVersionWarningBanner(data) {
   button.innerText = "Switch to latest stable version";
   button.onclick = checkPageExistsAndRedirect;
   // add the version-dependent text
-  inner.innerText = "This is documentation for ";
-  if (version.includes("dev") || compare(version, preferredVersion, ">")) {
-    inner.innerText += "the ";
+  inner.innerText = "This is documentation for an ";
+  const isDev = version.includes("dev");
+  const newerThanPreferred =
+    versionsAreComparable && compare(version, preferredVersion, ">");
+  if (isDev || newerThanPreferred) {
     bold.innerText = "unstable development version";
-  } else {
-    inner.innerText += "an ";
+  } else if (versionsAreComparable && compare(version, preferredVersion, "<")) {
     bold.innerText = `old version (${version})`;
+  } else {
+    bold.innerText = `version ${version}`;
   }
   outer.appendChild(middle);
   middle.appendChild(inner);
