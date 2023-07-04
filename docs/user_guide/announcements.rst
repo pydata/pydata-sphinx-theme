@@ -41,6 +41,9 @@ For example, the following configuration tells the theme to load the ``custom-te
       "announcement": "https://github.com/pydata/pydata-sphinx-theme/raw/main/docs/_templates/custom-template.html",
    }
 
+
+.. _version-warning-banners:
+
 Version warning banners
 -----------------------
 
