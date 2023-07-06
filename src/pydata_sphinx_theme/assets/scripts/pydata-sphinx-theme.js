@@ -430,7 +430,10 @@ function showVersionWarningBanner(data) {
   button.onclick = checkPageExistsAndRedirect;
   // add the version-dependent text
   inner.innerText = "This is documentation for an ";
-  const isDev = version.includes("dev");
+  const isDev =
+    version.includes("dev") ||
+    version.includes("rc") ||
+    version.includes("pre");
   const newerThanPreferred =
     versionsAreComparable && compare(version, preferredVersion, ">");
   if (isDev || newerThanPreferred) {
