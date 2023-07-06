@@ -67,5 +67,6 @@ In addition to the general-purpose announcement banner, the theme includes a bui
         {
             "name": "9.9.9 (current)",
             "version": "stable",
+            "preferred": true,
             "url": "https://anything"
         }
