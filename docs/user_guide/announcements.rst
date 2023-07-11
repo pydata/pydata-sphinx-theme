@@ -56,17 +56,30 @@ In addition to the general-purpose announcement banner, the theme includes a bui
         ...
         "show_version_warning_banner": True,
     }
-.. warning::
+
+.. important::
 
     This functionality relies on the :ref:`version switcher <version-dropdowns>` to determine the version number of the latest stable release.
     *It will only work* if your version switcher ``.json`` has exactly one entry with property ``"preferred": true``
-    and a ``name`` property that begins with a version string that is parsable by the `compare-versions node module <https://www.npmjs.com/package/compare-versions>`__, for example:
+    and your entries have ``version`` properties that are parsable by the `compare-versions node module <https://www.npmjs.com/package/compare-versions>`__, for example:
 
     .. code-block:: json
 
         {
-            "name": "9.9.9 (current)",
-            "version": "stable",
-            "preferred": true,
-            "url": "https://anything"
+            "name": "stable",
+            "version": "9.9.9",
+            "url": "https://anything",
+            "preferred": true
         }
+
+If you want similar functionality for *older* versions of your docs (i.e. those built before the ``show_version_warning_banner`` configuration option was available), you can manually add a banner by prepending the following HTML to all pages (be sure to replace ``URL_OF_STABLE_VERSION_OF_PROJECT`` with a valid URL, and adjust styling as desired):
+
+.. code-block:: html
+
+    <div style="background-color: rgb(248, 215, 218); color: rgb(114, 28, 36); text-align: center;">
+      <div>
+        <div>This is documentation for <strong>an old version</strong>.
+          <a href="{{ URL_OF_STABLE_VERSION_OF_PROJECT }}" style="background-color: rgb(220, 53, 69); color: rgb(255, 255, 255); margin: 1rem; padding: 0.375rem 0.75rem; border-radius: 4px; display: inline-block; text-align: center;">Switch to stable version</a>
+        </div>
+      </div>
+    </div>
