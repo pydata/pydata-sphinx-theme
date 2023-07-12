@@ -426,7 +426,7 @@ function showVersionWarningBanner(data) {
   button.classList =
     "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-1 align-baseline";
   button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
-  button.innerText = "Switch to latest stable version";
+  button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
   // add the version-dependent text
   inner.innerText = "This is documentation for an ";
