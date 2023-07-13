@@ -1,5 +1,5 @@
 /**
- * Navigation links within a navbar
+ * Navigation text links in the navbar
  */
 .navbar-nav {
   ul {
@@ -12,7 +12,7 @@
     }
   }
 
-  // Default link styles
+  // Navbar links - do not have an underline by default
   li {
     display: flex;
     flex-direction: column;
@@ -21,24 +21,9 @@
       display: flex;
       align-items: center;
       height: 100%;
-      color: var(--pst-color-text-muted);
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
-      &:hover {
-        color: var(--pst-color-primary);
-        border-style: none;
-        text-decoration-line: none;
-      }
-
-      &:focus {
-        color: var(--pst-color-primary);
-      }
-    }
-
-    // Active page is always highlighted
-    &.current > a {
-      font-weight: 600;
-      color: var(--pst-color-primary);
+      @include link-style-text;
     }
   }
 

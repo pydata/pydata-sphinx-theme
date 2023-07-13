@@ -23,11 +23,6 @@ html_sourcelink_suffix = ""
 html_theme_options = {
     "search_bar_position": "navbar",
     "logo_text": "DOCS",
-    "page_sidebar_items": [
-        "page-toc.html",
-        "edit-this-page.html",
-        "sourcelink.html",
-    ],
     "footer_items": ["page-toc.html"],
     "favicons": [
         {

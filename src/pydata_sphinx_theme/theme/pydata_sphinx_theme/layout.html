@@ -52,6 +52,15 @@ or not theme_secondary_sidebar_items %}
 {%- endblock %}
 
 {%- block content %}
+  {# A tiny helper pixel to detect if we've scrolled #}
+  <div id="pst-scroll-pixel-helper"></div>
+
+  {# the scroll to top button #}
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    {{ _("Back to top") }}
+  </button>
+
   {# checkbox to toggle primary sidebar #}
   <input type="checkbox"
           class="sidebar-toggle"

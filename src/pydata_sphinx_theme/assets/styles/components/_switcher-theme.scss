@@ -1,19 +1,23 @@
-// the icons for theme change
+/**
+ * Light/dark theme switcher
+ */
+
 .theme-switch-button {
   // overide bootstrap settings
   margin: 0 -0.5rem;
   padding: 0; // We pad the `span` not the container
   color: var(--pst-color-text-muted);
+  border-radius: 0;
+  @include focus-indicator;
 
   span {
     display: none;
     padding: 0.5em;
 
-    &:hover,
-    &:active,
-    &:focus {
+    @include icon-navbar-hover;
+    &:active {
       text-decoration: none;
-      color: var(--pst-color-primary);
+      color: var(--pst-color-link-hover);
     }
   }
 }

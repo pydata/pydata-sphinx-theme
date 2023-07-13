@@ -357,6 +357,7 @@ if (versionSwitcherBtns.length) {
     const anchor = document.createElement("a");
     anchor.setAttribute("class", "list-group-item list-group-item-action py-1");
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
+    anchor.setAttribute("role", "option");
     const span = document.createElement("span");
     span.textContent = `${entry.name}`;
     anchor.appendChild(span);
@@ -368,10 +369,11 @@ if (versionSwitcherBtns.length) {
     // this version, rather than using sphinx's {{ version }} variable.
     // also highlight the dropdown entry for the currently-viewed
     // version's entry
-    if (entry.version == DOCUMENTATION_OPTIONS.version_switcher_version_match) {
+    if (entry.version == DOCUMENTATION_OPTIONS.theme_switcher_version_match) {
       anchor.classList.add("active");
       versionSwitcherBtns.forEach((btn) => {
-        btn.innerText = btn.dataset["activeVersionName"] = entry.name;
+        btn.innerText = entry.name;
+        btn.dataset["activeVersionName"] = entry.name;
         btn.dataset["activeVersion"] = entry.version;
       });
     }

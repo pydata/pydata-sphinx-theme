@@ -13,7 +13,7 @@
 @import "variables/color";
 
 // re-usable SCSS functions / classes
-@import "abstracts/mixins";
+@import "abstracts/all";
 
 // Basic styling applied throughout site
 @import "./base/base";
