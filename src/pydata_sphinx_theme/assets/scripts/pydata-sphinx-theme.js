@@ -339,12 +339,28 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
     btn.dataset["activeVersionName"] = "";
     btn.dataset["activeVersion"] = "";
   });
-  // create links to the corresponding page in the other docs versions
-  data.forEach((entry) => {
+  // in case there are multiple entries with the same version string, this helps us
+  // decide which entry's `name` to put on the button itself. Without this, it would
+  // always be the *last* version-matching entry; now it will be either the
+  // version-matching entry that is also marked as `"preferred": true`, or if that
+  // doesn't exist: the *first* version-matching entry.
+  data = data.map((entry) => {
+    // does this entry match the version that we're currently building/viewing?
+    entry.match =
+      entry.version == DOCUMENTATION_OPTIONS.theme_switcher_version_match;
+    entry.preferred = entry.preferred || false;
     // if no custom name specified (e.g., "latest"), use version string
     if (!("name" in entry)) {
       entry.name = entry.version;
     }
+    return entry;
+  });
+  const hasMatchingPreferredEntry = data
+    .map((entry) => entry.preferred && entry.match)
+    .some(Boolean);
+  var foundMatch = false;
+  // create links to the corresponding page in the other docs versions
+  data.forEach((entry) => {
     // create the node
     const anchor = document.createElement("a");
     anchor.setAttribute("class", "list-group-item list-group-item-action py-1");
@@ -357,17 +373,20 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
     // to apply CSS styling based on this information.
     anchor.dataset["versionName"] = entry.name;
     anchor.dataset["version"] = entry.version;
-    // replace dropdown button text with the preferred display name of
-    // this version, rather than using sphinx's {{ version }} variable.
-    // also highlight the dropdown entry for the currently-viewed
-    // version's entry
-    if (entry.version == DOCUMENTATION_OPTIONS.theme_switcher_version_match) {
+    // replace dropdown button text with the preferred display name of the
+    // currently-viewed version, rather than using sphinx's {{ version }} variable.
+    // also highlight the dropdown entry for the currently-viewed version's entry
+    let matchesAndIsPreferred = hasMatchingPreferredEntry && entry.preferred;
+    let matchesAndIsFirst =
+      !hasMatchingPreferredEntry && !foundMatch && entry.match;
+    if (matchesAndIsPreferred || matchesAndIsFirst) {
       anchor.classList.add("active");
       versionSwitcherBtns.forEach((btn) => {
         btn.innerText = entry.name;
         btn.dataset["activeVersionName"] = entry.name;
         btn.dataset["activeVersion"] = entry.version;
       });
+      foundMatch = true;
     }
     // There may be multiple version-switcher elements, e.g. one
     // in a slide-over panel displayed on smaller screens.
