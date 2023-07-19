@@ -1,3 +1,5 @@
+.. _version-dropdowns:
+
 Version switcher dropdowns
 ==========================
 
@@ -40,6 +42,8 @@ each can have the following fields:
 - ``url``: the URL for this version.
 - ``name``: an optional name to display in the switcher dropdown instead of the
   version string (e.g., "latest", "stable", "dev", etc.).
+- ``preferred``: an optional field that *should occur on at most one entry* in the JSON file.
+  It specifies which version is considered "latest stable", and is used to customize the message used on :ref:`version-warning-banners` (if they are enabled).
 
 Here is an example JSON file:
 

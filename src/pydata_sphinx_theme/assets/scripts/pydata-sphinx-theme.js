@@ -1,5 +1,6 @@
 // Define the custom behavior of the page
 import { documentReady } from "./mixin";
+import { compare, validate } from "compare-versions";
 
 import "../styles/pydata-sphinx-theme.scss";
 
@@ -299,60 +300,67 @@ function checkPageExistsAndRedirect(event) {
       location.href = otherDocsHomepage;
     });
 
-  // ensure we don't follow the initial link
+  // ↓ this prevents the browser from following the href of the clicked node
+  // ↓ (which is fine because this function takes care of redirecting)
   event.preventDefault();
 }
 
 /**
- * Check if the corresponding url is absolute and make a absolute path from root if necessary
+ * Load and parse the version switcher JSON file from an absolute or relative URL.
  *
- * @param {string} url the url to check
+ * @param {string} url The URL to load version switcher entries from.
  */
 async function fetchVersionSwitcherJSON(url) {
   // first check if it's a valid URL
   try {
     var result = new URL(url);
   } catch (err) {
-    // if not, assume relative path and fix accordingly
     if (err instanceof TypeError) {
-      // workaround for redirects like https://pydata-sphinx-theme.readthedocs.io
-      // fetch() automatically follows redirects so it should work in every builder
-      // (RDT, GitHub actions, etc)
-      const origin = await fetch(window.location.origin, {
-        method: "HEAD",
-      });
+      // assume we got a relative path, and fix accordingly. But first, we need to
+      // use `fetch()` to follow redirects so we get the correct final base URL
+      const origin = await fetch(window.location.origin, { method: "HEAD" });
       result = new URL(url, origin.url);
     } else {
+      // something unexpected happened
       throw err;
     }
   }
-
+  // load and return the JSON
   const response = await fetch(result);
   const data = await response.json();
   return data;
 }
 
-// Populate the version switcher from the JSON config file
-var versionSwitcherBtns = document.querySelectorAll(
-  ".version-switcher__button"
-);
-
-if (versionSwitcherBtns.length) {
-  const data = await fetchVersionSwitcherJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url
-  );
+// Populate the version switcher from the JSON data
+function populateVersionSwitcher(data, versionSwitcherBtns) {
   const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
   versionSwitcherBtns.forEach((btn) => {
     // Set empty strings by default so that these attributes exist and can be used in CSS selectors
     btn.dataset["activeVersionName"] = "";
     btn.dataset["activeVersion"] = "";
   });
-  // create links to the corresponding page in the other docs versions
-  data.forEach((entry) => {
+  // in case there are multiple entries with the same version string, this helps us
+  // decide which entry's `name` to put on the button itself. Without this, it would
+  // always be the *last* version-matching entry; now it will be either the
+  // version-matching entry that is also marked as `"preferred": true`, or if that
+  // doesn't exist: the *first* version-matching entry.
+  data = data.map((entry) => {
+    // does this entry match the version that we're currently building/viewing?
+    entry.match =
+      entry.version == DOCUMENTATION_OPTIONS.theme_switcher_version_match;
+    entry.preferred = entry.preferred || false;
     // if no custom name specified (e.g., "latest"), use version string
     if (!("name" in entry)) {
       entry.name = entry.version;
     }
+    return entry;
+  });
+  const hasMatchingPreferredEntry = data
+    .map((entry) => entry.preferred && entry.match)
+    .some(Boolean);
+  var foundMatch = false;
+  // create links to the corresponding page in the other docs versions
+  data.forEach((entry) => {
     // create the node
     const anchor = document.createElement("a");
     anchor.setAttribute("class", "list-group-item list-group-item-action py-1");
@@ -365,17 +373,20 @@ if (versionSwitcherBtns.length) {
     // to apply CSS styling based on this information.
     anchor.dataset["versionName"] = entry.name;
     anchor.dataset["version"] = entry.version;
-    // replace dropdown button text with the preferred display name of
-    // this version, rather than using sphinx's {{ version }} variable.
-    // also highlight the dropdown entry for the currently-viewed
-    // version's entry
-    if (entry.version == DOCUMENTATION_OPTIONS.theme_switcher_version_match) {
+    // replace dropdown button text with the preferred display name of the
+    // currently-viewed version, rather than using sphinx's {{ version }} variable.
+    // also highlight the dropdown entry for the currently-viewed version's entry
+    let matchesAndIsPreferred = hasMatchingPreferredEntry && entry.preferred;
+    let matchesAndIsFirst =
+      !hasMatchingPreferredEntry && !foundMatch && entry.match;
+    if (matchesAndIsPreferred || matchesAndIsFirst) {
       anchor.classList.add("active");
       versionSwitcherBtns.forEach((btn) => {
         btn.innerText = entry.name;
         btn.dataset["activeVersionName"] = entry.name;
         btn.dataset["activeVersion"] = entry.version;
       });
+      foundMatch = true;
     }
     // There may be multiple version-switcher elements, e.g. one
     // in a slide-over panel displayed on smaller screens.
@@ -390,6 +401,73 @@ if (versionSwitcherBtns.length) {
       menu.append(node);
     });
   });
+}
+
+/*******************************************************************************
+ * Warning banner when viewing non-stable version of the docs.
+ */
+
+/**
+ * Show a warning banner when viewing a non-stable version of the docs.
+ *
+ * adapted 2023-06 from https://mne.tools/versionwarning.js, which was
+ * originally adapted 2020-05 from https://scikit-learn.org/versionwarning.js
+ *
+ * @param {Array} data The version data used to populate the switcher menu.
+ */
+function showVersionWarningBanner(data) {
+  const version = DOCUMENTATION_OPTIONS.VERSION;
+  // figure out what latest stable version is
+  var preferredEntries = data.filter((entry) => entry.preferred);
+  if (preferredEntries.length !== 1) {
+    const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
+    throw new Error(
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON`
+    );
+  }
+  const preferredVersion = preferredEntries[0].version;
+  const preferredURL = preferredEntries[0].url;
+  // if already on preferred version, nothing to do
+  const versionsAreComparable = validate(version) && validate(preferredVersion);
+  if (versionsAreComparable && compare(version, preferredVersion, "=")) {
+    return;
+  }
+  // now construct the warning banner
+  var outer = document.createElement("div");
+  const middle = document.createElement("div");
+  const inner = document.createElement("div");
+  const bold = document.createElement("strong");
+  const button = document.createElement("a");
+  // these classes exist since pydata-sphinx-theme v0.10.0
+  outer.classList = "bd-header-version-warning container-fluid";
+  middle.classList = "bd-header-announcement__content";
+  inner.classList = "sidebar-message";
+  button.classList =
+    "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-1 align-baseline";
+  button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
+  button.innerText = "Switch to stable version";
+  button.onclick = checkPageExistsAndRedirect;
+  // add the version-dependent text
+  inner.innerText = "This is documentation for an ";
+  const isDev =
+    version.includes("dev") ||
+    version.includes("rc") ||
+    version.includes("pre");
+  const newerThanPreferred =
+    versionsAreComparable && compare(version, preferredVersion, ">");
+  if (isDev || newerThanPreferred) {
+    bold.innerText = "unstable development version";
+  } else if (versionsAreComparable && compare(version, preferredVersion, "<")) {
+    bold.innerText = `old version (${version})`;
+  } else {
+    bold.innerText = `version ${version}`;
+  }
+  outer.appendChild(middle);
+  middle.appendChild(inner);
+  inner.appendChild(bold);
+  inner.appendChild(document.createTextNode("."));
+  inner.appendChild(button);
+  document.body.prepend(outer);
 }
 
 /*******************************************************************************
@@ -421,6 +499,27 @@ function initRTDObserver() {
   const observer = new MutationObserver(mutatedCallback);
   const config = { childList: true };
   observer.observe(document.body, config);
+}
+
+// fetch the JSON version data (only once), then use it to populate the version
+// switcher and maybe show the version warning bar
+var versionSwitcherBtns = document.querySelectorAll(
+  ".version-switcher__button"
+);
+const hasSwitcherMenu = versionSwitcherBtns.length > 0;
+const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
+  "theme_switcher_json_url"
+);
+const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
+
+if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
+  const data = await fetchVersionSwitcherJSON(
+    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+  );
+  populateVersionSwitcher(data, versionSwitcherBtns);
+  if (wantsWarningBanner) {
+    showVersionWarningBanner(data);
+  }
 }
 
 /*******************************************************************************
