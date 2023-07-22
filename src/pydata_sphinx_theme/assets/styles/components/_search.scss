@@ -1,9 +1,20 @@
-/*************************
+/**
  * Search field
- */
+ **/
 .bd-search {
   position: relative;
-  padding: 1rem 0;
+  padding-left: 0.5rem;
+  gap: 0.5rem;
+  background-color: var(--pst-color-background);
+  border-radius: $admonition-border-radius;
+  border: 1px solid var(--pst-color-border);
+  color: var(--pst-color-text-base);
+
+  // Background should always be same color regardless of active or not
+  &:active {
+    background-color: var(--pst-color-background);
+    color: var(--pst-color-text-muted);
+  }
 
   .icon {
     position: absolute;
@@ -11,29 +22,16 @@
     left: 25px;
   }
 
-  i.fa-solid.fa-magnifying-glass {
+  .fa-solid.fa-magnifying-glass {
     position: absolute;
     left: calc((2.5rem - 0.7em) / 2);
     color: var(--pst-color-text-muted);
   }
 
   input {
-    background-color: var(--pst-color-background);
-    border-radius: $admonition-border-radius;
-    border: 1px solid var(--pst-color-border);
-    padding-left: 2.5rem;
-    color: var(--pst-color-text-base);
-
     // Inner-text of the search bar
     &::placeholder {
-      color: var(--pst-color-border);
-    }
-
-    // Background should always be same color regardless of active or not
-    &:active,
-    &:focus {
-      background-color: var(--pst-color-background);
-      color: var(--pst-color-text-base);
+      color: var(--pst-color-text-muted);
     }
 
     // Remove the little "x" that pops up when you start typing
@@ -53,20 +51,32 @@
   }
 }
 
-/*************************
- * Search button
+.form-control {
+  &:focus,
+  &:focus-visible {
+    border: none;
+    box-shadow: none;
+    outline: 3px solid var(--pst-color-accent);
+    background-color: var(--pst-color-background);
+    color: var(--pst-color-text-muted);
+  }
+}
+
+/**
+ * Search button - located in the navbar
  */
+
 // Search link icon should be a bit bigger since it is separate from icon links
 .search-button {
   display: flex;
   align-items: center;
   align-content: center;
-  padding: 0;
   color: var(--pst-color-text-muted);
-
-  &:hover {
-    color: var(--pst-color-primary);
-  }
+  // Needed to match other icons hover
+  padding: 0 0 0.25rem 0;
+  border-radius: 0;
+  @include icon-navbar-hover;
+  @include focus-indicator;
 
   i {
     font-size: 1.3rem;
@@ -112,8 +122,55 @@
   }
 
   // Font and input text a bit bigger
-  i,
+  svg,
   input {
     font-size: var(--pst-font-size-icon);
+  }
+}
+
+/**
+ * The search button component that looks like a field.
+ * Lives at components/search-button-field.html
+ */
+.search-button-field {
+  display: inline-flex;
+  align-items: center;
+  border: var(--pst-color-border) solid 1px;
+  border-radius: 1.5em;
+  color: var(--pst-color-text-muted);
+  padding: 0.5em;
+
+  &:hover {
+    background-color: var(--pst-color-surface);
+    border: 2px solid var(--pst-color-link-hover);
+  }
+  &:focus-visible {
+    border: 2px solid var(--pst-color-accent);
+  }
+
+  // The keyboard shotcut text
+  .search-button__kbd-shortcut {
+    font-size: var(--bs-nav-link-font-size);
+    font-weight: var(--bs-nav-link-font-weight);
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+  }
+
+  .kbd-shortcut__modifier {
+    font-size: 0.75em;
+  }
+
+  // Ensures that all the text lines up in the middle
+  > * {
+    align-items: center;
+  }
+
+  // Only the icon should be visible on narrow screens
+  > :not(svg) {
+    display: none;
+
+    @include media-breakpoint-up(lg) {
+      display: flex;
+    }
   }
 }

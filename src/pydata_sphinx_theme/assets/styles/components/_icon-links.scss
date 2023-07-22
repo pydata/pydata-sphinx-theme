@@ -12,6 +12,7 @@
   li.nav-item a.nav-link {
     padding-left: 0;
     padding-right: 0;
+    @include icon-navbar-hover;
   }
 
   // Spacing and centering

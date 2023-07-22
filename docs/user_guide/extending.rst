@@ -35,6 +35,16 @@ Then add the ``dropdown`` class to any admonition directive (shown here on a ``n
             :code: rst
             :class: highlight-rst
 
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{note}
+            :class: dropdown
+
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            ```
+
 
 Custom admonition styles
 ========================
@@ -65,6 +75,14 @@ The title is specified on the same line as the ``.. admonition::`` directive:
             :code: rst
             :class: highlight-rst
 
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{admonition} Custom title!
+
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            ```
 
 Styling with semantic color names
 ---------------------------------
@@ -89,6 +107,16 @@ Note that it updates both the color and the icon. See :doc:`./styling` for a lis
             :end-before: .. end-example-semantic
             :code: rst
             :class: highlight-rst
+
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{admonition} Custom title with "warning" style
+            :class: warning
+
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            ```
 
 This theme defines classes for `the standard docutils admonition types <https://docutils.sourceforge.io/docs/ref/rst/directives.html#admonitions>`__ (``attention``, ``caution``, etc) and additionally supports ``seealso`` and ``todo`` admonitions (see :doc:`../examples/kitchen-sink/admonitions` for a demo of all built-in admonition styles).
 
@@ -117,13 +145,23 @@ Be sure to use the same color for ``border-color`` and ``color`` and a different
             :code: rst
             :class: highlight-rst
 
-    .. tab-item:: css
+    .. tab-item:: markdown
 
-        .. include:: ../_static/custom.css
-            :start-after: begin-custom-color
-            :end-before: /* end-custom-color
-            :code: css
-            :class: highlight-css
+        .. code-block:: md
+
+            ```{admonition} Admonition with custom "olive" color
+            :class: admonition-olive
+
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            ```
+
+And add the following to your ``custom.css`` file:
+
+.. include:: ../_static/custom.css
+    :start-after: begin-custom-color
+    :end-before: /* end-custom-color
+    :code: css
+    :class: highlight-css
 
 
 Using a custom icon
@@ -148,13 +186,23 @@ Customizing the icon uses a similar process to customizing the color: create a n
             :code: rst
             :class: highlight-rst
 
-    .. tab-item:: css
+    .. tab-item:: markdown
 
-        .. include:: ../_static/custom.css
-            :start-after: begin-custom-icon
-            :end-before: /* end-custom-icon
-            :code: css
-            :class: highlight-css
+        .. code-block:: md
+
+            ```{admonition} Check out my custom icon
+            :class: admonition-icon
+
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            ```
+
+And add the following css to your ``custom.css`` file:
+
+.. include:: ../_static/custom.css
+    :start-after: begin-custom-icon
+    :end-before: /* end-custom-icon
+    :code: css
+    :class: highlight-css
 
 
 Combining all three customizations
@@ -179,10 +227,22 @@ Here we demonstrate an admonition with a custom icon, color, and title (and also
             :code: rst
             :class: highlight-rst
 
-    .. tab-item:: css
+    .. tab-item:: markdown
 
-        .. include:: ../_static/custom.css
-            :start-after: begin-custom-youtube
-            :end-before: /* end-custom-youtube
-            :code: css
-            :class: highlight-css
+        .. code-block:: md
+
+            ````{admonition} YouTube
+            :class: dropdown admonition-youtube
+
+            ```{youtube} dQw4w9WgXcQ
+            ```
+
+            ````
+
+And add the following css to your custom.css file:
+
+.. include:: ../_static/custom.css
+    :start-after: begin-custom-youtube
+    :end-before: /* end-custom-youtube
+    :code: css
+    :class: highlight-css

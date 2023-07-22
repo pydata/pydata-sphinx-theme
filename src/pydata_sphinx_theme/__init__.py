@@ -36,16 +36,6 @@ def update_config(app):
             "The configuration `logo_text` is deprecated." "Use `'logo': {'text': }`."
         )
 
-    # TODO: deprecation; remove after 0.13 release
-    if theme_options.get("page_sidebar_items"):
-        theme_options["secondary_sidebar_items"] = theme_options.get(
-            "page_sidebar_items"
-        )
-        logger.warning(
-            "The configuration `page_sidebar_items` is deprecated."
-            "Use `secondary_sidebar_items`."
-        )
-
     # TODO: DEPRECATE after 0.14
     if theme_options.get("footer_items"):
         theme_options["footer_start"] = theme_options.get("footer_items")
@@ -70,14 +60,6 @@ def update_config(app):
     # Set the anchor link default to be # if the user hasn't provided their own
     if not utils.config_provided_by_user(app, "html_permalinks_icon"):
         app.config.html_permalinks_icon = "#"
-
-    # Raise a warning for a deprecated theme switcher config
-    # TODO: deprecation; remove after 0.13 release
-    if "url_template" in theme_options.get("switcher", {}):
-        logger.warning(
-            "html_theme_options['switcher']['url_template'] is no longer supported."
-            " Set version URLs in JSON directly."
-        )
 
     # check the validity of the theme switcher file
     is_dict = isinstance(theme_options.get("switcher"), dict)
@@ -273,6 +255,7 @@ def update_and_remove_templates(
         js = f"""
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = '{json_url}';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = {str(context["theme_show_version_warning_banner"]).lower()};
         """
         app.add_js_file(None, body=js)
 

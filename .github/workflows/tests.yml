@@ -46,10 +46,6 @@ jobs:
         os: [ubuntu-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11"]
         include:
-          # legacy test
-          - os: ubuntu-latest
-            python-version: "3.7"
-            sphinx-version: "4.2"
           # macos test
           - os: macos-latest
             python-version: "3.11"

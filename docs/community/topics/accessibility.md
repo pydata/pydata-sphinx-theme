@@ -15,4 +15,6 @@ We run a [Lighthouse](https://developers.google.com/web/tools/lighthouse) job in
 The configuration for Lighthouse can be found in the `.github/workflows/lighthouserc.json` file.
 
 For more information about configuring Lighthouse, see [the Lighthouse documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md).
-For more information about Accessibility in general, see [](../../user_guide/accessibility.rst).
+For more information about Accessibility in general, see [](../../user_guide/accessibility.md).
+
+We have also recently added automated tests using [Playwright](https://playwright.dev/python/) and [axe-core](https://github.com/dequelabs/axe-core) to improve our accessibility testing and reporting.

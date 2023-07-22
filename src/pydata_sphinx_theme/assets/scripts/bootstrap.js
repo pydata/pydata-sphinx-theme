@@ -22,7 +22,35 @@ function TriggerTooltip() {
 }
 
 /*******************************************************************************
+ * back to top button
+ */
+function backToTop() {
+  var btn = document.getElementById("pst-back-to-top");
+  btn.addEventListener("click", function () {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+}
+
+function showBackToTop() {
+  var btn = document.getElementById("pst-back-to-top");
+  var header = document
+    .getElementsByClassName("bd-header")[0]
+    .getBoundingClientRect();
+  window.addEventListener("scroll", function () {
+    if (this.oldScroll > this.scrollY && this.scrollY > header.bottom) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+    this.oldScroll = this.scrollY;
+  });
+}
+
+/*******************************************************************************
  * Call functions after document loading.
  */
 
 documentReady(TriggerTooltip);
+documentReady(backToTop);
+documentReady(showBackToTop);

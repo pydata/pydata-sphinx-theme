@@ -36,18 +36,16 @@ nav.page-toc {
     // Padding w/ negative margin so the top TOC item highlight overlaps w/ the TOC border
     padding-left: 1rem;
     margin-left: -1rem;
-    color: var(--pst-color-text-muted);
 
-    &:hover {
-      color: var(--pst-color-primary);
-      text-decoration: none;
-    }
+    @include link-sidebar;
 
     &.active {
-      font-weight: 600;
-      color: var(--pst-color-primary);
+      @include link-sidebar-current;
       background-color: transparent;
-      border-left: 2px solid var(--pst-color-primary);
+
+      &:hover {
+        color: var(--pst-color-link-hover);
+      }
     }
   }
 }
