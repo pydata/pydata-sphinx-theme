@@ -15,6 +15,17 @@ These projects are our earliest adopters and/or present some interesting customi
 
 Thanks to all the projects that are now using `pydata-sphinx-theme` for their documentation, here is a non exhaustive list of our users.
 
-```{gallery-list} ../_static/gallery.yaml
+```{gallery-grid}
+:grid-columns: "1 2 2 3"
 
+- title: MegEngine
+  link: https://www.megengine.org.cn/doc/stable/en/index.html
+- title: Feature-engine
+  link: https://feature-engine.readthedocs.io/
+- title: CuPy
+  link: https://docs.cupy.dev/en/stable/index.html
+- title: Fairlearn
+  link: https://fairlearn.org/main/about/
+- title: Binder
+  link: https://mybinder.readthedocs.io/en/latest/index.html
 ```
