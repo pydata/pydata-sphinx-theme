@@ -42,7 +42,11 @@ LIST_ITEM = "[{title}]({link})"
 
 
 class GalleryGridDirective(SphinxDirective):
-    """A directive to show a gallery of images and links in a grid."""
+    """A directive to show a gallery of images and links in a grid.
+
+    Danger:
+        This directive can only be used in the context of a Myst documentation page as the templates are using Markdown flavored formatting.
+    """
 
     name = "gallery-grid"
     has_content = True
@@ -144,52 +148,48 @@ class GalleryGridDirective(SphinxDirective):
         # Add extra classes
         if self.options.get("container-class", []):
             container.attributes["classes"] += self.options.get("class", [])
+
         return [container]
 
 
 class GalleryListDirective(SphinxDirective):
-    """A directive to show a gallery of linked projects."""
+    """A directive to show a gallery of linked projects.
+
+    Danger:
+        This directive can only be used in the context of a Myst documentation page as the templates are using Markdown flavored formatting.
+    """
 
     name = "gallery-list"
     has_content = True
-    required_arguments = 0
-    optional_arguments = 1
+    required_arguments = 1
+    optional_arguments = 0
     final_argument_whitespace = True
-    option_spec = {
-        # A class to be added to the resulting container
-        "grid-columns": directives.unchanged,
-        "class-container": directives.unchanged,
-        "class-card": directives.unchanged,
-    }
 
     def run(self) -> List[nodes.Node]:
-        if self.arguments:
-            # If an argument is given, assume it's a path to a YAML file
-            # Parse it and load it into the directive content
-            path_data_rel = Path(self.arguments[0])
-            path_doc, _ = self.get_source_info()
-            path_doc = Path(path_doc).parent
-            path_data = (path_doc / path_data_rel).resolve()
-            if not path_data.exists():
-                logger.warn(f"Could not find grid data at {path_data}.")
-                nodes.text("No grid data found at {path_data}.")
-                return
-            yaml_string = path_data.read_text()
-        else:
-            yaml_string = "\n".join(self.content)
 
-        # Read in YAML so we can generate the gallery
+        # the argument is the path to the YAML file containing the gallery site list
+        path_data_rel = Path(self.arguments[0])
+        path_doc, _ = self.get_source_info()
+        path_doc = Path(path_doc).parent
+        path_data = (path_doc / path_data_rel).resolve()
+        if not path_data.exists():
+            logger.warn(f"Could not find grid data at {path_data}.")
+            nodes.text(f"No grid data found at {path_data}.")
+            return
+        yaml_string = path_data.read_text()
+
+        # Use all the element with an img-bottom key as sites to show
+        # and generate a list item for each of them
         grid_data = [i for i in safe_load(yaml_string) if "img-bottom" not in i]
+        grid_items = [
+            LIST_ITEM.format(title=item["title"], link=item["website"])
+            for item in grid_data
+        ]
 
-        grid_items = []
-        for item in grid_data:
-            grid_items.append(
-                LIST_ITEM.format(title=item["title"], link=item["website"])
-            )
-
+        # parse the links as a simple paragraph using Myst
         node = nodes.paragraph()
-        grid_directive = "  \n".join(grid_items)
-        self.state.nested_parse([grid_directive], 0, node)
+        self.state.nested_parse(["  \n".join(grid_items)], 0, node)
+
         return [node]
 
 
@@ -198,6 +198,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 
     Args:
         app: the Sphinx application
+
     Returns:
         the 2 parallel parameters set to ``True``.
     """
