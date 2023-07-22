@@ -38,6 +38,8 @@ GRID_CARD = """
 ````
 """
 
+LIST_ITEM = "[{title}]({link}): {description}"
+
 
 class GalleryGridDirective(SphinxDirective):
     """A directive to show a gallery of images and links in a grid."""
@@ -145,6 +147,52 @@ class GalleryGridDirective(SphinxDirective):
         return [container]
 
 
+class GalleryListDirective(SphinxDirective):
+    """A directive to show a gallery of linked projects."""
+
+    name = "gallery-list"
+    has_content = True
+    required_arguments = 0
+    optional_arguments = 1
+    final_argument_whitespace = True
+    option_spec = {
+        # A class to be added to the resulting container
+        "grid-columns": directives.unchanged,
+        "class-container": directives.unchanged,
+        "class-card": directives.unchanged,
+    }
+
+    def run(self) -> List[nodes.Node]:
+        if self.arguments:
+            # If an argument is given, assume it's a path to a YAML file
+            # Parse it and load it into the directive content
+            path_data_rel = Path(self.arguments[0])
+            path_doc, _ = self.get_source_info()
+            path_doc = Path(path_doc).parent
+            path_data = (path_doc / path_data_rel).resolve()
+            if not path_data.exists():
+                logger.warn(f"Could not find grid data at {path_data}.")
+                nodes.text("No grid data found at {path_data}.")
+                return
+            yaml_string = path_data.read_text()
+        else:
+            yaml_string = "\n".join(self.content)
+
+        # Read in YAML so we can generate the gallery
+        grid_data = safe_load(yaml_string)
+
+        grid_items = []
+        for item in grid_data:
+            grid_items.append(
+                LIST_ITEM.format(title=item["title"], link=item["website"])
+            )
+
+        node = nodes.paragraph()
+        grid_directive = "  \n".join(grid_items)
+        self.state.nested_parse([grid_directive], 0, node)
+        return [node]
+
+
 def setup(app: Sphinx) -> Dict[str, Any]:
     """Add custom configuration to sphinx app.
 
@@ -154,6 +202,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
         the 2 parallel parameters set to ``True``.
     """
     app.add_directive("gallery-grid", GalleryGridDirective)
+    app.add_directive("gallery-list", GalleryListDirective)
 
     return {
         "parallel_read_safe": True,

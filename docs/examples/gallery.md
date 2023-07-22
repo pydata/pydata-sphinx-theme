@@ -7,3 +7,7 @@ If you'd like to add your documentation to this list, simply add an entry to [th
 :grid-columns: "1 2 2 3"
 
 ```
+
+```{gallery-list} ../_static/gallery.yaml
+
+```
