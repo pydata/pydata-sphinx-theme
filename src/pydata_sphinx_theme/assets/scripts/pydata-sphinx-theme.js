@@ -288,6 +288,9 @@ var setupSearchButtons = () => {
  * @param {event} event the event that trigger the check
  */
 function checkPageExistsAndRedirect(event) {
+  // ensure we don't follow the initial link
+  event.preventDefault();
+
   const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
   const tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
@@ -299,10 +302,6 @@ function checkPageExistsAndRedirect(event) {
     .catch((error) => {
       location.href = otherDocsHomepage;
     });
-
-  // ↓ this prevents the browser from following the href of the clicked node
-  // ↓ (which is fine because this function takes care of redirecting)
-  event.preventDefault();
 }
 
 /**
