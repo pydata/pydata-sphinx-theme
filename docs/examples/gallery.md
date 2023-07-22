@@ -1,7 +1,7 @@
 # Gallery of sites using this theme
 
 This is a gallery of documentation built on top of the `pydata-sphinx-theme`.
-If you'd like to add your documentation to this list, simply add an entry to [this gallery.yaml file](https://github.com/pydata/pydata-sphinx-theme/blob/main/docs/_static/gallery.yaml) and open a Pull Request to add it.
+If you'd like to add your documentation to this list, simply add an entry to list at the end of [this page](https://github.com/pydata/pydata-sphinx-theme/blob/main/docs/examples/gallery.md) and open a Pull Request to add it.
 
 ## Featured projects
 

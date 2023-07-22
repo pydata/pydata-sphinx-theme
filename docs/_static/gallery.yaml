@@ -3,13 +3,8 @@
 # 1. Used by `generate_gallery_images.py` to take snapshots of each item and place an image in `gallery`.
 # 2. Used by our Gallery Grid directive to create the grid on our `examples/gallery.md` page.
 #
-# title: The title of each gallery item
-# link: The link that will be used to create a snapshot of this item.
-#    An image will be placed in docs/_static/gallery/{sanitized_title}.png
-# img-bottom: The location where img-bottoms will be placed for each entry by generate_gallery_img-bottoms.py
-#    This should follow the form shown above and is roughly the same for all items.
-#    This is an optional parameter only relevant for promoted items. If not provided, the documentation
-#    will be added to the list. Only maintainers should add this parameter.
+# This file should only be modified by maintainer, contributors should add their project
+# to the list of `gallery.md`.
 - title: Pandas
   link: https://pandas.pydata.org/docs/
   img-bottom: ../_static/gallery/pandas.png
