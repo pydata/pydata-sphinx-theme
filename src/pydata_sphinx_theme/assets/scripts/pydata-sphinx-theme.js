@@ -287,10 +287,9 @@ var setupSearchButtons = () => {
  * @param {event} event the event that trigger the check
  */
 function checkPageExistsAndRedirect(event) {
-
   // ensure we don't follow the initial link
   event.preventDefault();
-  
+
   const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
   const tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
@@ -301,7 +300,7 @@ function checkPageExistsAndRedirect(event) {
     }) // if the page exists, go there
     .catch((error) => {
       location.href = otherDocsHomepage;
-    })
+    });
 }
 
 /**
