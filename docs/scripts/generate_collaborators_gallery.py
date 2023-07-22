@@ -21,7 +21,7 @@ for collaborator in collaborators:
         {
             "header": f"@{collaborator['login']}",
             "image": f"https://avatars.githubusercontent.com/u/{collaborator['id']}",
-            "website": collaborator["html_url"],
+            "link": collaborator["html_url"],
         }
     )
 
