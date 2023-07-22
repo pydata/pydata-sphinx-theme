@@ -38,7 +38,7 @@ GRID_CARD = """
 ````
 """
 
-LIST_ITEM = "[{title}]({link}): {description}"
+LIST_ITEM = "[{title}]({link})"
 
 
 class GalleryGridDirective(SphinxDirective):
@@ -73,7 +73,7 @@ class GalleryGridDirective(SphinxDirective):
             yaml_string = "\n".join(self.content)
 
         # Read in YAML so we can generate the gallery
-        grid_data = safe_load(yaml_string)
+        grid_data = [i for i in safe_load(yaml_string) if "img-bottom" in i]
 
         grid_items = []
         for item in grid_data:
@@ -179,7 +179,7 @@ class GalleryListDirective(SphinxDirective):
             yaml_string = "\n".join(self.content)
 
         # Read in YAML so we can generate the gallery
-        grid_data = safe_load(yaml_string)
+        grid_data = [i for i in safe_load(yaml_string) if "img-bottom" not in i]
 
         grid_items = []
         for item in grid_data:

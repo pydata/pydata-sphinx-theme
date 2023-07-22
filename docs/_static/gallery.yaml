@@ -22,9 +22,6 @@
 - title: Bokeh
   website: https://docs.bokeh.org/en/latest/
   img-bottom: ../_static/gallery/bokeh.png
-- title: CuPy
-  website: https://docs.cupy.dev/en/stable/index.html
-  img-bottom: ../_static/gallery/cupy.png
 - title: PyVista
   website: https://docs.pyvista.org
   img-bottom: ../_static/gallery/pyvista.png
@@ -34,24 +31,12 @@
 - title: NetworkX
   website: https://networkx.org/documentation/stable/
   img-bottom: ../_static/gallery/networkx.png
-- title: Fairlearn
-  website: https://fairlearn.org/main/about/
-  img-bottom: ../_static/gallery/fairlearn.png
 - title: Jupyter Book
   website: https://jupyterbook.org/en/stable/intro.html
   img-bottom: ../_static/gallery/jupyter_book.png
-- title: Binder
-  website: https://mybinder.readthedocs.io/en/latest/index.html
-  img-bottom: ../_static/gallery/binder.png
 - title: Jupyter
   website: https://docs.jupyter.org/en/latest/
   img-bottom: ../_static/gallery/jupyter.png
-- title: MegEngine
-  website: https://www.megengine.org.cn/doc/stable/en/index.html
-  img-bottom: ../_static/gallery/megengine.png
-- title: Feature-engine
-  website: https://feature-engine.readthedocs.io/
-  img-bottom: ../_static/gallery/feature-engine.png
 - title: ArviZ
   website: https://python.arviz.org/
   img-bottom: ../_static/gallery/arviz.png
@@ -61,3 +46,18 @@
 - title: Matplotlib
   website: https://matplotlib.org/stable/
   img-bottom: ../_static/gallery/matplotlib.png
+- title: MegEngine
+  website: https://www.megengine.org.cn/doc/stable/en/index.html
+  #img-bottom: ../_static/gallery/megengine.png
+- title: Feature-engine
+  website: https://feature-engine.readthedocs.io/
+  #img-bottom: ../_static/gallery/feature-engine.png
+- title: CuPy
+  website: https://docs.cupy.dev/en/stable/index.html
+  #img-bottom: ../_static/gallery/cupy.png
+- title: Fairlearn
+  website: https://fairlearn.org/main/about/
+  #img-bottom: ../_static/gallery/fairlearn.png
+- title: Binder
+  website: https://mybinder.readthedocs.io/en/latest/index.html
+  #img-bottom: ../_static/gallery/binder.png
