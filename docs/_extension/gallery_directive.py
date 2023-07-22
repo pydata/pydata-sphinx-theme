@@ -39,7 +39,7 @@ GRID_CARD = """
 """
 
 
-class GalleryDirective(SphinxDirective):
+class GalleryGridDirective(SphinxDirective):
     """A directive to show a gallery of images and links in a grid."""
 
     name = "gallery-grid"
@@ -153,7 +153,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     Returns:
         the 2 parallel parameters set to ``True``.
     """
-    app.add_directive("gallery-grid", GalleryDirective)
+    app.add_directive("gallery-grid", GalleryGridDirective)
 
     return {
         "parallel_read_safe": True,

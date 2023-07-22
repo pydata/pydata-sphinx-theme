@@ -8,6 +8,8 @@
 #    An image will be placed in docs/_static/gallery/{sanitized_title}.png
 # img-bottom: The location where img-bottoms will be placed for each entry by generate_gallery_img-bottoms.py
 #    This should follow the form shown above and is roughly the same for all items.
+#    This is an optional parameter only relevant for promoted items. If not provided, the documentation
+#    will be added to the list. Only maintainers should add this parameter.
 - title: Pandas
   website: https://pandas.pydata.org/docs/
   img-bottom: ../_static/gallery/pandas.png
