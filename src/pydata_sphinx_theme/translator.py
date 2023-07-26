@@ -106,7 +106,7 @@ class BootstrapHTML5TranslatorMixin:
                 document = self.builder.env.get_doctree(self.builder.current_docname)
 
                 # Get the target anchor ID
-                first,target_id = refid.split("#")
+                first, target_id = refid.split("#")
                 sanitized_id = target_id.replace(".", "_")
                 # Update the node `href`
                 node["refuri"] = first + "#" + sanitized_id
@@ -147,7 +147,7 @@ class BootstrapHTML5TranslatorMixin:
                     ]
         except KeyError:
             pass
-            
+
         try:
             refid = node["refid"]
             if "." in refid:
@@ -188,10 +188,10 @@ class BootstrapHTML5TranslatorMixin:
                         sanitized_id if id_ == target_id else id_
                         for id_ in target["ids"]
                     ]
-        
+
         except KeyError:
             pass
-        
+
         try:
             refid = node["refuri"]
             if "." in refid:
@@ -200,7 +200,7 @@ class BootstrapHTML5TranslatorMixin:
 
                 # Get the target anchor ID
                 parts = refid.split("#")
-                if len(parts)>1:
+                if len(parts) > 1:
                     first = parts[0]
                     target_id = parts[1]
                 else:
@@ -238,10 +238,10 @@ class BootstrapHTML5TranslatorMixin:
                         sanitized_id if id_ == target_id else id_
                         for id_ in target["ids"]
                     ]
-        
+
         except KeyError:
             pass
-        
+
         super().visit_reference(node)
 
 
