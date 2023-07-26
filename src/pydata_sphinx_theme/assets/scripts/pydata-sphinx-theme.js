@@ -287,21 +287,23 @@ var setupSearchButtons = () => {
  *
  * @param {event} event the event that trigger the check
  */
-function checkPageExistsAndRedirect(event) {
+async function checkPageExistsAndRedirect(event) {
   // ensure we don't follow the initial link
   event.preventDefault();
-
-  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
-  const tryUrl = event.currentTarget.getAttribute("href");
+  let currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  let tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
-
-  fetch(tryUrl, { method: "HEAD" })
-    .then(() => {
-      location.href = tryUrl;
-    }) // if the page exists, go there
-    .catch((error) => {
+  try {
+    let head = await fetch(tryUrl, { method: "HEAD" });
+    if (head.ok) {
+      location.href = tryUrl; // the page exists, go there
+    } else {
       location.href = otherDocsHomepage;
-    });
+    }
+  } catch (err) {
+    // something went wrong, probably CORS restriction, fallback to other docs homepage
+    location.href = otherDocsHomepage;
+  }
 }
 
 /**
