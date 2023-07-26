@@ -28,7 +28,7 @@ The default body and header fonts can be changed as follows:
   For example, you could download and vendor the font in the ``_static`` directory
   of your Sphinx site, and then update the base template to load the font resources:
 
-  - Configure the `template_path <https://www.sphinx-doc.org/en/master/theming.html#templating>`__
+  - Configure the `template_path <https://www.sphinx-doc.org/en/master/development/theming.html#templating>`__
     in your ``conf.py``
   - Create a custom ``layout.html`` Jinja2 template which overloads the ``fonts`` block
     (example for loading the Lato font that is included in the ``_static/vendor`` directory):

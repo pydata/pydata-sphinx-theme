@@ -127,4 +127,6 @@ def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
     assert entries.count() == 2
     # make sure they're highlighted
     for entry in entries.all():
-        expect(entry).to_have_css("color", "rgb(10, 125, 145)")
+        light_mode = "rgb(39, 107, 233)"
+        # dark_mode = "rgb(121, 163, 142)"
+        expect(entry).to_have_css("color", light_mode)

@@ -104,7 +104,7 @@ if not version_match or version_match.isdigit():
     # For local development, infer the version to match from the package.
     release = pydata_sphinx_theme.__version__
     if "dev" in release or "rc" in release:
-        version_match = "latest"
+        version_match = "dev"
         # We want to keep the relative reference if we are in dev mode
         # but we want the whole url if we are effectively in a released version
         json_url = "_static/switcher.json"
@@ -164,6 +164,7 @@ html_theme_options = {
     "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
     "navbar_center": ["version-switcher", "navbar-nav"],
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
+    "show_version_warning_banner": True,
     # "show_nav_level": 2,
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
