@@ -447,7 +447,7 @@ function showVersionWarningBanner(data) {
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
   // add the version-dependent text
-  inner.innerText = "This is documentation for an ";
+  inner.innerText = "This is documentation for ";
   const isDev =
     version.includes("dev") ||
     version.includes("rc") ||
@@ -455,9 +455,9 @@ function showVersionWarningBanner(data) {
   const newerThanPreferred =
     versionsAreComparable && compare(version, preferredVersion, ">");
   if (isDev || newerThanPreferred) {
-    bold.innerText = "unstable development version";
+    bold.innerText = "an unstable development version";
   } else if (versionsAreComparable && compare(version, preferredVersion, "<")) {
-    bold.innerText = `old version (${version})`;
+    bold.innerText = `an old version (${version})`;
   } else {
     bold.innerText = `version ${version}`;
   }
