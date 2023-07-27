@@ -253,6 +253,7 @@ def update_and_remove_templates(
 
         # Add variables to our JavaScript for re-use in our main JS script
         js = f"""
+        DOCUMENTATION_OPTIONS.theme_version = '{__version__}';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = '{json_url}';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = {str(context["theme_show_version_warning_banner"]).lower()};
