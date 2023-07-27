@@ -76,7 +76,7 @@ save the JSON file.
 Configure ``switcher['json_url']``
 ----------------------------------
 
-The JSON file needs to be at a stable, persistent, fully-resolved URL (i.e.,
+*The JSON file needs to be at a stable, persistent, fully-resolved URL* (i.e.,
 not specified as a path relative to the sphinx root of the current doc build).
 Each version of your documentation should point to the same URL, so that as new
 versions are added to the JSON file all the older versions of the docs will
@@ -101,11 +101,6 @@ in a few different ways:
   only the most recent version is ever loaded (even by older versions of the
   docs).
 
-- The JSON could be saved in a folder that is listed under your site's
-  ``html_static_path`` configuration. See `the Sphinx static path documentation
-  <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_static_path>`_
-  for more information.
-
 - The JSON could be stored outside the doc build trees. This probably means it
   would be outside the software repo, and would require you to add new version
   entries to the JSON file manually as part of your release process. Example:
@@ -118,6 +113,12 @@ in a few different ways:
               "json_url": "https://mysite.org/switcher.json",
           }
       }
+
+- In theory the JSON could be saved in a folder that is listed under your site's
+  ``html_static_path`` configuration, **but this is not recommended**. If you want to
+  do it this way, see `the Sphinx static path documentation
+  <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_static_path>`_
+  for more information but do so knowing that we do not support this use case.
 
 By default, the theme is testing the :code:`.json` file provided and outputs warnings in the Sphinx build. If this test breaks the pipeline of your docs, the test can be disabled by configuring the :code:`check_switcher` parameter in :code:`conf.py`:
 
