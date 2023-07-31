@@ -96,7 +96,7 @@ class GalleryGridDirective(SphinxDirective):
             content = f"{item.pop('content')}  \n" if "content" in item else ""
 
             # optional parameter that influence all cards
-            if "card-class" in self.options:
+            if "class-card" in self.options:
                 item["class-card"] = self.options["class-card"]
 
             loc_options_str = "\n".join(f":{k}: {v}" for k, v in item.items()) + "  \n"
