@@ -8,7 +8,7 @@ If you'd like to add your documentation to this list, simply add an entry to lis
 These projects are our earliest adopters and/or present some interesting customization. Check their repositories for more information.
 
 ```{gallery-grid} ../_static/gallery.yaml
-:grid-columns: "1 2 2 3"
+:grid-columns: "1 1 2 2"
 ```
 
 ## Other projects using this theme
@@ -16,7 +16,7 @@ These projects are our earliest adopters and/or present some interesting customi
 Thanks to all the projects that are now using `pydata-sphinx-theme` for their documentation, here is a non exhaustive list of our users.
 
 ```{gallery-grid}
-:grid-columns: "1 2 2 3"
+:grid-columns: "1 2 3 4"
 
 - title: MegEngine
   link: https://www.megengine.org.cn/doc/stable/en/index.html
