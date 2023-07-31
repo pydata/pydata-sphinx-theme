@@ -22,14 +22,16 @@ Thanks for your support!
 ```{gallery-grid}
 :grid-columns: "1 2 3 4"
 
-- title: MegEngine
-  link: https://www.megengine.org.cn/doc/stable/en/index.html
-- title: Feature-engine
-  link: https://feature-engine.readthedocs.io/
+- title: Binder
+  link: https://mybinder.readthedocs.io/en/latest/index.html
 - title: CuPy
   link: https://docs.cupy.dev/en/stable/index.html
 - title: Fairlearn
   link: https://fairlearn.org/main/about/
-- title: Binder
-  link: https://mybinder.readthedocs.io/en/latest/index.html
+- title: Feature-engine
+  link: https://feature-engine.readthedocs.io/
+- title: MegEngine
+  link: https://www.megengine.org.cn/doc/stable/en/index.html
+- title: PyVista
+  link: https://docs.pyvista.org
 ```
