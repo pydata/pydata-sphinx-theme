@@ -5,39 +5,36 @@
 #
 # This file should only be modified by maintainer, contributors should add their project
 # to the list of `gallery.md`.
-- title: Pandas
-  link: https://pandas.pydata.org/docs/
-  img-bottom: ../_static/gallery/pandas.png
-- title: NumPy
-  link: https://numpy.org/doc/stable/
-  img-bottom: ../_static/gallery/numpy.png
-- title: SciPy
-  link: https://docs.scipy.org/doc/scipy/
-  img-bottom: ../_static/gallery/scipy.png
+- title: ArviZ
+  link: https://python.arviz.org/
+  img-bottom: ../_static/gallery/arviz.png
 - title: Bokeh
   link: https://docs.bokeh.org/en/latest/
   img-bottom: ../_static/gallery/bokeh.png
-- title: PyVista
-  link: https://docs.pyvista.org
-  img-bottom: ../_static/gallery/pyvista.png
+- title: Jupyter
+  link: https://docs.jupyter.org/en/latest/
+  img-bottom: ../_static/gallery/jupyter.png
+- title: Jupyter Book
+  link: https://jupyterbook.org/en/stable/intro.html
+  img-bottom: ../_static/gallery/jupyter_book.png
+- title: Matplotlib
+  link: https://matplotlib.org/stable/
+  img-bottom: ../_static/gallery/matplotlib.png
 - title: MNE-Python
   link: https://mne.tools/stable/index.html
   img-bottom: ../_static/gallery/mne-python.png
 - title: NetworkX
   link: https://networkx.org/documentation/stable/
   img-bottom: ../_static/gallery/networkx.png
-- title: Jupyter Book
-  link: https://jupyterbook.org/en/stable/intro.html
-  img-bottom: ../_static/gallery/jupyter_book.png
-- title: Jupyter
-  link: https://docs.jupyter.org/en/latest/
-  img-bottom: ../_static/gallery/jupyter.png
-- title: ArviZ
-  link: https://python.arviz.org/
-  img-bottom: ../_static/gallery/arviz.png
+- title: NumPy
+  link: https://numpy.org/doc/stable/
+  img-bottom: ../_static/gallery/numpy.png
+- title: Pandas
+  link: https://pandas.pydata.org/docs/
+  img-bottom: ../_static/gallery/pandas.png
+- title: SciPy
+  link: https://docs.scipy.org/doc/scipy/
+  img-bottom: ../_static/gallery/scipy.png
 - title: SEPAL
   link: https://docs.sepal.io/en/latest/index.html
   img-bottom: ../_static/gallery/sepal.png
-- title: Matplotlib
-  link: https://matplotlib.org/stable/
-  img-bottom: ../_static/gallery/matplotlib.png
