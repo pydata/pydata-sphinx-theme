@@ -40,12 +40,17 @@ GRID_CARD = """
 
 
 class GalleryGridDirective(SphinxDirective):
-    """A directive to show a gallery of images and links in a grid.
+    """A directive to show a gallery of images and links in a Bootstrap grid.
 
-    The grid is generated from a YAML file that contains a list of items or directly from the content of directive (also formatted in YAM). We added a new parameter "card-class" to customize all cards at once. in the items; users can use all parameters from "grid-item-card" directive to customize the cards + ["image", "header", "content", "title"].
+    The grid can be generated from a YAML file that contains a list of items, or
+    from the content of the directive (also formatted in YAML). Use the parameter
+    "class-card" to add an additional CSS class to all cards. When specifying the grid
+    items, you can use all parameters from "grid-item-card" directive to customize
+    individual cards + ["image", "header", "content", "title"].
 
     Danger:
-        This directive can only be used in the context of a Myst documentation page as the templates are using Markdown flavored formatting.
+        This directive can only be used in the context of a Myst documentation page as
+        the templates use Markdown flavored formatting.
     """
 
     name = "gallery-grid"
@@ -61,7 +66,7 @@ class GalleryGridDirective(SphinxDirective):
     }
 
     def run(self) -> List[nodes.Node]:
-
+        """Create the gallery grid."""
         if self.arguments:
             # If an argument is given, assume it's a path to a YAML file
             # Parse it and load it into the directive content
