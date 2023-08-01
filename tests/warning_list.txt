@@ -2,7 +2,6 @@ WARNING: image file not readable: _static/gallery/pandas.png
 WARNING: image file not readable: _static/gallery/numpy.png
 WARNING: image file not readable: _static/gallery/scipy.png
 WARNING: image file not readable: _static/gallery/bokeh.png
-WARNING: image file not readable: _static/gallery/pyvista.png
 WARNING: image file not readable: _static/gallery/mne-python.png
 WARNING: image file not readable: _static/gallery/networkx.png
 WARNING: image file not readable: _static/gallery/jupyter_book.png
