@@ -24,6 +24,8 @@ Thanks for your support!
 
 - title: Binder
   link: https://mybinder.readthedocs.io/en/latest/index.html
+- title: Brightway
+  link: https://docs.brightway.dev/en/latest/
 - title: CuPy
   link: https://docs.cupy.dev/en/stable/index.html
 - title: Fairlearn
