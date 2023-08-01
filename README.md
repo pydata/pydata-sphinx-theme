@@ -1,18 +1,19 @@
 # The PyData Sphinx Theme
 
-[![pypi](https://img.shields.io/pypi/v/pydata-sphinx-theme)](https://pypi.org/project/pydata-sphinx-theme/)
-[![conda-forge](https://img.shields.io/conda/vn/conda-forge/pydata-sphinx-theme.svg)](https://anaconda.org/conda-forge/pydata-sphinx-theme)
-[![continuous-integration](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml/badge.svg)](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml)
-[![docs](https://readthedocs.org/projects/pydata-sphinx-theme/badge/)](https://readthedocs.org/projects/pydata-sphinx-theme/builds/)
-[![codecov](https://codecov.io/gh/pydata/pydata-sphinx-theme/branch/main/graph/badge.svg?token=NwOObjYacn)](https://codecov.io/gh/pydata/pydata-sphinx-theme)
+[![License badge](https://img.shields.io/badge/License-BSD_3--Clause-yellow?logo=opensourceinitiative&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/blob/main/LICENSE)
+[![PyPI version badge](https://img.shields.io/pypi/v/pydata-sphinx-theme?logo=python&logoColor=white&color=orange)](https://pypi.org/project/pydata-sphinx-theme/)
+[![conda-forge version badge](https://img.shields.io/conda/vn/conda-forge/pydata-sphinx-theme.svg?logo=anaconda&logoColor=white&color=orange)](https://anaconda.org/conda-forge/pydata-sphinx-theme)
+[![GitHub Workflow test status badge](https://img.shields.io/github/actions/workflow/status/pydata/pydata-sphinx-theme/tests.yml?logo=github&logoColor=white)](https://github.com/pydata/pydata-sphinx-theme/actions/workflows/tests.yml)
+[![Read the Docs build status badge](https://img.shields.io/readthedocs/pydata-sphinx-theme/latest?logo=readthedocs&logoColor=white)](https://readthedocs.org/projects/pydata-sphinx-theme/builds/)
+[![Codecov test coverage percentage badge](https://img.shields.io/codecov/c/github/pydata/pydata-sphinx-theme?logo=codecov&logoColor=white)](https://codecov.io/gh/pydata/pydata-sphinx-theme)
 
 A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData community](https://pydata.org).
 
-- 📚 Documentation: https://pydata-sphinx-theme.readthedocs.io/en/stable
-- 💡 Examples: https://pydata-sphinx-theme.readthedocs.io/en/stable/examples
-- 🙌 Contribute: https://pydata-sphinx-theme.readthedocs.io/en/stable/community
+- :books: Documentation: https://pydata-sphinx-theme.readthedocs.io/en/stable
+- :bulb: Examples: https://pydata-sphinx-theme.readthedocs.io/en/stable/examples
+- :raised_hands: Contribute: https://pydata-sphinx-theme.readthedocs.io/en/stable/community
 
-[![Example documentation with this theme](./docs/_static/theme_landing.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
+[![PyData theme - Configure the search position demo image showcasing both the light and dark theme in a single image.](./docs/_static/theme-demo-screenshot.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
 ## Installation and usage
 
@@ -21,7 +22,7 @@ and use as follows:
 
 - Install the `pydata-sphinx-theme` in your doc build environment:
 
-  ```
+  ```bash
   pip install pydata-sphinx-theme
   # or
   conda install pydata-sphinx-theme --channel conda-forge
@@ -30,7 +31,7 @@ and use as follows:
 - Then, in the `conf.py` of your sphinx docs, you update the `html_theme`
   configuration option:
 
-  ```
+  ```python
   html_theme = "pydata_sphinx_theme"
   ```
 
@@ -45,7 +46,7 @@ And that's it!
 ## Contribute to and develop the theme
 
 Contributions are very welcome! Installing the development version, building
-the example docs and developing the css/js of the theme, etc, is explained in
+the example docs and developing the `CSS/JS` of the theme, etc., is explained in
 more detail in the contributing section of the documentation:
 
 - [Community and contributing documentation](https://pydata-sphinx-theme.readthedocs.io/en/latest/community/index.html)

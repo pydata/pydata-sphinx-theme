@@ -28,7 +28,7 @@ jobs:
       - name: Install (prerelease) dependencies
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          python -m pip install --upgrade --pre -e .[test]
+          python -m pip install --upgrade --pre -e .[doc,test]
 
       - name: Build docs to store
         run: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Check that there are no unexpected Sphinx warnings
         if: matrix.python-version == '3.10'
-        run: python tests/check_warnings.py
+        run: python tests/utils/check_warnings.py
 
       - name: Run the tests
         run: |

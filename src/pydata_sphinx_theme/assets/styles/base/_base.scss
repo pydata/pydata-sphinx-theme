@@ -13,8 +13,6 @@ body {
   display: flex;
   flex-direction: column;
 
-  @include scrollbar-style();
-
   // hack to avoid the black background on some browser including Safari
   &::-webkit-scrollbar-track {
     background: var(--pst-color-background);
@@ -37,17 +35,12 @@ p {
 }
 
 a {
-  color: var(--pst-color-link);
-  text-decoration: none;
+  @include link-style-default;
 
-  &:hover {
-    color: var(--pst-color-link-hover);
-    text-decoration: underline;
-  }
-
+  // The # anchor that appears on hover over headings
   &.headerlink {
-    color: var(--pst-color-warning);
-    opacity: 0.4;
+    color: var(--pst-color-secondary);
+    opacity: 0.7;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     margin-left: 0.2em;
@@ -61,10 +54,13 @@ a {
   }
 
   // set up a icon next to the shorten links from github and gitlab
-  &::before {
-    color: var(--pst-color-text-muted);
-    font-family: "Font Awesome 6 Brands";
-    margin-right: 0.25rem;
+  &.github,
+  &.gitlab {
+    &::before {
+      color: var(--pst-color-text-muted);
+      font: var(--fa-font-brands);
+      margin-right: 0.25rem;
+    }
   }
 
   &.github::before {
@@ -79,7 +75,7 @@ a {
 .heading-style {
   margin: 2.75rem 0 1.05rem;
   font-family: var(--pst-font-family-heading);
-  font-weight: 400;
+  font-weight: var(--pst-font-weight-heading);
   line-height: 1.15;
 }
 
@@ -87,25 +83,25 @@ h1 {
   @extend .heading-style;
   margin-top: 0;
   font-size: var(--pst-font-size-h1);
-  color: var(--pst-color-primary);
+  color: var(--pst-heading-color);
 }
 
 h2 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h2);
-  color: var(--pst-color-primary);
+  color: var(--pst-heading-color);
 }
 
 h3 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h3);
-  color: var(--pst-color-text-base);
+  color: var(--pst-heading-color);
 }
 
 h4 {
   @extend .heading-style;
   font-size: var(--pst-font-size-h4);
-  color: var(--pst-color-text-base);
+  color: var(--pst-heading-color);
 }
 
 h5 {
@@ -164,10 +160,22 @@ pre {
   border: 1px solid var(--pst-color-border);
   border-radius: $admonition-border-radius;
 
-  @include scrollbar-style();
-
   .linenos {
-    opacity: 0.5;
+    // minimum opacity to make the line numbers WCAG AA conformant
+    opacity: 0.8;
     padding-right: 10px;
   }
+}
+
+// the back to top btn
+#pst-back-to-top {
+  z-index: $zindex-tooltip;
+  position: fixed;
+  display: none;
+  top: 80vh;
+  left: 50vw;
+  transform: translate(-50%);
+  color: var(--pst-color-secondary-text);
+  background-color: var(--pst-color-secondary);
+  border: none;
 }

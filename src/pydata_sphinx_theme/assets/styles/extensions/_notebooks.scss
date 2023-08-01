@@ -42,8 +42,6 @@ div.nblast.container {
 div.cell_output .output {
   max-width: 100%;
   overflow-x: auto;
-
-  @include scrollbar-style();
 }
 
 // Dark theme special-cases

@@ -1,3 +1,4 @@
+.bd-header-version-warning,
 .bd-header-announcement {
   min-height: 3rem;
   width: 100%;
@@ -18,20 +19,35 @@
     margin: 0;
   }
 
-  // The same background color transparency hack we use in admonitions
   &:after {
     position: absolute;
     width: 100%;
     height: 100%;
     left: 0;
     top: 0;
-    background-color: var(--pst-color-info);
-    opacity: 0.2;
     content: "";
     z-index: -1; // So it doesn't hover over the content
   }
 
   &:empty {
     display: none;
+  }
+
+  // Ensure there is enough contrast against the background
+  a {
+    color: var(--pst-color-inline-code-links);
+  }
+}
+
+// Bg color is now defined in the theme color palette - using our secondary color
+.bd-header-announcement {
+  &:after {
+    background-color: var(--pst-color-secondary-bg);
+  }
+}
+
+.bd-header-version-warning {
+  &:after {
+    background-color: var(--pst-color-danger-bg);
   }
 }

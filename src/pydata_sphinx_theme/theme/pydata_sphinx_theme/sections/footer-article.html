@@ -1,1 +1,5 @@
-{% include "components/footer-article/prev-next.html" %}
+<div class="footer-article-items footer-article__inner">
+  {% for item in theme_article_footer_items %}
+    <div class="footer-article-item">{% include item %}</div>
+  {% endfor %}
+</div>

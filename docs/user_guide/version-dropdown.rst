@@ -1,3 +1,5 @@
+.. _version-dropdowns:
+
 Version switcher dropdowns
 ==========================
 
@@ -7,7 +9,7 @@ switcher will differ depending on which page of the docs is being viewed. For
 example, on the page ``https://mysite.org/en/v2.0/changelog.html``, the
 switcher links will go to ``changelog.html`` in the other versions of your
 docs. When clicked, the switcher will check for the existence of that page, and
-if it doesn't exist, redirect to the homepage of that docs version instead.
+if it doesn't exist, will redirect to the homepage instead (in the requested version of the docs).
 
 The switcher requires the following configuration steps:
 
@@ -23,7 +25,7 @@ The switcher requires the following configuration steps:
 
 3. Specify where to place the switcher in your page layout. For example, add
    the ``"version-switcher"`` template to one of the layout lists in
-   ``html_theme_options`` (e.g., ``navbar_end``, ``footer_items``, etc).
+   ``html_theme_options`` (e.g., ``navbar_end``, ``footer_start``, etc.).
 
 Below is a more in-depth description of each of these configuration steps.
 
@@ -39,7 +41,9 @@ each can have the following fields:
   ``switcher['version_match']`` to provide styling to the switcher.
 - ``url``: the URL for this version.
 - ``name``: an optional name to display in the switcher dropdown instead of the
-  version string (e.g., "latest", "stable", "dev", etc).
+  version string (e.g., "latest", "stable", "dev", etc.).
+- ``preferred``: an optional field that *should occur on at most one entry* in the JSON file.
+  It specifies which version is considered "latest stable", and is used to customize the message used on :ref:`version-warning-banners` (if they are enabled).
 
 Here is an example JSON file:
 
@@ -49,19 +53,19 @@ Here is an example JSON file:
         {
             "name": "v2.1 (stable)",
             "version": "2.1",
-            "url": "https://mysite.org/en/2.1/index.html"
+            "url": "https://mysite.org/en/2.1/"
         },
         {
             "version": "2.1rc1",
-            "url": "https://mysite.org/en/2.1rc1/index.html"
+            "url": "https://mysite.org/en/2.1rc1/"
         },
         {
             "version": "2.0",
-            "url": "https://mysite.org/en/2.0/index.html"
+            "url": "https://mysite.org/en/2.0/"
         },
         {
             "version": "1.0",
-            "url": "https://mysite.org/en/1.0/index.html"
+            "url": "https://mysite.org/en/1.0/"
         }
     ]
 
@@ -72,12 +76,12 @@ save the JSON file.
 Configure ``switcher['json_url']``
 ----------------------------------
 
-The JSON file needs to be at a stable, persistent, fully-resolved URL (i.e.,
+*The JSON file needs to be at a stable, persistent, fully-resolved URL* (i.e.,
 not specified as a path relative to the sphinx root of the current doc build).
 Each version of your documentation should point to the same URL, so that as new
 versions are added to the JSON file all the older versions of the docs will
 gain switcher dropdown entries linking to the new versions. This could be done
-a few different ways:
+in a few different ways:
 
 - The location could be one that is always associated with the most recent
   documentation build (i.e., if your docs server aliases "latest" to the most
@@ -93,14 +97,9 @@ a few different ways:
           }
       }
 
-  In this case the JSON is versioned alongside the rest of the docs pages but
+  In this case, the JSON is versioned alongside the rest of the docs pages but
   only the most recent version is ever loaded (even by older versions of the
   docs).
-
-- The JSON could be saved in a folder that is listed under your site's
-  ``html_static_path`` configuration. See `the Sphinx static path documentation
-  <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_static_path>`_
-  for more information.
 
 - The JSON could be stored outside the doc build trees. This probably means it
   would be outside the software repo, and would require you to add new version
@@ -115,7 +114,13 @@ a few different ways:
           }
       }
 
-By default the theme is testing the :code:`.json` file provided and outputs warnings in the Sphinx build. If this test breaks the pipeline of your docs, the test can be disabled by configuring the :code:`check_switcher` parameter in :code:`conf.py`:
+- In theory the JSON could be saved in a folder that is listed under your site's
+  ``html_static_path`` configuration, **but this is not recommended**. If you want to
+  do it this way, see `the Sphinx static path documentation
+  <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_static_path>`_
+  for more information but do so knowing that we do not support this use case.
+
+By default, the theme is testing the :code:`.json` file provided and outputs warnings in the Sphinx build. If this test breaks the pipeline of your docs, the test can be disabled by configuring the :code:`check_switcher` parameter in :code:`conf.py`:
 
 .. code-block:: python
 
@@ -132,7 +137,7 @@ being viewed, and is used to style the switcher (i.e., to highlight the current
 docs version in the switcher's dropdown menu, and to change the text displayed
 on the switcher button).
 
-Typically you can re-use one of the sphinx variables ``version``
+Typically, you can re-use one of the sphinx variables ``version``
 or ``release`` as the value of ``switcher['version_match']``; which one you use
 depends on how granular your docs versioning is. See
 `the Sphinx "project info" documentation
@@ -156,7 +161,7 @@ Specify where to display the switcher
 Finally, tell the theme where on your site's pages you want the switcher to
 appear. There are many choices here: you can add ``"version-switcher"`` to one
 of the locations in ``html_theme_options`` (e.g., ``navbar_end``,
-``footer_items``, etc). For example:
+``footer_start``, etc). For example:
 
 .. code:: python
 
@@ -229,4 +234,4 @@ version, you could use the following CSS selector:
 .. seealso::
 
    See the `MDN documentation on dataset properties <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset>`_
-   for more information on using and styling with these properties.
+   for more information on using and styling these properties.

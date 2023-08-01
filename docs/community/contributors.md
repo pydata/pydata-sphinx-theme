@@ -17,4 +17,4 @@ Support and development for this theme has been funded by one [NumFocus Small De
 
 ## Theme logo
 
-Thanks to [@drammock](https://github.com/drammock) for initial design of the theme logo.
+Thanks to [@drammock](https://github.com/drammock) for the initial design of the theme logo.

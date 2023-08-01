@@ -1,4 +1,8 @@
 .bd-footer-article {
-  display: flex;
   margin-top: auto;
+
+  .footer-article-items {
+    display: flex;
+    flex-direction: column;
+  }
 }

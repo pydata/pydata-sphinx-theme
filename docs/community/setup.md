@@ -2,7 +2,7 @@
 
 This section covers the simplest way to get started developing this theme locally so that you can contribute.
 It uses automation and as few steps as possible to get things done.
-If you'd like to do more operations manually, see [](manual.md).
+If you'd like to do more operations manually, see [](topics/manual-dev.md).
 
 ## Workflow for contributing changes
 
@@ -18,14 +18,14 @@ of:
 For each pull request, the documentation is built and deployed to make it easier to review the changes in the PR.
 To access this, click on the {{ rtd }} preview in the CI/CD jobs.
 
-The sections below cover the steps to do this in more detail.
+The sections below cover the steps to take in more detail.
 
 ## Clone the repository
 
-First off you'll need your own copy of the `pydata-sphinx-theme` codebase.
+First off you'll need your copy of the `pydata-sphinx-theme` codebase.
 You can clone it for local development like so:
 
-1. **Fork the repository** so you have your own copy on GitHub.
+1. **Fork the repository**, so you have your own copy on GitHub.
    See [the GitHub forking guide](https://docs.github.com/en/get-started/quickstart/fork-a-repo) for more information.
 2. **Clone the repository locally** so that you have a local copy to work from:
 
@@ -36,18 +36,18 @@ You can clone it for local development like so:
 
 ## Install your tools
 
-Building a Sphinx site uses a combination of Python and Jinja to manage HTML, SCSS, and Javascript.
+Building a Sphinx site uses a combination of Python and Jinja to manage HTML, SCSS, and JavaScript.
 To simplify this process, we use a few helper tools:
 
-- [The Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) to automatically perform compilation of web assets.
+- [The Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) compiles web assets in an automated way.
 - [pre-commit](https://pre-commit.com/) for automatically enforcing code standards and quality checks before commits.
-- [nox](https://nox.thea.codes/), for automating common development tasks.
+- [nox](https://nox.thea.codes/) for automating common development tasks.
 
-In particular, `nox` can be used to automatically create isolated local development environments with all of the correct packages installed to work on the theme.
+In particular, `nox` can be used to automatically create isolated local development environments with all the correct packages installed to work on the theme.
 The rest of this guide focuses on using `nox` to start with a basic environment.
 
 ```{seealso}
-The information on this page covers the basics to get you started, for information about manually compiling assets, see [](manual.md).
+The information on this page covers the basics to get you started, for information about manually compiling assets, see [](topics/manual-dev.md).
 ```
 
 ### Setup `nox`
@@ -58,9 +58,9 @@ To start, install `nox`:
 $ pip install nox
 ```
 
-You can call `nox` from the command line in order to perform common actions that are needed in building the theme.
+You can call `nox` from the command line to perform common actions that are needed in building the theme.
 `nox` operates with isolated environments, so each action has its own packages installed in a local directory (`.nox`).
-For common development actions, you'll simply need to use `nox` and won't need to set up any other packages.
+For common development actions, you'll only need to use `nox` and won't need to set up any other packages.
 
 ### Setup `pre-commit`
 
@@ -116,7 +116,7 @@ Now that you've built the documentation, edit one of the source files to see how
 1. **Make an edit to a page**. For example, add a word or fix a typo on any page.
 2. **Rebuild the documentation** with `nox -s docs`
 
-It should go much faster this time, because `nox` is re-using the old environment, and because Sphinx has cached the pages that you didn't change.
+It should go much faster this time because `nox` is re-using the previously created environment, and because Sphinx has cached the pages that you didn't change.
 
 ## Compile the CSS/JS assets
 
@@ -138,7 +138,7 @@ The `sphinx-theme-builder` will bundle these assets automatically when we make a
 
 ## Run a development server
 
-You can combine the above two actions and run a development server so that changes to `src/` are automatically bundled with the package, and the documentation is immediately reloaded in a live preview window.
+You can combine the above two actions (build the docs and compile JS/CSS assets) and run a development server so that changes to `src/` are automatically bundled with the package, and the documentation is immediately reloaded in a live preview window.
 
 To run the development server with `nox`, run the following command:
 
@@ -146,7 +146,7 @@ To run the development server with `nox`, run the following command:
 $ nox -s docs-live
 ```
 
-When working on the theme, saving changes to any of these directories:
+When working on the theme, making changes to any of these directories:
 
 - `src/js/index.js`
 - `src/scss/index.scss`
@@ -161,19 +161,33 @@ will cause the development server to do the following:
 
 ## Run the tests
 
-This theme uses `pytest` for its testing, with a lightweight fixture defined
-in the `test_build.py` script that makes it easy to run a Sphinx build using
-this theme and inspect the results.
+This theme uses `pytest` for its testing. There is a lightweight fixture defined
+in the `test_build.py` script that makes it straightforward to run a Sphinx build using
+this theme and inspect the results. There are also several automated accessibility checks in
+`test_a11y.py`.
 
-In addition, we use [pytest-regressions](https://pytest-regressions.readthedocs.io/en/latest/)
-to ensure that the HTML generated by the theme is what we'd expect. This module
+```{warning}
+Currently, the automated accessibility tests check the Kitchen Sink page only.
+We are working on extending coverage to the rest of the theme.
+```
+
+In addition, we use
+[pytest-regressions](https://pytest-regressions.readthedocs.io/en/latest/) to
+ensure that the HTML generated by the theme is what we'd expect. This module
 provides a `file_regression` fixture that will check the contents of an object
 against a reference file on disk. If the structure of the two differs, then the
 test will fail. If we _expect_ the structure to differ, then delete the file on
-disk and run the test. A new file will be created, and subsequent tests will pass.
+disk and run the test. A new file will be created, and subsequent tests will
+pass.
 
-To run the tests with `nox`, run the following command:
+To run the build tests with `nox`, run the following command:
 
 ```console
 $ nox -s test
+```
+
+To run the accessibility checks:
+
+```console
+$ nox -s a11y
 ```

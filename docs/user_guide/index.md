@@ -47,6 +47,7 @@ announcements
 version-dropdown
 search
 keyboard-shortcuts
+i18n
 ```
 
 ```{toctree}
@@ -54,6 +55,7 @@ keyboard-shortcuts
 theme-elements
 ablog
 web-components
+extending
 ```
 
 ```{toctree}
@@ -70,6 +72,7 @@ light-dark
 
 accessibility
 analytics
+static_assets
 performance
 readthedocs
 ```

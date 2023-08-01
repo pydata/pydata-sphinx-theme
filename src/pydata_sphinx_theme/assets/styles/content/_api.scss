@@ -88,6 +88,12 @@ table.field-list {
   color: var(--pst-color-inline-code);
 }
 
+.sig-param .o,
+.sig-param .default_value {
+  color: var(--pst-color-text-muted);
+  font-weight: normal;
+}
+
 // change target color for dark theme
 dt:target,
 span.highlighted {
@@ -111,9 +117,7 @@ span.highlighted {
 
 // the API selector
 // from https://github.com/pradyunsg/furo/blob/main/src/furo/assets/styles/content/_api.sass#L6)
-dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(
-    .simple
-  ) {
+dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) {
   dd {
     margin-left: 2rem;
 

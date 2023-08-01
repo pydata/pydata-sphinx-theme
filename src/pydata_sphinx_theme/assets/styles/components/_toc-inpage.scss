@@ -4,10 +4,6 @@
 nav.page-toc {
   // A little extra space before the buttons
   margin-bottom: 1rem;
-  // Each successive nested item will be a bit smaller
-  ul > li {
-    font-size: 0.95em;
-  }
 }
 
 .bd-toc .nav,
@@ -29,26 +25,27 @@ nav.page-toc {
 // Each entry of the in-page TOC
 .toc-entry {
   display: block;
+  a > code {
+    color: var(--pst-color-text-muted);
+  }
 
   a.nav-link {
     display: block;
     padding: 0.125rem 0;
 
-    // Padding w/ negative margin so the top TOC item highligh overlaps w/ the TOC border
+    // Padding w/ negative margin so the top TOC item highlight overlaps w/ the TOC border
     padding-left: 1rem;
     margin-left: -1rem;
-    color: var(--pst-color-text-muted);
 
-    &:hover {
-      color: var(--pst-color-primary);
-      text-decoration: none;
-    }
+    @include link-sidebar;
 
     &.active {
-      font-weight: 600;
-      color: var(--pst-color-primary);
+      @include link-sidebar-current;
       background-color: transparent;
-      border-left: 2px solid var(--pst-color-primary);
+
+      &:hover {
+        color: var(--pst-color-link-hover);
+      }
     }
   }
 }
