@@ -22,8 +22,8 @@ logger = logging.getLogger(__name__)
 
 
 TEMPLATE_GRID = """
-`````{{grid}} {grid_columns}
-{container_options}
+`````{{grid}} {columns}
+{options}
 
 {content}
 
@@ -32,15 +32,26 @@ TEMPLATE_GRID = """
 
 GRID_CARD = """
 ````{{grid-item-card}} {title}
-{card_options}
+{options}
 
 {content}
 ````
 """
 
 
-class GalleryDirective(SphinxDirective):
-    """A directive to show a gallery of images and links in a grid."""
+class GalleryGridDirective(SphinxDirective):
+    """A directive to show a gallery of images and links in a Bootstrap grid.
+
+    The grid can be generated from a YAML file that contains a list of items, or
+    from the content of the directive (also formatted in YAML). Use the parameter
+    "class-card" to add an additional CSS class to all cards. When specifying the grid
+    items, you can use all parameters from "grid-item-card" directive to customize
+    individual cards + ["image", "header", "content", "title"].
+
+    Danger:
+        This directive can only be used in the context of a Myst documentation page as
+        the templates use Markdown flavored formatting.
+    """
 
     name = "gallery-grid"
     has_content = True
@@ -55,6 +66,7 @@ class GalleryDirective(SphinxDirective):
     }
 
     def run(self) -> List[nodes.Node]:
+        """Create the gallery grid."""
         if self.arguments:
             # If an argument is given, assume it's a path to a YAML file
             # Parse it and load it into the directive content
@@ -70,79 +82,49 @@ class GalleryDirective(SphinxDirective):
         else:
             yaml_string = "\n".join(self.content)
 
-        # Read in YAML so we can generate the gallery
-        grid_data = safe_load(yaml_string)
-
+        # Use all the element with an img-bottom key as sites to show
+        # and generate a card item for each of them
         grid_items = []
-        for item in grid_data:
-            # Grid card parameters
-            options = {}
-            if "website" in item:
-                options["link"] = item["website"]
+        for item in safe_load(yaml_string):
 
+            # remove parameters that are not needed for the card options
+            title = item.pop("title", "")
+
+            # build the content of the card using some extra parameters
+            header = f"{item.pop('header')}  \n^^^  \n" if "header" in item else ""
+            image = f"![image]({item.pop('image')})  \n" if "image" in item else ""
+            content = f"{item.pop('content')}  \n" if "content" in item else ""
+
+            # optional parameter that influence all cards
             if "class-card" in self.options:
-                options["class-card"] = self.options["class-card"]
+                item["class-card"] = self.options["class-card"]
 
-            if "img-background" in item:
-                options["img-background"] = item["img-background"]
+            loc_options_str = "\n".join(f":{k}: {v}" for k, v in item.items()) + "  \n"
 
-            if "img-top" in item:
-                options["img-top"] = item["img-top"]
-
-            if "img-bottom" in item:
-                options["img-bottom"] = item["img-bottom"]
-
-            options_str = "\n".join(f":{k}: {v}" for k, v in options.items()) + "\n\n"
-
-            # Grid card content
-            content_str = ""
-            if "header" in item:
-                content_str += f"{item['header']}\n\n^^^\n\n"
-
-            if "image" in item:
-                content_str += f"![Gallery image]({item['image']})\n\n"
-
-            if "content" in item:
-                content_str += f"{item['content']}\n\n"
-
-            if "footer" in item:
-                content_str += f"+++\n\n{item['footer']}\n\n"
-
-            title = item.get("title", "")
-            content_str += "\n"
-            grid_items.append(
-                GRID_CARD.format(
-                    card_options=options_str, content=content_str, title=title
-                )
+            card = GRID_CARD.format(
+                options=loc_options_str, content=header + image + content, title=title
             )
+            grid_items.append(card)
 
-        # Parse the template with Sphinx Design to create an output
-        container = nodes.container()
+        # Parse the template with Sphinx Design to create an output container
         # Prep the options for the template grid
-        container_options = {"gutter": 2, "class-container": "gallery-directive"}
-        if "class-container" in self.options:
-            container_options[
-                "class-container"
-            ] += f' {self.options["class-container"]}'
-        container_options_str = "\n".join(
-            f":{k}: {v}" for k, v in container_options.items()
-        )
+        class_ = "gallery-directive" + f' {self.options.get("class-container", "")}'
+        options = {"gutter": 2, "class-container": class_}
+        options_str = "\n".join(f":{k}: {v}" for k, v in options.items())
 
         # Create the directive string for the grid
         grid_directive = TEMPLATE_GRID.format(
-            grid_columns=self.options.get("grid-columns", "1 2 3 4"),
-            container_options=container_options_str,
+            columns=self.options.get("grid-columns", "1 2 3 4"),
+            options=options_str,
             content="\n".join(grid_items),
         )
-        # Parse content as a directive so Sphinx Design processes it
-        self.state.nested_parse([grid_directive], 0, container)
-        # Sphinx Design outputs a container too, so just use that
-        container = container.children[0]
 
-        # Add extra classes
-        if self.options.get("container-class", []):
-            container.attributes["classes"] += self.options.get("class", [])
-        return [container]
+        # Parse content as a directive so Sphinx Design processes it
+        container = nodes.container()
+        self.state.nested_parse([grid_directive], 0, container)
+
+        # Sphinx Design outputs a container too, so just use that
+        return [container.children[0]]
 
 
 def setup(app: Sphinx) -> Dict[str, Any]:
@@ -150,10 +132,11 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 
     Args:
         app: the Sphinx application
+
     Returns:
         the 2 parallel parameters set to ``True``.
     """
-    app.add_directive("gallery-grid", GalleryDirective)
+    app.add_directive("gallery-grid", GalleryGridDirective)
 
     return {
         "parallel_read_safe": True,

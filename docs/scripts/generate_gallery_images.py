@@ -44,11 +44,11 @@ def regenerate_gallery() -> None:
             # Visit the page and take a screenshot
             for ii in range(3):
                 try:
-                    page.goto(item["website"])
+                    page.goto(item["link"])
                     page.screenshot(path=screenshot)
                     break
                 except TimeoutError:
-                    print(f"Page visit start timed out for: {item['website']}")
+                    print(f"Page visit start timed out for: {item['link']}")
                     print(f"Trying again (attempt {ii+2}/3)")
 
             # copy the 404 only if the screenshot file was not manually
