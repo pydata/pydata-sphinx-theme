@@ -1,9 +1,7 @@
 {# As the version switcher will only work when JavaScript is enabled, we add it through JavaScript.
  #}
 {% if theme_switcher.get('use_rtd') is defined and theme_switcher.get('use_rtd') %}
-  <script>
-    document.write(`<div id="readthedocs-embed-flyout"></div>`);
-  </script>
+  <div id="readthedocs-embed-flyout"></div>
 {% else %}
   <script>
     document.write(`
