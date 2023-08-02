@@ -1,69 +1,130 @@
-.bd-sidebar-primary div#rtd-footer-container {
-  position: sticky;
-  bottom: -1rem;
-  margin: -1rem; // ignore sidebar padding
-
-  .rst-versions.rst-badge {
-    position: unset;
-    font-size: 0.9em;
-    font-family: var(--pst-font-family-base);
-    max-width: unset;
-
-    .rst-current-version {
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
-      height: 2.5rem;
-      transition: background-color 0.2s ease-out;
-      background-color: var(--pst-color-background);
-      color: var(--pst-color-success);
-      border-top: 1px solid var(--pst-color-border);
-    }
-
-    .fa.fa-book {
-      color: var(--pst-color-text-muted);
-      margin-right: auto;
-
-      &::after {
-        color: var(--pst-color-text-base);
-        content: "Read The Docs";
-        font-family: var(--pst-font-family-base);
-        font-weight: var(--pst-admonition-font-weight-heading);
-      }
-    }
-    .fa.fa-caret-down {
-      color: var(--pst-color-text-muted);
-    }
-  }
-
-  .rst-versions.rst-badge.shift-up {
-    .rst-current-version {
-      border-bottom: 1px solid var(--pst-color-border);
-    }
-  }
-
-  .rst-other-versions {
-    background-color: var(--pst-color-surface);
+.rst-versions {
+  position: static !important;
+  bottom: unset;
+  left: unset;
+  width: unset;
+  background: unset;
+  background-color: var(--pst-color-on-background) !important;
+  color: var(--pst-color-text-muted);
+  font-family: unset !important;
+  z-index: unset;
+  a {
+    background-color: var(--pst-color-on-background);
     color: var(--pst-color-text-base);
-
-    dl {
-      dd a {
-        color: var(--pst-color-text-muted);
-      }
-    }
-
-    hr {
-      background-color: var(--pst-color-border);
-    }
-
-    small a {
-      color: var(--pst-color-link);
-    }
-
-    input {
-      padding-left: 0.5rem;
-      border: 1px solid var(--pst-color-border);
+    text-decoration: unset;
+    @include link-style-hover;
+    &:hover {
       background-color: var(--pst-color-surface);
     }
   }
+  &.rst-badge {
+    //  width: auto;
+    //  bottom: 20px;
+    //  right: 20px;
+    //  left: auto;
+    border-color: var(--pst-color-border);
+    border-radius: var(--bs-dropdown-border-radius);
+    border-width: 1px;
+    //  max-width: $nav-desktop-width;
+    //  max-height: 90%;
+    //  .icon-book {
+    //    float: none;
+    //    line-height: 30px;
+    //  }
+    //  .fa-book {
+    //    float: none;
+    //    line-height: 30px;
+    //  }
+    &.shift-up .rst-current-version {
+      text-align: unset;
+      .fa-book {
+        float: none !important;
+      }
+      .icon-book {
+        float: none;
+      }
+    }
+    //  > .rst-current-version {
+    //    width: auto;
+    //    height: 30px;
+    //    line-height: 30px;
+    //    padding: 0 $base-line-height / 4;
+    display: inline-block !important;
+    //    text-align: center;
+  }
+  //.rst-badge-small {
+  //  display: none;
+  //}
+  .rst-current-version {
+    //  padding: $base-line-height / 2;
+    background-color: var(--bs-btn-bg) !important;
+    text-align: left !important;
+    font-size: unset;
+    color: var(--pst-color-text-base) !important;
+    //  @include clearfix;
+    //  .fa {
+    //    color: $section-background-color;
+    //  }
+    .fa-book {
+      float: none;
+      display: inline-block !important;
+    }
+    .icon-book {
+      float: none;
+    }
+    //  &.rst-out-of-date {
+    //    background-color: $red;
+    //    color: $white;
+    //  }
+    //  &.rst-active-old-version {
+    //    background-color: $yellow;
+    //    color: $black;
+    //  }
+  }
+  //&.shift-up {
+  //  height: auto;
+  //  max-height: 100%;
+  //  overflow-y: scroll;
+  //}
+  &.shift-up .rst-other-versions {
+    display: inline-block !important;
+  }
+  .rst-other-versions {
+    //  font-size: 90%;
+    //  padding: $base-line-height / 2;
+    //  display: none;
+    hr {
+      //  display: block;
+      //  height: 1px;
+      //  border: 0;
+      //  margin: 20px 0;
+      //  padding: 0;
+      border-top: solid 1px var(--pst-color-border);
+    }
+    dl {
+      border-top: solid 1px var(--pst-color-border);
+    }
+    dd {
+      border-color: var(--pst-color-border);
+      border-radius: var(--bs-dropdown-border-radius);
+      border-width: 1px;
+      //  display: inline-block;
+      //  margin: 0;
+      a {
+        //  display: inline-block;
+        //  padding: $base-line-height / 4;
+        color: unset;
+        @include link-style-hover;
+      }
+    }
+  }
 }
+//@include media($tablet) {
+//  .rst-versions {
+//    width: 85%;
+//    display: none;
+//    &.shift {
+//      display: block;
+//    }
+//  }
+//}
