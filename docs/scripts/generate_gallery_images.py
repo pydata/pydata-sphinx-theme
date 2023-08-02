@@ -1,24 +1,21 @@
-"""
-Use playwright to build a gallery of website using this theme
-"""
+"""Use playwright to build a gallery of website using this theme."""
 
 from pathlib import Path
-from yaml import safe_load
 from shutil import copy
-from playwright.sync_api import sync_playwright, TimeoutError
-from rich.progress import track
+
+from playwright.sync_api import TimeoutError, sync_playwright
 from rich import print
+from rich.progress import track
+from yaml import safe_load
 
 
-def regenerate_gallery():
-    """
-    Regenerate images of snapshots for our gallery.
+def regenerate_gallery() -> None:
+    """Regenerate images of snapshots for our gallery.
 
     This function should only be triggered in RTD builds as it increases the build
     time by 30-60s. Developers can still execute this function from time to time to
     populate their local gallery images with updated files.
     """
-
     # get the existing folders path
     _static_dir = Path(__file__).parents[1] / "_static"
 
@@ -47,11 +44,11 @@ def regenerate_gallery():
             # Visit the page and take a screenshot
             for ii in range(3):
                 try:
-                    page.goto(item["website"])
+                    page.goto(item["link"])
                     page.screenshot(path=screenshot)
                     break
                 except TimeoutError:
-                    print(f"Page visit start timed out for: {item['website']}")
+                    print(f"Page visit start timed out for: {item['link']}")
                     print(f"Trying again (attempt {ii+2}/3)")
 
             # copy the 404 only if the screenshot file was not manually

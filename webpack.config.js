@@ -5,6 +5,7 @@
  *
  * - Generates a `webpack-macros.html` file that defines macros used
  *   to insert CSS / JS at various places in the main `layout.html` template.
+ * - Compiles our translation files into .mo files so they can be bundled with the theme
  * - Compiles our SCSS and JS and places them in the _static/ folder
  * - Downloads and links FontAwesome and some JS libraries (Bootstrap, etc)
  */
@@ -12,10 +13,17 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const dedent = require("dedent");
 const { Compilation } = require("webpack");
+
+/*******************************************************************************
+ * Compile our translation files
+ */
+const { exec } = require("child_process");
+const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
+exec(`pybabel compile -d ${localePath} -D sphinx`);
 
 /*******************************************************************************
  * Paths for various assets (sources and destinations)
@@ -54,6 +62,9 @@ const theme_scripts = [
 const fa_stylesheets = [
   `vendor/fontawesome/${vendorVersions.fontAwesome}/css/all.min.css`,
 ];
+const fa_scripts = [
+  `vendor/fontawesome/${vendorVersions.fontAwesome}/js/all.min.js`,
+];
 const fa_fonts = [
   `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-solid-900.woff2`,
   `vendor/fontawesome/${vendorVersions.fontAwesome}/webfonts/fa-brands-400.woff2`,
@@ -63,7 +74,7 @@ const fa_fonts = [
 /*******************************************************************************
  * Cache-busting Jinja2 macros (`webpack-macros.html`) used in `layout.html`
  *
- * @param  {Compilation} the compilation instace to extract the hash
+ * @param  {Compilation} the compilation instance to extract the hash
  * @return {String} the macro to inject in layout.html
  */
 function macroTemplate({ compilation }) {
@@ -87,6 +98,7 @@ function macroTemplate({ compilation }) {
     {% macro head_js_preload() %}
       <!-- Pre-loaded scripts that we'll load fully later -->
       ${theme_scripts.map(preload.bind(compilation)).join("\n")}
+      ${fa_scripts.map(script.bind(compilation)).join("\n")}
     {% endmacro %}
 
     {% macro body_post() %}
@@ -108,23 +120,30 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   templateContent: macroTemplate,
 });
 
-const copyPlugin = new CopyPlugin([ // fontawesome
-  {
-    context: "./node_modules/@fortawesome/fontawesome-free",
-    from: "LICENSE.txt",
-    to: resolve(faPath.fontAwesome, "LICENSE.txt"),
-  },
-  {
-    context: "./node_modules/@fortawesome/fontawesome-free/css",
-    from: "all.min.css",
-    to: resolve(faPath.fontAwesome, "css"),
-  },
-  {
-    context: "./node_modules/@fortawesome/fontawesome-free",
-    from: "webfonts",
-    to: resolve(faPath.fontAwesome, "webfonts"),
-  },
-]);
+const copyPlugin = new CopyPlugin({ // fontawesome
+  patterns: [
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free",
+      from: "LICENSE.txt",
+      to: resolve(faPath.fontAwesome, "LICENSE.txt"),
+    },
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free/css",
+      from: "all.min.css",
+      to: resolve(faPath.fontAwesome, "css"),
+    },
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free/js",
+      from: "all.min.js",
+      to: resolve(faPath.fontAwesome, "js"),
+    },
+    {
+      context: "./node_modules/@fortawesome/fontawesome-free",
+      from: "webfonts",
+      to: resolve(faPath.fontAwesome, "webfonts"),
+    },
+  ]
+});
 
 module.exports = {
   mode: "production",
@@ -134,17 +153,21 @@ module.exports = {
     "bootstrap": resolve(scriptPath, "bootstrap.js"),
   },
   output: {filename: "scripts/[name].js", path: staticPath},
-  optimization: {minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin({})]},
+  optimization: {minimizer: ['...', new CssMinimizerPlugin()]},
   module: {
     rules: [{
       test: /\.scss$/,
       use: [
-        {loader: "file-loader", options: {name: "styles/[name].css"}},
-        {loader: "extract-loader"},
-        {loader: "css-loader?-url"}, //url()-inlining turned off}
+        {loader: MiniCssExtractPlugin.loader},
+        {loader: "css-loader?-url"}, //url()-inlining turned off
         {loader: "sass-loader",},
       ],
     }],
   },
-  plugins: [htmlWebpackPlugin, copyPlugin],
+  plugins: [htmlWebpackPlugin, copyPlugin, new MiniCssExtractPlugin({
+    filename: "styles/[name].css"
+  })],
+  experiments: {
+    topLevelAwait: true,
+  },
 };

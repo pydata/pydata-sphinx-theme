@@ -1,42 +1,24 @@
-// the icons for theme change
+/**
+ * Light/dark theme switcher
+ */
+
 .theme-switch-button {
   // overide bootstrap settings
-  border-color: var(--pst-color-on-background);
-  // Size is a bit smaller because the background shadow is bigger
-  font-size: calc(var(--pst-font-size-icon) - 0.1rem);
   margin: 0 -0.5rem;
   padding: 0; // We pad the `span` not the container
+  color: var(--pst-color-text-muted);
+  border-radius: 0;
+  @include focus-indicator;
 
   span {
     display: none;
-    color: var(--pst-color-text-muted);
-    padding: 0.5rem;
-    &:hover,
-    &:active,
-    &:focus {
+    padding: 0.5em;
+
+    @include icon-navbar-hover;
+    &:active {
       text-decoration: none;
+      color: var(--pst-color-link-hover);
     }
-  }
-
-  &:hover,
-  &:active {
-    // overide bootstrap settings
-    background-color: var(--pst-color-on-surface) !important;
-    border-color: var(--pst-color-on-background) !important;
-    a {
-      color: var(--pst-color-text-muted);
-    }
-  }
-}
-
-// specific border color when the button is nested in the navbar
-// as it's color is different from the header
-.bd-sidebar-primary .theme-switch-button {
-  border-color: var(--pst-color-background);
-
-  &:hover,
-  &:active {
-    border-color: var(--pst-color-background) !important;
   }
 }
 

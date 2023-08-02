@@ -1,3 +1,5 @@
+"""Test conf file."""
+
 # -- Project information -----------------------------------------------------
 
 project = "PyData Tests"
@@ -20,12 +22,24 @@ html_sourcelink_suffix = ""
 # Base options, we can add other key/vals later
 html_theme_options = {
     "search_bar_position": "navbar",
-    "left_sidebar_end": ["sidebar-ethical-ads.html"],
     "logo_text": "DOCS",
-    "page_sidebar_items": [
-        "page-toc.html",
-        "edit-this-page.html",
-        "sourcelink.html",
+    "footer_items": ["page-toc.html"],
+    "favicons": [
+        {
+            "rel": "icon",
+            "sizes": "16x16",
+            "href": "https://secure.example.com/favicon/favicon-16x16.png",
+        },
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "href": "favicon-32x32.png",
+        },
+        {
+            "rel": "apple-touch-icon",
+            "sizes": "180x180",
+            "href": "apple-touch-icon-180x180.png",
+        },
     ],
 }
 

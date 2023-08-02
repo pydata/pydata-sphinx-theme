@@ -1,14 +1,13 @@
-"""Uses the GitHub API to list a gallery of all people with direct access
-to the repository.
-"""
+"""Uses the GitHub API to list a gallery of all people with direct access to the repository."""
+
+import json
+import shlex
+from pathlib import Path
+from subprocess import run
 
 from yaml import dump
-from subprocess import run
-import shlex
-import json
-from pathlib import Path
 
-COLLABORATORS_API = "https://api.github.com/repos/pydata/pydata-sphinx-theme/collaborators?affiliation=direct"  # noqa
+COLLABORATORS_API = "https://api.github.com/repos/pydata/pydata-sphinx-theme/collaborators?affiliation=direct"
 
 print("Grabbing latest collaborators with GitHub API via GitHub's CLI...")
 out = run(shlex.split(f"gh api {COLLABORATORS_API}"), capture_output=True)
@@ -22,7 +21,7 @@ for collaborator in collaborators:
         {
             "header": f"@{collaborator['login']}",
             "image": f"https://avatars.githubusercontent.com/u/{collaborator['id']}",
-            "website": collaborator["html_url"],
+            "link": collaborator["html_url"],
         }
     )
 

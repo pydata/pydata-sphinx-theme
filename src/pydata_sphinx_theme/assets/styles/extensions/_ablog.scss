@@ -2,20 +2,25 @@
  * ABlog
  * ref: https://ablog.readthedocs.io/
  */
-// HACK: ABlog has no CSS selector, but directly inserts elements into the sidebar
-// So we make an assumption here that any *top-level* sidebar items that are ul/h2/h3
-// Are attached to ABlog. This is hacky and we should try to get top-level ablog
-// CSS wrappers into ABlog instead.
-.bd-sidebar-primary .sidebar-start-items__item {
-  > h3,
-  > h2 {
+
+/**
+ * Sidebar template components
+ */
+.ablog-sidebar-item {
+  h2,
+  h3 {
+    font-size: var(--pst-sidebar-header-font-size);
     // Remove unnecessary vertical whitespace
     margin-top: 0.5rem;
-    // Headers are too big by default
-    font-size: 1.7rem;
+
+    // The headers are all links, but this makes them hard to parse
+    // So we change the colors to make them look like headers
+    a {
+      color: var(--pst-color-text-base);
+    }
   }
 
-  > ul {
+  ul {
     // No bullet points for the primary sidebar items
     list-style: none;
     padding-left: 0;
@@ -25,100 +30,110 @@
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    margin-bottom: 0;
 
     // The ablog cloud should move horizontally
     &.ablog-cloud {
       flex-direction: row;
       flex-flow: wrap;
-      gap: 0;
+      gap: 0.5rem;
+
+      // Vertical-align tag clouds
+      li {
+        // Center the tag cloud items
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }
 
-// Vertical-align tag clouds
-ul.ablog-cloud {
-  li {
-    // Center the tag cloud items
-    display: flex;
-    align-items: center;
-  }
-}
-
-// HACK: ABlog articles always seem to have the structure:
-// <section id="POST-TITLE-ID">{{ POST CONTENT }}
-// <div class="section">
-//   <div class="section"
-//      <span>previous button
-//      <span>empty space
-//      <span>next button
-//
-// So these rules make that assumption
-article.bd-article > section + div.section {
+/**
+ * Previous / next buttons at the bottom
+ */
+.ablog__prev-next {
   font-size: 1.2em;
+  display: flex;
+  padding: 1rem 0;
 
   // The bottom previous / next arrows
-  span {
+  > span {
     // To ensure that the whole thing fits on one line even if there are long titles
-    max-width: 45%;
-    // Alignment with the prev/next arrows
     display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    // Remove the ABlog icons because we specify our own
-    a i {
-      display: none;
-    }
-    // If the span is empty, it means there's no previous/next page to go to
-    // so this prevents the arrow from showing up
-    &:empty {
-      display: none;
+    max-width: 45%;
+
+    // Links within each span have the collection of icon + text
+    a {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      gap: 1rem;
+      line-height: 1.5rem;
+
+      i:before {
+        color: var(--pst-color-text-base);
+      }
     }
   }
 
-  // The first span is the "previous" button
-  span:first-child:before {
-    content: var(--pst-icon-angle-left);
-    font-family: "Font Awesome 6 Free";
-    font-weight: 800;
+  // The first span is for the previous page and aligns to the left
+  span.ablog__prev {
+    i.fa-arrow-circle-left:before {
+      content: var(--pst-icon-angle-left);
+    }
   }
 
   // The second span is just an empty space so we remove it because we're
   // positioning with flex
-  span:first-child + span {
-    display: none !important;
+  span.ablog__spacer {
+    display: none;
   }
 
   // The third span is aligned to the right
-  span:last-child {
+  span.ablog__next {
+    margin-left: auto;
     text-align: right;
-    &:after {
+
+    i.fa-arrow-circle-right:before {
       content: var(--pst-icon-angle-right);
-      font-family: "Font Awesome 6 Free";
-      font-weight: 800;
     }
   }
 }
 
-// Post metadata that is on the "posts" page
-ul.ablog-archive {
-  padding-left: 0;
-  font-size: 1.25rem;
-}
-
-// The post list when you use the {postlist} directive
-ul.postlist {
+/**
+ * {postlist} directive and posts page
+ */
+.ablog__collection,
+.postlist {
   padding-left: 0;
 
-  li.ablog-post {
+  .ablog-post {
     list-style: none;
 
-    // Title line should be a bit bigger
-    .ablog-post-title {
-      font-size: 1.5rem;
+    // Post metadata tags (author, links ,etc) should be a bit smaller
+    .ablog-archive {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      list-style: none;
+      font-size: 0.75rem;
+      padding-left: 0;
     }
-    // Create a bit more whitespace if there's an excerpt
-    .ablog-post-excerpt {
-      margin-bottom: 2em;
+
+    // Title line should be a bit bigger and bold to stand out
+    .ablog-post-title {
+      margin-top: 0;
+      font-size: 1.25rem;
+
+      a {
+        font-weight: bold;
+      }
+    }
+
+    // Read more button should be a bit bigger
+    .ablog-post-expand {
+      margin-bottom: 0.5rem;
     }
   }
 }

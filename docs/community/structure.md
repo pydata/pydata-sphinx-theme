@@ -9,14 +9,14 @@ The content is written in a combination of reStructuredText and MyST Markdown.
 ## Location and structure of CSS/JS assets
 
 The CSS and JS for this theme are built for the browser from `src/pydata_sphinx_theme/assets/*` with
-[webpack](https://webpack.js.org/). The main entrypoints are:
+[webpack](https://webpack.js.org/). The main entry points are:
 
-- CSS: `src/pydata_sphinx_theme/assets/styles/index.scss`
+- CSS: `src/pydata_sphinx_theme/assets/styles/pydata-sphinx-theme.scss`
 
   - the main part of the theme assets
   - customizes [Bootstrap](https://getbootstrap.com/) with [Sass](https://sass-lang.com)
 
-- JS: `src/pydata_sphinx_theme/assets/scripts/index.js`
+- JS: `src/pydata_sphinx_theme/assets/scripts/pydata-sphinx-theme.js`
 
   - provides add-on Bootstrap features, as well as some custom navigation behavior
 

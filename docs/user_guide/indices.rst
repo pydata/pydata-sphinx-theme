@@ -2,7 +2,7 @@
 Sphinx indices
 ==============
 
-Sphinx generates indices named `genindex`, `modindex` and `py-modindex` when building a documentation. More information about them can be found in the Sphinx documentation `here <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-index>`__.
+Sphinx generates indices named `genindex`, `modindex` and `py-modindex` when building a documentation. More information about them can be found in the `Sphinx documentation for indices <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-index>`__.
 
 Add indices links
 =================
@@ -19,4 +19,4 @@ By design the indices pages are not linked in a documentation generated with thi
 
 .. note::
 
-    don't forget to add back the ``"sidebar-ethical-ads.html"`` template if you are serving your documentation using `ReadTheDocs <https://readthedocs.org>`__.
+    Don't forget to add back the ``"sidebar-ethical-ads.html"`` template if you are serving your documentation using `ReadTheDocs <https://readthedocs.org>`__.

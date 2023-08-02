@@ -3,65 +3,38 @@
 # 1. Used by `generate_gallery_images.py` to take snapshots of each item and place an image in `gallery`.
 # 2. Used by our Gallery Grid directive to create the grid on our `examples/gallery.md` page.
 #
-# title: The title of each gallery item
-# website: The website that will be used to create a snapshot of this item.
-#    An image will be placed in docs/_static/gallery/{sanitized_title}.png
-# img-bottom: The location where img-bottoms will be placed for each entry by generate_gallery_img-bottoms.py
-#    This should follow the form shown above and is roughly the same for all items.
-- title: Pandas
-  website: https://pandas.pydata.org/docs/
-  img-bottom: ../_static/gallery/pandas.png
-- title: NumPy
-  website: https://numpy.org/doc/stable/
-  img-bottom: ../_static/gallery/numpy.png
-- title: SciPy
-  website: https://docs.scipy.org/doc/scipy/
-  img-bottom: ../_static/gallery/scipy.png
+# This file should only be modified by maintainer, contributors should add their project
+# to the list of `gallery.md`.
+- title: ArviZ
+  link: https://python.arviz.org/
+  img-bottom: ../_static/gallery/arviz.png
 - title: Bokeh
-  website: https://docs.bokeh.org/en/latest/
+  link: https://docs.bokeh.org/en/latest/
   img-bottom: ../_static/gallery/bokeh.png
-- title: CuPy
-  website: https://docs.cupy.dev/en/stable/index.html
-  img-bottom: ../_static/gallery/cupy.png
-- title: PyVista
-  website: https://docs.pyvista.org
-  img-bottom: ../_static/gallery/pyvista.png
+- title: Jupyter
+  link: https://docs.jupyter.org/en/latest/
+  img-bottom: ../_static/gallery/jupyter.png
+- title: Jupyter Book
+  link: https://jupyterbook.org/en/stable/intro.html
+  img-bottom: ../_static/gallery/jupyter_book.png
+- title: Matplotlib
+  link: https://matplotlib.org/stable/
+  img-bottom: ../_static/gallery/matplotlib.png
 - title: MNE-Python
-  website: https://mne.tools/stable/index.html
+  link: https://mne.tools/stable/index.html
   img-bottom: ../_static/gallery/mne-python.png
 - title: NetworkX
-  website: https://networkx.org/documentation/stable/
+  link: https://networkx.org/documentation/stable/
   img-bottom: ../_static/gallery/networkx.png
-- title: Fairlearn
-  website: https://fairlearn.org/main/about/
-  img-bottom: ../_static/gallery/fairlearn.png
-- title: Jupyter Book
-  website: https://jupyterbook.org/en/stable/intro.html
-  img-bottom: ../_static/gallery/jupyter_book.png
-- title: Binder
-  website: https://mybinder.readthedocs.io/en/latest/index.html
-  img-bottom: ../_static/gallery/binder.png
-- title: Jupyter
-  website: https://docs.jupyter.org/en/latest/
-  img-bottom: ../_static/gallery/jupyter.png
-- title: MegEngine
-  website: https://www.megengine.org.cn/doc/stable/en/index.html
-  img-bottom: ../_static/gallery/megengine.png
-- title: Feature-engine
-  website: https://feature-engine.readthedocs.io/
-  img-bottom: ../_static/gallery/feature-engine.png
-- title: ArviZ
-  website: https://python.arviz.org/
-  img-bottom: ../_static/gallery/arviz.png
+- title: NumPy
+  link: https://numpy.org/doc/stable/
+  img-bottom: ../_static/gallery/numpy.png
+- title: Pandas
+  link: https://pandas.pydata.org/docs/
+  img-bottom: ../_static/gallery/pandas.png
+- title: SciPy
+  link: https://docs.scipy.org/doc/scipy/
+  img-bottom: ../_static/gallery/scipy.png
 - title: SEPAL
-  website: https://docs.sepal.io/en/latest/index.html
+  link: https://docs.sepal.io/en/latest/index.html
   img-bottom: ../_static/gallery/sepal.png
-- title: EnOSlib
-  website: https://discovery.gitlabpages.inria.fr/enoslib/
-  img-bottom: ../_static/gallery/enoslib.png
-- title: Matplotlib
-  website: https://matplotlib.org/stable/
-  img-bottom: ../_static/gallery/matplotlib.png
-- title: cashocs
-  website: https://cashocs.readthedocs.io/en/latest/
-  img-bottom: ../_static/gallery/cashocs.png
