@@ -175,6 +175,7 @@ html_theme_options = {
     # "footer_start": ["test.html", "test.html"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
+        "use_rtd": True,
         "json_url": json_url,
         "version_match": version_match,
     },
