@@ -2,11 +2,7 @@
  #}
 {% if theme_switcher.get('use_rtd') is defined and theme_switcher.get('use_rtd') %}
   <script>
-    document.write(`
-      <div class="version-switcher__container dropdown">
-        <div id="readthedocs-embed-flyout"></div>
-      </div>
-    `);
+    document.write(`<div id="readthedocs-embed-flyout"></div>`);
   </script>
 {% else %}
   <script>
