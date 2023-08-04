@@ -1,15 +1,8 @@
 .rst-versions {
   position: relative !important;
-  bottom: unset;
-  left: unset;
-  width: unset;
-  background: unset;
-  background-color: var(--pst-color-on-background) !important;
-  color: var(--pst-color-text-muted);
+  color: var(--pst-color-text-muted) !important;
   font-family: unset !important;
-  z-index: unset;
   a {
-    background-color: var(--pst-color-on-background);
     color: var(--pst-color-text-base);
     text-decoration: unset;
     @include link-style-hover;
@@ -20,6 +13,8 @@
   &.rst-badge {
     //  width: auto;
     appearance: button;
+    height: inherit;
+    max-height: inherit;
     border-color: var(--pst-color-border) !important;
     border-radius: var(--bs-dropdown-border-radius) !important;
     border-width: 1px !important;
@@ -37,11 +32,15 @@
     //  }
     &.shift-up .rst-current-version {
       text-align: unset;
+      display: inline;
       .fa-book {
         float: none !important;
       }
       .icon-book {
         float: none;
+      }
+      > .rst-current-version {
+        height: inherit !important;
       }
     }
     //  > .rst-current-version {
@@ -55,10 +54,10 @@
   //  display: none;
   //}
   .rst-current-version {
-    //  padding: $base-line-height / 2;
-    background-color: var(--bs-btn-bg) !important;
+    padding: unset !important;
+    background-color: var(--pst-color-on-background) !important;
     text-align: left !important;
-    font-size: unset;
+    font-size: unset !important;
     color: var(--pst-color-text-base) !important;
     //  @include clearfix;
     //  .fa {
@@ -92,17 +91,21 @@
     //  font-size: 90%;
     //  padding: $base-line-height / 2;
     //  display: none;
-    color: var(--pst-color-text-muted);
+    position: absolute;
+    width: 300px;
+    color: var(--pst-color-text-muted) !important;
+    background-color: var(--pst-color-on-background) !important;
     hr {
       //  display: block;
       //  height: 1px;
       //  border: 0;
       //  margin: 20px 0;
       //  padding: 0;
+      border: none !important;
       border-top: solid 1px var(--pst-color-border) !important;
     }
     dl {
-      border-top: solid 1px var(--pst-color-border);
+      border-top: solid 1px var(--pst-color-border) !important;
     }
     dd {
       border-color: var(--pst-color-border) !important;

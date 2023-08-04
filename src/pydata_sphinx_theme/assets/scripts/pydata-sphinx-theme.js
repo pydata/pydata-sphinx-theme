@@ -531,4 +531,4 @@ documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
-documentReady(initRTDObserver);
+// documentReady(initRTDObserver);
