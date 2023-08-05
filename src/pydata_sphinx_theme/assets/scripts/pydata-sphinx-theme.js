@@ -490,8 +490,20 @@ function initRTDObserver() {
         return;
       }
       if (mutation.addedNodes[0].data.search("Inserted RTD Footer") != -1) {
-        mutation.addedNodes.forEach((node) => {
-          document.getElementById("rtd-footer-container").append(node);
+        let flyout = mutation.addedNodes[0].cloneNode(true);
+        // copy the flyout menu to whichever of the 2 target nodes didn't already get
+        // written to by the RTD injection script.
+        document.querySelectorAll('[data-rtd-target="rtd"]').forEach((node) => {
+          if (!node.hasChildNodes()) {
+            node.appendChild(flyout);
+            flyout.onclick = toggleFlyout;
+            // replicate the onclick function RTD uses: it can't be cloned by cloneNode()
+            flyout
+              .querySelector(".rst-current-version")
+              .addEventListener("click", function (e) {
+                e.currentTarget.classList.toggleClass("shift-up");
+              });
+          }
         });
       }
     });
@@ -531,4 +543,4 @@ documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
-// documentReady(initRTDObserver);
+documentReady(initRTDObserver);

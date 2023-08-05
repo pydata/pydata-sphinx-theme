@@ -2,7 +2,7 @@
  #}
 {% if theme_switcher.get('use_rtd') is defined and theme_switcher.get('use_rtd') %}
   <script>
-    document.write(`<div id="readthedocs-embed-flyout"></div>`);
+    document.write(`<div id="readthedocs-embed-flyout" data-rtd-target="rtd"></div>`);
   </script>
 {% else %}
   <script>
