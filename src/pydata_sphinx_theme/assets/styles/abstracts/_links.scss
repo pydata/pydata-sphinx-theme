@@ -43,7 +43,7 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
 // Ensures links have an underline decoration on hover - distinct from the
 // default behaviour
-@mixin link-decoration-hover($important: true) {
+@mixin link-decoration-hover($important: false) {
   @if $link-hover-decoration-thickness {
     text-decoration-thickness: $link-hover-decoration-thickness
       if-important($important);
@@ -57,7 +57,7 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
 // Simple hover style - can be used alone or in conjunction with other mixins
 // Add the text underline and change in thickness on hover
-@mixin link-style-hover($important: true) {
+@mixin link-style-hover($important: false) {
   &:hover {
     @include link-decoration($important: $important);
     @include link-decoration-hover($important: $important);
