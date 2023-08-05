@@ -2,16 +2,17 @@
   position: relative !important;
   font-family: inherit !important;
   a {
-    color: var(--pst-color-text-base);
+    color: var(--pst-color-link) !important;
     text-decoration: unset;
     @include link-style-hover;
     &:hover {
+      color: var(--pst-color-link-hover);
       background-color: var(--pst-color-surface);
     }
   }
   &.rst-badge {
     border-color: var(--pst-color-border) !important;
-    border-radius: var(--bs-dropdown-border-radius) !important;
+    border-radius: $admonition-border-radius;
     border-style: solid !important;
     border-width: 1px !important;
     bottom: unset !important;
@@ -48,11 +49,15 @@
     }
     dd {
       border-color: var(--pst-color-border) !important;
-      border-radius: var(--bs-dropdown-border-radius) !important;
+      border-radius: $admonition-border-radius !important;
+      border-style: solid !important;
       border-width: 1px !important;
       a {
-        color: unset;
+        color: var(--pst-color-text-base) !important;
         @include link-style-hover;
+        &:hover {
+          color: var(--pst-color-link-hover);
+        }
       }
     }
   }
