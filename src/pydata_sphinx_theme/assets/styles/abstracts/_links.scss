@@ -22,39 +22,46 @@ $link-underline-offset: 0.1578em !default;
 //  - 0.12em (relative to the link's text size)
 $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
+@function if-important($important) {
+  @return #{if($important, "!important", "")};
+}
+
 //  Ensures links have an underline decoration by default - needed to meet
 // WCAG SC 1.4.1
-@mixin link-decoration {
-  text-decoration: underline;
+@mixin link-decoration($important: false) {
+  text-decoration: underline if-important($important);
 
   @if $link-underline-thickness {
-    text-decoration-thickness: $link-underline-thickness;
+    text-decoration-thickness: $link-underline-thickness
+      if-important($important);
   }
 
   @if $link-underline-offset {
-    text-underline-offset: $link-underline-offset;
+    text-underline-offset: $link-underline-offset if-important($important);
   }
 }
 
 // Ensures links have an underline decoration on hover - distinct from the
 // default behaviour
-@mixin link-decoration-hover {
+@mixin link-decoration-hover($important: true) {
   @if $link-hover-decoration-thickness {
-    text-decoration-thickness: $link-hover-decoration-thickness;
+    text-decoration-thickness: $link-hover-decoration-thickness
+      if-important($important);
     // Disable ink skipping on underlines on hover. Browsers haven't
     // standardised on this part of the spec yet, so set both properties
-    text-decoration-skip-ink: none; // Chromium, Firefox
-    text-decoration-skip: none; // Safari
+    text-decoration-skip-ink: none
+      if-important($important); // Chromium, Firefox
+    text-decoration-skip: none if-important($important); // Safari
   }
 }
 
 // Simple hover style - can be used alone or in conjunction with other mixins
 // Add the text underline and change in thickness on hover
-@mixin link-style-hover {
+@mixin link-style-hover($important: true) {
   &:hover {
-    @include link-decoration;
-    @include link-decoration-hover;
-    color: var(--pst-color-link-hover);
+    @include link-decoration($important: $important);
+    @include link-decoration-hover($important: $important);
+    color: var(--pst-color-link-hover) if-important($important);
   }
 }
 
