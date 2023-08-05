@@ -483,6 +483,7 @@ function initRTDObserver() {
   const mutatedCallback = (mutationList, observer) => {
     mutationList.forEach((mutation) => {
       // Check whether the mutation is for RTD, which will have a specific structure
+      console.log(`XXX {mutation.type} XXX`);
       if (mutation.addedNodes.length === 0) {
         return;
       }
