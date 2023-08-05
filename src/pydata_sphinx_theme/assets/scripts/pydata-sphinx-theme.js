@@ -490,11 +490,15 @@ function initRTDObserver() {
         return;
       }
       if (mutation.addedNodes[0].data.search("Inserted RTD Footer") != -1) {
+        console.log("XXX FOUND MUTATED NODE XXX");
         let flyout = mutation.addedNodes[0].cloneNode(true);
+        console.log(flyout);
         // copy the flyout menu to whichever of the 2 target nodes didn't already get
         // written to by the RTD injection script.
         document.querySelectorAll('[data-rtd-target="rtd"]').forEach((node) => {
+          console.log("XXX FOUND A TARGET NODE XXX");
           if (!node.hasChildNodes()) {
+            console.log("XXX FOUND CHILDLESS NODE XXX");
             node.appendChild(flyout);
             flyout.onclick = toggleFlyout;
             // replicate the onclick function RTD uses: it can't be cloned by cloneNode()
