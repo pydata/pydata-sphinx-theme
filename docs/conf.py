@@ -100,7 +100,8 @@ json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switche
 version_match = os.environ.get("READTHEDOCS_VERSION")
 # If READTHEDOCS_VERSION doesn't exist, we're not on RTD
 # If it is an integer, we're in a PR build and the version isn't correct.
-if not version_match or version_match.isdigit():
+# If it's "latest" → change to "dev" (that's what we want the switcher to call it)
+if not version_match or version_match.isdigit() or version_match == "latest":
     # For local development, infer the version to match from the package.
     release = pydata_sphinx_theme.__version__
     if "dev" in release or "rc" in release:

@@ -31,23 +31,20 @@ button.btn.version-switcher__button {
     &:hover {
       background-color: var(--pst-color-surface);
     }
-  }
+    &.active {
+      @include link-sidebar-current;
+      position: relative;
+      z-index: 1;
 
-  // Over-rides Bootstrap default blue for the current one (info-bg)
-  // TODO: @trallard to fix active in subsequent PR
-  a.list-group-item.active {
-    color: var(--pst-color-info);
-    position: relative;
-    z-index: 1;
-
-    span:before {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      z-index: -1;
-      left: 0;
-      top: 0;
+      span:before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        top: 0;
+      }
     }
   }
 }
