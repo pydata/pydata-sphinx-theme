@@ -4,13 +4,14 @@ from functools import lru_cache
 from typing import List, Union
 from urllib.parse import urlparse
 
+import sphinx
 from bs4 import BeautifulSoup
 from docutils import nodes
 from docutils.nodes import Node
 from sphinx import addnodes
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.application import Sphinx
-from sphinx.environment.adapters.toctree import TocTree
+from sphinx.environment.adapters.toctree import _get_toctree_ancestors, TocTree
 
 from .utils import traverse_or_findall
 
@@ -63,7 +64,10 @@ def add_toctree_functions(
 
         # Find the active header navigation item so we decide whether to highlight
         # Will be empty if there is no active page (root_doc, or genindex etc)
-        active_header_page = toctree.get_toctree_ancestors(pagename)
+        if sphinx.version_info[:2] >= (7, 2):
+            active_header_page = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
+        else:
+            active_header_page = toctree.get_toctree_ancestors(pagename)
         if active_header_page:
             # The final list item will be the top-most ancestor
             active_header_page = active_header_page[-1]
@@ -417,7 +421,10 @@ def index_toctree(
         kwargs.pop("maxdepth")
 
     toctree = TocTree(app.env)
-    ancestors = toctree.get_toctree_ancestors(pagename)
+    if sphinx.version_info[:2] >= (7, 2):
+        ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
+    else:
+        ancestors = toctree.get_toctree_ancestors(pagename)
     try:
         indexname = ancestors[-startdepth]
     except IndexError:
