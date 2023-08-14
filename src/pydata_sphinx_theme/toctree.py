@@ -67,7 +67,9 @@ def add_toctree_functions(
         if sphinx.version_info[:2] >= (7, 2):
             from sphinx.environment.adapters.toctree import _get_toctree_ancestors
             
-            active_header_page = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
+            active_header_page = [
+                *_get_toctree_ancestors(app.env.toctree_includes, pagename)
+            ]
         else:
             active_header_page = toctree.get_toctree_ancestors(pagename)
         if active_header_page:
