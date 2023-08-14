@@ -11,7 +11,7 @@ from docutils.nodes import Node
 from sphinx import addnodes
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.application import Sphinx
-from sphinx.environment.adapters.toctree import _get_toctree_ancestors, TocTree
+from sphinx.environment.adapters.toctree import TocTree
 
 from .utils import traverse_or_findall
 
@@ -422,6 +422,8 @@ def index_toctree(
 
     toctree = TocTree(app.env)
     if sphinx.version_info[:2] >= (7, 2):
+        from sphinx.environment.adapters.toctree import _get_toctree_ancestors
+
         ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
     else:
         ancestors = toctree.get_toctree_ancestors(pagename)
