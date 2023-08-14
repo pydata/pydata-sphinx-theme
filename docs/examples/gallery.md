@@ -38,4 +38,6 @@ Thanks for your support!
   link: https://www.megengine.org.cn/doc/stable/en/index.html
 - title: PyVista
   link: https://docs.pyvista.org
+- title: Pastas
+  link: https://pastas.readthedocs.io/
 ```
