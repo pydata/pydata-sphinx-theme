@@ -70,7 +70,6 @@ def sphinx_build_factory(make_app: Callable, tmp_path: Path) -> Callable:
 
     def _func(src_folder: Path, **kwargs) -> SphinxBuild:
         """Create the Sphinxbuild from the source folder."""
-
         srcdir = tmp_path / src_folder
         if sphinx.version_info < (7, 2):
             from sphinx.testing.path import path as sphinx_path
