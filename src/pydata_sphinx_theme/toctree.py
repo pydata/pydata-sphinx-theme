@@ -66,7 +66,7 @@ def add_toctree_functions(
         # Will be empty if there is no active page (root_doc, or genindex etc)
         if sphinx.version_info[:2] >= (7, 2):
             from sphinx.environment.adapters.toctree import _get_toctree_ancestors
-            
+
             active_header_page = [
                 *_get_toctree_ancestors(app.env.toctree_includes, pagename)
             ]
