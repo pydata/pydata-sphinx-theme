@@ -581,4 +581,4 @@ The content will be respecting the format specified in the ``html_last_updated_f
 
 .. note::
 
-    If a special component to display such an information in your page is your need please see :ref:`_extending-build-date`.
+    If a special component to display such an information in your page is your need please see :ref:`extending-build-date`.
