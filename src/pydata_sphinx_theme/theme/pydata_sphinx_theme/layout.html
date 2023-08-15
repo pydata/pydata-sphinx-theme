@@ -39,6 +39,9 @@ or not theme_secondary_sidebar_items %}
 {%- block extrahead %}
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="{{ language }}"/>
+  {%- if last_updated %}
+    <meta name="docbuild:last-update" content="{{ last_updated | e }}"/>
+  {%- endif %}
 {%- endblock extrahead %}
 {% block body_tag %}
   {# set up with scrollspy to update the toc as we scroll #}
