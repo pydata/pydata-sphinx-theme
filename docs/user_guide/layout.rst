@@ -567,3 +567,18 @@ could do so with the following steps:
       "navbar_start": ["navbar-logo", "version"],
       # ...
       }
+
+Build date
+==========
+
+By design the build date cannot be seen in our template even when the `html_last_updated_fmt <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_last_updated_fmt>`__ is set. Instead the theme is adding a ``meta`` tag in the html head that can be read by html parser.
+
+.. code-block:: html
+
+    <meta name="docbuild:last-update" content="Aug 15, 2023">
+
+The content will be respecting the format specified in the ``html_last_updated_fmt`` conf variable.
+
+.. note::
+
+    If a special component to display such an information in your page is your need please see :ref:`_extending-build-date`.
