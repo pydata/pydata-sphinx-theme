@@ -48,6 +48,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11"]
+        sphinx-version: [""]
         include:
           # macos test
           - os: macos-latest
@@ -58,14 +59,8 @@ jobs:
           # old Sphinx test
           - os: ubuntu-latest
             python-version: "3.8"
-            sphinx-version: ""
-          - os: ubuntu-latest
-            python-version: "3.8"
             sphinx-version: "old"
           # dev Sphinx test
-          - os: ubuntu-latest
-            python-version: "3.11"
-            sphinx-version: ""
           - os: ubuntu-latest
             python-version: "3.11"
             sphinx-version: "dev"
