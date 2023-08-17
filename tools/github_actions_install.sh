@@ -9,7 +9,12 @@ if [[ "$SPHINX_VERSION" == "" ]]; then
 elif [[ "$SPHINX_VERSION" == "dev" ]]; then
     SPHINX_INSTALL="git+https://github.com/sphinx-doc/sphinx"
 elif [[ "$SPHINX_VERSION" == "old" ]]; then
-    SPHINX_INSTALL="sphinx==5.0"
+    # ablog requires 5.0 so we have to triage based on install type
+    if [[ "$1" == "doc" ]]; then
+        SPHINX_INSTALL="sphinx==5.0"
+    else
+        SPHINX_INSTALL="sphinx==4.2"
+    fi
 else  # not used currently but easy enough
     SPHINX_INSTALL="sphinx==$SPHINX_VERSION"
 fi
