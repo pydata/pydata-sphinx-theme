@@ -7,7 +7,7 @@ export PYTHONUTF8=1
 if [[ "$SPHINX_VERSION" == "" ]]; then
     SPHINX_INSTALL=""
 elif [[ "$SPHINX_VERSION" == "dev" ]]; then
-    SPHINX_INSTALL="https://github.com/sphinx-doc/sphinx"
+    SPHINX_INSTALL="git+https://github.com/sphinx-doc/sphinx"
 else
     SPHINX_INSTALL="sphinx==$SPHINX_VERSION"
 fi
