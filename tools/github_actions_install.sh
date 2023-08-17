@@ -9,7 +9,7 @@ if [[ "$SPHINX_VERSION" == "" ]]; then
 elif [[ "$SPHINX_VERSION" == "dev" ]]; then
     SPHINX_INSTALL="git+https://github.com/sphinx-doc/sphinx"
     if [[ "$1" == "doc" ]]; then
-        DEP_EXTRA="jupyterlite-sphinx==0.9.1 myst-nb==0.17.2 jupyter-sphinx=0.4.0"
+        DEP_EXTRA="jupyterlite-sphinx==0.9.1 myst-nb==0.17.2 jupyter-sphinx==0.4.0"
     fi
 elif [[ "$SPHINX_VERSION" == "old" ]]; then
     # ablog requires 5.0 so we have to triage based on install type
