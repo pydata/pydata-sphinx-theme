@@ -8,7 +8,9 @@ if [[ "$SPHINX_VERSION" == "" ]]; then
     SPHINX_INSTALL=""
 elif [[ "$SPHINX_VERSION" == "dev" ]]; then
     SPHINX_INSTALL="git+https://github.com/sphinx-doc/sphinx"
-else
+elif [[ "$SPHINX_VERSION" == "old" ]]; then
+    SPHINX_INSTALL="sphinx==5.0"
+else  # not used currently but easy enough
     SPHINX_INSTALL="sphinx==$SPHINX_VERSION"
 fi
 set -x  # print commands

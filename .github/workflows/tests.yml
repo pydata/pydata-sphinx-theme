@@ -58,7 +58,7 @@ jobs:
             sphinx-version: ""
           - os: ubuntu-latest
             python-version: "3.8"
-            sphinx-version: "5.0"
+            sphinx-version: "old"
           # dev Sphinx test
           - os: ubuntu-latest
             python-version: "3.11"
@@ -129,7 +129,7 @@ jobs:
         include:
           - os: ubuntu-latest
             python-version: "3.8"
-            sphinx-version: "5.0"
+            sphinx-version: "old"
           - os: ubuntu-latest
             python-version: "3.10" # use different ver here to ensure separate run
             sphinx-version: "dev"
