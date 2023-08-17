@@ -131,10 +131,9 @@ jobs:
           - os: ubuntu-latest
             python-version: "3.8"
             sphinx-version: "old"
-          # TODO: Can't build on dev because of dependency resolution :(
-          # - os: ubuntu-latest
-          #   python-version: "3.11"
-          #   sphinx-version: "dev"
+          - os: ubuntu-latest
+            python-version: "3.11"
+            sphinx-version: "dev"
     env:
       SPHINX_VERSION: ${{ matrix.sphinx-version }}
     runs-on: ${{ matrix.os }}
