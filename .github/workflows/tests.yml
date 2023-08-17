@@ -126,8 +126,6 @@ jobs:
         python-version: ["3.11"]
         sphinx-version: [""]
         include:
-          # TODO: Cant build on oldest version (4.2) because of ablog,
-          # so we test on 5.0 in github_actions_install.sh
           - os: ubuntu-latest
             python-version: "3.8"
             sphinx-version: "old"
