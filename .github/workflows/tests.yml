@@ -124,13 +124,17 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.11"]
+        sphinx-version: [""]
         include:
+          # TODO: Cant build on oldest version (4.2) because of ablog,
+          # so we test on 5.0 in github_actions_install.sh
           - os: ubuntu-latest
             python-version: "3.8"
             sphinx-version: "old"
-          - os: ubuntu-latest
-            python-version: "3.10" # use different ver here to ensure separate run
-            sphinx-version: "dev"
+          # TODO: Can't build on dev because of dependency resolution :(
+          # - os: ubuntu-latest
+          #   python-version: "3.11"
+          #   sphinx-version: "dev"
     env:
       SPHINX_VERSION: ${{ matrix.sphinx-version }}
     runs-on: ${{ matrix.os }}
