@@ -107,9 +107,13 @@
         border: 1px solid var(--pst-color-border);
         box-shadow: 0 0 0.3rem 0.1rem var(--pst-color-shadow);
         background-color: var(--pst-color-on-background);
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0;
         margin: 0.5rem 0;
         min-width: 20rem;
+
+        .dropdown-item {
+          padding: 0.25rem 1.5rem;
+        }
 
         // Hide the menu unless show has been clicked
         &:not(.show) {
