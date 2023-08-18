@@ -75,27 +75,35 @@ def url_base():
 @pytest.mark.a11y
 @pytest.mark.parametrize("theme", ["light", "dark"])
 @pytest.mark.parametrize(
-    "url_page,selector",
+    "url_pathname,selector",
     [
-        ("admonitions.html", "#admonitions"),
-        ("api.html", "#api-documentation"),
-        ("blocks.html", "#blocks"),
-        ("generic.html", "#generic-items"),
-        ("images.html", "#images-figures"),
-        ("lists.html", "#lists"),
-        ("structure.html", "#structural-elements"),
-        ("structure.html", "#structural-elements-2"),
-        ("tables.html", "#tables"),
-        ("typography.html", "#typography"),
+        ("/examples/kitchen-sink/admonitions.html", "#admonitions"),
+        ("/examples/kitchen-sink/api.html", "#api-documentation"),
+        ("/examples/kitchen-sink/blocks.html", "#blocks"),
+        ("/examples/kitchen-sink/generic.html", "#generic-items"),
+        ("/examples/kitchen-sink/images.html", "#images-figures"),
+        ("/examples/kitchen-sink/lists.html", "#lists"),
+        ("/examples/kitchen-sink/structure.html", "#structural-elements"),
+        ("/examples/kitchen-sink/structure.html", "#structural-elements-2"),
+        ("/examples/kitchen-sink/tables.html", "#tables"),
+        ("/examples/kitchen-sink/typography.html", "#typography"),
+        ("/examples/pydata.html", "#pydata-library-styles"),
+        ("/user_guide/theme-elements.html", "#theme-specific-elements"),
+        ("/user_guide/web-components.html", "#sphinx-design-components"),
+        ("/user_guide/extending.html", "#extending-the-theme"),
+        ("/user_guide/styling.html", "#theme-variables-and-css"),
+        # Using one of the simplest pages on the site, select the whole page for
+        # testing in order to effectively test repeated website elements like
+        # nav, sidebars, breadcrumbs, footer
+        ("/user_guide/page-toc.html", ""),
     ],
 )
-def test_axe_core_kitchen_sink(
-    theme: str, url_base: str, url_page: str, selector: str, page: Page
+def test_axe_core(
+    theme: str, url_base: str, url_pathname: str, selector: str, page: Page
 ):
     """Should have no Axe-core violations at the provided theme and page section."""
     # Load the page at the provided path
-    url_base_kitchen_sink = urljoin(url_base, "/examples/kitchen-sink/")
-    url_full = urljoin(url_base_kitchen_sink, url_page)
+    url_full = urljoin(url_base, url_pathname)
     page.goto(url_full)
 
     # Run a line of JavaScript that sets the light/dark theme on the page
@@ -108,7 +116,7 @@ def test_axe_core_kitchen_sink(
     # against the whole page because in this test we're not trying to find
     # accessibility violations in the nav, sidebar, footer, or other parts of
     # the PyData Sphinx Theme documentation website.)
-    results = page.evaluate(f"axe.run('{selector}')")
+    results = page.evaluate("axe.run()" if selector == "" else f"axe.run('{selector}')")
 
     # Expect Axe-core to have found 0 accessibility violations
     assert len(results["violations"]) == 0, pretty_axe_results(results, selector)
