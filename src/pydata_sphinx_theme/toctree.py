@@ -138,6 +138,8 @@ def add_toctree_functions(
 
         # Wrap the final few header items in a "more" dropdown
         links_dropdown = [
+            # 🐲 brittle code, relies on the assumption that the code above
+            # gives each link in the nav a `nav-link` CSS class        
             html.replace("nav-link", "nav-link dropdown-item")
             for html in links_html[n_links_before_dropdown:]
         ]
