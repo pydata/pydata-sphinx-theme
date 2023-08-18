@@ -112,7 +112,19 @@
         min-width: 20rem;
 
         .dropdown-item {
+          // Give the items in the dropdown some breathing room but let the hit
+          // and hover area of the items extend to the edges of the menu
           padding: 0.25rem 1.5rem;
+
+          // Override Bootstrap
+          &:focus:not(:hover):not(:active) {
+            background-color: inherit;
+          }
+        }
+
+        // Override Bootstrap
+        .nav-link {
+          transition: none;
         }
 
         // Hide the menu unless show has been clicked
