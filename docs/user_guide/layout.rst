@@ -571,7 +571,7 @@ could do so with the following steps:
 Build date
 ==========
 
-By design the build date cannot be seen in our template even when the `html_last_updated_fmt <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_last_updated_fmt>`__ is set. Instead the theme is adding a ``meta`` tag in the html head that can be read by html parser.
+By design the build date cannot be seen in our template even when the `html_last_updated_fmt <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_last_updated_fmt>`__ is set. Instead the theme adds a ``meta`` tag in the HTML head that specifies the build date, which can be inspected by viewing the page source or extracted with an HTML parser. The tag will look like:
 
 .. code-block:: html
 
