@@ -246,34 +246,3 @@ And add the following css to your custom.css file:
     :end-before: /* end-custom-youtube
     :code: css
     :class: highlight-css
-
-.. _extending-build-date:
-
-Build date
-==========
-
-No component is available by default to display the build date in this theme. If you need one please consider the following snippets as a starting point to build your custom component.
-
-First go to the ``_templates`` directory of your documentation folder and create a ``last-updated.html`` file:
-
-.. code-block:: html
-
-    <!-- docs/_templates/last-updated.html -->
-    <div class="last-updated">
-        {%- if last_updated %}
-            {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
-        {%- endif %}
-    </div>
-
-Then add this template to any section of the documentation using your ``conf.py`` e.g. the footer:
-
-.. code-block:: python
-
-    # docs/conf.py
-
-    templates_path = ["_templates"] # don't forget to add the templates folder
-    html_last_updated_fmt = "" # select any format you see fit
-    html_theme_options = {
-        # [...]
-        "footer_start": ["last-updated"], # work as well with the extension
-    }
