@@ -577,7 +577,7 @@ By design the build date cannot be seen in our template even when the `html_last
 
     <meta name="docbuild:last-update" content="Aug 15, 2023">
 
-The content will be respecting the format specified in the ``html_last_updated_fmt`` conf variable.
+The tag's ``content`` attribute will follow the format specified in the ``html_last_updated_fmt`` configuration variable.
 
 .. note::
 
