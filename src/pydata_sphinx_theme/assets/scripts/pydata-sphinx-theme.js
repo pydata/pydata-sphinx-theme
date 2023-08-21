@@ -364,7 +364,10 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
   data.forEach((entry) => {
     // create the node
     const anchor = document.createElement("a");
-    anchor.setAttribute("class", "list-group-item list-group-item-action py-1");
+    anchor.setAttribute(
+      "class",
+      "dropdown-item list-group-item list-group-item-action py-1"
+    );
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
     anchor.setAttribute("role", "option");
     const span = document.createElement("span");

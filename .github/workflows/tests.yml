@@ -1,4 +1,7 @@
 name: continuous-integration
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}-${{ github.event.ref }}
+  cancel-in-progress: true
 
 # README
 # ======
@@ -45,6 +48,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.8", "3.9", "3.10", "3.11"]
+        sphinx-version: [""]
         include:
           # macos test
           - os: macos-latest
@@ -52,9 +56,18 @@ jobs:
           # windows test
           - os: windows-latest
             python-version: "3.11"
+          # old Sphinx test
+          - os: ubuntu-latest
+            python-version: "3.8"
+            sphinx-version: "old"
+          # dev Sphinx test
+          - os: ubuntu-latest
+            python-version: "3.11"
+            sphinx-version: "dev"
     # needed to cache the browsers for the accessibility tests
     env:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/pw-browsers
+      SPHINX_VERSION: ${{ matrix.sphinx-version }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -67,21 +80,10 @@ jobs:
       - name: Install dependencies
         # if Sphinx version not specified in matrix, the constraints in the
         # pyproject.toml file determine Sphinx version
-        if: false == matrix.sphinx-version
         shell: bash
         # setting shell to BASH and using PYTHONUTF8 env var makes the editable
         # install work on Windows even though there are emoji in our README
-        run: |
-          export PYTHONUTF8=1
-          python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[test]
-      - name: Install dependencies (legacy Sphinx)
-        # here we override the pyproject.toml constraints to get a specific
-        # Sphinx version.
-        if: matrix.sphinx-version
-        run: |
-          python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[test] sphinx==${{ matrix.sphinx-version }}
+        run: tools/github_actions_install.sh test
       - name: Show installed versions
         run: python -m pip list
       - name: Compile MO files
@@ -122,6 +124,16 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.11"]
+        sphinx-version: [""]
+        include:
+          - os: ubuntu-latest
+            python-version: "3.8"
+            sphinx-version: "old"
+          - os: ubuntu-latest
+            python-version: "3.11"
+            sphinx-version: "dev"
+    env:
+      SPHINX_VERSION: ${{ matrix.sphinx-version }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -132,9 +144,8 @@ jobs:
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[doc]
+        shell: bash
+        run: ./tools/github_actions_install.sh doc
       - name: Show installed versions
         run: python -m pip list
       - name: Build docs
@@ -159,9 +170,8 @@ jobs:
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel setuptools
-          python -m pip install -e .[doc]
+        run: ./tools/github_actions_install.sh doc
+        shell: bash
       - name: Show installed versions
         run: python -m pip list
       # We want to run the audit on a simplified documentation build so that
@@ -203,9 +213,8 @@ jobs:
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip wheel setuptools nox
-          python -m pip install -e .[test]
+        run: ./tools/github_actions_install.sh test nox
+        shell: bash
       - name: Show installed versions
         run: python -m pip list
       - name: Generate a profile
