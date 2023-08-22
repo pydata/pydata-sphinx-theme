@@ -122,11 +122,6 @@
           }
         }
 
-        // Override Bootstrap
-        .nav-link {
-          transition: none;
-        }
-
         // Hide the menu unless show has been clicked
         &:not(.show) {
           display: none;
@@ -145,6 +140,9 @@
 
 .nav-link {
   @include link-style-hover;
+
+  // Override Bootstrap
+  transition: none;
 
   &.nav-external:after {
     font: var(--fa-font-solid);
