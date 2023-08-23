@@ -322,19 +322,19 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
     navbar = index_html.select("ul.bd-navbar-elements")[0]
     if n_links == 0:
         # There should be *only* a dropdown and no standalone links
-        assert navbar.select("div.dropdown") and not navbar.select(
-            ".navbar-nav > li.nav-item"
+        assert navbar.select("li.dropdown") and not navbar.select(
+            ".navbar-nav > li.nav-item:not(.dropdown)"
         )
     if n_links == 4:
         # There should be at least one standalone link, and a dropdown
-        assert navbar.select(".navbar-nav > li.nav-item") and navbar.select(
-            "div.dropdown"
-        )
+        assert navbar.select(
+            ".navbar-nav > li.nav-item:not(.dropdown)"
+        ) and navbar.select("li.dropdown")
     if n_links == 8:
         # There should be no dropdown and only standalone links
-        assert navbar.select(".navbar-nav > li.nav-item") and not navbar.select(
-            "div.dropdown"
-        )
+        assert navbar.select(
+            ".navbar-nav > li.nav-item:not(.dropdown)"
+        ) and not navbar.select("li.dropdown")
 
 
 def test_sidebars_captions(sphinx_build_factory, file_regression) -> None:
