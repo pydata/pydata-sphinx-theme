@@ -425,9 +425,10 @@ function showVersionWarningBanner(data) {
   var preferredEntries = data.filter((entry) => entry.preferred);
   if (preferredEntries.length !== 1) {
     const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
-    throw new Error(
-      `[PST] ${howMany} versions marked "preferred" found in versions JSON`
+    console.log(
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`
     );
+    return;
   }
   const preferredVersion = preferredEntries[0].version;
   const preferredURL = preferredEntries[0].url;
