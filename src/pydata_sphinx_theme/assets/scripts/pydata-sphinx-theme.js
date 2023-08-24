@@ -38,6 +38,15 @@ function setTheme(mode) {
   document.documentElement.dataset.mode = mode;
   var theme = mode == "auto" ? colorScheme : mode;
   document.documentElement.dataset.theme = theme;
+  // TODO: remove this line after Bootstrap upgrade
+  // v5.3 has a colors mode: https://getbootstrap.com/docs/5.3/customize/color-modes/
+  document.querySelectorAll(".dropdown-menu").forEach((el) => {
+    if (theme === "dark") {
+      el.classList.add("dropdown-menu-dark");
+    } else {
+      el.classList.remove("dropdown-menu-dark");
+    }
+  });
 
   // save mode and theme
   localStorage.setItem("mode", mode);

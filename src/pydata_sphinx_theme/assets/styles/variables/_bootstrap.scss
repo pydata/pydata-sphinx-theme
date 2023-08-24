@@ -15,3 +15,10 @@ $grid-breakpoints: (
   lg: 960px,
   xl: 1200px,
 );
+
+$dropdown-link-hover-bg: var(--pst-color-surface);
+// --pst-color-surface can also be assigned to the dark variant because it is
+// scoped to different values depending on light/dark theme
+$dropdown-dark-link-hover-bg: var(--pst-color-surface);
+$dropdown-link-active-bg: var(--pst-color-surface);
+$dropdown-dark-link-active-bg: var(--pst-color-surface);

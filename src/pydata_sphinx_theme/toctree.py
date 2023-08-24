@@ -137,18 +137,24 @@ def add_toctree_functions(
         out = "\n".join(links_solo)
 
         # Wrap the final few header items in a "more" dropdown
-        links_dropdown = links_html[n_links_before_dropdown:]
+        links_dropdown = [
+            # 🐲 brittle code, relies on the assumption that the code above
+            # gives each link in the nav a `nav-link` CSS class
+            html.replace("nav-link", "nav-link dropdown-item")
+            for html in links_html[n_links_before_dropdown:]
+        ]
+
         if links_dropdown:
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
-            <div class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
                     More
                 </button>
-                <div class="dropdown-menu">
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     {links_dropdown_html}
-                </div>
-            </div>
+                </ul>
+            </li>
             """
 
         return out

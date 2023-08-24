@@ -320,21 +320,17 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
     navbar = index_html.select("ul.bd-navbar-elements")[0]
+    dropdowns = navbar.select("li.dropdown")
+    standalone_links = navbar.select(".navbar-nav > li.nav-item:not(.dropdown)")
     if n_links == 0:
         # There should be *only* a dropdown and no standalone links
-        assert navbar.select("div.dropdown") and not navbar.select(
-            ".navbar-nav > li.nav-item"
-        )
+        assert len(dropdowns) == 1 and not standalone_links
     if n_links == 4:
-        # There should be at least one standalone link, and a dropdown
-        assert navbar.select(".navbar-nav > li.nav-item") and navbar.select(
-            "div.dropdown"
-        )
+        # There should be `n_links` standalone links, and a dropdown
+        assert len(standalone_links) == n_links and len(dropdowns) == 1
     if n_links == 8:
         # There should be no dropdown and only standalone links
-        assert navbar.select(".navbar-nav > li.nav-item") and not navbar.select(
-            "div.dropdown"
-        )
+        assert standalone_links and not dropdowns
 
 
 def test_sidebars_captions(sphinx_build_factory, file_regression) -> None:
