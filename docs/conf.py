@@ -129,7 +129,6 @@ html_theme_options = {
         },
     ],
     "header_links_before_dropdown": 4,
-    "header_dropdown_text": "Other",
     "icon_links": [
         {
             "name": "Twitter",
