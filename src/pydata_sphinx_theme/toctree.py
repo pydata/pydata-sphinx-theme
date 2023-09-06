@@ -37,7 +37,8 @@ def add_toctree_functions(
 ) -> None:
     """Add functions so Jinja templates can add toctree objects."""
 
-    def get_id_generator(base_id: str) -> Generator[str]:
+    @lru_cache(maxsize=None)
+    def get_id_generator(base_id: str) -> Iterator[str]:
         for n in count(start=1):
             if n == 1:
                 yield base_id
