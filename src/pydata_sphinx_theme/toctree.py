@@ -1,7 +1,8 @@
 """Methods to build the toctree used in the html pages."""
 
 from functools import lru_cache
-from typing import List, Union
+from itertools import count
+from typing import Generator, List, Union
 from urllib.parse import urlparse
 
 import sphinx
@@ -36,7 +37,25 @@ def add_toctree_functions(
     """Add functions so Jinja templates can add toctree objects."""
 
     @lru_cache(maxsize=None)
-    def generate_header_nav_html(n_links_before_dropdown: int = 5) -> str:
+    def get_id_generator(base_id: str) -> Generator[str]:
+        for n in count(start=1):
+            if n == 1:
+                yield base_id
+            else:
+                yield f"{base_id}-{n}"
+
+    def create_next_id(base_id: str):
+        """Create an id that is build-time unique.
+
+        The function works by sequentially returning "<base_id>", "<base_id>-2",
+        "<base_id>-3", etc. each time it is called.
+        """
+        return next(get_id_generator(base_id))
+
+    @lru_cache(maxsize=None)
+    def generate_header_nav_html(
+        dropdown_id: str, n_links_before_dropdown: int = 5
+    ) -> str:
         """Generate top-level links that are meant for the header navigation.
 
         We use this function instead of the TocTree-based one used for the
@@ -148,10 +167,10 @@ def add_toctree_functions(
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="{dropdown_id}">
                     More
                 </button>
-                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                <ul id="{dropdown_id}" class="dropdown-menu">
                     {links_dropdown_html}
                 </ul>
             </li>
@@ -310,6 +329,7 @@ def add_toctree_functions(
             )
         return align_options[align]
 
+    context["create_next_id"] = create_next_id
     context["generate_header_nav_html"] = generate_header_nav_html
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html

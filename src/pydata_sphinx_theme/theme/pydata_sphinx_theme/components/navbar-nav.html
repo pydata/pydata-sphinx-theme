@@ -1,3 +1,9 @@
+{% set base_id = "pst-more-nav-links" %}
+{% if parent_template_name %}
+  {% set dropdown_id = create_next_id(base_id + "-in-" + parent_template_name) %}
+{% else %}
+  {% set dropdown_id = create_next_id(base_id) %}
+{% endif %}
 <nav class="navbar-nav">
   <p class="sidebar-header-items__title"
      role="heading"
@@ -6,6 +12,8 @@
     {{ _("Site Navigation") }}
   </p>
   <ul class="bd-navbar-elements navbar-nav">
-    {{ generate_header_nav_html(n_links_before_dropdown=theme_header_links_before_dropdown) }}
+    {{ generate_header_nav_html(
+        dropdown_id,
+        n_links_before_dropdown=theme_header_links_before_dropdown) }}
   </ul>
 </nav>

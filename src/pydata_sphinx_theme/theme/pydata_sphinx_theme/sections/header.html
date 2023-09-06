@@ -1,3 +1,7 @@
+{# Set parent_template_name as a way for child templates included by this
+template to access the template name. This can be used, for example, when
+generating HTML IDs #}
+{% set parent_template_name = "header" %}
 {% if theme_navbar_start or theme_navbar_center or theme_navbar_end or theme_navbar_persistent %}
 <div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
