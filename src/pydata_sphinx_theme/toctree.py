@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 from itertools import count
-from typing import Generator, List, Union
+from typing import Iterator, List, Union
 from urllib.parse import urlparse
 
 import sphinx
@@ -37,7 +37,7 @@ def add_toctree_functions(
     """Add functions so Jinja templates can add toctree objects."""
 
     @lru_cache(maxsize=None)
-    def get_id_generator(base_id: str) -> Generator[str]:
+    def get_id_generator(base_id: str) -> Iterator[str]:
         for n in count(start=1):
             if n == 1:
                 yield base_id
