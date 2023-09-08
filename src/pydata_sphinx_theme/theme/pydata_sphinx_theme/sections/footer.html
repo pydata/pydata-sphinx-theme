@@ -7,6 +7,13 @@
       {% endfor %}
     </div>
   {% endif %}
+  {% if theme_footer_center %}
+    <div class="footer-items__center">
+      {% for item in theme_footer_center %}
+        <div class="footer-item">{% include item %}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
   {% if theme_footer_end %}
     <div class="footer-items__end">
       {% for item in theme_footer_end %}

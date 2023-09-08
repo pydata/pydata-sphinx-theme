@@ -418,6 +418,22 @@ def test_included_toc(sphinx_build_factory) -> None:
     assert included_page_html is not None
 
 
+def test_footer(sphinx_build_factory) -> None:
+    """Test for expected footer contents."""
+    overrides = {
+        "html_theme_options.footer_start": ["copyright.html"],
+        "html_theme_options.footer_center": ["sphinx-version.html"],
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=overrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    footer_sta = index_html.select("div.footer-items__start")[0]
+    footer_ctr = index_html.select("div.footer-items__center")[0]
+    footer_end = index_html.select("div.footer-items__end")[0]
+    assert "Pydata community" in footer_sta.text
+    assert "Created using" in footer_ctr.text
+    assert "Built with the" in footer_end.text
+
+
 # html contexts for `show_edit_button`
 
 # these are "good" context fragments that should yield a working link
