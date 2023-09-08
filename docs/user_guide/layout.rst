@@ -488,9 +488,9 @@ Footer
 Located in ``sections/footer.html``.
 
 The footer is just below a page's main content, and is configured in ``conf.py``
-with ``html_theme_options['footer_start']`` and ``html_theme_options['footer_end']``.
+with ``html_theme_options['footer_start']``, ``html_theme_options['footer_center']`` and ``html_theme_options['footer_end']``.
 
-By default, ``footer_end`` is empty, and ``footer_start`` has the following templates:
+By default, ``footer_center`` is empty, and ``footer_start`` and ``footer_end`` have the following templates:
 
 .. code-block:: python
 
