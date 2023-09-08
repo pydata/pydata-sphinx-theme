@@ -174,7 +174,8 @@ html_theme_options = {
     # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
     # "article_footer_items": ["test.html", "test.html"],
     # "content_footer_items": ["test.html", "test.html"],
-    # "footer_start": ["test.html", "test.html"],
+    "footer_start": ["copyright.html"],
+    "footer_center": ["sphinx-version.html"],
     # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,
