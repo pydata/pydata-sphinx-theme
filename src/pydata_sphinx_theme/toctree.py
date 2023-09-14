@@ -12,6 +12,7 @@ from sphinx import addnodes
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
+from sphinx.locale import _
 
 from .utils import traverse_or_findall
 
@@ -36,7 +37,9 @@ def add_toctree_functions(
     """Add functions so Jinja templates can add toctree objects."""
 
     @lru_cache(maxsize=None)
-    def generate_header_nav_html(n_links_before_dropdown: int = 5) -> str:
+    def generate_header_nav_html(
+        n_links_before_dropdown: int = 5, dropdown_text: str = "More"
+    ) -> str:
         """Generate top-level links that are meant for the header navigation.
 
         We use this function instead of the TocTree-based one used for the
@@ -53,6 +56,7 @@ def add_toctree_functions(
 
         Parameters:
             n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
+            dropdown_text:Text of the dropdown element button.
         """
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
@@ -149,7 +153,7 @@ def add_toctree_functions(
             out += f"""
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
-                    More
+                    {_(dropdown_text)}
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     {links_dropdown_html}
