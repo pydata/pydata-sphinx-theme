@@ -12,6 +12,7 @@ from sphinx import addnodes
 from sphinx.addnodes import toctree as toctree_node
 from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
+from sphinx.locale import _
 
 from .utils import traverse_or_findall
 
@@ -152,7 +153,7 @@ def add_toctree_functions(
             out += f"""
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
-                    {dropdown_text}
+                    {_(dropdown_text)}
                 </button>
                 <ul id="pst-header-nav-more-links" class="dropdown-menu">
                     {links_dropdown_html}
