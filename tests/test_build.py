@@ -333,6 +333,34 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
         assert standalone_links and not dropdowns
 
 
+@pytest.mark.parametrize("dropdown_text", (None, "Other"))  # None -> default "More"
+def test_navbar_header_dropdown_button(sphinx_build_factory, dropdown_text) -> None:
+    """Test whether dropdown button text is configurable."""
+    if dropdown_text:
+        confoverrides = {
+            "html_theme_options": {
+                "header_links_before_dropdown": 2,
+                "header_dropdown_text": dropdown_text,
+            }
+        }
+    else:
+        confoverrides = {
+            "html_theme_options": {
+                "header_links_before_dropdown": 2,
+            }
+        }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    navbar = index_html.select("ul.bd-navbar-elements")[0]
+    button_text = str(navbar.select("button")[0])
+    if dropdown_text:
+        # The dropdown text should be "Other"
+        assert dropdown_text in button_text
+    else:
+        # The dropdown text should be "More"
+        assert "More" in button_text
+
+
 def test_sidebars_captions(sphinx_build_factory, file_regression) -> None:
     """Test that the captions are rendered."""
     sphinx_build = sphinx_build_factory("sidebars").build()
