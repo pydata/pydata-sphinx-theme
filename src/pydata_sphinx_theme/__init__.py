@@ -14,7 +14,7 @@ from sphinx.util import logging
 
 from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
 
-__version__ = "0.14.0"
+__version__ = "0.14.1dev0"
 
 logger = logging.getLogger(__name__)
 
