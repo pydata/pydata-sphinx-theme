@@ -429,7 +429,7 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
  * @param {Array} data The version data used to populate the switcher menu.
  */
 function showVersionWarningBanner(data) {
-  const version = DOCUMENTATION_OPTIONS.theme_version;
+  const version = DOCUMENTATION_OPTIONS.VERSION;
   // figure out what latest stable version is
   var preferredEntries = data.filter((entry) => entry.preferred);
   if (preferredEntries.length !== 1) {
