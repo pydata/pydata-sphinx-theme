@@ -445,7 +445,7 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
  * @param {Array} data The version data used to populate the switcher menu.
  */
 function showVersionWarningBanner(data) {
-  const version = DOCUMENTATION_OPTIONS.theme_version;
+  var version = DOCUMENTATION_OPTIONS.VERSION;
   // figure out what latest stable version is
   var preferredEntries = data.filter((entry) => entry.preferred);
   if (preferredEntries.length !== 1) {
@@ -489,6 +489,8 @@ function showVersionWarningBanner(data) {
     bold.innerText = "an unstable development version";
   } else if (versionsAreComparable && compare(version, preferredVersion, "<")) {
     bold.innerText = `an old version (${version})`;
+  } else if (!version) {
+    bold.innerText = "an unknown version"; // e.g., an empty string
   } else {
     bold.innerText = `version ${version}`;
   }
