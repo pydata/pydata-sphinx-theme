@@ -91,7 +91,7 @@ To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration
    html_theme_options = {
        "logo": {
            # Because the logo is also a homepage link, including "home" in the alt text is good practice
-           "alt_text": "My Project Name - Home",
+           "alt_text": "My Project Name",
        }
    }
 
@@ -109,7 +109,9 @@ This title will appear next to the logo image if set.
        }
    }
 
-.. note:: The ``html_title`` field will work as well if no logo images are specified.
+.. note:: If you specify ``text`` then the theme sets the value of logo ``alt_text`` to an empty string to avoid screen reader noise.
+
+.. note:: If you provide neither a logo image nor logo text, the theme will use ``html_title``.
 
 
 Add favicons
