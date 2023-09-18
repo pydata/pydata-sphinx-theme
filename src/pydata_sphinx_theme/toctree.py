@@ -71,7 +71,9 @@ def add_toctree_functions(
 
     @lru_cache(maxsize=None)
     def generate_header_nav_html(
-        n_links_before_dropdown: int = 5, dropdown_text: str = "More", dropdown_id: str = None
+        n_links_before_dropdown: int = 5,
+        dropdown_text: str = "More",
+        dropdown_id: str = "pst-more-nav-links",
     ) -> str:
         """Generate top-level links that are meant for the header navigation.
 
