@@ -250,13 +250,29 @@ var addEventListenerForSearchKeyboard = () => {
 };
 
 /**
+ * Find out if we're on a Mac
+ */
+var isMac = (navigator) => {
+  var platform = "";
+  if (
+    typeof navigator.userAgentData !== "undefined" &&
+    navigator.userAgentData != null
+  ) {
+    platform = navigator.userAgentData.platform;
+  } else if (typeof navigator.platform !== "undefined") {
+    platform = navigator.platform;
+  }
+  return /mac.?os/.test(platform.toLowerCase());
+};
+
+/**
  * Change the search hint to `meta key` if we are a Mac
  */
+
 var changeSearchShortcutKey = () => {
-  let forms = document.querySelectorAll("form.bd-search");
-  var isMac = window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
-  if (isMac) {
-    forms.forEach(
+  let shortcuts = document.querySelectorAll(".search-button__kbd-shortcut");
+  if (isMac(window.navigator)) {
+    shortcuts.forEach(
       (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
     );
   }
