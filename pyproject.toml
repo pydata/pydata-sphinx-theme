@@ -48,6 +48,7 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
+  "sphinx>=7",
   "numpydoc",
   "myst-nb",
   "linkify-it-py", # for link shortening
