@@ -91,7 +91,7 @@ To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration
    html_theme_options = {
        "logo": {
            # Because the logo is also a homepage link, including "home" in the alt text is good practice
-           "alt_text": "My Project Name",
+           "alt_text": "My Project Name - Home",
        }
    }
 
