@@ -109,7 +109,7 @@ This title will appear next to the logo image if set.
        }
    }
 
-.. note:: If you specify ``text`` then the theme sets the value of logo ``alt_text`` to an empty string to avoid screen reader noise.
+.. note:: If you specify ``text`` then the theme sets the logo alt text to an empty string to avoid screen reader noise.
 
 .. note:: If you provide neither a logo image nor logo text, the theme will use ``html_title``.
 
