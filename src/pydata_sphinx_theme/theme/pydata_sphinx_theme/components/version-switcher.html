@@ -2,11 +2,11 @@
 {% set base_button_id = "pst-version-switcher-button" %}
 {% set base_dropdown_id = "pst-version-switcher-list" %}
 {% if parent_template_name %}
-  {% set button_id = create_next_id(base_button_id + "-in-" + parent_template_name) %}
-  {% set dropdown_id = create_next_id(base_dropdown_id + "-in-" + parent_template_name) %}
+  {% set button_id = unique_html_id(base_button_id + "-in-" + parent_template_name) %}
+  {% set dropdown_id = unique_html_id(base_dropdown_id + "-in-" + parent_template_name) %}
 {% else %}
-  {% set button_id = create_next_id(base_button_id) %}
-  {% set dropdown_id = create_next_id(base_dropdown_id) %}
+  {% set button_id = unique_html_id(base_button_id) %}
+  {% set dropdown_id = unique_html_id(base_dropdown_id) %}
 {% endif %}
 <script>
 document.write(`

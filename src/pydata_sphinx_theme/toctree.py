@@ -45,8 +45,8 @@ def add_toctree_functions(
             else:
                 yield f"{base_id}-{n}"
 
-    def create_next_id(base_id: str):
-        """Create an id that is build-time unique.
+    def unique_html_id(base_id: str):
+        """Create an id that is unique from other ids created by this function at build time.
 
         The function works by sequentially returning "<base_id>", "<base_id>-2",
         "<base_id>-3", etc. each time it is called.
@@ -347,7 +347,7 @@ def add_toctree_functions(
             )
         return align_options[align]
 
-    context["create_next_id"] = create_next_id
+    context["unique_html_id"] = unique_html_id
     context["generate_header_nav_html"] = generate_header_nav_html
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html

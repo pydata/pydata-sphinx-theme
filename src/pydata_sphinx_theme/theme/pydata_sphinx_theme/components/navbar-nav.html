@@ -1,8 +1,8 @@
 {% set base_id = "pst-more-nav-links" %}
 {% if parent_template_name %}
-  {% set dropdown_id = create_next_id(base_id + "-in-" + parent_template_name) %}
+  {% set dropdown_id = unique_html_id(base_id + "-in-" + parent_template_name) %}
 {% else %}
-  {% set dropdown_id = create_next_id(base_id) %}
+  {% set dropdown_id = unique_html_id(base_id) %}
 {% endif %}
 <nav class="navbar-nav">
   <p class="sidebar-header-items__title"
