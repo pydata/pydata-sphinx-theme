@@ -81,6 +81,8 @@ or not theme_secondary_sidebar_items %}
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
+
+  <header>
   {%- if theme_announcement -%}
     {% include "sections/announcement.html" %}
   {%- endif %}
@@ -89,6 +91,8 @@ or not theme_secondary_sidebar_items %}
       {%- include "sections/header.html" %}
     </nav>
   {% endblock docs_navbar %}
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}

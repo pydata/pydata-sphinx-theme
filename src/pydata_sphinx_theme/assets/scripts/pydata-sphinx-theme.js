@@ -481,7 +481,7 @@ function showVersionWarningBanner(data) {
   inner.appendChild(bold);
   inner.appendChild(document.createTextNode("."));
   inner.appendChild(button);
-  document.body.prepend(outer);
+  (documment.querySelector("header") || document.body).prepend(outer);
 }
 
 /*******************************************************************************
