@@ -82,16 +82,16 @@ or not theme_secondary_sidebar_items %}
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
 
-  <header>
   {%- if theme_announcement -%}
+    <aside>
     {% include "sections/announcement.html" %}
+    </aside>
   {%- endif %}
   {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
       {%- include "sections/header.html" %}
-    </nav>
+    </header>
   {% endblock docs_navbar %}
-  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
