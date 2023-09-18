@@ -66,6 +66,9 @@ def docs(session: nox.Session) -> None:
     """Build the documentation and place in docs/_build/html. Use --no-compile to skip compilation."""
     if _should_install(session):
         session.install("-e", ".[doc]")
+        # until this is solved: https://github.com/executablebooks/MyST-NB/issues/543
+        # change the version here to prevent issues in the pypi and conda releases
+        session.install("MyST-NB @ git+https://github.com/executablebooks/MyST-NB.git")
         session.install("sphinx-theme-builder[cli]")
     if "no-compile" not in session.posargs:
         session.run("stb", "compile")
@@ -87,6 +90,9 @@ def docs_live(session: nox.Session) -> None:
     session.run(*split("pybabel compile -d src/pydata_sphinx_theme/locale -D sphinx"))
     if _should_install(session):
         session.install("-e", ".[doc]")
+        # until this is solved: https://github.com/executablebooks/MyST-NB/issues/543
+        # change the version here to prevent issues in the pypi and conda releases
+        session.install("MyST-NB @ git+https://github.com/executablebooks/MyST-NB.git")
         # quick hack to get the patched version of stb - need to remove once a stb release is cut
         session.install(
             "sphinx-theme-builder[cli]@git+https://github.com/pradyunsg/sphinx-theme-builder#egg=d9f620b"
