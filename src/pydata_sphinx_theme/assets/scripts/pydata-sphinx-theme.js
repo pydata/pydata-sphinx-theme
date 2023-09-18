@@ -512,6 +512,7 @@ function initRTDObserver() {
   const mutatedCallback = (mutationList, observer) => {
     mutationList.forEach((mutation) => {
       // Check whether the mutation is for RTD, which will have a specific structure
+      console.log(`XXX {mutation.type} XXX`);
       if (mutation.addedNodes.length === 0) {
         return;
       }
@@ -519,8 +520,24 @@ function initRTDObserver() {
         return;
       }
       if (mutation.addedNodes[0].data.search("Inserted RTD Footer") != -1) {
-        mutation.addedNodes.forEach((node) => {
-          document.getElementById("rtd-footer-container").append(node);
+        console.log("XXX FOUND MUTATED NODE XXX");
+        let flyout = mutation.addedNodes[0].cloneNode(true);
+        console.log(flyout);
+        // copy the flyout menu to whichever of the 2 target nodes didn't already get
+        // written to by the RTD injection script.
+        document.querySelectorAll('[data-rtd-target="rtd"]').forEach((node) => {
+          console.log("XXX FOUND A TARGET NODE XXX");
+          if (!node.hasChildNodes()) {
+            console.log("XXX FOUND CHILDLESS NODE XXX");
+            node.appendChild(flyout);
+            flyout.onclick = toggleFlyout;
+            // replicate the onclick function RTD uses: it can't be cloned by cloneNode()
+            flyout
+              .querySelector(".rst-current-version")
+              .addEventListener("click", function (e) {
+                e.currentTarget.classList.toggleClass("shift-up");
+              });
+          }
         });
       }
     });
