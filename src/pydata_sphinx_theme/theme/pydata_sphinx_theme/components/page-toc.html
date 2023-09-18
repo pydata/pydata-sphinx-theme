@@ -1,5 +1,6 @@
 {% set page_toc = generate_toc_html() %}
 {%- if page_toc | length >= 1 %}
+{#- TODO use unique html id generator since components can be included in multiple places #}
   <div
     id="pst-page-navigation-heading"
     class="page-toc tocsection onthispage">
