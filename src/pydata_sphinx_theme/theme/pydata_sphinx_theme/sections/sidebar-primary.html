@@ -1,8 +1,4 @@
 {% block docs_sidebar %}
-{# Set parent_template_name as a way for child templates included by this
-  template to access the template name. This can be used, for example, when
-  generating HTML IDs #}
-{% set parent_template_name = "sidebar-primary" %}
 {% if theme_navbar_center or theme_navbar_end or sidebars or theme_primary_sidebar_end %}
   {# Header items that will be displayed in the sidebar on mobile #}
   <div class="sidebar-header-items sidebar-primary__section">

@@ -1,13 +1,6 @@
 {# As the version switcher will only work when JavaScript is enabled, we add it through JavaScript. #}
-{% set base_button_id = "pst-version-switcher-button" %}
-{% set base_dropdown_id = "pst-version-switcher-list" %}
-{% if parent_template_name %}
-  {% set button_id = unique_html_id(base_button_id + "-in-" + parent_template_name) %}
-  {% set dropdown_id = unique_html_id(base_dropdown_id + "-in-" + parent_template_name) %}
-{% else %}
-  {% set button_id = unique_html_id(base_button_id) %}
-  {% set dropdown_id = unique_html_id(base_dropdown_id) %}
-{% endif %}
+{%- set button_id = unique_html_id("pst-version-switcher-button") -%}
+{%- set dropdown_id = unique_html_id("pst-version-switcher-list") -%}
 <script>
 document.write(`
   <div class="version-switcher__container dropdown">

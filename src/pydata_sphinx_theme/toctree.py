@@ -38,7 +38,7 @@ def add_toctree_functions(
     """Add functions so Jinja templates can add toctree objects."""
 
     @lru_cache(maxsize=None)
-    def get_id_generator(base_id: str) -> Iterator[str]:
+    def create_or_get_id_generator(base_id: str) -> Iterator[str]:
         for n in count(start=1):
             if n == 1:
                 yield base_id
@@ -51,7 +51,7 @@ def add_toctree_functions(
         The function works by sequentially returning "<base_id>", "<base_id>-2",
         "<base_id>-3", etc. each time it is called.
         """
-        return next(get_id_generator(base_id))
+        return next(create_or_get_id_generator(base_id))
 
     @lru_cache(maxsize=None)
     def get_id_generator(base_id: str) -> Iterator[str]:
@@ -73,7 +73,6 @@ def add_toctree_functions(
     def generate_header_nav_html(
         n_links_before_dropdown: int = 5,
         dropdown_text: str = "More",
-        dropdown_id: str = "pst-more-nav-links",
     ) -> str:
         """Generate top-level links that are meant for the header navigation.
 
@@ -184,6 +183,7 @@ def add_toctree_functions(
         ]
 
         if links_dropdown:
+            dropdown_id = unique_html_id("pst-more-nav-links")
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <li class="nav-item dropdown">
