@@ -24,7 +24,7 @@
     <li class="breadcrumb-item">{{ doc.title }}</li>
     {% endif %}
     {%- endfor %}
-    <li class="breadcrumb-item active" aria-current="page">{{ title|truncate(10, False) }}</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ title|truncate(15, False) }}</li>
   </ul>
 </nav>
 {% endif %}
