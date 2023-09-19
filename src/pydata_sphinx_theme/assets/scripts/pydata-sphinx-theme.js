@@ -408,6 +408,9 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
     let matchesAndIsPreferred = hasMatchingPreferredEntry && entry.preferred;
     let matchesAndIsFirst =
       !hasMatchingPreferredEntry && !foundMatch && entry.match;
+    console.log(anchor);
+    console.log(`matches&preferred ${matchesAndIsPreferred}`);
+    console.log(`matches&first ${matchesAndIsFirst}`);
     if (matchesAndIsPreferred || matchesAndIsFirst) {
       anchor.classList.add("active");
       versionSwitcherBtns.forEach((btn) => {
