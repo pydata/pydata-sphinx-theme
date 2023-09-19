@@ -4,12 +4,15 @@
 <script>
 document.write(`
   <div class="version-switcher__container dropdown">
-    <button id="{{ button_id }}" type="button" role="button"
+    <button id="{{ button_id }}" 
+      type="button" 
       class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown" aria-haspopup="listbox"
-      aria-controls="{{ dropdown_id }}" aria-label="Version switcher list">
-      <!-- this text may get changed later by javascript -->
-      {{ theme_switcher.get('version_match') }}
+      data-bs-toggle="dropdown" 
+      aria-haspopup="listbox"
+      aria-controls="{{ dropdown_id }}" 
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div id="{{ dropdown_id }}"

@@ -54,25 +54,8 @@ def add_toctree_functions(
         return next(create_or_get_id_generator(base_id))
 
     @lru_cache(maxsize=None)
-    def get_id_generator(base_id: str) -> Iterator[str]:
-        for n in count(start=1):
-            if n == 1:
-                yield base_id
-            else:
-                yield f"{base_id}-{n}"
-
-    def create_next_id(base_id: str):
-        """Create an id that is build-time unique.
-
-        The function works by sequentially returning "<base_id>", "<base_id>-2",
-        "<base_id>-3", etc. each time it is called.
-        """
-        return next(get_id_generator(base_id))
-
-    @lru_cache(maxsize=None)
     def generate_header_nav_html(
-        n_links_before_dropdown: int = 5,
-        dropdown_text: str = "More",
+        n_links_before_dropdown: int = 5, dropdown_text: str = "More"
     ) -> str:
         """Generate top-level links that are meant for the header navigation.
 
