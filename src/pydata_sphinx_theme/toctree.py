@@ -53,28 +53,10 @@ def add_toctree_functions(
         """
         return next(create_or_get_id_generator(base_id))
 
+    # This function was only created to separate out the cacheable versus
+    # uncacheable part of generate_header_nav_html
     @lru_cache(maxsize=None)
-    def generate_header_nav_html(
-        n_links_before_dropdown: int = 5, dropdown_text: str = "More"
-    ) -> str:
-        """Generate top-level links that are meant for the header navigation.
-
-        We use this function instead of the TocTree-based one used for the
-        sidebar because this one is much faster for generating the links and
-        we don't need the complexity of the full Sphinx TocTree.
-
-        This includes two kinds of links:
-
-        - Links to pages described listed in the root_doc TocTrees
-        - External links defined in theme configuration
-
-        Additionally it will create a dropdown list for several links after
-        a cutoff.
-
-        Parameters:
-            n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
-            dropdown_text:Text of the dropdown element button.
-        """
+    def generate_header_nav_before_dropdown(n_links_before_dropdown):
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
         except Exception:
@@ -165,8 +147,35 @@ def add_toctree_functions(
             for html in links_html[n_links_before_dropdown:]
         ]
 
+        return out, links_dropdown
+
+    def generate_header_nav_html(
+        n_links_before_dropdown: int = 5, dropdown_text: str = "More"
+    ) -> str:
+        """Generate top-level links that are meant for the header navigation.
+
+        We use this function instead of the TocTree-based one used for the
+        sidebar because this one is much faster for generating the links and
+        we don't need the complexity of the full Sphinx TocTree.
+
+        This includes two kinds of links:
+
+        - Links to pages described listed in the root_doc TocTrees
+        - External links defined in theme configuration
+
+        Additionally it will create a dropdown list for several links after
+        a cutoff.
+
+        Parameters:
+            n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
+            dropdown_text:Text of the dropdown element button.
+        """
+        out, links_dropdown = generate_header_nav_before_dropdown(
+            n_links_before_dropdown
+        )
+
         if links_dropdown:
-            dropdown_id = unique_html_id("pst-more-nav-links")
+            dropdown_id = unique_html_id("pst-nav-more-links")
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <li class="nav-item dropdown">
