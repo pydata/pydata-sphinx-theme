@@ -77,24 +77,6 @@ To reference an external website, make sure your link starts with ``http``:
        }
    }
 
-Customize logo alternative text
--------------------------------
-
-You may set a custom ``alt text`` for your logo to replace the default ``"logo image"`` generic description.
-Adding a descriptive ``alt text`` can help make your documentation more accessible to readers using screen readers or another assistive tech.
-
-To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration option as in the following example:
-
-.. code-block:: python
-   :caption: conf.py
-
-   html_theme_options = {
-       "logo": {
-           # Because the logo is also a homepage link, including "home" in the alt text is good practice
-           "alt_text": "My Project Name - Home",
-       }
-   }
-
 Add a logo title
 ----------------
 
@@ -111,6 +93,26 @@ This title will appear next to the logo image if set.
 
 .. note:: The ``html_title`` field will work as well if no logo images are specified.
 
+Customize logo alternative text
+-------------------------------
+
+Adding a descriptive ``alt text`` can help make your documentation more accessible to readers using screen readers or other assistive tech.
+
+By default, the theme will set ``alt text`` to ``<Your Project Name> - Home`` unless you provide a logo title, in which case the theme sets the ``alt text`` to the empty string. The assumption is that if you provide a logo title, the title is probably doing the work of the alt text.
+
+However, if you don't like the default values, you may set a custom ``alt text`` for your logo.
+
+To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration option as in the following example:
+
+.. code-block:: python
+   :caption: conf.py
+
+   html_theme_options = {
+       "logo": {
+           # Because the logo is also a homepage link, including "home" in the alt text is good practice
+           "alt_text": "My Project Name - Home",
+       }
+   }
 
 Add favicons
 ============
