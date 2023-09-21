@@ -158,8 +158,9 @@ html_theme_options = {
     # "twitter_url": "https://twitter.com/PyData",
     "logo": {
         "text": "PyData Theme",
+        # Do not supply both text and alt_text if they are roughly equivalent
+        # "alt_text": "PyData Theme",
         "image_dark": "_static/logo-dark.svg",
-        "alt_text": "PyData Theme",
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
