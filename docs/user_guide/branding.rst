@@ -91,12 +91,12 @@ This title will appear next to the logo image if set.
        }
    }
 
-.. note:: The ``html_title`` field will work as well if no logo images are specified.
+.. note:: Sphinx's standard ``html_title`` variable in ``conf.py`` will work as well if no logo images are specified.
 
 Customize logo alternative text
 -------------------------------
 
-Adding a descriptive ``alt text`` can help make your documentation more accessible to readers using screen readers or other assistive tech.
+Adding a descriptive ``alt text`` can help make your documentation more accessible to people using screen readers or other assistive tech.
 
 By default, the theme will set ``alt text`` to ``<Your Project Name> - Home`` unless you provide a logo title, in which case the theme sets the ``alt text`` to the empty string. The assumption is that if you provide a logo title, the title is probably doing the work of the alt text.
 
