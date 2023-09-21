@@ -21,6 +21,7 @@ Thanks for your support!
 
 ```{gallery-grid}
 :grid-columns: "1 2 3 4"
+:class-card: "downstream-project-links"
 
 - title: Binder
   link: https://mybinder.readthedocs.io/en/latest/index.html
