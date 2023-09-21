@@ -11,7 +11,7 @@
 <a class="navbar-brand logo" href="{{ href }}">
   {# get all the brand information from html_theme_option #}
   {% set is_logo = "light" in theme_logo["image_relative"] %}
-  {% set alt = theme_logo.get("alt_text", "Logo" if not theme_logo.get("text") else "") %}
+  {% set alt = theme_logo.get("alt_text", f"{docstitle} - Home" if not theme_logo.get("text") else "") %}
   {% if is_logo %}
     {# Theme switching is only available when JavaScript is enabled.
      # Thus we should add the extra image using JavaScript, defaulting
