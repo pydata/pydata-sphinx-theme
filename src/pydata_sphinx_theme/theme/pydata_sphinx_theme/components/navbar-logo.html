@@ -12,7 +12,7 @@
   {# get all the brand information from html_theme_option #}
   {% set is_logo = "light" in theme_logo["image_relative"] %}
   {# use alt_text if given. If not, only add alttext if no add'l branding text given. #}
-  {% set alt = theme_logo.get("alt_text", "" if theme_logo.get("text") else f"{docstitle} - Home") %}
+  {% set alt = theme_logo.get("alt_text", "" if theme_logo.get("text") else "%s - Home" % docstitle) %}
   {% if is_logo %}
     {# Theme switching is only available when JavaScript is enabled.
      # Thus we should add the extra image using JavaScript, defaulting
