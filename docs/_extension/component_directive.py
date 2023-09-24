@@ -7,6 +7,8 @@ GitHub file.
 from pathlib import Path
 from typing import Any, Dict, List
 
+from bs4 import BeautifulSoup as BS
+from bs4 import Comment
 from docutils import nodes
 from sphinx.application import Sphinx
 from sphinx.util import logging
@@ -53,7 +55,11 @@ class ComponentListDirective(SphinxDirective):
 
         # create the list of all the components description using bs4
         # at the moment we use dummy information
-        docs = [f"toto_{i}" for i in range(len(components))]
+        docs = []
+        for c in components:
+            soup = BS(c.read_text(), "html.parser")
+            comment = soup.find(string=lambda text: isinstance(text, Comment))
+            docs.append(comment or "No description available")
 
         # get the urls from the github repo latest branch
         github_url = "https://github.com/pydata/pydata-sphinx-theme/blob/main"
