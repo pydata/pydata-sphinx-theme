@@ -35,6 +35,7 @@ extensions = [
     "sphinx_copybutton",
     "autoapi.extension",
     "_extension.gallery_directive",
+    "_extension.component_directive",
     # For extension examples and demos
     "ablog",
     "jupyter_sphinx",
