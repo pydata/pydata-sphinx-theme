@@ -517,6 +517,11 @@ Below is a list of built-in templates that you can insert into any section.
 Note that some of them may have CSS rules that assume a specific section (and
 will be named accordingly).
 
+.. note::
+
+    When adding/changing/overwritting a component, the ".html" suffix is optional.
+    That's why all of them are displayed without it in the following list.
+
 .. component-list::
 
 
