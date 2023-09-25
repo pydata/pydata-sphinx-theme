@@ -4,11 +4,10 @@ Read the content of the component folder and generate a list of all the componen
 This list will display some informations about the component and a link to the
 GitHub file.
 """
+import re
 from pathlib import Path
 from typing import Any, Dict, List
 
-from bs4 import BeautifulSoup as BS
-from bs4 import Comment
 from docutils import nodes
 from sphinx.application import Sphinx
 from sphinx.util import logging
@@ -56,10 +55,10 @@ class ComponentListDirective(SphinxDirective):
         # create the list of all the components description using bs4
         # at the moment we use dummy information
         docs = []
+        pattern = re.compile(r"(?<={#).*?(?=#})", flags=re.DOTALL)
         for c in components:
-            soup = BS(c.read_text(), "html.parser")
-            comment = soup.find(string=lambda text: isinstance(text, Comment))
-            docs.append(comment or "No description available")
+            comment = pattern.findall(c.read_text())
+            docs.append(comment[0].strip() if comment else "No description available.")
 
         # get the urls from the github repo latest branch
         github_url = "https://github.com/pydata/pydata-sphinx-theme/blob/main"
