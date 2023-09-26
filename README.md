@@ -41,7 +41,7 @@ And that's it!
 > This theme may not work with the latest major versions of Sphinx, especially
 > if they have only recently been released. Please give us a few months of
 > time to work out any bugs and changes when new releases are made.
-> See [our contributing documentation](docs/community/topics.md) for more information.
+> See [our contributing documentation](https://pydata-sphinx-theme.readthedocs.io/en/stable/community/practices/versions.html#supported-sphinx-versions) for more information.
 
 ## Contribute to and develop the theme
 
