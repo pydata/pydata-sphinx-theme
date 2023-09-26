@@ -1,15 +1,15 @@
-{# As the version switcher will only work when JavaScript is enabled, we add it through JavaScript. #}
 {%- set button_id = unique_html_id("pst-version-switcher-button") -%}
 {%- set dropdown_id = unique_html_id("pst-version-switcher-list") -%}
+{# As the version switcher will only work when JavaScript is enabled, we add it through JavaScript. #}
 <script>
 document.write(`
   <div class="version-switcher__container dropdown">
-    <button id="{{ button_id }}" 
-      type="button" 
+    <button id="{{ button_id }}"
+      type="button"
       class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
-      data-bs-toggle="dropdown" 
+      data-bs-toggle="dropdown"
       aria-haspopup="listbox"
-      aria-controls="{{ dropdown_id }}" 
+      aria-controls="{{ dropdown_id }}"
       aria-label="Version switcher list"
     >
       Choose version  <!-- this text may get changed later by javascript -->

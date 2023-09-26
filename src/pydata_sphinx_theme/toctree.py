@@ -38,7 +38,7 @@ def add_toctree_functions(
     """Add functions so Jinja templates can add toctree objects."""
 
     @lru_cache(maxsize=None)
-    def create_or_get_id_generator(base_id: str) -> Iterator[str]:
+    def get_or_create_id_generator(base_id: str) -> Iterator[str]:
         for n in count(start=1):
             if n == 1:
                 yield base_id
@@ -51,7 +51,7 @@ def add_toctree_functions(
         The function works by sequentially returning "<base_id>", "<base_id>-2",
         "<base_id>-3", etc. each time it is called.
         """
-        return next(create_or_get_id_generator(base_id))
+        return next(get_or_create_id_generator(base_id))
 
     # This function was only created to separate out the cacheable versus
     # uncacheable part of generate_header_nav_html
