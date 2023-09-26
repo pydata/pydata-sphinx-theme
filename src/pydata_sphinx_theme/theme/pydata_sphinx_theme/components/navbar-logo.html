@@ -11,7 +11,7 @@
 <a class="navbar-brand logo" href="{{ href }}">
   {# get all the brand information from html_theme_option #}
   {% set is_logo = "light" in theme_logo["image_relative"] %}
-  {# use alt_text if given. If not, only add alttext if no add'l branding text given. #}
+  {# use alt_text if given. If not, only add alt text if no additional branding text given. #}
   {% set alt = theme_logo.get("alt_text", "" if theme_logo.get("text") else "%s - Home" % docstitle) %}
   {% if is_logo %}
     {# Theme switching is only available when JavaScript is enabled.

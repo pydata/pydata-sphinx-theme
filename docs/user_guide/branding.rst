@@ -77,42 +77,67 @@ To reference an external website, make sure your link starts with ``http``:
        }
    }
 
-Add a logo title
-----------------
-
-To add a title in the brand section of your documentation, define a value for ``html_theme_options.logo["text"]``.
-This title will appear next to the logo image if set.
-
-.. code-block:: python
-
-   html_theme_options = {
-       "logo": {
-           "text": "My awesome documentation",
-       }
-   }
-
-.. note:: Sphinx's standard ``html_title`` variable in ``conf.py`` will work as well if no logo images are specified.
-
-Customize logo alternative text
+Logo title and alternative text
 -------------------------------
 
-Adding a descriptive ``alt text`` can help make your documentation more accessible to people using screen readers or other assistive tech.
-
-By default, the theme will set ``alt text`` to "`docstitle <https://www.sphinx-doc.org/en/master/development/templating.html#docstitle>`_ - Home" unless you provide a logo title, in which case the theme sets the ``alt text`` to the empty string. The assumption is that if you provide a logo title, the title is probably doing the work of the alt text.
-
-However, if you don't like the default values, you may set a custom ``alt text`` for your logo.
-
-To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration option as in the following example:
+If you provide a logo image, it replaces ``project`` or ``html_title`` in the
+header nav bar. If you want to display both your site's logo and title (or any
+other text) next to the logo, you provide it with the ``text`` property like so:
 
 .. code-block:: python
    :caption: conf.py
 
    html_theme_options = {
        "logo": {
-           # Because the logo is also a homepage link, including "home" in the alt text is good practice
-           "alt_text": "My Project Name - Home",
+           "text": "My awesome documentation",
+           "image_light": "_static/logo-light.png",
+           "image_dark": "_static/logo-dark.png",
        }
    }
+
+But if you only want to display the logo and not the site title, then it's good
+practice to provide alt text, which helps blind visitors and others who rely on
+screen readers:
+
+.. code-block:: python
+   :caption: conf.py
+
+   html_theme_options = {
+       "logo": {
+           # Because the logo is also a homepage link, including "home" in the
+           # alt text is good practice
+           "alt_text": "My awesome documentation - Home",
+           "image_light": "_static/logo-light.png",
+           "image_dark": "_static/logo-dark.png",
+       }
+   }
+
+In most cases, you will provide either ``text`` or ``alt_text``, not both, but
+there are some circumstances in which it may make sense to provide both:
+
+.. code-block:: python
+   :caption: conf.py
+
+   html_theme_options = {
+       "logo": {
+           # In a left-to-right context, screen readers will read the alt text
+           # first, then the text, so this example will be read as "P-G-G-P-Y
+           # (short pause) Home A pretty good geometry package"
+           "alt_text": "PggPy - Home",
+           "text": "A pretty good geometry package",
+           "image_light": "_static/logo-light.png",
+           "image_dark": "_static/logo-dark.png",
+       }
+   }
+
+If you do not provide ``text`` or ``alt_text``, the theme will provide some
+default alt text. (Otherwise, your homepage link would appear to assistive tech
+as something like "Unlabeled image.") By default, the theme will set logo image
+alt text to "`docstitle
+<https://www.sphinx-doc.org/en/master/development/templating.html#docstitle>`_ -
+Home" unless you provide a logo title (``text``), in which case the theme sets
+the alt text to the empty string. (The assumption is that if you provide a logo
+title, the title is probably doing the work of the alt text.)
 
 Add favicons
 ============
