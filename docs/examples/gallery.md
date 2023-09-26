@@ -21,6 +21,7 @@ Thanks for your support!
 
 ```{gallery-grid}
 :grid-columns: "1 2 3 4"
+:class-card: "downstream-project-links"
 
 - title: Binder
   link: https://mybinder.readthedocs.io/en/latest/index.html
@@ -34,6 +35,8 @@ Thanks for your support!
   link: https://fairlearn.org/main/about/
 - title: Feature-engine
   link: https://feature-engine.readthedocs.io/
+- title: idtracker.ai
+  link: https://idtracker.ai/
 - title: MegEngine
   link: https://www.megengine.org.cn/doc/stable/en/index.html
 - title: PyVista
