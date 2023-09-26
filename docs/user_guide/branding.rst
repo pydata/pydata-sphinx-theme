@@ -98,7 +98,7 @@ Customize logo alternative text
 
 Adding a descriptive ``alt text`` can help make your documentation more accessible to people using screen readers or other assistive tech.
 
-By default, the theme will set ``alt text`` to ``<Your Project Name> - Home`` unless you provide a logo title, in which case the theme sets the ``alt text`` to the empty string. The assumption is that if you provide a logo title, the title is probably doing the work of the alt text.
+By default, the theme will set ``alt text`` to "`docstitle <https://www.sphinx-doc.org/en/master/development/templating.html#docstitle>`_ - Home" unless you provide a logo title, in which case the theme sets the ``alt text`` to the empty string. The assumption is that if you provide a logo title, the title is probably doing the work of the alt text.
 
 However, if you don't like the default values, you may set a custom ``alt text`` for your logo.
 
