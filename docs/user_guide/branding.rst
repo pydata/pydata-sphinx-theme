@@ -131,13 +131,13 @@ there are some circumstances in which it may make sense to provide both:
    }
 
 If you do not provide ``text`` or ``alt_text``, the theme will provide some
-default alt text. (Otherwise, your homepage link would appear to assistive tech
-as something like "Unlabeled image.") By default, the theme will set logo image
-alt text to "`docstitle
+default alt text (otherwise, your homepage link would appear to assistive tech
+as something like "Unlabeled image"). The default alt text is "`docstitle
 <https://www.sphinx-doc.org/en/master/development/templating.html#docstitle>`_ -
-Home" unless you provide a logo title (``text``), in which case the theme sets
-the alt text to the empty string. (The assumption is that if you provide a logo
-title, the title is probably doing the work of the alt text.)
+Home", but if you provide a logo title (``text``) the default alt text will be an
+empty string (the assumption is that if you provide a logo title, the title is
+probably doing the work of the alt text, and as shown above, you can override
+this assumption by supplying both ``text`` and ``alt_text``).
 
 Add favicons
 ============
