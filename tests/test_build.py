@@ -115,6 +115,22 @@ def test_icon_links(sphinx_build_factory, file_regression) -> None:
     )
 
 
+@pytest.mark.parametrize(
+    "confoverrides,expected_alt_text",
+    (
+        [dict(), "PyData Tests  documentation - Home"],
+        [dict(html_theme_options=dict(logo=dict(text="Foo"))), ""],
+        [dict(html_theme_options=dict(logo=dict(text="Foo", alt_text="Bar"))), "Bar"],
+    ),
+)
+def test_logo_alt_text(sphinx_build_factory, confoverrides, expected_alt_text) -> None:
+    """Test our alt-text fallback mechanism."""
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    logo_image = index_html.select(".navbar-brand img")[0]
+    assert logo_image.attrs["alt"] == expected_alt_text
+
+
 def test_logo_basic(sphinx_build_factory) -> None:
     """Test that the logo is shown by default, project title if no logo."""
     sphinx_build = sphinx_build_factory("base").build()
