@@ -41,3 +41,11 @@ div.admonition.admonition-youtube > .admonition-title {
   color: white;
 }
 /* end-custom-youtube */
+
+/* fix for project names that are parsed as links: the whole card is a link so
+ * don't format the project name itself like a text link
+ */
+div.downstream-project-links a {
+  text-decoration: none !important;
+  color: inherit !important;
+}

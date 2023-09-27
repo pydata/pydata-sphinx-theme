@@ -77,40 +77,67 @@ To reference an external website, make sure your link starts with ``http``:
        }
    }
 
-Customize logo alternative text
+Logo title and alternative text
 -------------------------------
 
-You may set a custom ``alt text`` for your logo to replace the default ``"logo image"`` generic description.
-Adding a descriptive ``alt text`` can help make your documentation more accessible to readers using screen readers or another assistive tech.
-
-To do so, customize the ``html_theme_options["logo"]["alt_text"]`` configuration option as in the following example:
+If you provide a logo image, it replaces ``project`` or ``html_title`` in the
+header nav bar. If you want to display both your site's logo and title (or any
+other text) next to the logo, you provide it with the ``text`` property like so:
 
 .. code-block:: python
    :caption: conf.py
 
    html_theme_options = {
        "logo": {
-           # Because the logo is also a homepage link, including "home" in the alt text is good practice
-           "alt_text": "My Project Name - Home",
+           "text": "My awesome documentation",
+           "image_light": "_static/logo-light.png",
+           "image_dark": "_static/logo-dark.png",
        }
    }
 
-Add a logo title
-----------------
-
-To add a title in the brand section of your documentation, define a value for ``html_theme_options.logo["text"]``.
-This title will appear next to the logo image if set.
+But if you only want to display the logo and not the site title, then it's good
+practice to provide alt text, which helps blind visitors and others who rely on
+screen readers:
 
 .. code-block:: python
+   :caption: conf.py
 
    html_theme_options = {
        "logo": {
-           "text": "My awesome documentation",
+           # Because the logo is also a homepage link, including "home" in the
+           # alt text is good practice
+           "alt_text": "My awesome documentation - Home",
+           "image_light": "_static/logo-light.png",
+           "image_dark": "_static/logo-dark.png",
        }
    }
 
-.. note:: The ``html_title`` field will work as well if no logo images are specified.
+In most cases, you will provide either ``text`` or ``alt_text``, not both, but
+there are some circumstances in which it may make sense to provide both:
 
+.. code-block:: python
+   :caption: conf.py
+
+   html_theme_options = {
+       "logo": {
+           # In a left-to-right context, screen readers will read the alt text
+           # first, then the text, so this example will be read as "P-G-G-P-Y
+           # (short pause) Home A pretty good geometry package"
+           "alt_text": "PggPy - Home",
+           "text": "A pretty good geometry package",
+           "image_light": "_static/logo-light.png",
+           "image_dark": "_static/logo-dark.png",
+       }
+   }
+
+If you do not provide ``text`` or ``alt_text``, the theme will provide some
+default alt text (otherwise, your homepage link would appear to assistive tech
+as something like "Unlabeled image"). The default alt text is "`docstitle
+<https://www.sphinx-doc.org/en/master/development/templating.html#docstitle>`_ -
+Home", but if you provide a logo title (``text``) the default alt text will be an
+empty string (the assumption is that if you provide a logo title, the title is
+probably doing the work of the alt text, and as shown above, you can override
+this assumption by supplying both ``text`` and ``alt_text``).
 
 Add favicons
 ============
