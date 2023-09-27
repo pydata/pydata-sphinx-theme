@@ -117,8 +117,8 @@ msgstr "Sur cette page"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:2
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
-msgid "Section Navigation"
-msgstr "Navigation de la section"
+msgid "In this section"
+msgstr "Dans cette section"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:4
 msgid "Show Source"

@@ -118,8 +118,8 @@ msgstr "En esta página"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:2
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
-msgid "Section Navigation"
-msgstr "Navegación del sección"
+msgid "In this section"
+msgstr "En esta sección"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:4
 msgid "Show Source"
