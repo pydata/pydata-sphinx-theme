@@ -55,6 +55,7 @@ doc = [
   "sphinx-sitemap",
   "sphinx-autoapi",
   # For examples section
+  "myst-parser",
   "ablog>=0.11.0rc2",
   "jupyter_sphinx",
   "pandas",

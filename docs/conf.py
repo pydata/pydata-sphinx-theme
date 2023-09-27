@@ -35,6 +35,7 @@ extensions = [
     "sphinx_copybutton",
     "autoapi.extension",
     # For extension examples and demos
+    "myst_parser",
     "ablog",
     "jupyter_sphinx",
     "sphinxcontrib.youtube",
@@ -64,6 +65,13 @@ if not os.environ.get("READTHEDOCS"):
     html_baseurl = os.environ.get("SITEMAP_URL_BASE", "http://127.0.0.1:8000/")
     sitemap_locales = [None]
     sitemap_url_scheme = "{link}"
+
+# -- MyST options ------------------------------------------------------------
+
+# This allows us to use ::: to denote directives, useful for admonitions
+myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
+myst_heading_anchors = 2
+myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
 
 # -- Internationalization ----------------------------------------------------
 
