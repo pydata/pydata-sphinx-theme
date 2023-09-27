@@ -49,7 +49,6 @@ classifiers = [
 [project.optional-dependencies]
 doc = [
   "numpydoc",
-  "myst-nb",
   "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
@@ -69,8 +68,7 @@ doc = [
   "jupyterlite-sphinx",
   "sphinxcontrib-youtube<1.4",
   "sphinx-favicon>=1.0.1",
-  # Install nbsphinx in case we want to test it locally even though we can't load
-  # it at the same time as MyST-NB.
+  "ipykernel",
   "nbsphinx",
   "ipyleaflet",
   "colorama",

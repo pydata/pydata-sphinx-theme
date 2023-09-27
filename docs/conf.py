@@ -34,18 +34,17 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "autoapi.extension",
-    "_extension.gallery_directive",
     # For extension examples and demos
     "ablog",
     "jupyter_sphinx",
-    "matplotlib.sphinxext.plot_directive",
-    "myst_nb",
     "sphinxcontrib.youtube",
-    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
+    "nbsphinx",
     "numpydoc",
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
+    # custom extentions
+    "_extension.gallery_directive",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -70,13 +69,6 @@ if not os.environ.get("READTHEDOCS"):
 
 # specifying the natural language populates some key tags
 language = "en"
-
-# -- MyST options ------------------------------------------------------------
-
-# This allows us to use ::: to denote directives, useful for admonitions
-myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
-myst_heading_anchors = 2
-myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
 
 # -- Ablog options -----------------------------------------------------------
 
