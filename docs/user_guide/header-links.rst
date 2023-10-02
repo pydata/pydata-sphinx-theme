@@ -145,6 +145,18 @@ Image icons
 
 If you'd like to display an icon image that is not in the FontAwesome icons library,
 you may instead specify a URL or a path to a local image that will be used for the icon.
+You may also use ``.svg`` images as if they were FontAwesome with a little additional setup.
+
+Bitmap image icons
+~~~~~~~~~~~~~~~~~~
+
+For all bitmap image icons such as ``.png``, ``.jpg``, etc., you must specify ``type`` as local.
+
+.. admonition:: Note regarding :literal:`.svg`'s
+    :class: note
+
+    All icon images with ``"type": "local"`` are inserted into the document using ``<img>`` tags.
+    If you need features specific to objects in the ``svg`` class please see :ref:`svg image icons <svg-image-icons>`
 
 **To display an image on the web**, use ``"type": "url"``, and provide a URL to an image in the ``icon`` value.
 For example:
@@ -187,6 +199,54 @@ For example:
 .. tip::
 
    Use ``.svg`` images for a higher-resolution output that behaves similarly across screen sizes.
+
+.. _svg-image-icons:
+
+SVG image icons
+~~~~~~~~~~~~~~~
+
+In order to make use of the full feature set of ``.svg`` images provided by HTML you will need
+to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly straightforward process:
+
+#. Copy the contents of ``docs/_static/custom-icon.js`` into an appropriate directory of your documentation
+   source (typically ``source/js``) and rename the file however you like.
+
+   .. literalinclude::  ../_static/custom-icon.js
+    :language: javascript
+    :emphasize-lines: 7, 13
+    :linenos:
+
+#. Update the ``iconName`` (line 7 above) in your custom ``.js`` file to be one of our choosing
+
+#. Replace the path string (line 13 above) with the path which defines your custom icon
+#. Add the relative path from your source directory to the custom javascript file to your ``conf.py``:
+
+   .. code:: python
+
+      html_js_files = [
+         ...
+         "js/pypi-icon.js",
+         ...
+      ]
+
+#. Set up the icon link in the ``html_theme_options`` as a FontAwesome icon:
+
+   .. code:: python
+
+      html_theme_options = [
+         ...
+         "icon_links": [
+            {
+               "name": "PyPI",
+               "url": "https://www.pypi.org",
+               "icon": "fa-custom fa-pypi",
+               "type": "fontawesome",
+            },
+         ],
+         ...
+      ]
+
+That's it, your icon will now be inserted as with the ``<svg>`` tag and not the ``<img>``! You can reference your custom FontAwesome icon in CSS using ``fa-<custom-name>``!
 
 .. _icon-link-shortcuts:
 
