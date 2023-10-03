@@ -17,8 +17,8 @@ Below you can find some examples of the components created with the :code:`sphin
 
 .. _badges-buttons:
 
-Badges and buttons
-==================
+Badges and button-links
+=======================
 
 Here are some of the available badges:
 
@@ -29,7 +29,7 @@ Here are some of the available badges:
 :bdg-secondary-line:`secondary outline`
 :bdg-success-line:`success outline`
 
-Here are some of the available buttons, also using semantic colors:
+Here are some of the available button-style links, also using semantic colors:
 
 .. grid:: auto
 
@@ -95,6 +95,15 @@ Here are some of the available buttons, also using semantic colors:
             :shadow:
 
             Dark
+
+.. note::
+
+   `Sphinx Design buttons
+   <https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html>`__
+   are actually links, meaning they are rendered in HTML with ``<a>`` tags
+   instead of ``<button>``. Use them if you need a link to look like a button,
+   but we discourage this usage because it is not considered good practice for
+   accessibility.
 
 If in your site's `custom CSS file <custom-css>`_ you override the `CSS custom properties <css-variables>`_ ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
 
