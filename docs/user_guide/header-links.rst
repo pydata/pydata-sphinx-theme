@@ -207,17 +207,31 @@ SVG image icons
 In order to make use of the full feature set of ``.svg`` images provided by HTML you will need
 to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly straightforward process:
 
-#. Copy the contents of ``docs/_static/custom-icon.js`` into an appropriate directory of your documentation
-   source (typically ``source/js``) and rename the file however you like.
+#. Copy the contents of ``custom-icon.js`` - located within the ``docs`` tree - into an appropriate directory of your documentation
+   source (typically ``source/js``) and rename the file however you like. Highlighted below are the lines which must be modified
 
-   .. literalinclude::  ../_static/custom-icon.js
-    :language: javascript
-    :emphasize-lines: 7, 13
-    :linenos:
+   .. sourcecode:: javascript
+    :emphasize-lines: 3,5,6,9
 
-#. Update the ``iconName`` (line 7 above) in your custom ``.js`` file to be one of our choosing
+    ...
+    prefix: "fa-custom",
+    iconName: "pypi",
+    icon: [
+      17.313, // viewBox width
+      19.807, // viewBox height
+      [], // ligature
+      "e001", // unicode codepoint - private use area
+      "m10.383 0.2-3.239 ...", // string definined SVG path
+    ],
+    ...
 
-#. Replace the path string (line 13 above) with the path which defines your custom icon
+
+#. Update the following file contents:
+
+   #.  ``iconName``  to be one of our choosing
+   #.  Change the viewbox height and width to match that of your icon
+   #.  Replace the SVG path string with the path which defines your custom icon
+
 #. Add the relative path from your source directory to the custom javascript file to your ``conf.py``:
 
    .. code:: python
