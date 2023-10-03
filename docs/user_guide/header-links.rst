@@ -152,8 +152,7 @@ Bitmap image icons
 
 For all bitmap image icons such as ``.png``, ``.jpg``, etc., you must specify ``type`` as local.
 
-.. admonition:: Note regarding :literal:`.svg`'s
-    :class: note
+.. note:: Note regarding :literal:`.svg`'s
 
     All icon images with ``"type": "local"`` are inserted into the document using ``<img>`` tags.
     If you need features specific to objects in the ``svg`` class please see :ref:`svg image icons <svg-image-icons>`
