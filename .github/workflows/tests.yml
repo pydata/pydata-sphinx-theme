@@ -137,7 +137,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: nikeee/setup-pandoc@v1
+      # - uses: nikeee/setup-pandoc@v1
       - name: Setup Python
         uses: actions/setup-python@v4
         with:

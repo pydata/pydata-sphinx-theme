@@ -70,6 +70,7 @@ doc = [
   "sphinxcontrib-youtube<1.4",
   "sphinx-favicon>=1.0.1",
   "ipykernel",
+  "pypandoc_binary",
   "nbsphinx",
   "ipyleaflet",
   "colorama",
