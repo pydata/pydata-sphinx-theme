@@ -7,8 +7,6 @@ build:
   os: ubuntu-20.04
   tools:
     python: "3.10"
-  apt_packages:
-    - pandoc
   jobs:
     # build the gallery of themes before building the doc
     post_install:
