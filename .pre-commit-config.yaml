@@ -9,8 +9,9 @@ repos:
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
-        # exclude also the webpack.congo.js file has it embed complete url dificult to prettify
-        exclude: .+\.html|webpack\.config\.js
+        # exclude also the webpack.config.js file has it embed complete url dificult to prettify
+        # exclude the pytest-regressions folder tests/test_ally
+        exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
   - repo: https://github.com/psf/black
     rev: 22.12.0

@@ -1,0 +1,5 @@
+- help: Table header text should not be empty
+  helpUrl: https://dequeuniversity.com/rules/axe/4.6/empty-table-header?application=axeAPI
+  id: empty-table-header
+  targets:
+  - - thead > tr > th:nth-child(1)
