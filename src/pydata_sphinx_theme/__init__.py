@@ -50,6 +50,19 @@ def update_config(app):
             "Use the sphinx-favicon extension instead."
         )
 
+    # TODO: in 0.15, set the default navigation_with_keys value to False and remove this deprecation notice
+    if (
+        hasattr(theme_options, "navigation_with_keys")
+        and theme_options["navigation_with_keys"] is None
+    ):
+        logger.warning(
+            "The default value for `navigation_with_keys` will change to `False` in the next minor release."
+            "If you wish to guard the old behavior for your site, set `navigation_with_keys` to `True` in your `theme.conf` file."
+            "Be aware that `navigation_with_keys = True` has negative accessibility implications:"
+            "https://github.com/pydata/pydata-sphinx-theme/issues/1492"
+        )
+        theme_options["navigation_with_keys"] = False
+
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
