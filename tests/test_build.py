@@ -45,6 +45,7 @@ def test_toc_visibility(sphinx_build_factory) -> None:
     """Test that setting TOC level visibility works as expected."""
     confoverrides = {
         "html_theme_options.show_toc_level": 2,
+        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -57,6 +58,7 @@ def test_toc_visibility(sphinx_build_factory) -> None:
 def test_icon_links(sphinx_build_factory, file_regression) -> None:
     """Test that setting icon links are rendered in the documentation."""
     html_theme_options_icon_links = {
+        "navigation_with_keys": False,
         "icon_links": [
             {
                 "name": "FONTAWESOME",
@@ -103,7 +105,7 @@ def test_icon_links(sphinx_build_factory, file_regression) -> None:
                     "class": "overridden classes",
                 },
             },
-        ]
+        ],
     }
     confoverrides = {"html_theme_options": html_theme_options_icon_links}
 
@@ -125,6 +127,10 @@ def test_icon_links(sphinx_build_factory, file_regression) -> None:
 )
 def test_logo_alt_text(sphinx_build_factory, confoverrides, expected_alt_text) -> None:
     """Test our alt-text fallback mechanism."""
+    confoverrides["html_theme_options"] = (
+        confoverrides.get("html_theme_options", False) or dict()
+    )
+    confoverrides["html_theme_options"].update({"navigation_with_keys": False})
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
     logo_image = index_html.select(".navbar-brand img")[0]
@@ -144,7 +150,10 @@ def test_logo_basic(sphinx_build_factory) -> None:
 
 def test_logo_no_image(sphinx_build_factory) -> None:
     """Test that the text is shown if no image specified."""
-    confoverrides = {"html_logo": ""}
+    confoverrides = {
+        "html_logo": "",
+        "html_theme_options.navigation_with_keys": False,
+    }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
     assert "PyData Tests" in index_html.select(".navbar-brand")[0].text.strip()
@@ -156,10 +165,11 @@ def test_logo_two_images(sphinx_build_factory) -> None:
     # Test with a specified title and a dark logo
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "logo": {
                 "text": "Foo Title",
                 "image_dark": "_static/emptydarklogo.png",
-            }
+            },
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
@@ -175,6 +185,7 @@ def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory) -> Non
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {},
+        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -190,6 +201,7 @@ def test_primary_logo_is_light_when_default_mode_is_set_to_auto(
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "auto"},
+        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -203,6 +215,7 @@ def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory) 
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "light"},
+        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -216,6 +229,7 @@ def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory) ->
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "dark"},
+        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -229,10 +243,11 @@ def test_logo_missing_image(sphinx_build_factory) -> None:
     # Test with a specified title and a dark logo
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "logo": {
                 # The logo is actually in _static
                 "image_dark": "emptydarklogo.png",
-            }
+            },
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
@@ -247,9 +262,10 @@ def test_logo_external_link(sphinx_build_factory) -> None:
     test_url = "https://secure.example.com"
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "logo": {
                 "link": test_url,
-            }
+            },
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
@@ -264,9 +280,10 @@ def test_logo_external_image(sphinx_build_factory) -> None:
     test_url = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "logo": {
                 "image_dark": test_url,
-            }
+            },
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
@@ -280,9 +297,10 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
     # Test with a specified external logo image source
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "logo": {
                 "image_dark": "image_dark_t",
-            }
+            },
         },
     }
     with pytest.raises(sphinx.errors.ExtensionError, match="static logo image"):
@@ -299,7 +317,10 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
 )
 def test_navbar_align(align, klass, sphinx_build_factory) -> None:
     """The navbar items align with the proper part of the page."""
-    confoverrides = {"html_theme_options.navbar_align": align}
+    confoverrides = {
+        "html_theme_options.navbar_align": align,
+        "html_theme_options.navigation_with_keys": False,
+    }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
     if klass[0]:
@@ -329,6 +350,7 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
 
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "external_links": extra_links,
             "header_links_before_dropdown": n_links,
         }
@@ -355,6 +377,7 @@ def test_navbar_header_dropdown_button(sphinx_build_factory, dropdown_text) -> N
     if dropdown_text:
         confoverrides = {
             "html_theme_options": {
+                "navigation_with_keys": False,
                 "header_links_before_dropdown": 2,
                 "header_dropdown_text": dropdown_text,
             }
@@ -362,6 +385,7 @@ def test_navbar_header_dropdown_button(sphinx_build_factory, dropdown_text) -> N
     else:
         confoverrides = {
             "html_theme_options": {
+                "navigation_with_keys": False,
                 "header_links_before_dropdown": 2,
             }
         }
@@ -401,7 +425,10 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression) -> None:
 
 def test_sidebars_level2(sphinx_build_factory, file_regression) -> None:
     """Test sidebars in a second-level page w/ children."""
-    confoverrides = {"templates_path": ["_templates_sidebar_level2"]}
+    confoverrides = {
+        "templates_path": ["_templates_sidebar_level2"],
+        "html_theme_options.navigation_with_keys": False,
+    }
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
     subindex_html = sphinx_build.html_tree("section1/subsection1/index.html")
@@ -416,7 +443,10 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
 
     Testing both home page and a subsection page for correct elements.
     """
-    confoverrides = {"html_theme_options.show_nav_level": 0}
+    confoverrides = {
+        "html_theme_options.show_nav_level": 0,
+        "html_theme_options.navigation_with_keys": False,
+    }
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
     # 1. Home Page
@@ -611,6 +641,7 @@ all_edits = [
 def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) -> None:
     """Test the edit this page generated link."""
     confoverrides = {
+        "html_theme_options.navigation_with_keys": False,
         "html_theme_options.use_edit_page_button": True,
         "html_context": html_context,
     }
@@ -659,6 +690,7 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) ->
 def test_analytics(sphinx_build_factory, provider, tags) -> None:
     """Check the Google analytics."""
     confoverrides = provider
+    confoverrides.update({"html_theme_options.navigation_with_keys": False})
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
@@ -674,10 +706,11 @@ def test_analytics(sphinx_build_factory, provider, tags) -> None:
 def test_plausible(sphinx_build_factory) -> None:
     """Test the Plausible analytics."""
     provider = {
+        "html_theme_options.navigation_with_keys": False,
         "html_theme_options.analytics": {
             "plausible_analytics_domain": "toto",
             "plausible_analytics_url": "http://.../script.js",
-        }
+        },
     }
     confoverrides = provider
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
@@ -694,7 +727,10 @@ def test_plausible(sphinx_build_factory) -> None:
 
 def test_show_nav_level(sphinx_build_factory) -> None:
     """The navbar items align with the proper part of the page."""
-    confoverrides = {"html_theme_options.show_nav_level": 2}
+    confoverrides = {
+        "html_theme_options.navigation_with_keys": False,
+        "html_theme_options.show_nav_level": 2,
+    }
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
     # Both the column alignment and the margin should be changed
@@ -722,6 +758,7 @@ def test_version_switcher_error_states(
     """
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "navbar_end": ["version-switcher"],
             "switcher": {
                 "json_url": url,
@@ -799,6 +836,7 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     """
     confoverrides = {
         "html_theme_options": {
+            "navigation_with_keys": False,
             "pygment_light_style": style_names[0],
             "pygment_dark_style": style_names[1],
         },
@@ -845,6 +883,7 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
     warnings = sphinx_build.warnings.strip("\n").split("\n")
     warnings = [w.lstrip("\x1b[91m").rstrip("\x1b[39;49;00m\n") for w in warnings]
     expected_warnings = (
+        "The default value for `navigation_with_keys` will change",
         "The configuration `logo_text` is deprecated",
         "The configuration `favicons` is deprecated.",
         "`footer_items` is deprecated",
@@ -881,6 +920,7 @@ def test_empty_templates(sphinx_build_factory) -> None:
     # When configured to be gone, the template should be removed w/ its parent.
     # ABlog needs to be added so we can test that template rendering works w/ it.
     confoverrides = {
+        "html_theme_options.navigation_with_keys": False,
         "html_show_sourcelink": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
@@ -910,6 +950,7 @@ def test_translations(sphinx_build_factory) -> None:
             "github_version": "main",
         },
         "html_theme_options": {
+            "navigation_with_keys": False,
             "use_edit_page_button": True,
         },
     }
