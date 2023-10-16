@@ -46,6 +46,9 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 
+[project.urls]
+"Source" = "https://github.com/pydata/pydata-sphinx-theme"
+
 [project.optional-dependencies]
 doc = [
   "numpydoc",
