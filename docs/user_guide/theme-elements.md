@@ -161,7 +161,7 @@ In Python you can {python}`import sphinx`.
 ## Code execution
 
 This theme has support for Jupyter execution libraries so that you can programmatically update your documentation with each build.
-For examples, see [](../examples/pydata.md).
+For examples, see [](../examples/pydata.ipynb).
 
 ## Admonition sidebars
 
