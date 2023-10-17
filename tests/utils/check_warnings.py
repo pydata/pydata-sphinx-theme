@@ -1,5 +1,6 @@
 """Check the list of warnings produced by a doc build."""
 
+import platform
 import sys
 from pathlib import Path
 
@@ -27,30 +28,36 @@ def check_warnings(file: Path) -> bool:
 
     # find the file where all the known warnings are stored
     warning_file = Path(__file__).parent.parent / "warning_list.txt"
+    extra_warning_file = Path(__file__).parent.parent / "warning_list_windows.txt"
 
     test_warnings = file.read_text().strip().split("\n")
     ref_warnings = warning_file.read_text().strip().split("\n")
+    if platform.system() == "windows":
+        extra_warnings = extra_warning_file.read_text().strip().split("\n")
+    else:
+        extra_warnings = list()
 
     print(
         f'Checking build warnings in file: "{file}" and comparing to expected '
         f'warnings defined in "{warning_file}"\n\n'
     )
 
-    # find all the missing warnings
-    missing_warnings = []
-    for wa in ref_warnings:
-        index = [i for i, twa in enumerate(test_warnings) if wa in twa]
-        if len(index) == 0:
-            missing_warnings += [wa]
-            print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{wa}\n")
+    # find all the unexpected warnings
+    unexpected_warnings = list()
+    for ww in test_warnings:
+        if ww in ref_warnings:
+            ref_warnings.remove(ww)
+        elif ww in extra_warnings:
+            extra_warnings.remove(ww)
         else:
-            test_warnings.pop(index[0])
+            unexpected_warnings.append(ww)
+            print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{ww}\n")
+    # alert about expected warnings not being raised
+    leftover_expected = ref_warnings + extra_warnings
+    for wa in leftover_expected:
+        print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{wa}\n")
 
-    # the remaining one are unexpected
-    for twa in test_warnings:
-        print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{twa}\n")
-
-    return len(missing_warnings) != 0 or len(test_warnings) != 0
+    return len(unexpected_warnings) != 0 or len(leftover_expected) != 0
 
 
 if __name__ == "__main__":
