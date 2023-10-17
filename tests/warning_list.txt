@@ -22,3 +22,5 @@ WARNING: autosummary: stub file not found 'urllib.parse.SplitResult.index'. Chec
 WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'. Check your autosummary_generate setting.
 WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.index'. Check your autosummary_generate setting.
 ERROR: Unexpected indentation.
+WARNING: Cell printed to stderr:
+WARNING: Matplotlib is building the font cache; this may take a moment.
