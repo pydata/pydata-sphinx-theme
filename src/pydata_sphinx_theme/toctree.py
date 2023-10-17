@@ -53,10 +53,9 @@ def add_toctree_functions(
         """
         return next(get_or_create_id_generator(base_id))
 
-    # This function was only created to separate out the cacheable versus
-    # uncacheable part of generate_header_nav_html
     @lru_cache(maxsize=None)
     def generate_header_nav_before_dropdown(n_links_before_dropdown):
+        """The cacheable part."""
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
         except Exception:
