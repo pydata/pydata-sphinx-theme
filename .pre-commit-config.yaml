@@ -39,3 +39,8 @@ repos:
     rev: v1.1.1
     hooks:
       - id: doc8
+
+  - repo: "https://github.com/kynan/nbstripout"
+    rev: "0.5.0"
+    hooks:
+      - id: nbstripout
