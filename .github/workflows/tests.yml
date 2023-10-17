@@ -96,6 +96,7 @@ jobs:
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v3.1.4
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: cov.xml
           fail_ci_if_error: true
 
