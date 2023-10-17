@@ -33,9 +33,7 @@ def check_warnings(file: Path) -> bool:
     test_warnings = file.read_text().strip().split("\n")
     ref_warnings = warning_file.read_text().strip().split("\n")
     if platform.system() == "windows":
-        extra_warnings = extra_warning_file.read_text().strip().split("\n")
-    else:
-        extra_warnings = list()
+        ref_warnings += extra_warning_file.read_text().strip().split("\n")
 
     print(
         f'Checking build warnings in file: "{file}" and comparing to expected '
@@ -47,17 +45,14 @@ def check_warnings(file: Path) -> bool:
     for ww in test_warnings:
         if ww in ref_warnings:
             ref_warnings.remove(ww)
-        elif ww in extra_warnings:
-            extra_warnings.remove(ww)
         else:
             unexpected_warnings.append(ww)
             print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{ww}\n")
     # alert about expected warnings not being raised
-    leftover_expected = ref_warnings + extra_warnings
-    for wa in leftover_expected:
+    for wa in ref_warnings:
         print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{wa}\n")
 
-    return len(unexpected_warnings) != 0 or len(leftover_expected) != 0
+    return len(unexpected_warnings) != 0 or len(ref_warnings) != 0
 
 
 if __name__ == "__main__":
