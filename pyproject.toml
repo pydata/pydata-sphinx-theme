@@ -57,7 +57,7 @@ doc = [
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
-  "sphinx-autoapi",
+  "sphinx-autoapi>=3.0.0",
   # For examples section
   "ablog>=0.11.0rc2",
   "jupyter_sphinx",
