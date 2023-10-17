@@ -1,7 +1,8 @@
 """Methods to build the toctree used in the html pages."""
 
 from functools import lru_cache
-from typing import List, Union
+from itertools import count
+from typing import Iterator, List, Union
 from urllib.parse import urlparse
 
 import sphinx
@@ -37,27 +38,24 @@ def add_toctree_functions(
     """Add functions so Jinja templates can add toctree objects."""
 
     @lru_cache(maxsize=None)
-    def generate_header_nav_html(
-        n_links_before_dropdown: int = 5, dropdown_text: str = "More"
-    ) -> str:
-        """Generate top-level links that are meant for the header navigation.
+    def get_or_create_id_generator(base_id: str) -> Iterator[str]:
+        for n in count(start=1):
+            if n == 1:
+                yield base_id
+            else:
+                yield f"{base_id}-{n}"
 
-        We use this function instead of the TocTree-based one used for the
-        sidebar because this one is much faster for generating the links and
-        we don't need the complexity of the full Sphinx TocTree.
+    def unique_html_id(base_id: str):
+        """Create an id that is unique from other ids created by this function at build time.
 
-        This includes two kinds of links:
-
-        - Links to pages described listed in the root_doc TocTrees
-        - External links defined in theme configuration
-
-        Additionally it will create a dropdown list for several links after
-        a cutoff.
-
-        Parameters:
-            n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
-            dropdown_text:Text of the dropdown element button.
+        The function works by sequentially returning "<base_id>", "<base_id>-2",
+        "<base_id>-3", etc. each time it is called.
         """
+        return next(get_or_create_id_generator(base_id))
+
+    @lru_cache(maxsize=None)
+    def generate_header_nav_before_dropdown(n_links_before_dropdown):
+        """The cacheable part."""
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
         except Exception:
@@ -148,14 +146,42 @@ def add_toctree_functions(
             for html in links_html[n_links_before_dropdown:]
         ]
 
+        return out, links_dropdown
+
+    def generate_header_nav_html(
+        n_links_before_dropdown: int = 5, dropdown_text: str = "More"
+    ) -> str:
+        """Generate top-level links that are meant for the header navigation.
+
+        We use this function instead of the TocTree-based one used for the
+        sidebar because this one is much faster for generating the links and
+        we don't need the complexity of the full Sphinx TocTree.
+
+        This includes two kinds of links:
+
+        - Links to pages described listed in the root_doc TocTrees
+        - External links defined in theme configuration
+
+        Additionally it will create a dropdown list for several links after
+        a cutoff.
+
+        Parameters:
+            n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
+            dropdown_text:Text of the dropdown element button.
+        """
+        out, links_dropdown = generate_header_nav_before_dropdown(
+            n_links_before_dropdown
+        )
+
         if links_dropdown:
+            dropdown_id = unique_html_id("pst-nav-more-links")
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="{dropdown_id}">
                     {_(dropdown_text)}
                 </button>
-                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                <ul id="{dropdown_id}" class="dropdown-menu">
                     {links_dropdown_html}
                 </ul>
             </li>
@@ -314,6 +340,7 @@ def add_toctree_functions(
             )
         return align_options[align]
 
+    context["unique_html_id"] = unique_html_id
     context["generate_header_nav_html"] = generate_header_nav_html
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
