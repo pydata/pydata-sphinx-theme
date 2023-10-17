@@ -159,7 +159,7 @@ module.exports = {
       test: /\.scss$/,
       use: [
         {loader: MiniCssExtractPlugin.loader},
-        {loader: "css-loader?-url"}, //url()-inlining turned off
+        {loader: "css-loader", options: { url: false }},
         {loader: "sass-loader",},
       ],
     }],
