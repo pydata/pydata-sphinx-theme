@@ -6,6 +6,8 @@ from pathlib import Path
 
 from colorama import Fore, init
 
+from ..test_build import escape_ansi
+
 # init colors for all plateforms
 init()
 
@@ -31,7 +33,7 @@ def check_warnings(file: Path) -> bool:
     warning_file = Path(__file__).parent.parent / "warning_list.txt"
     extra_warning_file = Path(__file__).parent.parent / "warning_list_windows.txt"
 
-    test_warnings = file.read_text().strip().split("\n")
+    test_warnings = escape_ansi(file.read_text()).strip().split("\n")
     ref_warnings = warning_file.read_text().strip().split("\n")
     if windows:
         ref_warnings += extra_warning_file.read_text().strip().split("\n")
@@ -55,7 +57,6 @@ def check_warnings(file: Path) -> bool:
     # warn about unexpected warnings (unless they're the empty string)
     for _tw in test_warnings[::-1]:
         if len(_tw.strip()):
-            print(f'UNEXPECTED WARNING: "{_tw}", {tuple(map(ord, _tw))}')
             print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{_tw}\n")
         else:
             test_warnings.remove(_tw)
