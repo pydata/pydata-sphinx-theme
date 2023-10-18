@@ -40,19 +40,16 @@ def check_warnings(file: Path) -> bool:
         f'warnings defined in "{warning_file}"\n\n'
     )
 
-    # find all the unexpected warnings
-    unexpected_warnings = list()
-    for ww in test_warnings:
-        if ww in ref_warnings:
-            ref_warnings.remove(ww)
-        else:
-            unexpected_warnings.append(ww)
-            print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{ww}\n")
-    # alert about expected warnings not being raised
-    for wa in ref_warnings:
-        print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{wa}\n")
-
-    return len(unexpected_warnings) != 0 or len(ref_warnings) != 0
+    for refw in ref_warnings:
+        for testw in test_warnings:
+            if refw in testw:
+                ref_warnings.remove(refw)
+                test_warnings.remove(testw)
+                break
+        print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{refw}\n")
+    for testw in test_warnings:
+        print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{testw}\n")
+    return len(test_warnings) != 0 or len(ref_warnings) != 0
 
 
 if __name__ == "__main__":
