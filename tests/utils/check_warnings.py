@@ -40,7 +40,7 @@ def check_warnings(file: Path) -> bool:
         f'warnings defined in "{warning_file}"\n\n'
     )
 
-    for refw in ref_warnings:
+    for refw in ref_warnings[::-1]:
         for testw in test_warnings:
             if refw in testw:
                 ref_warnings.remove(refw)
