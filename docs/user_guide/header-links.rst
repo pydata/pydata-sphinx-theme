@@ -210,10 +210,8 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
 #. Copy the contents of ``custom-icon.js`` - located within the ``docs`` tree - into an appropriate directory of your documentation
    source (typically ``source/js``) and rename the file however you like. Highlighted below are the lines which must be modified
 
-   .. sourcecode:: javascript
-    :emphasize-lines: 3,5,6,9
-
-    ...
+   .. code:: javascript
+   
     prefix: "fa-custom",
     iconName: "pypi",
     icon: [
