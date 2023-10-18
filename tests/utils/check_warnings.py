@@ -32,7 +32,7 @@ def check_warnings(file: Path) -> bool:
 
     test_warnings = file.read_text().strip().split("\n")
     ref_warnings = warning_file.read_text().strip().split("\n")
-    if platform.system() == "windows":
+    if platform.system().lower() == "windows":
         ref_warnings += extra_warning_file.read_text().strip().split("\n")
 
     print(
@@ -41,12 +41,15 @@ def check_warnings(file: Path) -> bool:
     )
 
     for refw in ref_warnings[::-1]:
+        found = False
         for testw in test_warnings:
             if refw in testw:
                 ref_warnings.remove(refw)
                 test_warnings.remove(testw)
+                found = True
                 break
-        print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{refw}\n")
+        if not found:
+            print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{refw}\n")
     for testw in test_warnings:
         print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{testw}\n")
     return len(test_warnings) != 0 or len(ref_warnings) != 0
