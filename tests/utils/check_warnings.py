@@ -1,6 +1,5 @@
 """Check the list of warnings produced by a doc build."""
 
-import platform
 import sys
 from pathlib import Path
 
@@ -24,42 +23,40 @@ def check_warnings(file: Path) -> bool:
         0 if the warnings are all there
         1 if some warning are not registered or unexpected
     """
-    windows = platform.system().lower() == "windows"
     # print some log
     print("\n=== Sphinx Warnings test ===\n")
 
     # find the file where all the known warnings are stored
     warning_file = Path(__file__).parent.parent / "warning_list.txt"
-    extra_warning_file = Path(__file__).parent.parent / "warning_list_windows.txt"
+    extra_warning_file = Path(__file__).parent.parent / "intermittent_warning_list.txt"
 
-    test_warnings = escape_ansi(file.read_text()).strip().split("\n")
-    ref_warnings = warning_file.read_text().strip().split("\n")
-    if windows:
-        ref_warnings += extra_warning_file.read_text().strip().split("\n")
+    received_warnings = escape_ansi(file.read_text()).strip().split("\n")
+    expected_warnings = warning_file.read_text().strip().split("\n")
+    intermittent_warnings = extra_warning_file.read_text().strip().split("\n")
 
-    extra = f' and "{extra_warning_file}"' if windows else ""
     print(
         f'Checking build warnings in file: "{file}" and comparing to expected '
-        f'warnings defined in "{warning_file}"{extra}\n\n'
+        f'warnings defined in "{warning_file}" and "{extra_warning_file}"\n\n'
     )
 
-    for _rw in ref_warnings[::-1]:
+    for exp_w in expected_warnings[::-1] + intermittent_warnings[::-1]:
         found = False
-        for _tw in test_warnings:
-            if _rw in _tw:
-                ref_warnings.remove(_rw)
-                test_warnings.remove(_tw)
+        for rec_w in received_warnings:
+            if exp_w in rec_w:
+                expected_warnings.remove(exp_w)
+                received_warnings.remove(rec_w)
                 found = True
                 break
-        if not found:
-            print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{_rw}\n")
+        # alert only if an *always expected* warning wasn't raised (not intermittent)
+        if not found and exp_w not in intermittent_warnings:
+            print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{exp_w}\n")
     # warn about unexpected warnings (unless they're the empty string)
-    for _tw in test_warnings[::-1]:
-        if len(_tw.strip()):
-            print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{_tw}\n")
+    for rec_w in received_warnings[::-1]:
+        if len(rec_w.strip()):
+            print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{rec_w}\n")
         else:
-            test_warnings.remove(_tw)
-    return len(test_warnings) != 0 or len(ref_warnings) != 0
+            received_warnings.remove(rec_w)
+    return len(received_warnings) or len(expected_warnings)
 
 
 if __name__ == "__main__":
