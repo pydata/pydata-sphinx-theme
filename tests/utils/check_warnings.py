@@ -23,6 +23,7 @@ def check_warnings(file: Path) -> bool:
         0 if the warnings are all there
         1 if some warning are not registered or unexpected
     """
+    windows = platform.system().lower() == "windows"
     # print some log
     print("\n=== Sphinx Warnings test ===\n")
 
@@ -32,26 +33,31 @@ def check_warnings(file: Path) -> bool:
 
     test_warnings = file.read_text().strip().split("\n")
     ref_warnings = warning_file.read_text().strip().split("\n")
-    if platform.system().lower() == "windows":
+    if windows:
         ref_warnings += extra_warning_file.read_text().strip().split("\n")
 
+    extra = f' and "{extra_warning_file}"' if windows else ""
     print(
         f'Checking build warnings in file: "{file}" and comparing to expected '
-        f'warnings defined in "{warning_file}"\n\n'
+        f'warnings defined in "{warning_file}"{extra}\n\n'
     )
 
-    for refw in ref_warnings[::-1]:
+    for _rw in ref_warnings[::-1]:
         found = False
-        for testw in test_warnings:
-            if refw in testw:
-                ref_warnings.remove(refw)
-                test_warnings.remove(testw)
+        for _tw in test_warnings:
+            if _rw in _tw:
+                ref_warnings.remove(_rw)
+                test_warnings.remove(_tw)
                 found = True
                 break
         if not found:
-            print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{refw}\n")
-    for testw in test_warnings:
-        print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{testw}\n")
+            print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{_rw}\n")
+    # warn about unexpected warnings (unless they're the empty string)
+    for _tw in test_warnings[::-1]:
+        if len(_tw):
+            print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{_tw}\n")
+        else:
+            test_warnings.remove(_tw)
     return len(test_warnings) != 0 or len(ref_warnings) != 0
 
 
