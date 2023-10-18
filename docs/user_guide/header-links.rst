@@ -211,6 +211,7 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
    source (typically ``source/js``) and rename the file however you like. Highlighted below are the lines which must be modified
 
    .. code:: javascript
+
      prefix: "fa-custom",
      iconName: "pypi",
      icon: [
