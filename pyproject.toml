@@ -115,3 +115,6 @@ ignore = "H006,J018,T003,H025"
 
 [tool.pytest.ini_options]
 markers = "a11y: mark a test as an accessibility test"
+
+[tool.coverage.run]
+source = ["pydata_sphinx_theme"]
