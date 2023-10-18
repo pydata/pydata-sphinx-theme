@@ -33,6 +33,8 @@ def check_warnings(file: Path) -> bool:
     received_warnings = escape_ansi(file.read_text()).strip().split("\n")
     expected_warnings = warning_file.read_text().strip().split("\n")
     intermittent_warnings = extra_warning_file.read_text().strip().split("\n")
+    # filter out empty warnings (happens on notebooks for some reason)
+    received_warnings = filter(len, received_warnings)
 
     print(
         f'Checking build warnings in file: "{file}" and comparing to expected '
