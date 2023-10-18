@@ -212,15 +212,15 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
 
    .. code:: javascript
    
-    prefix: "fa-custom",
-    iconName: "pypi",
-    icon: [
-      17.313, // viewBox width
-      19.807, // viewBox height
-      [], // ligature
-      "e001", // unicode codepoint - private use area
-      "m10.383 0.2-3.239 ...", // string definined SVG path
-    ],
+     prefix: "fa-custom",
+     iconName: "pypi",
+     icon: [
+       17.313, // viewBox width
+       19.807, // viewBox height
+       [], // ligature
+       "e001", // unicode codepoint - private use area
+       "m10.383 0.2-3.239 ...", // string definined SVG path
+     ],
 
 
 #. Update the following file contents:
