@@ -50,12 +50,9 @@ def check_warnings(file: Path) -> bool:
         # alert only if an *always expected* warning wasn't raised (not intermittent)
         if not found and exp_w not in intermittent_warnings:
             print(f"{Fore.YELLOW}Warning was not raised: {Fore.RESET}{exp_w}\n")
-    # warn about unexpected warnings (unless they're the empty string)
+    # warn about unexpected warnings
     for rec_w in received_warnings[::-1]:
-        if len(rec_w.strip()):
-            print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{rec_w}\n")
-        else:
-            received_warnings.remove(rec_w)
+        print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{rec_w}\n")
     return len(received_warnings) or len(expected_warnings)
 
 
