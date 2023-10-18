@@ -43,8 +43,11 @@ def check_warnings(file: Path) -> bool:
         found = False
         for rec_w in received_warnings:
             if exp_w in rec_w:
-                expected_warnings.remove(exp_w)
                 received_warnings.remove(rec_w)
+                if exp_w in expected_warnings:
+                    expected_warnings.remove(exp_w)
+                elif exp_w in intermittent_warnings:
+                    intermittent_warnings.remove(exp_w)
                 found = True
                 break
         # alert only if an *always expected* warning wasn't raised (not intermittent)
