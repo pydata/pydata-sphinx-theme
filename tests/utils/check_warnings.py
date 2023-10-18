@@ -55,6 +55,7 @@ def check_warnings(file: Path) -> bool:
     # warn about unexpected warnings (unless they're the empty string)
     for _tw in test_warnings[::-1]:
         if len(_tw.strip()):
+            print(f'UNEXPECTED WARNING: "{_tw}", {tuple(map(ord, _tw))}')
             print(f"{Fore.YELLOW}Unexpected warning: {Fore.RESET}{_tw}\n")
         else:
             test_warnings.remove(_tw)
