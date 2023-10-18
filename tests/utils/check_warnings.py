@@ -5,8 +5,7 @@ import sys
 from pathlib import Path
 
 from colorama import Fore, init
-
-from ..test_build import escape_ansi
+from pydata_sphinx_theme.utils import escape_ansi
 
 # init colors for all plateforms
 init()

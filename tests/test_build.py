@@ -5,12 +5,7 @@ from pathlib import Path
 
 import pytest
 import sphinx.errors
-
-
-def escape_ansi(string: str) -> str:
-    """Helper function to remove ansi coloring from sphinx warnings."""
-    ansi_escape = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]")
-    return ansi_escape.sub("", string)
+from pydata_sphinx_theme.utils import escape_ansi
 
 
 def test_build_html(sphinx_build_factory, file_regression) -> None:
