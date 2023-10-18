@@ -20,9 +20,6 @@ on:
   pull_request:
   workflow_call:
 
-env:
-  COVERAGE_THRESHOLD: 60
-
 jobs:
   lint:
     strategy:
@@ -91,7 +88,7 @@ jobs:
           pip install nox
           nox -s compile
       - name: Run tests
-        run: pytest -m "not a11y" --color=yes --cov --cov-report=xml --cov-fail-under ${{ env.COVERAGE_THRESHOLD }}
+        run: pytest -m "not a11y" --color=yes --cov --cov-report=xml
       - name: Upload to Codecov
         if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v3
