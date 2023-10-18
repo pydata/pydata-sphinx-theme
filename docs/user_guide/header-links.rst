@@ -223,7 +223,6 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
       "e001", // unicode codepoint - private use area
       "m10.383 0.2-3.239 ...", // string definined SVG path
     ],
-    ...
 
 
 #. Update the following file contents:
