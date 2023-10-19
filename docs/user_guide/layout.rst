@@ -12,7 +12,7 @@ Below is a brief overview of the major layout of this theme.
 Take a look at the diagram to understand what the major sections are called.
 Where you can insert component templates in ``html_theme_options``, we include the variable name ``in inline code``.
 Click on section titles to learn more about them and some basic layout configurations.
-For  complete reference of the existing option please see `the last section of this page <references>`__.
+For  complete reference of the existing option please see :ref:`the last section of this page <references>`.
 
 .. The directives below generate a grid-like layout that mimics the structure of this theme.
 .. It uses Sphinx Design grids: https://sphinx-design.readthedocs.io/en/latest/grids.html
