@@ -43,4 +43,6 @@ Thanks for your support!
   link: https://docs.pyvista.org
 - title: Pastas
   link: https://pastas.readthedocs.io/
+- title: DecentralChain
+  link: https://docs.decentralchain.io/en/master/
 ```

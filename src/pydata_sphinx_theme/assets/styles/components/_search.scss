@@ -53,6 +53,7 @@
 
 .form-control {
   background-color: var(--pst-color-background);
+  color: var(--pst-color-text-base);
 
   &:focus,
   &:focus-visible {
