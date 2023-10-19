@@ -7,7 +7,7 @@ We have particular practices for deciding which versions of these we support (es
 Supported Python versions
 -------------------------
 
-For releases of Python, we aim to follow this approach[1]:
+For releases of Python, we aim to follow this approach [1]:
 
     For a new major/minor release of this theme, we support any minor Python versions released in the last 3.5 years (42 months), as defined in `the EOL schedule for Python <https://endoflife.date/python>`__ [2].
 
@@ -21,7 +21,7 @@ Supported Sphinx versions
 For supported versions of Sphinx, we aim to follow this approach:
 
     We support the latest released version of Sphinx that is **older than 6 months**.
-    We unofficially support earlier released versions of Sphinx, but may increase the lower-bound in our dependency pin without warning if needed[2].
+    We unofficially support earlier released versions of Sphinx, but may increase the lower-bound in our dependency pin without warning if needed [2].
 
 When a new pre-release of Sphinx is released, we should follow these steps:
 
