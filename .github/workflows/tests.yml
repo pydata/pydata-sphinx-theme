@@ -134,7 +134,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: nikeee/setup-pandoc@v1
+      # waiting for https://github.com/nikeee/setup-pandoc/pull/8
+      # using 12rambau fork until then
+      - uses: 12rambau/setup-pandoc@test
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
