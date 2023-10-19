@@ -596,10 +596,9 @@ The tag's ``content`` attribute will follow the format specified in the ``html_l
 References
 ==========
 
-Please find here the full list of key you can use in ``conf.py``:
+Please find here the full list of keys you can use in the ``html_theme_options`` in ``conf.py``:
 
 .. include:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/theme.conf
-    :start-after: [options]
     :code: ini
     :class: highlight-ini
 
