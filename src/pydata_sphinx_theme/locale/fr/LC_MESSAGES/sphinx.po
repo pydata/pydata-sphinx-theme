@@ -48,7 +48,7 @@ msgstr "Fil d'Ariane"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:16
 msgid "Home"
-msgstr "Accueil"
+msgstr "Acceuil"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:4
 #, python-format
