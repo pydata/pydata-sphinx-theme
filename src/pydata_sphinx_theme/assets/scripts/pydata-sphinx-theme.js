@@ -237,17 +237,21 @@ var addEventListenerForSearchKeyboard = () => {
       let input = findSearchInput();
       // toggle on Ctrl+k or ⌘+k
       if (
-        (event.ctrlKey || event.metaKey) &&
-        (/k/i.test(event.key) || event.keyCode === 75)
+        // Ignore if shift or alt are pressed
+        !event.shiftKey &&
+        !event.altKey &&
+        // On Mac use ⌘, all other OS use Ctrl
+        (isMac
+          ? event.metaKey && !event.ctrlKey
+          : !event.metaKey && event.ctrlKey) &&
+        // Since shift is not allowed, event.key should match lowercase k
+        event.key === "k"
       ) {
         event.preventDefault();
         toggleSearchField();
       }
       // also allow Escape key to hide (but not show) the dynamic search field
-      else if (
-        document.activeElement === input &&
-        (/escape/i.test(event.key) || event.keyCode === 27)
-      ) {
+      else if (document.activeElement === input && /Escape/i.test(event.key)) {
         toggleSearchField();
       }
     },
