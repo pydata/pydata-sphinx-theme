@@ -1,0 +1,2 @@
+WARNING: Cell printed to stderr:
+Matplotlib is building the font cache; this may take a moment.
