@@ -244,8 +244,8 @@ var addEventListenerForSearchKeyboard = () => {
         (isMac
           ? event.metaKey && !event.ctrlKey
           : !event.metaKey && event.ctrlKey) &&
-        // Since shift is not allowed, event.key should match lowercase k
-        event.key === "k"
+        // Case-insensitive so the shortcut still works with caps lock
+        /k/i.test(event.key)
       ) {
         event.preventDefault();
         toggleSearchField();
