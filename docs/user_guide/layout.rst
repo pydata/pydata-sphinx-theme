@@ -12,6 +12,7 @@ Below is a brief overview of the major layout of this theme.
 Take a look at the diagram to understand what the major sections are called.
 Where you can insert component templates in ``html_theme_options``, we include the variable name ``in inline code``.
 Click on section titles to learn more about them and some basic layout configurations.
+For  complete reference of the existing option please see :ref:`the last section of this page <references>`.
 
 .. The directives below generate a grid-like layout that mimics the structure of this theme.
 .. It uses Sphinx Design grids: https://sphinx-design.readthedocs.io/en/latest/grids.html
@@ -588,4 +589,16 @@ If you do specify ``html_last_updated_fmt`` but don't include the :code:`last-up
     <meta name="docbuild:last-update" content="Aug 15, 2023">
 
 The tag's ``content`` attribute will follow the format specified in the ``html_last_updated_fmt`` configuration variable.
+
+
+.. _references:
+
+References
+==========
+
+Please find here the full list of keys you can use in the ``html_theme_options`` in ``conf.py``:
+
+.. include:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/theme.conf
+    :code: ini
+    :class: highlight-ini
 
