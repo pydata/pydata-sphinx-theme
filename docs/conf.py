@@ -165,19 +165,19 @@ html_theme_options = {
     "use_edit_page_button": True,
     "show_toc_level": 1,
     "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    "navbar_center": ["version-switcher", "navbar-nav"],
+    # "show_nav_level": 2,
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     "show_version_warning_banner": True,
-    # "show_nav_level": 2,
+    "navbar_center": ["version-switcher", "navbar-nav"],
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "navbar_persistent": ["search-button"],
-    # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
-    # "article_footer_items": ["test.html", "test.html"],
-    # "content_footer_items": ["test.html", "test.html"],
-    "footer_start": ["copyright.html"],
-    "footer_center": ["sphinx-version.html"],
-    # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
+    # "primary_sidebar_end": ["custom-template", "sidebar-ethical-ads"],
+    # "article_footer_items": ["test", "test"],
+    # "content_footer_items": ["test", "test"],
+    "footer_start": ["copyright"],
+    "footer_center": ["sphinx-version"],
+    # "secondary_sidebar_items": ["page-toc"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,
