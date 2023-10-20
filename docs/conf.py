@@ -56,6 +56,9 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
+# substitutions that will be available at global level
+rst_prolog = ".. |rtd| replace: `Read the Docs <https://readthedocs.org/>`__"
+
 # -- Sitemap -----------------------------------------------------------------
 
 # ReadTheDocs has its own way of generating sitemaps, etc.
@@ -71,7 +74,6 @@ if not os.environ.get("READTHEDOCS"):
 # This allows us to use ::: to denote directives, useful for admonitions
 myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
 myst_heading_anchors = 2
-myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
 
 # -- Internationalization ----------------------------------------------------
 

@@ -1,7 +1,7 @@
 Making releases
 ===============
 
-(policies:release)=
+.. _policies-release:
 
 Our goals
 ---------
@@ -13,7 +13,7 @@ It tries to balance these goals:
 - Do not surprise people (especially with negative surprises) and provide time for projects to provide feedback about upcoming features.
 - Minimize the toil and complexity associated with releases, and reduce information silos and bottlenecks associated with them.
 
-.. _releases:when:
+.. _releases-when:
 
 When to make a release
 ----------------------
@@ -39,7 +39,7 @@ PyPI.
 Follow these steps to make a release:
 
 - (optionally) **Create a `GitHub milestones <https://github.com/pydata/pydata-sphinx-theme/milestones>`__** to organize the issues that should be resolved as part of a new release.
-- **Decide if it's time** to make a release be reading `releases:when`_ and decide if it is time for a release.
+- **Decide if it's time** to make a release be reading `releases-when`_ and decide if it is time for a release.
 - **Copy the release checklist into a new issue**. We have `a release checklist in our wiki <https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist#release-instructions>`_.
 - **Complete the checklist**. That's it!
 
