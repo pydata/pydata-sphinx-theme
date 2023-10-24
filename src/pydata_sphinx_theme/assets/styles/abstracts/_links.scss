@@ -182,3 +182,48 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     outline: 2px solid var(--pst-color-accent);
   }
 }
+
+@mixin header-link {
+  > .nav-link,
+  > .dropdown-toggle {
+    border-radius: 2px;
+    color: var(--pst-color-text-muted);
+
+    &:hover {
+      background-color: var(--pst-color-header-link-hover-bg);
+      color: var(--pst-color-header-link-hover);
+      text-decoration: none;
+    }
+
+    &:focus {
+      box-shadow: none; // override Bootstrap
+      outline: 3px solid var(--pst-color-accent);
+      outline-offset: 2px;
+
+      &:not(:hover) {
+        background-color: var(--pst-color-accent-bg);
+      }
+    }
+  }
+
+  &.current {
+    > .nav-link,
+    > .dropdown-toggle {
+      position: relative;
+      color: var(--pst-color-primary);
+      &:hover {
+        color: var(--pst-color-header-link-hover);
+      }
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-bottom: 3px solid var(--pst-color-primary);
+      }
+    }
+  }
+}
