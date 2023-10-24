@@ -5,8 +5,6 @@
 // ensure table will fit in the article width and make them y-scrollable
 table {
   display: table;
-  width: fit-content;
-  max-width: 100%;
   overflow: auto;
 
   // default to table-center

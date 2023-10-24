@@ -34,18 +34,18 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "autoapi.extension",
-    "_extension.gallery_directive",
     # For extension examples and demos
+    "myst_parser",
     "ablog",
     "jupyter_sphinx",
-    "matplotlib.sphinxext.plot_directive",
-    "myst_nb",
     "sphinxcontrib.youtube",
-    # "nbsphinx",  # Uncomment and comment-out MyST-NB for local testing purposes.
+    "nbsphinx",
     "numpydoc",
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
+    # custom extentions
+    "_extension.gallery_directive",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -66,17 +66,17 @@ if not os.environ.get("READTHEDOCS"):
     sitemap_locales = [None]
     sitemap_url_scheme = "{link}"
 
-# -- Internationalization ----------------------------------------------------
-
-# specifying the natural language populates some key tags
-language = "en"
-
 # -- MyST options ------------------------------------------------------------
 
 # This allows us to use ::: to denote directives, useful for admonitions
 myst_enable_extensions = ["colon_fence", "linkify", "substitution"]
 myst_heading_anchors = 2
 myst_substitutions = {"rtd": "[Read the Docs](https://readthedocs.org/)"}
+
+# -- Internationalization ----------------------------------------------------
+
+# specifying the natural language populates some key tags
+language = "en"
 
 # -- Ablog options -----------------------------------------------------------
 
@@ -99,19 +99,21 @@ json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switche
 
 # Define the version we use for matching in the version switcher.
 version_match = os.environ.get("READTHEDOCS_VERSION")
+release = pydata_sphinx_theme.__version__
 # If READTHEDOCS_VERSION doesn't exist, we're not on RTD
 # If it is an integer, we're in a PR build and the version isn't correct.
 # If it's "latest" → change to "dev" (that's what we want the switcher to call it)
 if not version_match or version_match.isdigit() or version_match == "latest":
     # For local development, infer the version to match from the package.
-    release = pydata_sphinx_theme.__version__
     if "dev" in release or "rc" in release:
         version_match = "dev"
         # We want to keep the relative reference if we are in dev mode
         # but we want the whole url if we are effectively in a released version
         json_url = "_static/switcher.json"
     else:
-        version_match = "v" + release
+        version_match = f"v{release}"
+elif version_match == "stable":
+    version_match = f"v{release}"
 
 html_theme_options = {
     "external_links": [
@@ -159,28 +161,28 @@ html_theme_options = {
     "logo": {
         "text": "PyData Theme",
         "image_dark": "_static/logo-dark.svg",
-        "alt_text": "PyData Theme",
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
     "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    "navbar_center": ["version-switcher", "navbar-nav"],
+    # "show_nav_level": 2,
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     "show_version_warning_banner": True,
-    # "show_nav_level": 2,
+    "navbar_center": ["version-switcher", "navbar-nav"],
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
     # "navbar_persistent": ["search-button"],
-    # "primary_sidebar_end": ["custom-template.html", "sidebar-ethical-ads.html"],
-    # "article_footer_items": ["test.html", "test.html"],
-    # "content_footer_items": ["test.html", "test.html"],
-    "footer_start": ["copyright.html"],
-    "footer_center": ["sphinx-version.html"],
-    # "secondary_sidebar_items": ["page-toc.html"],  # Remove the source buttons
+    # "primary_sidebar_end": ["custom-template", "sidebar-ethical-ads"],
+    # "article_footer_items": ["test", "test"],
+    # "content_footer_items": ["test", "test"],
+    "footer_start": ["copyright"],
+    "footer_center": ["sphinx-version"],
+    # "secondary_sidebar_items": ["page-toc"],  # Remove the source buttons
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,
     },
+    "navigation_with_keys": False,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
 }
 
