@@ -228,6 +228,12 @@ $pst-semantic-colors: (
       "light": #{map-deep-get($color-palette, "gray", "800")},
       "dark": $foundation-light-gray,
     ),
+  "header-link-hover": (
+    "light": $foundation-white,
+    "bg-light": #{map-deep-get($color-palette, "violet", "500")},
+    "dark": #{map-deep-get($color-palette, "violet", "500")},
+    "bg-dark": #{map-deep-get($color-palette, "gray", "800")},
+  ),
 );
 
 /*******************************************************************************

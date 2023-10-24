@@ -80,26 +80,29 @@
 
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       // Center align on wide screens so the dropdown button is centered properly
-      align-items: center;
+      align-items: baseline;
     }
 
-    li a.nav-link {
+    li.pst-header-nav-item {
+      margin-inline: 4px; // breathing room so hover, focus styles do not overlap
+      &:first-child {
+        margin-inline-start: 0;
+      }
+      &:last-child {
+        margin-inline-end: 0;
+      }
+      @include header-link;
+    }
+
+    li a.nav-link.dropdown-item {
       @include link-style-text;
-    }
-
-    // Current page is always underlined in the navbar
-    > .current > .nav-link {
-      @include link-navbar-current;
     }
 
     // Dropdowns for the extra links
     .dropdown {
       button {
         display: unset;
-        color: var(--pst-color-text-muted);
         border: none;
-        @include link-style-hover;
-        @include focus-indicator;
       }
 
       .dropdown-menu {
