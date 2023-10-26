@@ -75,7 +75,7 @@ class GalleryGridDirective(SphinxDirective):
             path_doc = Path(path_doc).parent
             path_data = (path_doc / path_data_rel).resolve()
             if not path_data.exists():
-                logger.warn(f"Could not find grid data at {path_data}.")
+                logger.info(f"Could not find grid data at {path_data}.")
                 nodes.text("No grid data found at {path_data}.")
                 return
             yaml_string = path_data.read_text()
@@ -86,7 +86,6 @@ class GalleryGridDirective(SphinxDirective):
         # and generate a card item for each of them
         grid_items = []
         for item in safe_load(yaml_string):
-
             # remove parameters that are not needed for the card options
             title = item.pop("title", "")
 

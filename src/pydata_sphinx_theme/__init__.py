@@ -26,40 +26,47 @@ def update_config(app):
     # page's HTML context (e.g. in jinja, `theme_keyword`).
     # To do this, you must manually modify `app.builder.theme_options`.
     theme_options = utils.get_theme_options_dict(app)
+    should_warn = theme_options.get("surface_warnings", False)
 
     # TODO: deprecation; remove after 0.14 release
     if theme_options.get("logo_text"):
         logo = theme_options.get("logo", {})
         logo["text"] = theme_options.get("logo_text")
         theme_options["logo"] = logo
-        logger.warning(
-            "The configuration `logo_text` is deprecated." "Use `'logo': {'text': }`."
-        )
+        if should_warn:
+            logger.warning(
+                "The configuration `logo_text` is deprecated. "
+                "Use `'logo': {'text': }`."
+            )
 
     # TODO: DEPRECATE after 0.14
     if theme_options.get("footer_items"):
         theme_options["footer_start"] = theme_options.get("footer_items")
-        logger.warning(
-            "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
-        )
+        if should_warn:
+            logger.warning(
+                "`footer_items` is deprecated. "
+                "Use `footer_start` or `footer_end` instead."
+            )
 
     # TODO: DEPRECATE after v0.15
     if theme_options.get("favicons"):
-        logger.warning(
-            "The configuration `favicons` is deprecated."
-            "Use the sphinx-favicon extension instead."
-        )
+        if should_warn:
+            logger.warning(
+                "The configuration `favicons` is deprecated. "
+                "Use the sphinx-favicon extension instead."
+            )
 
     # TODO: in 0.15, set the default navigation_with_keys value to False and remove this deprecation notice
     if theme_options.get("navigation_with_keys", None) is None:
-        logger.warning(
-            "The default value for `navigation_with_keys` will change to `False` in "
-            "the next release. If you wish to preserve the old behavior for your site, "
-            "set `navigation_with_keys=True` in the `html_theme_options` dict in your "
-            "`conf.py` file."
-            "Be aware that `navigation_with_keys = True` has negative accessibility implications:"
-            "https://github.com/pydata/pydata-sphinx-theme/issues/1492"
-        )
+        if should_warn:
+            logger.warning(
+                "The default value for `navigation_with_keys` will change to `False` "
+                "in the next release. If you wish to preserve the old behavior for "
+                "your site, set `navigation_with_keys=True` in the "
+                "`html_theme_options` dict in your `conf.py` file. Be aware that "
+                "`navigation_with_keys = True` has negative accessibility implications:"
+                " https://github.com/pydata/pydata-sphinx-theme/issues/1492"
+            )
         theme_options["navigation_with_keys"] = False
 
     # Validate icon links
@@ -101,20 +108,21 @@ def update_config(app):
                 reading_error = repr(e)
 
         if reading_error is not None:
-            logger.warning(
-                f'The version switcher "{json_url}" file cannot be read due to the following error:\n'
-                f"{reading_error}"
-            )
+            if should_warn:
+                logger.warning(
+                    f'The version switcher "{json_url}" file cannot be read due to '
+                    f"the following error:\n{reading_error}"
+                )
         else:
             # check that the json file is not illformed,
             # throw a warning if the file is ill formed and an error if it's not json
             switcher_content = json.loads(content)
             missing_url = any(["url" not in e for e in switcher_content])
             missing_version = any(["version" not in e for e in switcher_content])
-            if missing_url or missing_version:
+            if should_warn and missing_url or missing_version:
                 logger.warning(
-                    f'The version switcher "{json_url}" file is malformed'
-                    ' at least one of the items is missing the "url" or "version" key'
+                    f'The version switcher "{json_url}" file is malformed; '
+                    'at least one of the items is missing the "url" or "version" key'
                 )
 
     # Add an analytics ID to the site if provided

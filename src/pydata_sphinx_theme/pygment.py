@@ -61,6 +61,9 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
     Fallbacks are defined in this function in case the user-requested (or our
     theme-specified) pygments theme is not available.
     """
+    theme_options = get_theme_options_dict(app)
+    should_warn = theme_options.get("surface_warnings", False)
+
     if exception is not None:
         return
 
@@ -76,7 +79,7 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
 
         # see if user specified a light/dark pygments theme:
         style_key = f"pygment_{light_or_dark}_style"
-        style_name = get_theme_options_dict(app).get(style_key, None)
+        style_name = theme_options.get(style_key, None)
         # if not, use the one we set in `theme.conf`:
         if style_name is None and hasattr(app.builder, "theme"):
             style_name = app.builder.theme.get_options()[style_key]
@@ -84,7 +87,7 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
         # make sure we can load the style
         if style_name not in pygments_styles:
             # only warn if user asked for a highlight theme that we can't find
-            if style_name is not None:
+            if style_name is not None and should_warn:
                 logger.warning(
                     f"Highlighting style {style_name} not found by pygments, "
                     f"falling back to {fallback}."
