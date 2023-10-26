@@ -1,5 +1,5 @@
 [build-system]
-requires = ["sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/d9f620b1a73839728c95b596343595d3952ec8bf.zip"]
+requires = ["sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip"]
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
