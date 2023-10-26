@@ -48,6 +48,8 @@ extensions = [
     "_extension.gallery_directive",
 ]
 
+jupyterlite_config = "jupyterlite_config.json"
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 

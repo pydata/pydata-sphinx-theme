@@ -98,7 +98,7 @@ def docs_live(session: nox.Session) -> None:
         "serve",
         "docs",
         "--open-browser",
-        "--re-ignore=locale|api|_build",
+        r"--re-ignore=locale|api|_build|\.jupyterlite\.doit\.db",
         # suppress Py3.11's new "can't debug frozen modules" warning
         env=dict(PYDEVD_DISABLE_FILE_VALIDATION="1"),
     )
