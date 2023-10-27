@@ -142,7 +142,9 @@ def add_toctree_functions(
         links_dropdown = [
             # 🐲 brittle code because it relies on the code above to build the HTML in a particular way
             html.replace("nav-link", "nav-link dropdown-item").replace(
-                "pst-header-nav-item", ""
+                # Prevents the header-link mixin from applying to links within the dropdown
+                "pst-header-nav-item",
+                "",
             )
             for html in links_html[n_links_before_dropdown:]
         ]
