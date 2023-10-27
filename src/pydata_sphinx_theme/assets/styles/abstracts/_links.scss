@@ -183,6 +183,15 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   }
 }
 
+/*
+Mixin for links in the header (and the More dropdown toggle).
+
+The mixin assumes it will be applied to some element X with a markup structure
+like: X > .nav-link, or X > .dropdown-toggle.
+
+It also assumes X.current is how the app annotates which item in the header nav
+corresponds to the section in the docs that the user is currently reading.
+*/
 @mixin header-link {
   > .nav-link,
   > .dropdown-toggle {
@@ -192,7 +201,7 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     &:hover {
       background-color: var(--pst-color-header-link-hover-bg);
       color: var(--pst-color-header-link-hover);
-      text-decoration: none;
+      text-decoration: none; // override the link-style-hover mixin
     }
 
     &:focus {
@@ -209,11 +218,13 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &.current {
     > .nav-link,
     > .dropdown-toggle {
-      position: relative;
       color: var(--pst-color-primary);
       &:hover {
         color: var(--pst-color-header-link-hover);
       }
+
+      // These styles underline the current navbar item
+      position: relative;
       &::after {
         content: "";
         display: block;
