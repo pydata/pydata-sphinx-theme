@@ -1,12 +1,10 @@
----
-blogpost: true
-date: Jan 01, 2022
-author: pydata
-location: World
-category: Manual
-tags: one, two, three
-language: English
----
+:blogpost: true
+:date: Jan 01, 2022
+:author: pydata
+:location: World
+:category: Manual
+:tags: one, two, three
+:language: English
 
 # Post one with a long-ish title we can use to compare
 

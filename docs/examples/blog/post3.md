@@ -1,12 +1,10 @@
----
-blogpost: true
-date: Jan 03, 2022
-author: jupyter
-location: World
-category: Manual
-tags: one, two, three, four, five, six, seven, eight, nine
-language: English
----
+:blogpost: true
+:date: Jan 03, 2022
+:author: jupyter
+:location: World
+:category: Manual
+:tags: one, two, three, four, five, six, seven, eight, nine
+:language: English
 
 # Post three with a long-ish title we can use to compare
 
