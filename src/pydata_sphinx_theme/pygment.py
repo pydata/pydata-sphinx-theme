@@ -3,16 +3,14 @@
 inspired by the Furo theme
 https://github.com/pradyunsg/furo/blob/main/src/furo/__init__.py
 """
+from functools import partial
 from pathlib import Path
 
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 from sphinx.application import Sphinx
-from sphinx.util import logging
 
-from .utils import get_theme_options_dict
-
-logger = logging.getLogger(__name__)
+from .utils import get_theme_options_dict, maybe_warn
 
 
 def _get_styles(formatter: HtmlFormatter, prefix: str) -> None:
@@ -65,7 +63,8 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
         return
 
     assert app.builder
-
+    theme_options = get_theme_options_dict(app)
+    warning = partial(maybe_warn, app)
     pygments_styles = list(get_all_styles())
     fallbacks = dict(light="tango", dark="monokai")
 
@@ -76,7 +75,7 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
 
         # see if user specified a light/dark pygments theme:
         style_key = f"pygment_{light_or_dark}_style"
-        style_name = get_theme_options_dict(app).get(style_key, None)
+        style_name = theme_options.get(style_key, None)
         # if not, use the one we set in `theme.conf`:
         if style_name is None and hasattr(app.builder, "theme"):
             style_name = app.builder.theme.get_options()[style_key]
@@ -85,7 +84,7 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
         if style_name not in pygments_styles:
             # only warn if user asked for a highlight theme that we can't find
             if style_name is not None:
-                logger.warning(
+                warning(
                     f"Highlighting style {style_name} not found by pygments, "
                     f"falling back to {fallback}."
                 )
