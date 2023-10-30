@@ -90,6 +90,9 @@ $color-palette: (
       --pst-#{$group-color}-#{$color-name}: #{$definition};
     }
   }
+
+  // override some bootstrap colors if necessary
+  --bs-table-bg: transparent;
 }
 
 // Static SCSS variables used thoroughout the theme
