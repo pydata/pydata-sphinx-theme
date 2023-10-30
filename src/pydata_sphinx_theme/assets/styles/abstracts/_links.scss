@@ -197,6 +197,7 @@ corresponds to the section in the docs that the user is currently reading.
   > .dropdown-toggle {
     border-radius: 2px;
     color: var(--pst-color-text-muted);
+    font-weight: 700;
 
     &:hover {
       background-color: var(--pst-color-header-link-hover-bg);
@@ -207,7 +208,7 @@ corresponds to the section in the docs that the user is currently reading.
     &:focus {
       box-shadow: none; // override Bootstrap
       outline: 3px solid var(--pst-color-accent);
-      outline-offset: 2px;
+      outline-offset: 3px;
 
       &:not(:hover) {
         background-color: var(--pst-color-accent-bg);
@@ -234,6 +235,9 @@ corresponds to the section in the docs that the user is currently reading.
         bottom: 0;
         left: 0;
         border-bottom: 3px solid var(--pst-color-primary);
+      }
+      &:hover::after {
+        display: none;
       }
     }
   }
