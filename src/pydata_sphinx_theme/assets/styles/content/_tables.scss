@@ -43,3 +43,8 @@ td {
     text-align: center;
   }
 }
+
+// override bootstrap background colors
+.table {
+  --bs-table-bg: transparent;
+}
