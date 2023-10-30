@@ -67,12 +67,17 @@ class ComponentListDirective(SphinxDirective):
         ]
 
         # build the list of all the components
-        content = "".join(
-            TEMPLATE_LINE.format(name=component.stem, url=url, description=doc)
-            for component, url, doc in zip(components, urls, docs)
-        )
+        items = []
+        for component, url, doc in zip(components, urls, docs):
+            items.append(
+                nodes.list_item(
+                    "",
+                    nodes.TextElement(nodes.reference("", component.name, refuri=url)),
+                    nodes.Text(f": {doc}"),
+                )
+            )
 
-        return [nodes.raw("", TEMPLATE_LIST.format(content=content), format="html")]
+        return [nodes.bullet_list("", *items)]
 
 
 def setup(app: Sphinx) -> Dict[str, Any]:
