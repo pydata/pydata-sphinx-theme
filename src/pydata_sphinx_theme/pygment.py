@@ -3,16 +3,14 @@
 inspired by the Furo theme
 https://github.com/pradyunsg/furo/blob/main/src/furo/__init__.py
 """
+from functools import partial
 from pathlib import Path
 
 from pygments.formatters import HtmlFormatter
 from pygments.styles import get_all_styles
 from sphinx.application import Sphinx
-from sphinx.util import logging
 
-from .utils import get_theme_options_dict
-
-logger = logging.getLogger(__name__)
+from .utils import get_theme_options_dict, maybe_warn
 
 
 def _get_styles(formatter: HtmlFormatter, prefix: str) -> None:
@@ -61,14 +59,12 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
     Fallbacks are defined in this function in case the user-requested (or our
     theme-specified) pygments theme is not available.
     """
-    theme_options = get_theme_options_dict(app)
-    should_warn = theme_options.get("surface_warnings", False)
-
     if exception is not None:
         return
 
     assert app.builder
-
+    theme_options = get_theme_options_dict(app)
+    warning = partial(maybe_warn, app)
     pygments_styles = list(get_all_styles())
     fallbacks = dict(light="tango", dark="monokai")
 
@@ -87,8 +83,8 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
         # make sure we can load the style
         if style_name not in pygments_styles:
             # only warn if user asked for a highlight theme that we can't find
-            if style_name is not None and should_warn:
-                logger.warning(
+            if style_name is not None:
+                warning(
                     f"Highlighting style {style_name} not found by pygments, "
                     f"falling back to {fallback}."
                 )

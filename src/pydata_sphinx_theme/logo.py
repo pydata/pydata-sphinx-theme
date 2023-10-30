@@ -3,17 +3,16 @@
 we use one event to copy over custom logo images to _static
 and another even to link them in the html context
 """
+from functools import partial
 from pathlib import Path
 
 from docutils.nodes import Node
 from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
-from sphinx.util import isurl, logging
+from sphinx.util import isurl
 from sphinx.util.fileutil import copy_asset_file
 
-from .utils import get_theme_options_dict
-
-logger = logging.getLogger(__name__)
+from .utils import get_theme_options_dict, maybe_warn
 
 
 def setup_logo_path(
@@ -60,8 +59,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
 
     If logo image paths are given, copy them to the `_static` folder Then we can link to them directly in an html_page_context event.
     """
-    theme_options = get_theme_options_dict(app)
-    should_warn = theme_options.get("surface_warnings", False)
+    warning = partial(maybe_warn, app)
     logo = get_theme_options_dict(app).get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
     for kind in ["light", "dark"]:
@@ -72,8 +70,8 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
             # file already exists in static dir e.g. because a theme has
             # bundled the logo and installed it there
             continue
-        if should_warn and not (Path(app.srcdir) / path_image).exists():
-            logger.warning(f"Path to {kind} image logo does not exist: {path_image}")
+        if not (Path(app.srcdir) / path_image).exists():
+            warning(f"Path to {kind} image logo does not exist: {path_image}")
         # Ensure templates cannot be passed for logo path to avoid security vulnerability
         if path_image.lower().endswith("_t"):
             raise ExtensionError(
