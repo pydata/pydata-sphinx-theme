@@ -86,7 +86,10 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
       color: var(--pst-color-link-hover);
     }
   }
-  @include focus-indicator;
+
+  &:focus-visible {
+    @include focus-indicator;
+  }
 }
 
 // Text link styles
@@ -102,7 +105,10 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     @include link-decoration;
     @include link-decoration-hover;
   }
-  @include focus-indicator;
+
+  &:focus-visible {
+    @include focus-indicator;
+  }
 }
 
 // Sidebar and TOC links
@@ -177,9 +183,13 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 }
 
 // Focus indicator
-@mixin focus-indicator {
-  &:focus-visible {
-    outline: 3px solid var(--pst-color-accent);
-    box-shadow: none; // override Bootstrap
+//
+// If a value of $radius: 0.125rem is passed in, it means 2px at 100% zoom
+// (0.125 * 16px base font = 2px)
+@mixin focus-indicator($radius: -1) {
+  outline: 3px solid var(--pst-color-accent);
+  box-shadow: none; // override Bootstrap
+  @if $radius != -1 {
+    border-radius: $radius;
   }
 }

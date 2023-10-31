@@ -57,9 +57,8 @@
 
   &:focus,
   &:focus-visible {
+    @include focus-indicator;
     border: none;
-    box-shadow: none;
-    outline: 3px solid var(--pst-color-accent);
     background-color: var(--pst-color-background);
     color: var(--pst-color-text-muted);
   }
@@ -68,23 +67,6 @@
 /**
  * Search button - located in the navbar
  */
-
-// Search link icon should be a bit bigger since it is separate from icon links
-.search-button {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  color: var(--pst-color-text-muted);
-  // Needed to match other icons hover
-  padding: 0 0 0.25rem 0;
-  border-radius: 0;
-  @include icon-navbar-hover;
-  @include focus-indicator;
-
-  i {
-    font-size: 1.3rem;
-  }
-}
 
 // __search-container will only show up when we use the search pop-up bar
 .search-button__search-container,
@@ -149,9 +131,8 @@
     border: 2px solid var(--pst-color-link-hover);
   }
 
-  @include focus-indicator;
   &:focus-visible {
-    border-radius: $search-button-border-radius; // set explicitly to override focus-visible border-radius set in _header.scss
+    @include focus-indicator($radius: $search-button-border-radius);
   }
 
   // The keyboard shotcut text
