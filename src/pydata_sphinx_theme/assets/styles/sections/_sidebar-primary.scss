@@ -25,7 +25,7 @@
 
   // Focus styles
   :focus-visible {
-    @include focus-indicator($radius: 0.125rem);
+    border-radius: 0.125rem;
   }
 
   // override bootstrap when navlink are displayed in the sidebar

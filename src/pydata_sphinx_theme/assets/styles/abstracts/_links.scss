@@ -86,10 +86,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
       color: var(--pst-color-link-hover);
     }
   }
-
-  &:focus-visible {
-    @include focus-indicator;
-  }
 }
 
 // Text link styles
@@ -104,10 +100,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     color: var(--pst-color-link-hover);
     @include link-decoration;
     @include link-decoration-hover;
-  }
-
-  &:focus-visible {
-    @include focus-indicator;
   }
 }
 
@@ -143,10 +135,8 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   font-weight: 600;
   color: var(--pst-color-primary);
   @if $link-hover-decoration-thickness {
-    box-shadow: inset
-      $link-hover-decoration-thickness
-      0px
-      0px
+    border-left: $link-hover-decoration-thickness
+      solid
       var(--pst-color-primary);
   }
 }
@@ -182,14 +172,8 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   }
 }
 
-// Focus indicator
-//
-// If a value of $radius: 0.125rem is passed in, it means 2px at 100% zoom
-// (0.125 * 16px base font = 2px)
-@mixin focus-indicator($radius: -1) {
+// Focus ring
+:focus-visible {
   outline: 3px solid var(--pst-color-accent);
   box-shadow: none; // override Bootstrap
-  @if $radius != -1 {
-    border-radius: $radius;
-  }
 }
