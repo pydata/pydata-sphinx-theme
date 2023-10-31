@@ -28,6 +28,10 @@
     padding-right: 1rem;
   }
 
+  :focus-visible {
+    border-radius: 0.125rem; // 2/16
+  }
+
   // These items will define the height of the header
   .navbar-item {
     height: var(--pst-header-height);

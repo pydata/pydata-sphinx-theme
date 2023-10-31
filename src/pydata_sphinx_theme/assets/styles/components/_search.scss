@@ -136,10 +136,11 @@
  * Lives at components/search-button-field.html
  */
 .search-button-field {
+  $search-button-border-radius: 1.5em;
   display: inline-flex;
   align-items: center;
   border: var(--pst-color-border) solid 1px;
-  border-radius: 1.5em;
+  border-radius: $search-button-border-radius;
   color: var(--pst-color-text-muted);
   padding: 0.5em;
   background-color: var(--pst-color-surface);
@@ -147,8 +148,10 @@
   &:hover {
     border: 2px solid var(--pst-color-link-hover);
   }
+
+  @include focus-indicator;
   &:focus-visible {
-    border: 2px solid var(--pst-color-accent);
+    border-radius: $search-button-border-radius; // set explicitly to override focus-visible border-radius set in _header.scss
   }
 
   // The keyboard shotcut text

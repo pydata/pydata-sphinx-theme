@@ -180,5 +180,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 @mixin focus-indicator {
   &:focus-visible {
     outline: 3px solid var(--pst-color-accent);
+    box-shadow: none; // override Bootstrap
   }
 }
