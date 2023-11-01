@@ -15,9 +15,6 @@ from sphinx.util.docutils import SphinxDirective
 
 logger = logging.getLogger(__name__)
 
-TEMPLATE_LIST = '<ul class="simple">{content}</ul>'
-TEMPLATE_LINE = '<li><a href="{url}">{name}</a>:  {description}</li>'
-
 
 class ComponentListDirective(SphinxDirective):
     """A directive to generate the list of all the built-in components.
