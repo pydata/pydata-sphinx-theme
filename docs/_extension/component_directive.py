@@ -72,7 +72,9 @@ class ComponentListDirective(SphinxDirective):
             items.append(
                 nodes.list_item(
                     "",
-                    nodes.TextElement(nodes.reference("", component.name, refuri=url)),
+                    nodes.TextElement(
+                        nodes.reference("", component.name, internal=False, refuri=url)
+                    ),
                     nodes.Text(f": {doc}"),
                 )
             )
