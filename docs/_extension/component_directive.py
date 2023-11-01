@@ -75,7 +75,7 @@ class ComponentListDirective(SphinxDirective):
                     nodes.paragraph(
                         "",
                         "",
-                        nodes.reference("", component.name, internal=False, refuri=url),
+                        nodes.reference("", component.stem, internal=False, refuri=url),
                         nodes.Text(f": {doc}"),
                     ),
                 )
