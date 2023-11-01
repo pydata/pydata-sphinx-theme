@@ -71,12 +71,13 @@ class ComponentListDirective(SphinxDirective):
         for component, url, doc in zip(components, urls, docs):
             items.append(
                 nodes.list_item(
+                    "",
                     nodes.paragraph(
                         "",
                         "",
                         nodes.reference("", component.name, internal=False, refuri=url),
                         nodes.Text(f": {doc}"),
-                    )
+                    ),
                 )
             )
 
