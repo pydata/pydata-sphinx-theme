@@ -49,3 +49,11 @@ div.downstream-project-links a {
   text-decoration: none !important;
   color: inherit !important;
 }
+
+/* test the spinning behavior */
+.fa-spin-hover:hover svg {
+  -webkit-animation: fa-spin 2s infinite linear;
+  -moz-animation: fa-spin 2s infinite linear;
+  -o-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}

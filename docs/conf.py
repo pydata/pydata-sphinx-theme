@@ -138,7 +138,7 @@ html_theme_options = {
         {
             "name": "Twitter",
             "url": "https://twitter.com/PyData",
-            "icon": "fa-brands fa-twitter",
+            "icon": "fa-brands fa-twitter fa-spin-hover",
         },
         {
             "name": "GitHub",
