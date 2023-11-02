@@ -51,7 +51,7 @@ div.downstream-project-links a {
 }
 
 /* test the spinning behavior */
-.spin-hover:hover svg {
+.spin-hover:hover {
   -webkit-animation: fa-spin 2s infinite linear;
   -moz-animation: fa-spin 2s infinite linear;
   -o-animation: fa-spin 2s infinite linear;
