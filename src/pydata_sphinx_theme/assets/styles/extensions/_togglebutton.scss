@@ -9,7 +9,7 @@
       color: inherit;
 
       &:focus-visible {
-        outline: $focus-ring-width solid $focus-ring-color;
+        outline: $focus-ring-outline;
         outline-offset: $focus-ring-width;
       }
     }

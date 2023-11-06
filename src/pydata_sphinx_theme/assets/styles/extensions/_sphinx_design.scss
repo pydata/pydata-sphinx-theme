@@ -142,7 +142,7 @@ html[data-theme="light"] {
     border-bottom: 1px solid var(--pst-color-border);
 
     &:focus-visible {
-      outline: $focus-ring-width solid $focus-ring-color;
+      outline: $focus-ring-outline;
     }
   }
   .sd-card-footer {

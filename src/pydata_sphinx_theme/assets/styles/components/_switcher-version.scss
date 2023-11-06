@@ -16,7 +16,7 @@ button.btn.version-switcher__button {
 
 .version-switcher__menu {
   border-color: var(--pst-color-border);
-  border-radius: 2px;
+  border-radius: var(--bs-dropdown-border-radius);
 
   a.list-group-item {
     background-color: var(--pst-color-on-background);

@@ -28,6 +28,8 @@ $focus-ring-opacity: 1;
 $focus-ring-color: var(--pst-color-accent);
 $focus-ring-blur: 0;
 $focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color;
+// outline creates the same style of focus ring, it just uses CSS outline instead of box shadow
+$focus-ring-outline: $focus-ring-color solid $focus-ring-width;
 $btn-focus-box-shadow: $focus-ring-box-shadow;
 
 .btn {

@@ -92,7 +92,7 @@
             // In the mobile sidebar, the dropdown menu is inlined with the
             // other links, which do not have background-color changes on hover
             // and focus
-            background-color: transparent;
+            background-color: unset;
           }
         }
       }
@@ -102,7 +102,7 @@
       .nav-link {
         &:focus-visible {
           box-shadow: none; // Override Bootstrap
-          outline: $focus-ring-width solid $focus-ring-color;
+          outline: $focus-ring-outline;
           outline-offset: $focus-ring-width;
         }
       }

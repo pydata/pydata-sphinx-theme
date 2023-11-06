@@ -38,6 +38,6 @@ div.highlight button.copybtn {
   }
 
   &:focus-visible {
-    outline: $focus-ring-width solid $focus-ring-color;
+    outline: $focus-ring-outline;
   }
 }
