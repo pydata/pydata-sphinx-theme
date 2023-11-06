@@ -182,9 +182,9 @@ pre {
 
 // Focus ring
 //
-// Note: The Bootstrap stylesheet provide the focus ring for most of the site's
-// elements. This covers everything else that's focusable that Bootstrap doesn't
-// cover.
+// Note: The Bootstrap stylesheet provides the focus ring (customized via Sass
+// variables in _bootstrap.scss) in some cases. This rules covers all other
+// cases.
 :focus-visible {
   outline: $focus-ring-outline;
   box-shadow: none; // override Bootstrap
