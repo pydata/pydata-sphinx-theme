@@ -7,6 +7,11 @@
   .admonition {
     button.toggle-button {
       color: inherit;
+
+      &:focus-visible {
+        outline: $focus-ring-width solid $focus-ring-color;
+        outline-offset: $focus-ring-width;
+      }
     }
   }
 
