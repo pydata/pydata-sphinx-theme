@@ -67,6 +67,28 @@
  * Search button - located in the navbar
  */
 
+// Search link icon should be a bit bigger since it is separate from icon links
+.search-button {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  color: var(--pst-color-text-muted);
+  border-radius: 0;
+  border: none; // Override Bootstrap button border
+  font-size: 1rem; // Override Bootstrap button font size
+
+  // Override Bootstrap button padding-x. Whitespace in nav bar is controlled
+  // via column gap rule on the container.
+  padding-left: 0;
+  padding-right: 0;
+
+  @include icon-navbar-hover;
+
+  i {
+    font-size: 1.3rem;
+  }
+}
+
 // __search-container will only show up when we use the search pop-up bar
 .search-button__search-container,
 .search-button__overlay {
