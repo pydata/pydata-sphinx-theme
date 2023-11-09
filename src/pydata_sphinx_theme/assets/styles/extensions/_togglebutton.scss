@@ -19,16 +19,23 @@
     &:focus-within {
       overflow: visible;
 
+      // The complicated focus ring styles here are a consequence of the markup
+      // and border styles for this particular admonition class. (For the other
+      // type of admonition on this site, the focus ring style is achieved with
+      // simple `outline` and `outline-offset` rules on the admonition's
+      // header.) The problem is that Sphinx-togglebutton puts the admonition's
+      // left border on the outermost container (rather than separately setting
+      // the left border on the container's children). This makes it complicated
+      // to get the focus ring to simultaneously cover the left border in the
+      // header and align perfectly on the right with the body.
       .admonition-title:focus-within:before {
         content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        width: calc(100% - $focus-ring-width);
+        transform: translateX(
+          -$admonition-left-border-width
+        ); // align left edges of admonition and ring
+        width: calc(100% + $admonition-left-border-width); // align right edges
         height: 100%;
-        outline: $focus-ring-outline;
+        border: $focus-ring-outline;
         border-radius: $focus-ring-width;
       }
 
