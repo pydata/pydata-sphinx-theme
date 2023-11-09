@@ -190,8 +190,9 @@ html[data-theme="light"] {
     border: 0.125rem solid transparent;
     border-radius: 0.125rem 0.125rem 0px 0px;
     background-color: var(--pst-color-surface);
-    padding: 0.5em 0.75em;
+    padding: 0 0.75em;
     margin-inline-end: 0.25rem;
+    line-height: 1.95;
   }
 
   // panel
