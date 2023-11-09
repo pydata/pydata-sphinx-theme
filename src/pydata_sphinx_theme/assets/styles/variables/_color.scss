@@ -310,6 +310,7 @@ html:not([data-theme]) {
 @each $mode in (light, dark) {
   html[data-theme="#{$mode}"] {
     @include theme-colors($mode);
+    color-scheme: $mode;
   }
 }
 

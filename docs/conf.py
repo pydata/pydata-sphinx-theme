@@ -34,6 +34,9 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "autoapi.extension",
+    # custom extentions
+    "_extension.gallery_directive",
+    "_extension.component_directive",
     # For extension examples and demos
     "myst_parser",
     "ablog",
@@ -44,9 +47,9 @@ extensions = [
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
-    # custom extentions
-    "_extension.gallery_directive",
 ]
+
+jupyterlite_config = "jupyterlite_config.json"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

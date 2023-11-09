@@ -1,12 +1,13 @@
+{# Displays the current page's Table of Contents.  #}
 {% set page_toc = generate_toc_html() %}
 {%- if page_toc | length >= 1 %}
-{#- TODO use unique html id generator since components can be included in multiple places #}
+{%- set page_navigation_heading_id = unique_html_id("pst-page-navigation-heading") -%}
   <div
-    id="pst-page-navigation-heading"
+    id="{{ page_navigation_heading_id }}"
     class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> {{ _("On this page") }}
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="{{ page_navigation_heading_id }}">
     {{ page_toc }}
   </nav>
 {%- endif %}
