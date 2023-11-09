@@ -143,6 +143,7 @@ html[data-theme="light"] {
 
     &:focus-visible {
       outline: $focus-ring-outline;
+      outline-offset: -$focus-ring-width;
     }
   }
   .sd-card-footer {
