@@ -1,32 +1,43 @@
 # English translations for pydata-sphinx-theme.
 # Copyright (C) 2023 PyData developers
-# This file is distributed under the same license as the pydata-sphinx-theme project.
-# 
+# This file is distributed under the same license as the pydata-sphinx-theme
+# project.
+#
 # Translators:
 # Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2023
-# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-02-16 14:32-0500\n"
+"POT-Creation-Date: 2023-11-09 23:14+0100\n"
 "PO-Revision-Date: 2023-04-14 14:57+0000\n"
 "Last-Translator: Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2023\n"
-"Language-Team: Catalan (https://app.transifex.com/12rambau/teams/166811/ca/)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
 "Language: ca\n"
+"Language-Team: Catalan "
+"(https://app.transifex.com/12rambau/teams/166811/ca/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.0\n"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:50
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:53
 msgid "Skip to main content"
 msgstr "Salta al contingut principal"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:7
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:64
+msgid "Back to top"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:28
+#: venv/lib/python3.10/site-packages/sphinx/themes/agogo/layout.html:43
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:141
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/search.html:11
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/search.html:22
 msgid "Search"
 msgstr "Cerca al web"
 
@@ -38,93 +49,94 @@ msgstr "Error"
 msgid "Please activate JavaScript to enable the search functionality."
 msgstr "Activeu JavaScript per habilitar la funcionalitat de cerca."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:12
-msgid "Breadcrumbs"
-msgstr "Rutes de navegació"
-
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
 msgid "Breadcrumb"
 msgstr "Ruta de navegació"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:16
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:17
 msgid "Home"
 msgstr "Inici"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:4
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
 msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:7
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
 msgid "© Copyright %(copyright)s."
 msgstr "© Copyright %(copyright)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:9
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:10
 #, python-format
 msgid "Edit on %(provider)s"
 msgstr "Edita a %(provider)s"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:11
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:12
 msgid "Edit"
 msgstr "Edita"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/icon-links.html:31
-msgid "GitHub"
-msgstr "GitHub"
-
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/icon-links.html:32
-msgid "GitLab"
-msgstr "GitLab"
-
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/icon-links.html:33
-msgid "Bitbucket"
-msgstr "Bitbucket"
-
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/icon-links.html:34
-msgid "Twitter"
-msgstr "Twitter"
-
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:2
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:4
 msgid "Indices"
 msgstr "Índexs"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:9
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:11
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:30
 msgid "General Index"
 msgstr "Índex general"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:13
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:15
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:28
 msgid "Global Module Index"
 msgstr "Índex Global de Mòduls"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:17
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:19
 msgid "Python Module Index"
 msgstr "Índex de Mòduls Python"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/last-updated.html:2
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/last-updated.html:4
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:212
 #, python-format
 msgid "Last updated on %(last_updated)s."
 msgstr "Última actualització el %(last_updated)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/navbar-nav.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/navbar-nav.html:6
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/navbar-nav.html:7
 msgid "Site Navigation"
 msgstr "Navegació del lloc"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/page-toc.html:4
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/page-toc.html:8
 msgid "On this page"
 msgstr "Continguts de la pàgina"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:2
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
-msgid "Section Navigation"
-msgstr "Navegació de la Secció"
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:6
+msgid "previous page"
+msgstr "pàgina anterior"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:4
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:9
+msgid "previous"
+msgstr "anterior"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:17
+msgid "next page"
+msgstr "pàgina següent"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:19
+msgid "next"
+msgstr "següent"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
+msgid "In this section"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:5
+#: venv/lib/python3.10/site-packages/sphinx/themes/agogo/layout.html:90
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/sourcelink.html:15
 msgid "Show Source"
 msgstr "Mostra el fitxer d'origen"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sphinx-version.html:3
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sphinx-version.html:4
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:215
 #, python-format
 msgid ""
 "Created using <a href=\"https://www.sphinx-doc.org/\">Sphinx</a> "
@@ -137,7 +149,7 @@ msgstr ""
 msgid "light/dark"
 msgstr "clar/fosc"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:2
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
 msgid ""
 "Built with the <a href=\"https://pydata-sphinx-"
@@ -148,18 +160,383 @@ msgstr ""
 "theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
 "%(theme_version)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:6
-msgid "previous page"
-msgstr "pàgina anterior"
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/archives.html:4
+#: venv/lib/python3.10/site-packages/ablog/templates/archives.html:5
+msgid "Archives"
+msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:9
-msgid "previous"
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/authors.html:3
+#: venv/lib/python3.10/site-packages/ablog/templates/authors.html:4
+msgid "Authors"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/categories.html:4
+#: venv/lib/python3.10/site-packages/ablog/templates/categories.html:5
+msgid "Categories"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/languages.html:4
+#: venv/lib/python3.10/site-packages/ablog/templates/languages.html:5
+msgid "Languages"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/locations.html:4
+#: venv/lib/python3.10/site-packages/ablog/templates/locations.html:5
+msgid "Locations"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postcard2.html:8
+#: venv/lib/python3.10/site-packages/ablog/templates/postcard2.html:9
+msgid "Update"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postcard2.html:20
+#: venv/lib/python3.10/site-packages/ablog/templates/postcard2.html:21
+msgid "Author"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postcard2.html:44
+#: venv/lib/python3.10/site-packages/ablog/templates/postcard2.html:45
+msgid "Location"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postcard2.html:68
+#: venv/lib/python3.10/site-packages/ablog/templates/postcard2.html:69
+msgid "Language"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postcard2.html:92
+#: venv/lib/python3.10/site-packages/ablog/templates/postcard2.html:93
+msgid "Category"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postcard2.html:117
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/tagcloud.html:3
+#: venv/lib/python3.10/site-packages/ablog/templates/postcard2.html:118
+#: venv/lib/python3.10/site-packages/ablog/templates/tagcloud.html:4
+msgid "Tags"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postcard2.html:123
+#: venv/lib/python3.10/site-packages/ablog/templates/postcard2.html:124
+msgid "Tag"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postnavy.html:8
+#: venv/lib/python3.10/site-packages/ablog/templates/postnavy.html:9
+#, fuzzy
+msgid "Previous"
 msgstr "anterior"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:17
-msgid "next page"
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/postnavy.html:22
+#: venv/lib/python3.10/site-packages/ablog/templates/postnavy.html:23
+#, fuzzy
+msgid "Next"
+msgstr "següent"
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/recentposts.html:4
+#: venv/lib/python3.10/site-packages/ablog/templates/recentposts.html:5
+msgid "Recent Posts"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/ablog/templates/ablog/collection.html:64
+msgid "Read more ..."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/alabaster/layout.html:98
+#, fuzzy
+msgid "Page source"
+msgstr "Mostra el fitxer d'origen"
+
+#: venv/lib/python3.10/site-packages/alabaster/navigation.html:1
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:26
+#, fuzzy
+msgid "Navigation"
+msgstr "Navegació del lloc"
+
+#: venv/lib/python3.10/site-packages/alabaster/relations.html:9
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/relations.html:14
+#, fuzzy
+msgid "previous chapter"
+msgstr "pàgina anterior"
+
+#: venv/lib/python3.10/site-packages/alabaster/relations.html:13
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/relations.html:21
+#, fuzzy
+msgid "next chapter"
 msgstr "pàgina següent"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/footer-article/prev-next.html:19
-msgid "next"
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/404.html:3
+msgid "You are requesting a page that does not exist!"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/error.html:21
+msgid "The error was:"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/login.html:20
+msgid "Password or token:"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/login.html:23
+msgid "Password:"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/login.html:26
+msgid "Log in"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/login.html:35
+msgid "No login available, you shouldn't be seeing this page."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/login.html:84
+msgid "Setup a Password"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/login.html:102
+msgid ""
+"Log in and set new\n"
+"                    password"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/logout.html:26
+#, python-format
+msgid "Proceed to the <a href=\"%(base_url)s\">dashboard"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/logout.html:28
+#, python-format
+msgid "Proceed to the <a href=\"%(base_url)slogin\">login page"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/page.html:30
+msgid "Jupyter Server requires JavaScript."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/page.html:31
+msgid "Please enable it to proceed. "
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/page.html:35
+msgid "Top Menu"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/jupyter_server/templates/page.html:38
+msgid "dashboard"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/agogo/layout.html:38
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/globaltoc.html:10
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/localtoc.html:12
+#: venv/lib/python3.10/site-packages/sphinx/themes/scrolls/layout.html:41
+msgid "Table of Contents"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/agogo/layout.html:46
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/searchbox.html:16
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/searchfield.html:18
+msgid "Go"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:11
+msgid "Overview"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:15
+msgid "Welcome! This is"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:16
+msgid "the documentation for"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:17
+msgid "last updated"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:20
+msgid "Indices and tables:"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:23
+msgid "Complete Table of Contents"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:24
+msgid "lists all sections and subsections"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:25
+#, fuzzy
+msgid "Search Page"
+msgstr "Cerca al web"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:26
+msgid "search this documentation"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:29
+msgid "quick access to all modules"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/defindex.html:31
+msgid "all functions, classes, terms"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-single.html:30
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-single.html:55
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-split.html:11
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-split.html:14
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex.html:11
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex.html:34
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex.html:67
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:138
+#, fuzzy
+msgid "Index"
 msgstr "següent"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-single.html:33
+#, python-format
+msgid "Index &ndash; %(key)s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-single.html:61
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-split.html:24
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-split.html:38
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex.html:73
+msgid "Full index on one page"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-split.html:16
+msgid "Index pages by letter"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/genindex-split.html:25
+msgid "can be huge"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:126
+#, python-format
+msgid "Search within %(docstitle)s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:135
+msgid "About these documents"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:144
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:188
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:190
+msgid "Copyright"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:194
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/layout.html:200
+#, fuzzy, python-format
+msgid "&#169; %(copyright_prefix)s %(copyright)s."
+msgstr "© Copyright %(copyright)s."
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/relations.html:12
+#, fuzzy
+msgid "Previous topic"
+msgstr "pàgina anterior"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/relations.html:19
+#, fuzzy
+msgid "Next topic"
+msgstr "pàgina següent"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/search.html:27
+#, fuzzy
+msgid ""
+"Please activate JavaScript to enable the search\n"
+"    functionality."
+msgstr "Activeu JavaScript per habilitar la funcionalitat de cerca."
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/search.html:35
+msgid ""
+"Searching for multiple words only shows matches that contain\n"
+"    all words."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/search.html:42
+#, fuzzy
+msgid "search"
+msgstr "Cerca al web"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/search.html:48
+#, fuzzy
+msgid "Search Results"
+msgstr "Cerca al web"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/search.html:50
+msgid ""
+"Your search did not match any documents. Please make sure that all words "
+"are spelled correctly and that you've selected enough categories."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/searchbox.html:12
+#, fuzzy
+msgid "Quick search"
+msgstr "Cerca al web"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/sourcelink.html:12
+#, fuzzy
+msgid "This Page"
+msgstr "Continguts de la pàgina"
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/changes/frameset.html:5
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/changes/versionchanges.html:12
+#, python-format
+msgid "Changes in Version %(version)s &#8212; %(docstitle)s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/changes/rstsource.html:5
+#, python-format
+msgid "%(filename)s &#8212; %(docstitle)s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/changes/versionchanges.html:17
+#, python-format
+msgid "Automatically generated list of changes in version %(version)s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/changes/versionchanges.html:18
+msgid "Library changes"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/changes/versionchanges.html:23
+msgid "C API changes"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/basic/changes/versionchanges.html:25
+msgid "Other changes"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/classic/layout.html:20
+msgid "Collapse sidebar"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/sphinx/themes/haiku/layout.html:24
+msgid "Contents"
+msgstr ""
+
+#~ msgid "Breadcrumbs"
+#~ msgstr "Rutes de navegació"
+
+#~ msgid "GitHub"
+#~ msgstr "GitHub"
+
+#~ msgid "GitLab"
+#~ msgstr "GitLab"
+
+#~ msgid "Bitbucket"
+#~ msgstr "Bitbucket"
+
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
+
+#~ msgid "Section Navigation"
+#~ msgstr "Navegació de la Secció"
+
