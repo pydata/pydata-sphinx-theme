@@ -473,7 +473,8 @@ function showVersionWarningBanner(data) {
     return;
   }
   // now construct the warning banner
-  var outer = document.createElement("div");
+  var outer = document.createElement("aside");
+  outer.setAttribute("aria-label", "Version warning");
   const middle = document.createElement("div");
   const inner = document.createElement("div");
   const bold = document.createElement("strong");
@@ -509,7 +510,8 @@ function showVersionWarningBanner(data) {
   inner.appendChild(bold);
   inner.appendChild(document.createTextNode("."));
   inner.appendChild(button);
-  (documment.querySelector("header") || document.body).prepend(outer);
+  const skipLink = document.getElementById("pst-skip-link");
+  skipLink.after(outer);
 }
 
 /*******************************************************************************
