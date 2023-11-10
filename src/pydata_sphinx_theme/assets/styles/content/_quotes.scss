@@ -20,7 +20,7 @@ blockquote {
     margin-bottom: 0;
   }
 
-  @include background-from-color-variable(--pst-color-on-background);
+  background-color: var(--pst-color-surface);
 
   //hack to make the text in the blockquote selectable
   &:before {

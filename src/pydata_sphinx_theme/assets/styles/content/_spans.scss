@@ -11,8 +11,7 @@ span.guilabel {
   padding: 2.4px 6px;
   margin: auto 2px;
   position: relative;
-
-  @include background-from-color-variable(--pst-color-info-bg);
+  background-color: var(--pst-color-info-bg);
 }
 
 a.reference.download:before {
