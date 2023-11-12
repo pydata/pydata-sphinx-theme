@@ -44,6 +44,11 @@ table.field-list {
   td:first-child {
     white-space: nowrap;
   }
+
+  // increas margin of each element to differentiate functions from decriptions
+  dl {
+    margin-bottom: 2rem;
+  }
 }
 
 /* overriding basic.css to use our own monospace font */
