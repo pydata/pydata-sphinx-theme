@@ -35,7 +35,7 @@ Thanks for your support!
   link: https://fairlearn.org/main/about/
 - title: Feature-engine
   link: https://feature-engine.readthedocs.io/
-- title: idtracker.ai
+- title: idtracker&period;ai
   link: https://idtracker.ai/
 - title: MegEngine
   link: https://www.megengine.org.cn/doc/stable/en/index.html
