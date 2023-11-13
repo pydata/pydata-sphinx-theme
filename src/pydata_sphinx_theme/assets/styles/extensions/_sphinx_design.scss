@@ -149,6 +149,22 @@ html[data-theme="light"] {
   .sd-card-body {
     background-color: var(--pst-color-panel-background);
   }
+
+  // Focus ring for link-cards
+  .sd-stretched-link:focus-visible {
+    // Don't put the focus ring on the <a> element (it has zero height in Sphinx Design cards)
+    outline: none;
+
+    // Put the focus ring on the <a> element's ::after pseudo-element
+    &:after {
+      outline: $focus-ring-outline;
+      border-radius: 0.25rem; // copied from Sphinx Design CSS for .sd-card
+    }
+  }
+
+  &.sd-card-hover:hover {
+    border-color: var(--pst-color-link-hover);
+  }
 }
 /*******************************************************************************
   * tabs
@@ -255,6 +271,12 @@ details.sd-dropdown {
     .sd-summary-up,
     .sd-summary-down {
       top: 0.7rem;
+    }
+
+    // Focus ring
+    &:focus-visible {
+      outline: $focus-ring-outline;
+      outline-offset: -$focus-ring-width;
     }
   }
 }

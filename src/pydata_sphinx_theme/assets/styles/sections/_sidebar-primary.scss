@@ -23,6 +23,11 @@
     font-size: var(--pst-sidebar-font-size);
   }
 
+  // Focus styles
+  :focus-visible {
+    border-radius: 0.125rem;
+  }
+
   // override bootstrap when navlink are displayed in the sidebar
   .nav-link {
     font-size: var(--pst-sidebar-font-size-mobile);
@@ -80,6 +85,26 @@
         border: none;
         background-color: inherit;
         font-size: inherit;
+
+        .dropdown-item {
+          &:hover,
+          &:focus {
+            // In the mobile sidebar, the dropdown menu is inlined with the
+            // other links, which do not have background-color changes on hover
+            // and focus
+            background-color: unset;
+          }
+        }
+      }
+    }
+
+    .bd-navbar-elements {
+      .nav-link {
+        &:focus-visible {
+          box-shadow: none; // Override Bootstrap
+          outline: $focus-ring-outline;
+          outline-offset: $focus-ring-width;
+        }
       }
     }
 
@@ -93,7 +118,7 @@
     .sidebar-header-items__end {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
     }
 
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
@@ -171,8 +196,6 @@
 
 /* Between-page links and captions */
 nav.bd-links {
-  margin-right: -1rem;
-
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     display: block;
   }

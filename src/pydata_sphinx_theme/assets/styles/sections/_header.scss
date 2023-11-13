@@ -28,6 +28,10 @@
     padding-right: 1rem;
   }
 
+  :focus-visible {
+    border-radius: 0.125rem;
+  }
+
   // These items will define the height of the header
   .navbar-item {
     height: var(--pst-header-height);
@@ -99,7 +103,6 @@
         color: var(--pst-color-text-muted);
         border: none;
         @include link-style-hover;
-        @include focus-indicator;
       }
 
       .dropdown-menu {
@@ -190,7 +193,6 @@
       }
     }
     @include icon-navbar-hover;
-    @include focus-indicator;
   }
 
   // Hide the navbar header items on mobile because they're in the sidebar
