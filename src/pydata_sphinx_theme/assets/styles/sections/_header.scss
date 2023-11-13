@@ -29,7 +29,7 @@
   }
 
   :focus-visible {
-    border-radius: 0.125rem;
+    border-radius: $focus-ring-radius;
   }
 
   // These items will define the height of the header
