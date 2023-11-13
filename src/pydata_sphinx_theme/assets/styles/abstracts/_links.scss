@@ -123,6 +123,12 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:active {
     color: var(--pst-color-link-hover);
   }
+
+  &:focus-visible {
+    border-radius: 0.125rem; // 2px at 100% zoom and 16px base font
+    box-shadow: $focus-ring-box-shadow;
+    outline: none;
+  }
 }
 
 // Sidebar current page link styles
@@ -135,9 +141,16 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   font-weight: 600;
   color: var(--pst-color-primary);
   @if $link-hover-decoration-thickness {
-    border-left: $link-hover-decoration-thickness
-      solid
+    $notch-shadow: inset
+      $link-hover-decoration-thickness
+      0px
+      0px
       var(--pst-color-primary);
+    box-shadow: $notch-shadow;
+    &:focus-visible {
+      box-shadow: $notch-shadow, $focus-ring-box-shadow;
+      outline: none;
+    }
   }
 }
 
