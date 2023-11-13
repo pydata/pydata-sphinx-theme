@@ -23,7 +23,7 @@ A clean, Bootstrap-based Sphinx theme by and for [the PyData community](https://
 - header: "{fas}`palette;pst-color-primary` Customizable UI and themes"
   content: "Customize colors and branding with CSS variables, and build custom UIs with [Sphinx Design components](user_guide/web-components)."
 - header: "{fab}`python;pst-color-primary` Supports PyData and Jupyter"
-  content: "CSS and UI support for Jupyter extensions and [PyData execution outputs](examples/pydata.ipynb)."
+  content: "CSS and UI support for [Jupyter extensions](examples/execution) and [PyData execution outputs](examples/pydata.ipynb)."
 - header: "{fas}`lightbulb;pst-color-primary` Example Gallery"
   content: "See [our gallery](examples/gallery.md) of projects that use this theme."
 ```
