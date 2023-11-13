@@ -125,7 +125,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   }
 
   &:focus-visible {
-    border-radius: 0.125rem; // 2px at 100% zoom and 16px base font
     box-shadow: $focus-ring-box-shadow;
     outline: none;
   }

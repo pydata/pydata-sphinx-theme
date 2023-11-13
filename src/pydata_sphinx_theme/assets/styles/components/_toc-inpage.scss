@@ -47,5 +47,9 @@ nav.page-toc {
         color: var(--pst-color-link-hover);
       }
     }
+
+    &:focus-visible {
+      border-radius: $focus-ring-radius;
+    }
   }
 }

@@ -24,7 +24,7 @@
   }
 
   :focus-visible {
-    border-radius: 0.125rem;
+    border-radius: $focus-ring-radius;
   }
 
   // override bootstrap when navlink are displayed in the sidebar
