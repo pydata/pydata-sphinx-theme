@@ -20,6 +20,7 @@ blockquote {
     margin-bottom: 0;
   }
 
+  @include legacy-backdrop-placeholder;
   background-color: var(--pst-color-surface);
 
   //hack to make the text in the blockquote selectable

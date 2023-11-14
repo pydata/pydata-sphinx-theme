@@ -231,6 +231,7 @@ details.sd-dropdown {
       }
     }
 
+    @include legacy-backdrop-placeholder;
     background-color: var(--pst-sd-dropdown-bg-color) !important;
 
     // Add a left border with the same structure as our admonitions

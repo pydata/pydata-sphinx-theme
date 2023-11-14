@@ -38,6 +38,7 @@ div.admonition,
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: var(--pst-admonition-font-weight-heading);
     position: relative;
+    @include legacy-backdrop-placeholder;
     background-color: var(--pst-color-info-bg);
     // now that we use solid colors we want the title on top
     z-index: 1;

@@ -11,6 +11,7 @@ span.guilabel {
   padding: 2.4px 6px;
   margin: auto 2px;
   position: relative;
+  @include legacy-backdrop-placeholder;
   background-color: var(--pst-color-info-bg);
 }
 
