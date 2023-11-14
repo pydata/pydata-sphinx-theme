@@ -127,6 +127,7 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:focus-visible {
     box-shadow: $focus-ring-box-shadow;
     outline: none;
+    z-index: 10; // keep focus ring on top (prevent the link-sidebar-current notch from lying on top of the ring)
   }
 }
 

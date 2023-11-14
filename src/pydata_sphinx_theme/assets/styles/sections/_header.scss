@@ -123,6 +123,10 @@
           &:focus:not(:hover):not(:active) {
             background-color: inherit;
           }
+
+          &:focus-visible {
+            z-index: 10; // keep focus ring on top (prevent the hover background of the next dropdown item from covering the ring)
+          }
         }
 
         // Hide the menu unless show has been clicked
