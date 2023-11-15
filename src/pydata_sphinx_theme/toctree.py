@@ -367,6 +367,11 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if not element.find("ul"):
             continue
 
+        header = soup.new_tag("div", attrs={"class": "toctree-collapsible-header"})
+        link = element.find("a")
+        element.insert(0, header)
+        header.insert(0, link)
+
         # Add a class to indicate that this has children.
         element["class"] = classes + ["has-children"]
 
@@ -385,7 +390,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if "toctree-l0" in classes:
             # making label cover the whole caption text with css
             label["class"] = "label-parts"
-        element.insert(1, label)
+        header.insert(1, label)
 
         # Add the checkbox that's used to store expanded/collapsed state.
         checkbox = soup.new_tag(

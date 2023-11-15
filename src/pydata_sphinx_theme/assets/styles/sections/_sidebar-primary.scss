@@ -23,11 +23,6 @@
     font-size: var(--pst-sidebar-font-size);
   }
 
-  // Focus styles
-  :focus-visible {
-    border-radius: 0.125rem;
-  }
-
   // override bootstrap when navlink are displayed in the sidebar
   .nav-link {
     font-size: var(--pst-sidebar-font-size-mobile);
@@ -147,22 +142,23 @@
     // If it has children, add a bit more padding to wrap the content to avoid
     // overlapping with the <label>
     &.has-children {
-      > .reference {
+      .reference {
         padding-right: 30px;
       }
     }
   }
   // Navigation item chevrons
   label.toctree-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
+    flex: 0 0 auto;
+
+    margin-right: -1rem; // align with right edge of the sidebar
+
     height: 30px;
     width: 30px;
 
     cursor: pointer;
 
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 
@@ -192,6 +188,12 @@
       right: 0em; // aligning chevron to the right
     }
   }
+
+  .toctree-collapsible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
 }
 
 /* Between-page links and captions */
@@ -209,7 +211,7 @@ nav.bd-links {
     }
   }
 
-  li > a {
+  li a {
     display: block;
     padding: 0.25rem 0.65rem;
     @include link-sidebar;
@@ -223,12 +225,15 @@ nav.bd-links {
         margin-left: 0.3em;
       }
     }
-  }
 
-  .current {
-    > a {
+    &.current {
       @include link-sidebar-current;
       background-color: transparent;
+    }
+
+    &:focus-visible {
+      border-radius: 0.125rem;
+      z-index: 10; // needed so that adjacent UI elements (such as the collapse toggle) don't partially cover the focus ring
     }
   }
 
