@@ -191,8 +191,8 @@
 
   .toctree-collapsible-header {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    justify-content: space-between; // sends the link and collapse/expand chevron to opposite sides of the flex box
+    align-items: baseline; // for TOC entries that span two or more lines, ensures that the chevron is aligned with the first line
   }
 }
 
