@@ -45,6 +45,9 @@ button.btn.version-switcher__button {
         top: 0;
       }
     }
+    &:focus-visible {
+      z-index: 10; // keep focus ring on top (prevent the hover background of the next dropdown item from covering the ring)
+    }
   }
 }
 
