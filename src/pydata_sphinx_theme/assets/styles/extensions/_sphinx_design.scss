@@ -174,27 +174,47 @@ html[data-theme="light"] {
   > input {
     // Active tab label
     &:checked + label {
-      border-color: transparent transparent var(--pst-color-primary); // top LR bottom
+      border-style: solid solid none;
+      border-color: var(--pst-color-primary) var(--pst-color-primary)
+        transparent; // top LR bottom
+      border-width: 0.125rem 0.125rem 0;
+      border-radius: 0.125rem 0.125rem 0 0;
+      background-color: var(--pst-color-background);
+      transform: translateY(0.125rem);
       color: var(--pst-color-primary);
     }
 
+    &:focus-visible + label {
+      border: 0.125rem solid var(--pst-color-accent);
+      border-radius: 0.125rem;
+      background-color: var(--pst-color-accent-bg);
+      color: var(--pst-color-on-surface);
+    }
+
     // Hover label
-    &:not(:checked) + label:hover {
-      border-color: var(--pst-color-secondary);
+    &:not(:checked):not(:focus-visible) + label:hover {
+      border-color: transparent;
       color: var(--pst-color-secondary);
     }
   }
 
   // Tab label
   > label {
-    color: var(--pst-color-text-muted);
-    border-top: 0.125rem solid transparent; // so hover isn't just color change
-    padding-top: 0.5em; // same as bottom padding, so hover overline looks OK
-    // Hovered label
-    html &:hover {
-      color: var(--pst-color-secondary);
-      border-color: var(--pst-color-secondary);
-    }
+    color: var(--pst-color-on-surface);
+    border: 0.125rem solid transparent;
+    border-radius: 0.125rem 0.125rem 0px 0px;
+    background-color: var(--pst-color-surface);
+    padding: 0 0.75em;
+    margin-inline-end: 0.25rem;
+    line-height: 1.95;
+  }
+
+  // panel
+  .sd-tab-content {
+    border: 0.125rem solid var(--pst-color-primary);
+    border-radius: 0.1875rem;
+    box-shadow: unset;
+    padding: 0.625rem;
   }
 }
 
