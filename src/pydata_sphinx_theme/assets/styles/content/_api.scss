@@ -46,11 +46,6 @@ table.field-list {
   }
 }
 
-//increase margin bottom after the dl elements
-dl {
-  margin-bottom: 2rem;
-}
-
 /* overriding basic.css to use our own monospace font */
 .sig {
   font-family: var(--pst-font-family-monospace);
@@ -123,6 +118,9 @@ span.highlighted {
 // the API selector
 // from https://github.com/pradyunsg/furo/blob/main/src/furo/assets/styles/content/_api.sass#L6)
 dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) {
+  //increase margin bottom after the dl elements
+  margin-bottom: 2rem;
+
   dd {
     margin-left: 2rem;
 
