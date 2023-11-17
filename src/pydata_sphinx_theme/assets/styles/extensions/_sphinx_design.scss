@@ -231,9 +231,8 @@ details.sd-dropdown {
       }
     }
 
-    // Background color and border are grey by default
-    background-color: unset !important;
-    @include background-from-color-variable(--pst-sd-dropdown-bg-color);
+    @include legacy-backdrop-placeholder;
+    background-color: var(--pst-sd-dropdown-bg-color) !important;
 
     // Add a left border with the same structure as our admonitions
     border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
