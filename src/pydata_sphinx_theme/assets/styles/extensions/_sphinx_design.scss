@@ -179,7 +179,7 @@ html[data-theme="light"] {
         transparent; // top LR bottom
       border-width: 0.125rem 0.125rem 0;
       border-radius: 0.125rem 0.125rem 0 0;
-      background-color: var(--pst-color-background);
+      background-color: var(--pst-color-on-background);
       transform: translateY(0.125rem);
       color: var(--pst-color-primary);
     }
@@ -207,6 +207,10 @@ html[data-theme="light"] {
     padding: 0 0.75em;
     margin-inline-end: 0.25rem;
     line-height: 1.95;
+
+    html[data-theme="dark"] & {
+      background-color: var(--pst-color-on-background);
+    }
   }
 
   // panel
@@ -215,6 +219,7 @@ html[data-theme="light"] {
     border-radius: 0.1875rem;
     box-shadow: unset;
     padding: 0.625rem;
+    background-color: var(--pst-color-on-background);
   }
 }
 
