@@ -180,7 +180,10 @@ html_theme_options = {
     # "content_footer_items": ["test", "test"],
     "footer_start": ["copyright"],
     "footer_center": ["sphinx-version"],
-    # "secondary_sidebar_items": ["page-toc"],  # Remove the source buttons
+    "secondary_sidebar_items": {
+        "**/*": ["page-toc", "edit-this-page", "sourcelink"],
+        "examples/no-sidebar": [],
+    },
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,

@@ -986,3 +986,73 @@ def test_translations(sphinx_build_factory) -> None:
     # Search bar
     # TODO: Add translations where there are english phrases below
     assert "Search the docs" in str(index.select(".bd-search")[0])
+
+
+def test_render_secondary_sidebar_list(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a list of templates."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": ["page-toc", "edit-this-page"],
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the page-toc template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+
+    # Check that sourcelink is not rendered
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a dict of templates."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "**": ["page-toc", "edit-this-page"],
+                "section1/index": [],
+                "section2/index": ["sourcelink"],
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the page-toc template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+
+    # Check that sourcelink is not rendered
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
