@@ -2,7 +2,7 @@
  # a default mode has been set. This also improves compatibility when JavaScript is disabled.
  #}
 {% set html_tag %}
-<html{% if not html5_doctype %} xmlns="http://www.w3.org/1999/xhtml"{% endif %}{% if language is not none %} lang="{{ language }}"{% endif %} {% if default_mode %}data-theme="{{ default_mode }}"{% endif %}>
+<html{% if not html5_doctype %} xmlns="http://www.w3.org/1999/xhtml"{% endif %}{% if language is not none %} lang="{{ language }}"{% endif %} data-content_root="{{ content_root }}" {% if default_mode %}data-theme="{{ default_mode }}"{% endif %}>
 {% endset %}
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}

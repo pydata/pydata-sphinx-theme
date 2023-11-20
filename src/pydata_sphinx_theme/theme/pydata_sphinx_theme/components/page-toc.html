@@ -1,3 +1,4 @@
+{# Displays the current page's Table of Contents.  #}
 {% set page_toc = generate_toc_html() %}
 {%- if page_toc | length >= 1 %}
   <div class="page-toc tocsection onthispage">

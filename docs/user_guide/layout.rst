@@ -518,29 +518,12 @@ Below is a list of built-in templates that you can insert into any section.
 Note that some of them may have CSS rules that assume a specific section (and
 will be named accordingly).
 
-.. refer to files in: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/
+.. note::
 
-- ``breadcrumbs.html``
-- ``copyright.html``
-- ``edit-this-page.html``
-- ``footer-article/prev-next.html``
-- ``icon-links.html``
-- ``last-updated.html``
-- ``navbar-icon-links.html``
-- ``navbar-logo.html``
-- ``navbar-nav.html``
-- ``page-toc.html``
-- ``searchbox.html``
-- ``search-button.html``
-- ``search-field.html``
-- ``sidebar-ethical-ads.html``
-- ``sidebar-nav-bs.html``
-- ``sourcelink.html``
-- ``sphinx-version.html``
-- ``theme-switcher.html``
-- ``version-switcher.html``
-- ``indices.html``
-- ``theme-version.html``
+    When adding/changing/overwritting a component, the ".html" suffix is optional.
+    That's why all of them are displayed without it in the following list.
+
+.. component-list::
 
 
 Add your own HTML templates to theme sections

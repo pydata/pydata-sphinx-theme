@@ -22,6 +22,7 @@ html_sourcelink_suffix = ""
 # Base options, we can add other key/vals later
 html_theme_options = {
     "search_bar_position": "navbar",
+    "surface_warnings": True,
     "logo_text": "DOCS",
     "footer_items": ["page-toc.html"],
     "favicons": [
