@@ -91,7 +91,11 @@ def add_toctree_functions(
                 page = toc.attributes["parent"] if page == "self" else page
 
                 # If this is the active ancestor page, add a class so we highlight it
-                current = " current active" if page == active_header_page else ""
+                current = ""
+                aria_current = ""
+                if page == active_header_page:
+                    current = " current active"
+                    aria_current = ' aria-current="page"'
 
                 # sanitize page title for use in the html output if needed
                 if title is None:
@@ -114,7 +118,7 @@ def add_toctree_functions(
                 # create the html output
                 links_html.append(
                     f"""
-                    <li class="nav-item{current}">
+                    <li class="nav-item{current}"{aria_current}>
                       <a class="nav-link nav-{link_status}" href="{link_href}">
                         {title}
                       </a>
@@ -351,7 +355,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
     """Add checkboxes to collapse children in a toctree."""
     # based on https://github.com/pradyunsg/furo
 
-    toctree_checkbox_count = 0
+    toctree_subtree_count = 0
 
     for element in soup.find_all("li", recursive=True):
         # We check all "li" elements, to add a "current-page" to the correct li.
@@ -364,22 +368,35 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
                 parentli.select("p.caption ~ input")[0].attrs["checked"] = ""
 
         # Nothing more to do, unless this has "children"
-        if not element.find("ul"):
+        subtree = element.find("ul")
+        if not subtree:
             continue
 
         # Add a class to indicate that this has children.
         element["class"] = classes + ["has-children"]
 
         # We're gonna add a checkbox.
-        toctree_checkbox_count += 1
-        checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
+        toctree_subtree_count += 1
+        subtree_name = f"toctree-subtree-{toctree_subtree_count}"
+        subtree["id"] = subtree_name
+        checkbox_name = f"toctree-checkbox-{toctree_subtree_count}"
 
         # Add the "label" for the checkbox which will get filled.
         if soup.new_tag is None:
             continue
 
+        section_name = element.a.get_text()
         label = soup.new_tag(
-            "label", attrs={"for": checkbox_name, "class": "toctree-toggle"}
+            "label",
+            attrs={
+                "role": "button",
+                "for": checkbox_name,
+                "class": "toctree-toggle",
+                "tabindex": "0",
+                "aria-expanded": "false",
+                "aria-controls": subtree_name,
+                "aria-label": f"Expand section {section_name}",
+            },
         )
         label.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
         if "toctree-l0" in classes:
@@ -402,6 +419,8 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # (by checking the checkbox)
         if "current" in classes:
             checkbox.attrs["checked"] = ""
+            label.attrs["aria-expanded"] = "true"
+            label.attrs["aria-label"] = f"Collapse section {section_name}"
 
         element.insert(1, checkbox)
 
