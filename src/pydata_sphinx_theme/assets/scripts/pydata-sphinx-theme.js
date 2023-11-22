@@ -260,7 +260,7 @@ var addEventListenerForSearchKeyboard = () => {
 };
 
 /**
- * Find out if we're on a Mac
+ * If the user is on a Mac, use command (⌘) instead of control (ctrl) key
  *
  * Note: `navigator.platform` is deprecated; however MDN still recommends using
  * it for the one specific use case of detecting whether a keyboard shortcut
