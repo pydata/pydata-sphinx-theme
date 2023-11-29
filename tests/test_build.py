@@ -965,7 +965,7 @@ def test_translations(sphinx_build_factory) -> None:
 
     sidebar_primary = index.select(".bd-sidebar-primary")[0]
     assert "Navigation du site" in str(sidebar_primary)
-    assert "Dans cette section" in str(sidebar_primary)
+    assert "Navigation de la section" in str(sidebar_primary)
 
     sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
     assert "Montrer le code source" in str(sidebar_secondary)
