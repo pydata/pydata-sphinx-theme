@@ -474,6 +474,7 @@ function showVersionWarningBanner(data) {
   }
   // now construct the warning banner
   var outer = document.createElement("aside");
+  // TODO: add to translatable strings
   outer.setAttribute("aria-label", "Version warning");
   const middle = document.createElement("div");
   const inner = document.createElement("div");
