@@ -1,6 +1,6 @@
 {# Displays the TOC-subtree for pages nested under the currently active top-level TOCtree element. #}
-{%- set section_navigation_heading_id = unique_html_id("pst-section-navigation-heading") -%}
-<nav class="bd-docs-nav bd-links" aria-labelledby="{{ section_navigation_heading_id }}">
-  <p id="{{ section_navigation_heading_id }}" class="bd-links__title" role="heading" aria-level="1">{{ _("In this section") }}</p>
+<nav class="bd-docs-nav bd-links"
+     aria-label="{{ _('Section Navigation') }}">
+  <p class="bd-links__title" role="heading" aria-level="1">{{ _("Section Navigation") }}</p>
   <div class="bd-toc-item navbar-nav">{{ sidebar_nav_html }}</div>
 </nav>
