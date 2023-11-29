@@ -165,10 +165,9 @@ def translate(session: nox.Session) -> None:
     lan = "en" if len(session.posargs) < 2 else session.posargs[-1]
 
     # get the path to the differnet local related pieces
-    locale_dir = ROOT / "src" / "pydata_sphinx_theme" / "locale"
+    locale_dir = str(ROOT / "src" / "pydata_sphinx_theme" / "locale")
     babel_cfg = str(ROOT / "babel.cfg")
     pot_file = str(locale_dir / "sphinx.pot")
-    locale_dir = str(locale_dir)
 
     # install deps
     session.install("Babel")
@@ -177,15 +176,7 @@ def translate(session: nox.Session) -> None:
     cmd = ["pybabel", pybabel_cmd]
 
     if pybabel_cmd == "extract":
-        cmd += [
-            str(ROOT),
-            "-F",
-            babel_cfg,
-            "-o",
-            pot_file,
-            "-k",
-            "_ __ l_ lazy_gettext",
-        ]
+        cmd += [ROOT, "-F", babel_cfg, "-o", pot_file, "-k", "_ __ l_ lazy_gettext"]
 
     elif pybabel_cmd == "update":
         cmd += ["-i", pot_file, "-d", locale_dir, "-D", "sphinx"]
@@ -196,7 +187,7 @@ def translate(session: nox.Session) -> None:
     elif pybabel_cmd == "init":
         cmd += ["-i", pot_file, "-d", locale_dir, "-D", "sphinx", "-l", lan]
 
-    session.run(*cmd)
+    session.run(cmd)
 
 
 @nox.session()
