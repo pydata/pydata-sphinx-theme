@@ -39,7 +39,8 @@ div.admonition,
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: var(--pst-admonition-font-weight-heading);
     position: relative;
-    @include background-from-color-variable(--pst-color-info-bg);
+    @include legacy-backdrop-placeholder;
+    background-color: var(--pst-color-info-bg);
     // now that we use solid colors we want the title on top
     z-index: 1;
 
@@ -64,9 +65,7 @@ div.admonition,
   &.attention {
     border-color: var(--pst-color-attention);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-attention-bg);
-      }
+      background-color: var(--pst-color-attention-bg);
 
       &:after {
         color: var(--pst-color-attention);
@@ -78,9 +77,7 @@ div.admonition,
   &.caution {
     border-color: var(--pst-color-warning);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-warning-bg);
-      }
+      background-color: var(--pst-color-warning-bg);
 
       &:after {
         color: var(--pst-color-warning);
@@ -92,9 +89,7 @@ div.admonition,
   &.warning {
     border-color: var(--pst-color-warning);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-warning-bg);
-      }
+      background-color: var(--pst-color-warning-bg);
 
       &:after {
         color: var(--pst-color-warning);
@@ -106,9 +101,7 @@ div.admonition,
   &.danger {
     border-color: var(--pst-color-danger);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-danger-bg);
-      }
+      background-color: var(--pst-color-danger-bg);
 
       &:after {
         color: var(--pst-color-danger);
@@ -120,9 +113,7 @@ div.admonition,
   &.error {
     border-color: var(--pst-color-danger);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-danger-bg);
-      }
+      background-color: var(--pst-color-danger-bg);
 
       &:after {
         color: var(--pst-color-danger);
@@ -134,9 +125,7 @@ div.admonition,
   &.hint {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-success-bg);
-      }
+      background-color: var(--pst-color-success-bg);
 
       &:after {
         color: var(--pst-color-success);
@@ -148,9 +137,7 @@ div.admonition,
   &.tip {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-success-bg);
-      }
+      background-color: var(--pst-color-success-bg);
 
       &:after {
         color: var(--pst-color-success);
@@ -162,9 +149,7 @@ div.admonition,
   &.important {
     border-color: var(--pst-color-attention);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-attention-bg);
-      }
+      background-color: var(--pst-color-attention-bg);
 
       &:after {
         color: var(--pst-color-attention);
@@ -176,9 +161,7 @@ div.admonition,
   &.note {
     border-color: var(--pst-color-info);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-info-bg);
-      }
+      background-color: var(--pst-color-info-bg);
 
       &:after {
         color: var(--pst-color-info);
@@ -190,9 +173,7 @@ div.admonition,
   &.seealso {
     border-color: var(--pst-color-success);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-success-bg);
-      }
+      background-color: var(--pst-color-success-bg);
 
       &:after {
         color: var(--pst-color-success);
@@ -204,9 +185,7 @@ div.admonition,
   &.admonition-todo {
     border-color: var(--pst-color-secondary);
     > .admonition-title {
-      &:before {
-        background-color: var(--pst-color-secondary-bg);
-      }
+      background-color: var(--pst-color-secondary-bg);
 
       &:after {
         color: var(--pst-color-secondary);

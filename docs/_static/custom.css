@@ -7,14 +7,12 @@
 div.admonition.admonition-olive {
   border-color: hsl(60, 100%, 25%);
 }
-div.admonition.admonition-olive > .admonition-title:before {
+div.admonition.admonition-olive > .admonition-title {
   background-color: hsl(60, 100%, 14%);
+  color: white;
 }
 div.admonition.admonition-olive > .admonition-title:after {
   color: hsl(60, 100%, 25%);
-}
-div.admonition.admonition-olive > .admonition-title {
-  color: white;
 }
 /* end-custom-color */
 
@@ -30,15 +28,13 @@ div.admonition.admonition-icon > .admonition-title:after {
 div.admonition.admonition-youtube {
   border-color: hsl(0, 100%, 50%); /* YouTube red */
 }
-div.admonition.admonition-youtube > .admonition-title:before {
+div.admonition.admonition-youtube > .admonition-title {
   background-color: hsl(0, 99%, 18%);
+  color: white;
 }
 div.admonition.admonition-youtube > .admonition-title:after {
   color: hsl(0, 100%, 50%);
   content: "\f26c"; /* fa-solid fa-tv */
-}
-div.admonition.admonition-youtube > .admonition-title {
-  color: white;
 }
 /* end-custom-youtube */
 
