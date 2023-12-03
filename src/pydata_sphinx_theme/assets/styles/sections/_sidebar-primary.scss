@@ -149,19 +149,36 @@
       > .reference {
         padding-right: 30px;
       }
+
+      details {
+        // Get rid of the default toggle icon
+        > summary {
+          display: flex;
+          justify-content: space-between;
+          list-style: none;
+          &::-webkit-details-marker {
+            display: none;
+          }
+        }
+
+        // The section is open, rotate the toggle icon (chevron) so it points down instead of to the right
+        &[open] {
+          .fa-chevron-down {
+            transform: rotate(180deg);
+          }
+        }
+      }
+      text-align: initial;
     }
   }
   // Navigation item chevrons
-  label.toctree-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
+  span.toctree-toggle {
     height: 30px;
     width: 30px;
 
     cursor: pointer;
 
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 
@@ -208,7 +225,8 @@ nav.bd-links {
     }
   }
 
-  li > a {
+  li > a,
+  li summary a {
     display: block;
     padding: 0.25rem 0.65rem;
     @include link-sidebar;
@@ -224,11 +242,9 @@ nav.bd-links {
     }
   }
 
-  .current {
-    > a {
-      @include link-sidebar-current;
-      background-color: transparent;
-    }
+  a.current {
+    @include link-sidebar-current;
+    background-color: transparent;
   }
 
   // Title

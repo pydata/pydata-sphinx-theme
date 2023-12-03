@@ -26,32 +26,6 @@
       @include link-style-text;
     }
   }
-
-  /**
-   * Togglable expand/collapse
-   * This is only applicable to the primary sidebar which has these checkboxes
-   */
-  .toctree-checkbox {
-    position: absolute;
-    display: none;
-  }
-
-  .toctree-checkbox {
-    ~ ul {
-      display: none;
-    }
-    ~ label i {
-      transform: rotate(0deg);
-    }
-  }
-  .toctree-checkbox:checked {
-    ~ ul {
-      display: block;
-    }
-    ~ label i {
-      transform: rotate(180deg);
-    }
-  }
 }
 
 // Don't display the `site navigation` in the header menu

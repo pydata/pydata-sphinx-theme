@@ -375,11 +375,21 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # Add a class to indicate that this has children.
         element["class"] = classes + ["has-children"]
 
+        # Put everything inside a <details> tag
+        details = soup.new_tag("details")
+        details.extend(element.contents)
+        element.append(details)
+
+        # Put the <a> in the <summary>
+        summary = soup.new_tag("summary")
+        summary.append(details.a)
+        details.insert(0, summary)
+
         # We're gonna add a checkbox.
         toctree_subtree_count += 1
         subtree_name = f"toctree-subtree-{toctree_subtree_count}"
         subtree["id"] = subtree_name
-        checkbox_name = f"toctree-checkbox-{toctree_subtree_count}"
+        # checkbox_name = f"toctree-checkbox-{toctree_subtree_count}"
 
         # Add the "label" for the checkbox which will get filled.
         if soup.new_tag is None:
@@ -387,12 +397,12 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
 
         section_name = element.a.get_text()
         label = soup.new_tag(
-            "label",
+            "span",
             attrs={
-                "role": "button",
-                "for": checkbox_name,
+                # "role": "button",
+                # "for": checkbox_name,
                 "class": "toctree-toggle",
-                "tabindex": "0",
+                # "tabindex": "0",
                 "aria-expanded": "false",
                 "aria-controls": subtree_name,
                 "aria-label": f"Expand section {section_name}",
@@ -402,27 +412,13 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if "toctree-l0" in classes:
             # making label cover the whole caption text with css
             label["class"] = "label-parts"
-        element.insert(1, label)
-
-        # Add the checkbox that's used to store expanded/collapsed state.
-        checkbox = soup.new_tag(
-            "input",
-            attrs={
-                "type": "checkbox",
-                "class": ["toctree-checkbox"],
-                "id": checkbox_name,
-                "name": checkbox_name,
-            },
-        )
+        summary.append(label)
 
         # if this has a "current" class, be expanded by default
         # (by checking the checkbox)
         if "current" in classes:
-            checkbox.attrs["checked"] = ""
             label.attrs["aria-expanded"] = "true"
             label.attrs["aria-label"] = f"Collapse section {section_name}"
-
-        element.insert(1, checkbox)
 
 
 def get_local_toctree_for(

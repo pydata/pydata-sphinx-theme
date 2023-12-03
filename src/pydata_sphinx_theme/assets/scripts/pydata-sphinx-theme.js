@@ -565,58 +565,6 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
 }
 
 /*******************************************************************************
- * Table of contents expand/collapse chevron aka toctree-toggle
- */
-function setupToctreeToggle() {
-  const handleKey = (event) => {
-    if (
-      !event.target.classList.contains("toctree-toggle") ||
-      (event.key !== "Enter" && event.key !== " ")
-    ) {
-      return;
-    }
-
-    // Prevent default in any case
-    event.preventDefault();
-
-    if (
-      !(
-        // Enter key triggers button action on keydown
-        (
-          (event.type === "keydown" && event.key === "Enter") ||
-          // Space key triggers button action on keyup
-          (event.type === "keyup" && event.key === " ")
-        )
-      )
-    ) {
-      return;
-    }
-
-    event.stopPropagation();
-    const label = event.target;
-    const forId = label.getAttribute("for");
-    const invisibleCheckbox = document.getElementById(forId);
-    invisibleCheckbox.checked = !invisibleCheckbox.checked;
-    if (label.getAttribute("aria-expanded") === "true") {
-      label.setAttribute(
-        "aria-label",
-        label.ariaLabel.replace("Collapse", "Expand")
-      );
-      label.setAttribute("aria-expanded", "false");
-    } else {
-      label.setAttribute(
-        "aria-label",
-        label.ariaLabel.replace("Expand", "Collapse")
-      );
-      label.setAttribute("aria-expanded", "true");
-    }
-  };
-
-  window.addEventListener("keydown", handleKey);
-  window.addEventListener("keyup", handleKey);
-}
-
-/*******************************************************************************
  * Call functions after document loading.
  */
 
@@ -624,5 +572,4 @@ documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
-documentReady(setupToctreeToggle);
 documentReady(initRTDObserver);
