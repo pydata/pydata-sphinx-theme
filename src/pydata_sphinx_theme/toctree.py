@@ -273,10 +273,8 @@ def add_toctree_functions(
 
             # Open the sidebar navigation to the proper depth
             for ii in range(int(show_nav_level)):
-                for checkbox in soup.select(
-                    f"li.toctree-l{ii} > input.toctree-checkbox"
-                ):
-                    checkbox.attrs["checked"] = None
+                for details in soup.select(f"li.toctree-l{ii} > details"):
+                    details["open"] = None
 
         return soup
 
@@ -363,7 +361,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if "current" in classes:
             parentli = element.find_parent("li", class_="toctree-l0")
             if parentli:
-                parentli.find("details")["open"] = True
+                parentli.find("details")["open"] = None
 
         # Nothing more to do, unless this has "children"
         subtree = element.find("ul")
@@ -411,7 +409,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # If this has a "current" class, be expanded by default
         # (by opening the details/summary disclosure widget)
         if "current" in classes:
-            details["open"] = True
+            details["open"] = None
 
 
 def get_local_toctree_for(
