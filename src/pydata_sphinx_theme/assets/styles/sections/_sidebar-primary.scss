@@ -140,6 +140,10 @@
   .list-caption {
     list-style: none;
     padding-left: 0px;
+
+    .nav {
+      display: block;
+    }
   }
   li {
     position: relative;
@@ -150,21 +154,25 @@
         padding-right: 30px;
       }
 
-      details {
+      > details {
         // Get rid of the default toggle icon
         > summary {
           display: flex;
           justify-content: space-between;
+          align-items: baseline;
           list-style: none;
           &::-webkit-details-marker {
             display: none;
           }
         }
 
-        // The section is open, rotate the toggle icon (chevron) so it points down instead of to the right
+        // The section is open/expanded, rotate the toggle icon (chevron) so it
+        // points down instead of to the right
         &[open] {
-          .fa-chevron-down {
-            transform: rotate(180deg);
+          > summary {
+            .fa-chevron-down {
+              transform: rotate(180deg);
+            }
           }
         }
       }
@@ -173,9 +181,6 @@
   }
   // Navigation item chevrons
   span.toctree-toggle {
-    height: 30px;
-    width: 30px;
-
     cursor: pointer;
 
     display: inline-flex;
@@ -186,7 +191,7 @@
       background: var(--pst-color-surface);
     }
 
-    i {
+    svg {
       display: inline-block;
       font-size: 0.75rem;
       text-align: center;
@@ -194,18 +199,11 @@
         color: var(--pst-color-primary);
       }
     }
-  }
-  .label-parts {
-    width: 100%;
-    height: 100%;
-    &:hover {
-      background: none;
-    }
-    i {
-      width: 30px;
-      position: absolute;
-      top: 0.3em; // aligning chevron with text
-      right: 0em; // aligning chevron to the right
+
+    .toctree-l10 & {
+      svg {
+        font-size: inherit;
+      }
     }
   }
 }

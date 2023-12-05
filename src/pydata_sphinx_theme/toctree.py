@@ -364,8 +364,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
                 parentli.find("details")["open"] = None
 
         # Nothing more to do, unless this has "children"
-        subtree = element.find("ul")
-        if not subtree:
+        if not element.find("ul"):
             continue
 
         # Add a class to indicate that this has children.
@@ -374,7 +373,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if soup.new_tag is None:
             continue
 
-        # Modify the tree so that it looks like
+        # Modify the tree so that it looks like:
         #
         # li.has-children
         # > details
@@ -382,15 +381,18 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         #     > a.reference ~ span.toctree-toggle
         #   > ul
 
-        # Create <details> and move everything under this TOC <li> entry inside it
+        # Create <details> and move everything at this level into it
         details = soup.new_tag("details")
         details.extend(element.contents)
         element.append(details)
 
-        # Create <summary> and move the TOC <a> entry into it
+        # Create <summary> and move the level's heading into it
         summary = soup.new_tag("summary")
-        summary.append(details.a)
         details.insert(0, summary)
+        summary.append(
+            # heading
+            element.select_one("details > p.caption, details > a.reference")
+        )
 
         # Create chevron icon and append to <summary>
         span = soup.new_tag(
@@ -401,9 +403,6 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
             },
         )
         span.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
-        if "toctree-l0" in classes:
-            # making label cover the whole caption text with css
-            span["class"] = "label-parts"
         summary.append(span)
 
         # If this has a "current" class, be expanded by default
