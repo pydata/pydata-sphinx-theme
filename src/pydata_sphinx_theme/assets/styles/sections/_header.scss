@@ -171,8 +171,8 @@
 
 // Hide the header items on mobile
 .bd-header {
-  // Toggle labels
-  label {
+  // Toggle buttons
+  button {
     &.sidebar-toggle {
       display: flex;
       cursor: pointer;
@@ -181,6 +181,8 @@
       color: var(--pst-color-muted);
       margin-bottom: 0;
       padding-bottom: 0.25rem;
+      background-color: inherit;
+      border: none;
     }
 
     &.primary-toggle {
