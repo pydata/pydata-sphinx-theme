@@ -149,7 +149,7 @@
   background-color: var(--pst-color-surface);
 
   &:hover {
-    border: 2px solid var(--pst-color-link-hover);
+    box-shadow: 0 0 0 $focus-ring-width var(--pst-color-link-hover);
   }
 
   &:focus-visible {
