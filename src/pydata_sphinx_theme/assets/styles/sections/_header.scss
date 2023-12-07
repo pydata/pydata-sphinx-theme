@@ -28,6 +28,10 @@
     padding-right: 1rem;
   }
 
+  :focus-visible {
+    border-radius: $focus-ring-radius;
+  }
+
   // These items will define the height of the header
   .navbar-item {
     height: var(--pst-header-height);
@@ -103,6 +107,7 @@
       button {
         display: unset;
         border: none;
+        @include link-style-hover;
       }
 
       .dropdown-menu {
@@ -122,6 +127,10 @@
           // Override Bootstrap
           &:focus:not(:hover):not(:active) {
             background-color: inherit;
+          }
+
+          &:focus-visible {
+            z-index: 10; // keep focus ring on top (prevent the hover background of the next dropdown item from covering the ring)
           }
         }
 
@@ -193,7 +202,6 @@
       }
     }
     @include icon-navbar-hover;
-    @include focus-indicator;
   }
 
   // Hide the navbar header items on mobile because they're in the sidebar

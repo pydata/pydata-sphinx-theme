@@ -5,9 +5,9 @@
 // loading the math module
 @use "sass:math";
 
-// Set background color from a color variable
-//
-@mixin background-from-color-variable($color-variable) {
+// We must add ::before pseudo-element to some theme components (such as admonitions)
+// because users were instructed to customize the background color this way.
+@mixin legacy-backdrop-placeholder {
   &:before {
     content: "";
     width: 100%;
@@ -15,7 +15,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: var(#{$color-variable});
     z-index: -1;
     // So that hovering over the text within background is still possible.
     // Otherwise the background overlays the text and you cannot click or select easily.

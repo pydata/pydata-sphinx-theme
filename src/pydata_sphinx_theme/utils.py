@@ -5,6 +5,7 @@ from typing import Any, Dict, Iterator
 
 from docutils.nodes import Node
 from sphinx.application import Sphinx
+from sphinx.util import logging
 
 
 def get_theme_options_dict(app: Sphinx) -> Dict[str, Any]:
@@ -46,3 +47,14 @@ def escape_ansi(string: str) -> str:
     """Helper function to remove ansi coloring from sphinx warnings."""
     ansi_escape = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]")
     return ansi_escape.sub("", string)
+
+
+SPHINX_LOGGER = logging.getLogger(__name__)
+
+
+def maybe_warn(app: Sphinx, msg, *args, **kwargs):
+    """Wraps the Sphinx logger to allow warning suppression."""
+    theme_options = get_theme_options_dict(app)
+    should_warn = theme_options.get("surface_warnings", False)
+    if should_warn:
+        SPHINX_LOGGER.warning(msg, *args, **kwargs)

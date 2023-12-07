@@ -74,5 +74,6 @@ accessibility
 analytics
 static_assets
 performance
+warnings
 readthedocs
 ```

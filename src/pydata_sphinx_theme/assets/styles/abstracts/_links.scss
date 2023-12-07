@@ -86,7 +86,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
       color: var(--pst-color-link-hover);
     }
   }
-  @include focus-indicator;
 }
 
 // Text link styles
@@ -102,7 +101,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     @include link-decoration;
     @include link-decoration-hover;
   }
-  @include focus-indicator;
 }
 
 // Sidebar and TOC links
@@ -125,6 +123,12 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:active {
     color: var(--pst-color-link-hover);
   }
+
+  &:focus-visible {
+    box-shadow: $focus-ring-box-shadow;
+    outline: none;
+    z-index: 10; // keep focus ring on top (prevent the link-sidebar-current notch from lying on top of the ring)
+  }
 }
 
 // Sidebar current page link styles
@@ -137,11 +141,16 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   font-weight: 600;
   color: var(--pst-color-primary);
   @if $link-hover-decoration-thickness {
-    box-shadow: inset
+    $notch-shadow: inset
       $link-hover-decoration-thickness
       0px
       0px
       var(--pst-color-primary);
+    box-shadow: $notch-shadow;
+    &:focus-visible {
+      box-shadow: $notch-shadow, $focus-ring-box-shadow;
+      outline: none;
+    }
   }
 }
 
@@ -173,13 +182,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
         0px
         var(--pst-color-link-hover);
     }
-  }
-}
-
-// Focus indicator
-@mixin focus-indicator {
-  &:focus-visible {
-    outline: 2px solid var(--pst-color-accent);
   }
 }
 
