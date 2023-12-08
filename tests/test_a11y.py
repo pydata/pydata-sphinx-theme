@@ -1,6 +1,7 @@
 """Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
 
 import time
+from dataclasses import dataclass
 from http.client import HTTPConnection
 from pathlib import Path
 from subprocess import PIPE, Popen
@@ -70,20 +71,30 @@ def url_base():
         process.wait()
 
 
-def fingerprint_violations(accessibility_page_scan_violations):
+@dataclass(frozen=True)
+class AxeViolationFingerprint:
+    """Fingerprint for single Axe violation."""
+
+    id: str
+    help: str
+    helpUrl: str
+    targets: tuple
+
+
+def fingerprint(accessibility_page_scan_violations):
     """Create a fingerprint of the Axe violations array.
 
     https://playwright.dev/docs/accessibility-testing#using-snapshots-to-allow-specific-known-issues
     """
-    return [
-        {
-            "id": violation["id"],
-            "help": violation["help"],
-            "helpUrl": violation["helpUrl"],
-            "targets": [node["target"] for node in violation["nodes"]],
-        }
+    return tuple(
+        AxeViolationFingerprint(
+            violation["id"],
+            violation["help"],
+            violation["helpUrl"],
+            tuple(node["target"] for node in violation["nodes"]),
+        )
         for violation in accessibility_page_scan_violations
-    ]
+    )
 
 
 @pytest.mark.a11y
@@ -171,7 +182,7 @@ def test_axe_core(
     results = page.evaluate("axe.run()" if selector == "" else f"axe.run('{selector}')")
 
     # Check found violations against known violations that we do not plan to fix
-    data_regression.check(fingerprint_violations(results["violations"]))
+    data_regression.check(fingerprint(results["violations"]))
 
 
 def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
