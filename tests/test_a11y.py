@@ -10,7 +10,7 @@ import pytest
 
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
-from playwright.sync_api import Page, expect  # NOQA: E402
+from playwright.sync_api import Page, expect  # noqa: E402
 
 # Important note: automated accessibility scans can only find a fraction of
 # potential accessibility issues.
