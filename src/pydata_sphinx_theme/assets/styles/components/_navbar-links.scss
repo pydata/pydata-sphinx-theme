@@ -40,7 +40,7 @@
     ~ ul {
       display: none;
     }
-    ~ label i {
+    ~ label .fa-chevron-down {
       transform: rotate(0deg);
     }
   }
@@ -48,7 +48,7 @@
     ~ ul {
       display: block;
     }
-    ~ label i {
+    ~ label .fa-chevron-down {
       transform: rotate(180deg);
     }
   }
