@@ -304,3 +304,23 @@ details.sd-dropdown {
     }
   }
 }
+
+/*******************************************************************************
+* Buttons (which in Sphinx Design are actually links that look like buttons)
+*/
+.bd-content {
+  @each $name in $sd-semantic-color-names {
+    .sd-btn-#{$name} {
+      &:focus-visible {
+        // Override Sphinx Design's use of -highlight colors. The -highlight
+        // colors are 15% darker, so this would create the effect of darkening
+        // the button when focused but we just want the button to have a focus
+        // ring of the same (non-highlight) color.
+        background-color: var(--sd-color-#{$name}) !important;
+        border-color: var(--sd-color-#{$name}) !important;
+        outline: var(--sd-color-#{$name}) solid $focus-ring-width;
+        outline-offset: $focus-ring-width;
+      }
+    }
+  }
+}
