@@ -178,6 +178,13 @@ pre {
   color: var(--pst-color-secondary-text);
   background-color: var(--pst-color-secondary);
   border: none;
+
+  &:focus-visible {
+    box-shadow: none;
+    outline: $focus-ring-outline;
+    outline-color: var(--pst-color-secondary);
+    outline-offset: $focus-ring-width;
+  }
 }
 
 // Focus ring
