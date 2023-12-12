@@ -247,8 +247,9 @@ corresponds to the section in the docs that the user is currently reading.
   > .dropdown-toggle {
     &:hover {
       text-decoration: none;
-      outline: $focus-ring-width solid var(--pst-color-secondary);
-      outline-offset: $focus-ring-width;
+      box-shadow: 0 0 0 $focus-ring-width var(--pst-color-link-hover); // purple focus ring
+      // Brighten the text on hover (muted -> base)
+      color: var(--pst-color-text-base);
     }
   }
 
