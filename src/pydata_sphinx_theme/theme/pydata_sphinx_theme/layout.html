@@ -50,7 +50,7 @@ or not theme_secondary_sidebar_items %}
 
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
-  <div class="skip-link"><a href="#main-content">{{ _("Skip to main content") }}</a></div>
+  <div id="pst-skip-link" class="skip-link"><a href="#main-content">{{ _("Skip to main content") }}</a></div>
 
 {%- endblock %}
 
@@ -81,14 +81,18 @@ or not theme_secondary_sidebar_items %}
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
+
+  <header>
   {%- if theme_announcement -%}
     {% include "sections/announcement.html" %}
   {%- endif %}
   {% block docs_navbar %}
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
       {%- include "sections/header.html" %}
-    </nav>
+    </div>
   {% endblock docs_navbar %}
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
@@ -107,7 +111,7 @@ or not theme_secondary_sidebar_items %}
               {% block docs_body %}
               {# This is empty and only shows up if text has been highlighted by the URL #}
                 {% include "components/searchbox.html" %}
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   {% block body %}{% endblock %}
                 </article>
               {% endblock docs_body %}

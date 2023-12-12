@@ -74,6 +74,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
+      # waiting for https://github.com/nikeee/setup-pandoc/pull/8
+      # using 12rambau fork until then
+      - uses: 12rambau/setup-pandoc@test
       - name: Install dependencies
         # if Sphinx version not specified in matrix, the constraints in the
         # pyproject.toml file determine Sphinx version
