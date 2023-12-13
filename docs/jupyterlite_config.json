@@ -1,0 +1,7 @@
+{
+  "LiteBuildConfig": {
+    "Application": {
+      "log_level": 40
+    }
+  }
+}

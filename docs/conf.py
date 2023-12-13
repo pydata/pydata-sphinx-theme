@@ -34,6 +34,9 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "autoapi.extension",
+    # custom extentions
+    "_extension.gallery_directive",
+    "_extension.component_directive",
     # For extension examples and demos
     "myst_parser",
     "ablog",
@@ -44,9 +47,9 @@ extensions = [
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
-    # custom extentions
-    "_extension.gallery_directive",
 ]
+
+jupyterlite_config = "jupyterlite_config.json"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -150,9 +153,7 @@ html_theme_options = {
         {
             "name": "PyData",
             "url": "https://pydata.org",
-            "icon": "_static/pydata-logo.png",
-            "type": "local",
-            "attributes": {"target": "_blank"},
+            "icon": "fa-custom fa-pydata",
         },
     ],
     # alternative way to set twitter and github header icons
@@ -223,7 +224,7 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_js_files = ["custom-icon.js"]
+html_js_files = ["pydata-icon.js", "custom-icon.js"]
 todo_include_todos = True
 
 # -- favicon options ---------------------------------------------------------

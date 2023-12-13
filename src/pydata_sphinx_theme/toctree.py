@@ -94,7 +94,7 @@ def add_toctree_functions(
                 current = ""
                 aria_current = ""
                 if page == active_header_page:
-                    current = " current active"
+                    current = "current active"
                     aria_current = ' aria-current="page"'
 
                 # sanitize page title for use in the html output if needed
@@ -112,14 +112,14 @@ def add_toctree_functions(
                 # If it's an absolute one then we use the external class and
                 # the complete url.
                 is_absolute = bool(urlparse(page).netloc)
-                link_status = "external" if is_absolute else "internal"
+                link_status = "nav-external" if is_absolute else "nav-internal"
                 link_href = page if is_absolute else context["pathto"](page)
 
                 # create the html output
                 links_html.append(
                     f"""
-                    <li class="nav-item{current}"{aria_current}>
-                      <a class="nav-link nav-{link_status}" href="{link_href}">
+                    <li class="nav-item pst-header-nav-item {current}"{aria_current}>
+                      <a class="nav-link {link_status}" href="{link_href}">
                         {title}
                       </a>
                     </li>
@@ -130,7 +130,7 @@ def add_toctree_functions(
         for external_link in context["theme_external_links"]:
             links_html.append(
                 f"""
-                <li class="nav-item">
+                <li class="nav-item pst-header-nav-item">
                   <a class="nav-link nav-external" href="{ external_link["url"] }">
                     { external_link["name"] }
                   </a>
@@ -144,9 +144,12 @@ def add_toctree_functions(
 
         # Wrap the final few header items in a "more" dropdown
         links_dropdown = [
-            # 🐲 brittle code, relies on the assumption that the code above
-            # gives each link in the nav a `nav-link` CSS class
-            html.replace("nav-link", "nav-link dropdown-item")
+            # 🐲 brittle code because it relies on the code above to build the HTML in a particular way
+            html.replace("nav-link", "nav-link dropdown-item").replace(
+                # Prevents the header-link mixin from applying to links within the dropdown
+                "pst-header-nav-item",
+                "",
+            )
             for html in links_html[n_links_before_dropdown:]
         ]
 
@@ -181,7 +184,7 @@ def add_toctree_functions(
             dropdown_id = unique_html_id("pst-nav-more-links")
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown pst-header-nav-item">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="{dropdown_id}">
                     {_(dropdown_text)}
                 </button>

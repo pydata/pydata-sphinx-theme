@@ -7,6 +7,11 @@ import pytest
 import sphinx.errors
 from pydata_sphinx_theme.utils import escape_ansi
 
+COMMON_CONF_OVERRIDES = dict(
+    navigation_with_keys=False,
+    surface_warnings=True,
+)
+
 
 def test_build_html(sphinx_build_factory, file_regression) -> None:
     """Test building the base html template and config."""
@@ -238,7 +243,7 @@ def test_logo_missing_image(sphinx_build_factory) -> None:
     # Test with a specified title and a dark logo
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
+            **COMMON_CONF_OVERRIDES,
             "logo": {
                 # The logo is actually in _static
                 "image_dark": "emptydarklogo.png",
@@ -753,7 +758,7 @@ def test_version_switcher_error_states(
     """
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
+            **COMMON_CONF_OVERRIDES,
             "navbar_end": ["version-switcher"],
             "switcher": {
                 "json_url": url,
@@ -778,7 +783,10 @@ def test_version_switcher_error_states(
         assert not_read in escape_ansi(sphinx_build.warnings).strip()
 
     elif url == "missing_url.json":  # this file is missing the url key for one version
-        missing_url = 'WARNING: The version switcher "missing_url.json" file is malformed at least one of the items is missing the "url" or "version" key'
+        missing_url = (
+            'WARNING: The version switcher "missing_url.json" file is malformed; '
+            'at least one of the items is missing the "url" or "version" key'
+        )
         assert escape_ansi(sphinx_build.warnings).strip() == missing_url
 
 
@@ -814,14 +822,15 @@ def test_math_header_item(sphinx_build_factory, file_regression) -> None:
 
 
 @pytest.mark.parametrize(
-    "style_names,keyword_colors",
-    [
-        (("fake_foo", "fake_bar"), ("#204a87", "#66d9ef")),
-        (
+    ("style_names", "keyword_colors"),
+    (
+        pytest.param(("fake_foo", "fake_bar"), ("#204a87", "#66d9ef"), id="fake"),
+        pytest.param(
             ("a11y-high-contrast-light", "a11y-high-contrast-dark"),
             ("#7928a1", "#dcc6e0"),
+            id="real",
         ),
-    ],
+    ),
 )
 def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -> None:
     """Test that setting color themes works.
@@ -831,7 +840,7 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     """
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
+            **COMMON_CONF_OVERRIDES,
             "pygment_light_style": style_names[0],
             "pygment_dark_style": style_names[1],
         },
