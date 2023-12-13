@@ -6,11 +6,16 @@ button.btn.version-switcher__button {
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     margin-bottom: unset;
   }
-
-  @include link-style-hover;
+  &:hover {
+    box-shadow: 0 0 0 $focus-ring-width var(--pst-color-secondary);
+    border-color: transparent;
+  }
   &:active {
     color: var(--pst-color-text-base);
     border-color: var(--pst-color-border);
+  }
+  &:focus-visible {
+    border-color: transparent;
   }
 }
 

@@ -241,7 +241,7 @@ var addEventListenerForSearchKeyboard = () => {
         !event.shiftKey &&
         !event.altKey &&
         // On Mac use ⌘, all other OS use Ctrl
-        (isMac
+        (useCommandKey
           ? event.metaKey && !event.ctrlKey
           : !event.metaKey && event.ctrlKey) &&
         // Case-insensitive so the shortcut still works with caps lock
@@ -260,20 +260,15 @@ var addEventListenerForSearchKeyboard = () => {
 };
 
 /**
- * Find out if we're on a Mac
+ * If the user is on a Mac, use command (⌘) instead of control (ctrl) key
+ *
+ * Note: `navigator.platform` is deprecated; however MDN still recommends using
+ * it for the one specific use case of detecting whether a keyboard shortcut
+ * should use control or command:
+ * https://developer.mozilla.org/en-US/docs/Web/API/Navigator/platform#examples
  */
-var isMac = (navigator) => {
-  var platform = "";
-  if (
-    typeof navigator.userAgentData !== "undefined" &&
-    navigator.userAgentData != null
-  ) {
-    platform = navigator.userAgentData.platform;
-  } else if (typeof navigator.platform !== "undefined") {
-    platform = navigator.platform;
-  }
-  return /mac.?os/.test(platform.toLowerCase());
-};
+var useCommandKey =
+  navigator.platform.indexOf("Mac") === 0 || navigator.platform === "iPhone";
 
 /**
  * Change the search hint to `meta key` if we are a Mac
@@ -281,7 +276,7 @@ var isMac = (navigator) => {
 
 var changeSearchShortcutKey = () => {
   let shortcuts = document.querySelectorAll(".search-button__kbd-shortcut");
-  if (isMac(window.navigator)) {
+  if (useCommandKey) {
     shortcuts.forEach(
       (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
     );
@@ -473,7 +468,9 @@ function showVersionWarningBanner(data) {
     return;
   }
   // now construct the warning banner
-  var outer = document.createElement("div");
+  var outer = document.createElement("aside");
+  // TODO: add to translatable strings
+  outer.setAttribute("aria-label", "Version warning");
   const middle = document.createElement("div");
   const inner = document.createElement("div");
   const bold = document.createElement("strong");
@@ -509,7 +506,8 @@ function showVersionWarningBanner(data) {
   inner.appendChild(bold);
   inner.appendChild(document.createTextNode("."));
   inner.appendChild(button);
-  document.body.prepend(outer);
+  const skipLink = document.getElementById("pst-skip-link");
+  skipLink.after(outer);
 }
 
 /*******************************************************************************
