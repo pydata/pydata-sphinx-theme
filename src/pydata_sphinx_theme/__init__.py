@@ -233,19 +233,19 @@ def update_and_remove_templates(
                 return True
 
             context[section] = list(filter(_remove_empty_templates, context[section]))
-#
+    #
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
     # - theme.conf
     # - manually linked in `webpack-macros.html`
     if "css_files" in context:
         theme_css_name = "_static/styles/pydata-sphinx-theme.css"
-        for i in range(len(context['css_files'])):
-            asset = context['css_files'][i]
+        for i in range(len(context["css_files"])):
+            asset = context["css_files"][i]
             # TODO: eventually the contents of context['css_files'] etc should probably
             #       only be _CascadingStyleSheet etc. For now, assume mixed with strings.
             asset_path = getattr(asset, "filename", str(asset))
             if asset_path == theme_css_name:
-                del context['css_files'][i]
+                del context["css_files"][i]
                 break
     # Add links for favicons in the topbar
     for favicon in context.get("theme_favicons", []):
