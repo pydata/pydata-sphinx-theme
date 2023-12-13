@@ -16,6 +16,7 @@ from . import edit_this_page, logo, pygment, short_link, toctree, translator, ut
 
 __version__ = "0.14.5dev0"
 
+
 def update_config(app):
     """Update config with new default values and handle deprecated keys."""
     # By the time `builder-inited` happens, `app.builder.theme_options` already exists.
