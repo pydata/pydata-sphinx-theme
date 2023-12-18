@@ -241,7 +241,7 @@ def add_toctree_functions(
         if kind == "sidebar":
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
-                ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
+                ul.attrs["class"] = [*ul.attrs.get("class", []), "nav", "bd-sidenav"]
 
             # Add collapse boxes for parts/captions.
             # Wraps the TOC part in an extra <ul> to behave like chapters with toggles
@@ -289,22 +289,22 @@ def add_toctree_functions(
             if ul is None:
                 return
             if level <= (context["theme_show_toc_level"] + 1):
-                ul["class"] = ul.get("class", []) + ["visible"]
+                ul["class"] = [*ul.get("class", []), "visible"]
             for li in ul("li", recursive=False):
-                li["class"] = li.get("class", []) + [f"toc-h{level}"]
+                li["class"] = [*li.get("class", []), f"toc-h{level}"]
                 add_header_level_recursive(li.find("ul", recursive=False), level + 1)
 
         add_header_level_recursive(soup.find("ul"), 1)
 
         # Add in CSS classes for bootstrap
         for ul in soup("ul"):
-            ul["class"] = ul.get("class", []) + ["nav", "section-nav", "flex-column"]
+            ul["class"] = [*ul.get("class", []), "nav", "section-nav", "flex-column"]
 
         for li in soup("li"):
-            li["class"] = li.get("class", []) + ["nav-item", "toc-entry"]
+            li["class"] = [*li.get("class", []), "nav-item", "toc-entry"]
             if li.find("a"):
                 a = li.find("a")
-                a["class"] = a.get("class", []) + ["nav-link"]
+                a["class"] = [*a.get("class", []), "nav-link"]
 
         # If we only have one h1 header, assume it's a title
         h1_headers = soup.select(".toc-h1")
@@ -368,7 +368,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
             continue
 
         # Add a class to indicate that this has children.
-        element["class"] = classes + ["has-children"]
+        element["class"] = [*classes, "has-children"]
 
         # We're gonna add a checkbox.
         toctree_checkbox_count += 1
