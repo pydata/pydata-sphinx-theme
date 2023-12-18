@@ -223,7 +223,7 @@ jobs:
       - name: Generate a profile
         run: nox -s profile
         continue-on-error: true
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: profile-results
           path: profile.svg
