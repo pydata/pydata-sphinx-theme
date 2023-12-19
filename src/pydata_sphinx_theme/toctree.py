@@ -372,31 +372,55 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if soup.new_tag is None:
             continue
 
-        # Modify the tree so that it looks like:
+        # For table of contents nodes that have subtrees, we modify the HTML so
+        # that the subtree can be expanded or collapsed in the browser.
+        #
+        # The HTML markup tree at the parent node starts with this structure:
         #
         # li.has-children
-        # a.reference ~ span.toctree-toggle
-        # > details
-        #   > summary
-        #     >
-        #   > ul
+        #   a.reference or p.caption
+        #   ul
+        #
+        # Note the first child is p.caption only if this node is a section heading and
+        # the theme option show_nav_level is set to 0.
+        #
+        # Now we modify the tree structure in one of two ways.
+        #
+        # (1) If the node holds a section heading AND show_nav_level == 0, the HTML
+        # tree will be modified like so:
+        #
+        # li.has-children
+        #   details
+        #       summary
+        #           p.caption
+        #           .toctree-toggle
+        #       ul
+        #
+        # (2) Otherwise, if the node holds a link to a page in the docs:
+        #
+        # li.has-children
+        #   a.reference
+        #   details
+        #       summary
+        #           .toctree-toggle
+        #       ul
+        #
+        # This was done so that (1) section headings (which are not links) can
+        # be clicked anywhere to expand/collapse the subtree but that (2) link
+        # clicks would be clearly distinct from expand/collapse clicks.
 
-        # Create <details> and subtree into it
+        # Create <details> and put the entire subtree into it
         details = soup.new_tag("details")
         details.extend(element.contents)
         element.append(details)
+
+        # Hoist the link to the top if there is one
         toc_link = element.select_one("details > a.reference")
         if toc_link:
-            element.insert(
-                0, toc_link
-            )  # Move link outside to make it a clearer when focus is on link versus on the summary expand/collapse
+            element.insert(0, toc_link)
 
         # Create <summary> with chevron icon
         summary = soup.new_tag("summary")
-        collapsible_section_heading = element.select_one("details > p.caption")
-        if collapsible_section_heading:
-            # Put level 0 heading inside summary so that the heading text (and chevron) are both clickable
-            summary.append(collapsible_section_heading)
         span = soup.new_tag(
             "span",
             attrs={
@@ -406,11 +430,20 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         )
         span.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
         summary.append(span)
+
+        # Prepend section heading (if there is one) to <summary>
+        collapsible_section_heading = element.select_one("details > p.caption")
+        if collapsible_section_heading:
+            # Put heading inside summary so that the heading text (and chevron) are both clickable
+            summary.append(collapsible_section_heading)
+
+        # Prepend <summary> to <details>
         details.insert(0, summary)
 
-        # If this has a "current" class, be expanded by default
+        # If this TOC node has a "current" class, be expanded by default
         # (by opening the details/summary disclosure widget)
         if "current" in classes:
+            # None is how you add a boolean HTML attribute
             details["open"] = None
 
 
