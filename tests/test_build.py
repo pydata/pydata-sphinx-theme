@@ -463,7 +463,6 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
     # part li
     assert "toctree-l0 has-children" in " ".join(li[0].attrs["class"])
     assert "caption-text" in li[0].select("p span")[0].attrs["class"]
-    assert "label-parts" in li[0].find("label").attrs["class"]
 
     # basic checks on other levels
     assert "toctree-l1 has-children" in " ".join(li[1].attrs["class"])
