@@ -163,7 +163,8 @@ $sidebar-padding-right: 1rem;
             // flexbox
             flex: 0 0 auto;
 
-            // Override the rule below that reduces the font size to 0.75rem
+            // Make the level 0 chevron icon slightly bigger than descendant
+            // levels
             .fa-chevron-down {
               font-size: 1rem;
             }
@@ -179,7 +180,9 @@ $sidebar-padding-right: 1rem;
 
     > .reference,
     .caption {
-      margin-right: calc($toctree-toggle-width + $focus-ring-width);
+      margin-right: calc(
+        $toctree-toggle-width + $focus-ring-width
+      ); // keep clear of the toggle icon
       padding-top: 0.25rem; // align caption text with toggle chevron
     }
 
@@ -191,15 +194,13 @@ $sidebar-padding-right: 1rem;
           display: none;
         }
 
-        // The summary element is natively focussable, but delegate the focus
-        // state to the toggle icon
+        // The summary element is natively focusable, but delegate the focus state to the toggle icon
         &:focus-visible {
           outline: none;
 
           > .toctree-toggle {
-            // Prevent right side of focus ring from disappearing underneath the sidebar's right edge
             outline: $focus-ring-outline;
-            outline-offset: -$focus-ring-width;
+            outline-offset: -$focus-ring-width; // Prevent right side of focus ring from disappearing underneath the sidebar's right edge
           }
         }
 
