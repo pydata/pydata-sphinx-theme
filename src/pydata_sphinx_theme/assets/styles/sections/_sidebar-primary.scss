@@ -145,6 +145,21 @@ $sidebar-padding-right: 1rem;
     .nav {
       display: block;
     }
+
+    li.toctree-l0.has-children {
+      > details > summary {
+        position: relative;
+        height: auto;
+        width: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        > .toctree-toggle {
+          flex: 0 0 auto;
+        }
+      }
+    }
   }
   li.has-children {
     $toctree-toggle-width: 30px;
@@ -163,8 +178,6 @@ $sidebar-padding-right: 1rem;
         position: absolute;
         top: 0;
         right: 0;
-        width: $toctree-toggle-width;
-        height: $toctree-toggle-width; // make it square
 
         // Remove browser default details/summary icon
         list-style: none;
@@ -195,8 +208,8 @@ $sidebar-padding-right: 1rem;
           display: inline-flex;
           justify-content: center;
           align-items: center;
-          width: 100%;
-          height: 100%;
+          width: 30px;
+          height: 30px;
 
           .fa-chevron-down {
             font-size: 0.75rem;

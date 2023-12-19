@@ -385,12 +385,17 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         details = soup.new_tag("details")
         details.extend(element.contents)
         element.append(details)
-        element.insert(
-            0, element.select_one("details > p.caption, details > a.reference")
-        )
+        toc_link = element.select_one("details > a.reference")
+        if toc_link:
+            element.insert(
+                0, toc_link
+            )  # leave p.caption in summary but move link outside to make it a clearer when focus is on link versus on the summary expand/collapse
 
         # Create <summary> with chevron icon
         summary = soup.new_tag("summary")
+        collapsible_section_heading = element.select_one("details > p.caption")
+        if collapsible_section_heading:
+            summary.append(collapsible_section_heading)
         span = soup.new_tag(
             "span",
             attrs={
