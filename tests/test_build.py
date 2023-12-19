@@ -418,7 +418,7 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression) -> None:
 
     subindex_html = sphinx_build.html_tree("section1/subsection1/page1.html")
 
-    # For nested (uncollapsed) page, the label included `checked=""`
+    # For nested (uncollapsed) page, the disclosure widget should be open
     sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
@@ -472,12 +472,13 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
     subsection_html = sphinx_build.html_tree("section1/subsection1/index.html")
     sidebar = subsection_html.select("nav.bd-docs-nav")[0]
 
-    # get all input elements
-    input_elem = sidebar.select("input")
+    # get all <details> elements
+    details_elem = sidebar.select("details")
+    assert len(details_elem)
 
-    # all input elements should be collapsed in this page
-    for ii in input_elem:
-        assert "checked" in ii.attrs
+    # all <details> elements should be open in this page
+    for ii in details_elem:
+        assert "open" in ii.attrs
 
 
 def test_included_toc(sphinx_build_factory) -> None:
@@ -735,8 +736,8 @@ def test_show_nav_level(sphinx_build_factory) -> None:
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("section1/index.html")
 
-    for checkbox in index_html.select("li.toctree-l1.has-children > input"):
-        assert "checked" in checkbox.attrs
+    for details_elem in index_html.select("li.toctree-l1.has-children > details"):
+        assert "open" in details_elem.attrs
 
 
 # the switcher files tested in test_version_switcher_error_states, not all of them exist

@@ -225,7 +225,7 @@ $sidebar-padding-right: 1rem;
       }
 
       // The section is open/expanded, rotate the toggle icon (chevron) so it
-      // points down instead of to the right
+      // points up instead of down
       &[open] {
         > summary {
           .fa-chevron-down {
