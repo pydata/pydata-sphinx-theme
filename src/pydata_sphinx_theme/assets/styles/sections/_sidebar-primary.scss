@@ -271,7 +271,7 @@ nav.bd-links {
     }
   }
 
-  a.current {
+  .current > a {
     @include link-sidebar-current;
     background-color: transparent;
   }
