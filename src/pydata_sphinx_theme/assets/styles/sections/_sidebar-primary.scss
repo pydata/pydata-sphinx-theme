@@ -146,83 +146,78 @@ $sidebar-padding-right: 1rem;
       display: block;
     }
   }
-  li {
+  li.has-children {
+    $toctree-toggle-width: 30px;
+
     position: relative;
-    // If it has children, add a bit more padding to wrap the content to avoid
-    // overlapping with the <label>
-    &.has-children {
-      $toctree-toggle-width: 30px;
 
-      > .reference {
-        margin-right: calc($toctree-toggle-width + $focus-ring-width);
-        min-height: 30px;
-      }
+    > .reference,
+    .caption {
+      margin-right: calc($toctree-toggle-width + $focus-ring-width);
+      padding-top: 0.25rem; // align caption text with toggle chevron
+    }
 
-      > details {
-        // Get rid of the default toggle icon
-        > summary {
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: $toctree-toggle-width;
-          height: $toctree-toggle-width; // make it square
+    > details {
+      // Get rid of the default toggle icon
+      > summary {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $toctree-toggle-width;
+        height: $toctree-toggle-width; // make it square
 
-          // Remove browser default details/summary icon
-          list-style: none;
-          &::-webkit-details-marker {
-            display: none;
-          }
+        // Remove browser default details/summary icon
+        list-style: none;
+        &::-webkit-details-marker {
+          display: none;
+        }
 
-          &:hover .toctree-toggle {
+        &:hover {
+          > .toctree-toggle {
             background: var(--pst-color-surface);
           }
+        }
 
-          &:focus-visible {
-            outline: none;
+        &:focus-visible {
+          outline: none;
 
-            > .toctree-toggle {
-              // Prevent right side of focus ring from disappearing underneath the sidebar's right edge
-              outline: $focus-ring-outline;
-              outline-offset: -$focus-ring-width;
-            }
+          > .toctree-toggle {
+            // Prevent right side of focus ring from disappearing underneath the sidebar's right edge
+            outline: $focus-ring-outline;
+            outline-offset: -$focus-ring-width;
           }
         }
 
-        // The section is open/expanded, rotate the toggle icon (chevron) so it
-        // points down instead of to the right
-        &[open] {
-          > summary {
+        // Navigation item chevrons
+        .toctree-toggle {
+          cursor: pointer;
+
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+
+          .fa-chevron-down {
+            font-size: 0.75rem;
+          }
+
+          .toctree-l10 & {
             .fa-chevron-down {
-              transform: rotate(180deg);
+              font-size: inherit;
             }
           }
         }
       }
-      text-align: initial;
-    }
-  }
-  // Navigation item chevrons
-  .toctree-toggle {
-    cursor: pointer;
 
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-
-    svg {
-      display: inline-block;
-      font-size: 0.75rem;
-      text-align: center;
-      &:hover {
-        color: var(--pst-color-primary);
-      }
-    }
-
-    .toctree-l10 & {
-      svg {
-        font-size: inherit;
+      // The section is open/expanded, rotate the toggle icon (chevron) so it
+      // points down instead of to the right
+      &[open] {
+        > summary {
+          .fa-chevron-down {
+            transform: rotate(180deg);
+          }
+        }
       }
     }
   }
@@ -250,7 +245,6 @@ nav.bd-links {
     padding: 0.25rem 0.65rem;
     @include link-sidebar;
     box-shadow: none;
-    flex: 0 1 0%;
     margin-right: $focus-ring-width; // prevent the right side focus ring from disappearing under the sidebar right edge
 
     &.reference.external {

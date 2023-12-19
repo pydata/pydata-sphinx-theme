@@ -91,11 +91,7 @@ def add_toctree_functions(
                 page = toc.attributes["parent"] if page == "self" else page
 
                 # If this is the active ancestor page, add a class so we highlight it
-                current = ""
-                aria_current = ""
-                if page == active_header_page:
-                    current = "current active"
-                    aria_current = ' aria-current="page"'
+                current = "current active" if page == active_header_page else ""
 
                 # sanitize page title for use in the html output if needed
                 if title is None:
@@ -118,7 +114,7 @@ def add_toctree_functions(
                 # create the html output
                 links_html.append(
                     f"""
-                    <li class="nav-item pst-header-nav-item {current}"{aria_current}>
+                    <li class="nav-item pst-header-nav-item {current}">
                       <a class="nav-link {link_status}" href="{link_href}">
                         {title}
                       </a>
