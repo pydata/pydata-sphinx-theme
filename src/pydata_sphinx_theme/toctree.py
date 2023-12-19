@@ -379,25 +379,22 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # Modify the tree so that it looks like:
         #
         # li.has-children
+        # a.reference ~ span.toctree-toggle
         # > details
         #   > summary
-        #     > a.reference ~ span.toctree-toggle
+        #     >
         #   > ul
 
-        # Create <details> and move everything at this level into it
+        # Create <details> and subtree into it
         details = soup.new_tag("details")
         details.extend(element.contents)
         element.append(details)
-
-        # Create <summary> and move the level's heading into it
-        summary = soup.new_tag("summary")
-        details.insert(0, summary)
-        summary.append(
-            # heading
-            element.select_one("details > p.caption, details > a.reference")
+        element.insert(
+            0, element.select_one("details > p.caption, details > a.reference")
         )
 
-        # Create chevron icon and append to <summary>
+        # Create <summary> with chevron icon
+        summary = soup.new_tag("summary")
         span = soup.new_tag(
             "span",
             attrs={
@@ -407,6 +404,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         )
         span.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
         summary.append(span)
+        details.insert(0, summary)
 
         # If this has a "current" class, be expanded by default
         # (by opening the details/summary disclosure widget)
