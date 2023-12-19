@@ -146,6 +146,7 @@ $sidebar-padding-right: 1rem;
       display: block;
     }
 
+    // Level 0 TOC heading is put inside the <summary> tag
     li.toctree-l0.has-children {
       > details > summary {
         position: relative;
