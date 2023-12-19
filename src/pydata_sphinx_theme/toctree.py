@@ -1,6 +1,6 @@
 """Methods to build the toctree used in the html pages."""
 
-from functools import lru_cache
+from functools import cache
 from itertools import count
 from typing import Iterator, List, Union
 from urllib.parse import urlparse
@@ -37,7 +37,7 @@ def add_toctree_functions(
 ) -> None:
     """Add functions so Jinja templates can add toctree objects."""
 
-    @lru_cache(maxsize=None)
+    @cache
     def get_or_create_id_generator(base_id: str) -> Iterator[str]:
         for n in count(start=1):
             if n == 1:
@@ -53,7 +53,7 @@ def add_toctree_functions(
         """
         return next(get_or_create_id_generator(base_id))
 
-    @lru_cache(maxsize=None)
+    @cache
     def generate_header_nav_before_dropdown(n_links_before_dropdown):
         """The cacheable part."""
         try:
@@ -191,7 +191,7 @@ def add_toctree_functions(
 
     # Cache this function because it is expensive to run, and because Sphinx
     # somehow runs this twice in some circumstances in unpredictable ways.
-    @lru_cache(maxsize=None)
+    @cache
     def generate_toctree_html(
         kind: str, startdepth: int = 1, show_nav_level: int = 1, **kwargs
     ) -> Union[BeautifulSoup, str]:
@@ -276,7 +276,7 @@ def add_toctree_functions(
 
         return soup
 
-    @lru_cache(maxsize=None)
+    @cache
     def generate_toc_html(kind: str = "html") -> BeautifulSoup:
         """Return the within-page TOC links in HTML."""
         if "toc" not in context:
