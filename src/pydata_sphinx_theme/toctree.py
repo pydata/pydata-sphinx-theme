@@ -435,7 +435,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         collapsible_section_heading = element.select_one("details > p.caption")
         if collapsible_section_heading:
             # Put heading inside summary so that the heading text (and chevron) are both clickable
-            summary.append(collapsible_section_heading)
+            summary.insert(0, collapsible_section_heading)
 
         # Prepend <summary> to <details>
         details.insert(0, summary)

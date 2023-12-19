@@ -147,17 +147,27 @@ $sidebar-padding-right: 1rem;
     }
 
     // Level 0 TOC heading is put inside the <summary> tag
+    // so let the <summary> tag take up more space
     li.toctree-l0.has-children {
-      > details > summary {
-        position: relative;
-        height: auto;
-        width: auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
+      > details {
+        > summary {
+          position: relative;
+          height: auto;
+          width: auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
 
-        > .toctree-toggle {
-          flex: 0 0 auto;
+          .toctree-toggle {
+            // Prevent toggle icon from getting squished by summary being a
+            // flexbox
+            flex: 0 0 auto;
+
+            // Override the rule below that reduces the font size to 0.75rem
+            .fa-chevron-down {
+              font-size: 1rem;
+            }
+          }
         }
       }
     }
@@ -174,24 +184,15 @@ $sidebar-padding-right: 1rem;
     }
 
     > details {
-      // Get rid of the default toggle icon
       > summary {
-        position: absolute;
-        top: 0;
-        right: 0;
-
-        // Remove browser default details/summary icon
+        // Remove browser default toggle icon
         list-style: none;
         &::-webkit-details-marker {
           display: none;
         }
 
-        &:hover {
-          > .toctree-toggle {
-            background: var(--pst-color-surface);
-          }
-        }
-
+        // The summary element is natively focussable, but delegate the focus
+        // state to the toggle icon
         &:focus-visible {
           outline: none;
 
@@ -202,24 +203,27 @@ $sidebar-padding-right: 1rem;
           }
         }
 
-        // Navigation item chevrons
+        // Container for expand/collapse chevron icon
         .toctree-toggle {
           cursor: pointer;
 
+          // Position it so that it's aligned with the top right corner of the
+          // last positioned element, in this case the li.has-children
+          position: absolute;
+          top: 0;
+          right: 0;
+
+          // Give it dimensions
+          width: $toctree-toggle-width;
+          height: $toctree-toggle-width; // make it square
+
+          // Vertically and horizontally center the icon within the container
           display: inline-flex;
           justify-content: center;
           align-items: center;
-          width: 30px;
-          height: 30px;
 
           .fa-chevron-down {
             font-size: 0.75rem;
-          }
-
-          .toctree-l10 & {
-            .fa-chevron-down {
-              font-size: inherit;
-            }
           }
         }
       }
