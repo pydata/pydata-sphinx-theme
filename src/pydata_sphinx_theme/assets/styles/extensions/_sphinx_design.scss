@@ -310,6 +310,9 @@ details.sd-dropdown {
 */
 html {
   .sd-btn {
+    min-width: 2.25rem;
+    padding: 0.3125rem 0.75rem 0.4375rem;
+
     @include link-style-hover; // override Sphinx Design
     &:hover {
       text-decoration-thickness: 1px;
