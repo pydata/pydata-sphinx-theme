@@ -312,7 +312,7 @@ details.sd-dropdown {
 html {
   .sd-btn {
     min-width: 2.25rem;
-    padding: 0.3125rem 0.75rem 0.4375rem;
+    padding: 0.3125rem 0.75rem 0.4375rem; // 5px 12px 7px
 
     @include link-style-hover; // override Sphinx Design
     &:hover {
@@ -321,7 +321,8 @@ html {
   }
 
   @each $name in $sd-semantic-color-names {
-    .sd-btn-#{$name} {
+    .sd-btn-#{$name},
+    .sd-btn-outline-#{$name} {
       &:focus-visible {
         // Override Sphinx Design's use of -highlight colors. The -highlight
         // colors are 15% darker, so this would create the effect of darkening
