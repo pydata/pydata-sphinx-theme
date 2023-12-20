@@ -179,6 +179,19 @@ pre {
   background-color: var(--pst-color-secondary);
   border: none;
 
+  .fa-arrow-up {
+    // Using margin instead of a space character prevents the space between the
+    // icon and the text from being underlined when the button is hovered.
+    margin-inline-end: 0.5em;
+  }
+
+  @include link-style-hover;
+  &:hover {
+    text-decoration-thickness: 1px;
+    background-color: var(--pst-violet-600);
+    color: var(--pst-color-secondary-text);
+  }
+
   &:focus-visible {
     box-shadow: none;
     outline: $focus-ring-outline;

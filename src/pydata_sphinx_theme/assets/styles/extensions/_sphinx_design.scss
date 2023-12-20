@@ -309,6 +309,13 @@ details.sd-dropdown {
 * Buttons (which in Sphinx Design are actually links that look like buttons)
 */
 html {
+  .sd-btn {
+    @include link-style-hover; // override Sphinx Design
+    &:hover {
+      text-decoration-thickness: 1px;
+    }
+  }
+
   @each $name in $sd-semantic-color-names {
     .sd-btn-#{$name} {
       &:focus-visible {
