@@ -29,6 +29,7 @@ See the sections in the primary sidebar and below to explore.
 
     no-sidebar
     persistent-search-field
+    in-page-toc
     subpages/index
     mult_headers
     Link to an external site <https://jupyterbook.org/>
