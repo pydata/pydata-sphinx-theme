@@ -83,6 +83,9 @@ or not theme_secondary_sidebar_items %}
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
+      {% if get_sidebar_toctree_length(show_nav_level=theme_show_nav_level|int) == 0 %}
+        {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+      {% endif %}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>

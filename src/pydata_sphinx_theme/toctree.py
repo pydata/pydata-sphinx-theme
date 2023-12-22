@@ -32,10 +32,45 @@ def add_inline_math(node: Node) -> str:
     )
 
 
+def get_unrendered_local_toctree(
+    app: Sphinx, pagename: str, startdepth: int, collapse: bool = True, **kwargs
+):
+    """."""
+    if "includehidden" not in kwargs:
+        kwargs["includehidden"] = False
+    if kwargs.get("maxdepth") == "":
+        kwargs.pop("maxdepth")
+
+    toctree = TocTree(app.env)
+    if sphinx.version_info[:2] >= (7, 2):
+        from sphinx.environment.adapters.toctree import _get_toctree_ancestors
+
+        ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
+    else:
+        ancestors = toctree.get_toctree_ancestors(pagename)
+    try:
+        indexname = ancestors[-startdepth]
+    except IndexError:
+        # eg for index.rst, but also special pages such as genindex, py-modindex, search
+        # those pages don't have a "current" element in the toctree, so we can
+        # directly return an empty string instead of using the default sphinx
+        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
+        return ""
+
+    return get_local_toctree_for(
+        toctree, indexname, pagename, app.builder, collapse, **kwargs
+    )
+
+
 def add_toctree_functions(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
     """Add functions so Jinja templates can add toctree objects."""
+
+    def get_sidebar_toctree_length(
+        startdepth: int = 1, show_nav_level: int = 1, **kwargs
+    ):
+        return len(get_unrendered_local_toctree(app, pagename, startdepth))
 
     @cache
     def get_or_create_id_generator(base_id: str) -> Iterator[str]:
@@ -342,6 +377,7 @@ def add_toctree_functions(
 
     context["unique_html_id"] = unique_html_id
     context["generate_header_nav_html"] = generate_header_nav_html
+    context["get_sidebar_toctree_length"] = get_sidebar_toctree_length
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
@@ -455,29 +491,7 @@ def index_toctree(
     # returning:
     #     return self.render_partial(TocTree(self.env).get_toctree_for(
     #         pagename, self, collapse, **kwargs))['fragment']
-
-    if "includehidden" not in kwargs:
-        kwargs["includehidden"] = False
-    if kwargs.get("maxdepth") == "":
-        kwargs.pop("maxdepth")
-
-    toctree = TocTree(app.env)
-    if sphinx.version_info[:2] >= (7, 2):
-        from sphinx.environment.adapters.toctree import _get_toctree_ancestors
-
-        ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
-    else:
-        ancestors = toctree.get_toctree_ancestors(pagename)
-    try:
-        indexname = ancestors[-startdepth]
-    except IndexError:
-        # eg for index.rst, but also special pages such as genindex, py-modindex, search
-        # those pages don't have a "current" element in the toctree, so we can
-        # directly return an empty string instead of using the default sphinx
-        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
-        return ""
-
-    toctree_element = get_local_toctree_for(
-        toctree, indexname, pagename, app.builder, collapse, **kwargs
+    toctree_element = get_unrendered_local_toctree(
+        app, pagename, startdepth, collapse, **kwargs
     )
     return app.builder.render_partial(toctree_element)["fragment"]
