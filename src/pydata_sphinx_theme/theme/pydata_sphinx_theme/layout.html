@@ -7,9 +7,7 @@
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
-{% set remove_sidebar_secondary = (meta is defined and meta is not none
-and 'html_theme.sidebar_secondary.remove' in meta)
-or not theme_secondary_sidebar_items %}
+{% set remove_sidebar_secondary = (meta is defined and meta is not none and 'html_theme.sidebar_secondary.remove' in meta) or not theme_secondary_sidebar_items %}
 {%- block css %}
   {# The data-cfasync attribute disables CloudFlare's Rocket loader so that #}
   {# mode/theme are correctly set before the browser renders the page. #}

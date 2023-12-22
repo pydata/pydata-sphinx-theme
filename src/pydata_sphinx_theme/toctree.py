@@ -70,7 +70,8 @@ def add_toctree_functions(
     def get_sidebar_toctree_length(
         startdepth: int = 1, show_nav_level: int = 1, **kwargs
     ):
-        return len(get_unrendered_local_toctree(app, pagename, startdepth))
+        toctree = get_unrendered_local_toctree(app, pagename, startdepth)
+        return 0 if toctree is None else len(toctree)
 
     @cache
     def get_or_create_id_generator(base_id: str) -> Iterator[str]:
