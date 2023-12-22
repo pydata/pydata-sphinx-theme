@@ -1,21 +1,4 @@
 {% block docs_sidebar %}
-{# Create sidebar TOC links HTML here; if it's empty we'll skip adding its container #}
-{%- set pst_ns = namespace(
-  sidebar_nav_html=generate_toctree_html(
-    "sidebar",
-    show_nav_level=theme_show_nav_level|int,
-    maxdepth=theme_navigation_depth|int,
-    collapse=theme_collapse_navigation|tobool,
-    includehidden=True,
-    titles_only=True
-    )
-  )
--%}
-{# If we have no sidebar links, pop the links component from the sidebar list #}
-{% if pst_ns.sidebar_nav_html | length == 0 %}
-  {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
-{% endif %}
-
 {% if theme_navbar_center or theme_navbar_end or sidebars or theme_primary_sidebar_end %}
   {# Header items that will be displayed in the sidebar on mobile #}
   <div class="sidebar-header-items sidebar-primary__section">
