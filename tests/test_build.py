@@ -1030,6 +1030,7 @@ def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
             "github_version": "main",
         },
         "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
             "use_edit_page_button": True,
             "secondary_sidebar_items": {
                 "**": ["page-toc", "edit-this-page"],
@@ -1043,16 +1044,117 @@ def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
     sphinx_build.build()
 
     # Check that the page-toc template gets rendered
+    # (but not for section1/index or section2/*)
     assert sphinx_build.html_tree("index.html").select("div.page-toc")
     assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
     assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
 
     # Check that the edit-this-page template gets rendered
+    # (but not for section1/index or section2/*)
     assert sphinx_build.html_tree("index.html").select("div.editthispage")
     assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
     assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
 
-    # Check that sourcelink is not rendered
+    # Check that sourcelink is only rendered for section2/*
     assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
     assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
     assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a dict of templates that globs a subdir."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "section1/index": [],
+                "section2/*": ["sourcelink"],
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the no page-toc template gets rendered
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.page-toc")
+
+    # Check that no edit-this-page template gets rendered
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict_multiple_glob_matches(
+    sphinx_build_factory,
+) -> None:
+    """Test that the secondary sidebar builds with a template dict with two conflicting globs.
+
+    The last specified glob pattern should win, but a warning should be emitted with the
+    offending pattern and affected pagenames.
+    """
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "**": [
+                    "page-toc",
+                    "edit-this-page",
+                ],  # <-- Some pages match both patterns
+                "section1/index": [],
+                "section2/*": ["sourcelink"],  # <-- Some pages match both patterns
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory(
+        "sidebars",
+        confoverrides=confoverrides,
+    )
+    # Basic build with defaults
+    sphinx_build.build(no_warning=False)
+
+    # Check that the proper warnings are emitted for the affected pages
+    for page in ["section2/index", "section2/page1"]:
+        assert (
+            f"WARNING: Page {page} matches two wildcard patterns "
+            "in secondary_sidebar_items: ** and section2/*"
+        ) in sphinx_build.warnings
+
+    # Check that the page-toc template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")

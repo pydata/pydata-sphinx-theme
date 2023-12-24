@@ -92,7 +92,14 @@ def _update_and_remove_templates(
         app: Sphinx application passed to the html page context
         context: The html page context; dictionary of values passed to the templating engine
         templates: A list of template names, or a string of comma separated template names
-        section: Name of the template section where the templates are to be rendered
+        section: Name of the template section where the templates are to be rendered. Valid
+            section names include any of the ``sphinx`` or ``html_theme_options`` that take templates
+            or lists of templates as arguments, for example: ``theme_navbar_start``,
+            ``theme_primary_sidebar_end``, ``theme_secondary_sidebar_items``, ``sidebars``, etc. For
+            a complete list of valid section names, see the source for
+            :py:func:`pydata_sphinx_theme.update_and_remove_templates` and
+            :py:func:`pydata_sphinx_theme.utils.set_secondary_sidebar_items`, both of which call
+            this function.
         templates_skip_empty_check: Names of any templates which should never be removed from the list
             of filtered templates returned by this function. These templates aren't checked if they
             render empty, which can save time if the template is slow to render.
@@ -136,6 +143,9 @@ def _get_matching_sidebar_items(
     pagename: str, sidebars: Dict[str, List[str]]
 ) -> List[str]:
     """Get the matching sidebar templates to render for the given pagename.
+
+    If a page matches more than one pattern, a warning is emitted, and the templates for the
+    last matching pattern are used.
 
     This function was adapted from sphinx.builders.html.StandaloneHTMLBuilder.add_sidebars.
     """
