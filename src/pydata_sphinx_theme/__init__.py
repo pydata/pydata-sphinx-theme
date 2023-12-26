@@ -1,7 +1,6 @@
 """Bootstrap-based sphinx theme from the PyData community."""
 
 import json
-import os
 from functools import partial
 from pathlib import Path
 from typing import Dict
@@ -203,37 +202,19 @@ def update_and_remove_templates(
         "theme_footer_start",
         "theme_footer_center",
         "theme_footer_end",
-        "theme_secondary_sidebar_items",
         "theme_primary_sidebar_end",
         "sidebars",
     ]
     for section in template_sections:
         if context.get(section):
-            # Break apart `,` separated strings so we can use , in the defaults
-            if isinstance(context.get(section), str):
-                context[section] = [
-                    ii.strip() for ii in context.get(section).split(",")
-                ]
+            context[section] = utils._update_and_remove_templates(
+                app=app,
+                context=context,
+                templates=context.get(section, []),
+                section=section,
+                templates_skip_empty_check=["sidebar-nav-bs.html", "navbar-nav.html"],
+            )
 
-            # Add `.html` to templates with no suffix
-            for ii, template in enumerate(context.get(section)):
-                if not os.path.splitext(template)[1]:
-                    context[section][ii] = template + ".html"
-
-            # If this is the page TOC, check if it is empty and remove it if so
-            def _remove_empty_templates(tname):
-                # These templates take too long to render, so skip them.
-                # They should never be empty anyway.
-                SKIP_EMPTY_TEMPLATE_CHECKS = ["sidebar-nav-bs.html", "navbar-nav.html"]
-                if not any(tname.endswith(temp) for temp in SKIP_EMPTY_TEMPLATE_CHECKS):
-                    # Render the template and see if it is totally empty
-                    rendered = app.builder.templates.render(tname, context)
-                    if len(rendered.strip()) == 0:
-                        return False
-                return True
-
-            context[section] = list(filter(_remove_empty_templates, context[section]))
-    #
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
     # - theme.conf
     # - manually linked in `webpack-macros.html`
@@ -296,6 +277,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
+    app.connect("html-page-context", utils.set_secondary_sidebar_items)
     app.connect("build-finished", pygment.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 
