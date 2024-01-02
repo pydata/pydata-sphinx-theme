@@ -562,6 +562,16 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
   }
 }
 
+/**
+ * Fix bug #1603
+ */
+function fixMoreLinksInMobileSidebar() {
+  const dropdown = document.querySelector(
+    ".bd-sidebar-primary [id^=pst-nav-more-links]"
+  );
+  dropdown.classList.add("show");
+}
+
 /*******************************************************************************
  * Call functions after document loading.
  */
@@ -571,3 +581,4 @@ documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
+documentReady(fixMoreLinksInMobileSidebar);
