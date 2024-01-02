@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.11"]
+        python-version: ["3.12"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -44,22 +44,22 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
         sphinx-version: [""]
         include:
           # macos test
           - os: macos-latest
-            python-version: "3.11"
+            python-version: "3.12"
           # windows test
           - os: windows-latest
-            python-version: "3.11"
+            python-version: "3.12"
           # old Sphinx test
           - os: ubuntu-latest
-            python-version: "3.8"
+            python-version: "3.9"
             sphinx-version: "old"
           # dev Sphinx test
           - os: ubuntu-latest
-            python-version: "3.11"
+            python-version: "3.12"
             sphinx-version: "dev"
     # needed to cache the browsers for the accessibility tests
     env:
@@ -93,7 +93,7 @@ jobs:
       - name: Run tests
         run: pytest -m "not a11y" --color=yes --cov --cov-report=xml
       - name: Upload to Codecov
-        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -111,7 +111,7 @@ jobs:
             ${{ runner.os }}-pw-
 
       - name: Run accessibility tests with playwright
-        if: matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
         run: |
           nox -s a11y
         continue-on-error: true
@@ -123,14 +123,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.11"]
+        python-version: ["3.12"]
         sphinx-version: [""]
         include:
           - os: ubuntu-latest
-            python-version: "3.8"
+            python-version: "3.9"
             sphinx-version: "old"
           - os: ubuntu-latest
-            python-version: "3.11"
+            python-version: "3.12"
             sphinx-version: "dev"
     env:
       SPHINX_VERSION: ${{ matrix.sphinx-version }}
@@ -162,7 +162,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.11"]
+        python-version: ["3.12"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -205,7 +205,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.11"]
+        python-version: ["3.12"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
