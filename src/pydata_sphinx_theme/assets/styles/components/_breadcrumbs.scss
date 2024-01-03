@@ -5,7 +5,7 @@ ul.bd-breadcrumbs {
   list-style: none;
   padding-left: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   // Font size slightly smaller to avoid cluttering up space too much
   font-size: 0.8rem;
@@ -13,6 +13,17 @@ ul.bd-breadcrumbs {
   li.breadcrumb-item {
     display: flex;
     align-items: baseline;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &.active {
+      flex-shrink: 1;
+      overflow-x: hidden;
+      .ellipsis {
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+    }
 
     // Style should look like heavier in-page links
     // keeping visited in the default link colour
