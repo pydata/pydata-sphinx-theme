@@ -60,6 +60,8 @@ def maybe_warn(app: Sphinx, msg, *args, **kwargs):
     should_warn = theme_options.get("surface_warnings", False)
     if should_warn:
         SPHINX_LOGGER.warning(msg, *args, **kwargs)
+    else:
+        SPHINX_LOGGER.info(msg, *args, **kwargs)
 
 
 def set_secondary_sidebar_items(
