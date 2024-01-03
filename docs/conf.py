@@ -174,7 +174,7 @@ html_theme_options = {
     "navbar_center": ["version-switcher", "navbar-nav"],
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
-    "navbar_persistent": ["search-button", "search-field"],
+    "navbar_persistent": ["search-button"],
     # "primary_sidebar_end": ["custom-template", "sidebar-ethical-ads"],
     # "article_footer_items": ["test", "test"],
     # "content_footer_items": ["test", "test"],
