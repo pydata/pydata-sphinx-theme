@@ -25,6 +25,8 @@ html_theme_options = {
     "surface_warnings": True,
     "logo_text": "DOCS",
     "footer_items": ["page-toc.html"],
+    "pygment_light_style": "monokai",
+    "pygment_dark_style": "tango",
     "favicons": [
         {
             "rel": "icon",

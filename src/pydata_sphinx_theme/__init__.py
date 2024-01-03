@@ -60,6 +60,18 @@ def update_config(app):
         )
         theme_options["navigation_with_keys"] = False
 
+    # TODO: DEPRECATE after v1.0
+    themes = ["light", "dark"]
+    for theme in themes:
+        if theme_options.get(f"pygment_{theme}_style"):
+            theme_options[f"pygments_{theme}_style"] = theme_options.get(
+                f"pygment_{theme}_style"
+            )
+            warning(
+                f'The parameter "pygment_{theme}_style" was including a typo, please use '
+                f'"pygments_{theme}_style" instead.'
+            )
+
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
