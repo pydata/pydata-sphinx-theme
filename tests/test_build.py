@@ -834,8 +834,8 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     confoverrides = {
         "html_theme_options": {
             **COMMON_CONF_OVERRIDES,
-            "pygment_light_style": style_names[0],
-            "pygment_dark_style": style_names[1],
+            "pygments_light_style": style_names[0],
+            "pygments_dark_style": style_names[1],
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
@@ -879,7 +879,10 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
     # check the deprecation warnings
     warnings = sphinx_build.warnings.strip("\n").split("\n")
     warnings = [w.lstrip("\x1b[91m").rstrip("\x1b[39;49;00m\n") for w in warnings]
-    expected_warnings = ("",)
+    expected_warnings = (
+        'The parameter "pygment_dark_style" was including a typo',
+        'The parameter "pygment_light_style" was including a typo',
+    )
     assert len(warnings) == len(expected_warnings)
     for exp_warn in expected_warnings:
         assert exp_warn in sphinx_build.warnings
