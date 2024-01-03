@@ -189,7 +189,7 @@ html_theme_options = {
         "version_match": version_match,
     },
     "navigation_with_keys": False,
-    "back_to_top_button": False,
+    # "back_to_top_button": False,
     # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
 }
 
