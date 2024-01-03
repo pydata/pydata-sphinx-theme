@@ -1,4 +1,4 @@
-"""Handle pygment css.
+"""Handle Pygments css.
 
 inspired by the Furo theme
 https://github.com/pradyunsg/furo/blob/main/src/furo/__init__.py
@@ -97,6 +97,6 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
             dark_theme = style_name
 
     # re-write pygments.css
-    pygment_css = Path(app.builder.outdir) / "_static" / "pygments.css"
-    with pygment_css.open("w") as f:
+    pygments_css = Path(app.builder.outdir) / "_static" / "pygments.css"
+    with pygments_css.open("w") as f:
         f.write(get_pygments_stylesheet(light_theme, dark_theme))

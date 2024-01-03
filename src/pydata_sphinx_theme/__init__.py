@@ -11,7 +11,7 @@ from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
 
-from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
+from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
 __version__ = "0.15.0rc0"
 
@@ -278,7 +278,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
     app.connect("html-page-context", utils.set_secondary_sidebar_items)
-    app.connect("build-finished", pygment.overwrite_pygments_css)
+    app.connect("build-finished", pygments.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 
     # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
