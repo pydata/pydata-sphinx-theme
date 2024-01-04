@@ -129,9 +129,11 @@ jobs:
           - os: ubuntu-latest
             python-version: "3.9"
             sphinx-version: "old"
-          - os: ubuntu-latest
-            python-version: "3.12"
-            sphinx-version: "dev"
+          # crash with myst parser
+          # will be restored when myst will be dropped from our documentation
+          # - os: ubuntu-latest
+          #   python-version: "3.12"
+          #   sphinx-version: "dev"
     env:
       SPHINX_VERSION: ${{ matrix.sphinx-version }}
     runs-on: ${{ matrix.os }}
