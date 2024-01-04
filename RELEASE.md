@@ -8,6 +8,7 @@ Create an issue and copy/paste the steps below to release a new version. Close t
 
 These steps should be taken in order to create a new release![^release-refs]
 
+```md
 **Double check for quality-control**
 
 - [ ] There are no [open issues with a `impact: block-release` label](https://github.com/pydata/pydata-sphinx-theme/labels/impact%3A%20block-release)
@@ -34,3 +35,4 @@ These steps should be taken in order to create a new release![^release-refs]
 - [ ] Celebrate, you're done!
 
 [^release-refs]: Taken from [the release checklist in our wiki](https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist). See [the release documentation](https://pydata-sphinx-theme.readthedocs.io/en/latest/contribute/policies.html#release-policy) for an overview of release processes.
+```
