@@ -70,20 +70,67 @@ def url_base():
         process.wait()
 
 
-def fingerprint_violations(accessibility_page_scan_violations):
-    """Create a fingerprint of the Axe violations array.
+def filter_ignored_violations(violations, url_pathname):
+    """Filter out ignored violations.
 
-    https://playwright.dev/docs/accessibility-testing#using-snapshots-to-allow-specific-known-issues
+    In some tests, we wish to ignore certain accessibility violations that we
+    won't ever fix or that we don't plan to fix soon.
     """
-    return [
-        {
-            "id": violation["id"],
-            "help": violation["help"],
-            "helpUrl": violation["helpUrl"],
-            "targets": [node["target"] for node in violation["nodes"]],
-        }
-        for violation in accessibility_page_scan_violations
-    ]
+    if url_pathname == "/examples/pydata.html":
+        return [v for v in violations if v["id"] != "empty-table-header"]
+    elif url_pathname in [
+        "/examples/kitchen-sink/generic.html",
+        "/user_guide/theme-elements.html",
+    ]:
+        filtered = []
+        for violation in violations:
+            # TODO: eventually fix this rule violation. See
+            # https://github.com/pydata/pydata-sphinx-theme/issues/1479.
+            if violation["id"] == "landmark-unique":
+                # Ignore landmark-unique only for .sidebar targets. Don't ignore
+                # it for other targets because then the test might fail to catch
+                # a change that violates the rule in some other way.
+                unexpected_nodes = []
+                for node in violation["nodes"]:
+                    # If some target is not .sidebar then we've found a rule
+                    # violation we weren't expecting
+                    if not all([".sidebar" in target for target in node["target"]]):
+                        unexpected_nodes.append(node)
+                if unexpected_nodes:
+                    violation["nodes"] = unexpected_nodes
+                    filtered.append(violation)
+            else:
+                filtered.append(violation)
+        return filtered
+    else:
+        return violations
+
+
+def format_violations(violations):
+    """Return a pretty string representation of Axe-core violations."""
+    result = f"""
+
+        Found {len(violations)} accessibility violation(s):
+        """
+
+    for violation in violations:
+        result += f"""
+
+            - Rule violated:
+              {violation["id"]} - {violation["help"]}
+                - URL: {violation["helpUrl"]}
+                - Impact: {violation["impact"]}
+                - Tags: {" ".join(violation["tags"])}
+                - Targets:"""
+
+        for node in violation["nodes"]:
+            for target in node["target"]:
+                result += f"""
+                    - {target}"""
+
+        result += "\n\n"
+
+    return result
 
 
 @pytest.mark.a11y
@@ -122,7 +169,7 @@ def fingerprint_violations(accessibility_page_scan_violations):
             "/examples/kitchen-sink/typography.html",
             "#typography",
         ),
-        ("/examples/pydata.html", "#pydata-library-styles"),
+        ("/examples/pydata.html", "#PyData-Library-Styles"),
         (
             "/user_guide/theme-elements.html",
             "#theme-specific-elements",
@@ -142,16 +189,18 @@ def fingerprint_violations(accessibility_page_scan_violations):
         # Using one of the simplest pages on the site, select the whole page for
         # testing in order to effectively test repeated website elements like
         # nav, sidebars, breadcrumbs, footer
-        ("/user_guide/page-toc.html", ""),
+        (
+            "/user_guide/page-toc.html",
+            "",  # select whole page
+        ),
     ],
 )
 def test_axe_core(
-    data_regression,
-    theme: str,
+    page: Page,
     url_base: str,
+    theme: str,
     url_pathname: str,
     selector: str,
-    page: Page,
 ):
     """Should have no Axe-core violations at the provided theme and page section."""
     # Load the page at the provided path
@@ -164,14 +213,13 @@ def test_axe_core(
     # Inject the Axe-core JavaScript library into the page
     page.add_script_tag(path="node_modules/axe-core/axe.min.js")
 
-    # Run the Axe-core library against a section of the page. (Don't run it
-    # against the whole page because in this test we're not trying to find
-    # accessibility violations in the nav, sidebar, footer, or other parts of
-    # the PyData Sphinx Theme documentation website.)
+    # Run the Axe-core library against a section of the page (unless the
+    # selector is empty, then run against the whole page)
     results = page.evaluate("axe.run()" if selector == "" else f"axe.run('{selector}')")
 
     # Check found violations against known violations that we do not plan to fix
-    data_regression.check(fingerprint_violations(results["violations"]))
+    filtered_violations = filter_ignored_violations(results["violations"], url_pathname)
+    assert len(filtered_violations) == 0, format_violations(filtered_violations)
 
 
 def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
