@@ -1,6 +1,5 @@
 # Release instructions
 
-
 This page contains the steps to make a release and some helpful resources to get you started.
 
 Create an issue and copy/paste the steps below to release a new version. Close the issue when it is done.
