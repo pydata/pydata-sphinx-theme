@@ -1,6 +1,5 @@
 # Release instructions
 
-The `pydata-sphinx-theme` follows semantic version numbers.
 
 This page contains the steps to make a release and some helpful resources to get you started.
 
