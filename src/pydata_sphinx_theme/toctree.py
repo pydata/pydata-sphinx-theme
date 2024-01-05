@@ -35,9 +35,12 @@ def add_inline_math(node: Node) -> str:
 def get_unrendered_local_toctree(
     app: Sphinx, pagename: str, startdepth: int, collapse: bool = True, **kwargs
 ):
-    """."""
-    if "includehidden" not in kwargs:
-        kwargs["includehidden"] = False
+    """Get the "local" (starting at `startdepth`) TOC tree containing the current page.
+
+    This is similar to `context["toctree"](**kwargs)` in sphinx templating,
+    but using the startdepth-local instead of global TOC tree.
+    """
+    kwargs.setdefault("includehidden", True)
     if kwargs.get("maxdepth") == "":
         kwargs.pop("maxdepth")
 
@@ -457,12 +460,10 @@ def get_local_toctree_for(
     doctree = self.env.tocs[indexname].deepcopy()
 
     toctrees = []
-    if "includehidden" not in kwargs:
-        kwargs["includehidden"] = True
+    kwargs.setdefault("includehidden", True)
     if "maxdepth" not in kwargs or not kwargs["maxdepth"]:
         kwargs["maxdepth"] = 0
-    else:
-        kwargs["maxdepth"] = int(kwargs["maxdepth"])
+    kwargs["maxdepth"] = int(kwargs["maxdepth"])
     kwargs["collapse"] = collapse
 
     # TODO: use `doctree.findall(addnodes.toctree)` once docutils min version >=0.18.1
