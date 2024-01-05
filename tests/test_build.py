@@ -307,6 +307,13 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
         sphinx_build_factory("base", confoverrides=confoverrides).build()
 
 
+def test_sticky_header(sphinx_build_factory):
+    """Regression test, see #1630. Sticky header should be direct descendant of body."""
+    sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
+    index_html = sphinx_build.html_tree("index.html")
+    assert index_html.select_one("body > .bd-header")
+
+
 @pytest.mark.parametrize(
     "align,klass",
     [
