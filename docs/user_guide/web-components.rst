@@ -137,6 +137,7 @@ Cards
 
     .. grid-item-card:: A clickable card
         :link: https://example.com
+        :link-alt: A clickable card
 
 .. grid::
 

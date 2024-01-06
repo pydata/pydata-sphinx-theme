@@ -24,25 +24,36 @@ Thanks for your support!
 :class-card: "downstream-project-links"
 
 - title: Binder
+  link-alt: Binder
   link: https://mybinder.readthedocs.io/en/latest/index.html
 - title: Brightway
+  link-alt: Brightway
   link: https://docs.brightway.dev/en/latest/
 - title: cashocs
+  link-alt: cashocs
   link: https://cashocs.readthedocs.io/en/stable/
 - title: CuPy
+  link-alt: CuPy
   link: https://docs.cupy.dev/en/stable/index.html
 - title: Fairlearn
+  link-alt: Fairlearn
   link: https://fairlearn.org/main/about/
 - title: Feature-engine
+  link-alt: Feature-engine
   link: https://feature-engine.readthedocs.io/
 - title: idtracker.ai
+  link-alt: idtracker.ai
   link: https://idtracker.ai/
 - title: MegEngine
+  link-alt: MegEngine
   link: https://www.megengine.org.cn/doc/stable/en/index.html
 - title: PyVista
+  link-alt: PyVista
   link: https://docs.pyvista.org
 - title: Pastas
+  link-alt: Pastas
   link: https://pastas.readthedocs.io/
 - title: DecentralChain
+  link-alt: DecentralChain
   link: https://docs.decentralchain.io/en/master/
 ```
