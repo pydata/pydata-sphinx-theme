@@ -3,6 +3,7 @@
 import types
 
 import sphinx
+from docutils import nodes
 from packaging.version import Version
 from sphinx.application import Sphinx
 from sphinx.ext.autosummary import autosummary_table
@@ -35,6 +36,22 @@ class BootstrapHTML5TranslatorMixin:
             kwargs["tabindex"] = "0"
 
         return super().starttag(*args, **kwargs)
+
+    def visit_literal_block(self, node):
+        """Modify literal blocks.
+
+        - ensure tabindex="0" for <pre> tags buried in the HTML tree that Sphinx
+          (with Pygments) generates for literal blocks
+        """
+        try:
+            super().visit_literal_block(node)
+        except nodes.SkipNode:
+            # If the super method raises nodes.SkipNode, then we know it
+            # executed successfully and appended to self.body a string of HTML
+            # representing the code block, which we then modify.
+            html_string = self.body[-1]
+            self.body[-1] = html_string.replace("<pre", '<pre tabindex="0"')
+            raise nodes.SkipNode
 
     def visit_table(self, node):
         """Custom visit table method.
