@@ -23,9 +23,17 @@ class BootstrapHTML5TranslatorMixin:
         self.settings.table_style = "table"
 
     def starttag(self, *args, **kwargs):
-        """Ensure an aria-level is set for any heading role."""
+        """Perform small modifications to tags.
+
+        - ensure aria-level is set for any tag with heading role
+        - ensure <pre> tags have tabindex="0".
+        """
         if kwargs.get("ROLE") == "heading" and "ARIA-LEVEL" not in kwargs:
             kwargs["ARIA-LEVEL"] = "2"
+
+        if "pre" in args:
+            kwargs["tabindex"] = "0"
+
         return super().starttag(*args, **kwargs)
 
     def visit_table(self, node):
