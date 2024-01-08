@@ -40,7 +40,6 @@ def get_unrendered_local_toctree(
     This is similar to `context["toctree"](**kwargs)` in sphinx templating,
     but using the startdepth-local instead of global TOC tree.
     """
-    kwargs.setdefault("includehidden", True)
     if kwargs.get("maxdepth") == "":
         kwargs.pop("maxdepth")
 
@@ -460,7 +459,6 @@ def get_local_toctree_for(
     doctree = self.env.tocs[indexname].deepcopy()
 
     toctrees = []
-    kwargs.setdefault("includehidden", True)
     if "maxdepth" not in kwargs or not kwargs["maxdepth"]:
         kwargs["maxdepth"] = 0
     kwargs["maxdepth"] = int(kwargs["maxdepth"])
