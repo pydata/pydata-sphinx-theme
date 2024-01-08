@@ -70,11 +70,11 @@ def add_toctree_functions(
 ) -> None:
     """Add functions so Jinja templates can add toctree objects."""
 
-    def get_sidebar_toctree_length(
+    def check_for_sidebar_toctree(
         startdepth: int = 1, show_nav_level: int = 1, **kwargs
     ):
         toctree = get_unrendered_local_toctree(app, pagename, startdepth)
-        return 0 if toctree is None else len(toctree)
+        return toctree is not None
 
     @cache
     def get_or_create_id_generator(base_id: str) -> Iterator[str]:
@@ -381,7 +381,7 @@ def add_toctree_functions(
 
     context["unique_html_id"] = unique_html_id
     context["generate_header_nav_html"] = generate_header_nav_html
-    context["get_sidebar_toctree_length"] = get_sidebar_toctree_length
+    context["check_for_sidebar_toctree"] = check_for_sidebar_toctree
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
