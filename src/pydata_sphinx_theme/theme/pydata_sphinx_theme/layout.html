@@ -67,16 +67,14 @@
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
 
-  <header>
   {%- if theme_announcement -%}
     {% include "sections/announcement.html" %}
   {%- endif %}
   {% block docs_navbar %}
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
       {%- include "sections/header.html" %}
-    </div>
+    </header>
   {% endblock docs_navbar %}
-  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
