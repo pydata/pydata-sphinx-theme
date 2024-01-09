@@ -80,7 +80,7 @@
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
       {# If we have no sidebar TOC, pop the TOC component from the sidebar list #}
-      {% if get_sidebar_toctree_length(show_nav_level=theme_show_nav_level|int) == 0 %}
+      {% if missing_sidebar_toctree(includehidden=theme_sidebar_includehidden) %}
         {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
       {% endif %}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
