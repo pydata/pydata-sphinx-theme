@@ -170,6 +170,7 @@ For  complete reference of the existing option please see :ref:`the last section
             Footer
 
         ``footer_start``
+        ``footer_center``
         ``footer_end``
 
 Horizontal spacing
