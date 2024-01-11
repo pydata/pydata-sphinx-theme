@@ -64,7 +64,7 @@ def add_toctree_functions(
             entire TocTree for the site; 1 (default) gets the TocTree for the current
             top-level section.
 
-            kwargs: passed to the Sphinx `toctree` template function.
+            kwargs : passed to the Sphinx `toctree` template function.
         """
         ancestorname, toctree_obj = _get_ancestor_pagename(
             app=app, pagename=pagename, startdepth=startdepth
@@ -267,7 +267,7 @@ def add_toctree_functions(
             kind : "sidebar" or "raw". Whether to generate HTML meant for sidebar navigation ("sidebar") or to return the raw BeautifulSoup object ("raw").
             startdepth : The level of the toctree at which to start. By default, for the navbar uses the normal toctree (`startdepth=0`), and for the sidebar starts from the second level (`startdepth=1`).
             show_nav_level : The level of the navigation bar to toggle as visible on page load. By default, this level is 1, and only top-level pages are shown, with drop-boxes to reveal children. Increasing `show_nav_level` will show child levels as well.
-            kwargs: passed to the Sphinx `toctree` template function.
+            kwargs : passed to the Sphinx `toctree` template function.
 
         Returns:
             HTML string (if kind == "sidebar") OR BeautifulSoup object (if kind == "raw")
@@ -477,7 +477,18 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
 def get_nonroot_toctree(
     app: Sphinx, pagename: str, ancestorname: str, toctree, **kwargs
 ):
-    """Get the partial TocTree (rooted `startdepth` levels below the global root) that dominates `pagename`.
+    """Get the partial TocTree (rooted at `ancestorname`) that dominates `pagename`.
+
+    Parameters:
+    app : Sphinx app.
+    pagename : Name of the current page (as Sphinx knows it; i.e., its relative path
+    from the documentation root).
+    ancestorname : Name of a page that dominates `pagename` and that will serve as the
+    root of the TocTree fragment.
+    toctree : A Sphinx TocTree object. Since this is always needed when finding the
+    ancestorname (see _get_ancestor_pagename), it's more efficient to pass it here to
+    re-use it.
+    kwargs : passed to the Sphinx `toctree` template function.
 
     This is similar to `context["toctree"](**kwargs)` (AKA `toctree(**kwargs)` within a
     Jinja template), or `TocTree.get_toctree_for()`, which always uses the "root"
