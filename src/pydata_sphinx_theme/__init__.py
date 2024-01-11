@@ -287,4 +287,4 @@ def setup(app: Sphinx) -> Dict[str, str]:
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))
 
-    return {"parallel_read_safe": True, "parallel_write_safe": True}
+    return {"parallel_read_safe": True, "parallel_write_safe": False}
