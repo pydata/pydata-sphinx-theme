@@ -32,5 +32,5 @@ These steps should be taken in order to create a new release![^release-refs]
 - [ ] Hide the previous patch version build in the RDT interface if needed.
 - [ ] Celebrate, you're done!
 
-[^release-refs]: Taken from [the release checklist in our wiki](https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist). See [the release documentation](https://pydata-sphinx-theme.readthedocs.io/en/latest/contribute/policies.html#release-policy) for an overview of release processes.
+[^release-refs]: Taken from [the release checklist](https://github.com/pydata/pydata-sphinx-theme/blob/main/RELEASE.md). See [the release documentation](https://pydata-sphinx-theme.readthedocs.io/en/latest/contribute/policies.html#release-policy) for an overview of release processes.
 ```
