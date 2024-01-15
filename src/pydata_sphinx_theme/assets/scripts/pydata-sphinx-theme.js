@@ -245,7 +245,7 @@ var addEventListenerForSearchKeyboard = () => {
           ? event.metaKey && !event.ctrlKey
           : !event.metaKey && event.ctrlKey) &&
         // Case-insensitive so the shortcut still works with caps lock
-        /k/i.test(event.key)
+        /^k$/i.test(event.key)
       ) {
         event.preventDefault();
         toggleSearchField();
