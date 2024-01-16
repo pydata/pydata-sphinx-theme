@@ -136,17 +136,17 @@
 .search-button-field {
   display: inline-flex;
   align-items: center;
-  border: var(--pst-color-border) solid 1px;
+  outline: var(--pst-color-border) solid 1px;
   border-radius: 1.5em;
   color: var(--pst-color-text-muted);
   padding: 0.5em;
   background-color: var(--pst-color-surface);
 
   &:hover {
-    border: 2px solid var(--pst-color-link-hover);
+    outline: 2px solid var(--pst-color-link-hover);
   }
   &:focus-visible {
-    border: 2px solid var(--pst-color-accent);
+    outline: 2px solid var(--pst-color-accent);
   }
 
   // The keyboard shotcut text
