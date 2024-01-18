@@ -13,7 +13,7 @@ from sphinx.errors import ExtensionError
 
 from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
 
-__version__ = "0.15.2dev0"
+__version__ = "0.15.2"
 
 
 def update_config(app):
