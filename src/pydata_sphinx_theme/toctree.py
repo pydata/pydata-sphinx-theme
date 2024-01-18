@@ -506,7 +506,6 @@ def get_nonroot_toctree(
     for toctree_node in traverse_or_findall(ancestor_doctree, TocTreeNodeClass):
         # TODO: ↑↑↑↑↑↑ use `ancestor_doctree.findall(TocTreeNodeClass)` ↑↑↑↑↑↑
         #              once docutils min version >=0.18.1
-        # enforce order on the kwargs to ensure caching (this creates an OrderedDict)
 
         # ... resolve that `toctree::` (recursively get children, prune, collapse, etc)
         resolved_toctree = toctree.resolve(
