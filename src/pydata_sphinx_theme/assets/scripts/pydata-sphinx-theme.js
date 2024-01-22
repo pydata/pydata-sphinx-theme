@@ -348,7 +348,7 @@ async function fetchVersionSwitcherJSON(url) {
   } catch (err) {
     if (err instanceof TypeError) {
       if (!window.location.origin) {
-        // window.locaiton.origin is null for local static sites
+        // window.location.origin is null for local static sites
         // (ie. window.location.protocol == 'file:')
         //
         // TODO: Fix this to return the static version switcher by working out
