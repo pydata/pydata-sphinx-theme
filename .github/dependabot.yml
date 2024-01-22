@@ -16,3 +16,4 @@ updates:
     labels:
       - "tag: dependencies"
       - "tag: javascript"
+    open-pull-requests-limit: 0 # security updates only
