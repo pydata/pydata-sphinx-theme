@@ -102,7 +102,7 @@ jobs:
       # note I am setting this on top of the Python cache as I could not find
       # how to set the hash key on the python one
       - name: Set up browser cache (for accessibility tests)
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/pw-browsers
