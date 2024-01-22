@@ -564,6 +564,8 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
   const data = await fetchVersionSwitcherJSON(
     DOCUMENTATION_OPTIONS.theme_switcher_json_url
   );
+  // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
+  // We don't really want the switcher and warning bar to silently not work.
   if (data) {
     populateVersionSwitcher(data, versionSwitcherBtns);
     if (wantsWarningBanner) {
