@@ -3,10 +3,32 @@
  */
 
 .bd-content {
+  @mixin chevron-down {
+    .toggle-chevron-right {
+      transform: rotate(90deg); // point chevron down
+      transition: none; // match non-animated behavior of other chevrons on site
+    }
+  }
+
+  @mixin chevron-up {
+    .toggle-chevron-right {
+      transform: rotate(-90deg); // point chevron down
+      transition: none; // match non-animated behavior of other chevrons on site
+    }
+  }
+
   // Admonition toggles
   .admonition {
     button.toggle-button {
       color: inherit;
+
+      // When disclosure widget is closed
+      &.toggle-button-hidden {
+        @include chevron-down;
+      }
+
+      // When open
+      @include chevron-up;
     }
 
     // Focus ring
@@ -52,12 +74,18 @@
     // Over-ride border color to re-use our primary color
     summary {
       border-left: 3px solid var(--pst-color-primary);
+
+      @include chevron-down;
     }
 
     // When expanded, sharpen the bottom left and right corners of the focus ring
-    &[open] :focus-visible {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+    &[open] {
+      @include chevron-up;
+
+      :focus-visible {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
   }
 }

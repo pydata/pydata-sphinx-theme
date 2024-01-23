@@ -13,6 +13,7 @@ from typing import Any, Dict
 
 import pydata_sphinx_theme
 from sphinx.application import Sphinx
+from sphinx.locale import _
 
 sys.path.append(str(Path(".").resolve()))
 
@@ -88,6 +89,11 @@ blog_authors = {
     "pydata": ("PyData", "https://pydata.org"),
     "jupyter": ("Jupyter", "https://jupyter.org"),
 }
+
+# -- sphinx_togglebutton options ---------------------------------------------
+togglebutton_hint = str(_("Click to expand"))
+togglebutton_hint_hide = str(_("Click to collapse"))
+
 
 # -- Options for HTML output -------------------------------------------------
 
