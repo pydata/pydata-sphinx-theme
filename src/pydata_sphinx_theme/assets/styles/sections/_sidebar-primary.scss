@@ -142,10 +142,6 @@ $sidebar-padding-right: 1rem;
     list-style: none;
     padding-left: 0px;
 
-    .nav {
-      display: block;
-    }
-
     // Level 0 TOC heading is put inside the <summary> tag
     // so let the <summary> tag take up more space
     li.toctree-l0.has-children {
