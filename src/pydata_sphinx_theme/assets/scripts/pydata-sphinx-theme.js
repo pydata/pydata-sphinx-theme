@@ -347,6 +347,14 @@ async function fetchVersionSwitcherJSON(url) {
     var result = new URL(url);
   } catch (err) {
     if (err instanceof TypeError) {
+      if (!window.location.origin) {
+        // window.location.origin is null for local static sites
+        // (ie. window.location.protocol == 'file:')
+        //
+        // TODO: Fix this to return the static version switcher by working out
+        // how to get the correct path to the switcher JSON file on local static builds
+        return null;
+      }
       // assume we got a relative path, and fix accordingly. But first, we need to
       // use `fetch()` to follow redirects so we get the correct final base URL
       const origin = await fetch(window.location.origin, { method: "HEAD" });
@@ -556,9 +564,13 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
   const data = await fetchVersionSwitcherJSON(
     DOCUMENTATION_OPTIONS.theme_switcher_json_url
   );
-  populateVersionSwitcher(data, versionSwitcherBtns);
-  if (wantsWarningBanner) {
-    showVersionWarningBanner(data);
+  // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
+  // We don't really want the switcher and warning bar to silently not work.
+  if (data) {
+    populateVersionSwitcher(data, versionSwitcherBtns);
+    if (wantsWarningBanner) {
+      showVersionWarningBanner(data);
+    }
   }
 }
 

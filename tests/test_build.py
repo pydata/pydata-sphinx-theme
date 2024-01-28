@@ -1166,6 +1166,15 @@ def test_render_secondary_sidebar_dict_multiple_glob_matches(
     assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")
 
 
+def test_role_main_for_search_highlights(sphinx_build_factory):
+    """Sphinx searchtools.js looks for [role="main"], so make sure it's there.
+
+    This is a regression test. See #1676.
+    """
+    sphinx_build = sphinx_build_factory("base").build()
+    assert sphinx_build.html_tree("index.html").select_one('[role="main"]')
+
+
 def test_primary_sidebar_hidden_when_empty(sphinx_build_factory) -> None:
     """Test that the primary sidebar does not show up if it is empty."""
     sphinx_build = sphinx_build_factory("test_primary_sidebar_toc").build()
