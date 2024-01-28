@@ -581,7 +581,9 @@ function fixMoreLinksInMobileSidebar() {
   const dropdown = document.querySelector(
     ".bd-sidebar-primary [id^=pst-nav-more-links]"
   );
-  dropdown.classList.add("show");
+  if (dropdown !== null) {
+    dropdown.classList.add("show");
+  }
 }
 
 /*******************************************************************************
