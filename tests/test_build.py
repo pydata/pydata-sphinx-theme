@@ -1164,3 +1164,23 @@ def test_render_secondary_sidebar_dict_multiple_glob_matches(
     assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
     assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
     assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")
+
+
+def test_primary_sidebar_hidden_when_empty(sphinx_build_factory) -> None:
+    """Test that the primary sidebar does not show up if it is empty."""
+    sphinx_build = sphinx_build_factory("test_primary_sidebar_toc").build()
+    sidebar_primary = sphinx_build.html_tree("page.html").select(
+        "div.bd-sidebar-primary"
+    )[0]
+    assert "hide-on-wide" in sidebar_primary.attrs["class"]
+
+
+def test_primary_sidebar_exist_when_hidden_toctree(sphinx_build_factory) -> None:
+    """Test that the primary sidebar shows up if there are hidden toctrees."""
+    sphinx_build = sphinx_build_factory("test_primary_sidebar_toc").build()
+    for page in ("sec/index.html", "sec/subpage.html"):
+        sidebar_primary = sphinx_build.html_tree(page).select("div.bd-sidebar-primary")[
+            0
+        ]
+        assert "hide-on-wide" not in sidebar_primary.attrs["class"]
+        assert "Page in Section" in str(sidebar_primary)

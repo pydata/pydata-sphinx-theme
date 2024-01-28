@@ -71,10 +71,6 @@ def add_toctree_functions(
         )
         if ancestorname is None:
             return True  # suppress
-        if kwargs.get("includehidden", False):
-            # if ancestor is found and `includehidden=True` we're guaranteed there's a
-            # TocTree to be shown, so don't suppress
-            return False
 
         # we've found an ancestor page, but `includehidden=False` so we can't be sure if
         # there's a TocTree fragment that should be shown on this page; unfortunately we
