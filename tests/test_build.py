@@ -1066,6 +1066,11 @@ def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
     assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
     assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
 
+    # Check that the secondary sidebar is completely removed for section1/index
+    assert not sphinx_build.html_tree("section1/index.html").select(
+        "div.bd-sidebar-secondary"
+    )
+
 
 def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None:
     """Test that the secondary sidebar can be built with a dict of templates that globs a subdir."""
