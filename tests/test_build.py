@@ -307,6 +307,13 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
         sphinx_build_factory("base", confoverrides=confoverrides).build()
 
 
+def test_sticky_header(sphinx_build_factory):
+    """Regression test, see #1630. Sticky header should be direct descendant of body."""
+    sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
+    index_html = sphinx_build.html_tree("index.html")
+    assert index_html.select_one("body > .bd-header")
+
+
 @pytest.mark.parametrize(
     "align,klass",
     [
@@ -964,7 +971,6 @@ def test_translations(sphinx_build_factory) -> None:
     index = sphinx_build.html_tree("section1/index.html")
 
     sidebar_primary = index.select(".bd-sidebar-primary")[0]
-    assert "Navigation du site" in str(sidebar_primary)
     assert "Navigation de la section" in str(sidebar_primary)
 
     sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
@@ -986,3 +992,184 @@ def test_translations(sphinx_build_factory) -> None:
     # Search bar
     # TODO: Add translations where there are english phrases below
     assert "Search the docs" in str(index.select(".bd-search")[0])
+
+
+def test_render_secondary_sidebar_list(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a list of templates."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": ["page-toc", "edit-this-page"],
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the page-toc template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+
+    # Check that sourcelink is not rendered
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a dict of templates."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "**": ["page-toc", "edit-this-page"],
+                "section1/index": [],
+                "section2/index": ["sourcelink"],
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the page-toc template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a dict of templates that globs a subdir."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "section1/index": [],
+                "section2/*": ["sourcelink"],
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the no page-toc template gets rendered
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.page-toc")
+
+    # Check that no edit-this-page template gets rendered
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict_multiple_glob_matches(
+    sphinx_build_factory,
+) -> None:
+    """Test that the secondary sidebar builds with a template dict with two conflicting globs.
+
+    The last specified glob pattern should win, but a warning should be emitted with the
+    offending pattern and affected pagenames.
+    """
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "**": [
+                    "page-toc",
+                    "edit-this-page",
+                ],  # <-- Some pages match both patterns
+                "section1/index": [],
+                "section2/*": ["sourcelink"],  # <-- Some pages match both patterns
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory(
+        "sidebars",
+        confoverrides=confoverrides,
+    )
+    # Basic build with defaults
+    sphinx_build.build(no_warning=False)
+
+    # Check that the proper warnings are emitted for the affected pages
+    for page in ["section2/index", "section2/page1"]:
+        assert (
+            f"WARNING: Page {page} matches two wildcard patterns "
+            "in secondary_sidebar_items: ** and section2/*"
+        ) in sphinx_build.warnings
+
+    # Check that the page-toc template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")
+
+
+def test_role_main_for_search_highlights(sphinx_build_factory):
+    """Sphinx searchtools.js looks for [role="main"], so make sure it's there.
+
+    This is a regression test. See #1676.
+    """
+    sphinx_build = sphinx_build_factory("base").build()
+    assert sphinx_build.html_tree("index.html").select_one('[role="main"]')

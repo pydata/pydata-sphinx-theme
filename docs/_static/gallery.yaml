@@ -11,6 +11,9 @@
 - title: Bokeh
   link: https://docs.bokeh.org/en/latest/
   img-bottom: ../_static/gallery/bokeh.png
+- title: Brightway
+  link: https://docs.brightway.dev/en/latest/
+  img-bottom: ../_static/gallery/brightway.png
 - title: Jupyter
   link: https://docs.jupyter.org/en/latest/
   img-bottom: ../_static/gallery/jupyter.png

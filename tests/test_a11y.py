@@ -8,8 +8,6 @@ from urllib.parse import urljoin
 
 import pytest
 
-from .utils.pretty_axe_results import pretty_axe_results
-
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
 from playwright.sync_api import Page, expect  # noqa: E402
@@ -72,26 +70,75 @@ def url_base():
         process.wait()
 
 
+def fingerprint_violations(accessibility_page_scan_violations):
+    """Create a fingerprint of the Axe violations array.
+
+    https://playwright.dev/docs/accessibility-testing#using-snapshots-to-allow-specific-known-issues
+    """
+    return [
+        {
+            "id": violation["id"],
+            "help": violation["help"],
+            "helpUrl": violation["helpUrl"],
+            "targets": [node["target"] for node in violation["nodes"]],
+        }
+        for violation in accessibility_page_scan_violations
+    ]
+
+
 @pytest.mark.a11y
 @pytest.mark.parametrize("theme", ["light", "dark"])
 @pytest.mark.parametrize(
     "url_pathname,selector",
     [
-        ("/examples/kitchen-sink/admonitions.html", "#admonitions"),
-        ("/examples/kitchen-sink/api.html", "#api-documentation"),
+        (
+            "/examples/kitchen-sink/admonitions.html",
+            "#admonitions",
+        ),
+        (
+            "/examples/kitchen-sink/api.html",
+            "#api-documentation",
+        ),
         ("/examples/kitchen-sink/blocks.html", "#blocks"),
-        ("/examples/kitchen-sink/generic.html", "#generic-items"),
-        ("/examples/kitchen-sink/images.html", "#images-figures"),
+        (
+            "/examples/kitchen-sink/generic.html",
+            "#generic-items",
+        ),
+        (
+            "/examples/kitchen-sink/images.html",
+            "#images-figures",
+        ),
         ("/examples/kitchen-sink/lists.html", "#lists"),
-        ("/examples/kitchen-sink/structure.html", "#structural-elements"),
-        ("/examples/kitchen-sink/structure.html", "#structural-elements-2"),
+        (
+            "/examples/kitchen-sink/structure.html",
+            "#structural-elements",
+        ),
+        (
+            "/examples/kitchen-sink/structure.html",
+            "#structural-elements-2",
+        ),
         ("/examples/kitchen-sink/tables.html", "#tables"),
-        ("/examples/kitchen-sink/typography.html", "#typography"),
+        (
+            "/examples/kitchen-sink/typography.html",
+            "#typography",
+        ),
         ("/examples/pydata.html", "#pydata-library-styles"),
-        ("/user_guide/theme-elements.html", "#theme-specific-elements"),
-        ("/user_guide/web-components.html", "#sphinx-design-components"),
-        ("/user_guide/extending.html", "#extending-the-theme"),
-        ("/user_guide/styling.html", "#theme-variables-and-css"),
+        (
+            "/user_guide/theme-elements.html",
+            "#theme-specific-elements",
+        ),
+        (
+            "/user_guide/web-components.html",
+            "#sphinx-design-components",
+        ),
+        (
+            "/user_guide/extending.html",
+            "#extending-the-theme",
+        ),
+        (
+            "/user_guide/styling.html",
+            "#theme-variables-and-css",
+        ),
         # Using one of the simplest pages on the site, select the whole page for
         # testing in order to effectively test repeated website elements like
         # nav, sidebars, breadcrumbs, footer
@@ -99,7 +146,12 @@ def url_base():
     ],
 )
 def test_axe_core(
-    theme: str, url_base: str, url_pathname: str, selector: str, page: Page
+    data_regression,
+    theme: str,
+    url_base: str,
+    url_pathname: str,
+    selector: str,
+    page: Page,
 ):
     """Should have no Axe-core violations at the provided theme and page section."""
     # Load the page at the provided path
@@ -118,8 +170,8 @@ def test_axe_core(
     # the PyData Sphinx Theme documentation website.)
     results = page.evaluate("axe.run()" if selector == "" else f"axe.run('{selector}')")
 
-    # Expect Axe-core to have found 0 accessibility violations
-    assert len(results["violations"]) == 0, pretty_axe_results(results, selector)
+    # Check found violations against known violations that we do not plan to fix
+    data_regression.check(fingerprint_violations(results["violations"]))
 
 
 def test_version_switcher_highlighting(page: Page, url_base: str) -> None:

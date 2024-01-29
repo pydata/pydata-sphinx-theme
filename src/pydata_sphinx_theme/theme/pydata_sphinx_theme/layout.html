@@ -6,30 +6,15 @@
 {% endset %}
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}
-{# Metadata and asset linking #}
-{# Create the sidebar links HTML here to re-use in a few places #}
-{# If we have no sidebar links, pop the links component from the sidebar list #}
-{%- set sidebar_nav_html = generate_toctree_html("sidebar",
-show_nav_level=theme_show_nav_level|int,
-maxdepth=theme_navigation_depth|int,
-collapse=theme_collapse_navigation|tobool,
-includehidden=True,
-titles_only=True)
--%}
-{% if sidebar_nav_html | length == 0 %}
-  {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
-{% endif %}
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
-{% set remove_sidebar_secondary = (meta is defined and meta is not none
-and 'html_theme.sidebar_secondary.remove' in meta)
-or not theme_secondary_sidebar_items %}
+{% set remove_sidebar_secondary = (meta is defined and meta is not none and 'html_theme.sidebar_secondary.remove' in meta) or not theme_secondary_sidebar_items %}
 {%- block css %}
   {# The data-cfasync attribute disables CloudFlare's Rocket loader so that #}
   {# mode/theme are correctly set before the browser renders the page. #}
   {# https://github.com/pydata/pydata-sphinx-theme/pull/1045 #}
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "{{ default_mode }}";
   </script>
   {{ _webpack.head_pre_assets() }}
   {{ _webpack.head_pre_icons() }}
@@ -58,11 +43,13 @@ or not theme_secondary_sidebar_items %}
   {# A tiny helper pixel to detect if we've scrolled #}
   <div id="pst-scroll-pixel-helper"></div>
 
+  {%- if theme_back_to_top_button %}
   {# the scroll to top button #}
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
     {{- _("Back to top") -}}
   </button>
+  {%- endif %}
 
   {# checkbox to toggle primary sidebar #}
   <input type="checkbox"
@@ -80,25 +67,27 @@ or not theme_secondary_sidebar_items %}
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
 
-  <header>
   {%- if theme_announcement -%}
     {% include "sections/announcement.html" %}
   {%- endif %}
   {% block docs_navbar %}
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
       {%- include "sections/header.html" %}
-    </div>
+    </header>
   {% endblock docs_navbar %}
-  </header>
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
+      {# If we have no sidebar TOC, pop the TOC component from the sidebars list #}
+      {% if suppress_sidebar_toctree(includehidden=theme_sidebar_includehidden | tobool) %}
+        {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+      {% endif %}
       <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
       {# Using an ID here so that the skip-link works #}
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         {# Main content area #}
         {% block docs_main %}
           <div class="bd-content">

@@ -1,6 +1,6 @@
 """Methods to build the toctree used in the html pages."""
 
-from functools import lru_cache
+from functools import cache
 from itertools import count
 from typing import Iterator, List, Union
 from urllib.parse import urlparse
@@ -9,8 +9,7 @@ import sphinx
 from bs4 import BeautifulSoup
 from docutils import nodes
 from docutils.nodes import Node
-from sphinx import addnodes
-from sphinx.addnodes import toctree as toctree_node
+from sphinx.addnodes import toctree as TocTreeNodeClass
 from sphinx.application import Sphinx
 from sphinx.environment.adapters.toctree import TocTree
 from sphinx.locale import _
@@ -32,12 +31,60 @@ def add_inline_math(node: Node) -> str:
     )
 
 
+def _get_ancestor_pagename(app: Sphinx, pagename: str, startdepth: int) -> str:
+    """Get the name of `pagename`'s ancestor that is rooted `startdepth` levels below the global root."""
+    toctree = TocTree(app.env)
+    if sphinx.version_info[:2] >= (7, 2):
+        from sphinx.environment.adapters.toctree import _get_toctree_ancestors
+
+        ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
+    else:
+        ancestors = toctree.get_toctree_ancestors(pagename)
+    try:
+        out = ancestors[-startdepth]
+    except IndexError:
+        # eg for index.rst, but also special pages such as genindex, py-modindex, search
+        # those pages don't have a "current" element in the toctree, so we can
+        # directly return None instead of using the default sphinx
+        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
+        out = None
+    return out, toctree
+
+
 def add_toctree_functions(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
     """Add functions so Jinja templates can add toctree objects."""
 
-    @lru_cache(maxsize=None)
+    def suppress_sidebar_toctree(startdepth: int = 1, **kwargs):
+        """Check if there's a sidebar TocTree that needs to be rendered.
+
+        Parameters:
+            startdepth : The level of the TocTree at which to start. 0 includes the
+            entire TocTree for the site; 1 (default) gets the TocTree for the current
+            top-level section.
+
+            kwargs : passed to the Sphinx `toctree` template function.
+        """
+        ancestorname, toctree_obj = _get_ancestor_pagename(
+            app=app, pagename=pagename, startdepth=startdepth
+        )
+        if ancestorname is None:
+            return True  # suppress
+        if kwargs.get("includehidden", False):
+            # if ancestor is found and `includehidden=True` we're guaranteed there's a
+            # TocTree to be shown, so don't suppress
+            return False
+
+        # we've found an ancestor page, but `includehidden=False` so we can't be sure if
+        # there's a TocTree fragment that should be shown on this page; unfortunately we
+        # must resolve the whole TOC subtree to find out
+        toctree = get_nonroot_toctree(
+            app, pagename, ancestorname, toctree_obj, **kwargs
+        )
+        return toctree is None
+
+    @cache
     def get_or_create_id_generator(base_id: str) -> Iterator[str]:
         for n in count(start=1):
             if n == 1:
@@ -53,7 +100,7 @@ def add_toctree_functions(
         """
         return next(get_or_create_id_generator(base_id))
 
-    @lru_cache(maxsize=None)
+    @cache
     def generate_header_nav_before_dropdown(n_links_before_dropdown):
         """The cacheable part."""
         try:
@@ -69,6 +116,9 @@ def add_toctree_functions(
         if sphinx.version_info[:2] >= (7, 2):
             from sphinx.environment.adapters.toctree import _get_toctree_ancestors
 
+            # NOTE: `env.toctree_includes` is a dict mapping pagenames to any (possibly
+            # hidden) TocTree directives on that page (i.e., the "child" pages nested
+            # under `pagename`).
             active_header_page = [
                 *_get_toctree_ancestors(app.env.toctree_includes, pagename)
             ]
@@ -78,14 +128,18 @@ def add_toctree_functions(
             # The final list item will be the top-most ancestor
             active_header_page = active_header_page[-1]
 
-        # Find the root document because it lists our top-level toctree pages
-        root = app.env.tocs[app.config.root_doc]
+        # NOTE: `env.tocs` is a dict mapping pagenames to hierarchical bullet-lists
+        # ("nodetrees" in Sphinx parlance) of in-page headings (including `toctree::`
+        # directives). Thus the `tocs` of `root_doc` yields the top-level pages that sit
+        # just below the root of our site
+        root_toc = app.env.tocs[app.config.root_doc]
 
-        # Iterate through each toctree node in the root document
-        # Grab the toctree pages and find the relative link + title.
         links_html = []
-        # TODO: use `root.findall(toctree_node)` once docutils min version >=0.18.1
-        for toc in traverse_or_findall(root, toctree_node):
+        # Iterate through each node in the root document toc.
+        # Grab the toctree pages and find the relative link + title.
+        for toc in traverse_or_findall(root_toc, TocTreeNodeClass):
+            # TODO: ↑↑↑ use `root_toc.findall(TocTreeNodeClass)` ↑↑↑
+            #              once docutils min version >=0.18.1
             for title, page in toc.attributes["entries"]:
                 # if the page is using "self" use the correct link
                 page = toc.attributes["parent"] if page == "self" else page
@@ -194,7 +248,7 @@ def add_toctree_functions(
 
     # Cache this function because it is expensive to run, and because Sphinx
     # somehow runs this twice in some circumstances in unpredictable ways.
-    @lru_cache(maxsize=None)
+    @cache
     def generate_toctree_html(
         kind: str, startdepth: int = 1, show_nav_level: int = 1, **kwargs
     ) -> Union[BeautifulSoup, str]:
@@ -216,18 +270,31 @@ def add_toctree_functions(
             kind : "sidebar" or "raw". Whether to generate HTML meant for sidebar navigation ("sidebar") or to return the raw BeautifulSoup object ("raw").
             startdepth : The level of the toctree at which to start. By default, for the navbar uses the normal toctree (`startdepth=0`), and for the sidebar starts from the second level (`startdepth=1`).
             show_nav_level : The level of the navigation bar to toggle as visible on page load. By default, this level is 1, and only top-level pages are shown, with drop-boxes to reveal children. Increasing `show_nav_level` will show child levels as well.
-            kwargs: passed to the Sphinx `toctree` template function.
+            kwargs : passed to the Sphinx `toctree` template function.
 
         Returns:
             HTML string (if kind == "sidebar") OR BeautifulSoup object (if kind == "raw")
         """
         if startdepth == 0:
-            toc_sphinx = context["toctree"](**kwargs)
+            html_toctree = context["toctree"](**kwargs)
         else:
+            # find relevant ancestor page; some pages (search, genindex) won't have one
+            ancestorname, toctree_obj = _get_ancestor_pagename(
+                app=app, pagename=pagename, startdepth=startdepth
+            )
+            if ancestorname is None:
+                raise RuntimeError(
+                    "Template requested to generate a TocTree fragment but no suitable "
+                    "ancestor found to act as root node. Please report this to theme "
+                    "developers."
+                )
             # select the "active" subset of the navigation tree for the sidebar
-            toc_sphinx = index_toctree(app, pagename, startdepth, **kwargs)
+            toctree_element = get_nonroot_toctree(
+                app, pagename, ancestorname, toctree_obj, **kwargs
+            )
+            html_toctree = app.builder.render_partial(toctree_element)["fragment"]
 
-        soup = BeautifulSoup(toc_sphinx, "html.parser")
+        soup = BeautifulSoup(html_toctree, "html.parser")
 
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
@@ -244,7 +311,7 @@ def add_toctree_functions(
         if kind == "sidebar":
             # Add bootstrap classes for first `ul` items
             for ul in soup("ul", recursive=False):
-                ul.attrs["class"] = ul.attrs.get("class", []) + ["nav", "bd-sidenav"]
+                ul.attrs["class"] = [*ul.attrs.get("class", []), "nav", "bd-sidenav"]
 
             # Add collapse boxes for parts/captions.
             # Wraps the TOC part in an extra <ul> to behave like chapters with toggles
@@ -279,7 +346,7 @@ def add_toctree_functions(
 
         return soup
 
-    @lru_cache(maxsize=None)
+    @cache
     def generate_toc_html(kind: str = "html") -> BeautifulSoup:
         """Return the within-page TOC links in HTML."""
         if "toc" not in context:
@@ -292,22 +359,22 @@ def add_toctree_functions(
             if ul is None:
                 return
             if level <= (context["theme_show_toc_level"] + 1):
-                ul["class"] = ul.get("class", []) + ["visible"]
+                ul["class"] = [*ul.get("class", []), "visible"]
             for li in ul("li", recursive=False):
-                li["class"] = li.get("class", []) + [f"toc-h{level}"]
+                li["class"] = [*li.get("class", []), f"toc-h{level}"]
                 add_header_level_recursive(li.find("ul", recursive=False), level + 1)
 
         add_header_level_recursive(soup.find("ul"), 1)
 
         # Add in CSS classes for bootstrap
         for ul in soup("ul"):
-            ul["class"] = ul.get("class", []) + ["nav", "section-nav", "flex-column"]
+            ul["class"] = [*ul.get("class", []), "nav", "section-nav", "flex-column"]
 
         for li in soup("li"):
-            li["class"] = li.get("class", []) + ["nav-item", "toc-entry"]
+            li["class"] = [*li.get("class", []), "nav-item", "toc-entry"]
             if li.find("a"):
                 a = li.find("a")
-                a["class"] = a.get("class", []) + ["nav-link"]
+                a["class"] = [*a.get("class", []), "nav-link"]
 
         # If we only have one h1 header, assume it's a title
         h1_headers = soup.select(".toc-h1")
@@ -345,6 +412,7 @@ def add_toctree_functions(
 
     context["unique_html_id"] = unique_html_id
     context["generate_header_nav_html"] = generate_header_nav_html
+    context["suppress_sidebar_toctree"] = suppress_sidebar_toctree
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
@@ -371,7 +439,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
             continue
 
         # Add a class to indicate that this has children.
-        element["class"] = classes + ["has-children"]
+        element["class"] = [*classes, "has-children"]
 
         # We're gonna add a checkbox.
         toctree_checkbox_count += 1
@@ -409,78 +477,53 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         element.insert(1, checkbox)
 
 
-def get_local_toctree_for(
-    self: TocTree, indexname: str, docname: str, builder, collapse: bool, **kwargs
-) -> List[BeautifulSoup]:
-    """Return the "local" TOC nodetree (relative to `indexname`)."""
-    # this is a copy of `TocTree.get_toctree_for`, but where the sphinx version
-    # always uses the "root" doctree:
-    #     doctree = self.env.get_doctree(self.env.config.root_doc)
-    # we here use the `indexname` additional argument to be able to use a subset
-    # of the doctree (e.g. starting at a second level for the sidebar):
-    #     doctree = app.env.tocs[indexname].deepcopy()
+def get_nonroot_toctree(
+    app: Sphinx, pagename: str, ancestorname: str, toctree, **kwargs
+):
+    """Get the partial TocTree (rooted at `ancestorname`) that dominates `pagename`.
 
-    doctree = self.env.tocs[indexname].deepcopy()
+    Parameters:
+    app : Sphinx app.
+    pagename : Name of the current page (as Sphinx knows it; i.e., its relative path
+    from the documentation root).
+    ancestorname : Name of a page that dominates `pagename` and that will serve as the
+    root of the TocTree fragment.
+    toctree : A Sphinx TocTree object. Since this is always needed when finding the
+    ancestorname (see _get_ancestor_pagename), it's more efficient to pass it here to
+    re-use it.
+    kwargs : passed to the Sphinx `toctree` template function.
 
-    toctrees = []
-    if "includehidden" not in kwargs:
-        kwargs["includehidden"] = True
+    This is similar to `context["toctree"](**kwargs)` (AKA `toctree(**kwargs)` within a
+    Jinja template), or `TocTree.get_toctree_for()`, which always uses the "root"
+    doctree (i.e., `doctree = self.env.get_doctree(self.env.config.root_doc)`).
+    """
+    kwargs.setdefault("collapse", True)
     if "maxdepth" not in kwargs or not kwargs["maxdepth"]:
         kwargs["maxdepth"] = 0
-    else:
-        kwargs["maxdepth"] = int(kwargs["maxdepth"])
-    kwargs["collapse"] = collapse
+    kwargs["maxdepth"] = int(kwargs["maxdepth"])
+    # starting from ancestor page, recursively parse `toctree::` elements
+    ancestor_doctree = toctree.env.tocs[ancestorname].deepcopy()
+    toctrees = []
 
-    # TODO: use `doctree.findall(addnodes.toctree)` once docutils min version >=0.18.1
-    for toctreenode in traverse_or_findall(doctree, addnodes.toctree):
-        toctree = self.resolve(docname, builder, toctreenode, prune=True, **kwargs)
-        if toctree:
-            toctrees.append(toctree)
+    # for each `toctree::` directive in the ancestor page...
+    for toctree_node in traverse_or_findall(ancestor_doctree, TocTreeNodeClass):
+        # TODO: ↑↑↑↑↑↑ use `ancestor_doctree.findall(TocTreeNodeClass)` ↑↑↑↑↑↑
+        #              once docutils min version >=0.18.1
+
+        # ... resolve that `toctree::` (recursively get children, prune, collapse, etc)
+        resolved_toctree = toctree.resolve(
+            docname=pagename,
+            builder=app.builder,
+            toctree=toctree_node,
+            **kwargs,
+        )
+        # ... keep the non-empty ones
+        if resolved_toctree:
+            toctrees.append(resolved_toctree)
     if not toctrees:
         return None
+    # ... and merge them into a single entity
     result = toctrees[0]
-    for toctree in toctrees[1:]:
-        result.extend(toctree.children)
+    for resolved_toctree in toctrees[1:]:
+        result.extend(resolved_toctree.children)
     return result
-
-
-def index_toctree(
-    app: Sphinx, pagename: str, startdepth: int, collapse: bool = True, **kwargs
-):
-    """Returns the "local" (starting at `startdepth`) TOC tree containing the current page, rendered as HTML bullet lists.
-
-    This is the equivalent of `context["toctree"](**kwargs)` in sphinx
-    templating, but using the startdepth-local instead of global TOC tree.
-    """
-    # this is a variant of the function stored in `context["toctree"]`, which is
-    # defined as `lambda **kwargs: self._get_local_toctree(pagename, **kwargs)`
-    # with `self` being the HMTLBuilder and the `_get_local_toctree` basically
-    # returning:
-    #     return self.render_partial(TocTree(self.env).get_toctree_for(
-    #         pagename, self, collapse, **kwargs))['fragment']
-
-    if "includehidden" not in kwargs:
-        kwargs["includehidden"] = False
-    if kwargs.get("maxdepth") == "":
-        kwargs.pop("maxdepth")
-
-    toctree = TocTree(app.env)
-    if sphinx.version_info[:2] >= (7, 2):
-        from sphinx.environment.adapters.toctree import _get_toctree_ancestors
-
-        ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
-    else:
-        ancestors = toctree.get_toctree_ancestors(pagename)
-    try:
-        indexname = ancestors[-startdepth]
-    except IndexError:
-        # eg for index.rst, but also special pages such as genindex, py-modindex, search
-        # those pages don't have a "current" element in the toctree, so we can
-        # directly return an empty string instead of using the default sphinx
-        # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
-        return ""
-
-    toctree_element = get_local_toctree_for(
-        toctree, indexname, pagename, app.builder, collapse, **kwargs
-    )
-    return app.builder.render_partial(toctree_element)["fragment"]

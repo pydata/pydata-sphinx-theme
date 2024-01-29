@@ -60,3 +60,4 @@ JavaScript
 ^^^^^^^^^^
 
 -   Data attributes for all JavaScript plugins are now namespaced to help distinguish Bootstrap functionality from third parties and your code. For example, we use ``data-bs-toggle`` instead of ``data-toggle``.
+-   Bootstrap's `Programmatic API <https://getbootstrap.com/docs/5.0/getting-started/javascript/#programmatic-api>`_, ``bootstrap``, is also available. This API can be useful for initializing opt-in components that are not initialized by default such as `Popovers <https://getbootstrap.com/docs/5.0/components/popovers/#overview>`_.
