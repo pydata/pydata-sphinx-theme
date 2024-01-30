@@ -11,17 +11,21 @@ fetch("{{ theme_announcement }}")
     div.classList.add(...{{ header_classes | tojson }});
     div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
     const autoHeight = div.offsetHeight;
-    // Set height and padding to 0 to prepare the height transition
+    // Set height and vertical padding to 0 to prepare the height transition
     div.style.height = 0;
-    div.style.padding = 0;
+    div.style.paddingTop = 0;
+    div.style.paddingBottom = 0;
     div.classList.remove("init");
     // Set height to the computed height with a small timeout to activate the transition
     setTimeout(() => {
       div.style.height = `${autoHeight}px`;
-      // Remove the padding style after 150ms, i.e., the transition time
+      // Wait for a bit more than 150ms (the transition duration) then remove the
+      // forcefully set styles and let CSS take over
       setTimeout(() => {
-        div.style.padding = "";
-      }, 150);
+        div.style.paddingTop = "";
+        div.style.paddingBottom = "";
+        div.style.height = "";
+      }, 160);
     }, 10);
   })
   .catch(error => {

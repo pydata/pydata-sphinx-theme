@@ -484,7 +484,8 @@ function showVersionWarningBanner(data) {
   const bold = document.createElement("strong");
   const button = document.createElement("a");
   // these classes exist since pydata-sphinx-theme v0.10.0
-  outer.classList = "bd-header-version-warning container-fluid";
+  // the init class is used for animation
+  outer.classList = "bd-header-version-warning container-fluid init";
   middle.classList = "bd-header-announcement__content";
   inner.classList = "sidebar-message";
   button.classList =
@@ -516,6 +517,24 @@ function showVersionWarningBanner(data) {
   inner.appendChild(button);
   const skipLink = document.getElementById("pst-skip-link");
   skipLink.after(outer);
+  const autoHeight = outer.offsetHeight;
+
+  // Set height and vertical padding to 0 to prepare the height transition
+  outer.style.height = 0;
+  outer.style.paddingTop = 0;
+  outer.style.paddingBottom = 0;
+  outer.classList.remove("init");
+  // Set height to the computed height with a small timeout to activate the transition
+  setTimeout(() => {
+    outer.style.height = `${autoHeight}px`;
+    // Wait for a bit more than 150ms (the transition duration) then remove the
+    // forcefully set styles and let CSS take over
+    setTimeout(() => {
+      outer.style.paddingTop = "";
+      outer.style.paddingBottom = "";
+      outer.style.height = "";
+    }, 160);
+  }, 10);
 }
 
 /*******************************************************************************
