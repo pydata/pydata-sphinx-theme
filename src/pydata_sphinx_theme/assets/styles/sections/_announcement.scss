@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: height 150ms ease-in-out;
+  transition: height 300ms ease-in-out;
   overflow-y: hidden;
   padding: 0.5rem 12.5%; // Horizontal padding so the width is 75%
   // One breakpoint less than $breakpoint-sidebar-primary. See variables/_layout.scss for more info.

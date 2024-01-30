@@ -527,13 +527,13 @@ function showVersionWarningBanner(data) {
   // Set height to the computed height with a small timeout to activate the transition
   setTimeout(() => {
     outer.style.height = `${autoHeight}px`;
-    // Wait for a bit more than 150ms (the transition duration) then remove the
+    // Wait for a bit more than 300ms (the transition duration) then remove the
     // forcefully set styles and let CSS take over
     setTimeout(() => {
       outer.style.paddingTop = "";
       outer.style.paddingBottom = "";
       outer.style.height = "";
-    }, 160);
+    }, 320);
   }, 10);
 }
 

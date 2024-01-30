@@ -19,13 +19,13 @@ fetch("{{ theme_announcement }}")
     // Set height to the computed height with a small timeout to activate the transition
     setTimeout(() => {
       div.style.height = `${autoHeight}px`;
-      // Wait for a bit more than 150ms (the transition duration) then remove the
+      // Wait for a bit more than 300ms (the transition duration) then remove the
       // forcefully set styles and let CSS take over
       setTimeout(() => {
         div.style.paddingTop = "";
         div.style.paddingBottom = "";
         div.style.height = "";
-      }, 160);
+      }, 320);
     }, 10);
   })
   .catch(error => {
