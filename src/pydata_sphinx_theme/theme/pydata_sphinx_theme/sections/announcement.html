@@ -1,4 +1,4 @@
-{% set header_classes = ["bd-header-announcement", "container-fluid"] %}
+{% set header_classes = ["bd-header-announcement", "container-fluid", "init"] %}
 {% set is_remote=theme_announcement.startswith("http") %}
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
 {%- if is_remote %}
@@ -10,6 +10,19 @@ fetch("{{ theme_announcement }}")
     div = document.querySelector(".bd-header-announcement");
     div.classList.add(...{{ header_classes | tojson }});
     div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
+    const autoHeight = div.offsetHeight;
+    // Set height and padding to 0 to prepare the height transition
+    div.style.height = 0;
+    div.style.padding = 0;
+    div.classList.remove("init");
+    // Set height to the computed height with a small timeout to activate the transition
+    setTimeout(() => {
+      div.style.height = `${autoHeight}px`;
+      // Remove the padding style after 150ms, i.e., the transition time
+      setTimeout(() => {
+        div.style.padding = "";
+      }, 150);
+    }, 10);
   })
   .catch(error => {
     console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}");
