@@ -28,7 +28,7 @@ msgstr "Saltar al contenido principal"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:64
 msgid "Back to top"
-msgstr ""
+msgstr "Volver arriba"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
@@ -122,7 +122,7 @@ msgstr "siguiente"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
 msgid "Section Navigation"
-msgstr "Navegación del sección"
+msgstr "Navegación por secciones"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:5
 msgid "Show Source"

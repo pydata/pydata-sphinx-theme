@@ -27,7 +27,7 @@ msgstr "Salta al contingut principal"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:64
 msgid "Back to top"
-msgstr ""
+msgstr "Torna a l'inici"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
@@ -35,7 +35,7 @@ msgstr ""
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:28
 msgid "Search"
-msgstr "Cerca al web"
+msgstr "Cerca"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:8
 msgid "Error"
@@ -121,7 +121,7 @@ msgstr "següent"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
 msgid "Section Navigation"
-msgstr "Navegació de la Secció"
+msgstr "Navegació per seccions"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:5
 msgid "Show Source"
