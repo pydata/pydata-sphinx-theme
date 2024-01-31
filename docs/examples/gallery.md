@@ -25,8 +25,6 @@ Thanks for your support!
 
 - title: Binder
   link: https://mybinder.readthedocs.io/en/latest/index.html
-- title: Brightway
-  link: https://docs.brightway.dev/en/latest/
 - title: cashocs
   link: https://cashocs.readthedocs.io/en/stable/
 - title: CuPy

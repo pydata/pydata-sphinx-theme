@@ -3,10 +3,6 @@
 There are a few elements that are unique or particularly important to this theme.
 Some of these are triggered with configuration or Markdown syntax that is unique to the theme, and we cover them below.
 
-```{contents} Page contents
-:local:
-```
-
 ## Mathematics
 
 Most Sphinx sites support math, but it is particularly important for scientific computing, so we illustrate support here as well.

@@ -20,15 +20,12 @@ msgstr ""
 #: docs/conf.py:94
 msgid "Click to expand"
 msgstr ""
-
 #: docs/conf.py:95
 msgid "Click to collapse"
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:53
 msgid "Skip to main content"
-msgstr ""
-
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:64
 msgid "Back to top"
 msgstr ""

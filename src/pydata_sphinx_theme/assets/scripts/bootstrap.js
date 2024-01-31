@@ -1,6 +1,6 @@
 // Import and setup functions to control Bootstrap's behavior.
 import "@popperjs/core";
-import { Tooltip } from "bootstrap";
+import * as bootstrap from "bootstrap";
 import { documentReady } from "./mixin";
 
 import "../styles/bootstrap.scss";
@@ -17,7 +17,9 @@ function TriggerTooltip() {
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
   );
   tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new Tooltip(tooltipTriggerEl, { delay: { show: 500, hide: 100 } });
+    return new bootstrap.Tooltip(tooltipTriggerEl, {
+      delay: { show: 500, hide: 100 },
+    });
   });
 }
 
@@ -54,3 +56,5 @@ function showBackToTop() {
 documentReady(TriggerTooltip);
 documentReady(backToTop);
 documentReady(showBackToTop);
+
+window.bootstrap = bootstrap;
