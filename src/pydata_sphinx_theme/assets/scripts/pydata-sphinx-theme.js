@@ -517,22 +517,26 @@ function showVersionWarningBanner(data) {
   inner.appendChild(button);
   const skipLink = document.getElementById("pst-skip-link");
   skipLink.after(outer);
-  const autoHeight = outer.offsetHeight;
-
+  // At least 3rem height
+  const autoHeight = Math.min(
+    outer.offsetHeight,
+    3 * parseFloat(getComputedStyle(document.documentElement).fontSize)
+  );
   // Set height and vertical padding to 0 to prepare the height transition
-  outer.style.height = 0;
-  outer.style.paddingTop = 0;
-  outer.style.paddingBottom = 0;
+  outer.style.setProperty("height", 0);
+  outer.style.setProperty("padding-top", 0);
+  outer.style.setProperty("padding-bottom", 0);
   outer.classList.remove("init");
   // Set height to the computed height with a small timeout to activate the transition
   setTimeout(() => {
-    outer.style.height = `${autoHeight}px`;
+    outer.style.setProperty("height", `${autoHeight}px`);
     // Wait for a bit more than 300ms (the transition duration) then remove the
     // forcefully set styles and let CSS take over
     setTimeout(() => {
-      outer.style.paddingTop = "";
-      outer.style.paddingBottom = "";
-      outer.style.height = "";
+      outer.style.removeProperty("padding-top");
+      outer.style.removeProperty("padding-bottom");
+      outer.style.removeProperty("height");
+      outer.style.setProperty("min-height", "3rem");
     }, 320);
   }, 10);
 }
