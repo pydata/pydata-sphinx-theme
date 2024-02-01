@@ -518,7 +518,7 @@ function showVersionWarningBanner(data) {
   const skipLink = document.getElementById("pst-skip-link");
   skipLink.after(outer);
   // At least 3rem height
-  const autoHeight = Math.min(
+  const autoHeight = Math.max(
     outer.offsetHeight,
     3 * parseFloat(getComputedStyle(document.documentElement).fontSize)
   );
