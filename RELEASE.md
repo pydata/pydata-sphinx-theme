@@ -21,7 +21,7 @@ These steps should be taken in order to create a new release![^release-refs]
 
 **Make the release**
 
-- [ ] [Start a new GitHub release](https://github.com/pandas-dev/pydata-sphinx-theme/releases/new)
+- [ ] [Start a new GitHub release](https://github.com/pydata/pydata-sphinx-theme/releases/new)
   - Call the release the current version, e.g. `v0.2.0`
   - In the **`Choose a Tag:`** dropdown, type in the release name (e.g., `v0.2.0`) and click "Create new tag"
   - In the **`Target:`** dropdown, pin it to the release commit that you've just pushed.
