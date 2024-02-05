@@ -1,4 +1,4 @@
-{% set header_classes = ["bd-header-announcement", "container-fluid"] %}
+{% set header_classes = ["bd-header-announcement", "container-fluid", "init"] %}
 {% set is_remote=theme_announcement.startswith("http") %}
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
 {%- if is_remote %}
@@ -10,6 +10,27 @@ fetch("{{ theme_announcement }}")
     div = document.querySelector(".bd-header-announcement");
     div.classList.add(...{{ header_classes | tojson }});
     div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
+    // At least 3rem height
+    const autoHeight = Math.min(
+      div.offsetHeight,
+      3 * parseFloat(getComputedStyle(document.documentElement).fontSize));
+    // Set height and vertical padding to 0 to prepare the height transition
+    div.style.setProperty("height", 0);
+    div.style.setProperty("padding-top", 0);
+    div.style.setProperty("padding-bottom", 0);
+    div.classList.remove("init");
+    // Set height to the computed height with a small timeout to activate the transition
+    setTimeout(() => {
+      div.style.setProperty("height", `${autoHeight}px`);
+      // Wait for a bit more than 300ms (the transition duration) then remove the
+      // forcefully set styles and let CSS take over
+      setTimeout(() => {
+        div.style.removeProperty("padding-top");
+        div.style.removeProperty("padding-bottom");
+        div.style.removeProperty("height");
+        div.style.setProperty("min-height", "3rem");
+      }, 320);
+    }, 10);
   })
   .catch(error => {
     console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}");
