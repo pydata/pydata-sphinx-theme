@@ -12,6 +12,7 @@ A clean, three-column, Bootstrap-based Sphinx theme by and for the [PyData commu
 - :books: Documentation: https://pydata-sphinx-theme.readthedocs.io/en/stable
 - :bulb: Examples: https://pydata-sphinx-theme.readthedocs.io/en/stable/examples
 - :raised_hands: Contribute: https://pydata-sphinx-theme.readthedocs.io/en/stable/community
+- :globe_with_meridians: Translate: https://explore.transifex.com/12rambau/pydata-sphinx-theme/
 
 [![PyData theme - Configure the search position demo image showcasing both the light and dark theme in a single image.](./docs/_static/theme-demo-screenshot.png)](https://pydata-sphinx-theme.readthedocs.io/en/stable)
 
