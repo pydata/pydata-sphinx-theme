@@ -44,7 +44,8 @@ td {
   }
 }
 
-// override bootstrap background colors
+// override bootstrap table colors
 .table {
-  --bs-table-bg: transparent;
+  --bs-table-bg: transparent;  //background
+  --bs-table-color: var(--pst-color-text-base);  // ensure text and bullets are visible
 }
