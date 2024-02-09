@@ -25,41 +25,6 @@ def update_config(app):
     theme_options = utils.get_theme_options_dict(app)
     warning = partial(utils.maybe_warn, app)
 
-    # TODO: deprecation; remove after 0.14 release
-    if theme_options.get("logo_text"):
-        logo = theme_options.get("logo", {})
-        logo["text"] = theme_options.get("logo_text")
-        theme_options["logo"] = logo
-        warning(
-            "The configuration `logo_text` is deprecated. Use `'logo': {'text': }`."
-        )
-
-    # TODO: DEPRECATE after 0.14
-    if theme_options.get("footer_items"):
-        theme_options["footer_start"] = theme_options.get("footer_items")
-        warning(
-            "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
-        )
-
-    # TODO: DEPRECATE after v0.15
-    if theme_options.get("favicons"):
-        warning(
-            "The configuration `favicons` is deprecated. "
-            "Use the sphinx-favicon extension instead."
-        )
-
-    # TODO: in 0.15, set the default navigation_with_keys value to False and remove this deprecation notice
-    if theme_options.get("navigation_with_keys", None) is None:
-        warning(
-            "The default value for `navigation_with_keys` will change to `False` in "
-            "the next release. If you wish to preserve the old behavior for your site, "
-            "set `navigation_with_keys=True` in the `html_theme_options` dict in your "
-            "`conf.py` file. Be aware that `navigation_with_keys = True` has negative "
-            "accessibility implications: "
-            "https://github.com/pydata/pydata-sphinx-theme/issues/1492"
-        )
-        theme_options["navigation_with_keys"] = False
-
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
@@ -228,18 +193,6 @@ def update_and_remove_templates(
             if asset_path == theme_css_name:
                 del context["css_files"][i]
                 break
-    # Add links for favicons in the topbar
-    for favicon in context.get("theme_favicons", []):
-        icon_type = Path(favicon["href"]).suffix.strip(".")
-        opts = {
-            "rel": favicon.get("rel", "icon"),
-            "sizes": favicon.get("sizes", "16x16"),
-            "type": f"image/{icon_type}",
-        }
-        if "color" in favicon:
-            opts["color"] = favicon["color"]
-        # Sphinx will auto-resolve href if it's a local file
-        app.add_css_file(favicon["href"], **opts)
 
     # Add metadata to DOCUMENTATION_OPTIONS so that we can re-use later
     # Pagename to current page
