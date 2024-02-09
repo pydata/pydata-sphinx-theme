@@ -263,7 +263,9 @@ def update_and_remove_templates(
     context["theme_version"] = __version__
 
 
-def _fix_canonical_url(app: Sphinx, pagename: str, context: dict) -> None:
+def _fix_canonical_url(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree
+) -> None:
     """Fix the canonical URL when using the dirhtml builder.
 
     Sphinx builds a canonical URL if ``html_baseurl`` config is set. However,
