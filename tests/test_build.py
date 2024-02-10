@@ -474,7 +474,7 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
 
     # get all <details> elements
     details_elem = sidebar.select("details")
-    assert len(details_elem)
+    assert len(details_elem) > 0, "There must be at least one details element"
 
     # all <details> elements should be open in this page
     for ii in details_elem:
