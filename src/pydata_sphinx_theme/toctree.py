@@ -377,42 +377,42 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         #
         # The HTML markup tree at the parent node starts with this structure:
         #
-        # li.has-children
-        #   a.reference or p.caption
-        #   ul
+        # - li.has-children
+        #   - a.reference or p.caption
+        #   - ul
         #
-        # Note the first child is p.caption only if this node is a section heading and
-        # the theme option show_nav_level is set to 0.
+        # Note the first child of li.has-children is p.caption only if this node
+        # is a section heading. (This only happens when show_nav_level is set to
+        # 0.)
         #
         # Now we modify the tree structure in one of two ways.
         #
-        # (1) If the node holds a section heading AND show_nav_level == 0, the HTML
-        # tree will be modified like so:
+        # (1) If the node holds a section heading, the HTML tree will be
+        # modified like so:
         #
-        # li.has-children
-        #   details
-        #       summary
-        #           p.caption
-        #           .toctree-toggle
-        #       ul
+        # - li.has-children
+        #   - details
+        #     - summary
+        #       - p.caption
+        #       - .toctree-toggle
+        #     - ul
         #
         # (2) Otherwise, if the node holds a link to a page in the docs:
         #
-        # li.has-children
-        #   a.reference
-        #   details
-        #       summary
-        #           .toctree-toggle
-        #       ul
+        # - li.has-children
+        #   - a.reference
+        #   - details
+        #     - summary
+        #       - .toctree-toggle
+        #   - ul
         #
         # Why the difference? In the first case, the TOC section heading is not
         # a link, but in the second case it is. So in the first case it makes
-        # sense to put the text inside the summary tag so that the user can
-        # click either the text or the .toctree-toggle chevron icon to expand/
-        # collapse the TOC subtree. But in the second case, putting the
-        # heading/link in the summary tag would make it unclear whether the
-        # clicking on the link should expand the subtree or take you to the
-        # link.
+        # sense to put the (non-link) text inside the summary tag so that the
+        # user can click either the text or the .toctree-toggle chevron icon to
+        # expand/collapse the TOC subtree. But in the second case, putting the
+        # link in the summary tag would make it unclear whether clicking on the
+        # link should expand the subtree or take you to the link.
 
         # Create <details> and put the entire subtree into it
         details = soup.new_tag("details")
