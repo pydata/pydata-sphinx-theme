@@ -449,7 +449,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # (by opening the details/summary disclosure widget)
         if "current" in classes:
             # None is how you add a boolean HTML attribute
-            details["open"] = None
+            details["open"] = "open"
 
 
 def get_local_toctree_for(
