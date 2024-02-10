@@ -273,7 +273,7 @@ def add_toctree_functions(
             # Open the sidebar navigation to the proper depth
             for ii in range(int(show_nav_level)):
                 for details in soup.select(f"li.toctree-l{ii} > details"):
-                    details["open"] = None
+                    details["open"] = "open"
 
         return soup
 
@@ -448,7 +448,6 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # If this TOC node has a "current" class, be expanded by default
         # (by opening the details/summary disclosure widget)
         if "current" in classes:
-            # None is how you add a boolean HTML attribute
             details["open"] = "open"
 
 
