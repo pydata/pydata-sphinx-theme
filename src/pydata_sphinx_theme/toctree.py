@@ -339,10 +339,8 @@ def add_toctree_functions(
 
             # Open the sidebar navigation to the proper depth
             for ii in range(int(show_nav_level)):
-                for checkbox in soup.select(
-                    f"li.toctree-l{ii} > input.toctree-checkbox"
-                ):
-                    checkbox.attrs["checked"] = None
+                for details in soup.select(f"li.toctree-l{ii} > details"):
+                    details["open"] = "open"
 
         return soup
 
@@ -422,8 +420,6 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
     """Add checkboxes to collapse children in a toctree."""
     # based on https://github.com/pradyunsg/furo
 
-    toctree_checkbox_count = 0
-
     for element in soup.find_all("li", recursive=True):
         # We check all "li" elements, to add a "current-page" to the correct li.
         classes = element.get("class", [])
@@ -432,7 +428,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if "current" in classes:
             parentli = element.find_parent("li", class_="toctree-l0")
             if parentli:
-                parentli.select("p.caption ~ input")[0].attrs["checked"] = ""
+                parentli.find("details")["open"] = None
 
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
@@ -441,40 +437,86 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # Add a class to indicate that this has children.
         element["class"] = [*classes, "has-children"]
 
-        # We're gonna add a checkbox.
-        toctree_checkbox_count += 1
-        checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
-
-        # Add the "label" for the checkbox which will get filled.
         if soup.new_tag is None:
             continue
 
-        label = soup.new_tag(
-            "label", attrs={"for": checkbox_name, "class": "toctree-toggle"}
-        )
-        label.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
-        if "toctree-l0" in classes:
-            # making label cover the whole caption text with css
-            label["class"] = "label-parts"
-        element.insert(1, label)
+        # For table of contents nodes that have subtrees, we modify the HTML so
+        # that the subtree can be expanded or collapsed in the browser.
+        #
+        # The HTML markup tree at the parent node starts with this structure:
+        #
+        # - li.has-children
+        #   - a.reference or p.caption
+        #   - ul
+        #
+        # Note the first child of li.has-children is p.caption only if this node
+        # is a section heading. (This only happens when show_nav_level is set to
+        # 0.)
+        #
+        # Now we modify the tree structure in one of two ways.
+        #
+        # (1) If the node holds a section heading, the HTML tree will be
+        # modified like so:
+        #
+        # - li.has-children
+        #   - details
+        #     - summary
+        #       - p.caption
+        #       - .toctree-toggle
+        #     - ul
+        #
+        # (2) Otherwise, if the node holds a link to a page in the docs:
+        #
+        # - li.has-children
+        #   - a.reference
+        #   - details
+        #     - summary
+        #       - .toctree-toggle
+        #   - ul
+        #
+        # Why the difference? In the first case, the TOC section heading is not
+        # a link, but in the second case it is. So in the first case it makes
+        # sense to put the (non-link) text inside the summary tag so that the
+        # user can click either the text or the .toctree-toggle chevron icon to
+        # expand/collapse the TOC subtree. But in the second case, putting the
+        # link in the summary tag would make it unclear whether clicking on the
+        # link should expand the subtree or take you to the link.
 
-        # Add the checkbox that's used to store expanded/collapsed state.
-        checkbox = soup.new_tag(
-            "input",
+        # Create <details> and put the entire subtree into it
+        details = soup.new_tag("details")
+        details.extend(element.contents)
+        element.append(details)
+
+        # Hoist the link to the top if there is one
+        toc_link = element.select_one("details > a.reference")
+        if toc_link:
+            element.insert(0, toc_link)
+
+        # Create <summary> with chevron icon
+        summary = soup.new_tag("summary")
+        span = soup.new_tag(
+            "span",
             attrs={
-                "type": "checkbox",
-                "class": ["toctree-checkbox"],
-                "id": checkbox_name,
-                "name": checkbox_name,
+                "class": "toctree-toggle",
+                "role": "presentation",  # This element and the chevron it contains are purely decorative; the actual expand/collapse functionality is delegated to the <summary> tag
             },
         )
+        span.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
+        summary.append(span)
 
-        # if this has a "current" class, be expanded by default
-        # (by checking the checkbox)
+        # Prepend section heading (if there is one) to <summary>
+        collapsible_section_heading = element.select_one("details > p.caption")
+        if collapsible_section_heading:
+            # Put heading inside summary so that the heading text (and chevron) are both clickable
+            summary.insert(0, collapsible_section_heading)
+
+        # Prepend <summary> to <details>
+        details.insert(0, summary)
+
+        # If this TOC node has a "current" class, be expanded by default
+        # (by opening the details/summary disclosure widget)
         if "current" in classes:
-            checkbox.attrs["checked"] = ""
-
-        element.insert(1, checkbox)
+            details["open"] = "open"
 
 
 def get_nonroot_toctree(
