@@ -2,25 +2,25 @@
 # Copyright (C) 2023 PyData developers
 # This file is distributed under the same license as the pydata-sphinx-theme
 # project.
-#
+# 
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
+# Cristhian Rivera, 2024
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-21 07:30-0700\n"
 "PO-Revision-Date: 2023-04-14 14:57+0000\n"
-"Last-Translator: Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023\n"
-"Language: es\n"
-"Language-Team: Spanish "
-"(https://app.transifex.com/12rambau/teams/166811/es/)\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 "
-"? 1 : 2;\n"
+"Last-Translator: Cristhian Rivera, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/12rambau/teams/166811/es/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.0\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:53
 msgid "Skip to main content"
@@ -28,7 +28,7 @@ msgstr "Saltar al contenido principal"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:64
 msgid "Back to top"
-msgstr ""
+msgstr "Volver arriba"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
@@ -44,7 +44,8 @@ msgstr "Error"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr "Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
+msgstr ""
+"Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
 msgid "Breadcrumb"
@@ -166,4 +167,3 @@ msgstr ""
 
 #~ msgid "Twitter"
 #~ msgstr "Twitter"
-
