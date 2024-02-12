@@ -71,11 +71,13 @@ def url_base():
 
 
 def filter_ignored_violations(violations, url_pathname):
-    """Filter out ignored violations.
+    """Filter out ignored axe-core violations.
 
     In some tests, we wish to ignore certain accessibility violations that we
     won't ever fix or that we don't plan to fix soon.
     """
+	# we allow empty table headers
+	# https://dequeuniversity.com/rules/axe/4.8/empty-table-header?application=RuleDescription
     if url_pathname == "/examples/pydata.html":
         return [v for v in violations if v["id"] != "empty-table-header"]
     elif url_pathname in [
