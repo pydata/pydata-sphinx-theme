@@ -72,9 +72,6 @@ def add_toctree_functions(
         if ancestorname is None:
             return True  # suppress
 
-        # we've found an ancestor page, but `includehidden=False` so we can't be sure if
-        # there's a TocTree fragment that should be shown on this page; unfortunately we
-        # must resolve the whole TOC subtree to find out
         toctree = get_nonroot_toctree(
             app, pagename, ancestorname, toctree_obj, **kwargs
         )
