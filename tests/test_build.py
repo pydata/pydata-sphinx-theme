@@ -1035,6 +1035,11 @@ def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
     assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
     assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
 
+    # Check that the secondary sidebar is completely removed for section1/index
+    assert not sphinx_build.html_tree("section1/index.html").select(
+        "div.bd-sidebar-secondary"
+    )
+
 
 def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None:
     """Test that the secondary sidebar can be built with a dict of templates that globs a subdir."""
@@ -1142,3 +1147,20 @@ def test_role_main_for_search_highlights(sphinx_build_factory):
     """
     sphinx_build = sphinx_build_factory("base").build()
     assert sphinx_build.html_tree("index.html").select_one('[role="main"]')
+
+
+def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar is removed if all templates are empty."""
+    confoverrides = {
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "secondary_sidebar_items": ["page-toc", "sourcelink"],
+        },
+        "html_show_sourcelink": False,
+    }
+
+    # The page-toc component is empty because there is no in-page toc for page1
+    # The sourcelink component is empty because we disabled it in configuration
+    # Hence the secondary sidebar has all its templates empty and should be removed
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    assert not sphinx_build.html_tree("page1.html").select("div.bd-sidebar-secondary")
