@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
+from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
 from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
@@ -215,6 +216,30 @@ def update_and_remove_templates(
     context["theme_version"] = __version__
 
 
+def _fix_canonical_url(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree
+) -> None:
+    """Fix the canonical URL when using the dirhtml builder.
+
+    Sphinx builds a canonical URL if ``html_baseurl`` config is set. However,
+    it builds a URL ending with ".html" when using the dirhtml builder, which is
+    incorrect. Detect this and generate the correct URL for each page.
+
+    Workaround for https://github.com/sphinx-doc/sphinx/issues/9730; can be removed
+    when that is fixed, released, and available in our minimum supported Sphinx version.
+    """
+    if (
+        not app.config.html_baseurl
+        or not isinstance(app.builder, DirectoryHTMLBuilder)
+        or not context["pageurl"]
+        or not context["pageurl"].endswith(".html")
+    ):
+        return
+
+    target = app.builder.get_target_uri(pagename)
+    context["pageurl"] = app.config.html_baseurl + target
+
+
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
@@ -226,6 +251,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("html-page-context", _fix_canonical_url)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
