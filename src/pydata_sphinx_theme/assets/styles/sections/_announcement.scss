@@ -33,6 +33,14 @@
   a {
     color: var(--pst-color-inline-code-links);
   }
+
+  .button-link-to-stable-version {
+    @include box-shadow();
+    background-color: var(--pst-color-danger);
+    border-color: var(--pst-color-danger);
+    color: var(--pst-color-heading-color);
+    border-radius: 0.25rem;
+  }
 }
 
 // Bg color is now defined in the theme color palette - using our secondary color
