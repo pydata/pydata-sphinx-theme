@@ -36,19 +36,25 @@
 
   .button-link-to-stable-version {
     @include box-shadow();
-    background-color: var(--pst-color-danger);
-    border-color: var(--pst-color-danger);
-    color: var(--pst-color-heading-color);
+
+    $background-color: var(--pst-color-danger);
+    $hover-background-color: var(--pst-color-danger-highlight);
+    $color: var(--pst-color-heading-color);
+
+    background-color: $background-color;
+    border-color: $background-color;
+    color: $color;
     border-radius: 0.25rem;
 
     &:hover {
-      background-color: var(--pst-color-danger-highlight);
-      border-color: var(--pst-color-danger-highlight);
-      color: var(--pst-color-heading-color);
+      background-color: $hover-background-color;
+      border-color: $hover-background-color;
+      color: $color;
     }
 
     &:focus-visible {
-      outline: 2px solid var(--pst-color-heading-color);
+      outline: 0.1875rem solid $background-color;
+      outline-offset: 0.1875rem;
     }
   }
 }
