@@ -40,6 +40,16 @@
     border-color: var(--pst-color-danger);
     color: var(--pst-color-heading-color);
     border-radius: 0.25rem;
+
+    &:hover {
+      background-color: var(--pst-color-danger-highlight);
+      border-color: var(--pst-color-danger-highlight);
+      color: var(--pst-color-heading-color);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--pst-color-heading-color);
+    }
   }
 }
 
