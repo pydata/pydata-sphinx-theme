@@ -489,7 +489,7 @@ function showVersionWarningBanner(data) {
   middle.classList = "bd-header-announcement__content";
   inner.classList = "sidebar-message";
   button.classList =
-    "btn font-weight-bold ms-3 my-1 align-baseline button-link-to-stable-version";
+    "btn text-wrap font-weight-bold ms-3 my-1 align-baseline button-link-to-stable-version";
   button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
