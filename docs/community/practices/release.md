@@ -19,7 +19,7 @@ Anybody is encouraged to make a new release if:
 
 - It has been more than a month since the last release.
 - OR a significant change has been made to our code that warrants a release.
-- AND there are no open issues with a [{guilabel}`block-release`](https://github.com/pydata/pydata-sphinx-theme/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Ablock-release) label.
+- AND there are no open issues with a [{guilabel}`impact: block-release`](https://github.com/pydata/pydata-sphinx-theme/labels/impact%3A%20block-release) label.
 
 ### Release candidates
 
@@ -35,7 +35,7 @@ Follow these steps to make a release:
 
 - (optionally) **Create a [GitHub milestones](https://github.com/pydata/pydata-sphinx-theme/milestones)** to organize the issues that should be resolved as part of a new release.
 - **Decide if it's time** to make a release be reading [](releases:when) and decide if it is time for a release.
-- **Copy the release checklist into a new issue**. We have [a release checklist in our wiki](https://github.com/pydata/pydata-sphinx-theme/wiki/Release-checklist#release-instructions).
+- **Copy the [release checklist](https://github.com/pydata/pydata-sphinx-theme/blob/main/RELEASE.md) into a new issue**.
 - **Complete the checklist**. That's it!
 
 ## Choosing a version increment

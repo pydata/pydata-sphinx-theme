@@ -26,9 +26,6 @@ Thanks for your support!
 - title: Binder
   link-alt: Binder
   link: https://mybinder.readthedocs.io/en/latest/index.html
-- title: Brightway
-  link-alt: Brightway
-  link: https://docs.brightway.dev/en/latest/
 - title: cashocs
   link-alt: cashocs
   link: https://cashocs.readthedocs.io/en/stable/

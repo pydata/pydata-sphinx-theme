@@ -9,11 +9,12 @@ from urllib.parse import urlparse
 import requests
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
+from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
 from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
 
-__version__ = "0.15.2dev0"
+__version__ = "0.15.3dev0"
 
 
 def update_config(app):
@@ -24,41 +25,6 @@ def update_config(app):
     # To do this, you must manually modify `app.builder.theme_options`.
     theme_options = utils.get_theme_options_dict(app)
     warning = partial(utils.maybe_warn, app)
-
-    # TODO: deprecation; remove after 0.14 release
-    if theme_options.get("logo_text"):
-        logo = theme_options.get("logo", {})
-        logo["text"] = theme_options.get("logo_text")
-        theme_options["logo"] = logo
-        warning(
-            "The configuration `logo_text` is deprecated. Use `'logo': {'text': }`."
-        )
-
-    # TODO: DEPRECATE after 0.14
-    if theme_options.get("footer_items"):
-        theme_options["footer_start"] = theme_options.get("footer_items")
-        warning(
-            "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
-        )
-
-    # TODO: DEPRECATE after v0.15
-    if theme_options.get("favicons"):
-        warning(
-            "The configuration `favicons` is deprecated. "
-            "Use the sphinx-favicon extension instead."
-        )
-
-    # TODO: in 0.15, set the default navigation_with_keys value to False and remove this deprecation notice
-    if theme_options.get("navigation_with_keys", None) is None:
-        warning(
-            "The default value for `navigation_with_keys` will change to `False` in "
-            "the next release. If you wish to preserve the old behavior for your site, "
-            "set `navigation_with_keys=True` in the `html_theme_options` dict in your "
-            "`conf.py` file. Be aware that `navigation_with_keys = True` has negative "
-            "accessibility implications: "
-            "https://github.com/pydata/pydata-sphinx-theme/issues/1492"
-        )
-        theme_options["navigation_with_keys"] = False
 
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
@@ -228,18 +194,6 @@ def update_and_remove_templates(
             if asset_path == theme_css_name:
                 del context["css_files"][i]
                 break
-    # Add links for favicons in the topbar
-    for favicon in context.get("theme_favicons", []):
-        icon_type = Path(favicon["href"]).suffix.strip(".")
-        opts = {
-            "rel": favicon.get("rel", "icon"),
-            "sizes": favicon.get("sizes", "16x16"),
-            "type": f"image/{icon_type}",
-        }
-        if "color" in favicon:
-            opts["color"] = favicon["color"]
-        # Sphinx will auto-resolve href if it's a local file
-        app.add_css_file(favicon["href"], **opts)
 
     # Add metadata to DOCUMENTATION_OPTIONS so that we can re-use later
     # Pagename to current page
@@ -262,6 +216,30 @@ def update_and_remove_templates(
     context["theme_version"] = __version__
 
 
+def _fix_canonical_url(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree
+) -> None:
+    """Fix the canonical URL when using the dirhtml builder.
+
+    Sphinx builds a canonical URL if ``html_baseurl`` config is set. However,
+    it builds a URL ending with ".html" when using the dirhtml builder, which is
+    incorrect. Detect this and generate the correct URL for each page.
+
+    Workaround for https://github.com/sphinx-doc/sphinx/issues/9730; can be removed
+    when that is fixed, released, and available in our minimum supported Sphinx version.
+    """
+    if (
+        not app.config.html_baseurl
+        or not isinstance(app.builder, DirectoryHTMLBuilder)
+        or not context["pageurl"]
+        or not context["pageurl"].endswith(".html")
+    ):
+        return
+
+    target = app.builder.get_target_uri(pagename)
+    context["pageurl"] = app.config.html_baseurl + target
+
+
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
@@ -273,6 +251,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("html-page-context", _fix_canonical_url)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
@@ -287,4 +266,4 @@ def setup(app: Sphinx) -> Dict[str, str]:
     # Include component templates
     app.config.templates_path.append(str(theme_path / "components"))
 
-    return {"parallel_read_safe": True, "parallel_write_safe": True}
+    return {"parallel_read_safe": True, "parallel_write_safe": False}

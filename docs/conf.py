@@ -188,8 +188,7 @@ html_theme_options = {
         "json_url": json_url,
         "version_match": version_match,
     },
-    "navigation_with_keys": False,
-    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
+    # "back_to_top_button": False,
 }
 
 html_sidebars = {

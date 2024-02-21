@@ -41,6 +41,15 @@ For example, the following configuration tells the theme to load the ``custom-te
       "announcement": "https://github.com/pydata/pydata-sphinx-theme/raw/main/docs/_templates/custom-template.html",
    }
 
+Update or remove announcement banner
+------------------------------------
+
+To update or remove the announcement banner, you can change the value of
+``html_theme_options["announcement"]`` in your ``conf.py`` or you can edit the
+contents of the ``custom-template.html`` file directly. For example, if you have a
+temporary announcement that you want to remove without rebuilding your
+documentation pages, you can use an empty ``custom-template.html`` file and the
+banner will be hidden.
 
 .. _version-warning-banners:
 

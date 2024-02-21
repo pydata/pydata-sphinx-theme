@@ -75,6 +75,7 @@
   align-items: center;
   align-content: center;
   color: var(--pst-color-text-muted);
+  padding: 0;
   border-radius: 0;
   @include icon-navbar-hover;
   @include focus-indicator;
