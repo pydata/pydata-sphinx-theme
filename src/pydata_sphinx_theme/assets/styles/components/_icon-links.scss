@@ -5,8 +5,8 @@
 .navbar-icon-links {
   display: flex;
   flex-direction: row;
-  column-gap: 1rem;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 
   // Remove the padding so that we can define it with flexbox gap above
   li.nav-item a.nav-link {
