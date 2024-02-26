@@ -139,7 +139,7 @@ Cards
         :link: https://sphinx-design.readthedocs.io/en/pydata-theme/cards.html#clickable-cards
         :link-alt: Clickable cards - Sphinx Design docs
 
-        Don't forget ``link-alt``!
+        Don't forget to add the alternative text with ``link-alt``!
 
 .. grid::
 
