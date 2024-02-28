@@ -8,7 +8,7 @@ On this page, you will find user interface components such as badges, buttons,
 cards, and tabs.
 
 The components on this page are **not provided by PyData Theme**. They are
-provided by a Sphinx extension called Sphinx Design. This means that if you wish
+provided by `Sphinx Design <https://sphinx-design.readthedocs.io/en/pydata-theme/index.html>_` (a Sphinx extension). This means that if you wish
 to use the components on this page, you must install Sphinx Design separately.
 
 .. seealso::
