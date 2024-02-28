@@ -9,7 +9,7 @@ cards, and tabs.
 
 The components on this page are **not provided by PyData Theme**. They are
 provided by `Sphinx Design <https://sphinx-design.readthedocs.io/en/pydata-theme/index.html>_` (a Sphinx extension). This means that if you wish
-to use the components on this page, you must install Sphinx Design separately.
+to use the components on this page, you must install Sphinx Design separately and add it to your `conf.py`.
 
 .. seealso::
 
