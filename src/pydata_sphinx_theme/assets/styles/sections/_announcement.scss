@@ -35,7 +35,7 @@
   }
 
   // The "Switch to stable version" link (styled like a button)
-  .button-link-to-stable-version {
+  .pst-button-link-to-stable-version {
     @include box-shadow();
 
     $background-color: var(--pst-color-danger);
