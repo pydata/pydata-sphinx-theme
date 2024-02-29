@@ -1143,6 +1143,7 @@ def test_role_main_for_search_highlights(sphinx_build_factory):
     sphinx_build = sphinx_build_factory("base").build()
     assert sphinx_build.html_tree("index.html").select_one('[role="main"]')
 
+
 def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
     """Test that the secondary sidebar is removed if all templates are empty."""
     confoverrides = {
