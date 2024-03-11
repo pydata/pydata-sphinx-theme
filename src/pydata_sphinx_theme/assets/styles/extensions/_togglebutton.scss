@@ -12,7 +12,7 @@
 
   @mixin chevron-up {
     .toggle-chevron-right {
-      transform: rotate(-90deg); // point chevron down
+      transform: rotate(-90deg); // point chevron up
       transition: none; // match non-animated behavior of other chevrons on site
     }
   }
