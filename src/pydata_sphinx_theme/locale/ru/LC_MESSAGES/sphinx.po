@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-02-05 09:55-0500\n"
+"POT-Creation-Date: 2024-03-11 13:22-0500\n"
 "PO-Revision-Date: 2023-04-14 14:57+0000\n"
 "Last-Translator: Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023\n"
 "Language: ru\n"
@@ -31,11 +31,11 @@ msgstr ""
 msgid "Click to collapse"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:38
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
 msgid "Skip to main content"
 msgstr "Перейти к основному содержанию"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:50
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:51
 msgid "Back to top"
 msgstr ""
 
