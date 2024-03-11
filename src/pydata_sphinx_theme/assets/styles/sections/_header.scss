@@ -188,6 +188,8 @@
       padding-bottom: 0.25rem;
       background-color: inherit;
       border: none;
+
+      @include icon-navbar-hover;
     }
 
     &.primary-toggle {
@@ -203,7 +205,6 @@
         display: none;
       }
     }
-    @include icon-navbar-hover;
   }
 
   // Hide the navbar header items on mobile because they're in the sidebar
