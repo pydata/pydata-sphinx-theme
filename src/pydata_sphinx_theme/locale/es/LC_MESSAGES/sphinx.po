@@ -5,13 +5,14 @@
 #
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
+# Cristhian Rivera, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-02-05 09:55-0500\n"
+"POT-Creation-Date: 2024-03-11 13:22-0500\n"
 "PO-Revision-Date: 2023-04-14 14:57+0000\n"
-"Last-Translator: Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023\n"
+"Last-Translator: Cristhian Rivera, 2024\n"
 "Language: es\n"
 "Language-Team: Spanish "
 "(https://app.transifex.com/12rambau/teams/166811/es/)\n"
@@ -30,13 +31,13 @@ msgstr ""
 msgid "Click to collapse"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:38
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
 msgid "Skip to main content"
 msgstr "Saltar al contenido principal"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:50
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:51
 msgid "Back to top"
-msgstr ""
+msgstr "Volver arriba"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7

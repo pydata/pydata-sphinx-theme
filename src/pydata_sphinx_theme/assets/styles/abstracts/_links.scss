@@ -202,12 +202,6 @@ corresponds to the section in the docs that the user is currently reading.
     border-radius: 2px;
     color: var(--pst-color-text-muted);
     font-weight: 700;
-
-    &:focus-visible {
-      box-shadow: none; // override Bootstrap
-      outline: 3px solid var(--pst-color-accent);
-      outline-offset: 3px;
-    }
   }
 
   > .nav-link {
@@ -242,9 +236,18 @@ corresponds to the section in the docs that the user is currently reading.
         border-bottom: 3px solid var(--pst-color-secondary);
       }
     }
+
+    &:focus-visible {
+      box-shadow: none; // override Bootstrap
+      outline: 3px solid var(--pst-color-accent);
+      outline-offset: 3px;
+    }
   }
 
   > .dropdown-toggle {
+    &:focus-visible {
+      box-shadow: $focus-ring-box-shadow;
+    }
     &:hover {
       text-decoration: none;
       box-shadow: 0 0 0 $focus-ring-width var(--pst-color-link-hover); // purple focus ring
