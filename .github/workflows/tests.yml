@@ -96,8 +96,10 @@ jobs:
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+          verbose: true
+        env:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       # note I am setting this on top of the Python cache as I could not find
       # how to set the hash key on the python one
