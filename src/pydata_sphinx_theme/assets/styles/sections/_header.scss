@@ -88,12 +88,15 @@
     }
 
     li.pst-header-nav-item {
-      margin-inline: 5px; // breathing room so hover, focus styles do not overlap
-      &:first-child {
-        margin-inline-start: 0;
+      margin-inline: 2px; // breathing room so hover, focus styles do not overlap
+      &.dropdown {
+        margin-inline: 4px;
+        button {
+          padding-inline: 8px;
+        }
       }
-      &:last-child {
-        margin-inline-end: 0;
+      a {
+        padding-inline: 6px;
       }
       @include header-link;
     }
