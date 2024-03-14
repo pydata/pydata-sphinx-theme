@@ -88,7 +88,7 @@
     }
 
     li.pst-header-nav-item {
-      margin-inline: 2px; // breathing room so hover, focus styles do not overlap
+      margin-inline: 2px; // breathing room so hover and focus styles do not overlap
       &.dropdown {
         margin-inline: 4px;
         button {
