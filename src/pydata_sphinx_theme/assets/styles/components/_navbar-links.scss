@@ -26,30 +26,4 @@
       @include link-style-text;
     }
   }
-
-  /**
-   * Togglable expand/collapse
-   * This is only applicable to the primary sidebar which has these checkboxes
-   */
-  .toctree-checkbox {
-    position: absolute;
-    display: none;
-  }
-
-  .toctree-checkbox {
-    ~ ul {
-      display: none;
-    }
-    ~ label .fa-chevron-down {
-      transform: rotate(0deg);
-    }
-  }
-  .toctree-checkbox:checked {
-    ~ ul {
-      display: block;
-    }
-    ~ label .fa-chevron-down {
-      transform: rotate(180deg);
-    }
-  }
 }

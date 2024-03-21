@@ -1,8 +1,8 @@
 {% if theme_navbar_start or theme_navbar_center or theme_navbar_end or theme_navbar_persistent %}
 <div class="bd-header__inner bd-page-width">
-  <label class="sidebar-toggle primary-toggle" for="__primary">
+  <button class="sidebar-toggle primary-toggle" aria-label="{{ _('Site navigation') }}">
     <span class="fa-solid fa-bars"></span>
-  </label>
+  </button>
   {% set navbar_start, navbar_class, navbar_align = navbar_align_class() %}
   {% if theme_navbar_start %}
   <div class="{{ navbar_start }} navbar-header-items__start">
@@ -40,9 +40,9 @@
   {% endfor %}
 
   {% if not remove_sidebar_secondary and secondary_sidebar_items %}
-    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+    <button class="sidebar-toggle secondary-toggle" aria-label="{{ _('On this page') }}">
       <span class="fa-solid fa-outdent"></span>
-    </label>
+    </button>
   {% endif %}
 </div>
 {% endif %}

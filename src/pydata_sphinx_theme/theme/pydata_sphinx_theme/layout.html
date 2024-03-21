@@ -36,7 +36,7 @@
 
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
-  <a id="pst-skip-link" class="skip-link" href="#main-content">{{ _("Skip to main content") }}</a>
+  <div id="pst-skip-link" class="skip-link"><a href="#main-content">{{ _("Skip to main content") }}</a></div>
 
 {%- endblock %}
 
@@ -48,22 +48,20 @@
   {# the scroll to top button #}
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
-    {{ _("Back to top") }}
+    {{- _("Back to top") -}}
   </button>
   {%- endif %}
 
   {# checkbox to toggle primary sidebar #}
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   {# Checkboxes to toggle the secondary sidebar #}
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   {# A search field pop-up that will only show when the search button is clicked #}
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>

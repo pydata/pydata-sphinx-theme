@@ -194,6 +194,18 @@ def update_and_remove_templates(
             if asset_path == theme_css_name:
                 del context["css_files"][i]
                 break
+    # Add links for favicons in the topbar
+    for favicon in context.get("theme_favicons", []):
+        icon_type = Path(favicon["href"]).suffix.strip(".")
+        opts = {
+            "rel": favicon.get("rel", "icon"),
+            "sizes": favicon.get("sizes", "16x16"),
+            "type": f"image/{icon_type}",
+        }
+        if "color" in favicon:
+            opts["color"] = favicon["color"]
+        # Sphinx will auto-resolve href if it's a local file
+        app.add_css_file(favicon["href"], **opts)
 
     # Add metadata to DOCUMENTATION_OPTIONS so that we can re-use later
     # Pagename to current page

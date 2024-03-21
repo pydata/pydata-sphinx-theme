@@ -3,13 +3,14 @@
  * Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
  */
 $admonition-border-radius: 0.25rem;
+$admonition-left-border-width: 0.2rem;
 div.admonition,
 .admonition {
   margin: 1.5625em auto;
   padding: 0 0.6rem 0.8rem 0.6rem;
   overflow: hidden;
   page-break-inside: avoid;
-  border-left: 0.2rem solid;
+  border-left: $admonition-left-border-width solid;
   border-color: var(--pst-color-info);
   border-radius: $admonition-border-radius;
   background-color: var(--pst-color-on-background);
@@ -205,7 +206,7 @@ div.admonition,
     margin-top: 0;
 
     // Undo the .sidebar directive border
-    border-width: 0 0 0 0.2rem;
+    border-width: 0 0 0 $admonition-left-border-width;
 
     // TODO: these semantic-color-names border-color rules might no longer be
     //       needed when we drop support for Sphinx 4 / docutils 0.17

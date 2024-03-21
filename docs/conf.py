@@ -13,6 +13,7 @@ from typing import Any, Dict
 
 import pydata_sphinx_theme
 from sphinx.application import Sphinx
+from sphinx.locale import _
 
 sys.path.append(str(Path(".").resolve()))
 
@@ -89,6 +90,11 @@ blog_authors = {
     "jupyter": ("Jupyter", "https://jupyter.org"),
 }
 
+# -- sphinx_togglebutton options ---------------------------------------------
+togglebutton_hint = str(_("Click to expand"))
+togglebutton_hint_hide = str(_("Click to collapse"))
+
+
 # -- Options for HTML output -------------------------------------------------
 
 html_theme = "pydata_sphinx_theme"
@@ -153,9 +159,7 @@ html_theme_options = {
         {
             "name": "PyData",
             "url": "https://pydata.org",
-            "icon": "_static/pydata-logo.png",
-            "type": "local",
-            "attributes": {"target": "_blank"},
+            "icon": "fa-custom fa-pydata",
         },
     ],
     # alternative way to set twitter and github header icons
@@ -228,7 +232,7 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_js_files = ["custom-icon.js"]
+html_js_files = ["pydata-icon.js", "custom-icon.js"]
 todo_include_todos = True
 
 # -- favicon options ---------------------------------------------------------

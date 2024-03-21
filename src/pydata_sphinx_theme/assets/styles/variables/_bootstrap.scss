@@ -22,3 +22,16 @@ $dropdown-link-hover-bg: var(--pst-color-surface);
 $dropdown-dark-link-hover-bg: var(--pst-color-surface);
 $dropdown-link-active-bg: var(--pst-color-surface);
 $dropdown-dark-link-active-bg: var(--pst-color-surface);
+
+$focus-ring-width: 0.1875rem; // 3px at 100% zoom (0.1875 * 16px base font = 3px)
+$focus-ring-opacity: 1;
+$focus-ring-color: var(--pst-color-accent);
+$focus-ring-blur: 0;
+$focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color;
+// outline creates the same style of focus ring, it just uses CSS outline instead of box shadow
+$focus-ring-outline: $focus-ring-color solid $focus-ring-width;
+$btn-focus-box-shadow: $focus-ring-box-shadow;
+
+.btn {
+  --bs-btn-focus-box-shadow: #{$btn-focus-box-shadow};
+}

@@ -6,8 +6,7 @@ nav.page-toc {
   margin-bottom: 1rem;
 }
 
-.bd-toc .nav,
-.list-caption {
+.bd-toc .nav {
   .nav {
     display: none;
 
@@ -46,6 +45,10 @@ nav.page-toc {
       &:hover {
         color: var(--pst-color-link-hover);
       }
+    }
+
+    &:focus-visible {
+      border-radius: $focus-ring-radius;
     }
   }
 }

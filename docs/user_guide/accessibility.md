@@ -33,6 +33,14 @@ page that lacks metadata, please open a pull request to add it!
 - We have improved how we assign text colors to interactive elements such as buttons and dropdowns to ensure that they meet
   WCAG 2 AA or AAA contrast requirements.
 
+### Keyboard Navigation Support
+
+For all buttons, dropdowns, tabbed panels, hamburger menus, modals, overlays,
+links and other interactive elements, we have worked to ensure they:
+
+- Have a visible focus indicator (WCAG 2.4.7)
+- Can be accessed via keyboard navigation (WCAG 2.1.1)
+
 ## What You Can Do
 
 ### Site configuration

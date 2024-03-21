@@ -117,18 +117,18 @@ Here is an overview of the colors available in the theme (change theme mode to s
     </style>
 
     <p>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-primary sd-bg-text-primary">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-secondary sd-bg-text-secondary">secondary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-accent sd-bg-text-secondary">accent</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-success sd-bg-text-success">success</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-info sd-bg-text-info">info</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-warning sd-bg-text-warning">warning</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-danger sd-bg-text-danger">danger</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-background">background</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-on-background">on-background</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-surface">surface</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-on-surface sd-bg-text-primary">on-surface</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-target">target</span>
+      <span class="sd-badge pst-badge pst-primary sd-bg-text-primary">primary</span>
+      <span class="sd-badge pst-badge pst-secondary sd-bg-text-secondary">secondary</span>
+      <span class="sd-badge pst-badge pst-accent sd-bg-text-secondary">accent</span>
+      <span class="sd-badge pst-badge pst-success sd-bg-text-success">success</span>
+      <span class="sd-badge pst-badge pst-info sd-bg-text-info">info</span>
+      <span class="sd-badge pst-badge pst-warning sd-bg-text-warning">warning</span>
+      <span class="sd-badge pst-badge pst-danger sd-bg-text-danger">danger</span>
+      <span class="sd-badge pst-badge pst-background">background</span>
+      <span class="sd-badge pst-badge pst-on-background">on-background</span>
+      <span class="sd-badge pst-badge pst-surface">surface</span>
+      <span class="sd-badge pst-badge pst-on-surface sd-bg-text-primary">on-surface</span>
+      <span class="sd-badge pst-badge pst-target">target</span>
     </p>
 
 

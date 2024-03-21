@@ -38,8 +38,8 @@ Thanks for your support!
 - title: Feature-engine
   link-alt: Feature-engine docs
   link: https://feature-engine.readthedocs.io/
-- title: idtracker.ai
-  link-alt: idtracker.ai docs
+- title: idtracker&period;ai
+  link-alt: idtracker&period;ai docs
   link: https://idtracker.ai/
 - title: MegEngine
   link-alt: MegEngine docs

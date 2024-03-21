@@ -33,6 +33,31 @@
   a {
     color: var(--pst-color-inline-code-links);
   }
+
+  // The "Switch to stable version" link (styled like a button)
+  .pst-button-link-to-stable-version {
+    @include box-shadow();
+
+    $background-color: var(--pst-color-danger);
+    $hover-background-color: var(--pst-color-danger-highlight);
+    $color: var(--pst-color-danger-text);
+
+    background-color: $background-color;
+    border-color: $background-color;
+    color: $color;
+    border-radius: 0.25rem;
+
+    &:hover {
+      background-color: $hover-background-color;
+      border-color: $hover-background-color;
+      color: $color;
+    }
+
+    &:focus-visible {
+      outline: $focus-ring-width solid $background-color;
+      outline-offset: $focus-ring-width;
+    }
+  }
 }
 
 // Bg color is now defined in the theme color palette - using our secondary color
