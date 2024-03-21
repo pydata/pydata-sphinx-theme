@@ -151,7 +151,10 @@ Cards
             Hidden content
 
     .. grid-item-card:: A clickable card
-        :link: https://example.com
+        :link: https://sphinx-design.readthedocs.io/en/pydata-theme/cards.html#clickable-cards
+        :link-alt: Clickable cards - Sphinx Design docs
+
+        Don't forget to add the alternative text with ``link-alt``!
 
 .. grid::
 
