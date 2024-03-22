@@ -78,4 +78,4 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
                 f"The {kind} logo path '{path_image}' looks like a Sphinx template; "
                 "please provide a static logo image."
             )
-        copy_asset_file(path_image, staticdir)
+        copy_asset_file(str(Path(app.srcdir) / path_image), staticdir)
