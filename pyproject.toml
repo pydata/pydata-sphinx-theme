@@ -78,7 +78,7 @@ doc = [
   "colorama",
 ]
 test = ["pytest", "pytest-cov", "pytest-regressions"]
-dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]"]
+dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]", "tox"]
 a11y = ["pytest-playwright"]
 
 [project.entry-points]
