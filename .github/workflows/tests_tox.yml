@@ -17,6 +17,7 @@ on:
   push:
     branches:
       - main
+      - trallard/* # allow for personal branches for debugging
   pull_request:
   workflow_call:
   # allow manual triggering of the workflow, while debugging
