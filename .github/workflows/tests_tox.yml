@@ -11,7 +11,6 @@ concurrency:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty
-  PYTHONUNBUFFERED: "1" # Make stdout and stderr behave well
 
 permissions: {}
 
@@ -68,5 +67,4 @@ jobs:
         uses: 12rambau/setup-pandoc@test
       - name: "Run tests"
         run: |
-          # get the python version from the matrix and substitute
-          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
+          # python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
