@@ -39,11 +39,10 @@ jobs:
       - name: "Run pre-commit 🔍"
         uses: pre-commit/action@v3.0.0
 
-  # run our test suite on various combinations of OS / Python / Sphinx version
+  # run our test suite on various combinations of OS / Python version
   run-pytest:
     needs: lint
     strategy:
-      # while debugging, set fail-fast to false
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -118,3 +117,24 @@ jobs:
       - name: "Run accessibility tests with playwright 🎭"
         run: python -Im tox run -e a11y
         continue-on-error: true
+
+  build-site:
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version-default
+          cache: pip
+          cache-dependency-path: "pyproject.toml"
+      - run: python -Im pip install tox-uv
+      - name: "Build docs and check for warnings"
+        run: python -Im tox run -e docs
