@@ -1,0 +1,69 @@
+name: continuous-integration
+
+# Concurrency group that uses the workflow name and PR number if available
+# or commit SHA as a fallback. If a new build is triggered under that
+# concurrency group while a previous build is running it will be canceled.
+# Repeated pushes to a PR will cancel all previous builds, while multiple
+# merges to main will not cancel.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: "1" # Make tools pretty
+  PYTHONUNBUFFERED: "1" # Make stdout and stderr behave well
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
+  # allow manual triggering of the workflow, while debugging
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version-default
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
+      - name: "Run pre-commit 🔍"
+        uses: pre-commit/action@v3.0.0
+
+  # run our test suite on various combinations of OS / Python / Sphinx version
+  run-pytest:
+    needs: lint
+    strategy:
+      # while debugging, set fail-fast to false
+      fail-fast: true
+      matrix:
+        # os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
+        python-version: [3.9, 3.10., 3.11, 3.12]
+        sphinx-version: ["dev", "6.1.0"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: "pyproject.toml"
+      - run: python -Im pip install tox-uv
+        # waiting for https://github.com/nikeee/setup-pandoc/pull/8
+        # using 12rambau fork until then
+      - name: "Install pandoc 📝"
+        uses: 12rambau/setup-pandoc@test
+      - name: "Run tests"
+        run: |
+          # get the python version from the matrix and substitute
+          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
