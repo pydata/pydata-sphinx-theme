@@ -46,10 +46,8 @@ jobs:
       # while debugging, set fail-fast to false
       fail-fast: true
       matrix:
-        # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
-        sphinx-version: ["dev", "6.1.0"]
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
@@ -67,4 +65,38 @@ jobs:
         uses: 12rambau/setup-pandoc@test
       - name: "Run tests"
         run: |
-          # python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
+          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
+
+  run-tests:
+    needs: lint
+    strategy:
+      # while debugging, set fail-fast to false
+      fail-fast: true
+      matrix:
+        python-version: ["3.9", "3.12"]
+        sphinx-version: [61, dev]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: "pyproject.toml"
+      - run: python -Im pip install tox-uv
+        # waiting for https://github.com/nikeee/setup-pandoc/pull/8
+        # using 12rambau fork until then
+      - name: "Install pandoc 📝"
+        uses: 12rambau/setup-pandoc@test
+        # oldest python version with the oldest sphinx version
+      - name: "${{ matrix.python-version }} - ${{ matrix.sphinx-version }}"
+        run: |
+          python -Im tox run py39-sphinx61
+        if: matrix.sphinx-version == 61 && matrix.python-version == "3.9"
+        # newest python version with the newest sphinx version
+      - name: "${{ matrix.python-version }} - ${{ matrix.sphinx-version }}"
+        run: |
+          python -Im tox run py39-sphinx61
+        if: matrix.sphinx-version == dev && matrix.python-version == "3.12"
