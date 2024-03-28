@@ -92,11 +92,11 @@ jobs:
         uses: 12rambau/setup-pandoc@test
         # oldest python version with the oldest sphinx version
       - name: "${{ matrix.python-version }} - ${{ matrix.sphinx-version }}"
+        if: ${{ matrix.sphinx-version }} == 61 && ${{ matrix.python-version }} == "3.9"
         run: |
           python -Im tox run py39-sphinx61
-        if: matrix.sphinx-version == 61 && matrix.python-version == "3.9"
         # newest python version with the newest sphinx version
       - name: "${{ matrix.python-version }} - ${{ matrix.sphinx-version }}"
+        if: ${{ matrix.sphinx-version}} == dev && ${{matrix.python-version}} == "3.12"
         run: |
           python -Im tox run py39-sphinx61
-        if: matrix.sphinx-version == dev && matrix.python-version == "3.12"
