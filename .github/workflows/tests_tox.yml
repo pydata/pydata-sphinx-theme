@@ -94,9 +94,27 @@ jobs:
       - name: "${{ matrix.python-version }} - ${{ matrix.sphinx-version }}"
         if: ${{ matrix.sphinx-version }} == 61 && ${{ matrix.python-version }} == "3.9"
         run: |
-          python -Im tox run py39-sphinx61
+          python -Im tox run -e py39-sphinx61
         # newest python version with the newest sphinx version
       - name: "${{ matrix.python-version }} - ${{ matrix.sphinx-version }}"
         if: ${{ matrix.sphinx-version}} == dev && ${{matrix.python-version}} == "3.12"
         run: |
-          python -Im tox run py39-sphinx61
+          python -Im tox run -e py312-sphinxdev
+
+  a11y-tests:
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version-default
+          cache: pip
+          cache-dependency-path: "pyproject.toml"
+      - run: python -Im pip install tox-uv
+      - name: "Run accessibility tests with playwright 🎭"
+        run: python -Im tox run -e a11y
+        continue-on-error: true
