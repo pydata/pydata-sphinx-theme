@@ -7,7 +7,7 @@ export PYTHONUTF8=1
 if [[ "$SPHINX_VERSION" == "" ]]; then
     SPHINX_INSTALL=""
 elif [[ "$SPHINX_VERSION" == "dev" ]]; then
-    SPHINX_INSTALL="git+https://github.com/sphinx-doc/sphinx [test]"
+    SPHINX_INSTALL="sphinx[test] @ https://codeload.github.com/sphinx-doc/sphinx/zip/refs/heads/master"
 elif [[ "$SPHINX_VERSION" == "old" ]]; then
     SPHINX_INSTALL="sphinx[test]==6.1.0"
 else  # not used currently but easy enough
