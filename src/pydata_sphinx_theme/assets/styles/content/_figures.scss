@@ -1,3 +1,9 @@
+figure>a, figure>a>img, figure>img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 figure {
   a.headerlink {
     // So that header link doesn't push caption to be off-center.
@@ -15,7 +21,13 @@ figure {
     color: var(--pst-color-text-muted);
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 
+    p {
+         text-align: left;
+         display:inline-block
+    }
+    
     table.table {
       width: fit-content;
       margin-left: auto;
