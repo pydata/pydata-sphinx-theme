@@ -15,4 +15,4 @@ else  # not used currently but easy enough
 fi
 set -x  # print commands
 python -m pip install --upgrade pip wheel setuptools
-python -m pip install -e .["$1"] ${SPHINX_INSTALL} $2 $DEP_EXTRA
+python -m pip install -e .["$1"] "${SPHINX_INSTALL}" $2 $DEP_EXTRA
