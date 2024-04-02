@@ -12,7 +12,6 @@ concurrency:
 env:
   FORCE_COLOR: "1" # Make tools pretty
   DEFAULT_PYTHON_VERSION: "3.12" # Default Python version to use
-  OLDEST_SPHINX_VERSION: "61" # Oldest Sphinx version to test, without .
 
 permissions: {}
 
@@ -52,7 +51,7 @@ jobs:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
             python-version: "3.9"
-            sphinx-version: ${{ env.OLDEST_SPHINX_VERSION }}
+            sphinx-version: "61"
             # newest Python version with the newest Sphinx version
           - os: ubuntu-latest
             python-version: "3.12"
@@ -106,7 +105,7 @@ jobs:
         include:
           - os: ubuntu-latest
             python-version: "3.9"
-            sphinx-version: ${{ env.OLDEST_SPHINX_VERSION }}
+            sphinx-version: "61"
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
