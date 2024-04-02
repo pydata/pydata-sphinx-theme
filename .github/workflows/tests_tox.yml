@@ -118,6 +118,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           pandoc: "True"
       - name: "Build docs and check for warnings"
+        shell: bash
         run: |
           # check if there is a specific Sphinx version to test
           if [ -n "${{matrix.sphinx-version}}" ]; then
