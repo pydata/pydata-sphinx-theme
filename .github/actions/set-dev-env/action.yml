@@ -16,7 +16,6 @@ runs:
   steps:
     - name: "Setup Python 🐍"
       uses: actions/setup-python@v5
-      if: ${{ inputs.python-version }}
       with:
         python-version: ${{ inputs.python-version }}
         cache: "pip"
@@ -26,6 +25,5 @@ runs:
     # waiting for https://github.com/nikeee/setup-pandoc/pull/8
     # using 12rambau fork until then
     - name: "Install pandoc 📝"
-      shell: bash
-      if: ${{ inputs.pandoc }} == "True"
       uses: 12rambau/setup-pandoc@test
+      if: ${{ inputs.pandoc }} == "True"

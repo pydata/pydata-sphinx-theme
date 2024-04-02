@@ -12,6 +12,7 @@ concurrency:
 env:
   FORCE_COLOR: "1" # Make tools pretty
   DEFAULT_PYTHON_VERSION: "3.12" # Default Python version to use
+  OLDEST_SPHINX_VERSION: "61" # Oldest Sphinx version to test, without .
 
 permissions: {}
 
@@ -51,7 +52,7 @@ jobs:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
             python-version: "3.9"
-            sphinx-version: "61"
+            sphinx-version: ${{ env.OLDEST_SPHINX_VERSION }}
             # newest Python version with the newest Sphinx version
           - os: ubuntu-latest
             python-version: "3.12"
@@ -100,6 +101,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.12"]
+        sphinx-version: [""]
+        include:
+          - os: ubuntu-latest
+            python-version: "3.9"
+            sphinx-version: ${{ env.OLDEST_SPHINX_VERSION }}
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
@@ -107,10 +114,15 @@ jobs:
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          python-version: ${{ matrix.python-version }}
           pandoc: "True"
       - name: "Build docs and check for warnings"
         run: python -Im tox run -e docs
+          if [ -n "${{matrix.sphinx-version}}" ]; then
+          python -Im tox run -f docs-py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
+          else
+          python -Im tox run -f docs-py$(echo ${{ matrix.python-version }} | tr -d .)
+          fi
 
   # Run Lighthouse audits on the built site (Ubuntu)
   lighthouse-audit:
