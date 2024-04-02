@@ -47,6 +47,7 @@ jobs:
       matrix:
         os: ["ubuntu-latest", "macos-latest", "macos-14", "windows-latest"]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
+        sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
@@ -77,11 +78,7 @@ jobs:
         uses: 12rambau/setup-pandoc@test
       - name: "Run tests"
         run: |
-          if [[ -z ${{ matrix.sphinx-version }} ]]; then
-            python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)
-          else
-            python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
-          fi
+          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)
 
   a11y-tests:
     needs: lint
