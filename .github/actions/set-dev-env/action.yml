@@ -1,0 +1,20 @@
+name: Setup PST CI environment
+description: Create a PST dev environment
+
+inputs:
+  python-version:
+    description: Python version to use
+    required: false
+    default: "3.12"
+
+runs:
+  using: composite
+  steps:
+    - name: "Setup Python 🐍"
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ python-version }}
+        cache: "pip"
+        cache-dependency-path: "pyproject.toml"
+    - run: python -Im pip install tox-uv
+      shell: bash

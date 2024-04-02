@@ -78,7 +78,7 @@ jobs:
         uses: 12rambau/setup-pandoc@test
       - name: "Run tests"
         run: |
-          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }})
+          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
 
   a11y-tests:
     needs: lint
@@ -86,13 +86,10 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
-      - name: "Setup Python 🐍"
-        uses: actions/setup-python@v5
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
         with:
-          python-version-file: .python-version-default
-          cache: pip
-          cache-dependency-path: "pyproject.toml"
-      - run: python -Im pip install tox-uv
+          python-version: "3.12"
       - name: "Run accessibility tests with playwright 🎭"
         run: python -Im tox run -e a11y
         continue-on-error: true
