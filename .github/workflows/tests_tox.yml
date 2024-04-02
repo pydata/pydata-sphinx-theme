@@ -45,7 +45,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: ["ubuntu-latest", "macos-latest", "macos-14", "windows-latest"]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
     runs-on: ${{ matrix.os }}
     steps:
@@ -135,6 +135,8 @@ jobs:
           python-version-file: .python-version-default
           cache: pip
           cache-dependency-path: "pyproject.toml"
+      - name: "Install pandoc 📝"
+        uses: 12rambau/setup-pandoc@test
       - run: python -Im pip install tox-uv
       - name: "Build docs and check for warnings"
         run: python -Im tox run -e docs
