@@ -72,8 +72,10 @@ jobs:
       - name: "Run tests"
         shell: bash
         run: |
+          # check if there is a specific Sphinx version to test
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
+          # if not we use the default version
           else
             python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
           fi

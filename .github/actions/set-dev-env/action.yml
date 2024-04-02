@@ -26,4 +26,4 @@ runs:
     # using 12rambau fork until then
     - name: "Install pandoc 📝"
       uses: 12rambau/setup-pandoc@test
-      if: ${{ inputs.pandoc == "True" }}
+      if: ${{ inputs.pandoc }} == "True"
