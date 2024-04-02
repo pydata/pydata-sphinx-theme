@@ -11,6 +11,7 @@ concurrency:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty
+  DEFAULT_PYTHON_VERSION: "3.12" # Default Python version to use
 
 permissions: {}
 
@@ -30,14 +31,12 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
-      - name: "Setup Python 🐍"
-        uses: actions/setup-python@v5
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
         with:
-          python-version-file: .python-version-default
-          cache: "pip"
-          cache-dependency-path: "pyproject.toml"
-      - name: "Run pre-commit 🔍"
-        uses: pre-commit/action@v3.0.0
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - name: "Run lint checks 🧹"
+        run: python -Im tox run -e lint
 
   # run our test suite on various combinations of OS / Python version
   run-pytest:
@@ -77,6 +76,7 @@ jobs:
       - name: "Install pandoc 📝"
         uses: 12rambau/setup-pandoc@test
       - name: "Run tests"
+        shell: bash
         run: |
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
@@ -92,7 +92,7 @@ jobs:
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
-          python-version: "3.12"
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Run accessibility tests with playwright 🎭"
         run: python -Im tox run -e a11y
         continue-on-error: true
