@@ -78,8 +78,11 @@ jobs:
         uses: 12rambau/setup-pandoc@test
       - name: "Run tests"
         run: |
-          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
-
+          if [ -n "${{matrix.sphinx-version}}" ]; then
+            python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
+          else
+            python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
+          fi
   a11y-tests:
     needs: lint
     runs-on: ubuntu-latest
