@@ -52,7 +52,7 @@ jobs:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
             python-version: "3.9"
-            sphinx-version: "6.1"
+            sphinx-version: "61"
             # newest Python version with the newest Sphinx version
           - os: ubuntu-latest
             python-version: "3.12"
@@ -78,7 +78,7 @@ jobs:
         uses: 12rambau/setup-pandoc@test
       - name: "Run tests"
         run: |
-          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)
+          python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }})
 
   a11y-tests:
     needs: lint
