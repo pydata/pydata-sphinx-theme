@@ -79,6 +79,13 @@ jobs:
           else
             python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
           fi
+      - name: "Upload coverage data to GH artifacts "
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-data-${{ matrix.python-version }}
+          path: .coverage.*
+          if-no-files-found: ignore
 
   # Only run accessibility tests on the latest Python version (3.12) and Ubuntu
   a11y-tests:
@@ -139,7 +146,7 @@ jobs:
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Run Lighthouse audits on the built site"
-        run: python -Im tox run -e lighthouse
+        run: python -Im tox run -e docs-no-checks
       - name: "Copy kitchen sink to a tiny site"
         run: |
           mkdir audit/
