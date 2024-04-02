@@ -64,17 +64,11 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
-      - name: "Setup Python 🐍"
-        uses: actions/setup-python@v5
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pip
-          cache-dependency-path: "pyproject.toml"
-      - run: python -Im pip install tox-uv
-        # waiting for https://github.com/nikeee/setup-pandoc/pull/8
-        # using 12rambau fork until then
-      - name: "Install pandoc 📝"
-        uses: 12rambau/setup-pandoc@test
+          pandoc: "True"
       - name: "Run tests"
         shell: bash
         run: |
@@ -83,6 +77,8 @@ jobs:
           else
             python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
           fi
+
+  # Only run accessibility tests on the latest Python version (3.12) and Ubuntu
   a11y-tests:
     needs: lint
     runs-on: ubuntu-latest
@@ -97,6 +93,7 @@ jobs:
         run: python -Im tox run -e a11y
         continue-on-error: true
 
+  # Build sites on the 2 major OSes and check for warnings
   build-site:
     needs: lint
     strategy:
@@ -107,14 +104,40 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
-      - name: "Setup Python 🐍"
-        uses: actions/setup-python@v5
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
         with:
-          python-version-file: .python-version-default
-          cache: pip
-          cache-dependency-path: "pyproject.toml"
-      - name: "Install pandoc 📝"
-        uses: 12rambau/setup-pandoc@test
-      - run: python -Im pip install tox-uv
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          pandoc: "True"
       - name: "Build docs and check for warnings"
         run: python -Im tox run -e docs
+
+  # Run Lighthouse audits on the built site (Ubuntu)
+  lighthouse-audit:
+    needs: build-site
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - name: "Run Lighthouse audits on the built site"
+        run: python -Im tox run -e lighthouse
+      - name: "Copy kitchen sink to a tiny site"
+        run: |
+          mkdir audit/
+          mkdir audit/site
+          cp -r docs/examples/kitchen-sink audit/site/kitchen-sink
+          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > audit/site/index.rst
+          echo 'html_theme = "pydata_sphinx_theme"' > audit/site/conf.py
+          echo '.. toctree::\n   :glob:\n\n   *' >> audit/site/index.rst
+          python -Im tox run -e docs-no-checks
+      - name: "Audit with Lighthouse 🔦"
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          configPath: ".github/workflows/lighthouserc.json"
+          temporaryPublicStorage: true
+          uploadArtifacts: true
+          runs: 3 # Multiple runs to reduce variance

@@ -6,6 +6,10 @@ inputs:
     description: Python version to use
     required: false
     default: "3.12"
+  pandoc:
+    description: Whether this should install pandoc or not
+    required: false
+    default: "False"
 
 runs:
   using: composite
@@ -19,3 +23,9 @@ runs:
         cache-dependency-path: "pyproject.toml"
     - run: python -Im pip install tox-uv
       shell: bash
+    # waiting for https://github.com/nikeee/setup-pandoc/pull/8
+    # using 12rambau fork until then
+    - name: "Install pandoc 📝"
+      shell: bash
+      if: ${{ inputs.pandoc }} == "True"
+      uses: 12rambau/setup-pandoc@test
