@@ -12,6 +12,7 @@ runs:
   steps:
     - name: "Setup Python 🐍"
       uses: actions/setup-python@v5
+      if: ${{ inputs.python-version }}
       with:
         python-version: ${{ inputs.python-version }}
         cache: "pip"
