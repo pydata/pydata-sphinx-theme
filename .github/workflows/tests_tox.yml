@@ -74,10 +74,10 @@ jobs:
         run: |
           # check if there is a specific Sphinx version to test
           if [ -n "${{matrix.sphinx-version}}" ]; then
-            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}-tests
+            python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}-tests
           # if not we use the default version
           else
-            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-tests
+            python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
       - name: "Upload coverage data to GH artifacts "
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
@@ -155,6 +155,7 @@ jobs:
           printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > audit/site/index.rst
           echo 'html_theme = "pydata_sphinx_theme"' > audit/site/conf.py
           echo '.. toctree::\n   :glob:\n\n   *' >> audit/site/index.rst
+
           python -Im tox run -e docs_no_checks
       - name: "Audit with Lighthouse 🔦"
         uses: treosh/lighthouse-ci-action@v11
