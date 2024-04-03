@@ -74,17 +74,17 @@ jobs:
         run: |
           # check if there is a specific Sphinx version to test
           if [ -n "${{matrix.sphinx-version}}" ]; then
-            python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
+            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}-tests
           # if not we use the default version
           else
-            python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
+            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
       - name: "Upload coverage data to GH artifacts "
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
         uses: actions/upload-artifact@v4
         with:
           name: coverage-data-${{ matrix.python-version }}
-          path: .coverage.*
+          path: .coverage
           if-no-files-found: ignore
 
   # Only run accessibility tests on the latest Python version (3.12) and Ubuntu
@@ -99,7 +99,7 @@ jobs:
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Run accessibility tests with playwright 🎭"
-        run: python -Im tox run -e a11y
+        run: python -Im tox run -e py312-docs,a11y-tests
         continue-on-error: true
 
   # Build sites on the 2 major OSes and check for warnings
@@ -129,9 +129,9 @@ jobs:
         run: |
           # check if there is a specific Sphinx version to test
           if [ -n "${{matrix.sphinx-version}}" ]; then
-            python -Im tox run -f docs-py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}
+            python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}-docs
           else
-            python -Im tox run -f docs-py$(echo ${{ matrix.python-version }} | tr -d .)
+            python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs
           fi
 
   # Run Lighthouse audits on the built site (Ubuntu)
@@ -155,7 +155,7 @@ jobs:
           printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > audit/site/index.rst
           echo 'html_theme = "pydata_sphinx_theme"' > audit/site/conf.py
           echo '.. toctree::\n   :glob:\n\n   *' >> audit/site/index.rst
-          python -Im tox run -e docs-no-checks
+          python -Im tox run -e docs_no_checks
       - name: "Audit with Lighthouse 🔦"
         uses: treosh/lighthouse-ci-action@v11
         with:

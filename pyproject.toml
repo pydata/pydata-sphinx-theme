@@ -126,4 +126,4 @@ show_missing = true
 skip_covered = true
 
 [tool.coverage.paths]
-source = ["src"]
+source = ["src", ".tox/py*/**/site-packages"]
