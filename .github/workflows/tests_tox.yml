@@ -163,7 +163,7 @@ jobs:
           echo '.. toctree::\n   :glob:\n\n   *' >> ${{ env.DOCS_DIR }}/site/index.rst
 
           # build docs without checking for warnings
-          python -Im tox run -e docs_no_checks
+          python -Im tox run -e docs-no-checks
 
       - name: "Audit with Lighthouse 🔦"
         uses: treosh/lighthouse-ci-action@v11
