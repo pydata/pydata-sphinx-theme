@@ -119,6 +119,7 @@ markers = "a11y: mark a test as an accessibility test"
 [tool.coverage.run]
 source = ["pydata_sphinx_theme"]
 branch = true
+relative_files = true
 
 [tool.coverage.report]
 fail_under = 60
