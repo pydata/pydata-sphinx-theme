@@ -174,7 +174,7 @@ jobs:
           runs: 3 # Multiple runs to reduce variance
 
   coverage:
-    name: Combine & check coverage
+    name: "Combine & check coverage"
     needs: run-pytest
     runs-on: ubuntu-latest
     steps:
@@ -190,9 +190,10 @@ jobs:
         with:
           pattern: coverage-data-*
           merge-multiple: true
-      - name: "Combine coverage & fail if it's <80%"
+      - name: "Get coverage data & fail if it's <80%"
         run: |
-          python -Im coverage combine
+          # if we decide to check cov across versions and combine
+          # python -Im coverage combine
           python -Im coverage html --skip-covered --skip-empty
 
           # report and write to summary.
