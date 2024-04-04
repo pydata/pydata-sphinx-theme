@@ -38,7 +38,7 @@ jobs:
       - name: "Run lint checks 🧹"
         run: python -Im tox run -e lint
 
-  # run our test suite on various combinations of OS / Python version
+  # Run our test suite on various combinations of OS & Python versions
   run-pytest:
     needs: lint
     strategy:
@@ -69,17 +69,19 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: "True"
-      - name: "Run tests"
+      - name: "Run tests ✅"
         shell: bash
         run: |
-          # check if there is a specific Sphinx version to test
+          # check if there is a specific Sphinx version to test with
+          # example substitution: tox run -e compile,py39-sphinx61-tests
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}-tests
           # if not we use the default version
+          # example substitution: tox run -e compile,py39-tests
           else
             python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
-      - name: "Upload coverage data to GH artifacts "
+      - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
         uses: actions/upload-artifact@v4
         with:
@@ -89,6 +91,7 @@ jobs:
 
   # Only run accessibility tests on the latest Python version (3.12) and Ubuntu
   a11y-tests:
+    name: "a11y-tests (ubuntu-latest, 3.12)"
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -99,18 +102,18 @@ jobs:
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Run accessibility tests with playwright 🎭"
-        # build PST then run tests
+        # build PST, build docs, then run a11y-tests
         run: python -Im tox run -e py312-docs,a11y-tests
         continue-on-error: true
 
-  # Build sites on the 2 major OSes and check for warnings
+  # Build our docs (PST) on major OSes and check for warnings
   build-site:
     needs: lint
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.12"]
+        python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
         include:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
@@ -125,20 +128,25 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: "True"
-      - name: "Build docs and check for warnings"
+      - name: "Build docs and check for warnings 📖"
         shell: bash
         run: |
-          # check if there is a specific Sphinx version to test
+          # check if there is a specific Sphinx version to build with
+          # example substitution: tox run -e docs-py39-sphinx61-docs
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx${{matrix.sphinx-version}}-docs
+          # build with the default Sphinx version 
+          # example substitution: tox run -e docs-py312-docs
           else
             python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs
           fi
 
-  # Run Lighthouse audits on the built site (Ubuntu)
+  # Run Lighthouse audits on the built site (kitchen-sink only)
   lighthouse-audit:
     needs: build-site
     runs-on: ubuntu-latest
+    env:
+      DOCS_DIR: "audit"
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
@@ -148,14 +156,15 @@ jobs:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Copy kitchen sink to a tiny site"
         run: |
-          mkdir audit/
-          mkdir audit/site
-          cp -r docs/examples/kitchen-sink audit/site/kitchen-sink
-          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > audit/site/index.rst
-          echo 'html_theme = "pydata_sphinx_theme"' > audit/site/conf.py
-          echo '.. toctree::\n   :glob:\n\n   *' >> audit/site/index.rst
+          mkdir -p ${{ env.DOCS_DIR }}/site
+          cp -r docs/examples/kitchen-sink ${{ env.DOCS_DIR }}/site/kitchen-sink
+          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > ${{ env.DOCS_DIR }}/site/index.rst
+          echo 'html_theme = "pydata_sphinx_theme"' > ${{ env.DOCS_DIR }}/site/conf.py
+          echo '.. toctree::\n   :glob:\n\n   *' >> ${{ env.DOCS_DIR }}/site/index.rst
 
+          # build docs without checking for warnings
           python -Im tox run -e docs_no_checks
+
       - name: "Audit with Lighthouse 🔦"
         uses: treosh/lighthouse-ci-action@v11
         with:
@@ -163,3 +172,37 @@ jobs:
           temporaryPublicStorage: true
           uploadArtifacts: true
           runs: 3 # Multiple runs to reduce variance
+
+  coverage:
+    name: Combine & check coverage
+    needs: run-pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - run: python -Im pip install --upgrade coverage[toml]
+      - name: "Download coverage data 📥"
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-data-*
+          merge-multiple: true
+      - name: "Combine coverage & fail if it's <80%"
+        run: |
+          python -Im coverage combine
+          python -Im coverage html --skip-covered --skip-empty
+
+          # report and write to summary.
+          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+
+          # report again and fail if under 80%.
+          python -Im coverage report --fail-under=80
+      - name: "Upload HTML report if check failed 📤"
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: htmlcov
+        if: ${{ failure() }}
