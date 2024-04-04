@@ -99,6 +99,7 @@ jobs:
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Run accessibility tests with playwright 🎭"
+        # build PST then run tests
         run: python -Im tox run -e py312-docs,a11y-tests
         continue-on-error: true
 
@@ -145,8 +146,6 @@ jobs:
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - name: "Run Lighthouse audits on the built site"
-        run: python -Im tox run -e docs-no-checks
       - name: "Copy kitchen sink to a tiny site"
         run: |
           mkdir audit/
