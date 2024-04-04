@@ -174,7 +174,7 @@ jobs:
           runs: 3 # Multiple runs to reduce variance
 
   coverage:
-    name: "Combine & check coverage"
+    name: "check coverage"
     needs: run-pytest
     runs-on: ubuntu-latest
     steps:

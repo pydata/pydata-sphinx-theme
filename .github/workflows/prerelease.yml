@@ -38,10 +38,10 @@ jobs:
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
-      # - name: Create an issue if failure
-      #   uses: JasonEtco/create-an-issue@v2
-      #   if: ${{ env.SPHINX_BUILD_UNEXPECTED_WARNINGS || !env.PYTEST_ERRORS }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     filename: .github/prerelease-template.md
+      - name: "Create an issue if failure"
+        uses: JasonEtco/create-an-issue@v2
+        if: ${{ env.SPHINX_BUILD_UNEXPECTED_WARNINGS || !env.PYTEST_ERRORS }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/prerelease-template.md
