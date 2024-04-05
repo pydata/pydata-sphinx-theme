@@ -7,7 +7,7 @@ document.write(`<div class="bd-header-announcement"></div>`);
 fetch("{{ theme_announcement }}")
   .then(res => {
     if (!res.ok){
-      throw new Error("Error " + res.status)
+      throw new Error("Error " + res.status);
     }
     return res.text();})
   .then(data => {
