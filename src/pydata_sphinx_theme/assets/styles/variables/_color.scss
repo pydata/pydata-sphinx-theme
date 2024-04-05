@@ -203,6 +203,14 @@ $pst-semantic-colors: (
     "light": #f3cf95,
     "dark": #675c04,
   ),
+  "table-text": (
+    "light": #{map-deep-get($color-palette, "foundation", "black")},
+    "dark": #{map-deep-get($color-palette, "foundation", "white")},
+  ),
+  "table-row-hover": (
+    "bg-light": #{map-deep-get($color-palette, "violet", "300")},
+    "bg-dark": #{map-deep-get($color-palette, "violet", "600")},
+  ),
   // DEPTH COLORS - you can see the elevation colours and shades
   // in the Figma file https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1492%3A922&t=sQeQZehkOzposYEg-1
   // background: color of the canvas / the furthest back layer
@@ -265,6 +273,10 @@ $pst-semantic-colors: (
   & {
     --pst-color-link: var(--pst-color-primary);
     --pst-color-link-hover: var(--pst-color-secondary);
+    --pst-color-table: var(--pst-color-foundation);
+    --pst-color-table-heading-bg: var(--pst-color-surface);
+    --pst-color-table-row-zebra-1-bg: var(--pst-color-on-background);
+    --pst-color-table-row-zebra-2-bg: var(--pst-color-surface);
   }
   // adapt to light/dark-specific content
   @if $mode == "light" {

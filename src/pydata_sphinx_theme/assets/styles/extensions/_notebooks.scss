@@ -22,6 +22,12 @@ html[data-theme="dark"] .bd-content {
   .nboutput {
     .output_area.rendered_html {
       @include cell-output-background;
+
+      // Change the background color of data table outputs to blend seamlessly
+      // with the site's background
+      &:has(table.dataframe) {
+        background-color: var(--pst-color-background);
+      }
     }
 
     .output_area.stderr {
@@ -70,6 +76,38 @@ html[data-theme="dark"] .bd-content {
   div.output {
     table {
       table-layout: auto;
+    }
+  }
+}
+
+/*******************************************************************************
+ * pandas
+ */
+
+// Re-style Pandas data tables
+.nboutput .output_area.rendered_html table.dataframe {
+  // ^ Need to use this long selector in order to override library CSS rules
+
+  color: var(--pst-color-table-text);
+
+  thead {
+    tr {
+      background-color: var(--pst-color-table-heading-bg);
+      border-bottom: 2px solid var(--pst-color-primary);
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: var(--pst-color-table-row-zebra-1-bg);
+      }
+      &:nth-child(even) {
+        background-color: var(--pst-color-table-row-zebra-2-bg);
+      }
+      &:hover {
+        background-color: var(--pst-color-table-row-hover-bg);
+      }
     }
   }
 }
