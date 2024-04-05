@@ -40,8 +40,8 @@ class BootstrapHTML5TranslatorMixin:
     def visit_literal_block(self, node):
         """Modify literal blocks.
 
-        - ensure tabindex="0" for <pre> tags buried in the HTML tree that Sphinx
-          (with Pygments) generates for literal blocks
+        - add tabindex="0" to <pre> tags within the HTML tree of the literal
+          block
         """
         try:
             super().visit_literal_block(node)
