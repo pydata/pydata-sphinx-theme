@@ -5,7 +5,11 @@
 <script>
 document.write(`<div class="bd-header-announcement"></div>`);
 fetch("{{ theme_announcement }}")
-  .then(res => {return res.text();})
+  .then(res => {
+    if (!res.ok){
+      throw new Error("Error " + res.status)
+    }
+    return res.text();})
   .then(data => {
     if (data.length === 0) {
       console.log("[PST]: Empty announcement at: {{ theme_announcement }}");
