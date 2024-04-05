@@ -9,9 +9,12 @@ on:
 jobs:
   tests:
     uses: ./.github/workflows/tests.yml
+
   publish:
     name: publish
     needs: [tests] # require tests to pass before deploy runs
+    permissions:
+      id-token: write # needed for PyPI upload
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -29,6 +32,3 @@ jobs:
           python -m build
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_KEY }}
