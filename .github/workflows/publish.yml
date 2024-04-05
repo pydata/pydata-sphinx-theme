@@ -8,13 +8,14 @@ on:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty
+  PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
 
 jobs:
   tests:
     uses: ./.github/workflows/tests.yml
   publish:
     name: publish
-    needs: [tests] # require tests to pass before deploy runs
+    needs: [tests] # require tests to pass before release
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"

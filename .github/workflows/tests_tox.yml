@@ -11,7 +11,8 @@ concurrency:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty
-  DEFAULT_PYTHON_VERSION: "3.12" # Default Python version to use
+  DEFAULT_PYTHON_VERSION: "3.12" # keep in sync with tox.ini
+  PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
 
 permissions: {}
 
@@ -207,3 +208,23 @@ jobs:
           name: html-report
           path: htmlcov
         if: ${{ failure() }}
+
+  profile:
+    needs: [build-site, run-pytest]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - name: "Run profiling with py-spy 🕵️‍♂️"
+        run: python -Im tox run -e profile-docs
+        continue-on-error: true
+      - name: "Upload profiling data to GH artifacts 📤"
+        uses: actions/upload-artifact@v4
+        with:
+          name: profile-results
+          path: profile.svg
+          if-no-files-found: ignore
