@@ -1,3 +1,11 @@
+# Config for pre-commit CI https://pre-commit.ci/
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] Automatic linting and formatting fixes
+  autofix_prs: true
+  autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate hooks"
+  autoupdate_schedule: monthly
+
 # Fix the node version to avoid a GLIBC error
 # ref: https://stackoverflow.com/questions/71939099/bitbucket-pipeline-error-installing-pre-commit-ts-lint/71940852#71940852
 default_language_version:
