@@ -3,7 +3,7 @@ description: Create a PST dev environment
 
 inputs:
   python-version:
-    description: Python version to use
+    description: Default Python version to use if none is specified
     required: false
     default: "3.12"
   pandoc:
