@@ -38,15 +38,16 @@ extensions = [
     "_extension.gallery_directive",
     "_extension.component_directive",
     # For extension examples and demos
-    "myst_parser",
+    # "myst_parser",
     "ablog",
     "jupyter_sphinx",
     "sphinxcontrib.youtube",
-    "nbsphinx",
+    # "nbsphinx",
     "numpydoc",
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
+    "myst_nb",
 ]
 
 jupyterlite_config = "jupyterlite_config.json"

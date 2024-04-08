@@ -76,6 +76,8 @@ doc = [
   "nbsphinx",
   "ipyleaflet",
   "colorama",
+  "ipywidgets",
+  "myst-nb"
 ]
 test = ["pytest", "pytest-cov", "pytest-regressions"]
 dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]"]
