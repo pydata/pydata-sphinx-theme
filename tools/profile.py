@@ -65,11 +65,11 @@ def profile_docs(output: str = "profile.svg", n_extra_pages: int = 50) -> None:
         print(f"Profiling build with {n_extra_pages} pages with py-spy...")
 
         subprocess.run(
-            f"py-spy record -o {output} -- sphinx-build {target_path} {output_site_path}/_build".split(),
+            ["py-spy", "record", "-o", output, "--", "sphinx-build", target_path, f" {output_site_path}/_build",
             capture_output=True,
         )
 
-        print(f"py-spy profiler output at this file: {output}")
+        print("py-spy profiler output at this file:", output)
 
 
 if __name__ == "__main__":
