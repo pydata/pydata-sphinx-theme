@@ -20,6 +20,7 @@ runs:
         python-version: ${{ inputs.python-version }}
         cache: "pip"
         cache-dependency-path: "pyproject.toml"
+        allow-prereleases: true
     - run: python -Im pip install tox-uv
       shell: bash
     # waiting for https://github.com/nikeee/setup-pandoc/pull/8
