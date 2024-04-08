@@ -29,7 +29,7 @@ jobs:
       - name: "Install (prerelease) dependencies"
         run: |
           python -Im pip install --upgrade pip wheel setuptools
-      - name: "Build PST docs and check for warnings"
+      - name: "Build PST docs and check for warnings 📖"
         run: |
           # example substitution: tox run -e docs-py312-docs
           python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going

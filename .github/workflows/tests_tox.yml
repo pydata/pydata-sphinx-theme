@@ -45,7 +45,7 @@ jobs:
       fail-fast: true
       matrix:
         os: ["ubuntu-latest", "macos-latest", "macos-14", "windows-latest"]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13-dev"]
         sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
@@ -55,6 +55,7 @@ jobs:
             # newest Python version with the newest Sphinx version
           - os: ubuntu-latest
             python-version: "3.12"
+            # Sphinx HEAD
             sphinx-version: "dev"
         exclude:
           # Python 3.9 is not supported on macOS 14 - https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
