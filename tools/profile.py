@@ -78,7 +78,7 @@ def profile_docs(output: str = "profile.svg", n_extra_pages: int = 50) -> None:
             capture_output=True,
         )
 
-        print("py-spy profiler output at this file:", output)
+    print("py-spy profiler output at this file:", output)
 
 
 if __name__ == "__main__":

@@ -221,11 +221,12 @@ jobs:
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Run profiling with py-spy 🕵️‍♂️"
-        run: python -Im tox run -e profile-docs
+        # profiling needs to be run as sudo
+        run: sudo python -Im tox run -e py312-profile-docs -- -o docbuild_profile.svg
         continue-on-error: true
       - name: "Upload profiling data to GH artifacts 📤"
         uses: actions/upload-artifact@v4
         with:
           name: profile-results
-          path: profile.svg
+          path: docbuild_profile.svg
           if-no-files-found: ignore
