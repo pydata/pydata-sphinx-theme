@@ -52,3 +52,14 @@ repos:
     rev: "0.5.0"
     hooks:
       - id: nbstripout
+
+  - repo: https://github.com/thibaudcolas/pre-commit-stylelint
+    rev: v16.3.1
+    hooks:
+      - id: stylelint
+        # automatically fix .scss files where possible
+        args: [--fix]
+        additional_dependencies:
+          # stylelint itself needs to be here when using additional_dependencies.
+          - stylelint@16.3.1
+          - stylelint-config-standard-scss@13.1.0
