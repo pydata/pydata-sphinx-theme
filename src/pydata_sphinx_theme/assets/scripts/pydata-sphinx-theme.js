@@ -142,7 +142,7 @@ function scrollToActive() {
   // Inspired on source of revealjs.com
   let storedScrollTop = parseInt(
     sessionStorage.getItem("sidebar-scroll-top"),
-    10,
+    10
   );
 
   if (!isNaN(storedScrollTop)) {
@@ -194,7 +194,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search",
+        "div:not(.search-button__search-container) > form.bd-search"
       );
     }
     return form.querySelector("input");
@@ -255,7 +255,7 @@ var addEventListenerForSearchKeyboard = () => {
         toggleSearchField();
       }
     },
-    true,
+    true
   );
 };
 
@@ -278,7 +278,7 @@ var changeSearchShortcutKey = () => {
   let shortcuts = document.querySelectorAll(".search-button__kbd-shortcut");
   if (useCommandKey) {
     shortcuts.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘"),
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
     );
   }
 };
@@ -322,6 +322,26 @@ var getCurrentUrlPath = () => {
   }
   return `${DOCUMENTATION_OPTIONS.pagename}.html`;
 };
+
+/**
+ * Allow user to dismiss the warning banner about the docs version being dev / old.
+ * We store the dismissal date and version, to give us flexibility about making the
+ * dismissal last for longer than one browser session, if we decide to do that.
+ *
+ * @param {event} event the event that trigger the check
+ */
+async function DismissBannerAndStorePref(event) {
+  const banner = document.querySelector(".bd-header-version-warning");
+  banner.remove();
+  let version = DOCUMENTATION_OPTIONS.VERSION;
+  let now = new Date();
+  let banner_pref = JSON.parse(localStorage.getItem("pst_banner_pref") || "{}");
+  console.debug(
+    `[PST] Dismissing the version warning banner on ${version} starting ${now}.`
+  );
+  banner_pref[version] = now;
+  localStorage.setItem("pst_banner_pref", JSON.stringify(banner_pref));
+}
 
 /**
  * Check if corresponding page path exists in other version of docs
@@ -412,11 +432,11 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
   var foundMatch = false;
   // create links to the corresponding page in the other docs versions
   data.forEach((entry) => {
-    // create the node
+    // creaIPython – slow debuggerte the node
     const anchor = document.createElement("a");
     anchor.setAttribute(
       "class",
-      "dropdown-item list-group-item list-group-item-action py-1",
+      "dropdown-item list-group-item list-group-item-action py-1"
     );
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
     anchor.setAttribute("role", "option");
@@ -476,7 +496,7 @@ function showVersionWarningBanner(data) {
   if (preferredEntries.length !== 1) {
     const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
     console.log(
-      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`,
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`
     );
     return;
   }
@@ -487,21 +507,45 @@ function showVersionWarningBanner(data) {
   if (versionsAreComparable && compare(version, preferredVersion, "=")) {
     return;
   }
+  // check if banner has been dismissed recently
+  const dismiss_date_str = JSON.parse(
+    localStorage.getItem("pst_banner_pref") || "{}"
+  )[version];
+  if (dismiss_date_str != null) {
+    const dismiss_date = new Date(dismiss_date_str);
+    const now = new Date();
+    const milisecond_in_a_day = 24 * 60 * 60 * 100;
+    const days_passed = (now - dismiss_date) / milisecond_in_a_day;
+    const timeout_in_days = 14;
+    if (days_passed < timeout_in_days) {
+      console.info(
+        `[PST] Suppressing version warning banner; was dismissed ${days_passed} day(s) ago`
+      );
+      return;
+    }
+  }
+
   // now construct the warning banner
   const banner = document.querySelector(".bd-header-version-warning");
   const middle = document.createElement("div");
   const inner = document.createElement("div");
   const bold = document.createElement("strong");
   const button = document.createElement("a");
+  const close_btn = document.createElement("a");
   // these classes exist since pydata-sphinx-theme v0.10.0
   // the init class is used for animation
-  middle.classList = "bd-header-announcement__content";
+  middle.classList = "bd-header-announcement__content  ms-auto me-auto";
   inner.classList = "sidebar-message";
   button.classList =
     "btn text-wrap font-weight-bold ms-3 my-1 align-baseline pst-button-link-to-stable-version";
   button.href = `${preferredURL}${getCurrentUrlPath()}`;
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
+  close_btn.classList = "ms-3 my-1 align-baseline";
+  const close_x = document.createElement("i");
+  close_btn.append(close_x);
+  close_x.classList = "fa-solid fa-xmark";
+  close_btn.onclick = DismissBannerAndStorePref;
   // add the version-dependent text
   inner.innerText = "This is documentation for ";
   const isDev =
@@ -520,6 +564,7 @@ function showVersionWarningBanner(data) {
     bold.innerText = `version ${version}`;
   }
   banner.appendChild(middle);
+  banner.append(close_btn);
   middle.appendChild(inner);
   inner.appendChild(bold);
   inner.appendChild(document.createTextNode("."));
@@ -562,17 +607,17 @@ async function fetchAndUseVersions() {
   // fetch the JSON version data (only once), then use it to populate the version
   // switcher and maybe show the version warning bar
   var versionSwitcherBtns = document.querySelectorAll(
-    ".version-switcher__button",
+    ".version-switcher__button"
   );
   const hasSwitcherMenu = versionSwitcherBtns.length > 0;
   const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
-    "theme_switcher_json_url",
+    "theme_switcher_json_url"
   );
   const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
 
   if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
     const data = await fetchVersionSwitcherJSON(
-      DOCUMENTATION_OPTIONS.theme_switcher_json_url,
+      DOCUMENTATION_OPTIONS.theme_switcher_json_url
     );
     // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
     // We don't really want the switcher and warning bar to silently not work.
@@ -596,7 +641,7 @@ function setupMobileSidebarKeyboardHandlers() {
   // allows the mobile sidebars to be hidden or revealed via CSS.
   const primaryToggle = document.getElementById("pst-primary-sidebar-checkbox");
   const secondaryToggle = document.getElementById(
-    "pst-secondary-sidebar-checkbox",
+    "pst-secondary-sidebar-checkbox"
   );
   const primarySidebar = document.querySelector(".bd-sidebar-primary");
   const secondarySidebar = document.querySelector(".bd-sidebar-secondary");
@@ -709,7 +754,7 @@ async function setupAnnouncementBanner() {
     const response = await fetch(pstAnnouncementUrl);
     if (!response.ok) {
       throw new Error(
-        `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`,
+        `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`
       );
     }
     const data = await response.text();
@@ -743,7 +788,7 @@ async function fetchRevealBannersTogether() {
   // Add together the heights of the element's children
   const height = Array.from(revealer.children).reduce(
     (height, el) => height + el.offsetHeight,
-    0,
+    0
   );
 
   // Use the calculated height to give the revealer a non-zero height (if
