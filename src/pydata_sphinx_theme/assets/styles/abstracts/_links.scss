@@ -2,25 +2,31 @@
  * Consistent styling for links
  **/
 
+@use "sass:string";
+
 // Define some useful variables for links styling consistency
-//
+
 //  Thickness of the underline for links
 // the default will be either:
 //  - 1px
 // - 0.0625rem if it's thicker than 1px because the user has changed the text
 //   size in their browser
-$link-underline-thickness: unquote("max(1px, .0625rem)") !default;
+$link-underline-thickness: string.unquote("max(1px, .0625rem)") !default;
+
 // Offset of link underlines from text baseline
 // The default is 3px expressed as ems, as calculated against the default body
 // font size (on desktop).
 $link-underline-offset: 0.1578em !default;
+
 // Thickness of link underlines in hover state
 // The default for each link will be the thickest of the following:
 //  - 3px
 //  - 0.1875rem, if it's thicker than 3px because the user has changed the text
 //    size in their browser
 //  - 0.12em (relative to the link's text size)
-$link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
+$link-hover-decoration-thickness: string.unquote(
+  "max(3px, .1875rem, .12em)"
+) !default;
 
 //  Ensures links have an underline decoration by default - needed to meet
 // WCAG SC 1.4.1
@@ -41,6 +47,7 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 @mixin link-decoration-hover {
   @if $link-hover-decoration-thickness {
     text-decoration-thickness: $link-hover-decoration-thickness;
+
     // Disable ink skipping on underlines on hover. Browsers haven't
     // standardised on this part of the spec yet, so set both properties
     text-decoration-skip-ink: none; // Chromium, Firefox
@@ -54,23 +61,25 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:hover {
     @include link-decoration;
     @include link-decoration-hover;
+
     color: var(--pst-color-link-hover);
   }
 }
 
 // Default link styles
-//
+
 // Defines: default unvisited, visited, hover, and active.
 // TODO: @trallard to improve focus styles in subsequent PR
 @mixin link-style-default {
   // So that really long links don't spill out of their container
   word-wrap: break-word;
-
   color: var(--pst-color-link);
+
   @include link-decoration;
 
   &:hover {
     color: var(--pst-color-link-hover);
+
     @include link-decoration-hover;
   }
 
@@ -82,15 +91,17 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   // Visited should still be hoverable
   &:visited {
     color: var(--pst-color-link);
+
     &:hover {
       color: var(--pst-color-link-hover);
     }
   }
+
   @include focus-indicator;
 }
 
 // Text link styles
-//
+
 // Makes links use the muted text colour and removes the underline.
 // Use this mixin for navigation bar links.
 @mixin link-style-text {
@@ -99,14 +110,16 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 
   &:hover {
     color: var(--pst-color-link-hover);
+
     @include link-decoration;
     @include link-decoration-hover;
   }
+
   @include focus-indicator;
 }
 
 // Sidebar and TOC links
-//
+
 // Makes links use the muted text colour and removes the underline.
 // Use this mixin for navigation the primary sidebar and table of contents.
 // Active and hover should work together rather than one overriding the other.
@@ -118,6 +131,7 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     text-decoration: underline;
     background-color: transparent;
     color: var(--pst-color-link-hover);
+
     @include link-decoration-hover;
   }
 
@@ -128,7 +142,7 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 }
 
 // Sidebar current page link styles
-//
+
 // Adds a vertical line on the left hand side of the link to indicate that
 // it's the current page. Note this is distinct from an active state.
 // Used on the primary sidebar and the TOC.
@@ -136,23 +150,25 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 @mixin link-sidebar-current {
   font-weight: 600;
   color: var(--pst-color-primary);
+
   @if $link-hover-decoration-thickness {
     box-shadow: inset
       $link-hover-decoration-thickness
-      0px
-      0px
+      0
+      0
       var(--pst-color-primary);
   }
 }
 
 // Navigation bar current page link styles
-//
+
 // Adds a bottom underline, this leaves enough space for the hover state without
 // cluttering the navbar.
 // We want the side box shadow to have the same thickness as the hover underline
 @mixin link-navbar-current {
   font-weight: 600;
   color: var(--pst-color-primary);
+
   @if $link-hover-decoration-thickness {
     border-bottom: $link-hover-decoration-thickness
       solid
@@ -161,16 +177,17 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 }
 
 // Navigation bar icon links hover styles
-//
+
 // Adds a bottom box-shadow - since there is no text we cannot use text-decoration
 // We want the side box shadow to have the same thickness as the hover underline
 @mixin icon-navbar-hover {
   &:hover {
     color: var(--pst-color-link-hover);
+
     @if $link-hover-decoration-thickness {
-      box-shadow: 0px
+      box-shadow: 0
         $link-hover-decoration-thickness
-        0px
+        0
         var(--pst-color-link-hover);
     }
   }

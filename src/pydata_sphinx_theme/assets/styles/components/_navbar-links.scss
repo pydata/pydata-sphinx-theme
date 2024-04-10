@@ -23,6 +23,7 @@
       height: 100%;
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
+
       @include link-style-text;
     }
   }
@@ -34,22 +35,23 @@
   .toctree-checkbox {
     position: absolute;
     display: none;
-  }
 
-  .toctree-checkbox {
     ~ ul {
       display: none;
     }
+
     ~ label .fa-chevron-down {
       transform: rotate(0deg);
     }
-  }
-  .toctree-checkbox:checked {
-    ~ ul {
-      display: block;
-    }
-    ~ label .fa-chevron-down {
-      transform: rotate(180deg);
+
+    &:checked {
+      ~ ul {
+        display: block;
+      }
+
+      ~ label .fa-chevron-down {
+        transform: rotate(180deg);
+      }
     }
   }
 }

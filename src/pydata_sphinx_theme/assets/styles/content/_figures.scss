@@ -4,6 +4,7 @@ figure {
     position: absolute;
     font-size: inherit;
   }
+
   // Default headerlink hover doesn't trigger on figures
   &:hover a.headerlink {
     visibility: visible;

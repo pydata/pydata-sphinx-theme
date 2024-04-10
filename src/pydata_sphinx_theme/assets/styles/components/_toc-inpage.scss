@@ -1,4 +1,5 @@
 /* Collapsing of the TOC sidebar while scrolling */
+
 /* Nav: hide second level (shown on .active) */
 
 nav.page-toc {
@@ -25,6 +26,7 @@ nav.page-toc {
 // Each entry of the in-page TOC
 .toc-entry {
   display: block;
+
   a > code {
     color: var(--pst-color-text-muted);
   }
@@ -41,6 +43,7 @@ nav.page-toc {
 
     &.active {
       @include link-sidebar-current;
+
       background-color: transparent;
 
       &:hover {

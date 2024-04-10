@@ -8,6 +8,7 @@
 @use "../variables/color" as pst-color;
 @use "sass:meta";
 @use "sass:color";
+@use "sass:map";
 
 /*******************************************************************************
   * Color and variables
@@ -60,21 +61,24 @@ $extra-semantic-colors: (
   "dark": $foundation-dark-gray,
   "black": $foundation-black,
 );
-
-$all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
+$all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
 
 @mixin create-sd-colors($value, $name) {
   // define the pst variables, so that downstream user overrides will work
   --pst-color-#{$name}: #{$value};
+
   // we are now using a11y-combination to calculate the text color - this is based
   // on the WCAG color contrast guidelines
   --pst-color-#{$name}-text: #{a11y-combination($value)};
-  //TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
-  --pst-color-#{$name}-highlight: #{darken($value, 15%)};
+
+  // TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
+  --pst-color-#{$name}-highlight: #{color.adjust($value, $lightness: -15%)};
+
   // override the sphinx-design variables
   --sd-color-#{$name}: var(--pst-color-#{$name});
   --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
-  //TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
+
+  // TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
   --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
 }
 
@@ -83,27 +87,32 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
   html[data-theme="#{$mode}"] {
     // check if this color is defined differently for light/dark
     @each $name in $sd-semantic-color-names {
-      $definition: map-get($all-colors, $name);
+      $definition: map.get($all-colors, $name);
+
       @if type-of($definition) == map {
         @each $key, $value in $definition {
-          @if str-index($key, $mode) != null {
+          @if str-index($key, $mode) {
             // since now we define the bg colours in the semantic colours and not
             // by changing opacity, we need to check if the key contains bg and the
             // correct mode (light/dark)
-            @if str-index($key, "bg") != null {
+            @if str-index($key, "bg") {
               --sd-color-#{$name}-bg: #{$value};
+
               // create local variable
-              $bg-var: --sd-color-#{$name}-bg;
+              $bg-var: var(--sd-color-#{$name}-bg);
               $value: check-color($value);
+
               --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
             } @else {
               $value: check-color($value);
+
               @include create-sd-colors($value, $name);
             }
           }
         }
       } @else {
-        $value: map-get($all-colors, $name);
+        $value: map.get($all-colors, $name);
+
         @include create-sd-colors($value, $name);
       }
     }
@@ -125,7 +134,7 @@ html[data-theme="light"] {
   .sd-shadow-sm,
   .sd-shadow-md,
   .sd-shadow-lg {
-    @include box-shadow();
+    @include box-shadow;
   }
 }
 
@@ -141,6 +150,7 @@ html[data-theme="light"] {
     background-color: var(--pst-color-panel-background);
     border-bottom: 1px solid var(--pst-color-border);
   }
+
   .sd-card-footer {
     background-color: var(--pst-color-panel-background);
     border-top: 1px solid var(--pst-color-border);
@@ -150,6 +160,7 @@ html[data-theme="light"] {
     background-color: var(--pst-color-panel-background);
   }
 }
+
 /*******************************************************************************
   * tabs
   */
@@ -188,18 +199,14 @@ html[data-theme="light"] {
 
 details.sd-dropdown {
   // Remove all borders to over-ride SD behavior, and we'll add our own later
-  border: 0px !important;
-  summary.sd-card-header {
-    border: 0 !important;
-    & + div.sd-summary-content {
-      border: 0;
-    }
-  }
+  border: 0 !important;
+
   // Drop shadow should behave same as admonitions
-  @include box-shadow();
+  @include box-shadow;
 
   // Header is where the "clickable" box goes
   summary.sd-card-header {
+    border: 0 !important;
     display: flex;
     align-items: center;
     position: relative; // So background color works
@@ -212,13 +219,18 @@ details.sd-dropdown {
     // so that it is defined in both places
     --pst-sd-dropdown-color: var(--pst-gray-500);
     --pst-sd-dropdown-bg-color: var(--pst-color-surface);
+
     & + div.sd-summary-content {
+      border: 0;
+
       --pst-sd-dropdown-color: var(--sd-color-card-border);
     }
+
     @each $name in $sd-semantic-color-names {
       &.sd-bg-#{$name} {
         --pst-sd-dropdown-color: var(--sd-color-#{$name});
         --pst-sd-dropdown-bg-color: var(--sd-color-#{$name}-bg);
+
         // Otherwise it won't be defined in the sibling element
         & + div.sd-summary-content {
           --pst-sd-dropdown-color: var(--sd-color-#{$name});
@@ -232,19 +244,24 @@ details.sd-dropdown {
     }
 
     @include legacy-backdrop-placeholder;
+
     background-color: var(--pst-sd-dropdown-bg-color) !important;
 
     // Add a left border with the same structure as our admonitions
     border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
+
+    // stylelint-disable-next-line no-duplicate-selectors
     & + div.sd-summary-content {
       border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
       border-bottom-left-radius: calc(0.25rem - 1px);
       background-color: var(--pst-color-on-background);
     }
+
     span.sd-summary-icon {
       display: inline-flex;
       align-items: center;
       color: var(--pst-sd-dropdown-color) !important;
+
       svg {
         opacity: 1;
       }

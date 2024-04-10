@@ -3,17 +3,19 @@
  * Admonitions CSS originally inspired by https://squidfunk.github.io/mkdocs-material/getting-started/
  */
 $admonition-border-radius: 0.25rem;
+
 div.admonition,
 .admonition {
   margin: 1.5625em auto;
-  padding: 0 0.6rem 0.8rem 0.6rem;
+  padding: 0 0.6rem 0.8rem;
   overflow: hidden;
   page-break-inside: avoid;
   border-left: 0.2rem solid;
   border-color: var(--pst-color-info);
   border-radius: $admonition-border-radius;
   background-color: var(--pst-color-on-background);
-  @include box-shadow();
+
+  @include box-shadow;
 
   // Last item should have no spacing since we'll control that w/ padding
   *:last-child {
@@ -38,12 +40,15 @@ div.admonition,
     padding: 0.4rem 0.6rem 0.4rem 2rem;
     font-weight: var(--pst-admonition-font-weight-heading);
     position: relative;
+
     @include legacy-backdrop-placeholder;
+
     background-color: var(--pst-color-info-bg);
+
     // now that we use solid colors we want the title on top
     z-index: 1;
 
-    &:after {
+    &::after {
       position: absolute;
       left: 0.5rem;
       width: 1rem;
@@ -63,10 +68,11 @@ div.admonition,
 
   &.attention {
     border-color: var(--pst-color-attention);
+
     > .admonition-title {
       background-color: var(--pst-color-attention-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-attention);
         content: var(--pst-icon-admonition-attention);
       }
@@ -75,10 +81,11 @@ div.admonition,
 
   &.caution {
     border-color: var(--pst-color-warning);
+
     > .admonition-title {
       background-color: var(--pst-color-warning-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-warning);
         content: var(--pst-icon-admonition-caution);
       }
@@ -87,10 +94,11 @@ div.admonition,
 
   &.warning {
     border-color: var(--pst-color-warning);
+
     > .admonition-title {
       background-color: var(--pst-color-warning-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-warning);
         content: var(--pst-icon-admonition-warning);
       }
@@ -99,10 +107,11 @@ div.admonition,
 
   &.danger {
     border-color: var(--pst-color-danger);
+
     > .admonition-title {
       background-color: var(--pst-color-danger-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-danger);
         content: var(--pst-icon-admonition-danger);
       }
@@ -111,10 +120,11 @@ div.admonition,
 
   &.error {
     border-color: var(--pst-color-danger);
+
     > .admonition-title {
       background-color: var(--pst-color-danger-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-danger);
         content: var(--pst-icon-admonition-error);
       }
@@ -123,10 +133,11 @@ div.admonition,
 
   &.hint {
     border-color: var(--pst-color-success);
+
     > .admonition-title {
       background-color: var(--pst-color-success-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-success);
         content: var(--pst-icon-admonition-hint);
       }
@@ -135,10 +146,11 @@ div.admonition,
 
   &.tip {
     border-color: var(--pst-color-success);
+
     > .admonition-title {
       background-color: var(--pst-color-success-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-success);
         content: var(--pst-icon-admonition-tip);
       }
@@ -147,10 +159,11 @@ div.admonition,
 
   &.important {
     border-color: var(--pst-color-attention);
+
     > .admonition-title {
       background-color: var(--pst-color-attention-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-attention);
         content: var(--pst-icon-admonition-important);
       }
@@ -159,10 +172,11 @@ div.admonition,
 
   &.note {
     border-color: var(--pst-color-info);
+
     > .admonition-title {
       background-color: var(--pst-color-info-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-info);
         content: var(--pst-icon-admonition-note);
       }
@@ -171,10 +185,11 @@ div.admonition,
 
   &.seealso {
     border-color: var(--pst-color-success);
+
     > .admonition-title {
       background-color: var(--pst-color-success-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-success);
         content: var(--pst-icon-admonition-seealso);
       }
@@ -183,10 +198,11 @@ div.admonition,
 
   &.admonition-todo {
     border-color: var(--pst-color-secondary);
+
     > .admonition-title {
       background-color: var(--pst-color-secondary-bg);
 
-      &:after {
+      &::after {
         color: var(--pst-color-secondary);
         content: var(--pst-icon-admonition-todo);
       }
@@ -237,8 +253,8 @@ div.admonition,
 
     // No inner margin since we have less horizontal space w/ the sidebar
     p.admonition-title ~ * {
-      margin-left: 0rem;
-      margin-right: 0rem;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }
@@ -262,10 +278,11 @@ aside.topic {
   border-color: var(--pst-color-border);
   border-radius: $admonition-border-radius;
   padding: 1rem 1.25rem;
-  @include box-shadow();
+
+  @include box-shadow;
 
   .topic-title {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.5rem;
   }
 
   // Over-ride text color to ensure enough contrast
@@ -291,9 +308,11 @@ aside.sidebar {
   border: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-surface);
   border-radius: $admonition-border-radius;
+
   // to match the admonition-styled sidebars:
   margin-left: 0.5rem;
   padding: 0;
+
   > *:last-child {
     padding-bottom: 1rem;
   }

@@ -18,15 +18,13 @@ html .jp-RenderedHTMLCommon {
 }
 
 // Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  .nboutput {
-    .output_area.rendered_html {
-      @include cell-output-background;
-    }
+html[data-theme="dark"] .bd-content .nboutput {
+  .output_area.rendered_html {
+    @include cell-output-background;
+  }
 
-    .output_area.stderr {
-      background: var(--pst-color-danger);
-    }
+  .output_area.stderr {
+    background: var(--pst-color-danger);
   }
 }
 
@@ -45,12 +43,10 @@ div.cell_output .output {
 }
 
 // Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  div.cell_output {
-    img,
-    .text_html {
-      @include cell-output-background;
-    }
+html[data-theme="dark"] .bd-content div.cell_output {
+  img,
+  .text_html {
+    @include cell-output-background;
   }
 }
 
