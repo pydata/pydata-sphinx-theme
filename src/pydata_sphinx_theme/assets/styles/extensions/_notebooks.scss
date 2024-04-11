@@ -8,20 +8,20 @@
 
 @mixin pandas-data-table {
   table.dataframe {
-    color: var(--pst-color-table-text);
-    border: 1px solid var(--pst-color-surface);
+    color: var(--pst-color-data-table);
+    border: 1px solid var(--pst-color-data-table-outer-border);
 
     th,
     td {
       ~ th,
       ~ td {
-        border-left: 1px solid var(--pst-color-table-internal-border);
+        border-left: 1px solid var(--pst-color-data-table-inner-border);
       }
     }
 
     thead {
       tr {
-        background-color: var(--pst-color-table-heading-bg);
+        background-color: var(--pst-color-data-table-heading-bg);
         border-bottom: 2px solid var(--pst-color-primary);
       }
     }
@@ -29,13 +29,13 @@
     tbody {
       tr {
         &:nth-child(odd) {
-          background-color: var(--pst-color-table-row-zebra-1-bg);
+          background-color: var(--pst-color-data-table-row-zebra-high-bg);
         }
         &:nth-child(even) {
-          background-color: var(--pst-color-table-row-zebra-2-bg);
+          background-color: var(--pst-color-data-table-row-zebra-low-bg);
         }
         &:hover {
-          background-color: var(--pst-color-table-row-hover-bg);
+          background-color: var(--pst-color-data-table-row-hover-bg);
         }
       }
     }
