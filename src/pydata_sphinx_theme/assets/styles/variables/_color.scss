@@ -211,6 +211,10 @@ $pst-semantic-colors: (
     "bg-light": #{map-deep-get($color-palette, "violet", "300")},
     "bg-dark": #{map-deep-get($color-palette, "violet", "600")},
   ),
+  "table-internal-border": (
+    "light": #{map-deep-get($color-palette, "gray", "200")},
+    "dark": #364150,
+  ),
   // DEPTH COLORS - you can see the elevation colours and shades
   // in the Figma file https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1492%3A922&t=sQeQZehkOzposYEg-1
   // background: color of the canvas / the furthest back layer

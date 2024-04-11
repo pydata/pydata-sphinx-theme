@@ -9,6 +9,15 @@
 @mixin pandas-data-table {
   table.dataframe {
     color: var(--pst-color-table-text);
+    border: 1px solid var(--pst-color-surface);
+
+    th,
+    td {
+      ~ th,
+      ~ td {
+        border-left: 1px solid var(--pst-color-table-internal-border);
+      }
+    }
 
     thead {
       tr {
@@ -84,10 +93,9 @@ div.cell_output .output {
 
   html[data-theme="dark"] & {
     img,
-    .text_html {
-      &:not(:has(table.dataframe)) {
-        @include cell-output-background;
-      }
+    .text_html:not(:has(table.dataframe)),
+    .widget-subarea {
+      @include cell-output-background;
     }
   }
 }
