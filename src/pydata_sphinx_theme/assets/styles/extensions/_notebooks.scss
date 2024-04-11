@@ -6,6 +6,33 @@
  * In the future, we might add dark theme support for specific packages.
  */
 
+@mixin pandas-data-table {
+  table.dataframe {
+    color: var(--pst-color-table-text);
+
+    thead {
+      tr {
+        background-color: var(--pst-color-table-heading-bg);
+        border-bottom: 2px solid var(--pst-color-primary);
+      }
+    }
+
+    tbody {
+      tr {
+        &:nth-child(odd) {
+          background-color: var(--pst-color-table-row-zebra-1-bg);
+        }
+        &:nth-child(even) {
+          background-color: var(--pst-color-table-row-zebra-2-bg);
+        }
+        &:hover {
+          background-color: var(--pst-color-table-row-hover-bg);
+        }
+      }
+    }
+  }
+}
+
 /*******************************************************************************
  * nbsphinx
  */
@@ -17,21 +44,23 @@ html .jp-RenderedHTMLCommon {
   }
 }
 
-// Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  .nboutput {
-    .output_area.rendered_html {
-      @include cell-output-background;
-
-      // Change the background color of data table outputs to blend seamlessly
-      // with the site's background
-      &:has(table.dataframe) {
-        background-color: var(--pst-color-background);
-      }
+.bd-content .nboutput {
+  .output_area {
+    &.rendered_html,
+    .jp-RenderedHTMLCommon {
+      @include pandas-data-table;
     }
 
-    .output_area.stderr {
-      background: var(--pst-color-danger);
+    // Dark theme special-cases
+    html[data-theme="dark"] & {
+      &.rendered_html:not(:has(table.dataframe)),
+      .widget-subarea {
+        @include cell-output-background;
+      }
+
+      &.stderr {
+        background: var(--pst-color-danger);
+      }
     }
   }
 }
@@ -50,12 +79,15 @@ div.cell_output .output {
   overflow-x: auto;
 }
 
-// Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  div.cell_output {
+.bd-content div.cell_output {
+  @include pandas-data-table;
+
+  html[data-theme="dark"] & {
     img,
     .text_html {
-      @include cell-output-background;
+      &:not(:has(table.dataframe)) {
+        @include cell-output-background;
+      }
     }
   }
 }
@@ -76,38 +108,6 @@ html[data-theme="dark"] .bd-content {
   div.output {
     table {
       table-layout: auto;
-    }
-  }
-}
-
-/*******************************************************************************
- * pandas
- */
-
-// Re-style Pandas data tables
-.nboutput .output_area.rendered_html table.dataframe {
-  // ^ Need to use this long selector in order to override library CSS rules
-
-  color: var(--pst-color-table-text);
-
-  thead {
-    tr {
-      background-color: var(--pst-color-table-heading-bg);
-      border-bottom: 2px solid var(--pst-color-primary);
-    }
-  }
-
-  tbody {
-    tr {
-      &:nth-child(odd) {
-        background-color: var(--pst-color-table-row-zebra-1-bg);
-      }
-      &:nth-child(even) {
-        background-color: var(--pst-color-table-row-zebra-2-bg);
-      }
-      &:hover {
-        background-color: var(--pst-color-table-row-hover-bg);
-      }
     }
   }
 }
