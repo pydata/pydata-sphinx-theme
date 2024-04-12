@@ -157,6 +157,12 @@ html_theme_options = {
             "type": "local",
             "attributes": {"target": "_blank"},
         },
+        {
+            "name": "News",
+            "url": "https://biotite.bsky.social",
+            "icon": "fa-brands fa-bluesky",
+            "type": "fontawesome",
+        },
     ],
     # alternative way to set twitter and github header icons
     # "github_url": "https://github.com/pydata/pydata-sphinx-theme",
