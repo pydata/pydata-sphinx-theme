@@ -15,7 +15,7 @@ body {
 
   // hack to avoid the black background on some browser including Safari
   &::-webkit-scrollbar-track {
-    background: var(--pst-color-background);
+    background-color: var(--pst-color-background);
   }
 }
 

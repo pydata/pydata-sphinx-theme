@@ -142,7 +142,7 @@
     align-items: center;
 
     &:hover {
-      background: var(--pst-color-surface);
+      background-color: var(--pst-color-surface);
     }
 
     i {
@@ -158,7 +158,7 @@
     width: 100%;
     height: 100%;
     &:hover {
-      background: none;
+      background-color: none;
     }
     i {
       width: 30px;
