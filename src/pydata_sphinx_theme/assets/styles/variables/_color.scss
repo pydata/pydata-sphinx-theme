@@ -289,7 +289,7 @@ $pst-semantic-colors: (
     *  which case assume they're already optimized for dark mode).
     */
     .bd-content img:not(.only-dark):not(.dark-light) {
-      background: rgb(255, 255, 255);
+      background-color: rgb(255, 255, 255);
       border-radius: 0.25rem;
     }
     // MathJax SVG outputs should be filled to same color as text.
