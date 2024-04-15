@@ -2,7 +2,7 @@
 
 from functools import cache
 from itertools import count
-from typing import Iterator, List, Union
+from typing import Iterator, List, Tuple, Union
 from urllib.parse import urlparse
 
 import sphinx
@@ -101,8 +101,18 @@ def add_toctree_functions(
         return next(get_or_create_id_generator(base_id))
 
     @cache
-    def generate_header_nav_before_dropdown(n_links_before_dropdown):
-        """The cacheable part."""
+    def generate_header_nav_before_dropdown(
+        n_links_before_dropdown,
+    ) -> Tuple[str, List[str]]:
+        """Return html for navbar and dropdown.
+
+        Given the number of links before the dropdown, return the html for the navbar,
+        as well as the list of links to put in a dropdown.
+
+        Returns:
+            - HTML str for the navbar
+            - list of HTML str for the dropdown
+        """
         try:
             n_links_before_dropdown = int(n_links_before_dropdown)
         except Exception:
