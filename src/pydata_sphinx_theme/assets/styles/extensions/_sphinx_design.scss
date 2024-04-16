@@ -149,6 +149,22 @@ html[data-theme="light"] {
   .sd-card-body {
     background-color: var(--pst-color-panel-background);
   }
+
+  // Focus ring for link-cards
+  .sd-stretched-link:focus-visible {
+    // Don't put the focus ring on the <a> element (it has zero height in Sphinx Design cards)
+    outline: none;
+
+    // Put the focus ring on the <a> element's ::after pseudo-element
+    &:after {
+      outline: $focus-ring-outline;
+      border-radius: 0.25rem; // copied from Sphinx Design CSS for .sd-card
+    }
+  }
+
+  &.sd-card-hover:hover {
+    border-color: var(--pst-color-link-hover);
+  }
 }
 /*******************************************************************************
   * tabs
@@ -158,27 +174,52 @@ html[data-theme="light"] {
   > input {
     // Active tab label
     &:checked + label {
-      border-color: transparent transparent var(--pst-color-primary); // top LR bottom
+      border-style: solid solid none;
+      border-color: var(--pst-color-primary) var(--pst-color-primary)
+        transparent; // top LR bottom
+      border-width: 0.125rem 0.125rem 0;
+      border-radius: 0.125rem 0.125rem 0 0;
+      background-color: var(--pst-color-on-background);
+      transform: translateY(0.125rem);
       color: var(--pst-color-primary);
     }
 
+    &:focus-visible + label {
+      border: 0.125rem solid var(--pst-color-accent);
+      border-radius: 0.125rem;
+      background-color: var(--pst-color-accent-bg);
+      color: var(--pst-color-on-surface);
+    }
+
     // Hover label
-    &:not(:checked) + label:hover {
-      border-color: var(--pst-color-secondary);
+    &:not(:checked):not(:focus-visible) + label:hover {
+      border-color: transparent;
       color: var(--pst-color-secondary);
     }
   }
 
   // Tab label
   > label {
-    color: var(--pst-color-text-muted);
-    border-top: 0.125rem solid transparent; // so hover isn't just color change
-    padding-top: 0.5em; // same as bottom padding, so hover overline looks OK
-    // Hovered label
-    html &:hover {
-      color: var(--pst-color-secondary);
-      border-color: var(--pst-color-secondary);
+    color: var(--pst-color-on-surface);
+    border: 0.125rem solid transparent;
+    border-radius: 0.125rem 0.125rem 0px 0px;
+    background-color: var(--pst-color-surface);
+    padding: 0 0.75em;
+    margin-inline-end: 0.25rem;
+    line-height: 1.95;
+
+    html[data-theme="dark"] & {
+      background-color: var(--pst-color-on-background);
     }
+  }
+
+  // panel
+  .sd-tab-content {
+    border: 0.125rem solid var(--pst-color-primary);
+    border-radius: 0.1875rem;
+    box-shadow: unset;
+    padding: 0.625rem;
+    background-color: var(--pst-color-on-background);
   }
 }
 
@@ -254,6 +295,44 @@ details.sd-dropdown {
     .sd-summary-up,
     .sd-summary-down {
       top: 0.7rem;
+    }
+
+    // Focus ring
+    &:focus-visible {
+      outline: $focus-ring-outline;
+      outline-offset: -$focus-ring-width;
+    }
+  }
+}
+
+/*******************************************************************************
+* Buttons (which in Sphinx Design are actually links that look like buttons)
+* ref: https://sphinx-design.readthedocs.io/en/pydata-theme/badges_buttons.html#buttons
+*/
+html {
+  .sd-btn {
+    min-width: 2.25rem;
+    padding: 0.3125rem 0.75rem 0.4375rem; // 5px 12px 7px
+
+    @include link-style-hover; // override Sphinx Design
+    &:hover {
+      text-decoration-thickness: 1px;
+    }
+  }
+
+  @each $name in $sd-semantic-color-names {
+    .sd-btn-#{$name},
+    .sd-btn-outline-#{$name} {
+      &:focus-visible {
+        // Override Sphinx Design's use of -highlight colors. The -highlight
+        // colors are 15% darker, so this would create the effect of darkening
+        // the button when focused but we just want the button to have a focus
+        // ring of the same (non-highlight) color.
+        background-color: var(--sd-color-#{$name}) !important;
+        border-color: var(--sd-color-#{$name}) !important;
+        outline: var(--sd-color-#{$name}) solid $focus-ring-width;
+        outline-offset: $focus-ring-width;
+      }
     }
   }
 }

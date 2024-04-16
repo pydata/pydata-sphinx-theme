@@ -28,6 +28,10 @@
     padding-right: 1rem;
   }
 
+  :focus-visible {
+    border-radius: $focus-ring-radius;
+  }
+
   // These items will define the height of the header
   .navbar-item {
     height: var(--pst-header-height);
@@ -80,26 +84,33 @@
 
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       // Center align on wide screens so the dropdown button is centered properly
-      align-items: center;
+      align-items: baseline;
     }
 
-    li a.nav-link {
+    li.pst-header-nav-item {
+      margin-inline: 2px; // breathing room so hover and focus styles do not overlap
+      &.dropdown {
+        margin-inline: 4px;
+        button {
+          padding-inline: 8px;
+        }
+      }
+      a {
+        padding-inline: 6px;
+      }
+      @include header-link;
+    }
+
+    li a.nav-link.dropdown-item {
       @include link-style-text;
-    }
-
-    // Current page is always underlined in the navbar
-    > .current > .nav-link {
-      @include link-navbar-current;
     }
 
     // Dropdowns for the extra links
     .dropdown {
       button {
         display: unset;
-        color: var(--pst-color-text-muted);
         border: none;
         @include link-style-hover;
-        @include focus-indicator;
       }
 
       .dropdown-menu {
@@ -119,6 +130,10 @@
           // Override Bootstrap
           &:focus:not(:hover):not(:active) {
             background-color: inherit;
+          }
+
+          &:focus-visible {
+            z-index: 10; // keep focus ring on top (prevent the hover background of the next dropdown item from covering the ring)
           }
         }
 
@@ -164,8 +179,8 @@
 
 // Hide the header items on mobile
 .bd-header {
-  // Toggle labels
-  label {
+  // Toggle buttons
+  button {
     &.sidebar-toggle {
       display: flex;
       cursor: pointer;
@@ -174,6 +189,10 @@
       color: var(--pst-color-muted);
       margin-bottom: 0;
       padding-bottom: 0.25rem;
+      background-color: inherit;
+      border: none;
+
+      @include icon-navbar-hover;
     }
 
     &.primary-toggle {
@@ -189,8 +208,6 @@
         display: none;
       }
     }
-    @include icon-navbar-hover;
-    @include focus-indicator;
   }
 
   // Hide the navbar header items on mobile because they're in the sidebar
