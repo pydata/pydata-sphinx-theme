@@ -13,7 +13,7 @@
   z-index: $zindex-fixed;
 
   // Overrides bootstrap
-  background: var(--pst-color-on-background) !important;
+  background-color: var(--pst-color-on-background) !important;
   box-shadow: 0 0.125rem 0.25rem 0 var(--pst-color-shadow);
 
   width: 100%;
