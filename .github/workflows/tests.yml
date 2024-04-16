@@ -83,7 +83,7 @@ jobs:
         shell: bash
         # setting shell to BASH and using PYTHONUTF8 env var makes the editable
         # install work on Windows even though there are emoji in our README
-        run: tools/github_actions_install.sh test
+        run: ./tools/github_actions_install.sh test
       - name: Show installed versions
         run: python -m pip list
       - name: Compile MO files
