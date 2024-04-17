@@ -4,8 +4,8 @@
 # ($2) is an extra dependency (currently just nox on one run)
 set -eo pipefail
 export PYTHONUTF8=1
-if [[ "$SPHINX_VERSION" == "" ]]; then
-    SPHINX_INSTALL=""
+if [[ "$SPHINX_VERSION" == "rls" ]]; then
+    SPHINX_INSTALL="sphinx[test]"
 elif [[ "$SPHINX_VERSION" == "dev" ]]; then
     SPHINX_INSTALL="sphinx[test]@https://codeload.github.com/sphinx-doc/sphinx/zip/refs/heads/master"
 elif [[ "$SPHINX_VERSION" == "old" ]]; then
