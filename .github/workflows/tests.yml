@@ -50,9 +50,11 @@ jobs:
           # macos test
           - os: macos-latest
             python-version: "3.12"
+            sphinx-version: "rls"
           # windows test
           - os: windows-latest
             python-version: "3.12"
+            sphinx-version: "rls"
           # old Sphinx test
           - os: ubuntu-latest
             python-version: "3.9"

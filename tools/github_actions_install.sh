@@ -10,8 +10,8 @@ elif [[ "$SPHINX_VERSION" == "dev" ]]; then
     SPHINX_INSTALL="sphinx[test]@https://codeload.github.com/sphinx-doc/sphinx/zip/refs/heads/master"
 elif [[ "$SPHINX_VERSION" == "old" ]]; then
     SPHINX_INSTALL="sphinx[test]==6.1.0"
-else  # not used currently but easy enough
-    SPHINX_INSTALL="sphinx[test]==$SPHINX_VERSION"
+else  # for the "build site" jobs
+    SPHINX_INSTALL="sphinx"
 fi
 set -x  # print commands
 python -m pip install --upgrade pip wheel setuptools
