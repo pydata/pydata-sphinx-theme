@@ -11,7 +11,7 @@ elif [[ "$SPHINX_VERSION" == "dev" ]]; then
 elif [[ "$SPHINX_VERSION" == "old" ]]; then
     SPHINX_INSTALL="sphinx[test]==6.1.0"
 else  # for the "build site" jobs
-    SPHINX_INSTALL='"sphinx<7.3"'
+    SPHINX_INSTALL="sphinx<7.3"
 fi
 set -x  # print commands
 python -m pip install --upgrade pip wheel setuptools
