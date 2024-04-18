@@ -20,7 +20,8 @@ dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-  "sphinx>=5.0",
+  # pinning until Ablog is compatible with Sphinx 7.3
+  "sphinx<7.3",
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
