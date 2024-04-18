@@ -203,15 +203,15 @@ $pst-semantic-colors: (
     "light": #f3cf95,
     "dark": #675c04,
   ),
-  "data-table": (
+  "table": (
     "light": #{map-deep-get($color-palette, "foundation", "black")},
     "dark": #{map-deep-get($color-palette, "foundation", "white")},
   ),
-  "data-table-row-hover": (
+  "table-row-hover": (
     "bg-light": #{map-deep-get($color-palette, "violet", "300")},
     "bg-dark": #{map-deep-get($color-palette, "violet", "600")},
   ),
-  "data-table-inner-border": (
+  "table-inner-border": (
     "light": #{map-deep-get($color-palette, "gray", "200")},
     "dark": #364150,
   ),
@@ -277,10 +277,10 @@ $pst-semantic-colors: (
   & {
     --pst-color-link: var(--pst-color-primary);
     --pst-color-link-hover: var(--pst-color-secondary);
-    --pst-color-data-table-outer-border: var(--pst-color-surface);
-    --pst-color-data-table-heading-bg: var(--pst-color-surface);
-    --pst-color-data-table-row-zebra-high-bg: var(--pst-color-on-background);
-    --pst-color-data-table-row-zebra-low-bg: var(--pst-color-surface);
+    --pst-color-table-outer-border: var(--pst-color-surface);
+    --pst-color-table-heading-bg: var(--pst-color-surface);
+    --pst-color-table-row-zebra-high-bg: var(--pst-color-on-background);
+    --pst-color-table-row-zebra-low-bg: var(--pst-color-surface);
   }
   // adapt to light/dark-specific content
   @if $mode == "light" {

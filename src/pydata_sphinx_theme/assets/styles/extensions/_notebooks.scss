@@ -6,42 +6,6 @@
  * In the future, we might add dark theme support for specific packages.
  */
 
-@mixin pandas-data-table {
-  table.dataframe {
-    color: var(--pst-color-data-table);
-    border: 1px solid var(--pst-color-data-table-outer-border);
-
-    th,
-    td {
-      ~ th,
-      ~ td {
-        border-left: 1px solid var(--pst-color-data-table-inner-border);
-      }
-    }
-
-    thead {
-      tr {
-        background-color: var(--pst-color-data-table-heading-bg);
-        border-bottom: 2px solid var(--pst-color-primary);
-      }
-    }
-
-    tbody {
-      tr {
-        &:nth-child(odd) {
-          background-color: var(--pst-color-data-table-row-zebra-high-bg);
-        }
-        &:nth-child(even) {
-          background-color: var(--pst-color-data-table-row-zebra-low-bg);
-        }
-        &:hover {
-          background-color: var(--pst-color-data-table-row-hover-bg);
-        }
-      }
-    }
-  }
-}
-
 /*******************************************************************************
  * nbsphinx
  */
@@ -57,7 +21,10 @@ html .jp-RenderedHTMLCommon {
   .output_area {
     &.rendered_html,
     .jp-RenderedHTMLCommon {
-      @include pandas-data-table;
+      // pandas
+      table.dataframe {
+        @include table-colors;
+      }
     }
 
     // Dark theme special-cases
@@ -89,7 +56,10 @@ div.cell_output .output {
 }
 
 .bd-content div.cell_output {
-  @include pandas-data-table;
+  // pandas
+  table.dataframe {
+    @include table-colors;
+  }
 
   html[data-theme="dark"] & {
     img,

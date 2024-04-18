@@ -20,3 +20,37 @@
   border-radius: 0.25rem;
   padding: 0.5rem;
 }
+
+@mixin table-colors {
+  color: var(--pst-color-table);
+  border: 1px solid var(--pst-color-table-outer-border);
+
+  th,
+  td {
+    ~ th,
+    ~ td {
+      border-left: 1px solid var(--pst-color-table-inner-border);
+    }
+  }
+
+  thead {
+    tr {
+      background-color: var(--pst-color-table-heading-bg);
+      border-bottom: 2px solid var(--pst-color-primary);
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: var(--pst-color-table-row-zebra-low-bg);
+      }
+      &:nth-child(even) {
+        background-color: var(--pst-color-table-row-zebra-high-bg);
+      }
+      &:hover {
+        background-color: var(--pst-color-table-row-hover-bg);
+      }
+    }
+  }
+}
