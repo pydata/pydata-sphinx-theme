@@ -692,6 +692,29 @@ function setupMobileSidebarKeyboardHandlers() {
   });
 }
 
+/**
+ * When the page loads or the window resizes check all elements with
+ * [data-tabindex="0"], and if they have scrollable overflow, set tabIndex = 0.
+ */
+function setupLiteralBlockTabStops() {
+  const updateTabStops = () => {
+    document.querySelectorAll('[data-tabindex="0"]').forEach((el) => {
+      el.tabIndex = el.scrollWidth > el.clientWidth ? 0 : -1;
+    });
+  };
+  window.addEventListener("resize", debounce(updateTabStops, 300));
+  updateTabStops();
+}
+function debounce(callback, wait) {
+  let timeoutId = null;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
+}
+
 /*******************************************************************************
  * Call functions after document loading.
  */
@@ -703,3 +726,4 @@ documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
 documentReady(fixMoreLinksInMobileSidebar);
+documentReady(setupLiteralBlockTabStops);
