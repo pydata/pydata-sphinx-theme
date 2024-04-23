@@ -1,7 +1,9 @@
 """Methods to build the toctree used in the html pages."""
 
+from dataclasses import dataclass
 from functools import cache
 from itertools import count
+from textwrap import dedent
 from typing import Iterator, List, Tuple, Union
 from urllib.parse import urlparse
 
@@ -49,6 +51,16 @@ def _get_ancestor_pagename(app: Sphinx, pagename: str, startdepth: int) -> str:
         # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
         out = None
     return out, toctree
+
+
+@dataclass
+class LinkInfo:
+    """Dataclass to generate toctree data."""
+
+    is_current: bool
+    href: str
+    title: str
+    is_external: bool
 
 
 def add_toctree_functions(
@@ -133,14 +145,14 @@ def add_toctree_functions(
             # NOTE: `env.toctree_includes` is a dict mapping pagenames to any (possibly
             # hidden) TocTree directives on that page (i.e., the "child" pages nested
             # under `pagename`).
-            active_header_page = [
-                *_get_toctree_ancestors(app.env.toctree_includes, pagename)
-            ]
+            header_pages = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
         else:
-            active_header_page = toctree.get_toctree_ancestors(pagename)
-        if active_header_page:
+            header_pages = toctree.get_toctree_ancestors(pagename)
+        if header_pages:
             # The final list item will be the top-most ancestor
-            active_header_page = active_header_page[-1]
+            active_header_page = header_pages[-1]
+        else:
+            active_header_page = None
 
         # NOTE: `env.tocs` is a dict mapping pagenames to hierarchical bullet-lists
         # ("nodetrees" in Sphinx parlance) of in-page headings (including `toctree::`
@@ -149,6 +161,8 @@ def add_toctree_functions(
         root_toc = app.env.tocs[app.config.root_doc]
 
         links_html = []
+        links_data = []
+
         # Iterate through each node in the root document toc.
         # Grab the toctree pages and find the relative link + title.
         for toc in traverse_or_findall(root_toc, TocTreeNodeClass):
@@ -179,28 +193,65 @@ def add_toctree_functions(
                 link_status = "nav-external" if is_absolute else "nav-internal"
                 link_href = page if is_absolute else context["pathto"](page)
 
+                links_data.append(
+                    LinkInfo(
+                        is_current=(page == active_header_page),
+                        href=link_href,
+                        title=title,
+                        is_external=is_absolute,
+                    )
+                )
+
                 # create the html output
                 links_html.append(
-                    f"""
+                    dedent(
+                        f"""
                     <li class="nav-item pst-header-nav-item {current}">
                       <a class="nav-link {link_status}" href="{link_href}">
                         {title}
                       </a>
                     </li>
                 """
+                    )
                 )
 
         # Add external links defined in configuration as sibling list items
         for external_link in context["theme_external_links"]:
+            links_data.append(
+                LinkInfo(
+                    is_current=False,
+                    href=external_link["url"],
+                    title=external_link["name"],
+                    is_external=True,
+                )
+            )
             links_html.append(
-                f"""
-                <li class="nav-item pst-header-nav-item">
+                dedent(
+                    f"""
+                <li class="nav-item pst-header-nav-item ">
                   <a class="nav-link nav-external" href="{ external_link["url"] }">
                     { external_link["name"] }
                   </a>
                 </li>
                 """
+                )
             )
+        lhtml = []
+        for link in links_data:
+            lhtml.append(
+                dedent(
+                    f"""
+                <li class="nav-item pst-header-nav-item {"current active" if link.is_current else ""}">
+                  <a class="nav-link {"nav-external" if link.is_external else "nav-internal"}" href="{ link.href}">
+                    { link.title }
+                  </a>
+                </li>
+            """
+                )
+            )
+        for a, b, d in zip(links_html, lhtml, links_data):
+            assert a == b, (a, b, d)
+        assert links_html == lhtml, (links_html, lhtml)
 
         # The first links will always be visible
         links_solo = links_html[:n_links_before_dropdown]
