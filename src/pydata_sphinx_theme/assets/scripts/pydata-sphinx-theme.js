@@ -699,7 +699,10 @@ function setupMobileSidebarKeyboardHandlers() {
 function setupLiteralBlockTabStops() {
   const updateTabStops = () => {
     document.querySelectorAll('[data-tabindex="0"]').forEach((el) => {
-      el.tabIndex = el.scrollWidth > el.clientWidth ? 0 : -1;
+      el.tabIndex =
+        el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
+          ? 0
+          : -1;
     });
   };
   window.addEventListener("resize", debounce(updateTabStops, 300));
