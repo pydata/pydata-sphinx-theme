@@ -113,7 +113,7 @@ class BootstrapHTML5TranslatorMixin:
         )
 
     def depart_footnote(self, node) -> None:
-        """r/aside/div copy of Docutils html5 writer method.
+        """r/aside/div copy of Sphinx-patched Docutils html5 writer method.
 
         Link to original: https://github.com/sphinx-doc/sphinx/blob/9ebc46a74fa766460c450bd60cdef46b98492939/sphinx/util/docutils.py#L193
         """
