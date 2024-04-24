@@ -87,7 +87,7 @@ class BootstrapHTML5TranslatorMixin:
     def visit_sidebar(self, node):
         """r/aside/div copy of Docutils html5 writer method.
 
-        Ref: https://www.docutils.org/docs/user/html.html#html5)
+        Link to original: https://github.com/docutils/docutils/blob/ff0b419256d6b7bfdd4363dd078c2255701de605/docutils/docutils/writers/html5_polyglot/__init__.py#L350
         """
         self.body.append(self.starttag(node, "div", CLASS="sidebar"))
         self.in_sidebar = True
@@ -95,15 +95,15 @@ class BootstrapHTML5TranslatorMixin:
     def depart_sidebar(self, node):
         """r/aside/div copy of Docutils html5 writer method.
 
-        Ref: https://www.docutils.org/docs/user/html.html#html5
+        Link to original: https://github.com/docutils/docutils/blob/ff0b419256d6b7bfdd4363dd078c2255701de605/docutils/docutils/writers/html5_polyglot/__init__.py#L355
         """
         self.body.append("</div>\n")
         self.in_sidebar = False
 
     def visit_footnote(self, node) -> None:
-        """r/aside/div copy of Docutils html5 writer method.
+        """r/aside/div copy of Sphinx-patched Docutils html5 writer method.
 
-        Ref: https://www.docutils.org/docs/user/html.html#html5
+        Link to original: https://github.com/sphinx-doc/sphinx/blob/9ebc46a74fa766460c450bd60cdef46b98492939/sphinx/util/docutils.py#L185
         """
         label_style = self.settings.footnote_references
         if not isinstance(node.previous_sibling(), type(node)):  # type: ignore[attr-defined]
@@ -115,7 +115,7 @@ class BootstrapHTML5TranslatorMixin:
     def depart_footnote(self, node) -> None:
         """r/aside/div copy of Docutils html5 writer method.
 
-        Ref: https://www.docutils.org/docs/user/html.html#html5
+        Link to original: https://github.com/sphinx-doc/sphinx/blob/9ebc46a74fa766460c450bd60cdef46b98492939/sphinx/util/docutils.py#L193
         """
         self.body.append("</div>\n")
         if not isinstance(node.next_node(descend=False, siblings=True), type(node)):
