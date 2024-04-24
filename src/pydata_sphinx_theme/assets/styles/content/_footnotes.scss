@@ -14,8 +14,8 @@ a.footnote-reference {
   font-size: small;
 }
 
-// Docutils 0.18 uses an `aside.footnote` container with different internal structure
-aside.footnote {
+// Docutils 0.18 uses a container with different internal structure
+div.footnote {
   margin-bottom: 0.5rem;
   &:last-child {
     margin-bottom: 1rem;
@@ -27,5 +27,23 @@ aside.footnote {
 
   &:target {
     background-color: var(--pst-color-target);
+  }
+
+  // Replicate styles from Sphinx that target aside.footnote
+  > span {
+    float: left;
+    &:last-of-type {
+      padding-right: 0.5em;
+    }
+  }
+  > p {
+    margin-left: 2em;
+    &:last-of-type {
+      margin-bottom: 0em;
+      &:after {
+        content: "";
+        clear: both;
+      }
+    }
   }
 }

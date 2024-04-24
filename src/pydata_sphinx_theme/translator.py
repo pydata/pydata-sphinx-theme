@@ -84,6 +84,43 @@ class BootstrapHTML5TranslatorMixin:
         tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
 
+    def visit_sidebar(self, node):
+        """r/aside/div copy of Docutils html5 writer method.
+
+        Ref: https://www.docutils.org/docs/user/html.html#html5)
+        """
+        self.body.append(self.starttag(node, "div", CLASS="sidebar"))
+        self.in_sidebar = True
+
+    def depart_sidebar(self, node):
+        """r/aside/div copy of Docutils html5 writer method.
+
+        Ref: https://www.docutils.org/docs/user/html.html#html5
+        """
+        self.body.append("</div>\n")
+        self.in_sidebar = False
+
+    def visit_footnote(self, node) -> None:
+        """r/aside/div copy of Docutils html5 writer method.
+
+        Ref: https://www.docutils.org/docs/user/html.html#html5
+        """
+        label_style = self.settings.footnote_references
+        if not isinstance(node.previous_sibling(), type(node)):  # type: ignore[attr-defined]
+            self.body.append(f'<div class="footnote-list {label_style}">\n')
+        self.body.append(
+            self.starttag(node, "div", classes=[node.tagname, label_style], role="note")
+        )
+
+    def depart_footnote(self, node) -> None:
+        """r/aside/div copy of Docutils html5 writer method.
+
+        Ref: https://www.docutils.org/docs/user/html.html#html5
+        """
+        self.body.append("</div>\n")
+        if not isinstance(node.next_node(descend=False, siblings=True), type(node)):
+            self.body.append("</div>\n")
+
 
 def setup_translators(app: Sphinx):
     """Add bootstrap HTML functionality if we are using an HTML translator.

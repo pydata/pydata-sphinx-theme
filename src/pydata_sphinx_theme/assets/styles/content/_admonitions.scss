@@ -255,8 +255,7 @@ div.admonition,
 div.topic,
 div.topic.contents,
 // Docutils >= 0.18
-nav.contents,
-aside.topic {
+nav.contents {
   display: flex;
   flex-direction: column;
   background-color: var(--pst-color-surface);
@@ -288,7 +287,7 @@ aside.topic {
 /**
  * Sidebar directive
  */
-aside.sidebar {
+div.sidebar {
   border: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-surface);
   border-radius: $admonition-border-radius;
