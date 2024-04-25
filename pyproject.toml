@@ -77,7 +77,7 @@ doc = [
   "ipyleaflet",
   "colorama",
 ]
-test = ["pytest", "pytest-cov", "pytest-regressions"]
+test = ["pytest", "pytest-cov", "pytest-regressions", 'sphinx[test]']
 dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]", "tox"]
 a11y = ["pytest-playwright"]
 
