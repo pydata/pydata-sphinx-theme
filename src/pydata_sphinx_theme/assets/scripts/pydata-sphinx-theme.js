@@ -791,11 +791,14 @@ async function fetchRevealBannersTogether() {
 // Call this one first to kick off the network request for the version warning
 // and announcement banner data as early as possible.
 documentReady(fetchRevealBannersTogether);
+
 documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(fixMoreLinksInMobileSidebar);
-documentReady(setupLiteralBlockTabStops);
+
+// Use load event because determining whether an element has scrollable content
+// depends on stylesheets (which come after DOMContentLoaded)
+window.addEventListener("load", addTabStopsToScrollableElements);
