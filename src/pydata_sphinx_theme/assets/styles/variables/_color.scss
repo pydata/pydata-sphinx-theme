@@ -190,9 +190,10 @@ $pst-semantic-colors: (
     "dark": #{map-deep-get($color-palette, "gray", "700")},
   ),
   "blockquote-notch": (
-    // gray-500 has a contrast ratio > 3.0 for foundation white and black
+    // gray-500 has a contrast ratio > 3.0 against both the background and
+    // surface colors that it is sandwiched between
     "light": #{map-deep-get($color-palette, "gray", "500")},
-    "dark": #{map-deep-get($color-palette, "gray", "500")},
+    "dark": #{map-deep-get($color-palette, "gray", "400")},
   ),
   "inline-code": (
     "light": #{map-deep-get($color-palette, "pink", "600")},
