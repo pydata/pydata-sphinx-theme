@@ -24,8 +24,7 @@
     display: flex;
     align-items: center;
     height: fit-content;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 0.5rem 1rem;
   }
 
   :focus-visible {
@@ -34,8 +33,6 @@
 
   // These items will define the height of the header
   .navbar-item {
-    height: var(--pst-header-height);
-    max-height: var(--pst-header-height);
     display: flex;
     align-items: center;
   }
@@ -48,6 +45,8 @@
       display: flex;
       flex-grow: 1;
       padding: 0 0 0 0.5rem;
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
     }
   }
 
@@ -56,7 +55,7 @@
   .navbar-header-items__start {
     display: flex;
     align-items: center;
-    flex-flow: wrap;
+    flex-flow: nowrap;
     // In case we wrap our items to multiple rows on small screens
     row-gap: 0;
   }
@@ -81,6 +80,7 @@
   // Contains the navigation links within the navbar
   .navbar-nav {
     display: flex;
+    flex-wrap: wrap;
 
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       // Center align on wide screens so the dropdown button is centered properly
