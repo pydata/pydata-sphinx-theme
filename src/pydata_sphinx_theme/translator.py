@@ -33,7 +33,7 @@ class BootstrapHTML5TranslatorMixin:
             kwargs["ARIA-LEVEL"] = "2"
 
         if "pre" in args:
-            kwargs["tabindex"] = "0"
+            kwargs["data-tabindex"] = "0"
 
         return super().starttag(*args, **kwargs)
 
@@ -50,7 +50,7 @@ class BootstrapHTML5TranslatorMixin:
             # executed successfully and appended to self.body a string of HTML
             # representing the code block, which we then modify.
             html_string = self.body[-1]
-            self.body[-1] = html_string.replace("<pre", '<pre tabindex="0"')
+            self.body[-1] = html_string.replace("<pre", '<pre data-tabindex="0"')
             raise nodes.SkipNode
 
     def visit_table(self, node):

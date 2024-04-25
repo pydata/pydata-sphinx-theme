@@ -31,4 +31,13 @@ div.highlight button.copybtn {
     color: var(--pst-color-text);
     background-color: var(--pst-color-surface);
   }
+
+  &:focus {
+    // For keyboard users, make the copy button visible when focussed.
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: $focus-ring-outline;
+  }
 }

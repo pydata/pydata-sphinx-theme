@@ -45,14 +45,16 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
-        sphinx-version: [""]
+        sphinx-version: ["rls"]
         include:
           # macos test
           - os: macos-latest
             python-version: "3.12"
+            sphinx-version: "rls"
           # windows test
           - os: windows-latest
             python-version: "3.12"
+            sphinx-version: "rls"
           # old Sphinx test
           - os: ubuntu-latest
             python-version: "3.9"
@@ -97,6 +99,7 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
+          verbose: true
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
