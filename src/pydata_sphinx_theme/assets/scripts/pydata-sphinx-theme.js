@@ -680,7 +680,7 @@ function addTabStopsToScrollableElements() {
         "pre, " + // code blocks
           ".nboutput > .output_area, " + // NBSphinx notebook output
           ".cell_output > .output, " + // Myst-NB
-          ".jp-RenderedHTMLCommon", // ipywidgets
+          ".jp-RenderedHTMLCommon" // ipywidgets
       )
       .forEach((el) => {
         el.tabIndex =
@@ -788,7 +788,7 @@ async function fetchRevealBannersTogether() {
  * Call functions after document loading.
  */
 
-// Call this one first to kick off the network request for the version warning
+// Pass this one first to kick off the network request for the version warning
 // and announcement banner data as early as possible.
 documentReady(fetchRevealBannersTogether);
 
