@@ -189,6 +189,12 @@ $pst-semantic-colors: (
     "light": rgba(23, 23, 26, 0.2),
     "dark": #{map-deep-get($color-palette, "gray", "700")},
   ),
+  "blockquote-notch": (
+    // These colors have a contrast ratio > 3.0 against both the background and
+    // surface colors that the notch is sandwiched between
+    "light": #{map-deep-get($color-palette, "gray", "500")},
+    "dark": #{map-deep-get($color-palette, "gray", "400")},
+  ),
   "inline-code": (
     "light": #{map-deep-get($color-palette, "pink", "600")},
     "dark": #{map-deep-get($color-palette, "pink", "300")},
