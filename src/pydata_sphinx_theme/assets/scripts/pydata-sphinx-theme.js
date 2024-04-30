@@ -320,7 +320,15 @@ var setupSearchButtons = () => {
 async function checkPageExistsAndRedirect(event) {
   // ensure we don't follow the initial link
   event.preventDefault();
-  let currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  let currentFilePath;
+  if (DOCUMENTATION_OPTIONS.BUILDER == "dirhtml") {
+    currentFilePath =
+      DOCUMENTATION_OPTIONS.pagename == "index"
+        ? `/`
+        : `${DOCUMENTATION_OPTIONS.pagename}/`;
+  } else {
+    currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  }
   let tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
   try {
@@ -372,7 +380,15 @@ async function fetchVersionSwitcherJSON(url) {
 
 // Populate the version switcher from the JSON data
 function populateVersionSwitcher(data, versionSwitcherBtns) {
-  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  let currentFilePath;
+  if (DOCUMENTATION_OPTIONS.BUILDER == "dirhtml") {
+    currentFilePath =
+      DOCUMENTATION_OPTIONS.pagename == "index"
+        ? `/`
+        : `${DOCUMENTATION_OPTIONS.pagename}/`;
+  } else {
+    currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  }
   versionSwitcherBtns.forEach((btn) => {
     // Set empty strings by default so that these attributes exist and can be used in CSS selectors
     btn.dataset["activeVersionName"] = "";
@@ -490,7 +506,14 @@ function showVersionWarningBanner(data) {
   inner.classList = "sidebar-message";
   button.classList =
     "btn text-wrap font-weight-bold ms-3 my-1 align-baseline pst-button-link-to-stable-version";
-  button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
+  if (DOCUMENTATION_OPTIONS.BUILDER == "dirhtml") {
+    button.href =
+      DOCUMENTATION_OPTIONS.pagename == "index"
+        ? `/`
+        : `${DOCUMENTATION_OPTIONS.pagename}/`;
+  } else {
+    button.href = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  }
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
   // add the version-dependent text
