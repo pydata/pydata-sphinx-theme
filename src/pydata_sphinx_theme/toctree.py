@@ -113,28 +113,13 @@ def add_toctree_functions(
         return next(get_or_create_id_generator(base_id))
 
     @cache
-    def _generate_header_nav_before_dropdown(
-        n_links_before_dropdown,
-    ) -> Tuple[str, List[str]]:
-        """Return html for navbar and dropdown.
+    def _generate_nav_info() -> List[LinkInfo]:
+        """Generate informations necessary to generate nav.
 
-        .. warning::
-
-            Private helper function, do not call this directly.
-
-        Given the number of links before the dropdown, return the html for the navbar,
-        as well as the list of links to put in a dropdown.
-
-        Returns:
-            - HTML str for the navbar
-            - list of HTML str for the dropdown
+        Instead of messing with html later, having this as a util function
+        should make it slightly easier to generate different html snippet for
+        sidebar or navbar.
         """
-        try:
-            n_links_before_dropdown = int(n_links_before_dropdown)
-        except Exception:
-            raise ValueError(
-                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
-            )
         toctree = TocTree(app.env)
 
         # Find the active header navigation item so we decide whether to highlight
@@ -160,7 +145,6 @@ def add_toctree_functions(
         # just below the root of our site
         root_toc = app.env.tocs[app.config.root_doc]
 
-        links_html = []
         links_data = []
 
         # Iterate through each node in the root document toc.
@@ -173,7 +157,6 @@ def add_toctree_functions(
                 page = toc.attributes["parent"] if page == "self" else page
 
                 # If this is the active ancestor page, add a class so we highlight it
-                current = "current active" if page == active_header_page else ""
 
                 # sanitize page title for use in the html output if needed
                 if title is None:
@@ -190,7 +173,6 @@ def add_toctree_functions(
                 # If it's an absolute one then we use the external class and
                 # the complete url.
                 is_absolute = bool(urlparse(page).netloc)
-                link_status = "nav-external" if is_absolute else "nav-internal"
                 link_href = page if is_absolute else context["pathto"](page)
 
                 links_data.append(
@@ -199,19 +181,6 @@ def add_toctree_functions(
                         href=link_href,
                         title=title,
                         is_external=is_absolute,
-                    )
-                )
-
-                # create the html output
-                links_html.append(
-                    dedent(
-                        f"""
-                    <li class="nav-item pst-header-nav-item {current}">
-                      <a class="nav-link {link_status}" href="{link_href}">
-                        {title}
-                      </a>
-                    </li>
-                """
                     )
                 )
 
@@ -225,20 +194,33 @@ def add_toctree_functions(
                     is_external=True,
                 )
             )
-            links_html.append(
-                dedent(
-                    f"""
-                <li class="nav-item pst-header-nav-item ">
-                  <a class="nav-link nav-external" href="{ external_link["url"] }">
-                    { external_link["name"] }
-                  </a>
-                </li>
-                """
-                )
+
+        return links_data
+
+    @cache
+    def generate_header_nav_before_dropdown(
+        n_links_before_dropdown,
+    ) -> Tuple[str, List[str]]:
+        """Return html for navbar and dropdown.
+
+        Given the number of links before the dropdown, return the html for the navbar,
+        as well as the list of links to put in a dropdown.
+
+        Returns:
+            - HTML str for the navbar
+            - list of HTML str for the dropdown
+        """
+        try:
+            n_links_before_dropdown = int(n_links_before_dropdown)
+        except Exception:
+            raise ValueError(
+                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
             )
-        lhtml = []
+        links_data = _generate_nav_info(n_links_before_dropdown)
+
+        links_html = []
         for link in links_data:
-            lhtml.append(
+            links_html.append(
                 dedent(
                     f"""
                 <li class="nav-item pst-header-nav-item {"current active" if link.is_current else ""}">
@@ -249,9 +231,6 @@ def add_toctree_functions(
             """
                 )
             )
-        for a, b, d in zip(links_html, lhtml, links_data):
-            assert a == b, (a, b, d)
-        assert links_html == lhtml, (links_html, lhtml)
 
         # The first links will always be visible
         links_solo = links_html[:n_links_before_dropdown]
