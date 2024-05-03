@@ -71,7 +71,7 @@ def sphinx_build_factory(make_app: Callable, tmp_path: Path, request) -> Callabl
 
     def _func(src_folder: str, **kwargs) -> SphinxBuild:
         """Create the Sphinxbuild from the source folder."""
-        no_temp = environ.get("PST_TEST_HTML_DIR", None)
+        no_temp = environ.get("PST_TEST_HTML_DIR")
         nonlocal tmp_path
         if no_temp is not None:
             tmp_path = Path(no_temp) / request.node.name / str(src_folder)
