@@ -51,9 +51,11 @@ jobs:
       - name: "Download PST built package 📦"
         uses: actions/download-artifact@v4
         with:
-          name: PST-package
+          name: Packages.zip
           path: dist
-
+      - name: "Unzip artifact"
+        run: |
+          unzip Packages.zip && rm Packages.zip
       - name: "Publish PST package to PyPI 🚀"
         uses: pypa/gh-action-pypi-publish@release/v1
         # only publish if this is a published release by pydata
