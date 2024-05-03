@@ -4,8 +4,8 @@
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/"
   },
   {
-    "name": "0.15.3 (stable)",
-    "version": "v0.15.3",
+    "name": "0.15.2 (stable)",
+    "version": "v0.15.2",
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/stable/",
     "preferred": true
   },
