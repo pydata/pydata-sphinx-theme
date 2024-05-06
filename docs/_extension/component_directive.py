@@ -4,6 +4,7 @@ Read the content of the component folder and generate a list of all the componen
 This list will display some informations about the component and a link to the
 GitHub file.
 """
+
 import re
 from pathlib import Path
 from typing import Any, Dict, List

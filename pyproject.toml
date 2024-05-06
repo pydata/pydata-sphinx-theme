@@ -88,19 +88,20 @@ a11y = ["pytest-playwright"]
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 
 [tool.ruff]
-ignore-init-module-imports = true
 fix = true
-select = ["E", "F", "W", "I", "D", "RUF"]
+
+[tool.ruff.lint]
 ignore = [
   "E501", # line too long | Black take care of it
   "D107", # Missing docstring in `__init__` | set the docstring in the class
-
 ]
+ignore-init-module-imports = true
+select = ["E", "F", "W", "I", "D", "RUF"]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.djlint]

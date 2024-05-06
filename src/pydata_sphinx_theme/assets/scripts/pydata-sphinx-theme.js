@@ -142,7 +142,7 @@ function scrollToActive() {
   // Inspired on source of revealjs.com
   let storedScrollTop = parseInt(
     sessionStorage.getItem("sidebar-scroll-top"),
-    10
+    10,
   );
 
   if (!isNaN(storedScrollTop)) {
@@ -194,7 +194,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search"
+        "div:not(.search-button__search-container) > form.bd-search",
       );
     }
     return form.querySelector("input");
@@ -255,7 +255,7 @@ var addEventListenerForSearchKeyboard = () => {
         toggleSearchField();
       }
     },
-    true
+    true,
   );
 };
 
@@ -278,7 +278,7 @@ var changeSearchShortcutKey = () => {
   let shortcuts = document.querySelectorAll(".search-button__kbd-shortcut");
   if (useCommandKey) {
     shortcuts.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘"),
     );
   }
 };
@@ -404,7 +404,7 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
     const anchor = document.createElement("a");
     anchor.setAttribute(
       "class",
-      "dropdown-item list-group-item list-group-item-action py-1"
+      "dropdown-item list-group-item list-group-item-action py-1",
     );
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
     anchor.setAttribute("role", "option");
@@ -464,7 +464,7 @@ function showVersionWarningBanner(data) {
   if (preferredEntries.length !== 1) {
     const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
     console.log(
-      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`,
     );
     return;
   }
@@ -520,7 +520,7 @@ function showVersionWarningBanner(data) {
   // At least 3rem height
   const autoHeight = Math.max(
     outer.offsetHeight,
-    3 * parseFloat(getComputedStyle(document.documentElement).fontSize)
+    3 * parseFloat(getComputedStyle(document.documentElement).fontSize),
   );
   // Set height and vertical padding to 0 to prepare the height transition
   outer.style.setProperty("height", 0);
@@ -575,17 +575,17 @@ function initRTDObserver() {
 // fetch the JSON version data (only once), then use it to populate the version
 // switcher and maybe show the version warning bar
 var versionSwitcherBtns = document.querySelectorAll(
-  ".version-switcher__button"
+  ".version-switcher__button",
 );
 const hasSwitcherMenu = versionSwitcherBtns.length > 0;
 const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
-  "theme_switcher_json_url"
+  "theme_switcher_json_url",
 );
 const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
 
 if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
   const data = await fetchVersionSwitcherJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+    DOCUMENTATION_OPTIONS.theme_switcher_json_url,
   );
   // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
   // We don't really want the switcher and warning bar to silently not work.
@@ -602,7 +602,7 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
  */
 function fixMoreLinksInMobileSidebar() {
   const dropdown = document.querySelector(
-    ".bd-sidebar-primary [id^=pst-nav-more-links]"
+    ".bd-sidebar-primary [id^=pst-nav-more-links]",
   );
   if (dropdown !== null) {
     dropdown.classList.add("show");
@@ -620,7 +620,7 @@ function setupMobileSidebarKeyboardHandlers() {
   // allows the mobile sidebars to be hidden or revealed via CSS.
   const primaryToggle = document.getElementById("pst-primary-sidebar-checkbox");
   const secondaryToggle = document.getElementById(
-    "pst-secondary-sidebar-checkbox"
+    "pst-secondary-sidebar-checkbox",
   );
   const primarySidebar = document.querySelector(".bd-sidebar-primary");
   const secondarySidebar = document.querySelector(".bd-sidebar-secondary");
