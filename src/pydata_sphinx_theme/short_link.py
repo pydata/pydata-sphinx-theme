@@ -33,7 +33,7 @@ class ShortenLinkTransform(SphinxPostTransform):
     platform = None
 
     def run(self, **kwargs):
-        """run the Transform object."""
+        """Run the Transform object."""
         matcher = NodeMatcher(nodes.reference)
         # TODO: just use "findall" once docutils min version >=0.18.1
         for node in traverse_or_findall(self.document, matcher):
