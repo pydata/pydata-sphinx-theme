@@ -185,8 +185,8 @@ pre {
     margin-inline-end: 0.5em;
   }
 
-  @include link-style-hover;
   &:hover {
+    @include link-style-hover;
     text-decoration-thickness: 1px;
     background-color: var(--pst-violet-600);
     color: var(--pst-color-secondary-text);

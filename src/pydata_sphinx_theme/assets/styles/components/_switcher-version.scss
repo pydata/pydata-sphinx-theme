@@ -31,8 +31,8 @@ button.btn.version-switcher__button {
     &:not(:last-child) {
       border-bottom: 1px solid var(--pst-color-border);
     }
-    @include link-style-hover;
     &:hover {
+      @include link-style-hover;
       background-color: var(--pst-color-surface);
     }
     &.active {
