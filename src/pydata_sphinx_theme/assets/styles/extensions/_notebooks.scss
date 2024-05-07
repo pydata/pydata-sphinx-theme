@@ -30,6 +30,7 @@ html .jp-RenderedHTMLCommon {
     // Dark theme special-cases
     html[data-theme="dark"] & {
       &.rendered_html:not(:has(table.dataframe)),
+      // ipywidgets
       .widget-subarea {
         @include cell-output-background;
       }
@@ -64,6 +65,7 @@ div.cell_output .output {
   html[data-theme="dark"] & {
     img,
     .text_html:not(:has(table.dataframe)),
+    // ipywidgets
     .widget-subarea {
       @include cell-output-background;
     }
