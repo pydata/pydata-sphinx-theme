@@ -1,5 +1,6 @@
 """A custom Transform object to shorten github and gitlab links."""
 
+from typing import ClassVar
 from urllib.parse import ParseResult, urlparse, urlunparse
 
 from docutils import nodes
@@ -29,11 +30,14 @@ class ShortenLinkTransform(SphinxPostTransform):
 
     default_priority = 400
     formats = ("html",)
-    supported_platform = {"github.com": "github", "gitlab.com": "gitlab"}
+    supported_platform: ClassVar[dict[str, str]] = {
+        "github.com": "github",
+        "gitlab.com": "gitlab",
+    }
     platform = None
 
     def run(self, **kwargs):
-        """run the Transform object."""
+        """Run the Transform object."""
         matcher = NodeMatcher(nodes.reference)
         # TODO: just use "findall" once docutils min version >=0.18.1
         for node in traverse_or_findall(self.document, matcher):

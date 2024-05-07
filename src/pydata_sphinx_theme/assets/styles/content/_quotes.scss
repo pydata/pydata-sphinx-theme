@@ -2,7 +2,7 @@
 blockquote {
   padding: 1em 1em;
   color: var(--pst-color-text-muted);
-  border-left: 0.25em solid var(--pst-color-border);
+  border-left: 0.25em solid var(--pst-color-blockquote-notch);
   border-radius: $admonition-border-radius;
   position: relative;
 
@@ -22,6 +22,11 @@ blockquote {
 
   @include legacy-backdrop-placeholder;
   background-color: var(--pst-color-surface);
+
+  // Ensure there is enough contrast against the background
+  a {
+    color: var(--pst-color-inline-code-links);
+  }
 
   //hack to make the text in the blockquote selectable
   &:before {

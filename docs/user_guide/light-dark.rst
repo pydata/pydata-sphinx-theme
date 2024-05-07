@@ -59,14 +59,14 @@ For example to define a different background color for both the light and dark t
     html[data-theme="light"] {
 
         /* whatever you want to change */
-        background: white;
+        background-color: white;
     }
 
     /* anything related to the dark theme */
     html[data-theme="dark"] {
 
         /* whatever you want to change */
-        background: black;
+        background-color: black;
     }
 
 A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.

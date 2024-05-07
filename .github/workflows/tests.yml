@@ -35,7 +35,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: "pyproject.toml"
-      - uses: pre-commit/action@v3.0.0
+      - uses: pre-commit/action@v3.0.1
 
   # run our test suite on various combinations of OS / Python / Sphinx version
   run-pytest:
@@ -45,14 +45,16 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
-        sphinx-version: [""]
+        sphinx-version: ["rls"]
         include:
           # macos test
           - os: macos-latest
             python-version: "3.12"
+            sphinx-version: "rls"
           # windows test
           - os: windows-latest
             python-version: "3.12"
+            sphinx-version: "rls"
           # old Sphinx test
           - os: ubuntu-latest
             python-version: "3.9"

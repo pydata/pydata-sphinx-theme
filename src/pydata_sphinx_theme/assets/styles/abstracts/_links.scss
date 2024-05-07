@@ -86,7 +86,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
       color: var(--pst-color-link-hover);
     }
   }
-  @include focus-indicator;
 }
 
 // Text link styles
@@ -102,7 +101,6 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
     @include link-decoration;
     @include link-decoration-hover;
   }
-  @include focus-indicator;
 }
 
 // Sidebar and TOC links
@@ -125,6 +123,12 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   &:active {
     color: var(--pst-color-link-hover);
   }
+
+  &:focus-visible {
+    box-shadow: $focus-ring-box-shadow;
+    outline: none;
+    z-index: 10; // keep focus ring on top (prevent the link-sidebar-current notch from lying on top of the ring)
+  }
 }
 
 // Sidebar current page link styles
@@ -137,11 +141,16 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   font-weight: 600;
   color: var(--pst-color-primary);
   @if $link-hover-decoration-thickness {
-    box-shadow: inset
+    $notch-shadow: inset
       $link-hover-decoration-thickness
       0px
       0px
       var(--pst-color-primary);
+    box-shadow: $notch-shadow;
+    &:focus-visible {
+      box-shadow: $notch-shadow, $focus-ring-box-shadow;
+      outline: none;
+    }
   }
 }
 
@@ -176,9 +185,84 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
   }
 }
 
-// Focus indicator
-@mixin focus-indicator {
-  &:focus-visible {
-    outline: 2px solid var(--pst-color-accent);
+/*
+Mixin for links in the header (and the More dropdown toggle).
+
+The mixin assumes it will be applied to some element X with a markup structure
+like: X > .nav-link, or X > .dropdown-toggle.
+
+It also assumes X.current is how the app annotates which item in the header nav
+corresponds to the section in the docs that the user is currently reading.
+*/
+@mixin header-link {
+  // Target the child and not the parent because we want the underline in the
+  // mobile sidebar to only span the width of the text not the entire row/line.
+  > .nav-link,
+  > .dropdown-toggle {
+    border-radius: 2px;
+    color: var(--pst-color-text-muted);
+  }
+
+  > .nav-link {
+    // Set up pseudo-element for hover and current states below.
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: transparent;
+    }
+
+    // Underline on hover.
+    // - Don't use text-decoration because it will wrap across two lines if
+    //   the link text also wraps across two lines.
+    // - Use pseudo-element in order to avoid the border-radius values
+    //   rounding the edges of the underline. (And since a header link can be
+    //   both focused and hovered at the same time and we want the focus ring
+    //   but not the underline to be rounded, we cannot use a box shadow or
+    //   bottom border link element to create the underline, or else it will
+    //   be rounded and if we apply border-radius 0 then the hovered focus
+    //   ring would go from rounded to sharp. So we have to use the
+    //   pseudo-element.)
+    &:hover {
+      color: var(--pst-color-secondary);
+      text-decoration: none; // override the link-style-hover mixin
+      &::before {
+        border-bottom: 3px solid var(--pst-color-secondary);
+      }
+    }
+
+    &:focus-visible {
+      box-shadow: none; // override Bootstrap
+      outline: 3px solid var(--pst-color-accent);
+      outline-offset: 3px;
+    }
+  }
+
+  > .dropdown-toggle {
+    &:focus-visible {
+      box-shadow: $focus-ring-box-shadow;
+    }
+    &:hover {
+      text-decoration: none;
+      box-shadow: 0 0 0 $focus-ring-width var(--pst-color-link-hover); // purple focus ring
+      // Brighten the text on hover (muted -> base)
+      color: var(--pst-color-text-base);
+    }
+  }
+
+  &.current {
+    > .nav-link {
+      color: var(--pst-color-primary);
+
+      // Underline the current navbar item
+      &::before {
+        border-bottom: 3px solid var(--pst-color-primary);
+      }
+    }
   }
 }

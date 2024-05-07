@@ -28,20 +28,22 @@ label.overlay {
 
 input {
   // Show the correct overlay when its input is checked
-  &#__primary:checked + label.overlay.overlay-primary,
-  &#__secondary:checked + label.overlay.overlay-secondary {
+  &#pst-primary-sidebar-checkbox:checked + label.overlay.overlay-primary,
+  &#pst-secondary-sidebar-checkbox:checked + label.overlay.overlay-secondary {
     height: 100vh;
     width: 100vw;
   }
 
   // Primary sidebar slides in from the left
-  &#__primary:checked ~ .bd-container .bd-sidebar-primary {
+  &#pst-primary-sidebar-checkbox:checked ~ .bd-container .bd-sidebar-primary {
     visibility: visible;
     margin-left: 0;
   }
 
   // Secondary sidebar slides in from the right
-  &#__secondary:checked ~ .bd-container .bd-sidebar-secondary {
+  &#pst-secondary-sidebar-checkbox:checked
+    ~ .bd-container
+    .bd-sidebar-secondary {
     visibility: visible;
     margin-right: 0;
   }
@@ -67,7 +69,8 @@ input {
   width: 75%;
   flex-grow: 0.75;
   max-width: 350px;
-  transition: visibility $animation-time ease-out,
+  transition:
+    visibility $animation-time ease-out,
     margin $animation-time ease-out;
   visibility: hidden;
 
@@ -82,11 +85,11 @@ input {
 
 // Primary sidebar hides/shows at earlier widths
 @include media-breakpoint-up($breakpoint-sidebar-primary) {
-  label.sidebar-toggle.primary-toggle {
+  .sidebar-toggle.primary-toggle {
     display: none;
   }
 
-  input#__primary {
+  input#pst-primary-sidebar-checkbox {
     &:checked + label.overlay.overlay-primary {
       height: 0;
       width: 0;

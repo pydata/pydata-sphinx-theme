@@ -3,18 +3,23 @@
  */
 
 .theme-switch-button {
-  // overide bootstrap settings
-  margin: 0 -0.5rem;
-  padding: 0; // We pad the `span` not the container
   color: var(--pst-color-text-muted);
   border-radius: 0;
-  @include focus-indicator;
+  border: none; // Override Bootstrap button border
+  font-size: 1rem; // Override Bootstrap's button font size
+
+  // Override Bootstrap button padding-x. Whitespace in nav bar is controlled
+  // via column gap rule on the container.
+  padding-left: 0;
+  padding-right: 0;
+
+  &:hover {
+    @include icon-navbar-hover;
+  }
 
   span {
     display: none;
-    padding: 0.5em;
 
-    @include icon-navbar-hover;
     &:active {
       text-decoration: none;
       color: var(--pst-color-link-hover);

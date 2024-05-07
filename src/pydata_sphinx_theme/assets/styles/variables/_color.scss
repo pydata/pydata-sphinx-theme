@@ -151,7 +151,7 @@ $pst-semantic-colors: (
     "dark": #5fb488,
     "bg-dark": #002f17,
   ),
-  // This is is based on the warning color
+  // This is based on the warning color
   "attention":
     (
       "light": var(--pst-color-warning),
@@ -188,6 +188,12 @@ $pst-semantic-colors: (
   "border-muted": (
     "light": rgba(23, 23, 26, 0.2),
     "dark": #{map-deep-get($color-palette, "gray", "700")},
+  ),
+  "blockquote-notch": (
+    // These colors have a contrast ratio > 3.0 against both the background and
+    // surface colors that the notch is sandwiched between
+    "light": #{map-deep-get($color-palette, "gray", "500")},
+    "dark": #{map-deep-get($color-palette, "gray", "400")},
   ),
   "inline-code": (
     "light": #{map-deep-get($color-palette, "pink", "600")},
@@ -289,7 +295,7 @@ $pst-semantic-colors: (
     *  which case assume they're already optimized for dark mode).
     */
     .bd-content img:not(.only-dark):not(.dark-light) {
-      background: rgb(255, 255, 255);
+      background-color: rgb(255, 255, 255);
       border-radius: 0.25rem;
     }
     // MathJax SVG outputs should be filled to same color as text.

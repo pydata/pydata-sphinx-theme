@@ -142,7 +142,7 @@ function scrollToActive() {
   // Inspired on source of revealjs.com
   let storedScrollTop = parseInt(
     sessionStorage.getItem("sidebar-scroll-top"),
-    10
+    10,
   );
 
   if (!isNaN(storedScrollTop)) {
@@ -194,7 +194,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search"
+        "div:not(.search-button__search-container) > form.bd-search",
       );
     }
     return form.querySelector("input");
@@ -255,7 +255,7 @@ var addEventListenerForSearchKeyboard = () => {
         toggleSearchField();
       }
     },
-    true
+    true,
   );
 };
 
@@ -278,7 +278,7 @@ var changeSearchShortcutKey = () => {
   let shortcuts = document.querySelectorAll(".search-button__kbd-shortcut");
   if (useCommandKey) {
     shortcuts.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘"),
     );
   }
 };
@@ -404,7 +404,7 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
     const anchor = document.createElement("a");
     anchor.setAttribute(
       "class",
-      "dropdown-item list-group-item list-group-item-action py-1"
+      "dropdown-item list-group-item list-group-item-action py-1",
     );
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
     anchor.setAttribute("role", "option");
@@ -464,7 +464,7 @@ function showVersionWarningBanner(data) {
   if (preferredEntries.length !== 1) {
     const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
     console.log(
-      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`,
     );
     return;
   }
@@ -489,7 +489,7 @@ function showVersionWarningBanner(data) {
   middle.classList = "bd-header-announcement__content";
   inner.classList = "sidebar-message";
   button.classList =
-    "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-1 align-baseline";
+    "btn text-wrap font-weight-bold ms-3 my-1 align-baseline pst-button-link-to-stable-version";
   button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
@@ -520,7 +520,7 @@ function showVersionWarningBanner(data) {
   // At least 3rem height
   const autoHeight = Math.max(
     outer.offsetHeight,
-    3 * parseFloat(getComputedStyle(document.documentElement).fontSize)
+    3 * parseFloat(getComputedStyle(document.documentElement).fontSize),
   );
   // Set height and vertical padding to 0 to prepare the height transition
   outer.style.setProperty("height", 0);
@@ -575,17 +575,17 @@ function initRTDObserver() {
 // fetch the JSON version data (only once), then use it to populate the version
 // switcher and maybe show the version warning bar
 var versionSwitcherBtns = document.querySelectorAll(
-  ".version-switcher__button"
+  ".version-switcher__button",
 );
 const hasSwitcherMenu = versionSwitcherBtns.length > 0;
 const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
-  "theme_switcher_json_url"
+  "theme_switcher_json_url",
 );
 const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
 
 if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
   const data = await fetchVersionSwitcherJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+    DOCUMENTATION_OPTIONS.theme_switcher_json_url,
   );
   // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
   // We don't really want the switcher and warning bar to silently not work.
@@ -602,11 +602,120 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
  */
 function fixMoreLinksInMobileSidebar() {
   const dropdown = document.querySelector(
-    ".bd-sidebar-primary [id^=pst-nav-more-links]"
+    ".bd-sidebar-primary [id^=pst-nav-more-links]",
   );
   if (dropdown !== null) {
     dropdown.classList.add("show");
   }
+}
+
+/*******************************************************************************
+ * Add keyboard functionality to mobile sidebars.
+ *
+ * Wire up the hamburger-style buttons using the click event which (on buttons)
+ * handles both mouse clicks and the space and enter keys.
+ */
+function setupMobileSidebarKeyboardHandlers() {
+  // These are hidden checkboxes at the top of the page whose :checked property
+  // allows the mobile sidebars to be hidden or revealed via CSS.
+  const primaryToggle = document.getElementById("pst-primary-sidebar-checkbox");
+  const secondaryToggle = document.getElementById(
+    "pst-secondary-sidebar-checkbox",
+  );
+  const primarySidebar = document.querySelector(".bd-sidebar-primary");
+  const secondarySidebar = document.querySelector(".bd-sidebar-secondary");
+
+  // Toggle buttons -
+  //
+  // These are the hamburger-style buttons in the header nav bar. When the user
+  // clicks, the button transmits the click to the hidden checkboxes used by the
+  // CSS to control whether the sidebar is open or closed.
+  const primaryClickTransmitter = document.querySelector(".primary-toggle");
+  const secondaryClickTransmitter = document.querySelector(".secondary-toggle");
+  [
+    [primaryClickTransmitter, primaryToggle, primarySidebar],
+    [secondaryClickTransmitter, secondaryToggle, secondarySidebar],
+  ].forEach(([clickTransmitter, toggle, sidebar]) => {
+    if (!clickTransmitter) {
+      return;
+    }
+    clickTransmitter.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      toggle.checked = !toggle.checked;
+
+      // If we are opening the sidebar, move focus to the first focusable item
+      // in the sidebar
+      if (toggle.checked) {
+        // Note: this selector is not exhaustive, and we may need to update it
+        // in the future
+        const tabStop = sidebar.querySelector("a, button");
+        // use setTimeout because you cannot move focus synchronously during a
+        // click in the handler for the click event
+        setTimeout(() => tabStop.focus(), 100);
+      }
+    });
+  });
+
+  // Escape key -
+  //
+  // When sidebar is open, user should be able to press escape key to close the
+  // sidebar.
+  [
+    [primarySidebar, primaryToggle, primaryClickTransmitter],
+    [secondarySidebar, secondaryToggle, secondaryClickTransmitter],
+  ].forEach(([sidebar, toggle, transmitter]) => {
+    if (!sidebar) {
+      return;
+    }
+    sidebar.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        toggle.checked = false;
+        transmitter.focus();
+      }
+    });
+  });
+
+  // When the <label> overlay is clicked to close the sidebar, return focus to
+  // the opener button in the nav bar.
+  [
+    [primaryToggle, primaryClickTransmitter],
+    [secondaryToggle, secondaryClickTransmitter],
+  ].forEach(([toggle, transmitter]) => {
+    toggle.addEventListener("change", (event) => {
+      if (!event.currentTarget.checked) {
+        transmitter.focus();
+      }
+    });
+  });
+}
+
+/**
+ * When the page loads or the window resizes check all elements with
+ * [data-tabindex="0"], and if they have scrollable overflow, set tabIndex = 0.
+ */
+function setupLiteralBlockTabStops() {
+  const updateTabStops = () => {
+    document.querySelectorAll('[data-tabindex="0"]').forEach((el) => {
+      el.tabIndex =
+        el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
+          ? 0
+          : -1;
+    });
+  };
+  window.addEventListener("resize", debounce(updateTabStops, 300));
+  updateTabStops();
+}
+function debounce(callback, wait) {
+  let timeoutId = null;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
 }
 
 /*******************************************************************************
@@ -618,4 +727,6 @@ documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
+documentReady(setupMobileSidebarKeyboardHandlers);
 documentReady(fixMoreLinksInMobileSidebar);
+documentReady(setupLiteralBlockTabStops);
