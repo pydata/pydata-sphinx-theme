@@ -113,7 +113,7 @@ def add_toctree_functions(
         return next(get_or_create_id_generator(base_id))
 
     @cache
-    def _generate_nav_info() -> List[LinkInfo]:
+    def _generate_nav_info(self) -> List[LinkInfo]:
         """Generate informations necessary to generate nav.
 
         Instead of messing with html later, having this as a util function
@@ -198,7 +198,7 @@ def add_toctree_functions(
         return links_data
 
     @cache
-    def generate_header_nav_before_dropdown(
+    def _generate_header_nav_before_dropdown(
         n_links_before_dropdown,
     ) -> Tuple[str, List[str]]:
         """Return html for navbar and dropdown.
