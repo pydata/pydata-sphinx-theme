@@ -9,7 +9,9 @@ div.admonition,
   margin: 1.5625em auto;
   padding: 0 0.6rem 0.8rem 0.6rem;
   overflow: hidden;
+  /* break-inside has replaced page-break-inside and is widely usable since 2019 */
   page-break-inside: avoid;
+  break-inside: avoid;
   border-left: $admonition-left-border-width solid;
   border-color: var(--pst-color-info);
   border-radius: $admonition-border-radius;

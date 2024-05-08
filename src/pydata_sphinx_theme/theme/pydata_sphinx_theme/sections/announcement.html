@@ -4,7 +4,7 @@
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
 {%- if is_remote %}
 <script>
-document.write(`<aside class="bd-header-announcement" aria-label="{{ banner_label }}"></aside>`);
+document.write(`<aside class="bd-header-announcement d-print-none" aria-label="{{ banner_label }}"></aside>`);
 fetch("{{ theme_announcement }}")
   .then(res => {return res.text();})
   .then(data => {
