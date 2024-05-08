@@ -73,6 +73,7 @@ jobs:
       - name: "Run tests ✅"
         shell: bash
         run: |
+          # this will compile the assets then run the tests
           # check if there is a specific Sphinx version to test with
           # example substitution: tox run -e compile,py39-sphinx61-tests
           if [ -n "${{matrix.sphinx-version}}" ]; then

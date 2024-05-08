@@ -35,6 +35,7 @@ jobs:
           python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
       - name: "Run tests ✅ (no coverage)"
         run: |
+          # this will compile the assets then run the tests
           python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests-no-cov
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
