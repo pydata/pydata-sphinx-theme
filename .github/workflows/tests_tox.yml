@@ -219,10 +219,11 @@ jobs:
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          # 3.12 is not supported by py-spy yet
+          python-version: "3.11"
       - name: "Run profiling with py-spy 🕵️‍♂️"
         # profiling needs to be run as sudo
-        run: sudo python -Im tox run -e py312-profile-docs -- -o docbuild_profile.svg
+        run: sudo python -Im tox run -e py311-profile-docs -- -o docbuild_profile.svg
         continue-on-error: true
       - name: "Upload profiling data to GH artifacts 📤"
         uses: actions/upload-artifact@v4
