@@ -49,13 +49,12 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 }
 
 // Simple hover style - can be used alone or in conjunction with other mixins
-// Add the text underline and change in thickness on hover
+// Add the text underline and change in thickness on hover.
+// Intended for use with the `:hover` pseudo-class.
 @mixin link-style-hover {
-  &:hover {
-    @include link-decoration;
-    @include link-decoration-hover;
-    color: var(--pst-color-link-hover);
-  }
+  @include link-decoration;
+  @include link-decoration-hover;
+  color: var(--pst-color-link-hover);
 }
 
 // Default link styles

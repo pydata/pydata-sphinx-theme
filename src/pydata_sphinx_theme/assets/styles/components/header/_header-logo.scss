@@ -17,6 +17,7 @@
 
   // If there's no logo image, we use a p element w/ the site title
   p {
+    color: var(--pst-color-text-base);
     margin-bottom: 0;
   }
 
@@ -27,16 +28,9 @@
     width: auto;
   }
 
-  // remove underline from brand title on default state
-  a {
-    text-decoration: none;
-  }
-  &:hover {
+  &:hover,
+  &:visited:hover {
     @include link-style-hover;
-  }
-  &:visited {
-    &:hover {
-      @include link-style-hover;
-    }
+    color: var(--pst-color-text-base);
   }
 }

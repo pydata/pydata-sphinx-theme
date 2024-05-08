@@ -5,6 +5,7 @@ Re-install the environment from scratch:
 
     nox -s docs -- -r
 """
+
 import os
 import shutil as sh
 import tempfile

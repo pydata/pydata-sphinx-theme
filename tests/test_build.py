@@ -349,6 +349,8 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
+
+    # classic navbar:
     navbar = index_html.select("ul.bd-navbar-elements")[0]
     dropdowns = navbar.select("li.dropdown")
     standalone_links = navbar.select(".navbar-nav > li.nav-item:not(.dropdown)")
@@ -361,6 +363,13 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
     if n_links == 8:
         # There should be no dropdown and only standalone links
         assert standalone_links and not dropdowns
+
+    # sidebar nav should never have dropdown
+    navbar = index_html.select("ul.bd-navbar-elements")[1]
+    dropdowns = navbar.select("li.dropdown")
+    standalone_links = navbar.select(".navbar-nav > li.nav-item:not(.dropdown)")
+    assert len(standalone_links) == 7
+    assert len(dropdowns) == 0
 
 
 @pytest.mark.parametrize("dropdown_text", (None, "Other"))  # None -> default "More"

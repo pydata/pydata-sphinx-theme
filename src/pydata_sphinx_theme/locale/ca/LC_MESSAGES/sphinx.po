@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-11 13:22-0500\n"
+"POT-Creation-Date: 2024-04-29 13:43+0200\n"
 "PO-Revision-Date: 2023-04-14 14:57+0000\n"
 "Last-Translator: Cristhian Rivera, 2024\n"
 "Language: ca\n"
@@ -155,6 +155,10 @@ msgstr ""
 "Construïda amb el <a href=\"https://pydata-sphinx-"
 "theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
 "%(theme_version)s."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:1
+msgid "Announcement"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
 #, fuzzy
