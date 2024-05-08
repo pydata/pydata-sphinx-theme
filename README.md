@@ -9,7 +9,7 @@
 | src/pydata\_sphinx\_theme/logo.py             |       38 |        1 |       18 |        1 |     96% |        73 |
 | src/pydata\_sphinx\_theme/pygment.py          |       45 |        1 |       18 |        2 |     95% |75, 87->92 |
 | src/pydata\_sphinx\_theme/short\_link.py      |       50 |        0 |       28 |        5 |     94% |48->43, 88->90, 93->114, 96->114, 106->114 |
-| src/pydata\_sphinx\_theme/toctree.py          |      211 |       12 |      114 |       15 |     92% |82-85, 89->exit, 108-109, 279, 286, 306->304, 309, 311->345, 328->332, 373->371, 394, 405, 441, 544, 563->551, 570 |
+| src/pydata\_sphinx\_theme/toctree.py          |      211 |       12 |      114 |       15 |     92% |82-85, 89->exit, 122-123, 293, 300, 320->318, 323, 325->359, 342->346, 387->385, 408, 419, 455, 558, 577->565, 584 |
 | src/pydata\_sphinx\_theme/translator.py       |       48 |       19 |       18 |        2 |     50% |36, 62-85, 107-120 |
 | src/pydata\_sphinx\_theme/utils.py            |       65 |        3 |       35 |        2 |     93% |24-27, 73->exit |
 |                                     **TOTAL** |  **606** |   **51** |  **288** |   **36** | **88%** |           |
