@@ -17,7 +17,7 @@ permissions:
 jobs:
   # calls our tests workflow
   tests:
-    uses: ./.github/workflows/tests.yml
+    uses: ./.github/workflows/CI.yml
 
   build-package:
     name: "Build & verify PST package"
