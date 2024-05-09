@@ -101,7 +101,7 @@ The caveat to using `tox` is that this will not install the required hooks to ru
 
 Now that you have `tox` installed and cloned the repository, you should be able to build the documentation locally.
 
-To build the documentation with `nox`, run the following command:
+To build the documentation with `tox`, run the following command:
 
 ```console
 $ tox run -e docs-dev
@@ -147,16 +147,14 @@ Compiled assets are **not committed to git**.
 The `sphinx-theme-builder` will bundle these assets automatically when we make a new release, but we do not manually commit these compiled assets to Git history.
 ```
 
-<!-- TODO update or remove -->
-
 ## Run a development server
 
 You can combine the above two actions (build the docs and compile JS/CSS assets) and run a development server so that changes to `src/` are automatically bundled with the package, and the documentation is immediately reloaded in a live preview window.
 
-To run the development server with `nox`, run the following command:
+To run the development server with `tox`, run the following command:
 
 ```console
-$ nox -s docs-live
+$ tox -e run docs-live
 ```
 
 When working on the theme, making changes to any of these directories:
@@ -164,6 +162,7 @@ When working on the theme, making changes to any of these directories:
 - `src/js/index.js`
 - `src/scss/index.scss`
 - `docs/**/*.rst`
+- `docs/**/*.md`
 - `docs/**/*.py`
 
 will cause the development server to do the following:
