@@ -16,7 +16,7 @@ of:
 - fix findings of various linters and checks
 - work through code review
 
-For each pull request, the documentation is built and deployed to make it easier to review the changes in the PR.
+For each pull request (PR), the documentation is built and deployed to make it easier to review the changes in the PR.
 To access this preview, click on the {{ rtd }} preview in the CI/CD jobs (GitHub checks section
 at the bottom of a PR, note you might need to click on "Show all checks" to access the job).
 
@@ -211,3 +211,10 @@ $ tox -e run compile,docs, a11y-tests
 # to run the tests without pre-compiling the assets and without re-building the docs (for example if you recently compiled the assets or built the docs)
 $ tox -e run a11y-tests
 ```
+
+## GitHub codespaces
+
+If you have good internet connectivity and want a temporary set-up, it is often faster to work on PyData Sphinx Theme
+in a Codespaces environment. Once your Codespaces instance is set up, you can run the `tox` commands above to build
+the documentation, compile the assets, and run the tests.
+For documentation on how to get started with Codespaces, see [the Codespaces documentation](https://docs.github.com/en/codespaces).
