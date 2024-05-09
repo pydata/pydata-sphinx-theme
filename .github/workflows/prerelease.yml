@@ -26,7 +26,8 @@ jobs:
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ matrix.python-version }}
-      - name: "Install (prerelease) dependencies"
+          pandoc: "True"
+      - name: "Install (prerelease) dependencies 📦"
         run: |
           python -Im pip install --upgrade pip wheel setuptools
       - name: "Build PST docs and check for warnings 📖"
