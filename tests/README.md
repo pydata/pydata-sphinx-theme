@@ -1,6 +1,6 @@
 # PyData Sphinx tests
 
-This directory contains the Python tests for the theme. These tests are built with [pytest](https://docs.pytest.org/en/stable/) and are called through `nox`.
+This directory contains the Python tests for the theme. These tests are built with [pytest](https://docs.pytest.org/en/stable/) and are called through `tox`.
 
 - `test_build.py` checks that the static HTML output of the build process conforms
   to various expectations. It builds static HTML pages based on configurations in

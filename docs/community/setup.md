@@ -47,7 +47,7 @@ To simplify this process, we use a few helper tools:
 - [pandoc](https://pandoc.org/) the universal document converter.
 
 In particular, `tox` can be used to automatically create isolated local development environments with all the correct packages installed to work on the theme.
-The rest of this guide focuses on using `nox` to start with a basic environment.
+The rest of this guide focuses on using `tox` to start with a basic environment.
 
 ```{seealso}
 The information on this page covers the basics to get you started, for information about manually compiling assets, see [](topics/manual-dev.md).
@@ -192,7 +192,7 @@ test will fail. If we _expect_ the structure to differ, then delete the file on
 disk and run the test. A new file will be created, and subsequent tests will
 pass.
 
-To run the build tests with `nox`, run the following command:
+To run the build tests with `tox`, run the following command:
 
 ```console
 # this will compile the assets and run the tests (with test coverage)
