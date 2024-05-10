@@ -301,6 +301,46 @@ def test_sticky_header(sphinx_build_factory):
     assert index_html.select_one("body > .bd-header")
 
 
+def test_local_announcement_banner(sphinx_build_factory) -> None:
+    """If announcement is not a URL, it should be rendered at build time."""
+    confoverrides = {
+        "html_theme_options.announcement": "Hello, world!",
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="bd-header-announcement")
+
+    # Template should only render one announcement banner
+    assert len(results) == 1
+    banner = results[0]
+
+    # Announcement banner should contain the value from the config
+    assert banner.text.strip() == "Hello, world!"
+
+
+def test_remote_announcement_banner(sphinx_build_factory) -> None:
+    """If announcement is a URL, it should not be rendered at build time."""
+    confoverrides = {
+        "html_theme_options.announcement": "http://example.com/announcement",
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="bd-header-announcement")
+
+    # Template should only render one announcement banner
+    assert len(results) == 1
+    banner = results[0]
+
+    # Remote announcement banner URL should be stored as data attribute
+    assert banner["data-pst-announcement-url"] == "http://example.com/announcement"
+
+    # Remote announcement should be empty at build time (filled at run time)
+    assert not banner.find_all()
+
+    # Remote announcement banner should be inside the async banner revealer
+    assert "pst-async-banner-revealer" in banner.parent["class"]
+
+
 @pytest.mark.parametrize(
     "align,klass",
     [
