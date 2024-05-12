@@ -6,6 +6,47 @@
  * In the future, we might add dark theme support for specific packages.
  */
 
+// For both nbsphinx and MyST-NB, force light mode because many notebook outputs
+// do not support dark mode.
+
+.bd-content {
+  // nbsphinx
+  .nboutput,
+  // MyST-NB
+  .cell_output {
+    @include theme-colors("light");
+    @include sd-colors-for-mode("light");
+    color-scheme: light;
+    color: var(--pst-color-text-base);
+  }
+}
+
+// Dark theme special-cases
+html[data-theme="dark"] .bd-content {
+  @mixin cell-output-background {
+    background-color: var(--pst-color-background);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+  }
+
+  .nboutput {
+    .output_area {
+      @include cell-output-background;
+    }
+
+    .output_area.stderr {
+      background-color: var(--pst-color-danger);
+    }
+  }
+
+  div.cell_output {
+    img,
+    .text_html {
+      @include cell-output-background;
+    }
+  }
+}
+
 /*******************************************************************************
  * nbsphinx
  */
@@ -14,19 +55,6 @@ html div.rendered_html,
 html .jp-RenderedHTMLCommon {
   table {
     table-layout: auto;
-  }
-}
-
-// Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  .nboutput {
-    .output_area.rendered_html {
-      @include cell-output-background;
-    }
-
-    .output_area.stderr {
-      background-color: var(--pst-color-danger);
-    }
   }
 }
 
@@ -42,16 +70,6 @@ div.nblast.container {
 div.cell_output .output {
   max-width: 100%;
   overflow-x: auto;
-}
-
-// Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  div.cell_output {
-    img,
-    .text_html {
-      @include cell-output-background;
-    }
-  }
 }
 
 // Prevent tables from scrunching together

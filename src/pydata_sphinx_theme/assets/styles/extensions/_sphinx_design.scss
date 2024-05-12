@@ -78,35 +78,39 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
   --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
 }
 
+@mixin sd-colors-for-mode($mode) {
+  // check if this color is defined differently for light/dark
+  @each $name in $sd-semantic-color-names {
+    $definition: map-get($all-colors, $name);
+    @if type-of($definition) == map {
+      @each $key, $value in $definition {
+        @if str-index($key, $mode) != null {
+          // since now we define the bg colours in the semantic colours and not
+          // by changing opacity, we need to check if the key contains bg and the
+          // correct mode (light/dark)
+          @if str-index($key, "bg") != null {
+            --sd-color-#{$name}-bg: #{$value};
+            // create local variable
+            $bg-var: --sd-color-#{$name}-bg;
+            $value: check-color($value);
+            --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
+          } @else {
+            $value: check-color($value);
+            @include create-sd-colors($value, $name);
+          }
+        }
+      }
+    } @else {
+      $value: map-get($all-colors, $name);
+      @include create-sd-colors($value, $name);
+    }
+  }
+}
+
 // Now we override the --sd-color-* variables.
 @each $mode in (light, dark) {
   html[data-theme="#{$mode}"] {
-    // check if this color is defined differently for light/dark
-    @each $name in $sd-semantic-color-names {
-      $definition: map-get($all-colors, $name);
-      @if type-of($definition) == map {
-        @each $key, $value in $definition {
-          @if str-index($key, $mode) != null {
-            // since now we define the bg colours in the semantic colours and not
-            // by changing opacity, we need to check if the key contains bg and the
-            // correct mode (light/dark)
-            @if str-index($key, "bg") != null {
-              --sd-color-#{$name}-bg: #{$value};
-              // create local variable
-              $bg-var: --sd-color-#{$name}-bg;
-              $value: check-color($value);
-              --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
-            } @else {
-              $value: check-color($value);
-              @include create-sd-colors($value, $name);
-            }
-          }
-        }
-      } @else {
-        $value: map-get($all-colors, $name);
-        @include create-sd-colors($value, $name);
-      }
-    }
+    @include sd-colors-for-mode($mode);
   }
 }
 
