@@ -10,8 +10,8 @@ If you are comfortable with and prefer a more manual setup refer to the [](topic
 We follow a [typical GitHub workflow](https://guides.github.com/introduction/flow/)
 of:
 
-- create a personal fork of this repo
-- create a branch
+- create a personal fork and local clone of this repo
+- create a branch for your contribution
 - open a pull request
 - fix findings of various linters and checks
 - work through code review
@@ -38,7 +38,7 @@ You can clone it for local development like so:
 
 ## Install your tools
 
-Building a Sphinx site uses a combination of Python and Jinja to manage HTML, SCSS, and JavaScript.
+Building a Sphinx site uses a combination of Python and `Jinja` to manage `HTML`, `scss`, and `JavaScript`.
 To simplify this process, we use a few helper tools:
 
 - [The Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) compiles web assets in an automated way.
@@ -62,7 +62,7 @@ $ pip install tox
 ```
 
 You can call `tox` from the command line to perform common actions that are needed in building the theme.
-`tox` operates with isolated environments, so each action has its own packages installed in a local directory (`.tox`).
+`tox` operates with isolated environments, so each action has its packages installed in a local directory (`.tox`).
 For common development actions, you'll only need to use `tox` and won't need to set up any other packages.
 
 ### Setup `pre-commit`
@@ -109,7 +109,7 @@ $ tox run -e docs-dev
 
 This will install the necessary dependencies and build the documentation located in the `docs/` folder.
 The generated documentation will be placed in a `docs/_build/html` folder.
-If the docs have already been built, it will only re-build the pages that have been updated.
+If the docs have already been built, it will only rebuild the pages that have been updated.
 You can open one of the HTML files there to preview the documentation locally.
 
 Alternatively, you can invoke the built-in Python [http.server](https://docs.python.org/3/library/http.server.html#module-http.server) with:
@@ -137,7 +137,7 @@ These are then built and bundled with the theme (e.g., `scss` is turned into `cs
 To compile the CSS/JS assets with `tox`, run the following command:
 
 ```console
-$ tox -e run compile
+$ tox run -e compile
 ```
 
 This will compile all assets and place them in the appropriate folder to be used with documentation builds.
@@ -154,7 +154,7 @@ You can combine the above two actions (build the docs and compile JS/CSS assets)
 To run the development server with `tox`, run the following command:
 
 ```console
-$ tox -e run docs-live
+$ tox run -e docs-live
 ```
 
 When working on the theme, making changes to any of these directories:
@@ -196,24 +196,26 @@ To run the build tests with `tox`, run the following command:
 
 ```console
 # this will compile the assets and run the tests (with test coverage)
-$ tox -e run compile,tests
+# note the use of the `-m` flag vs. other commands in this guide
+$ tox run -m tests
 
-# to run the tests without pre-compiling the assets and without coverage (for example if you recently compiled the assets)
-$ tox -e run tests-no-cov
+# to run the tests only without pre-compiling the assets and without coverage (for example if you recently compiled the assets)
+$ tox run -e tests-no-cov
 ```
 
 To run the accessibility checks:
 
 ```console
-$ tox -e run compile,docs, a11y-tests
+# this will compile the assets, build the documentation, and run the accessibility tests
+$ tox run -m a11y
 
 # to run the tests without pre-compiling the assets and without re-building the docs (for example if you recently compiled the assets or built the docs)
-$ tox -e run a11y-tests
+$ tox run -e a11y-tests
 ```
 
-## GitHub codespaces
+## GitHub Codespaces
 
-If you have good internet connectivity and want a temporary set-up, it is often faster to work on PyData Sphinx Theme
-in a Codespaces environment. Once your Codespaces instance is set up, you can run the `tox` commands above to build
-the documentation, compile the assets, and run the tests.
+If you have good internet connectivity and want a temporary set-up, it is often faster to work on the PyData Sphinx Theme
+in a Codespaces environment.
+Once your Codespaces instance is set up, you can run the `tox` commands above to build the documentation, compile the assets, and run the tests.
 For documentation on how to get started with Codespaces, see [the Codespaces documentation](https://docs.github.com/en/codespaces).

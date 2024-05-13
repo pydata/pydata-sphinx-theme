@@ -18,7 +18,7 @@ This directory contains the Python tests for the theme. These tests are built wi
   In contrast to the build test suite, the accessibility suite checks components as
   they appear in the browser, meaning with any CSS and JavaScript applied. It does
   this by building the PyData Sphinx Theme docs, launching a local server to the
-  docs, then checking the "Kitchen Sink" example pages with
+  docs, and then checking the "Kitchen Sink" example pages with
   [Playwright](https://playwright.dev), a program for developers that allows
   loading and manipulating pages with various browsers, such as Chrome (chromium),
   Firefox (gecko), Safari (WebKit).
@@ -27,17 +27,17 @@ The ["Kitchen Sink" examples](https://pydata-sphinx-theme.readthedocs.io/en/stab
 are taken from [sphinx-themes.org](https://sphinx-themes.org/) and showcase
 components of the PyData Sphinx Theme, such as admonitions, lists, and headings.
 
-## visually debugging the test pages
+## Visually debugging the test pages
 
 It can be useful to build and inspect the test pages in the browser.
 
-By default `nox -s test` will build the html in a temporary directory.
+By default, `tox run -m tests` (or any other `tox` command that runs our tests) will build the HTML in a temporary directory.
 You can change this by using the `PST_TEST_HTML_DIR` environment variable.
 
 For example:
 
-```
-$ PST_TEST_HTML_DIR=./debug-test-theme/ nox -s test
+```bash
+$ PST_TEST_HTML_DIR=./debug-test-theme/ tox run -m tests
 ```
 
-Will save all the generated html in the folders `./debug-test-theme/<test-name>/<site-name>`
+Will save all the generated HTML in the folders `./debug-test-theme/<test-name>/<site-name>`

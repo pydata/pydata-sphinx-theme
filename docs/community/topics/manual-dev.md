@@ -2,7 +2,8 @@
 
 # Set up a manual development environment
 
-If you prefer not to use automation tools like `tox`, or want to have more control over the specific version of packages that you'd like installed, you may set your local development environment manually.
+If you prefer not to use automation tools like `tox`, or want to have more control over the specific version of packages that you'd like installed,
+you may set your local development environment manually.
 
 To do so, follow the instructions on this page.
 
