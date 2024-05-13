@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2023 ORGANIZATION
+# Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-21 07:30-0700\n"
+"POT-Creation-Date: 2024-04-29 13:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.0\n"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:53
+#: docs/conf.py:94
+msgid "Click to expand"
+msgstr ""
+
+#: docs/conf.py:95
+msgid "Click to collapse"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
 msgid "Skip to main content"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:64
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:51
 msgid "Back to top"
 msgstr ""
 
@@ -89,12 +97,8 @@ msgstr ""
 msgid "Last updated on %(last_updated)s."
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/navbar-nav.html:6
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/navbar-nav.html:7
-msgid "Site Navigation"
-msgstr ""
-
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/page-toc.html:8
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:43
 msgid "On this page"
 msgstr ""
 
@@ -140,5 +144,13 @@ msgid ""
 "Built with the <a href=\"https://pydata-sphinx-"
 "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:1
+msgid "Announcement"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
+msgid "Site navigation"
 msgstr ""
 

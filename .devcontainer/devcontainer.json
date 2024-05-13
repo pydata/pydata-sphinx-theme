@@ -5,7 +5,8 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/nox:2": {},
     "ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
-    "ghcr.io/rocker-org/devcontainer-features/pandoc:1": {}
+    "ghcr.io/rocker-org/devcontainer-features/pandoc:1": {},
+    "ghcr.io/devcontainers/features/node:1": {}
   },
   "postCreateCommand": "pre-commit install"
 }

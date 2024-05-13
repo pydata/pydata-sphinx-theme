@@ -3,7 +3,7 @@
 import copy
 import os
 import re
-from typing import Any, Dict, Iterator, List, Optional, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, Union
 
 from docutils.nodes import Node
 from sphinx.application import Sphinx
@@ -32,7 +32,9 @@ def config_provided_by_user(app: Sphinx, key: str) -> bool:
     return any(key in ii for ii in [app.config.overrides, app.config._raw_config])
 
 
-def traverse_or_findall(node: Node, condition: str, **kwargs) -> Iterator[Node]:
+def traverse_or_findall(
+    node: Node, condition: Union[Callable, type], **kwargs
+) -> Iterable[Node]:
     """Triage node.traverse (docutils <0.18.1) vs node.findall.
 
     TODO: This check can be removed when the minimum supported docutils version

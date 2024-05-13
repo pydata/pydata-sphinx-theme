@@ -212,6 +212,9 @@ def test_axe_core(
     # Run a line of JavaScript that sets the light/dark theme on the page
     page.evaluate(f"document.documentElement.dataset.theme = '{theme}'")
 
+    # Wait for CSS transitions (Bootstrap's transitions are 300 ms)
+    page.wait_for_timeout(301)
+
     # Inject the Axe-core JavaScript library into the page
     page.add_script_tag(path="node_modules/axe-core/axe.min.js")
 
@@ -240,3 +243,25 @@ def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
         light_mode = "rgb(10, 125, 145)"  # pst-color-primary
         # dark_mode = "rgb(63, 177, 197)"
         expect(entry).to_have_css("color", light_mode)
+
+
+def test_code_block_tab_stop(page: Page, url_base: str) -> None:
+    """Code blocks that have scrollable content should be tab stops."""
+    page.set_viewport_size({"width": 1440, "height": 720})
+    page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+    code_block = page.locator(
+        'css=#code-block pre[data-tabindex="0"]', has_text="from typing import Iterator"
+    )
+
+    # Viewport is wide, so code block content fits, no overflow, no tab stop
+    assert code_block.evaluate("el => el.scrollWidth > el.clientWidth") is False
+    assert code_block.evaluate("el => el.tabIndex") != 0
+
+    page.set_viewport_size({"width": 400, "height": 720})
+
+    # Resize handler is debounced with 300 ms wait time
+    page.wait_for_timeout(301)
+
+    # Narrow viewport, content overflows and code block should be a tab stop
+    assert code_block.evaluate("el => el.scrollWidth > el.clientWidth") is True
+    assert code_block.evaluate("el => el.tabIndex") == 0

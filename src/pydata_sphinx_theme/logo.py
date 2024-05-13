@@ -3,6 +3,7 @@
 we use one event to copy over custom logo images to _static
 and another even to link them in the html context
 """
+
 from functools import partial
 from pathlib import Path
 

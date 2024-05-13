@@ -31,3 +31,7 @@ $animation-time: 200ms;
 * UI shaping and padding
 */
 $admonition-border-radius: 0.25rem;
+
+// In this theme, some focus rings have rounded corners while others do not.
+// This variable sets the border radius for the rounded focus rings.
+$focus-ring-radius: 0.125rem; // 2px at 100% zoom and 16px base font.

@@ -6,12 +6,16 @@ button.btn.version-switcher__button {
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     margin-bottom: unset;
   }
-
-  @include link-style-hover;
-  @include focus-indicator;
+  &:hover {
+    box-shadow: 0 0 0 $focus-ring-width var(--pst-color-secondary);
+    border-color: transparent;
+  }
   &:active {
     color: var(--pst-color-text-base);
     border-color: var(--pst-color-border);
+  }
+  &:focus-visible {
+    border-color: transparent;
   }
 }
 
@@ -27,8 +31,8 @@ button.btn.version-switcher__button {
     &:not(:last-child) {
       border-bottom: 1px solid var(--pst-color-border);
     }
-    @include link-style-hover;
     &:hover {
+      @include link-style-hover;
       background-color: var(--pst-color-surface);
     }
     &.active {
@@ -45,6 +49,9 @@ button.btn.version-switcher__button {
         left: 0;
         top: 0;
       }
+    }
+    &:focus-visible {
+      z-index: 10; // keep focus ring on top (prevent the hover background of the next dropdown item from covering the ring)
     }
   }
 }
