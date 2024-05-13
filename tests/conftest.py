@@ -1,6 +1,7 @@
 """Configuration of the pytest session."""
 
 import re
+from os import environ
 from pathlib import Path
 from shutil import copytree
 from typing import Callable
@@ -65,11 +66,15 @@ class SphinxBuild:
 
 
 @pytest.fixture()
-def sphinx_build_factory(make_app: Callable, tmp_path: Path) -> Callable:
+def sphinx_build_factory(make_app: Callable, tmp_path: Path, request) -> Callable:
     """Return a factory builder pointing to the tmp directory."""
 
-    def _func(src_folder: Path, **kwargs) -> SphinxBuild:
+    def _func(src_folder: str, **kwargs) -> SphinxBuild:
         """Create the Sphinxbuild from the source folder."""
+        no_temp = environ.get("PST_TEST_HTML_DIR")
+        nonlocal tmp_path
+        if no_temp is not None:
+            tmp_path = Path(no_temp) / request.node.name / str(src_folder)
         srcdir = tmp_path / src_folder
         if sphinx.version_info < (7, 2):
             from sphinx.testing.path import path as sphinx_path
