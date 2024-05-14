@@ -502,7 +502,7 @@ function showVersionWarningBanner(data) {
   inner.classList = "sidebar-message";
   button.classList =
     "btn text-wrap font-weight-bold ms-3 my-1 align-baseline pst-button-link-to-stable-version";
-  button.href = getCurrentUrlPath();
+  button.href = `${preferredURL}${getCurrentUrlPath()}`;
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
   // add the version-dependent text
