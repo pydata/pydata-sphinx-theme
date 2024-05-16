@@ -597,18 +597,6 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
   }
 }
 
-/**
- * Fix bug #1603
- */
-function fixMoreLinksInMobileSidebar() {
-  const dropdown = document.querySelector(
-    ".bd-sidebar-primary [id^=pst-nav-more-links]",
-  );
-  if (dropdown !== null) {
-    dropdown.classList.add("show");
-  }
-}
-
 /*******************************************************************************
  * Add keyboard functionality to mobile sidebars.
  *
@@ -728,5 +716,4 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(fixMoreLinksInMobileSidebar);
 documentReady(setupLiteralBlockTabStops);
