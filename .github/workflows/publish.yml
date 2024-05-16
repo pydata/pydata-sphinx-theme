@@ -17,6 +17,9 @@ permissions:
 jobs:
   # calls our tests workflow
   tests:
+    permissions:
+      pull-requests: write
+      contents: write
     uses: ./.github/workflows/tests.yml
 
   build-package:
