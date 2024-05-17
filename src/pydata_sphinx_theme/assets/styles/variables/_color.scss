@@ -5,6 +5,10 @@
 * To see the full list of colors see https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1234%3A765&t=ifcFT1JtnrSshGfi-1
 */
 
+@use "sass:map";
+@use "sass:meta";
+@use "sass:string";
+
 /**
 * Function to get items from nested maps
 */
@@ -13,7 +17,7 @@
 // @return {*}
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {
-    $map: map-get($map, $key);
+    $map: map.get($map, $key);
   }
 
   @return $map;
@@ -266,13 +270,13 @@ $pst-semantic-colors: (
 @mixin theme-colors($mode) {
   // check if this color is defined differently for light/dark
   @each $col-name, $definition in $pst-semantic-colors {
-    @if type-of($definition) == map {
+    @if meta.type-of($definition) == map {
       @each $key, $val in $definition {
-        @if str-index($key, $mode) != null {
+        @if string.index($key, $mode) {
           // since now we define the bg colours in the semantic colours and not
           // by changing opacity, we need to check if the key contains bg and the
           // correct mode (light/dark)
-          @if str-index($key, "bg") != null {
+          @if string.index($key, "bg") {
             --pst-color-#{$col-name}-bg: #{$val};
           } @else {
             --pst-color-#{$col-name}: #{$val};

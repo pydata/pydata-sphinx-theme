@@ -40,13 +40,13 @@
     align-items: center;
   }
 
-  // Hide the header items on mobile
+  // Hide the navbar header items on mobile because they're in the sidebar
   .navbar-header-items {
     display: none;
     flex-shrink: 1;
 
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
-      display: flex;
+      display: inherit;
       flex-grow: 1;
       padding: 0 0 0 0.5rem;
     }
@@ -152,6 +152,41 @@
       }
     }
   }
+
+  // **************************************************************
+  // Showing and hiding the sidebar toggle buttons and header items
+  // **************************************************************
+
+  // Toggle buttons
+  button.sidebar-toggle {
+    display: flex;
+    cursor: pointer;
+    font-size: var(--pst-font-size-icon);
+    align-items: center;
+    color: var(--pst-color-muted);
+    margin-bottom: 0;
+    padding-bottom: 0.25rem;
+    background-color: inherit;
+    border: none;
+
+    @include icon-navbar-hover;
+  }
+
+  button.primary-toggle {
+    margin-right: 1rem;
+
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      display: none;
+    }
+  }
+
+  button.secondary-toggle {
+    margin-left: 1rem;
+
+    @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+      display: none;
+    }
+  }
 }
 
 // inline the element in the navbar as long as they fit and use display block when collapsing
@@ -181,55 +216,6 @@
   font-size: 0.7rem;
   padding-left: 2px;
   vertical-align: middle;
-}
-
-/**
- * Showing and hiding the sidebar toggle buttons and header items
- */
-
-// Hide the header items on mobile
-.bd-header {
-  // Toggle buttons
-  button {
-    &.sidebar-toggle {
-      display: flex;
-      cursor: pointer;
-      font-size: var(--pst-font-size-icon);
-      align-items: center;
-      color: var(--pst-color-muted);
-      margin-bottom: 0;
-      padding-bottom: 0.25rem;
-      background-color: inherit;
-      border: none;
-
-      @include icon-navbar-hover;
-    }
-
-    &.primary-toggle {
-      margin-right: 1rem;
-
-      @include media-breakpoint-up($breakpoint-sidebar-primary) {
-        display: none;
-      }
-    }
-
-    &.secondary-toggle {
-      margin-left: 1rem;
-
-      @include media-breakpoint-up($breakpoint-sidebar-secondary) {
-        display: none;
-      }
-    }
-  }
-
-  // Hide the navbar header items on mobile because they're in the sidebar
-  .navbar-header-items {
-    display: none;
-
-    @include media-breakpoint-up($breakpoint-sidebar-primary) {
-      display: inherit;
-    }
-  }
 }
 
 // THe elements next to the hamburger menu only show on narrow screens

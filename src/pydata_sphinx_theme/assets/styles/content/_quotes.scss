@@ -29,7 +29,7 @@ blockquote {
     color: var(--pst-color-inline-code-links);
   }
 
-  //hack to make the text in the blockquote selectable
+  // hack to make the text in the blockquote selectable
   &::before {
     z-index: -1;
   }
