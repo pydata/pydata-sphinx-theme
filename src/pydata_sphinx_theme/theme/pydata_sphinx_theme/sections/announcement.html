@@ -2,19 +2,9 @@
 {% set header_classes = ["bd-header-announcement", "container-fluid", "init"] %}
 {% set is_remote=theme_announcement.startswith("http") %}
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
-{%- if is_remote %}
 <script>
-document.write(`<aside class="bd-header-announcement d-print-none" aria-label="{{ banner_label }}"></aside>`);
-fetch("{{ theme_announcement }}")
-  .then(res => {return res.text();})
-  .then(data => {
-    if (data.length === 0) {
-      console.log("[PST]: Empty announcement at: {{ theme_announcement }}");
-      return;
-    }
-    div = document.querySelector(".bd-header-announcement");
-    div.classList.add(...{{ header_classes | tojson }});
-    div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
+function setAnnouncementHeight() {
+    const div = document.querySelector(".bd-header-announcement");
     // At least 3rem height
     const autoHeight = Math.min(
       div.offsetHeight,
@@ -36,15 +26,30 @@ fetch("{{ theme_announcement }}")
         div.style.setProperty("min-height", "3rem");
       }, 320);
     }, 10);
-  })
-  .catch(error => {
-    console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}");
-  });
+  }
+is_remote = {{ is_remote | tojson }};
+if (is_remote) {
+  document.write(`<aside class="bd-header-announcement d-print-none" aria-label="{{ banner_label }}"></aside>`);
+  fetch("{{ theme_announcement }}")
+    .then(res => {return res.text();})
+    .then(data => {
+      if (data.length === 0) {
+        console.log("[PST]: Empty announcement at: {{ theme_announcement }}");
+        return;
+      }
+      div = document.querySelector(".bd-header-announcement");
+      div.classList.add(...{{ header_classes | tojson }});
+      div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
+      setAnnouncementHeight();
+    })
+    .catch(error => {
+      console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}");
+    });
+} else {
+  document.write(`<aside class="{{ header_classes | join(' ') }} bd-header-announcement" aria-label="{{ banner_label }}">
+      <div class="bd-header-announcement__content">{{ theme_announcement }}</div>
+      </aside>`)
+  console.log("[PST]: Using local announcement.")
+  setAnnouncementHeight();
+}
 </script>
-{#- if announcement text is not remote, populate announcement w/ local content -#}
-{%- else %}
-  <aside class="{{ header_classes | join(' ') }} bd-header-announcement"
-         aria-label="{{ banner_label }}">
-    <div class="bd-header-announcement__content">{{ theme_announcement }}</div>
-  </aside>
-{% endif %}
