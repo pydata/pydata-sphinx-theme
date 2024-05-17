@@ -14,6 +14,7 @@
   // override bootstrap settings
   .nav-link {
     font-size: var(--pst-sidebar-font-size-mobile);
+
     @include media-breakpoint-up($breakpoint-sidebar-secondary) {
       font-size: var(--pst-sidebar-font-size);
     }

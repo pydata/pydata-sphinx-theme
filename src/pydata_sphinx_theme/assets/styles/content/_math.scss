@@ -11,6 +11,7 @@ div.math {
   align-items: center;
   display: flex;
   max-width: 100%;
+
   // This will be over-ridden for the y-direction and divs
   overflow: hidden;
 }
@@ -23,6 +24,7 @@ span.math {
 // Block-level only
 div.math {
   gap: 0.5em;
+
   // So that the eqno shows up after the equation
   flex-direction: row-reverse;
 

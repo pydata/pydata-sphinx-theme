@@ -15,6 +15,7 @@
   @each $key in $keys {
     $map: map-get($map, $key);
   }
+
   @return $map;
 }
 
@@ -98,22 +99,26 @@ $color-palette: (
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
 // 4.5 - is for text that is 14pt or less
 $min-contrast-ratio-4: 4.5;
+
 // 3 is for text that is 18pt or bold, or for non-text elements
 $min-contrast-ratio-3: 3;
 
 // Customize the light and dark text colors for use in our color contrast function.
 $foundation-black: #14181e;
-$foundation-white: #ffffff;
+$foundation-white: #fff;
+
 // This is a custom - calculated  color between gray 100 and 200 - to reduce
 // the contrast ratio (avoid a jarring effect)
 $base-light-text: #ced6dd;
+
 // used in sphinx_design - gray 100
 $foundation-light-gray: #f3f4f5;
+
 // used in sphinx_design - gray 700
 $foundation-muted-gray: #29313d;
+
 // used in sphinx_design - gray 800
 $foundation-dark-gray: #222832;
-
 $pst-semantic-colors: (
   "primary": (
     "light": #{map-deep-get($color-palette, "teal", "500")},
@@ -288,6 +293,7 @@ $pst-semantic-colors: (
     --pst-color-table-row-zebra-high-bg: var(--pst-color-on-background);
     --pst-color-table-row-zebra-low-bg: var(--pst-color-surface);
   }
+
   // adapt to light/dark-specific content
   @if $mode == "light" {
     .only-dark,
@@ -299,21 +305,24 @@ $pst-semantic-colors: (
     .only-light ~ figcaption {
       display: none !important;
     }
+
     /* Adjust images in dark mode (unless they have class .only-dark or
      * .dark-light, in which case assume they're already optimized for dark
      * mode).
      */
-    img:not(.only-dark):not(.dark-light) {
+    img:not(.only-dark, .dark-light) {
       filter: brightness(0.8) contrast(1.2);
     }
+
     /* Give images a light background in dark mode in case they have
     *  transparency and black text (unless they have class .only-dark or .dark-light, in
     *  which case assume they're already optimized for dark mode).
     */
-    .bd-content img:not(.only-dark):not(.dark-light) {
-      background-color: rgb(255, 255, 255);
+    .bd-content img:not(.only-dark, .dark-light) {
+      background-color: rgb(255 255 255);
       border-radius: 0.25rem;
     }
+
     // MathJax SVG outputs should be filled to same color as text.
     .MathJax_SVG * {
       fill: var(--pst-color-text-base);
@@ -332,6 +341,7 @@ html:not([data-theme]) {
 @each $mode in (light, dark) {
   html[data-theme="#{$mode}"] {
     @include theme-colors($mode);
+
     color-scheme: $mode;
   }
 }

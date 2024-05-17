@@ -10,6 +10,7 @@
   width: auto;
   margin: 0;
   display: flex;
+
   // Ensure that the logo stays the same length while other content shrinks
   flex-shrink: 0;
   align-items: center;
@@ -31,6 +32,7 @@
   &:hover,
   &:visited:hover {
     @include link-style-hover;
+
     color: var(--pst-color-text-base);
   }
 }

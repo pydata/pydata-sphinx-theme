@@ -36,10 +36,10 @@
       div.context,
       p.context {
         color: var(--pst-color-text-base);
-        margin: 0.5em 0 0 0;
+        margin: 0.5em 0 0;
 
         // Add a # before page section titles to make it clear they are sections
-        a:before {
+        a::before {
           content: "#";
           padding-right: 0.2em;
           color: var(--pst-color-text-muted);

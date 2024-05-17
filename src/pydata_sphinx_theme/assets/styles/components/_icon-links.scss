@@ -4,16 +4,17 @@
 
 .navbar-icon-links {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   column-gap: 1rem;
-  flex-wrap: wrap;
   justify-content: space-evenly;
 
   // Remove the padding so that we can define it with flexbox gap above
   li.nav-item a.nav-link {
     padding-left: 0;
     padding-right: 0;
+
     @include icon-navbar-hover;
+
     &:focus {
       color: inherit;
     }
@@ -36,15 +37,15 @@
     }
 
     /* Social media buttons hard-code the brand color */
-    &.fa-square-twitter:before {
+    &.fa-square-twitter::before {
       color: #55acee;
     }
 
-    &.fa-square-gitlab:before {
+    &.fa-square-gitlab::before {
       color: #548;
     }
 
-    &.fa-bitbucket:before {
+    &.fa-bitbucket::before {
       color: #0052cc;
     }
   }
