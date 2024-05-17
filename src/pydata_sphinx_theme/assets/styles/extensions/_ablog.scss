@@ -37,8 +37,7 @@
 
     // The ablog cloud should move horizontally
     &.ablog-cloud {
-      flex-direction: row;
-      flex-flow: wrap;
+      flex-flow: row wrap;
       gap: 0.5rem;
 
       // Vertical-align tag clouds

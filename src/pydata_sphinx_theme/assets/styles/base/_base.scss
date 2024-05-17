@@ -71,7 +71,7 @@ a {
   }
 }
 
-.heading-style {
+%heading-style {
   margin: 2.75rem 0 1.05rem;
   font-family: var(--pst-font-family-heading);
   font-weight: var(--pst-font-weight-heading);
@@ -79,7 +79,7 @@ a {
 }
 
 h1 {
-  @extend .heading-style;
+  @extend %heading-style;
 
   margin-top: 0;
   font-size: var(--pst-font-size-h1);
@@ -87,35 +87,35 @@ h1 {
 }
 
 h2 {
-  @extend .heading-style;
+  @extend %heading-style;
 
   font-size: var(--pst-font-size-h2);
   color: var(--pst-heading-color);
 }
 
 h3 {
-  @extend .heading-style;
+  @extend %heading-style;
 
   font-size: var(--pst-font-size-h3);
   color: var(--pst-heading-color);
 }
 
 h4 {
-  @extend .heading-style;
+  @extend %heading-style;
 
   font-size: var(--pst-font-size-h4);
   color: var(--pst-heading-color);
 }
 
 h5 {
-  @extend .heading-style;
+  @extend %heading-style;
 
   font-size: var(--pst-font-size-h5);
   color: var(--pst-color-text-base);
 }
 
 h6 {
-  @extend .heading-style;
+  @extend %heading-style;
 
   font-size: var(--pst-font-size-h6);
   color: var(--pst-color-text-base);
@@ -207,7 +207,7 @@ pre {
 }
 
 // Focus ring
-//
+// ----------
 // Note: The Bootstrap stylesheet provides the focus ring (customized by this
 // theme via Sass variables in _bootstrap.scss) in some cases. This rule covers
 // all other cases.

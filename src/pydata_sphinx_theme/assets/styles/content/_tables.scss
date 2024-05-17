@@ -47,7 +47,7 @@ td {
 .table {
   @include table-colors;
 
-  --bs-table-bg: transparent; //background
+  --bs-table-bg: transparent; // background
   --bs-table-color: var(
     --pst-color-text-base
   ); // ensure text and bullets are visible
