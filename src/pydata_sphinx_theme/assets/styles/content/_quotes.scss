@@ -1,6 +1,6 @@
 // GitHub blockquote style
 blockquote {
-  padding: 1em 1em;
+  padding: 1em;
   color: var(--pst-color-text-muted);
   border-left: 0.25em solid var(--pst-color-blockquote-notch);
   border-radius: $admonition-border-radius;
@@ -12,7 +12,7 @@ blockquote {
 
   // remove padding from included line-block to avoid duplication
   .line-block {
-    margin: 0 0;
+    margin: 0;
   }
 
   // remove margin bottom for the last p
@@ -21,6 +21,7 @@ blockquote {
   }
 
   @include legacy-backdrop-placeholder;
+
   background-color: var(--pst-color-surface);
 
   // Ensure there is enough contrast against the background
@@ -29,7 +30,7 @@ blockquote {
   }
 
   //hack to make the text in the blockquote selectable
-  &:before {
+  &::before {
     z-index: -1;
   }
 }

@@ -27,6 +27,7 @@
 
     p.prev-next-title {
       @include link-style-default;
+
       font-weight: var(--pst-admonition-font-weight-heading);
       font-size: 1.1em;
     }

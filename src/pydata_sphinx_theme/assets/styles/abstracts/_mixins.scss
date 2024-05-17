@@ -46,9 +46,11 @@
       &:nth-child(odd) {
         background-color: var(--pst-color-table-row-zebra-low-bg);
       }
+
       &:nth-child(even) {
         background-color: var(--pst-color-table-row-zebra-high-bg);
       }
+
       &:hover {
         background-color: var(--pst-color-table-row-hover-bg);
       }

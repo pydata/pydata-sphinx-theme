@@ -60,20 +60,23 @@ $extra-semantic-colors: (
   "dark": $foundation-dark-gray,
   "black": $foundation-black,
 );
-
 $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
 
 @mixin create-sd-colors($value, $name) {
   // define the pst variables, so that downstream user overrides will work
   --pst-color-#{$name}: #{$value};
+
   // we are now using a11y-combination to calculate the text color - this is based
   // on the WCAG color contrast guidelines
   --pst-color-#{$name}-text: #{a11y-combination($value)};
+
   //TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
   --pst-color-#{$name}-highlight: #{darken($value, 15%)};
+
   // override the sphinx-design variables
   --sd-color-#{$name}: var(--pst-color-#{$name});
   --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
+
   //TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
   --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
 }
@@ -84,6 +87,7 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
     // check if this color is defined differently for light/dark
     @each $name in $sd-semantic-color-names {
       $definition: map-get($all-colors, $name);
+
       @if type-of($definition) == map {
         @each $key, $value in $definition {
           @if str-index($key, $mode) != null {
@@ -92,18 +96,22 @@ $all-colors: map-merge($pst-semantic-colors, $extra-semantic-colors);
             // correct mode (light/dark)
             @if str-index($key, "bg") != null {
               --sd-color-#{$name}-bg: #{$value};
+
               // create local variable
               $bg-var: --sd-color-#{$name}-bg;
               $value: check-color($value);
+
               --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
             } @else {
               $value: check-color($value);
+
               @include create-sd-colors($value, $name);
             }
           }
         }
       } @else {
         $value: map-get($all-colors, $name);
+
         @include create-sd-colors($value, $name);
       }
     }
@@ -125,7 +133,7 @@ html[data-theme="light"] {
   .sd-shadow-sm,
   .sd-shadow-md,
   .sd-shadow-lg {
-    @include box-shadow();
+    @include box-shadow;
   }
 }
 
@@ -141,6 +149,7 @@ html[data-theme="light"] {
     background-color: var(--pst-color-panel-background);
     border-bottom: 1px solid var(--pst-color-border);
   }
+
   .sd-card-footer {
     background-color: var(--pst-color-panel-background);
     border-top: 1px solid var(--pst-color-border);
@@ -156,7 +165,7 @@ html[data-theme="light"] {
     outline: none;
 
     // Put the focus ring on the <a> element's ::after pseudo-element
-    &:after {
+    &::after {
       outline: $focus-ring-outline;
       border-radius: 0.25rem; // copied from Sphinx Design CSS for .sd-card
     }
@@ -166,6 +175,7 @@ html[data-theme="light"] {
     border-color: var(--pst-color-link-hover);
   }
 }
+
 /*******************************************************************************
   * tabs
   */
@@ -177,6 +187,7 @@ html[data-theme="light"] {
       border-style: solid solid none;
       border-color: var(--pst-color-primary) var(--pst-color-primary)
         transparent; // top LR bottom
+
       border-width: 0.125rem 0.125rem 0;
       border-radius: 0.125rem 0.125rem 0 0;
       background-color: var(--pst-color-on-background);
@@ -192,7 +203,7 @@ html[data-theme="light"] {
     }
 
     // Hover label
-    &:not(:checked):not(:focus-visible) + label:hover {
+    &:not(:checked, :focus-visible) + label:hover {
       border-color: transparent;
       color: var(--pst-color-secondary);
     }
@@ -202,7 +213,7 @@ html[data-theme="light"] {
   > label {
     color: var(--pst-color-on-surface);
     border: 0.125rem solid transparent;
-    border-radius: 0.125rem 0.125rem 0px 0px;
+    border-radius: 0.125rem 0.125rem 0 0;
     background-color: var(--pst-color-surface);
     padding: 0 0.75em;
     margin-inline-end: 0.25rem;
@@ -229,15 +240,18 @@ html[data-theme="light"] {
 
 details.sd-dropdown {
   // Remove all borders to over-ride SD behavior, and we'll add our own later
-  border: 0px !important;
+  border: 0 !important;
+
   summary.sd-card-header {
     border: 0 !important;
+
     & + div.sd-summary-content {
       border: 0;
     }
   }
+
   // Drop shadow should behave same as admonitions
-  @include box-shadow();
+  @include box-shadow;
 
   // Header is where the "clickable" box goes
   summary.sd-card-header {
@@ -253,13 +267,16 @@ details.sd-dropdown {
     // so that it is defined in both places
     --pst-sd-dropdown-color: var(--pst-gray-500);
     --pst-sd-dropdown-bg-color: var(--pst-color-surface);
+
     & + div.sd-summary-content {
       --pst-sd-dropdown-color: var(--sd-color-card-border);
     }
+
     @each $name in $sd-semantic-color-names {
       &.sd-bg-#{$name} {
         --pst-sd-dropdown-color: var(--sd-color-#{$name});
         --pst-sd-dropdown-bg-color: var(--sd-color-#{$name}-bg);
+
         // Otherwise it won't be defined in the sibling element
         & + div.sd-summary-content {
           --pst-sd-dropdown-color: var(--sd-color-#{$name});
@@ -273,19 +290,23 @@ details.sd-dropdown {
     }
 
     @include legacy-backdrop-placeholder;
+
     background-color: var(--pst-sd-dropdown-bg-color) !important;
 
     // Add a left border with the same structure as our admonitions
     border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
+
     & + div.sd-summary-content {
       border-left: 0.2rem solid var(--pst-sd-dropdown-color) !important;
       border-bottom-left-radius: calc(0.25rem - 1px);
       background-color: var(--pst-color-on-background);
     }
+
     span.sd-summary-icon {
       display: inline-flex;
       align-items: center;
       color: var(--pst-sd-dropdown-color) !important;
+
       svg {
         opacity: 1;
       }
@@ -316,6 +337,7 @@ html {
 
     &:hover {
       @include link-style-hover; // override Sphinx Design
+
       text-decoration-thickness: 1px;
     }
   }
