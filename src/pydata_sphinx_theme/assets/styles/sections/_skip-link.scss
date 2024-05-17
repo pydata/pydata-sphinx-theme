@@ -19,6 +19,7 @@
   // This shows / hides the button
   transform: translateY(-100%);
   transition: transform 150ms ease-in-out;
+
   &:focus-within {
     transform: translateY(0%);
   }

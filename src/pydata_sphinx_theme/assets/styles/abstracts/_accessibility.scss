@@ -22,6 +22,7 @@
 
   @each $fg in $foregrounds {
     $contrast-ratio: get-contrast-ratio($bg, $fg);
+
     @if $contrast-ratio >= $min-contrast-ratio {
       @return $fg;
     } @else if $contrast-ratio > $max-ratio {
@@ -29,8 +30,8 @@
       $max-ratio-color: $fg;
     }
   }
-  @warn "Found no color leading to #{$min-contrast-ratio}:1 contrast ratio against #{$bg}...";
 
+  @warn "Found no color leading to #{$min-contrast-ratio}:1 contrast ratio against #{$bg}...";
   @return $max-ratio-color;
 }
 

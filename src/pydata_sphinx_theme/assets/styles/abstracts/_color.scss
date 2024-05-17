@@ -8,7 +8,7 @@
 // We must add ::before pseudo-element to some theme components (such as admonitions)
 // because users were instructed to customize the background color this way.
 @mixin legacy-backdrop-placeholder {
-  &:before {
+  &::before {
     content: "";
     width: 100%;
     height: 100%;
@@ -16,6 +16,7 @@
     left: 0;
     top: 0;
     z-index: -1;
+
     // So that hovering over the text within background is still possible.
     // Otherwise the background overlays the text and you cannot click or select easily.
     // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events
@@ -33,6 +34,7 @@
   @each $key in $keys {
     $map: map-get($map, $key);
   }
+
   @return $map;
 }
 
@@ -47,6 +49,7 @@
   @if type-of($color) == string {
     $color: from-hex($color);
   }
+
   @return $color;
 }
 
@@ -99,8 +102,8 @@
   $hex: "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "a" "b" "c" "d" "e" "f";
   $string: to-lower-case($string);
   $length: str-length($string);
-
   $dec: 0;
+
   @for $i from 1 through $length {
     $factor: 1 + (15 * ($length - $i));
     $index: index($hex, str-slice($string, $i, $i));

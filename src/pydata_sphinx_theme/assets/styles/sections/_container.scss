@@ -10,6 +10,7 @@
 
 .bd-page-width {
   width: 100%;
+
   @include media-breakpoint-up(lg) {
     max-width: $breakpoint-page-width;
   }
