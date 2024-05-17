@@ -9,8 +9,4 @@ span.linenos,
 div.doctest > div.highlight span.gp {
   /* gp: Generic.Prompt */
   user-select: none;
-  user-select: text; /* Safari fallback only */
-  user-select: none; /* Chrome/Safari */
-  user-select: none; /* Firefox */
-  user-select: none; /* IE10+ */
 }
