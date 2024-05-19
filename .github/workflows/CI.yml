@@ -211,7 +211,7 @@ jobs:
           path: htmlcov
         if: ${{ failure() }}
 
-  profile:
+  profiling:
     needs: [build-site, run-pytest]
     runs-on: ubuntu-latest
     steps:
@@ -224,7 +224,7 @@ jobs:
           python-version: "3.11"
       - name: "Run profiling with py-spy 🕵️‍♂️"
         # profiling needs to be run as sudo
-        run: sudo python -Im tox run -e py311-profile-docs -- -o docbuild_profile.svg
+        run: python -m tox run -e py311-profile-docs -- -o docbuild_profile.svg
         continue-on-error: true
       - name: "Upload profiling data to GH artifacts 📤"
         uses: actions/upload-artifact@v4
