@@ -110,7 +110,10 @@
       button {
         display: unset;
         border: none;
-        @include link-style-hover;
+
+        &:hover {
+          @include link-style-hover;
+        }
       }
 
       .dropdown-menu {
@@ -154,7 +157,9 @@
 }
 
 .nav-link {
-  @include link-style-hover;
+  &:hover {
+    @include link-style-hover;
+  }
 
   // Override Bootstrap
   transition: none;

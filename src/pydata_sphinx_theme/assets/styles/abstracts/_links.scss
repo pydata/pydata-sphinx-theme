@@ -41,21 +41,18 @@ $link-hover-decoration-thickness: unquote("max(3px, .1875rem, .12em)") !default;
 @mixin link-decoration-hover {
   @if $link-hover-decoration-thickness {
     text-decoration-thickness: $link-hover-decoration-thickness;
-    // Disable ink skipping on underlines on hover. Browsers haven't
-    // standardised on this part of the spec yet, so set both properties
-    text-decoration-skip-ink: none; // Chromium, Firefox
-    text-decoration-skip: none; // Safari
+    // Disable ink skipping on underlines on hover.
+    text-decoration-skip-ink: none;
   }
 }
 
 // Simple hover style - can be used alone or in conjunction with other mixins
-// Add the text underline and change in thickness on hover
+// Add the text underline and change in thickness on hover.
+// Intended for use with the `:hover` pseudo-class.
 @mixin link-style-hover {
-  &:hover {
-    @include link-decoration;
-    @include link-decoration-hover;
-    color: var(--pst-color-link-hover);
-  }
+  @include link-decoration;
+  @include link-decoration-hover;
+  color: var(--pst-color-link-hover);
 }
 
 // Default link styles

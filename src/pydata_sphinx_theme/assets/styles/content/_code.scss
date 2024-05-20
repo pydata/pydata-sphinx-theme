@@ -12,6 +12,7 @@ div.literal-block-wrapper {
   flex-direction: column;
   width: unset;
   border-radius: $admonition-border-radius;
+  break-inside: avoid;
 }
 
 // Code blocks with captions

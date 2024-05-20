@@ -26,3 +26,18 @@ This directory contains the Python tests for the theme. These tests are built wi
 The ["Kitchen Sink" examples](https://pydata-sphinx-theme.readthedocs.io/en/stable/examples/kitchen-sink/index.html)
 are taken from [sphinx-themes.org](https://sphinx-themes.org/) and showcase
 components of the PyData Sphinx Theme, such as admonitions, lists, and headings.
+
+## visually debugging the test pages
+
+It can be useful to build and inspect the test pages in the browser.
+
+By default `nox -s test` will build the html in a temporary directory.
+You can change this by using the `PST_TEST_HTML_DIR` environment variable.
+
+For example:
+
+```
+$ PST_TEST_HTML_DIR=./debug-test-theme/ nox -s test
+```
+
+Will save all the generated html in the folders `./debug-test-theme/<test-name>/<site-name>`

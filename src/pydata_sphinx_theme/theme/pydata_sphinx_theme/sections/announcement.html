@@ -1,9 +1,10 @@
+{% set banner_label = _("Announcement") %}
 {% set header_classes = ["bd-header-announcement", "container-fluid", "init"] %}
 {% set is_remote=theme_announcement.startswith("http") %}
 {# If we are remote, add a script to make an HTTP request for the value on page load #}
 {%- if is_remote %}
 <script>
-document.write(`<div class="bd-header-announcement"></div>`);
+document.write(`<aside class="bd-header-announcement d-print-none" aria-label="{{ banner_label }}"></aside>`);
 fetch("{{ theme_announcement }}")
   .then(res => {return res.text();})
   .then(data => {
@@ -42,7 +43,8 @@ fetch("{{ theme_announcement }}")
 </script>
 {#- if announcement text is not remote, populate announcement w/ local content -#}
 {%- else %}
-  <div class="{{ header_classes | join(' ') }} bd-header-announcement">
+  <aside class="{{ header_classes | join(' ') }} bd-header-announcement"
+         aria-label="{{ banner_label }}">
     <div class="bd-header-announcement__content">{{ theme_announcement }}</div>
-  </div>
+  </aside>
 {% endif %}
