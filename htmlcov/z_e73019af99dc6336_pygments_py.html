@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for src/pydata_sphinx_theme/pygment.py: 95%</title>
+    <title>Coverage for src/pydata_sphinx_theme/pygments.py: 95%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
     <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
     <script src="coverage_html_cb_da166b87.js" defer></script>
@@ -11,7 +11,7 @@
 <header>
     <div class="content">
         <h1>
-            <span class="text">Coverage for </span><b>src/pydata_sphinx_theme/pygment.py</b>:
+            <span class="text">Coverage for </span><b>src/pydata_sphinx_theme/pygments.py</b>:
             <span class="pc_cov">95%</span>
         </h1>
         <aside id="help_panel_wrapper">
@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_e73019af99dc6336_short_link_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.5.1">coverage.py v7.5.1</a>,
-            created at 2024-05-21 15:34 +0000
+            created at 2024-05-21 17:14 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -82,7 +82,7 @@
     </div>
 </header>
 <main id="source">
-    <p class="pln"><span class="n"><a id="t1" href="#t1">1</a></span><span class="t"><span class="str">"""Handle pygment css.</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t1" href="#t1">1</a></span><span class="t"><span class="str">"""Handle Pygments css.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t2" href="#t2">2</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t3" href="#t3">3</a></span><span class="t"><span class="str">inspired by the Furo theme</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="str">https://github.com/pradyunsg/furo/blob/main/src/furo/__init__.py</span>&nbsp;</span><span class="r"></span></p>
@@ -159,7 +159,7 @@
     <p class="mis show_mis"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">            <span class="nam">fallback</span> <span class="op">=</span> <span class="nam">pygments_styles</span><span class="op">[</span><span class="num">0</span><span class="op">]</span>  <span class="com"># should resolve to "default"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t">        <span class="com"># see if user specified a light/dark pygments theme:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t78" href="#t78">78</a></span><span class="t">        <span class="nam">style_key</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">pygment_</span><span class="op">{</span><span class="nam">light_or_dark</span><span class="op">}</span><span class="fst">_style</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t78" href="#t78">78</a></span><span class="t">        <span class="nam">style_key</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">pygments_</span><span class="op">{</span><span class="nam">light_or_dark</span><span class="op">}</span><span class="fst">_style</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t79" href="#t79">79</a></span><span class="t">        <span class="nam">style_name</span> <span class="op">=</span> <span class="nam">theme_options</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">style_key</span><span class="op">,</span> <span class="key">None</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t80" href="#t80">80</a></span><span class="t">        <span class="com"># if not, use the one we set in `theme.conf`:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t81" href="#t81">81</a></span><span class="t">        <span class="key">if</span> <span class="nam">style_name</span> <span class="key">is</span> <span class="key">None</span> <span class="key">and</span> <span class="nam">hasattr</span><span class="op">(</span><span class="nam">app</span><span class="op">.</span><span class="nam">builder</span><span class="op">,</span> <span class="str">"theme"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -182,8 +182,8 @@
     <p class="run"><span class="n"><a id="t98" href="#t98">98</a></span><span class="t">            <span class="nam">dark_theme</span> <span class="op">=</span> <span class="nam">style_name</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t100" href="#t100">100</a></span><span class="t">    <span class="com"># re-write pygments.css</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">    <span class="nam">pygment_css</span> <span class="op">=</span> <span class="nam">Path</span><span class="op">(</span><span class="nam">app</span><span class="op">.</span><span class="nam">builder</span><span class="op">.</span><span class="nam">outdir</span><span class="op">)</span> <span class="op">/</span> <span class="str">"_static"</span> <span class="op">/</span> <span class="str">"pygments.css"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">    <span class="key">with</span> <span class="nam">pygment_css</span><span class="op">.</span><span class="nam">open</span><span class="op">(</span><span class="str">"w"</span><span class="op">)</span> <span class="key">as</span> <span class="nam">f</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">    <span class="nam">pygments_css</span> <span class="op">=</span> <span class="nam">Path</span><span class="op">(</span><span class="nam">app</span><span class="op">.</span><span class="nam">builder</span><span class="op">.</span><span class="nam">outdir</span><span class="op">)</span> <span class="op">/</span> <span class="str">"_static"</span> <span class="op">/</span> <span class="str">"pygments.css"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">    <span class="key">with</span> <span class="nam">pygments_css</span><span class="op">.</span><span class="nam">open</span><span class="op">(</span><span class="str">"w"</span><span class="op">)</span> <span class="key">as</span> <span class="nam">f</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">        <span class="nam">f</span><span class="op">.</span><span class="nam">write</span><span class="op">(</span><span class="nam">get_pygments_stylesheet</span><span class="op">(</span><span class="nam">light_theme</span><span class="op">,</span> <span class="nam">dark_theme</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
@@ -194,7 +194,7 @@
             <a class="nav" href="z_e73019af99dc6336_short_link_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.5.1">coverage.py v7.5.1</a>,
-            created at 2024-05-21 15:34 +0000
+            created at 2024-05-21 17:14 +0000
         </p>
     </div>
 </footer>
