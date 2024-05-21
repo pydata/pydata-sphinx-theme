@@ -704,7 +704,7 @@ function addTabStopsToScrollableElements() {
         "pre, " + // code blocks
           ".nboutput > .output_area, " + // NBSphinx notebook output
           ".cell_output > .output, " + // Myst-NB
-          ".jp-RenderedHTMLCommon" // ipywidgets
+          ".jp-RenderedHTMLCommon", // ipywidgets
       )
       .forEach((el) => {
         el.tabIndex =
