@@ -312,6 +312,18 @@ var setupSearchButtons = () => {
  */
 
 /**
+ * path component of URL
+ */
+var getCurrentUrlPath = () => {
+  if (DOCUMENTATION_OPTIONS.BUILDER == "dirhtml") {
+    return DOCUMENTATION_OPTIONS.pagename == "index"
+      ? `/`
+      : `${DOCUMENTATION_OPTIONS.pagename}/`;
+  }
+  return `${DOCUMENTATION_OPTIONS.pagename}.html`;
+};
+
+/**
  * Check if corresponding page path exists in other version of docs
  * and, if so, go there instead of the homepage of the other docs version
  *
@@ -320,7 +332,7 @@ var setupSearchButtons = () => {
 async function checkPageExistsAndRedirect(event) {
   // ensure we don't follow the initial link
   event.preventDefault();
-  let currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const currentFilePath = getCurrentUrlPath();
   let tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
   try {
@@ -372,7 +384,7 @@ async function fetchVersionSwitcherJSON(url) {
 
 // Populate the version switcher from the JSON data
 function populateVersionSwitcher(data, versionSwitcherBtns) {
-  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const currentFilePath = getCurrentUrlPath();
   versionSwitcherBtns.forEach((btn) => {
     // Set empty strings by default so that these attributes exist and can be used in CSS selectors
     btn.dataset["activeVersionName"] = "";
@@ -490,7 +502,7 @@ function showVersionWarningBanner(data) {
   inner.classList = "sidebar-message";
   button.classList =
     "btn text-wrap font-weight-bold ms-3 my-1 align-baseline pst-button-link-to-stable-version";
-  button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
+  button.href = `${preferredURL}${getCurrentUrlPath()}`;
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
   // add the version-dependent text
@@ -594,18 +606,6 @@ if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
     if (wantsWarningBanner) {
       showVersionWarningBanner(data);
     }
-  }
-}
-
-/**
- * Fix bug #1603
- */
-function fixMoreLinksInMobileSidebar() {
-  const dropdown = document.querySelector(
-    ".bd-sidebar-primary [id^=pst-nav-more-links]",
-  );
-  if (dropdown !== null) {
-    dropdown.classList.add("show");
   }
 }
 
@@ -728,5 +728,4 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(fixMoreLinksInMobileSidebar);
 documentReady(setupLiteralBlockTabStops);
