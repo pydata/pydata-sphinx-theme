@@ -212,6 +212,9 @@ def test_axe_core(
     # Run a line of JavaScript that sets the light/dark theme on the page
     page.evaluate(f"document.documentElement.dataset.theme = '{theme}'")
 
+    # Wait for CSS transitions (Bootstrap's transitions are 300 ms)
+    page.wait_for_timeout(301)
+
     # Inject the Axe-core JavaScript library into the page
     page.add_script_tag(path="node_modules/axe-core/axe.min.js")
 

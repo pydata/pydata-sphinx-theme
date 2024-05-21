@@ -69,7 +69,8 @@ input {
   width: 75%;
   flex-grow: 0.75;
   max-width: 350px;
-  transition: visibility $animation-time ease-out,
+  transition:
+    visibility $animation-time ease-out,
     margin $animation-time ease-out;
   visibility: hidden;
 

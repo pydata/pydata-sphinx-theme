@@ -6,7 +6,8 @@
  * A consistent box shadow style we apply across elements.
  */
 @mixin box-shadow() {
-  box-shadow: 0 0.2rem 0.5rem var(--pst-color-shadow),
+  box-shadow:
+    0 0.2rem 0.5rem var(--pst-color-shadow),
     0 0 0.0625rem var(--pst-color-shadow) !important;
 }
 
@@ -19,4 +20,38 @@
   background-color: var(--pst-color-text-base);
   border-radius: 0.25rem;
   padding: 0.5rem;
+}
+
+@mixin table-colors {
+  color: var(--pst-color-table);
+  border: 1px solid var(--pst-color-table-outer-border);
+
+  th,
+  td {
+    ~ th,
+    ~ td {
+      border-left: 1px solid var(--pst-color-table-inner-border);
+    }
+  }
+
+  thead {
+    tr {
+      background-color: var(--pst-color-table-heading-bg);
+      border-bottom: 2px solid var(--pst-color-primary);
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: var(--pst-color-table-row-zebra-low-bg);
+      }
+      &:nth-child(even) {
+        background-color: var(--pst-color-table-row-zebra-high-bg);
+      }
+      &:hover {
+        background-color: var(--pst-color-table-row-hover-bg);
+      }
+    }
+  }
 }

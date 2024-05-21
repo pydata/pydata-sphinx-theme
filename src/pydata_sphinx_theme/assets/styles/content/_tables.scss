@@ -4,6 +4,8 @@
 
 // ensure table will fit in the article width and make them y-scrollable
 table {
+  @include table-colors;
+
   display: table;
   overflow: auto;
 
@@ -46,6 +48,8 @@ td {
 
 // override bootstrap table colors
 .table {
+  @include table-colors;
+
   --bs-table-bg: transparent; //background
   --bs-table-color: var(
     --pst-color-text-base
