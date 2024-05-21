@@ -22,6 +22,7 @@ on:
 
 jobs:
   lint:
+    timeout-minutes: 3
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -39,6 +40,7 @@ jobs:
 
   # run our test suite on various combinations of OS / Python / Sphinx version
   run-pytest:
+    timeout-minutes: 10
     needs: [lint]
     strategy:
       fail-fast: false
@@ -152,6 +154,7 @@ jobs:
 
   # Build our site on the 3 major OSes and check for Sphinx warnings
   build-site:
+    timeout-minutes: 15
     needs: [lint]
     strategy:
       fail-fast: false
