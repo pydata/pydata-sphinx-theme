@@ -707,6 +707,11 @@ async function setupAnnouncementBanner() {
 
   try {
     const response = await fetch(pstAnnouncementUrl);
+    if (!response.ok) {
+      throw new Error(
+        `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`,
+      );
+    }
     const data = await response.text();
     if (data.length === 0) {
       console.log(`[PST]: Empty announcement at: ${pstAnnouncementUrl}`);
