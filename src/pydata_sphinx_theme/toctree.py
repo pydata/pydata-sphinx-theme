@@ -113,7 +113,7 @@ def add_toctree_functions(
         return next(get_or_create_id_generator(base_id))
 
     @cache
-    def _generate_nav_info(self) -> List[LinkInfo]:
+    def _generate_nav_info() -> List[LinkInfo]:
         """Generate informations necessary to generate nav.
 
         Instead of messing with html later, having this as a util function
@@ -216,19 +216,25 @@ def add_toctree_functions(
             raise ValueError(
                 f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
             )
-        links_data = _generate_nav_info(n_links_before_dropdown)
+        links_data = _generate_nav_info()
 
         links_html = []
+        boilerplate = """
+            <li class="nav-item pst-header-nav-item{active}">
+              <a class="nav-link nav-{ext_int}" href="{href}">
+                {title}
+              </a>
+            </li>
+            """
         for link in links_data:
             links_html.append(
                 dedent(
-                    f"""
-                <li class="nav-item pst-header-nav-item {"current active" if link.is_current else ""}">
-                  <a class="nav-link {"nav-external" if link.is_external else "nav-internal"}" href="{ link.href}">
-                    { link.title }
-                  </a>
-                </li>
-            """
+                    boilerplate.format(
+                        active=" current active" if link.is_current else "",
+                        ext_int="external" if link.is_external else "internal",
+                        href=link.href,
+                        title=link.title,
+                    )
                 )
             )
 
