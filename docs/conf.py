@@ -94,6 +94,11 @@ blog_authors = {
 togglebutton_hint = str(_("Click to expand"))
 togglebutton_hint_hide = str(_("Click to collapse"))
 
+# -- Sphinx-copybutton options ---------------------------------------------
+# Exclude copy button from appearing over notebook cell numbers by using :not()
+# The default copybutton selector is `div.highlight pre`
+# https://github.com/executablebooks/sphinx-copybutton/blob/master/sphinx_copybutton/__init__.py#L82
+copybutton_selector = ":not(.prompt) > div.highlight pre"
 
 # -- Options for HTML output -------------------------------------------------
 

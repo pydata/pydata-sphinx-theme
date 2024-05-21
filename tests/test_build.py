@@ -860,7 +860,7 @@ def test_math_header_item(sphinx_build_factory, file_regression) -> None:
         pytest.param(("fake_foo", "fake_bar"), ("#204a87", "#66d9ef"), id="fake"),
         pytest.param(
             ("a11y-high-contrast-light", "a11y-high-contrast-dark"),
-            ("#7928a1", "#dcc6e0"),
+            ("#6730c5", "#dcc6e0"),
             id="real",
         ),
     ),
