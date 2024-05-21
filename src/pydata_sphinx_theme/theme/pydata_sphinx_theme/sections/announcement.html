@@ -6,7 +6,11 @@
 <script>
 document.write(`<aside class="bd-header-announcement d-print-none" aria-label="{{ banner_label }}"></aside>`);
 fetch("{{ theme_announcement }}")
-  .then(res => {return res.text();})
+  .then(res => {
+    if (!res.ok){
+      throw new Error("Error loading announcement banner:\n" + res.status);
+    }
+    return res.text();})
   .then(data => {
     if (data.length === 0) {
       console.log("[PST]: Empty announcement at: {{ theme_announcement }}");
