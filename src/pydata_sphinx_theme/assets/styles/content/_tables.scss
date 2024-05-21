@@ -55,3 +55,9 @@ td {
     --pst-color-text-base
   ); // ensure text and bullets are visible
 }
+
+.pst-scrollable-table-container {
+  // This puts a scrollbar just below wide tables that overflow the main article
+  // column width
+  overflow-x: auto;
+}
