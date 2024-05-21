@@ -29,13 +29,11 @@ def update_config(app):
     # TODO: DEPRECATE after v1.0
     themes = ["light", "dark"]
     for theme in themes:
-        if theme_options.get(f"pygment_{theme}_style"):
-            theme_options[f"pygments_{theme}_style"] = theme_options.get(
-                f"pygment_{theme}_style"
-            )
+        if style := theme_options.get(f"pygment_{theme}_style"):
+            theme_options[f"pygments_{theme}_style"] = style
             warning(
-                f'The parameter "pygment_{theme}_style" was including a typo, please use '
-                f'"pygments_{theme}_style" instead.'
+                f'The parameter "pygment_{theme}_style" was renamed to '
+                f'"pygments_{theme}_style" (note the "s" on "pygments").'
             )
 
     # Validate icon links

@@ -880,8 +880,8 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
     warnings = sphinx_build.warnings.strip("\n").split("\n")
     warnings = [w.lstrip("\x1b[91m").rstrip("\x1b[39;49;00m\n") for w in warnings]
     expected_warnings = (
-        'The parameter "pygment_dark_style" was including a typo',
-        'The parameter "pygment_light_style" was including a typo',
+        'The parameter "pygment_dark_style" was renamed to',
+        'The parameter "pygment_light_style" was renamed to',
     )
     assert len(warnings) == len(expected_warnings)
     for exp_warn in expected_warnings:
