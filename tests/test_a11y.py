@@ -280,17 +280,24 @@ def test_notebook_output_tab_stop(page: Page, url_base: str) -> None:
     assert nb_output.evaluate("el => el.scrollWidth > el.clientWidth") is True
     assert nb_output.evaluate("el => el.tabIndex") == 0
 
-    # TODO: uncomment the following test code after #1760 is merged
 
-    # # An ipywidget notebook output
-    # ipywidget = page.locator("css=.jp-RenderedHTMLCommon").first
+@pytest.mark.fail(reason="fail until #1760 is merged")
+def test_notebook_output_tab_stop_1760(page: Page, url_base: str) -> None:
+    """# TODO: this was part of test_notebook_output_tab_stop.
 
-    # # As soon as the ipywidget is attached to the page it should trigger the
-    # # mutation observer, which has a 300 ms debounce
-    # ipywidget.wait_for(state="attached")
-    # page.wait_for_timeout(301)
+    I is now separated into it's own failing test until #1760 is merged.
+    """
+    page.goto(urljoin(url_base, "/examples/pydata.html"))
 
-    # # At the default viewport size (1280 x 720) the data table inside the
-    # # ipywidget has overflow
-    # assert ipywidget.evaluate("el => el.scrollWidth > el.clientWidth") is True
-    # assert ipywidget.evaluate("el => el.tabIndex") == 0
+    # An ipywidget notebook output
+    ipywidget = page.locator("css=.jp-RenderedHTMLCommon").first
+
+    # As soon as the ipywidget is attached to the page it should trigger the
+    # mutation observer, which has a 300 ms debounce
+    ipywidget.wait_for(state="attached")
+    page.wait_for_timeout(301)
+
+    # At the default viewport size (1280 x 720) the data table inside the
+    # ipywidget has overflow
+    assert ipywidget.evaluate("el => el.scrollWidth > el.clientWidth") is True
+    assert ipywidget.evaluate("el => el.tabIndex") == 0
