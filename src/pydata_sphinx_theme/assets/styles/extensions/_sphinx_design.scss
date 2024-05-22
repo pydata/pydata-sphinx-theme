@@ -100,7 +100,6 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
               --sd-color-#{$name}-bg: #{$value};
 
               // create local variable
-              $bg-var: var(--sd-color-#{$name}-bg);
               $value: check-color($value);
 
               --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
