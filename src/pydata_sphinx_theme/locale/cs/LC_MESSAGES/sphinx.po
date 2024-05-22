@@ -7,20 +7,7 @@
 # Jan Breuer <j123b567@jaybee.cz>, 2024
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-05-10 18:43+0200\n"
-"PO-Revision-Date: 2023-04-14 14:57+0000\n"
-"Last-Translator: Jan Breuer <j123b567@jaybee.cz>, 2024\n"
-"Language: cs\n"
-"Language-Team: Czech "
-"(https://app.transifex.com/12rambau/teams/166811/cs/)\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && "
-"n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.0\n"
+
 
 #: docs/conf.py:94
 msgid "Click to expand"
