@@ -281,7 +281,7 @@ def test_notebook_output_tab_stop(page: Page, url_base: str) -> None:
     assert nb_output.evaluate("el => el.tabIndex") == 0
 
 
-@pytest.mark.fail(reason="fail until #1760 is merged")
+@pytest.mark.xfail(reason="fail until #1760 is merged", strict=True)
 def test_notebook_output_tab_stop_1760(page: Page, url_base: str) -> None:
     """# TODO: this was part of test_notebook_output_tab_stop.
 
