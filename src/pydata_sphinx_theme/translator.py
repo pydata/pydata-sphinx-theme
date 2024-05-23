@@ -60,8 +60,16 @@ class BootstrapHTML5TranslatorMixin:
         if "align" in node:
             classes.append(f'table-{node["align"]}')
 
+        # put table within a scrollable container (for tables that are too wide)
+        self.body.append('<div class="pst-scrollable-table-container">')
+
         tag = self.starttag(node, "table", CLASS=" ".join(classes), **atts)
         self.body.append(tag)
+
+    def depart_table(self, node):
+        """Custom depart_table method to close the scrollable div we add in visit_table."""
+        super().depart_table(node)
+        self.body.append("</div>\n")
 
 
 def setup_translators(app: Sphinx):

@@ -52,3 +52,8 @@ repos:
     rev: "0.7.1"
     hooks:
       - id: nbstripout
+
+  - repo: https://github.com/mondeja/pre-commit-po-hooks
+    rev: v1.7.3
+    hooks:
+      - id: remove-metadata

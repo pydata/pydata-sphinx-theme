@@ -488,16 +488,13 @@ function showVersionWarningBanner(data) {
     return;
   }
   // now construct the warning banner
-  var outer = document.createElement("aside");
-  // TODO: add to translatable strings
-  outer.setAttribute("aria-label", "Version warning");
+  const banner = document.querySelector(".bd-header-version-warning");
   const middle = document.createElement("div");
   const inner = document.createElement("div");
   const bold = document.createElement("strong");
   const button = document.createElement("a");
   // these classes exist since pydata-sphinx-theme v0.10.0
   // the init class is used for animation
-  outer.classList = "bd-header-version-warning container-fluid init";
   middle.classList = "bd-header-announcement__content";
   inner.classList = "sidebar-message";
   button.classList =
@@ -522,35 +519,12 @@ function showVersionWarningBanner(data) {
   } else {
     bold.innerText = `version ${version}`;
   }
-  outer.appendChild(middle);
+  banner.appendChild(middle);
   middle.appendChild(inner);
   inner.appendChild(bold);
   inner.appendChild(document.createTextNode("."));
   inner.appendChild(button);
-  const skipLink = document.getElementById("pst-skip-link");
-  skipLink.after(outer);
-  // At least 3rem height
-  const autoHeight = Math.max(
-    outer.offsetHeight,
-    3 * parseFloat(getComputedStyle(document.documentElement).fontSize),
-  );
-  // Set height and vertical padding to 0 to prepare the height transition
-  outer.style.setProperty("height", 0);
-  outer.style.setProperty("padding-top", 0);
-  outer.style.setProperty("padding-bottom", 0);
-  outer.classList.remove("init");
-  // Set height to the computed height with a small timeout to activate the transition
-  setTimeout(() => {
-    outer.style.setProperty("height", `${autoHeight}px`);
-    // Wait for a bit more than 300ms (the transition duration) then remove the
-    // forcefully set styles and let CSS take over
-    setTimeout(() => {
-      outer.style.removeProperty("padding-top");
-      outer.style.removeProperty("padding-bottom");
-      outer.style.removeProperty("height");
-      outer.style.setProperty("min-height", "3rem");
-    }, 320);
-  }, 10);
+  banner.classList.remove("d-none");
 }
 
 /*******************************************************************************
@@ -584,27 +558,29 @@ function initRTDObserver() {
   observer.observe(document.body, config);
 }
 
-// fetch the JSON version data (only once), then use it to populate the version
-// switcher and maybe show the version warning bar
-var versionSwitcherBtns = document.querySelectorAll(
-  ".version-switcher__button",
-);
-const hasSwitcherMenu = versionSwitcherBtns.length > 0;
-const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
-  "theme_switcher_json_url",
-);
-const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
-
-if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
-  const data = await fetchVersionSwitcherJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url,
+async function fetchAndUseVersions() {
+  // fetch the JSON version data (only once), then use it to populate the version
+  // switcher and maybe show the version warning bar
+  var versionSwitcherBtns = document.querySelectorAll(
+    ".version-switcher__button",
   );
-  // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
-  // We don't really want the switcher and warning bar to silently not work.
-  if (data) {
-    populateVersionSwitcher(data, versionSwitcherBtns);
-    if (wantsWarningBanner) {
-      showVersionWarningBanner(data);
+  const hasSwitcherMenu = versionSwitcherBtns.length > 0;
+  const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
+    "theme_switcher_json_url",
+  );
+  const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
+
+  if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
+    const data = await fetchVersionSwitcherJSON(
+      DOCUMENTATION_OPTIONS.theme_switcher_json_url,
+    );
+    // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
+    // We don't really want the switcher and warning bar to silently not work.
+    if (data) {
+      populateVersionSwitcher(data, versionSwitcherBtns);
+      if (wantsWarningBanner) {
+        showVersionWarningBanner(data);
+      }
     }
   }
 }
@@ -752,8 +728,69 @@ if (document.readyState === "complete") {
 }
 
 /*******************************************************************************
+ * Announcement banner - fetch and load remote HTML
+ */
+async function setupAnnouncementBanner() {
+  const banner = document.querySelector(".bd-header-announcement");
+  const { pstAnnouncementUrl } = banner.dataset;
+
+  if (!pstAnnouncementUrl) {
+    return;
+  }
+
+  try {
+    const response = await fetch(pstAnnouncementUrl);
+    if (!response.ok) {
+      throw new Error(
+        `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`,
+      );
+    }
+    const data = await response.text();
+    if (data.length === 0) {
+      console.log(`[PST]: Empty announcement at: ${pstAnnouncementUrl}`);
+      return;
+    }
+    banner.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
+    banner.classList.remove("d-none");
+  } catch (_error) {
+    console.log(`[PST]: Failed to load announcement at: ${pstAnnouncementUrl}`);
+    console.error(_error);
+  }
+}
+
+/*******************************************************************************
+ * Reveal (and animate) the banners (version warning, announcement) together
+ */
+async function fetchRevealBannersTogether() {
+  // Wait until finished fetching and loading banners
+  await Promise.allSettled([fetchAndUseVersions(), setupAnnouncementBanner()]);
+
+  // The revealer element should have CSS rules that set height to 0, overflow
+  // to hidden, and an animation transition on the height (unless the user has
+  // turned off animations)
+  const revealer = document.querySelector(".pst-async-banner-revealer");
+
+  // Remove the d-none (display-none) class to calculate the children heights.
+  revealer.classList.remove("d-none");
+
+  // Add together the heights of the element's children
+  const height = Array.from(revealer.children).reduce(
+    (height, el) => height + el.offsetHeight,
+    0,
+  );
+
+  // Use the calculated height to give the revealer a non-zero height (if
+  // animations allowed, the height change will animate)
+  revealer.style.setProperty("height", `${height}px`);
+}
+
+/*******************************************************************************
  * Call functions after document loading.
  */
+
+// Call this one first to kick off the network request for the version warning
+// and announcement banner data as early as possible.
+documentReady(fetchRevealBannersTogether);
 documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
