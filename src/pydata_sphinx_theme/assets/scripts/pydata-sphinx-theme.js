@@ -333,9 +333,9 @@ var getCurrentUrlPath = () => {
 async function DismissBannerAndStorePref(event) {
   const banner = document.querySelector("#bd-header-version-warning");
   banner.remove();
-  let version = DOCUMENTATION_OPTIONS.VERSION;
-  let now = new Date();
-  let banner_pref = JSON.parse(localStorage.getItem("pst_banner_pref") || "{}");
+  const version = DOCUMENTATION_OPTIONS.VERSION;
+  const now = new Date();
+  const banner_pref = JSON.parse(localStorage.getItem("pst_banner_pref") || "{}");
   console.debug(
     `[PST] Dismissing the version warning banner on ${version} starting ${now}.`,
   );
@@ -432,7 +432,7 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
   var foundMatch = false;
   // create links to the corresponding page in the other docs versions
   data.forEach((entry) => {
-    // creaIPython – slow debuggerte the node
+    // create the node
     const anchor = document.createElement("a");
     anchor.setAttribute(
       "class",
@@ -522,7 +522,7 @@ function showVersionWarningBanner(data) {
     const timeout_in_days = 14;
     if (days_passed < timeout_in_days) {
       console.info(
-        `[PST] Suppressing version warning banner; was dismissed ${days_passed} day(s) ago`,
+        `[PST] Suppressing version warning banner; was dismissed ${Math.floor(days_passed)} day(s) ago`,
       );
       return;
     }
