@@ -10,9 +10,9 @@
 | src/pydata\_sphinx\_theme/pygments.py         |       45 |        1 |       18 |        2 |     95% |75, 87->92 |
 | src/pydata\_sphinx\_theme/short\_link.py      |       50 |        0 |       28 |        5 |     94% |48->43, 88->90, 93->114, 96->114, 106->114 |
 | src/pydata\_sphinx\_theme/toctree.py          |      226 |       12 |      120 |       15 |     92% |94-97, 101->exit, 215-216, 329, 336, 356->354, 359, 361->395, 378->382, 423->421, 444, 455, 491, 594, 613->601, 620 |
-| src/pydata\_sphinx\_theme/translator.py       |       48 |       19 |       18 |        2 |     50% |36, 62-85, 107-120 |
+| src/pydata\_sphinx\_theme/translator.py       |       52 |       22 |       18 |        2 |     49% |36, 62-88, 92-93, 115-128 |
 | src/pydata\_sphinx\_theme/utils.py            |       65 |        3 |       35 |        2 |     93% |24-27, 73->exit |
-|                                     **TOTAL** |  **626** |   **51** |  **298** |   **36** | **89%** |           |
+|                                     **TOTAL** |  **630** |   **54** |  **298** |   **36** | **89%** |           |
 
 
 ## Setup coverage badge
