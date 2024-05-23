@@ -286,7 +286,7 @@ def test_notebook_output_tab_stop(page: Page, url_base: str) -> None:
 def test_notebook_output_tab_stop_1760(page: Page, url_base: str) -> None:
     """# TODO: this was part of test_notebook_output_tab_stop.
 
-    I is now separated into it's own failing test until #1760 is merged.
+    It is now separated into its own failing test until #1760 is merged.
     """
     page.goto(urljoin(url_base, "/examples/pydata.html"))
 
