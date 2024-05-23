@@ -22,6 +22,8 @@ html_sourcelink_suffix = ""
 # Base options, we can add other key/vals later
 html_theme_options = {
     "surface_warnings": True,
+    "pygment_light_style": "monokai",
+    "pygment_dark_style": "tango",
 }
 
 html_sidebars = {"section1/index": ["sidebar-nav-bs.html"]}
