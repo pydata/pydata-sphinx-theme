@@ -10,6 +10,7 @@
 msgid ""
 msgstr ""
 
+
 #: docs/conf.py:94
 msgid "Click to expand"
 msgstr "Cliquez pour développer"
@@ -144,7 +145,11 @@ msgstr ""
 "theme.readthedocs.io/en/stable/index.html\">Thème PyData Sphinx</a> "
 "%(theme_version)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:1
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
+msgid "Version warning"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
 msgid "Announcement"
 msgstr "Annonce"
 
