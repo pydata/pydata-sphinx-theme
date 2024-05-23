@@ -44,12 +44,20 @@ For example, the following configuration tells the theme to load the ``custom-te
 Update or remove announcement banner
 ------------------------------------
 
-To update or remove the announcement banner, you can change the value of
-``html_theme_options["announcement"]`` in your ``conf.py`` or you can edit the
-contents of the ``custom-template.html`` file directly. For example, if you have a
-temporary announcement that you want to remove without rebuilding your
-documentation pages, you can use an empty ``custom-template.html`` file and the
-banner will be hidden.
+If you set ``html_theme_options["announcement"]`` to plain text or HTML, then to
+update the announcement banner you need to modify this string and rebuild your
+documentation pages. To remove the announcement banner, set this value to an
+empty string and rebuild your documentation pages.
+
+If you set ``html_theme_options["announcement"]`` to a URL string (starts with
+``http``), then you can edit the file at that URL to update the announcement
+banner. Saving an empty file at that URL will remove the announcement banner.
+That's the main advantage of using a URL--you can change the announcement banner
+without rebuilding and redeploying all of your documentation pages. For example,
+if you point the announcement to the URL of a file in your repo, as we do on
+this documentation site (see previous section), then you can edit, save and push
+your changes to just that file (empty file = remove announcement) without
+rebuilding and redeploying all your docs.
 
 .. _version-warning-banners:
 
