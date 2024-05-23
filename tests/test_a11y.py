@@ -276,8 +276,9 @@ def test_notebook_output_tab_stop(page: Page, url_base: str) -> None:
     nb_output = page.locator("css=#Pandas > .nboutput > .output_area")
 
     # At the default viewport size (1280 x 720) the Pandas data table has
-    # overflow
+    # overflow...
     assert nb_output.evaluate("el => el.scrollWidth > el.clientWidth") is True
+    # ... and so our js code on the page should make it keyboard-focusable (tabIndex = 0)
     assert nb_output.evaluate("el => el.tabIndex") == 0
 
 
@@ -298,6 +299,7 @@ def test_notebook_output_tab_stop_1760(page: Page, url_base: str) -> None:
     page.wait_for_timeout(301)
 
     # At the default viewport size (1280 x 720) the data table inside the
-    # ipywidget has overflow
+    # ipywidget has overflow...
     assert ipywidget.evaluate("el => el.scrollWidth > el.clientWidth") is True
+    # ... and so our js code on the page should make it keyboard-focusable (tabIndex = 0)
     assert ipywidget.evaluate("el => el.tabIndex") == 0
