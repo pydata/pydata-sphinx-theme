@@ -335,7 +335,9 @@ async function DismissBannerAndStorePref(event) {
   banner.remove();
   const version = DOCUMENTATION_OPTIONS.VERSION;
   const now = new Date();
-  const banner_pref = JSON.parse(localStorage.getItem("pst_banner_pref") || "{}");
+  const banner_pref = JSON.parse(
+    localStorage.getItem("pst_banner_pref") || "{}",
+  );
   console.debug(
     `[PST] Dismissing the version warning banner on ${version} starting ${now}.`,
   );
