@@ -781,7 +781,7 @@ async function fetchRevealBannersTogether() {
  * Call functions after document loading.
  */
 
-// Pass this one first to kick off the network request for the version warning
+// This one first to kick off the network request for the version warning
 // and announcement banner data as early as possible.
 documentReady(fetchRevealBannersTogether);
 
