@@ -749,6 +749,12 @@ async function fetchRevealBannersTogether() {
   // Use the calculated height to give the revealer a non-zero height (if
   // animations allowed, the height change will animate)
   revealer.style.setProperty("height", `${height}px`);
+
+  // Wait for a bit more than 300ms (the transition duration), then set height
+  // to auto so the banner can resize if the window is resized.
+  setTimeout(() => {
+    revealer.style.setProperty("height", "auto");
+  }, 320);
 }
 
 /*******************************************************************************
