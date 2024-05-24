@@ -2,7 +2,8 @@
 
 # Set up a manual development environment
 
-If you prefer not to use automation tools like `nox`, or want to have more control over the specific version of packages that you'd like installed, you may also manually set up a development environment locally.
+If you prefer not to use automation tools like `tox`, or want to have more control over the specific version of packages that you'd like installed,
+you may set your local development environment manually.
 
 To do so, follow the instructions on this page.
 
@@ -12,18 +13,12 @@ This is optional, but it's best to start with a fresh development environment so
 
 To do so, use a tool like [conda](https://docs.conda.io/en/latest/), [mamba](https://github.com/mamba-org/mamba), or [virtualenv](https://virtualenv.pypa.io/).
 
-## Install dependencies
+## Pre-requisites
 
-You must install `sphinx-theme-builder` and Pandoc.
+Before you start, ensure that you have the following installed:
 
-We use the `sphinx-theme-builder` to install `nodejs` locally and to compile all CSS and JS assets needed for the theme.
-Install it like so (note the `cli` option so that we can run it from the command line):
-
-```console
-$ pip install "sphinx-theme-builder[cli]"
-```
-
-We use `nbsphinx` to support notebook (.ipynb) files in the documentation, which requires [installing Pandoc](https://pandoc.org/installing.html) at a system level (or within a Conda environment).
+- Python >= 3.9
+- [Pandoc](https://pandoc.org/installing.html): we use `nbsphinx` to support notebook (.ipynb) files in the documentation, which requires [installing Pandoc](https://pandoc.org/installing.html) at a system level (or within a Conda environment).
 
 ## Clone the repository locally
 

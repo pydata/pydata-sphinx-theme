@@ -68,9 +68,8 @@
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
 
-  {%- if theme_announcement -%}
-    {% include "sections/announcement.html" %}
-  {%- endif %}
+  {% include "sections/announcement.html" %}
+
   {% block docs_navbar %}
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
       {%- include "sections/header.html" %}
