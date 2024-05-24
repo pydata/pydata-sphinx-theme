@@ -707,7 +707,7 @@ function addTabStopsToScrollableElements() {
     childList: true,
   });
 
-  // On page load (or whenever this function gets called)
+  // On page load (when this function gets called)
   updateTabStops();
 }
 function debounce(callback, wait) {
