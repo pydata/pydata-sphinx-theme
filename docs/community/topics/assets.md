@@ -18,7 +18,7 @@ site after upgrading the theme.
 To compile the assets and bundle them with the theme, run this command:
 
 ```console
-$ nox -s compile
+$ tox -e run compile
 ```
 
 ## Styles (SCSS) and Scripts (JS)
