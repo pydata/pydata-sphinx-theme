@@ -719,6 +719,7 @@ function debounce(callback, wait) {
     }, wait);
   };
 }
+
 // Determining whether an element has scrollable content depends on stylesheets,
 // so we're checking for the "load" event rather than "DOMContentLoaded"
 if (document.readyState === "complete") {
@@ -798,7 +799,3 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
-
-// Use load event because determining whether an element has scrollable content
-// depends on stylesheets (which come after DOMContentLoaded)
-window.addEventListener("load", addTabStopsToScrollableElements);
