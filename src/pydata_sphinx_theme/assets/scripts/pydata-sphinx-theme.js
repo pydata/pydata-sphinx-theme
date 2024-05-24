@@ -720,14 +720,6 @@ function debounce(callback, wait) {
   };
 }
 
-// Determining whether an element has scrollable content depends on stylesheets,
-// so we're checking for the "load" event rather than "DOMContentLoaded"
-if (document.readyState === "complete") {
-  addTabStopsToScrollableElements();
-} else {
-  window.addEventListener("load", addTabStopsToScrollableElements);
-}
-
 /*******************************************************************************
  * Announcement banner - fetch and load remote HTML
  */
@@ -799,3 +791,11 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
+
+// Determining whether an element has scrollable content depends on stylesheets,
+// so we're checking for the "load" event rather than "DOMContentLoaded"
+if (document.readyState === "complete") {
+  addTabStopsToScrollableElements();
+} else {
+  window.addEventListener("load", addTabStopsToScrollableElements);
+}
