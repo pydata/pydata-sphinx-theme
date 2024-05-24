@@ -44,8 +44,16 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: ["ubuntu-latest", "macos-latest", "macos-14", "windows-latest"]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        # macos-14==latest
+        os:
+          [
+            "ubuntu-latest",
+            "ubuntu-24.04",
+            "macos-14",
+            "macos-13",
+            "windows-latest",
+          ]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
