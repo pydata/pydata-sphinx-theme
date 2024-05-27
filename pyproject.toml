@@ -1,5 +1,7 @@
 [build-system]
-requires = ["sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip"]
+requires = [
+  "sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip",
+]
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
@@ -10,7 +12,7 @@ additional-compiled-static-assets = [
   "vendor/",
   "styles/bootstrap.css",
   "scripts/bootstrap.js",
-  "locale/"
+  "locale/",
 ]
 
 [project]
@@ -27,7 +29,7 @@ dependencies = [
   "Babel",
   "pygments>=2.7",
   "accessible-pygments",
-  "typing-extensions"
+  "typing-extensions",
 ]
 license = { file = "LICENSE" }
 maintainers = [
@@ -52,7 +54,7 @@ classifiers = [
 [project.optional-dependencies]
 doc = [
   "numpydoc",
-  "linkify-it-py", # for link shortening
+  "linkify-it-py",         # for link shortening
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
@@ -76,10 +78,18 @@ doc = [
   "nbsphinx",
   "ipyleaflet",
   "colorama",
-  "ipywidgets"
+  "ipywidgets",
+  "graphviz",
 ]
 test = ["pytest", "pytest-cov", "pytest-regressions", "sphinx[test]"]
-dev = ["pyyaml", "pre-commit", "pydata-sphinx-theme[doc,test]", "tox", "pandoc", "sphinx-theme-builder[cli]"]
+dev = [
+  "pyyaml",
+  "pre-commit",
+  "pydata-sphinx-theme[doc,test]",
+  "tox",
+  "pandoc",
+  "sphinx-theme-builder[cli]",
+]
 a11y = ["pytest-playwright"]
 i18n = ["Babel", "jinja2"]
 
