@@ -12,7 +12,7 @@
   }
 }
 
-.bd-header-version-warning,
+#bd-header-version-warning,
 .bd-header-announcement {
   min-height: 3rem;
   width: 100%;
@@ -69,6 +69,6 @@
   background-color: var(--pst-color-secondary-bg);
 }
 
-.bd-header-version-warning {
+#bd-header-version-warning {
   background-color: var(--pst-color-danger-bg);
 }

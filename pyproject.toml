@@ -78,9 +78,10 @@ doc = [
   "colorama",
   "ipywidgets"
 ]
-test = ["pytest", "pytest-cov", "pytest-regressions"]
-dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]"]
+test = ["pytest", "pytest-cov", "pytest-regressions", "sphinx[test]"]
+dev = ["pyyaml", "pre-commit", "pydata-sphinx-theme[doc,test]", "tox", "pandoc", "sphinx-theme-builder[cli]"]
 a11y = ["pytest-playwright"]
+i18n = ["Babel", "jinja2"]
 
 [project.entry-points]
 "sphinx.html_themes" = { pydata_sphinx_theme = "pydata_sphinx_theme" }
@@ -124,4 +125,9 @@ branch = true
 relative_files = true
 
 [tool.coverage.report]
-fail_under = 60
+fail_under = 80
+show_missing = true
+skip_covered = true
+
+[tool.coverage.paths]
+source = ["src", ".tox/py*/**/site-packages"]

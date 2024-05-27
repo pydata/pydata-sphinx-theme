@@ -1,7 +1,7 @@
 {#- The "revealer" allows async banners to be loaded, revealed, and animated together in a controlled way -#}
 <div class="pst-async-banner-revealer d-none">
 {#- Version warning banner is always loaded remotely/asynchronously #}
-  <aside class="bd-header-version-warning d-none d-print-none" aria-label="{{ _('Version warning') }}"></aside>
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="{{ _('Version warning') }}"></aside>
 {#- But the announcement banner might be loaded locally or remotely -#}
 {%- set announcement_banner_label = _("Announcement") -%}
 {%- set announcement_banner_classes = "bd-header-announcement d-print-none" -%}

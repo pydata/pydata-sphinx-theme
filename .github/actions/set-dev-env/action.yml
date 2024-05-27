@@ -1,0 +1,32 @@
+name: Setup PST CI environment
+description: Create a PST dev environment
+
+inputs:
+  python-version:
+    description: Default Python version to use if none is specified
+    required: false
+    default: "3.12"
+  pandoc:
+    description: Whether this should install pandoc or not
+    required: false
+    default: "False"
+
+runs:
+  using: composite
+  steps:
+    - name: "Setup Python 🐍"
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: "pip"
+        cache-dependency-path: "pyproject.toml"
+        allow-prereleases: true
+
+    - run: python -Im pip install tox-uv
+      shell: bash
+
+    # waiting for https://github.com/nikeee/setup-pandoc/pull/8
+    # using 12rambau fork until then
+    - name: "Install pandoc 📝"
+      uses: 12rambau/setup-pandoc@test
+      if: ${{ inputs.pandoc }} == true
