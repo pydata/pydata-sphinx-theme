@@ -5,9 +5,9 @@ Graphviz
 Inheritance Diagram
 -------------------
 
-Using :mod:`sphinx.ext.inheritance_diagram`, inheritance diagrams can be generated
-through :mod:`sphinx.ext.graphviz`.  If the output of the inheritance diagrams are
-in SVG format, they can be made to conform to light or dark mode.
+If you use :mod:`sphinx.ext.inheritance_diagram` to generate inheritance diagrams with
+:mod:`sphinx.ext.graphviz`, and you output the inheritance diagrams in SVG format,
+they will automatically adapt to this theme's light or dark mode.
 
 To have the inheritance-diagram render to SVG, inside ``conf.py``, you need
 the following option.
@@ -19,7 +19,8 @@ the following option.
     graphviz_output_format = 'svg'
     ...
 
-Below is an example of the inheritance diagram for ``matplotlib.figure.Figure``
+Below is an example of the inheritance diagram for ``matplotlib.figure.Figure``.
+Try toggling light/dark mode to see it adapt!
 
 .. inheritance-diagram:: matplotlib.figure.Figure
 
