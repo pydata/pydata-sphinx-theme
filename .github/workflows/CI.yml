@@ -145,6 +145,19 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
+      - name: "Install Graphviz on Windows 🗔"
+        if: runner.os == 'Windows'
+        run: choco install graphviz
+      - name: "Install Graphviz on macOS "
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          brew install graphviz
+      - name: "Install Graphviz on Linux 🐧"
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends graphviz
       - name: "Build docs and check for warnings 📖"
         shell: bash
         run: |
