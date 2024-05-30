@@ -52,10 +52,6 @@ back-to-top
 ```
 
 ```{toctree}
-
-```
-
-```{toctree}
 :caption: Content and features
 theme-elements
 ablog
