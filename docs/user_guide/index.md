@@ -48,6 +48,10 @@ version-dropdown
 search
 keyboard-shortcuts
 i18n
+back-to-top
+```
+
+```{toctree}
 ```
 
 ```{toctree}
