@@ -36,7 +36,7 @@
 
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
-  <div id="pst-skip-link" class="skip-link"><a href="#main-content">{{ _("Skip to main content") }}</a></div>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">{{ _("Skip to main content") }}</a></div>
 
 {%- endblock %}
 
@@ -68,11 +68,10 @@
     <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
   </div>
 
-  {%- if theme_announcement -%}
-    {% include "sections/announcement.html" %}
-  {%- endif %}
+  {% include "sections/announcement.html" %}
+
   {% block docs_navbar %}
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
       {%- include "sections/header.html" %}
     </header>
   {% endblock docs_navbar %}
@@ -94,7 +93,7 @@
           <div class="bd-content">
             <div class="bd-article-container">
               {# Article header #}
-              <div class="bd-header-article">{% include "sections/header-article.html" %}</div>
+              <div class="bd-header-article d-print-none">{% include "sections/header-article.html" %}</div>
               {# Article content #}
               {% block docs_body %}
               {# This is empty and only shows up if text has been highlighted by the URL #}
@@ -111,7 +110,7 @@
               {% endif %}
               {# prev-next buttons #}
               {% if theme_show_prev_next %}
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   {% include "components/prev-next.html" %}
                 </footer>
               {% endif %}

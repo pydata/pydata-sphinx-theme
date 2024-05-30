@@ -142,7 +142,7 @@ function scrollToActive() {
   // Inspired on source of revealjs.com
   let storedScrollTop = parseInt(
     sessionStorage.getItem("sidebar-scroll-top"),
-    10
+    10,
   );
 
   if (!isNaN(storedScrollTop)) {
@@ -194,7 +194,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search"
+        "div:not(.search-button__search-container) > form.bd-search",
       );
     }
     return form.querySelector("input");
@@ -255,7 +255,7 @@ var addEventListenerForSearchKeyboard = () => {
         toggleSearchField();
       }
     },
-    true
+    true,
   );
 };
 
@@ -278,7 +278,7 @@ var changeSearchShortcutKey = () => {
   let shortcuts = document.querySelectorAll(".search-button__kbd-shortcut");
   if (useCommandKey) {
     shortcuts.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘"),
     );
   }
 };
@@ -312,6 +312,40 @@ var setupSearchButtons = () => {
  */
 
 /**
+ * path component of URL
+ */
+var getCurrentUrlPath = () => {
+  if (DOCUMENTATION_OPTIONS.BUILDER == "dirhtml") {
+    return DOCUMENTATION_OPTIONS.pagename == "index"
+      ? `/`
+      : `${DOCUMENTATION_OPTIONS.pagename}/`;
+  }
+  return `${DOCUMENTATION_OPTIONS.pagename}.html`;
+};
+
+/**
+ * Allow user to dismiss the warning banner about the docs version being dev / old.
+ * We store the dismissal date and version, to give us flexibility about making the
+ * dismissal last for longer than one browser session, if we decide to do that.
+ *
+ * @param {event} event the event that trigger the check
+ */
+async function DismissBannerAndStorePref(event) {
+  const banner = document.querySelector("#bd-header-version-warning");
+  banner.remove();
+  const version = DOCUMENTATION_OPTIONS.VERSION;
+  const now = new Date();
+  const banner_pref = JSON.parse(
+    localStorage.getItem("pst_banner_pref") || "{}",
+  );
+  console.debug(
+    `[PST] Dismissing the version warning banner on ${version} starting ${now}.`,
+  );
+  banner_pref[version] = now;
+  localStorage.setItem("pst_banner_pref", JSON.stringify(banner_pref));
+}
+
+/**
  * Check if corresponding page path exists in other version of docs
  * and, if so, go there instead of the homepage of the other docs version
  *
@@ -320,7 +354,7 @@ var setupSearchButtons = () => {
 async function checkPageExistsAndRedirect(event) {
   // ensure we don't follow the initial link
   event.preventDefault();
-  let currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const currentFilePath = getCurrentUrlPath();
   let tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
   try {
@@ -372,7 +406,7 @@ async function fetchVersionSwitcherJSON(url) {
 
 // Populate the version switcher from the JSON data
 function populateVersionSwitcher(data, versionSwitcherBtns) {
-  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const currentFilePath = getCurrentUrlPath();
   versionSwitcherBtns.forEach((btn) => {
     // Set empty strings by default so that these attributes exist and can be used in CSS selectors
     btn.dataset["activeVersionName"] = "";
@@ -404,7 +438,7 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
     const anchor = document.createElement("a");
     anchor.setAttribute(
       "class",
-      "dropdown-item list-group-item list-group-item-action py-1"
+      "dropdown-item list-group-item list-group-item-action py-1",
     );
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
     anchor.setAttribute("role", "option");
@@ -464,7 +498,7 @@ function showVersionWarningBanner(data) {
   if (preferredEntries.length !== 1) {
     const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
     console.log(
-      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`,
     );
     return;
   }
@@ -473,26 +507,50 @@ function showVersionWarningBanner(data) {
   // if already on preferred version, nothing to do
   const versionsAreComparable = validate(version) && validate(preferredVersion);
   if (versionsAreComparable && compare(version, preferredVersion, "=")) {
+    console.log(
+      "This is the prefered version of the docs, not showing the warning banner.",
+    );
     return;
   }
+  // check if banner has been dismissed recently
+  const dismiss_date_str = JSON.parse(
+    localStorage.getItem("pst_banner_pref") || "{}",
+  )[version];
+  if (dismiss_date_str != null) {
+    const dismiss_date = new Date(dismiss_date_str);
+    const now = new Date();
+    const milliseconds_in_a_day = 24 * 60 * 60 * 1000;
+    const days_passed = (now - dismiss_date) / milliseconds_in_a_day;
+    const timeout_in_days = 14;
+    if (days_passed < timeout_in_days) {
+      console.info(
+        `[PST] Suppressing version warning banner; was dismissed ${Math.floor(days_passed)} day(s) ago`,
+      );
+      return;
+    }
+  }
+
   // now construct the warning banner
-  var outer = document.createElement("aside");
-  // TODO: add to translatable strings
-  outer.setAttribute("aria-label", "Version warning");
+  const banner = document.querySelector("#bd-header-version-warning");
   const middle = document.createElement("div");
   const inner = document.createElement("div");
   const bold = document.createElement("strong");
   const button = document.createElement("a");
+  const close_btn = document.createElement("a");
   // these classes exist since pydata-sphinx-theme v0.10.0
   // the init class is used for animation
-  outer.classList = "bd-header-version-warning container-fluid init";
-  middle.classList = "bd-header-announcement__content";
+  middle.classList = "bd-header-announcement__content  ms-auto me-auto";
   inner.classList = "sidebar-message";
   button.classList =
     "btn text-wrap font-weight-bold ms-3 my-1 align-baseline pst-button-link-to-stable-version";
-  button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
+  button.href = `${preferredURL}${getCurrentUrlPath()}`;
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
+  close_btn.classList = "ms-3 my-1 align-baseline";
+  const close_x = document.createElement("i");
+  close_btn.append(close_x);
+  close_x.classList = "fa-solid fa-xmark";
+  close_btn.onclick = DismissBannerAndStorePref;
   // add the version-dependent text
   inner.innerText = "This is documentation for ";
   const isDev =
@@ -510,35 +568,13 @@ function showVersionWarningBanner(data) {
   } else {
     bold.innerText = `version ${version}`;
   }
-  outer.appendChild(middle);
+  banner.appendChild(middle);
+  banner.append(close_btn);
   middle.appendChild(inner);
   inner.appendChild(bold);
   inner.appendChild(document.createTextNode("."));
   inner.appendChild(button);
-  const skipLink = document.getElementById("pst-skip-link");
-  skipLink.after(outer);
-  // At least 3rem height
-  const autoHeight = Math.max(
-    outer.offsetHeight,
-    3 * parseFloat(getComputedStyle(document.documentElement).fontSize)
-  );
-  // Set height and vertical padding to 0 to prepare the height transition
-  outer.style.setProperty("height", 0);
-  outer.style.setProperty("padding-top", 0);
-  outer.style.setProperty("padding-bottom", 0);
-  outer.classList.remove("init");
-  // Set height to the computed height with a small timeout to activate the transition
-  setTimeout(() => {
-    outer.style.setProperty("height", `${autoHeight}px`);
-    // Wait for a bit more than 300ms (the transition duration) then remove the
-    // forcefully set styles and let CSS take over
-    setTimeout(() => {
-      outer.style.removeProperty("padding-top");
-      outer.style.removeProperty("padding-bottom");
-      outer.style.removeProperty("height");
-      outer.style.setProperty("min-height", "3rem");
-    }, 320);
-  }, 10);
+  banner.classList.remove("d-none");
 }
 
 /*******************************************************************************
@@ -572,40 +608,30 @@ function initRTDObserver() {
   observer.observe(document.body, config);
 }
 
-// fetch the JSON version data (only once), then use it to populate the version
-// switcher and maybe show the version warning bar
-var versionSwitcherBtns = document.querySelectorAll(
-  ".version-switcher__button"
-);
-const hasSwitcherMenu = versionSwitcherBtns.length > 0;
-const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
-  "theme_switcher_json_url"
-);
-const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
-
-if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
-  const data = await fetchVersionSwitcherJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+async function fetchAndUseVersions() {
+  // fetch the JSON version data (only once), then use it to populate the version
+  // switcher and maybe show the version warning bar
+  var versionSwitcherBtns = document.querySelectorAll(
+    ".version-switcher__button",
   );
-  // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
-  // We don't really want the switcher and warning bar to silently not work.
-  if (data) {
-    populateVersionSwitcher(data, versionSwitcherBtns);
-    if (wantsWarningBanner) {
-      showVersionWarningBanner(data);
+  const hasSwitcherMenu = versionSwitcherBtns.length > 0;
+  const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
+    "theme_switcher_json_url",
+  );
+  const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
+
+  if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
+    const data = await fetchVersionSwitcherJSON(
+      DOCUMENTATION_OPTIONS.theme_switcher_json_url,
+    );
+    // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
+    // We don't really want the switcher and warning bar to silently not work.
+    if (data) {
+      populateVersionSwitcher(data, versionSwitcherBtns);
+      if (wantsWarningBanner) {
+        showVersionWarningBanner(data);
+      }
     }
-  }
-}
-
-/**
- * Fix bug #1603
- */
-function fixMoreLinksInMobileSidebar() {
-  const dropdown = document.querySelector(
-    ".bd-sidebar-primary [id^=pst-nav-more-links]"
-  );
-  if (dropdown !== null) {
-    dropdown.classList.add("show");
   }
 }
 
@@ -620,7 +646,7 @@ function setupMobileSidebarKeyboardHandlers() {
   // allows the mobile sidebars to be hidden or revealed via CSS.
   const primaryToggle = document.getElementById("pst-primary-sidebar-checkbox");
   const secondaryToggle = document.getElementById(
-    "pst-secondary-sidebar-checkbox"
+    "pst-secondary-sidebar-checkbox",
   );
   const primarySidebar = document.querySelector(".bd-sidebar-primary");
   const secondarySidebar = document.querySelector(".bd-sidebar-secondary");
@@ -693,19 +719,45 @@ function setupMobileSidebarKeyboardHandlers() {
 }
 
 /**
- * When the page loads or the window resizes check all elements with
- * [data-tabindex="0"], and if they have scrollable overflow, set tabIndex = 0.
+ * When the page loads, or the window resizes, or descendant nodes are added or
+ * removed from the main element, check all code blocks and Jupyter notebook
+ * outputs, and for each one that has scrollable overflow, set tabIndex = 0.
  */
-function setupLiteralBlockTabStops() {
+function addTabStopsToScrollableElements() {
   const updateTabStops = () => {
-    document.querySelectorAll('[data-tabindex="0"]').forEach((el) => {
-      el.tabIndex =
-        el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
-          ? 0
-          : -1;
-    });
+    document
+      .querySelectorAll(
+        "pre, " + // code blocks
+          ".nboutput > .output_area, " + // NBSphinx notebook output
+          ".cell_output > .output, " + // Myst-NB
+          ".jp-RenderedHTMLCommon", // ipywidgets
+      )
+      .forEach((el) => {
+        el.tabIndex =
+          el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
+            ? 0
+            : -1;
+      });
   };
-  window.addEventListener("resize", debounce(updateTabStops, 300));
+  const debouncedUpdateTabStops = debounce(updateTabStops, 300);
+
+  // On window resize
+  window.addEventListener("resize", debouncedUpdateTabStops);
+
+  // The following MutationObserver is for ipywidgets, which take some time to
+  // finish loading and rendering on the page (so even after the "load" event is
+  // fired, they still have not finished rendering). Would be nice to replace
+  // the MutationObserver if there is a way to hook into the ipywidgets code to
+  // know when it is done.
+  const mainObserver = new MutationObserver(debouncedUpdateTabStops);
+
+  // On descendant nodes added/removed from main element
+  mainObserver.observe(document.getElementById("main-content"), {
+    subtree: true,
+    childList: true,
+  });
+
+  // On page load (when this function gets called)
   updateTabStops();
 }
 function debounce(callback, wait) {
@@ -719,8 +771,75 @@ function debounce(callback, wait) {
 }
 
 /*******************************************************************************
+ * Announcement banner - fetch and load remote HTML
+ */
+async function setupAnnouncementBanner() {
+  const banner = document.querySelector(".bd-header-announcement");
+  const { pstAnnouncementUrl } = banner.dataset;
+
+  if (!pstAnnouncementUrl) {
+    return;
+  }
+
+  try {
+    const response = await fetch(pstAnnouncementUrl);
+    if (!response.ok) {
+      throw new Error(
+        `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`,
+      );
+    }
+    const data = await response.text();
+    if (data.length === 0) {
+      console.log(`[PST]: Empty announcement at: ${pstAnnouncementUrl}`);
+      return;
+    }
+    banner.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
+    banner.classList.remove("d-none");
+  } catch (_error) {
+    console.log(`[PST]: Failed to load announcement at: ${pstAnnouncementUrl}`);
+    console.error(_error);
+  }
+}
+
+/*******************************************************************************
+ * Reveal (and animate) the banners (version warning, announcement) together
+ */
+async function fetchRevealBannersTogether() {
+  // Wait until finished fetching and loading banners
+  await Promise.allSettled([fetchAndUseVersions(), setupAnnouncementBanner()]);
+
+  // The revealer element should have CSS rules that set height to 0, overflow
+  // to hidden, and an animation transition on the height (unless the user has
+  // turned off animations)
+  const revealer = document.querySelector(".pst-async-banner-revealer");
+
+  // Remove the d-none (display-none) class to calculate the children heights.
+  revealer.classList.remove("d-none");
+
+  // Add together the heights of the element's children
+  const height = Array.from(revealer.children).reduce(
+    (height, el) => height + el.offsetHeight,
+    0,
+  );
+
+  // Use the calculated height to give the revealer a non-zero height (if
+  // animations allowed, the height change will animate)
+  revealer.style.setProperty("height", `${height}px`);
+
+  // Wait for a bit more than 300ms (the transition duration), then set height
+  // to auto so the banner can resize if the window is resized.
+  setTimeout(() => {
+    revealer.style.setProperty("height", "auto");
+  }, 320);
+}
+
+/*******************************************************************************
  * Call functions after document loading.
  */
+
+// This one first to kick off the network request for the version warning
+// and announcement banner data as early as possible.
+documentReady(fetchRevealBannersTogether);
 
 documentReady(addModeListener);
 documentReady(scrollToActive);
@@ -728,5 +847,11 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(fixMoreLinksInMobileSidebar);
-documentReady(setupLiteralBlockTabStops);
+
+// Determining whether an element has scrollable content depends on stylesheets,
+// so we're checking for the "load" event rather than "DOMContentLoaded"
+if (document.readyState === "complete") {
+  addTabStopsToScrollableElements();
+} else {
+  window.addEventListener("load", addTabStopsToScrollableElements);
+}

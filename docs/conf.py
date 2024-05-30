@@ -31,6 +31,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.graphviz",
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
@@ -59,6 +61,8 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
+
+intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
 
 # -- Sitemap -----------------------------------------------------------------
 
@@ -90,10 +94,25 @@ blog_authors = {
     "jupyter": ("Jupyter", "https://jupyter.org"),
 }
 
+
+# -- sphinx_ext_graphviz options ---------------------------------------------
+
+graphviz_output_format = "svg"
+inheritance_graph_attrs = dict(
+    rankdir="LR",
+    fontsize=14,
+    ratio="compress",
+)
+
 # -- sphinx_togglebutton options ---------------------------------------------
 togglebutton_hint = str(_("Click to expand"))
 togglebutton_hint_hide = str(_("Click to collapse"))
 
+# -- Sphinx-copybutton options ---------------------------------------------
+# Exclude copy button from appearing over notebook cell numbers by using :not()
+# The default copybutton selector is `div.highlight pre`
+# https://github.com/executablebooks/sphinx-copybutton/blob/master/sphinx_copybutton/__init__.py#L82
+copybutton_selector = ":not(.prompt) > div.highlight pre"
 
 # -- Options for HTML output -------------------------------------------------
 

@@ -1,8 +1,10 @@
 """Methods to build the toctree used in the html pages."""
 
+from dataclasses import dataclass
 from functools import cache
 from itertools import count
-from typing import Iterator, List, Union
+from textwrap import dedent
+from typing import Iterator, List, Tuple, Union
 from urllib.parse import urlparse
 
 import sphinx
@@ -49,6 +51,16 @@ def _get_ancestor_pagename(app: Sphinx, pagename: str, startdepth: int) -> str:
         # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
         out = None
     return out, toctree
+
+
+@dataclass
+class LinkInfo:
+    """Dataclass to generate toctree data."""
+
+    is_current: bool
+    href: str
+    title: str
+    is_external: bool
 
 
 def add_toctree_functions(
@@ -101,14 +113,13 @@ def add_toctree_functions(
         return next(get_or_create_id_generator(base_id))
 
     @cache
-    def generate_header_nav_before_dropdown(n_links_before_dropdown):
-        """The cacheable part."""
-        try:
-            n_links_before_dropdown = int(n_links_before_dropdown)
-        except Exception:
-            raise ValueError(
-                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
-            )
+    def _generate_nav_info() -> List[LinkInfo]:
+        """Generate informations necessary to generate nav.
+
+        Instead of messing with html later, having this as a util function
+        should make it slightly easier to generate different html snippet for
+        sidebar or navbar.
+        """
         toctree = TocTree(app.env)
 
         # Find the active header navigation item so we decide whether to highlight
@@ -119,14 +130,14 @@ def add_toctree_functions(
             # NOTE: `env.toctree_includes` is a dict mapping pagenames to any (possibly
             # hidden) TocTree directives on that page (i.e., the "child" pages nested
             # under `pagename`).
-            active_header_page = [
-                *_get_toctree_ancestors(app.env.toctree_includes, pagename)
-            ]
+            header_pages = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
         else:
-            active_header_page = toctree.get_toctree_ancestors(pagename)
-        if active_header_page:
+            header_pages = toctree.get_toctree_ancestors(pagename)
+        if header_pages:
             # The final list item will be the top-most ancestor
-            active_header_page = active_header_page[-1]
+            active_header_page = header_pages[-1]
+        else:
+            active_header_page = None
 
         # NOTE: `env.tocs` is a dict mapping pagenames to hierarchical bullet-lists
         # ("nodetrees" in Sphinx parlance) of in-page headings (including `toctree::`
@@ -134,7 +145,8 @@ def add_toctree_functions(
         # just below the root of our site
         root_toc = app.env.tocs[app.config.root_doc]
 
-        links_html = []
+        links_data = []
+
         # Iterate through each node in the root document toc.
         # Grab the toctree pages and find the relative link + title.
         for toc in traverse_or_findall(root_toc, TocTreeNodeClass):
@@ -145,7 +157,6 @@ def add_toctree_functions(
                 page = toc.attributes["parent"] if page == "self" else page
 
                 # If this is the active ancestor page, add a class so we highlight it
-                current = "current active" if page == active_header_page else ""
 
                 # sanitize page title for use in the html output if needed
                 if title is None:
@@ -162,30 +173,69 @@ def add_toctree_functions(
                 # If it's an absolute one then we use the external class and
                 # the complete url.
                 is_absolute = bool(urlparse(page).netloc)
-                link_status = "nav-external" if is_absolute else "nav-internal"
                 link_href = page if is_absolute else context["pathto"](page)
 
-                # create the html output
-                links_html.append(
-                    f"""
-                    <li class="nav-item pst-header-nav-item {current}">
-                      <a class="nav-link {link_status}" href="{link_href}">
-                        {title}
-                      </a>
-                    </li>
-                """
+                links_data.append(
+                    LinkInfo(
+                        is_current=(page == active_header_page),
+                        href=link_href,
+                        title=title,
+                        is_external=is_absolute,
+                    )
                 )
 
         # Add external links defined in configuration as sibling list items
         for external_link in context["theme_external_links"]:
+            links_data.append(
+                LinkInfo(
+                    is_current=False,
+                    href=external_link["url"],
+                    title=external_link["name"],
+                    is_external=True,
+                )
+            )
+
+        return links_data
+
+    @cache
+    def _generate_header_nav_before_dropdown(
+        n_links_before_dropdown,
+    ) -> Tuple[str, List[str]]:
+        """Return html for navbar and dropdown.
+
+        Given the number of links before the dropdown, return the html for the navbar,
+        as well as the list of links to put in a dropdown.
+
+        Returns:
+            - HTML str for the navbar
+            - list of HTML str for the dropdown
+        """
+        try:
+            n_links_before_dropdown = int(n_links_before_dropdown)
+        except Exception:
+            raise ValueError(
+                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
+            )
+        links_data = _generate_nav_info()
+
+        links_html = []
+        boilerplate = """
+            <li class="nav-item pst-header-nav-item{active}">
+              <a class="nav-link nav-{ext_int}" href="{href}">
+                {title}
+              </a>
+            </li>
+            """
+        for link in links_data:
             links_html.append(
-                f"""
-                <li class="nav-item pst-header-nav-item">
-                  <a class="nav-link nav-external" href="{ external_link["url"] }">
-                    { external_link["name"] }
-                  </a>
-                </li>
-                """
+                dedent(
+                    boilerplate.format(
+                        active=" current active" if link.is_current else "",
+                        ext_int="external" if link.is_external else "internal",
+                        href=link.href,
+                        title=link.title,
+                    )
+                )
             )
 
         # The first links will always be visible
@@ -226,7 +276,7 @@ def add_toctree_functions(
             n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
             dropdown_text:Text of the dropdown element button.
         """
-        out, links_dropdown = generate_header_nav_before_dropdown(
+        out, links_dropdown = _generate_header_nav_before_dropdown(
             n_links_before_dropdown
         )
 

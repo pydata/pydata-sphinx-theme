@@ -12,9 +12,9 @@ from sphinx.application import Sphinx
 from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
-from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
+from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
-__version__ = "0.15.3dev0"
+__version__ = "0.15.4dev0"
 
 
 def update_config(app):
@@ -25,6 +25,16 @@ def update_config(app):
     # To do this, you must manually modify `app.builder.theme_options`.
     theme_options = utils.get_theme_options_dict(app)
     warning = partial(utils.maybe_warn, app)
+
+    # TODO: DEPRECATE after v1.0
+    themes = ["light", "dark"]
+    for theme in themes:
+        if style := theme_options.get(f"pygment_{theme}_style"):
+            theme_options[f"pygments_{theme}_style"] = style
+            warning(
+                f'The parameter "pygment_{theme}_style" was renamed to '
+                f'"pygments_{theme}_style" (note the "s" on "pygments").'
+            )
 
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
@@ -269,7 +279,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
     app.connect("html-page-context", utils.set_secondary_sidebar_items)
-    app.connect("build-finished", pygment.overwrite_pygments_css)
+    app.connect("build-finished", pygments.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 
     # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api

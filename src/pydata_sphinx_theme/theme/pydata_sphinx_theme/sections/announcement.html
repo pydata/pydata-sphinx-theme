@@ -1,48 +1,18 @@
-{% set header_classes = ["bd-header-announcement", "container-fluid", "init"] %}
-{% set is_remote=theme_announcement.startswith("http") %}
-{# If we are remote, add a script to make an HTTP request for the value on page load #}
-{%- if is_remote %}
-<script>
-document.write(`<div class="bd-header-announcement"></div>`);
-fetch("{{ theme_announcement }}")
-  .then(res => {return res.text();})
-  .then(data => {
-    if (data.length === 0) {
-      console.log("[PST]: Empty announcement at: {{ theme_announcement }}");
-      return;
-    }
-    div = document.querySelector(".bd-header-announcement");
-    div.classList.add(...{{ header_classes | tojson }});
-    div.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
-    // At least 3rem height
-    const autoHeight = Math.min(
-      div.offsetHeight,
-      3 * parseFloat(getComputedStyle(document.documentElement).fontSize));
-    // Set height and vertical padding to 0 to prepare the height transition
-    div.style.setProperty("height", 0);
-    div.style.setProperty("padding-top", 0);
-    div.style.setProperty("padding-bottom", 0);
-    div.classList.remove("init");
-    // Set height to the computed height with a small timeout to activate the transition
-    setTimeout(() => {
-      div.style.setProperty("height", `${autoHeight}px`);
-      // Wait for a bit more than 300ms (the transition duration) then remove the
-      // forcefully set styles and let CSS take over
-      setTimeout(() => {
-        div.style.removeProperty("padding-top");
-        div.style.removeProperty("padding-bottom");
-        div.style.removeProperty("height");
-        div.style.setProperty("min-height", "3rem");
-      }, 320);
-    }, 10);
-  })
-  .catch(error => {
-    console.log("[PST]: Failed to load announcement at: {{ theme_announcement }}");
-  });
-</script>
-{#- if announcement text is not remote, populate announcement w/ local content -#}
-{%- else %}
-  <div class="{{ header_classes | join(' ') }} bd-header-announcement">
-    <div class="bd-header-announcement__content">{{ theme_announcement }}</div>
-  </div>
-{% endif %}
+{#- The "revealer" allows async banners to be loaded, revealed, and animated together in a controlled way -#}
+<div class="pst-async-banner-revealer d-none">
+{#- Version warning banner is always loaded remotely/asynchronously #}
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="{{ _('Version warning') }}"></aside>
+{#- But the announcement banner might be loaded locally or remotely -#}
+{%- set announcement_banner_label = _("Announcement") -%}
+{%- set announcement_banner_classes = "bd-header-announcement d-print-none" -%}
+{%- set announcement_is_remote = theme_announcement and theme_announcement.startswith("http") -%}
+{%- set announcement_is_local = theme_announcement and not announcement_is_remote -%}
+  {%- if announcement_is_remote %}
+  <aside class="{{ announcement_banner_classes }} d-none" aria-label="{{ announcement_banner_label }}" data-pst-announcement-url="{{ theme_announcement }}"></aside>
+  {%- endif %}
+</div>
+{%- if announcement_is_local %}
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">{{ theme_announcement }}</div>
+</aside>
+{%- endif %}

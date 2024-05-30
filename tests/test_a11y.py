@@ -212,6 +212,9 @@ def test_axe_core(
     # Run a line of JavaScript that sets the light/dark theme on the page
     page.evaluate(f"document.documentElement.dataset.theme = '{theme}'")
 
+    # Wait for CSS transitions (Bootstrap's transitions are 300 ms)
+    page.wait_for_timeout(301)
+
     # Inject the Axe-core JavaScript library into the page
     page.add_script_tag(path="node_modules/axe-core/axe.min.js")
 
@@ -242,12 +245,14 @@ def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
         expect(entry).to_have_css("color", light_mode)
 
 
+@pytest.mark.a11y
 def test_code_block_tab_stop(page: Page, url_base: str) -> None:
     """Code blocks that have scrollable content should be tab stops."""
     page.set_viewport_size({"width": 1440, "height": 720})
     page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+
     code_block = page.locator(
-        'css=#code-block pre[data-tabindex="0"]', has_text="from typing import Iterator"
+        "css=#code-block pre", has_text="from typing import Iterator"
     )
 
     # Viewport is wide, so code block content fits, no overflow, no tab stop
@@ -262,3 +267,42 @@ def test_code_block_tab_stop(page: Page, url_base: str) -> None:
     # Narrow viewport, content overflows and code block should be a tab stop
     assert code_block.evaluate("el => el.scrollWidth > el.clientWidth") is True
     assert code_block.evaluate("el => el.tabIndex") == 0
+
+
+@pytest.mark.a11y
+def test_notebook_output_tab_stop(page: Page, url_base: str) -> None:
+    """Notebook outputs that have scrollable content should be tab stops."""
+    page.goto(urljoin(url_base, "/examples/pydata.html"))
+
+    # A "plain" notebook output
+    nb_output = page.locator("css=#Pandas > .nboutput > .output_area")
+
+    # At the default viewport size (1280 x 720) the Pandas data table has
+    # overflow...
+    assert nb_output.evaluate("el => el.scrollWidth > el.clientWidth") is True
+
+    # ...and so our js code on the page should make it keyboard-focusable
+    # (tabIndex = 0)
+    assert nb_output.evaluate("el => el.tabIndex") == 0
+
+
+@pytest.mark.a11y
+def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
+    """Notebook ipywidget outputs that have scrollable content should be tab stops."""
+    page.goto(urljoin(url_base, "/examples/pydata.html"))
+
+    # An ipywidget notebook output
+    ipywidget = page.locator("css=.jp-RenderedHTMLCommon").first
+
+    # As soon as the ipywidget is attached to the page it should trigger the
+    # mutation observer, which has a 300 ms debounce
+    ipywidget.wait_for(state="attached")
+    page.wait_for_timeout(301)
+
+    # At the default viewport size (1280 x 720) the data table inside the
+    # ipywidget has overflow...
+    assert ipywidget.evaluate("el => el.scrollWidth > el.clientWidth") is True
+
+    # ...and so our js code on the page should make it keyboard-focusable
+    # (tabIndex = 0)
+    assert ipywidget.evaluate("el => el.tabIndex") == 0

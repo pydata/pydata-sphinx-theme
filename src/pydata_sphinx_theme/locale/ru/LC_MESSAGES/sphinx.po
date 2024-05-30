@@ -7,21 +7,7 @@
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-11 13:22-0500\n"
-"PO-Revision-Date: 2023-04-14 14:57+0000\n"
-"Last-Translator: Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023\n"
-"Language: ru\n"
-"Language-Team: Russian "
-"(https://app.transifex.com/12rambau/teams/166811/ru/)\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) "
-"|| (n%100>=11 && n%100<=14)? 2 : 3);\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.0\n"
+
 
 #: docs/conf.py:94
 msgid "Click to expand"
@@ -156,6 +142,14 @@ msgstr ""
 "Собрано с использованием темы <a href=\\\"https://pydata-sphinx-"
 "theme.readthedocs.io/en/stable/index.html\\\">PyData Sphinx</a> "
 "%(theme_version)s."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
+msgid "Version warning"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
+msgid "Announcement"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
 #, fuzzy

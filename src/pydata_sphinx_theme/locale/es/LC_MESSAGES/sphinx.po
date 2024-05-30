@@ -8,20 +8,7 @@
 # Cristhian Rivera, 2024
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-11 13:22-0500\n"
-"PO-Revision-Date: 2023-04-14 14:57+0000\n"
-"Last-Translator: Cristhian Rivera, 2024\n"
-"Language: es\n"
-"Language-Team: Spanish "
-"(https://app.transifex.com/12rambau/teams/166811/es/)\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 "
-"? 1 : 2;\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.0\n"
+
 
 #: docs/conf.py:94
 msgid "Click to expand"
@@ -156,6 +143,14 @@ msgstr ""
 "Construido con el <a href=\"https://pydata-sphinx-"
 "theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
 "%(theme_version)s."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
+msgid "Version warning"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
+msgid "Announcement"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
 #, fuzzy

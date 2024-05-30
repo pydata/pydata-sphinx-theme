@@ -13,7 +13,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
@@ -22,23 +22,23 @@ repos:
         exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
   - repo: https://github.com/psf/black
-    rev: 22.12.0
+    rev: 24.4.2
     hooks:
       - id: black
 
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.0.215"
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.4.3"
     hooks:
       - id: ruff
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
+    rev: v3.15.2
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
 
   - repo: https://github.com/Riverside-Healthcare/djLint
-    rev: v1.19.7
+    rev: v1.34.1
     hooks:
       - id: djlint-jinja
         types_or: ["html"]
@@ -49,6 +49,22 @@ repos:
       - id: doc8
 
   - repo: "https://github.com/kynan/nbstripout"
-    rev: "0.5.0"
+    rev: "0.7.1"
     hooks:
       - id: nbstripout
+
+  - repo: https://github.com/mondeja/pre-commit-po-hooks
+    rev: v1.7.3
+    hooks:
+      - id: remove-metadata
+
+  - repo: https://github.com/thibaudcolas/pre-commit-stylelint
+    rev: v16.5.0
+    hooks:
+      - id: stylelint
+        # automatically fix .scss files where possible
+        args: [--fix]
+        additional_dependencies:
+          # stylelint itself needs to be here when using additional_dependencies.
+          - stylelint@16.5.0
+          - stylelint-config-standard-scss@13.1.0

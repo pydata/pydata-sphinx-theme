@@ -32,7 +32,7 @@
     }
 
     // Focus ring
-    //
+    // ----------
     // Sphinx-togglebutton makes the entire admonition header clickable, but
     // only the button within the header is focusable. We want the entire
     // clickable area to be surrounded with a focus ring, so that's why we use
@@ -50,11 +50,12 @@
       // the left border on the container's children). This makes it complicated
       // to get the focus ring to simultaneously cover the left border in the
       // header and align perfectly on the right with the body.
-      .admonition-title:focus-within:before {
+      .admonition-title:focus-within::before {
         content: "";
         transform: translateX(
           -$admonition-left-border-width
         ); // align left edges of admonition and ring
+
         width: calc(100% + $admonition-left-border-width); // align right edges
         height: 100%;
         border: $focus-ring-outline;
@@ -62,7 +63,7 @@
       }
 
       // When expanded, sharpen the bottom left and right corners of the focus ring
-      &:not(.toggle-hidden) .admonition-title:focus-within:before {
+      &:not(.toggle-hidden) .admonition-title:focus-within::before {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
       }

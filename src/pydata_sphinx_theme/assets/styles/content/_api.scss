@@ -29,7 +29,7 @@ table.field-list {
     /* reduced space around parameter description */
     blockquote {
       border-left: none;
-      margin: 0em 0em 0.3em;
+      margin: 0 0 0.3em;
       padding-left: 30px;
     }
   }
@@ -51,7 +51,7 @@ table.field-list {
   font-family: var(--pst-font-family-monospace);
 }
 
-/* C++ specific styling - overriding the basic.css to avoid custom colors*/
+/* C++ specific styling - overriding the basic.css to avoid custom colors */
 
 .sig-inline.c-texpr,
 .sig-inline.cpp-texpr {
@@ -121,6 +121,7 @@ dl > dt > a:has(.viewcode-link) {
   // floated-right element. To fix the glitch, we apply the float rule on the
   // parent rather than the child.
   float: right;
+
   .viewcode-link {
     float: none;
   }
@@ -132,8 +133,8 @@ dl > dt > a:has(.viewcode-link) {
 
 // the API selector
 // from https://github.com/pradyunsg/furo/blob/main/src/furo/assets/styles/content/_api.sass#L6)
-dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple) {
-  //increase margin bottom after the dl elements
+dl[class]:not(.option-list, .field-list, .footnote, .glossary, .simple) {
+  // increase margin bottom after the dl elements
   margin-bottom: 3rem;
 
   dd {

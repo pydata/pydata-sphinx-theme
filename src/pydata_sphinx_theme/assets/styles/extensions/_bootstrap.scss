@@ -13,3 +13,7 @@
   max-width: unset;
   width: unset;
 }
+
+.btn {
+  --bs-btn-focus-box-shadow: #{$btn-focus-box-shadow};
+}

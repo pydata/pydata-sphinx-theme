@@ -4,8 +4,7 @@
 
 // ensure table will fit in the article width and make them y-scrollable
 table {
-  display: table;
-  overflow: auto;
+  @include table-colors;
 
   // default to table-center
   margin-left: auto;
@@ -31,23 +30,31 @@ table caption {
 // MyST Markdown tables use these classes to control alignment
 th,
 td {
-  &.text-align\:left {
+  &.text-left {
     text-align: left;
   }
 
-  &.text-align\:right {
+  &.text-right {
     text-align: right;
   }
 
-  &.text-align\:center {
+  &.text-center {
     text-align: center;
   }
 }
 
 // override bootstrap table colors
 .table {
-  --bs-table-bg: transparent; //background
+  @include table-colors;
+
+  --bs-table-bg: transparent; // background
   --bs-table-color: var(
     --pst-color-text-base
   ); // ensure text and bullets are visible
+}
+
+.pst-scrollable-table-container {
+  // Put a horizontal scrollbar just below tables that are too wide to fit
+  // within the main column
+  overflow-x: auto;
 }

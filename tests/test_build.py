@@ -301,6 +301,46 @@ def test_sticky_header(sphinx_build_factory):
     assert index_html.select_one("body > .bd-header")
 
 
+def test_local_announcement_banner(sphinx_build_factory) -> None:
+    """If announcement is not a URL, it should be rendered at build time."""
+    confoverrides = {
+        "html_theme_options.announcement": "Hello, world!",
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="bd-header-announcement")
+
+    # Template should only render one announcement banner
+    assert len(results) == 1
+    banner = results[0]
+
+    # Announcement banner should contain the value from the config
+    assert banner.text.strip() == "Hello, world!"
+
+
+def test_remote_announcement_banner(sphinx_build_factory) -> None:
+    """If announcement is a URL, it should not be rendered at build time."""
+    confoverrides = {
+        "html_theme_options.announcement": "http://example.com/announcement",
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="bd-header-announcement")
+
+    # Template should only render one announcement banner
+    assert len(results) == 1
+    banner = results[0]
+
+    # Remote announcement banner URL should be stored as data attribute
+    assert banner["data-pst-announcement-url"] == "http://example.com/announcement"
+
+    # Remote announcement should be empty at build time (filled at run time)
+    assert not banner.find_all()
+
+    # Remote announcement banner should be inside the async banner revealer
+    assert "pst-async-banner-revealer" in banner.parent["class"]
+
+
 @pytest.mark.parametrize(
     "align,klass",
     [
@@ -349,6 +389,8 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
+
+    # classic navbar:
     navbar = index_html.select("ul.bd-navbar-elements")[0]
     dropdowns = navbar.select("li.dropdown")
     standalone_links = navbar.select(".navbar-nav > li.nav-item:not(.dropdown)")
@@ -361,6 +403,13 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
     if n_links == 8:
         # There should be no dropdown and only standalone links
         assert standalone_links and not dropdowns
+
+    # sidebar nav should never have dropdown
+    navbar = index_html.select("ul.bd-navbar-elements")[1]
+    dropdowns = navbar.select("li.dropdown")
+    standalone_links = navbar.select(".navbar-nav > li.nav-item:not(.dropdown)")
+    assert len(standalone_links) == 7
+    assert len(dropdowns) == 0
 
 
 @pytest.mark.parametrize("dropdown_text", (None, "Other"))  # None -> default "More"
@@ -811,7 +860,7 @@ def test_math_header_item(sphinx_build_factory, file_regression) -> None:
         pytest.param(("fake_foo", "fake_bar"), ("#204a87", "#66d9ef"), id="fake"),
         pytest.param(
             ("a11y-high-contrast-light", "a11y-high-contrast-dark"),
-            ("#7928a1", "#dcc6e0"),
+            ("#6730c5", "#dcc6e0"),
             id="real",
         ),
     ),
@@ -825,8 +874,8 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     confoverrides = {
         "html_theme_options": {
             **COMMON_CONF_OVERRIDES,
-            "pygment_light_style": style_names[0],
-            "pygment_dark_style": style_names[1],
+            "pygments_light_style": style_names[0],
+            "pygments_dark_style": style_names[1],
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
@@ -870,7 +919,10 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
     # check the deprecation warnings
     warnings = sphinx_build.warnings.strip("\n").split("\n")
     warnings = [w.lstrip("\x1b[91m").rstrip("\x1b[39;49;00m\n") for w in warnings]
-    expected_warnings = ("",)
+    expected_warnings = (
+        'The parameter "pygment_dark_style" was renamed to',
+        'The parameter "pygment_light_style" was renamed to',
+    )
     assert len(warnings) == len(expected_warnings)
     for exp_warn in expected_warnings:
         assert exp_warn in sphinx_build.warnings
