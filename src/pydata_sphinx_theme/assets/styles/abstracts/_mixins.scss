@@ -57,3 +57,14 @@
     }
   }
 }
+
+// Minimum mouse hit area
+// ----------------------
+// Ensures that the element has a minimum hit area that conforms to
+// accessibility guidelines. For WCAG AA, we need 24px x 24px, see:
+// https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
+@mixin min-hit-area() {
+  box-sizing: border-box;
+  min-width: 24px;
+  min-height: 24px;
+}
