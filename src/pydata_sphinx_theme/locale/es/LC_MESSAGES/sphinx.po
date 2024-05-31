@@ -2,21 +2,26 @@
 # Copyright (C) 2023 PyData developers
 # This file is distributed under the same license as the pydata-sphinx-theme
 # project.
-#
+# 
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
 # Cristhian Rivera, 2024
+# Felipe Moreno, 2024
+# 
 msgid ""
 msgstr ""
-
+"Last-Translator: Felipe Moreno, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/12rambau/teams/166811/es/)\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: docs/conf.py:94
 msgid "Click to expand"
-msgstr ""
+msgstr "Haga clic para ampliar"
 
 #: docs/conf.py:95
 msgid "Click to collapse"
-msgstr ""
+msgstr "Haga clic para colapsar"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
 msgid "Skip to main content"
@@ -40,7 +45,8 @@ msgstr "Error"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr "Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
+msgstr ""
+"Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
 msgid "Breadcrumb"
@@ -146,14 +152,13 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
 msgid "Version warning"
-msgstr ""
+msgstr "Advertencia de versión"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
 msgid "Announcement"
-msgstr ""
+msgstr "Anuncio"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
-#, fuzzy
 msgid "Site navigation"
 msgstr "Navegación del sitio"
 
@@ -172,3 +177,5 @@ msgstr "Navegación del sitio"
 #~ msgid "Twitter"
 #~ msgstr "Twitter"
 
+#~ msgid "Site Navigation"
+#~ msgstr "Navegación del sitio"
