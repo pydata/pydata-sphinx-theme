@@ -1,5 +1,6 @@
 """Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
 
+import re
 import time
 from http.client import HTTPConnection
 from pathlib import Path
@@ -306,3 +307,9 @@ def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
     # ...and so our js code on the page should make it keyboard-focusable
     # (tabIndex = 0)
     assert ipywidget.evaluate("el => el.tabIndex") == 0
+
+@pytest.mark.a11y
+def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
+    page.goto(urljoin(url_base, "community/practices/merge.html"))
+    expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text("Merge and review policy")
+
