@@ -82,8 +82,6 @@
 
   // Contains the navigation links within the navbar
   .navbar-nav {
-    display: flex;
-
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
       // Center align on wide screens so the dropdown button is centered properly
       align-items: baseline;
@@ -104,10 +102,6 @@
       }
 
       @include header-link;
-    }
-
-    li a.nav-link.dropdown-item {
-      @include link-style-text;
     }
 
     // Dropdowns for the extra links
