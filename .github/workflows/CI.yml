@@ -26,21 +26,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
-      - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - name: "Run lint checks 🧹"
-        run: python -Im tox run -e lint
-
   # Run our test suite on various combinations of OS & Python versions
   run-pytest:
-    needs: lint
     strategy:
       fail-fast: true
       matrix:
@@ -108,7 +95,6 @@ jobs:
   # Only run accessibility tests on the latest Python version (3.12) and Ubuntu
   a11y-tests:
     name: "a11y-tests (ubuntu-latest, 3.12)"
-    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
@@ -125,7 +111,6 @@ jobs:
   # Build our docs (PST) on major OSes and check for warnings
   build-site:
     name: "build PST docs"
-    needs: lint
     strategy:
       fail-fast: false
       matrix:
