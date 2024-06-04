@@ -50,7 +50,7 @@ For  complete reference of the existing option please see :ref:`the last section
 
             .. grid-item::
                 :padding: 2
-                :columns: 3
+                :columns: 2
 
                 Logo
 
@@ -58,7 +58,7 @@ For  complete reference of the existing option please see :ref:`the last section
 
             .. grid-item::
                 :padding: 2
-                :columns: 6
+                :columns: 4
 
                 Section links
 
@@ -66,7 +66,15 @@ For  complete reference of the existing option please see :ref:`the last section
 
             .. grid-item::
                 :padding: 2
-                :columns: 3
+                :columns: 4
+
+                Persistent components
+
+                ``navbar_persistent``
+
+            .. grid-item::
+                :padding: 2
+                :columns: 2
 
                 Components
 
