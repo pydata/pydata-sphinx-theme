@@ -9,10 +9,6 @@
 # 
 msgid ""
 msgstr ""
-"Last-Translator: Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024\n"
-"Language-Team: Catalan (https://app.transifex.com/12rambau/teams/166811/ca/)\n"
-"Language: ca\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: docs/conf.py:94
 msgid "Click to expand"
