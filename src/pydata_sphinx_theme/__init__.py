@@ -158,6 +158,9 @@ def update_config(app):
         theme_logo = {}
     if not isinstance(theme_logo, dict):
         raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
+    theme_logo_link = theme_options.get("theme_logo_link")
+    if theme_logo_link:
+        theme_logo["link"] = theme_logo_link
     theme_options["logo"] = theme_logo
 
 
