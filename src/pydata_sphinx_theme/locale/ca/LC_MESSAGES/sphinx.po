@@ -2,20 +2,25 @@
 # Copyright (C) 2023 PyData developers
 # This file is distributed under the same license as the pydata-sphinx-theme
 # project.
-#
+# 
 # Translators:
-# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2023
 # Cristhian Rivera, 2024
+# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024
+# 
 msgid ""
 msgstr ""
+"Last-Translator: Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024\n"
+"Language-Team: Catalan (https://app.transifex.com/12rambau/teams/166811/ca/)\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: docs/conf.py:94
 msgid "Click to expand"
-msgstr ""
+msgstr "Feu clic per a desplegar"
 
 #: docs/conf.py:95
 msgid "Click to collapse"
-msgstr ""
+msgstr "Feu clic per a replegar"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
 msgid "Skip to main content"
@@ -145,14 +150,13 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
 msgid "Version warning"
-msgstr ""
+msgstr "Alerta sobre la versió"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
 msgid "Announcement"
-msgstr ""
+msgstr "Anunci"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
-#, fuzzy
 msgid "Site navigation"
 msgstr "Navegació del lloc"
 
@@ -170,3 +174,6 @@ msgstr "Navegació del lloc"
 
 #~ msgid "Twitter"
 #~ msgstr "Twitter"
+
+#~ msgid "Site Navigation"
+#~ msgstr "Navegació del lloc"
