@@ -85,7 +85,7 @@
     display: flex;
 
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
-      // Center align on wide screens so the dropdown button is centered properly
+      // Align on wide screens so the dropdown button is centered properly
       align-items: baseline;
     }
 
