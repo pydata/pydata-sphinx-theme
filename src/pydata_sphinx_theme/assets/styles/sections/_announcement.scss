@@ -7,6 +7,7 @@
   // Height to be set by JavaScript, which should trigger the following
   // transition rule (unless the user has set their system to reduce motion).
   transition: height 300ms ease-in-out;
+
   @media (prefers-reduced-motion) {
     transition: none;
   }
@@ -40,7 +41,7 @@
 
   // The "Switch to stable version" link (styled like a button)
   .pst-button-link-to-stable-version {
-    @include box-shadow();
+    @include box-shadow;
 
     $background-color: var(--pst-color-danger);
     $hover-background-color: var(--pst-color-danger-highlight);

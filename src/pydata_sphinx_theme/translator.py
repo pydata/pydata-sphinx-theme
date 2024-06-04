@@ -3,7 +3,6 @@
 import types
 
 import sphinx
-from docutils import nodes
 from packaging.version import Version
 from sphinx.application import Sphinx
 from sphinx.ext.autosummary import autosummary_table
@@ -27,31 +26,11 @@ class BootstrapHTML5TranslatorMixin:
         """Perform small modifications to tags.
 
         - ensure aria-level is set for any tag with heading role
-        - ensure <pre> tags have tabindex="0".
         """
         if kwargs.get("ROLE") == "heading" and "ARIA-LEVEL" not in kwargs:
             kwargs["ARIA-LEVEL"] = "2"
 
-        if "pre" in args:
-            kwargs["data-tabindex"] = "0"
-
         return super().starttag(*args, **kwargs)
-
-    def visit_literal_block(self, node):
-        """Modify literal blocks.
-
-        - add tabindex="0" to <pre> tags within the HTML tree of the literal
-          block
-        """
-        try:
-            super().visit_literal_block(node)
-        except nodes.SkipNode:
-            # If the super method raises nodes.SkipNode, then we know it
-            # executed successfully and appended to self.body a string of HTML
-            # representing the code block, which we then modify.
-            html_string = self.body[-1]
-            self.body[-1] = html_string.replace("<pre", '<pre data-tabindex="0"')
-            raise nodes.SkipNode
 
     def visit_table(self, node):
         """Custom visit table method.

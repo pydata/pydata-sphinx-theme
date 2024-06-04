@@ -63,6 +63,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
     warning = partial(maybe_warn, app)
     logo = get_theme_options_dict(app).get("logo", {})
     staticdir = Path(app.builder.outdir) / "_static"
+    assert staticdir.is_absolute()
     for kind in ["light", "dark"]:
         path_image = logo.get(f"image_{kind}")
         if not path_image or isurl(path_image):
@@ -71,7 +72,9 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
             # file already exists in static dir e.g. because a theme has
             # bundled the logo and installed it there
             continue
-        if not (Path(app.srcdir) / path_image).exists():
+        full_logo_path = Path(app.srcdir) / path_image
+        assert full_logo_path.is_absolute()
+        if not full_logo_path.exists():
             warning(f"Path to {kind} image logo does not exist: {path_image}")
         # Ensure templates cannot be passed for logo path to avoid security vulnerability
         if path_image.lower().endswith("_t"):
@@ -79,4 +82,4 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
                 f"The {kind} logo path '{path_image}' looks like a Sphinx template; "
                 "please provide a static logo image."
             )
-        copy_asset_file(path_image, staticdir)
+        copy_asset_file(str(full_logo_path), staticdir)

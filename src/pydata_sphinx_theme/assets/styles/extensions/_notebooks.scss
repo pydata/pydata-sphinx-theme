@@ -12,6 +12,11 @@
 html div.rendered_html,
 // NBsphinx ipywidgets output selector
 html .jp-RenderedHTMLCommon {
+  // Add some margin around the element box for the focus ring. Otherwise the
+  // focus ring gets clipped because the containing elements have `overflow:
+  // hidden` applied to them (via the `.lm-Widget` selector)
+  margin: $focus-ring-width;
+
   table {
     table-layout: auto;
   }

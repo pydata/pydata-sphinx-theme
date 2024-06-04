@@ -3,8 +3,9 @@ div.versionchanged,
 div.deprecated {
   vertical-align: middle;
   margin: 1.5625em auto;
-  padding: 0 0.6rem 0 0.6rem;
+  padding: 0 0.6rem;
   overflow: hidden;
+
   /* break-inside has replaced page-break-inside and is widely usable since 2019 */
   page-break-inside: avoid;
   break-inside: avoid;
@@ -12,7 +13,9 @@ div.deprecated {
   border-color: var(--pst-color-info);
   border-radius: $admonition-border-radius;
   background-color: var(--pst-color-on-background);
-  @include box-shadow();
+
+  @include box-shadow;
+
   position: relative;
 
   > p {
@@ -39,7 +42,7 @@ div.deprecated {
 span.versionmodified {
   font-weight: 600;
 
-  &:before {
+  &::before {
     margin-right: 0.6rem;
     color: var(--pst-color-info);
     font: var(--fa-font-solid);
@@ -48,21 +51,21 @@ span.versionmodified {
 }
 
 span.versionmodified.added {
-  &:before {
+  &::before {
     color: var(--pst-color-success);
     content: var(--pst-icon-versionmodified-added);
   }
 }
 
 span.versionmodified.changed {
-  &:before {
+  &::before {
     color: var(--pst-color-warning);
     content: var(--pst-icon-versionmodified-changed);
   }
 }
 
 span.versionmodified.deprecated {
-  &:before {
+  &::before {
     color: var(--pst-color-danger);
     content: var(--pst-icon-versionmodified-deprecated);
   }

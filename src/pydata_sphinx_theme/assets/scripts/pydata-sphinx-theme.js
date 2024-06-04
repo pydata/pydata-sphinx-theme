@@ -719,19 +719,45 @@ function setupMobileSidebarKeyboardHandlers() {
 }
 
 /**
- * When the page loads or the window resizes check all elements with
- * [data-tabindex="0"], and if they have scrollable overflow, set tabIndex = 0.
+ * When the page loads, or the window resizes, or descendant nodes are added or
+ * removed from the main element, check all code blocks and Jupyter notebook
+ * outputs, and for each one that has scrollable overflow, set tabIndex = 0.
  */
-function setupLiteralBlockTabStops() {
+function addTabStopsToScrollableElements() {
   const updateTabStops = () => {
-    document.querySelectorAll('[data-tabindex="0"]').forEach((el) => {
-      el.tabIndex =
-        el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
-          ? 0
-          : -1;
-    });
+    document
+      .querySelectorAll(
+        "pre, " + // code blocks
+          ".nboutput > .output_area, " + // NBSphinx notebook output
+          ".cell_output > .output, " + // Myst-NB
+          ".jp-RenderedHTMLCommon", // ipywidgets
+      )
+      .forEach((el) => {
+        el.tabIndex =
+          el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
+            ? 0
+            : -1;
+      });
   };
-  window.addEventListener("resize", debounce(updateTabStops, 300));
+  const debouncedUpdateTabStops = debounce(updateTabStops, 300);
+
+  // On window resize
+  window.addEventListener("resize", debouncedUpdateTabStops);
+
+  // The following MutationObserver is for ipywidgets, which take some time to
+  // finish loading and rendering on the page (so even after the "load" event is
+  // fired, they still have not finished rendering). Would be nice to replace
+  // the MutationObserver if there is a way to hook into the ipywidgets code to
+  // know when it is done.
+  const mainObserver = new MutationObserver(debouncedUpdateTabStops);
+
+  // On descendant nodes added/removed from main element
+  mainObserver.observe(document.getElementById("main-content"), {
+    subtree: true,
+    childList: true,
+  });
+
+  // On page load (when this function gets called)
   updateTabStops();
 }
 function debounce(callback, wait) {
@@ -799,19 +825,33 @@ async function fetchRevealBannersTogether() {
   // Use the calculated height to give the revealer a non-zero height (if
   // animations allowed, the height change will animate)
   revealer.style.setProperty("height", `${height}px`);
+
+  // Wait for a bit more than 300ms (the transition duration), then set height
+  // to auto so the banner can resize if the window is resized.
+  setTimeout(() => {
+    revealer.style.setProperty("height", "auto");
+  }, 320);
 }
 
 /*******************************************************************************
  * Call functions after document loading.
  */
 
-// Call this one first to kick off the network request for the version warning
+// This one first to kick off the network request for the version warning
 // and announcement banner data as early as possible.
 documentReady(fetchRevealBannersTogether);
+
 documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(setupLiteralBlockTabStops);
+
+// Determining whether an element has scrollable content depends on stylesheets,
+// so we're checking for the "load" event rather than "DOMContentLoaded"
+if (document.readyState === "complete") {
+  addTabStopsToScrollableElements();
+} else {
+  window.addEventListener("load", addTabStopsToScrollableElements);
+}

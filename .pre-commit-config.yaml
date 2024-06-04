@@ -27,7 +27,7 @@ repos:
       - id: black
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.4.3"
+    rev: "v0.4.7"
     hooks:
       - id: ruff
 
@@ -57,3 +57,14 @@ repos:
     rev: v1.7.3
     hooks:
       - id: remove-metadata
+
+  - repo: https://github.com/thibaudcolas/pre-commit-stylelint
+    rev: v16.6.1
+    hooks:
+      - id: stylelint
+        # automatically fix .scss files where possible
+        args: [--fix]
+        additional_dependencies:
+          # stylelint itself needs to be here when using additional_dependencies.
+          - stylelint@16.5.0
+          - stylelint-config-standard-scss@13.1.0
