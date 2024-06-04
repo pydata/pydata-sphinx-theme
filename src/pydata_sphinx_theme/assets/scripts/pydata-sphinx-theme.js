@@ -813,7 +813,7 @@ async function fetchRevealBannersTogether() {
   // turned off animations)
   const revealer = document.querySelector(".pst-async-banner-revealer");
   if (!revealer) {
-    return
+    return;
   }
 
   // Remove the d-none (display-none) class to calculate the children heights.
