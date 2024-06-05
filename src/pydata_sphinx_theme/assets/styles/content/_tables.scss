@@ -2,10 +2,7 @@
  * Tables
  */
 
-// ensure table will fit in the article width and make them y-scrollable
 table {
-  @include table-colors;
-
   // default to table-center
   margin-left: auto;
   margin-right: auto;
