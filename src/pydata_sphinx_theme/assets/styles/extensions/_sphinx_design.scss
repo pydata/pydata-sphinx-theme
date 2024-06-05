@@ -186,9 +186,7 @@ html[data-theme="light"] {
     // Active tab label
     &:checked + label {
       border-style: solid solid none;
-      border-color: var(--pst-color-border) var(--pst-color-border)
-        transparent; // top LR bottom
-
+      border-color: var(--pst-color-border) var(--pst-color-border) transparent; // top LR bottom
       border-width: 0.125rem 0.125rem 0;
       border-radius: 0.125rem 0.125rem 0 0;
       background-color: var(--pst-color-on-background);
