@@ -1,6 +1,5 @@
 """Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
 
-import re
 import time
 from http.client import HTTPConnection
 from pathlib import Path
@@ -72,11 +71,14 @@ def url_base():
 
 
 def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
+    """Foo."""
     page.set_viewport_size({"width": 1440, "height": 720})
     page.goto(urljoin(url_base, "community/topics/config.html"))
-    expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text("Update Sphinx configuration during the build")
+    expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
+        "Update Sphinx configuration during the build"
+    )
     el = page.get_by_text("Update Sphinx configuration during the build").nth(1)
-    assert el.evaluate("e => e.clientWidth === e.scrollWidth", el) == True
+    assert el.evaluate("e => e.clientWidth === e.scrollWidth", el)
     expect(el).to_have_css("overflow-x", "hidden")
     expect(el).to_have_css("text-overflow", "ellipsis")
     page.set_viewport_size({"width": 20, "height": 720})
@@ -84,16 +86,32 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
     # There is no good way to check if text-overflow has been applied other
     # than to directly compare the rendered clientWidth to the scrollWidth
     # required to display the text.
-    assert el.evaluate("e => e.clientWidth < e.scrollWidth", el) == True
+    assert el.evaluate("e => e.clientWidth < e.scrollWidth", el)
 
 
-def test_breadcrumbs_everywhere(sphinx_build_factory) -> None:
+def test_breadcrumbs_everywhere(
+    sphinx_build_factory, page: Page, url_base: str
+) -> None:
     """Test building the base html template and config."""
     sphinx_build = sphinx_build_factory("breadcrumbs")
 
     # Basic build with defaults
     sphinx_build.build()
     assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
-    #TODO symlink the outdir into the path_docs_build/playwright_tests/ directory
-    import ipdb; ipdb.set_trace()
-
+    symlink_path = path_docs_build / "playwright_tests" / "breadcrumbs"
+    symlink_path.parent.mkdir(exist_ok=True)
+    try:
+        symlink_path.symlink_to(sphinx_build.outdir, True)
+        page.goto(
+            urljoin(url_base, "playwright_tests/breadcrumbs/hansel/gretel/house.html")
+        )
+        # sidebar should overflow
+        text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
+        el = page.locator("#main-content").get_by_text(text).last
+        assert el.evaluate("e => e.clientWidth < e.scrollWidth", el)
+        # footer containers will never trigger ellipsis overflow because... their min-width is content? TODO
+        el = page.locator(".footer-items__center > .footer-item")
+        assert el.evaluate("e => e.clientWidth === e.scrollWidth", el)
+    finally:
+        symlink_path.unlink()
+        symlink_path.parent.rmdir()
