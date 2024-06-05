@@ -31,7 +31,7 @@ path_docs_build = path_repo / "docs" / "_build" / "html"
 
 
 @pytest.fixture(scope="module")
-def url_base(path_repo=path_repo, path_docs_build=path_docs_build):
+def url_base():
     """Start local server on built docs and return the localhost URL as the base URL."""
     # Use a port that is not commonly used during development or else you will
     # force the developer to stop running their dev server in order to run the
@@ -85,4 +85,15 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
     # than to directly compare the rendered clientWidth to the scrollWidth
     # required to display the text.
     assert el.evaluate("e => e.clientWidth < e.scrollWidth", el) == True
+
+
+def test_breadcrumbs_everywhere(sphinx_build_factory) -> None:
+    """Test building the base html template and config."""
+    sphinx_build = sphinx_build_factory("breadcrumbs")
+
+    # Basic build with defaults
+    sphinx_build.build()
+    assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
+    #TODO symlink the outdir into the path_docs_build/playwright_tests/ directory
+    import ipdb; ipdb.set_trace()
 
