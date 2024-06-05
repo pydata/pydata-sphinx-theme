@@ -16,7 +16,7 @@
     border-radius: 0;
     border: none;
     font-size: 1rem;
-    line-height: inherit; // Bootstrap defines a separate line-height for buttons
+    line-height: inherit; // Override Bootstrap, which defines a separate line-height for buttons
     padding: 0.25rem 0; // Horizontal white space in nav bar between between items is controlled via column gap rule on the container.
   }
 }
