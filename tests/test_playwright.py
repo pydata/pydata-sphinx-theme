@@ -1,9 +1,6 @@
 """Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
 
-import time
-from http.client import HTTPConnection
 from pathlib import Path
-from subprocess import PIPE, Popen
 from urllib.parse import urljoin
 
 import pytest
@@ -29,64 +26,48 @@ path_repo = Path(__file__).parent.parent
 path_docs_build = path_repo / "docs" / "_build" / "html"
 
 
-@pytest.fixture(scope="module")
-def url_base():
-    """Start local server on built docs and return the localhost URL as the base URL."""
-    # Use a port that is not commonly used during development or else you will
-    # force the developer to stop running their dev server in order to run the
-    # tests.
-    port = "8213"
-    host = "localhost"
-    url = f"http://{host}:{port}"
+def _is_overflowing(element):
+    """Check if an element is being shortened via CSS due to text-overflow property.
 
-    # Try starting the server
-    process = Popen(
-        ["python", "-m", "http.server", port, "--directory", path_docs_build],
-        stdout=PIPE,
+    We can't check the rendered text because we can't easily get that; all we can get
+    is the text as it exists in the DOM (prior to its truncation/elision). Thus we must
+    directly compare the rendered clientWidth to the scrollWidth required to display the
+    text.
+    """
+    return element.evaluate("e => e.clientWidth < e.scrollWidth", element)
+
+
+def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
+    """This isn't an a11y test, but needs a served site for Javascript to inject the version menu."""
+    page.goto(url=url_base)
+    # no need to include_hidden here ↓↓↓, we just need to get the active version name
+    button = page.get_by_role("button").filter(has_text="dev")
+    active_version_name = button.get_attribute("data-active-version-name")
+    # here we do include_hidden, so sidebar & topbar menus should each have a matching entry:
+    entries = page.get_by_role("option", include_hidden=True).filter(
+        has_text=active_version_name
     )
-
-    # Try connecting to the server
-    retries = 5
-    while retries > 0:
-        conn = HTTPConnection(host, port)
-        try:
-            conn.request("HEAD", "/")
-            response = conn.getresponse()
-            if response is not None:
-                yield url
-                break
-        except ConnectionRefusedError:
-            time.sleep(1)
-            retries -= 1
-
-    # If the code above never yields a URL, then we were never able to connect
-    # to the server and retries == 0.
-    if not retries:
-        raise RuntimeError("Failed to start http server in 5 seconds")
-    else:
-        # Otherwise the server started and this fixture is done now and we clean
-        # up by stopping the server.
-        process.terminate()
-        process.wait()
+    assert entries.count() == 2
+    # make sure they're highlighted
+    for entry in entries.all():
+        light_mode = "rgb(10, 125, 145)"  # pst-color-primary
+        # dark_mode = "rgb(63, 177, 197)"
+        expect(entry).to_have_css("color", light_mode)
 
 
 def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
-    """Foo."""
+    """Test breadcrumb text-overflow."""
     page.set_viewport_size({"width": 1440, "height": 720})
     page.goto(urljoin(url_base, "community/topics/config.html"))
     expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
         "Update Sphinx configuration during the build"
     )
     el = page.get_by_text("Update Sphinx configuration during the build").nth(1)
-    assert el.evaluate("e => e.clientWidth === e.scrollWidth", el)
+    assert not _is_overflowing(el)
     expect(el).to_have_css("overflow-x", "hidden")
     expect(el).to_have_css("text-overflow", "ellipsis")
     page.set_viewport_size({"width": 20, "height": 720})
-
-    # There is no good way to check if text-overflow has been applied other
-    # than to directly compare the rendered clientWidth to the scrollWidth
-    # required to display the text.
-    assert el.evaluate("e => e.clientWidth < e.scrollWidth", el)
+    assert _is_overflowing(el)
 
 
 def test_breadcrumbs_everywhere(
@@ -108,10 +89,10 @@ def test_breadcrumbs_everywhere(
         # sidebar should overflow
         text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
         el = page.locator("#main-content").get_by_text(text).last
-        assert el.evaluate("e => e.clientWidth < e.scrollWidth", el)
+        assert _is_overflowing(el)
         # footer containers will never trigger ellipsis overflow because... their min-width is content? TODO
         el = page.locator(".footer-items__center > .footer-item")
-        assert el.evaluate("e => e.clientWidth === e.scrollWidth", el)
+        assert not _is_overflowing(el)
     finally:
         symlink_path.unlink()
         symlink_path.parent.rmdir()
