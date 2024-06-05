@@ -61,21 +61,6 @@ $link-hover-decoration-thickness: string.unquote(
   color: var(--pst-color-link-hover);
 }
 
-// Hover underline for icons / non-text content
-// - Adds a bottom box-shadow - since there is no text we cannot use text-decoration.
-// - We want the side box shadow to have the same thickness as the hover underline.
-// - Use with &:hover.
-@mixin icon-hover {
-  color: var(--pst-color-link-hover);
-
-  @if $link-hover-decoration-thickness {
-    box-shadow: 0
-      $link-hover-decoration-thickness
-      0
-      var(--pst-color-link-hover);
-  }
-}
-
 // Default link styles
 // -------------------
 // Defines: default unvisited, visited, hover, and active.
@@ -203,24 +188,29 @@ $link-hover-decoration-thickness: string.unquote(
   // position is relative to this element.
   position: relative;
 
-  // Put some space between the underline and the content. Must apply to top as
-  // well as bottom so that the link is centered within the focus ring.
-  padding-block: 0.25rem;
-
-  // Pseudo-element for hover underline styles
+  // Set up pseudo-element used for hover underline styles
   &::before {
     content: "";
     display: block;
     position: absolute;
     inset: 0;
     background-color: transparent;
+
+    @if $link-hover-decoration-thickness {
+      bottom: calc(-1 * $link-hover-decoration-thickness);
+      margin: $link-hover-decoration-thickness 0;
+    }
   }
 
   &:hover {
     color: var(--pst-color-secondary);
     text-decoration: none; // override the link-style-hover mixin
     &::before {
-      border-bottom: 3px solid var(--pst-color-secondary);
+      @if $link-hover-decoration-thickness {
+        border-bottom: $link-hover-decoration-thickness
+          solid
+          var(--pst-color-secondary);
+      }
     }
   }
 

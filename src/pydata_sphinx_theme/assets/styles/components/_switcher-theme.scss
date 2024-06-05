@@ -17,14 +17,8 @@
   }
 }
 
-html[data-mode="auto"] .theme-switch-button span[data-mode="auto"] {
-  display: inline;
-}
-
-html[data-mode="light"] .theme-switch-button span[data-mode="light"] {
-  display: inline;
-}
-
-html[data-mode="dark"] .theme-switch-button span[data-mode="dark"] {
-  display: inline;
+@each $mode in auto, light, dark {
+  html[data-mode="#{$mode}"] .theme-switch-button span[data-mode="#{$mode}"] {
+    display: inline; // inline needed for span height to be calculated using inherited font size and line height
+  }
 }

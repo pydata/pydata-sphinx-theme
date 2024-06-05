@@ -17,11 +17,7 @@
     border: none;
     font-size: 1rem;
     line-height: inherit; // Bootstrap defines a separate line-height for buttons
-
-    // Override Bootstrap button padding-x. Whitespace in nav bar is controlled
-    // via column gap rule on the container.
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0.25rem 0; // Horizontal white space in nav bar between between items is controlled via column gap rule on the container.
   }
 }
 
