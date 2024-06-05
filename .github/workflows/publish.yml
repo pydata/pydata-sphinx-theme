@@ -62,7 +62,7 @@ jobs:
 
       - name: "Unzip artifact"
         run: |
-          tar xf dist/*.tar.gz --strip-components=1
+          tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
         uses: pypa/gh-action-pypi-publish@release/v1
