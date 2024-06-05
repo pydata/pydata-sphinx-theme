@@ -13,6 +13,8 @@ ul.bd-breadcrumbs {
   li.breadcrumb-item {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    flex-shrink: 0;
 
     &.active {
       flex-shrink: 1;
