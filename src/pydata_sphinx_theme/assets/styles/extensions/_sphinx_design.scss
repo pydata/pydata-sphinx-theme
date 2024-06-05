@@ -186,7 +186,7 @@ html[data-theme="light"] {
     // Active tab label
     &:checked + label {
       border-style: solid solid none;
-      border-color: var(--pst-color-primary) var(--pst-color-primary)
+      border-color: var(--pst-color-border) var(--pst-color-border)
         transparent; // top LR bottom
 
       border-width: 0.125rem 0.125rem 0;
@@ -227,7 +227,7 @@ html[data-theme="light"] {
 
   // panel
   .sd-tab-content {
-    border: 0.125rem solid var(--pst-color-primary);
+    border: 0.125rem solid var(--pst-color-border);
     border-radius: 0.1875rem;
     box-shadow: unset;
     padding: 0.625rem;
