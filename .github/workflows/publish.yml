@@ -8,9 +8,6 @@ on:
       - published
   schedule:
     - cron: "0 2 * * *" # at 2AM UTC
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
