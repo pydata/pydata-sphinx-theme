@@ -7,11 +7,8 @@ on:
     types:
       - published
   schedule:
-    - cron: "0 2 * * *"  # at 2AM UTC
+    - cron: "0 2 * * *" # at 2AM UTC
   pull_request:
-    branches:
-      - main
-  push:
     branches:
       - main
   workflow_dispatch:
@@ -73,7 +70,7 @@ jobs:
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
 
       - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
-        uses: scientific-python/upload-nightly-action@b67d7fcc0396e1128a474d1ab2b48aa94680f9fc  # 0.5.0
+        uses: scientific-python/upload-nightly-action@b67d7fcc0396e1128a474d1ab2b48aa94680f9fc # 0.5.0
         with:
           artifacts_path: dist
           anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
