@@ -17,6 +17,7 @@ ul.bd-breadcrumbs {
     &.active {
       flex-shrink: 1;
       overflow-x: hidden;
+
       .ellipsis {
         overflow-x: hidden;
         text-overflow: ellipsis;
