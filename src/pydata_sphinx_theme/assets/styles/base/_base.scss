@@ -7,7 +7,7 @@ body {
   background-color: var(--pst-color-background);
   font-family: var(--pst-font-family-base);
   font-weight: 400;
-  line-height: 1.65;
+  line-height: $line-height-body;
   color: var(--pst-color-text-base);
   min-height: 100vh;
   display: flex;

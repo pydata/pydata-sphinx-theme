@@ -16,8 +16,8 @@ ul.navbar-nav {
       display: flex;
       align-items: center;
       height: 100%;
-      padding-top: 0.25rem;
-      padding-bottom: 0.25rem;
+      padding-top: $navbar-link-padding-y;
+      padding-bottom: $navbar-link-padding-y;
 
       @include link-style-text;
     }

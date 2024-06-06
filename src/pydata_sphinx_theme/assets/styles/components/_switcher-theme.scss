@@ -3,7 +3,7 @@
  */
 
 .theme-switch-button {
-  span {
+  .theme-switch {
     display: none;
 
     &:active {
@@ -18,7 +18,9 @@
 }
 
 @each $mode in auto, light, dark {
-  html[data-mode="#{$mode}"] .theme-switch-button span[data-mode="#{$mode}"] {
+  html[data-mode="#{$mode}"]
+    .theme-switch-button
+    .theme-switch[data-mode="#{$mode}"] {
     display: inline; // inline needed for span height to be calculated using inherited font size and line height
   }
 }
