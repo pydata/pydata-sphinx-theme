@@ -6,6 +6,8 @@ on:
   release:
     types:
       - published
+  schedule:
+    - cron: "0 2 * * *" # at 2AM UTC
   workflow_dispatch:
 
 env:
@@ -57,9 +59,16 @@ jobs:
 
       - name: "Unzip artifact"
         run: |
-          tar xf dist/*.tar.gz --strip-components=1
+          tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
         uses: pypa/gh-action-pypi-publish@release/v1
         # only publish if this is a published release by pydata
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
+
+      - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
+        uses: scientific-python/upload-nightly-action@b67d7fcc0396e1128a474d1ab2b48aa94680f9fc # 0.5.0
+        with:
+          artifacts_path: dist
+          anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
+        if: github.repository_owner == 'pydata' && github.event_name == 'schedule'
