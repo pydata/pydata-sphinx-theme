@@ -4,13 +4,6 @@
   // The items define the height so that it disappears if there are no items
   .header-article-item {
     min-height: var(--pst-header-article-height);
-    height: var(--pst-header-article-height);
-  }
-
-  .header-article-items__start,
-  .header-article-items__end {
-    align-items: start;
-    gap: 0.5rem;
   }
 
   .header-article-items__end {

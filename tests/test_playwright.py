@@ -9,19 +9,6 @@ import pytest
 playwright = pytest.importorskip("playwright")
 from playwright.sync_api import Page, expect  # noqa: E402
 
-# Important note: automated accessibility scans can only find a fraction of
-# potential accessibility issues.
-#
-# This test file scans pages from the Kitchen Sink examples with a JavaScript
-# library called Axe-core, which checks the page for accessibility violations,
-# such as places on the page with poor color contrast that would be hard for
-# people with low vision to see.
-#
-# Just because a page passes the scan with no accessibility violations does
-# *not* mean that it will be generally usable by a broad range of disabled
-# people. It just means that page is free of common testable accessibility
-# pitfalls.
-
 path_repo = Path(__file__).parent.parent
 path_docs_build = path_repo / "docs" / "_build" / "html"
 
@@ -38,7 +25,7 @@ def _is_overflowing(element):
 
 
 def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
-    """This isn't an a11y test, but needs a served site for Javascript to inject the version menu."""
+    """In sidebar and topbar - version switcher should apply highlight color to currently selected version."""
     page.goto(url=url_base)
     # no need to include_hidden here ↓↓↓, we just need to get the active version name
     button = page.get_by_role("button").filter(has_text="dev")
