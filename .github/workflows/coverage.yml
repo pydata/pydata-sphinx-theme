@@ -1,7 +1,10 @@
 name: Post coverage comment
 
 on:
-  workflow_call:
+  workflow_run:
+    workflows: ["continuous-integration"]
+    types:
+      - completed
 
 jobs:
   test:
