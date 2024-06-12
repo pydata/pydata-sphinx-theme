@@ -8,15 +8,33 @@ on:
 
 jobs:
   test:
-    name: Run tests & display coverage
+    name: "Run tests & display coverage"
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    # Only run this job if the tests workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       pull-requests: write
       contents: write # needed to edit the comment vs opening multiple ones
       actions: read
     steps:
-      - name: Post comment
+      # note that the workflow_run does not have context of the PR that triggered it
+      - name: "Get the triggering workflow run details"
+        id: get-run
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Check if the trigger was a PR event"
+        run: |
+          TRIGGER_EVENT=$(echo '${{ steps.get-run.outputs.data }}' | jq -r '.event')
+          if [[ "$TRIGGER_EVENT" != "pull_request" ]]; then
+            echo "Workflow was not triggered by a PR, skipping coverage comment."
+            exit 78  # Exiting with a neutral status
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Post coverage comment"
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
