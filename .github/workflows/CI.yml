@@ -244,3 +244,9 @@ jobs:
           name: profile-results
           path: docbuild_profile.svg
           if-no-files-found: ignore
+
+  post-coverage-comment:
+    name: "Post coverage comment"
+    # we call the coverage workflow directly to avoid issues with artefacts
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: ./.github/workflows/coverage.yml
