@@ -72,7 +72,7 @@ doc = [
   "sphinx-design",
   "sphinx-togglebutton",
   "jupyterlite-sphinx",
-  "sphinxcontrib-youtube<1.4",
+  "sphinxcontrib-youtube>=1.4.1",
   "sphinx-favicon>=1.0.1",
   "ipykernel",
   "nbsphinx",
