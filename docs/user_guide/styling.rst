@@ -193,15 +193,15 @@ For a complete list of the theme colors that you may override, see the :download
 Configure pygments theme
 ========================
 
-As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``.
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygments_light_style`` and ``pygments_dark_style``.
 You can check available Pygments colors on this `pygments demo page <https://pygments.org/styles/>`__.
 
 .. code-block:: python
 
    html_theme_options = {
       ...
-      "pygment_light_style": "tango",
-      "pygment_dark_style": "monokai"
+      "pygments_light_style": "tango",
+      "pygments_dark_style": "monokai"
    }
 
 Note that the PyData Sphinx theme uses the `accessible pygments styles <https://github.com/Quansight-Labs/accessible-pygments>`__ for its default syntax highlighting themes.
