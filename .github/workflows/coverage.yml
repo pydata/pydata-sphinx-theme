@@ -29,8 +29,6 @@ jobs:
             echo "Workflow was not triggered by a PR, skipping coverage comment."
             exit 78  # Exiting with a neutral status
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # this needs the .coverage file so we download from the CI workflow artifacts
       - name: "Download coverage data 📥"
         uses: actions/download-artifact@v4
