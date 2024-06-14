@@ -4,12 +4,12 @@
    <div class="navbar-item">
     <nav>
      <ul class="bd-navbar-elements navbar-nav">
-      <li class="nav-item pst-header-nav-item">
+      <li class="nav-item">
        <a class="nav-link nav-internal" href="../page1.html">
         Page 1
        </a>
       </li>
-      <li class="nav-item pst-header-nav-item">
+      <li class="nav-item">
        <a class="nav-link nav-internal" href="../page2.html">
         Page
         <span class="math notranslate nohighlight">
@@ -17,12 +17,12 @@
         </span>
        </a>
       </li>
-      <li class="nav-item pst-header-nav-item current active">
+      <li class="nav-item current active">
        <a class="nav-link nav-internal" href="#">
         Section 1 index
        </a>
       </li>
-      <li class="nav-item pst-header-nav-item">
+      <li class="nav-item">
        <a class="nav-link nav-external" href="https://google.com">
         google
        </a>
@@ -35,10 +35,10 @@
    <div class="navbar-item">
     <script>
      document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
     </script>

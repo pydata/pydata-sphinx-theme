@@ -220,17 +220,21 @@ def add_toctree_functions(
 
         links_html = []
         boilerplate = """
-            <li class="nav-item pst-header-nav-item{active}">
-              <a class="nav-link nav-{ext_int}" href="{href}">
+            <li class="{nav_item} {active}">
+              <a class="{nav_link} nav-{ext_int}" href="{href}">
                 {title}
               </a>
             </li>
             """
+        nav_item = "nav-item"
+        nav_link = "nav-link"
         for link in links_data:
             links_html.append(
                 dedent(
                     boilerplate.format(
                         active=" current active" if link.is_current else "",
+                        nav_link=nav_link,
+                        nav_item=nav_item,
                         ext_int="external" if link.is_external else "internal",
                         href=link.href,
                         title=link.title,
@@ -244,12 +248,7 @@ def add_toctree_functions(
 
         # Wrap the final few header items in a "more" dropdown
         links_dropdown = [
-            # 🐲 brittle code because it relies on the code above to build the HTML in a particular way
-            html.replace("nav-link", "nav-link dropdown-item").replace(
-                # Prevents the header-link mixin from applying to links within the dropdown
-                "pst-header-nav-item",
-                "",
-            )
+            html.replace(nav_item, "").replace(nav_link, "nav-link dropdown-item")
             for html in links_html[n_links_before_dropdown:]
         ]
 
@@ -284,7 +283,7 @@ def add_toctree_functions(
             dropdown_id = unique_html_id("pst-nav-more-links")
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
-            <li class="nav-item dropdown pst-header-nav-item">
+            <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="{dropdown_id}">
                     {_(dropdown_text)}
                 </button>

@@ -164,114 +164,59 @@ $link-hover-decoration-thickness: string.unquote(
   }
 }
 
-// Navigation bar current page link styles
-// ---------------------------------------
-// Adds a bottom underline, this leaves enough space for the hover state without
-// cluttering the navbar.
-// We want the side box shadow to have the same thickness as the hover underline
-@mixin link-navbar-current {
-  font-weight: 600;
-  color: var(--pst-color-primary);
+// Heaver navbar text and icon links
+// ---------------------------------
+// (includes light/dark mode button)
 
-  @if $link-hover-decoration-thickness {
-    border-bottom: $link-hover-decoration-thickness
-      solid
-      var(--pst-color-primary);
-  }
-}
+// This mixin makes it possible to show hover/underline and focus/ring styles at
+// the same time. The trick is to use:
+//    - a pseudo-element with bottom border for the hover underline
+//    - a CSS outline for the focus ring.
 
-// Navigation bar icon links hover styles
-// --------------------------------------
-// Adds a bottom box-shadow - since there is no text we cannot use text-decoration
-// We want the side box shadow to have the same thickness as the hover underline
-@mixin icon-navbar-hover {
-  &:hover {
-    color: var(--pst-color-link-hover);
+// Normally we use box-shadow for underline and outline for focus ring. But we
+// cannot apply box-shadow and outline together on the same element because the
+// border-radius value that we use to round the outline will also round the
+// box-shadow used for the underline. We also cannot use text-underline because
+// it does not work on non-text links, nor do we want to use it on text links
+// that we want to treat as blocks, such as the header nav links because the
+// underline will wrap across two lines if the link text also wraps across two
+// lines.
+@mixin link-style-block {
+  color: var(--pst-color-text-muted);
+
+  // Set position relative so that the child ::before pseudo-element's absolute
+  // position is relative to this element.
+  position: relative;
+
+  // Set up pseudo-element used for hover underline styles
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    background-color: transparent;
 
     @if $link-hover-decoration-thickness {
-      box-shadow: 0
-        $link-hover-decoration-thickness
-        0
-        var(--pst-color-link-hover);
+      bottom: calc(-1 * $link-hover-decoration-thickness);
+      margin: $link-hover-decoration-thickness 0;
     }
   }
-}
 
-// Mixin for links in the header (and the More dropdown toggle).
-
-// The mixin assumes it will be applied to some element X with a markup structure
-// like: X > .nav-link, or X > .dropdown-toggle.
-
-// It also assumes X.current is how the app annotates which item in the header nav
-// corresponds to the section in the docs that the user is currently reading.
-@mixin header-link {
-  // Target the child and not the parent because we want the underline in the
-  // mobile sidebar to only span the width of the text not the entire row/line.
-  > .nav-link,
-  > .dropdown-toggle {
-    border-radius: 2px;
-    color: var(--pst-color-text-muted);
-  }
-
-  > .nav-link {
-    // Set up pseudo-element for hover and current states below.
-    position: relative;
-
+  &:hover {
+    color: var(--pst-color-secondary);
+    text-decoration: none; // override the link-style-hover mixin
     &::before {
-      content: "";
-      display: block;
-      position: absolute;
-      inset: 0;
-      background-color: transparent;
-    }
-
-    // Underline on hover.
-    // - Don't use text-decoration because it will wrap across two lines if
-    //   the link text also wraps across two lines.
-    // - Use pseudo-element in order to avoid the border-radius values
-    //   rounding the edges of the underline. (And since a header link can be
-    //   both focused and hovered at the same time and we want the focus ring
-    //   but not the underline to be rounded, we cannot use a box shadow or
-    //   bottom border link element to create the underline, or else it will
-    //   be rounded and if we apply border-radius 0 then the hovered focus
-    //   ring would go from rounded to sharp. So we have to use the
-    //   pseudo-element.)
-    &:hover {
-      color: var(--pst-color-secondary);
-      text-decoration: none; // override the link-style-hover mixin
-      &::before {
-        border-bottom: 3px solid var(--pst-color-secondary);
+      @if $link-hover-decoration-thickness {
+        border-bottom: $link-hover-decoration-thickness
+          solid
+          var(--pst-color-secondary);
       }
-    }
-
-    &:focus-visible {
-      box-shadow: none; // override Bootstrap
-      outline: 3px solid var(--pst-color-accent);
-      outline-offset: 3px;
     }
   }
 
-  > .dropdown-toggle {
-    &:focus-visible {
-      box-shadow: $focus-ring-box-shadow;
-    }
-
-    &:hover {
-      text-decoration: none;
-      box-shadow: 0 0 0 $focus-ring-width var(--pst-color-link-hover); // purple focus ring
-      // Brighten the text on hover (muted -> base)
-      color: var(--pst-color-text-base);
-    }
-  }
-
-  &.current {
-    > .nav-link {
-      color: var(--pst-color-primary);
-
-      // Underline the current navbar item
-      &::before {
-        border-bottom: 3px solid var(--pst-color-primary);
-      }
-    }
+  &:focus-visible {
+    box-shadow: none; // override Bootstrap
+    outline: 3px solid var(--pst-color-accent);
+    outline-offset: 3px;
   }
 }

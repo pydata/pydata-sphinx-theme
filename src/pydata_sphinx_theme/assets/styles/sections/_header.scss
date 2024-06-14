@@ -81,7 +81,7 @@
   }
 
   // Contains the navigation links within the navbar
-  .navbar-nav {
+  ul.navbar-nav {
     display: flex;
 
     @include media-breakpoint-up($breakpoint-sidebar-primary) {
@@ -89,21 +89,49 @@
       align-items: baseline;
     }
 
-    li.pst-header-nav-item {
+    > li.nav-item {
       margin-inline: 2px; // breathing room so hover and focus styles do not overlap
+
+      > .nav-link {
+        @include link-style-block;
+
+        padding-inline: 6px;
+      }
+
+      &.current {
+        > .nav-link {
+          color: var(--pst-color-primary);
+
+          // Underline the current navbar item
+          &::before {
+            border-bottom: 3px solid var(--pst-color-primary);
+          }
+        }
+      }
+
       &.dropdown {
         margin-inline: 4px;
 
         button {
           padding-inline: 8px;
         }
-      }
 
-      a {
-        padding-inline: 6px;
-      }
+        > .dropdown-toggle {
+          border-radius: $focus-ring-radius; // make border radius the same for both hover ring and focus ring
+          color: var(--pst-color-text-muted);
 
-      @include header-link;
+          &:focus-visible {
+            box-shadow: $focus-ring-box-shadow;
+          }
+
+          &:hover {
+            text-decoration: none;
+            box-shadow: 0 0 0 $focus-ring-width var(--pst-color-link-hover); // purple focus ring
+            // Brighten the text on hover (muted -> base)
+            color: var(--pst-color-text-base);
+          }
+        }
+      }
     }
 
     li a.nav-link.dropdown-item {
@@ -159,17 +187,11 @@
 
   // Toggle buttons
   button.sidebar-toggle {
-    display: flex;
-    cursor: pointer;
     font-size: var(--pst-font-size-icon);
-    align-items: center;
     color: var(--pst-color-muted);
     margin-bottom: 0;
-    padding-bottom: 0.25rem;
     background-color: inherit;
-    border: none;
-
-    @include icon-navbar-hover;
+    padding: 0.5rem;
   }
 
   button.primary-toggle {

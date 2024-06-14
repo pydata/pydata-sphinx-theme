@@ -72,6 +72,10 @@ button.version-switcher__button,
   font-size: 1.1em; // A bit smaller than other menu font
   z-index: $zindex-modal; // higher than the sidebars
 
+  // Make sure it meets WCAG target size requirement no matter the version
+  // string displayed in the button
+  @include min-hit-area;
+
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     font-size: unset;
   }

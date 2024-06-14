@@ -2,7 +2,7 @@
 {%- macro icon_link_nav_item(url, icon, name, type, attributes='') -%}
   {%- if url | length > 2 %}
         <li class="nav-item">
-          {%- set attributesDefault = { "href": url, "title": name, "class": "nav-link", "rel": "noopener", "target": "_blank", "data-bs-toggle": "tooltip", "data-bs-placement": "bottom"} %}
+          {%- set attributesDefault = { "href": url, "title": name, "class": "nav-link pst-navbar-icon", "rel": "noopener", "target": "_blank", "data-bs-toggle": "tooltip", "data-bs-placement": "bottom"} %}
           {%- if attributes %}{% for key, val in attributes.items() %}
             {% set _ = attributesDefault.update(attributes) %}
           {% endfor %}{% endif -%}
@@ -13,7 +13,7 @@
           {% set attributeString = attributeString | join(" ") -%}
           <a {{ attributeString }}>
             {%- if type == "fontawesome" -%}
-            <span><i class="{{ icon }} fa-lg" aria-hidden="true"></i></span>
+            <i class="{{ icon }} fa-lg" aria-hidden="true"></i>
             <span class="sr-only">{{ name }}</span>
             {%- elif type == "local" -%}
             <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ name }}"/>
