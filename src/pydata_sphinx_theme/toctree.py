@@ -219,40 +219,44 @@ def add_toctree_functions(
         links_data = _generate_nav_info()
 
         links_html = []
-        boilerplate = """
+        links_dropdown = []
+        boilerplate = dedent(
+            """
             <li class="{nav_item} {active}">
               <a class="{nav_link} nav-{ext_int}" href="{href}">
                 {title}
               </a>
             </li>
             """
+        )
         nav_item = "nav-item"
         nav_link = "nav-link"
-        for link in links_data:
+        dropdown_item = "dropdown-item"
+        for link in links_data[:n_links_before_dropdown]:
             links_html.append(
-                dedent(
-                    boilerplate.format(
-                        active=" current active" if link.is_current else "",
-                        nav_link=nav_link,
-                        nav_item=nav_item,
-                        ext_int="external" if link.is_external else "internal",
-                        href=link.href,
-                        title=link.title,
-                    )
+                boilerplate.format(
+                    active="current active" if link.is_current else "",
+                    nav_link=nav_link,
+                    nav_item=nav_item,
+                    ext_int="external" if link.is_external else "internal",
+                    href=link.href,
+                    title=link.title,
+                )
+            )
+        for link in links_data[n_links_before_dropdown:]:
+            links_dropdown.append(
+                boilerplate.format(
+                    active="current active" if link.is_current else "",
+                    nav_link=nav_link + " " + dropdown_item,
+                    nav_item="",
+                    ext_int="external" if link.is_external else "internal",
+                    href=link.href,
+                    title=link.title,
                 )
             )
 
         # The first links will always be visible
-        links_solo = links_html[:n_links_before_dropdown]
-        out = "\n".join(links_solo)
-
-        # Wrap the final few header items in a "more" dropdown
-        links_dropdown = [
-            html.replace(nav_item, "").replace(nav_link, "nav-link dropdown-item")
-            for html in links_html[n_links_before_dropdown:]
-        ]
-
-        return out, links_dropdown
+        return "\n".join(links_html), links_dropdown
 
     def generate_header_nav_html(
         n_links_before_dropdown: int = 5, dropdown_text: str = "More"
