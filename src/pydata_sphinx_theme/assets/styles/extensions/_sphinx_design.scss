@@ -207,6 +207,8 @@ html[data-theme="light"] {
     &:not(:checked, :focus-visible) + label:hover {
       border-color: transparent;
       color: var(--pst-color-secondary);
+      text-decoration-line: underline;
+      text-decoration-thickness: $link-hover-decoration-thickness;
     }
   }
 
