@@ -1,4 +1,4 @@
-"""Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
+"""Build minimal test sites with sphinx_build_factory and test them with Playwright."""
 
 from pathlib import Path
 from urllib.parse import urljoin
@@ -9,7 +9,7 @@ import pytest
 playwright = pytest.importorskip("playwright")
 from playwright.sync_api import Page, expect  # noqa: E402
 
-path_repo = Path(__file__).parent.parent
+path_repo = Path(__file__).parents[1]
 path_docs_build = path_repo / "docs" / "_build" / "html"
 
 
@@ -44,16 +44,18 @@ def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
 
 def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
     """Test breadcrumb text-overflow."""
+    # wide viewport width → no truncation
     page.set_viewport_size({"width": 1440, "height": 720})
     page.goto(urljoin(url_base, "community/topics/config.html"))
     expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
         "Update Sphinx configuration during the build"
     )
     el = page.get_by_text("Update Sphinx configuration during the build").nth(1)
-    assert not _is_overflowing(el)
     expect(el).to_have_css("overflow-x", "hidden")
     expect(el).to_have_css("text-overflow", "ellipsis")
-    page.set_viewport_size({"width": 20, "height": 720})
+    assert not _is_overflowing(el)
+    # narrow viewport width → truncation
+    page.set_viewport_size({"width": 150, "height": 720})
     assert _is_overflowing(el)
 
 
