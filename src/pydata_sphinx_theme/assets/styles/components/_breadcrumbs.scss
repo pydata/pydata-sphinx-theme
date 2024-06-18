@@ -20,6 +20,10 @@ ul.bd-breadcrumbs {
     .ellipsis {
       overflow-x: hidden;
       text-overflow: ellipsis;
+
+      // Need to add margin, otherwise the overflow: hidden rule on the parent
+      // will hide the focus ring
+      margin: $focus-ring-width;
     }
 
     // Style should look like heavier in-page links
