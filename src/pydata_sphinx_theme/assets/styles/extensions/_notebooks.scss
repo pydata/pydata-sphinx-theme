@@ -9,23 +9,40 @@
 /*******************************************************************************
  * nbsphinx
  */
-html div.rendered_html
+html div.rendered_html,
 // NBsphinx ipywidgets output selector
 html .jp-RenderedHTMLCommon {
+  // Add some margin around the element box for the focus ring. Otherwise the
+  // focus ring gets clipped because the containing elements have `overflow:
+  // hidden` applied to them (via the `.lm-Widget` selector)
+  margin: $focus-ring-width;
+
   table {
     table-layout: auto;
   }
 }
 
-// Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  .nboutput {
-    .output_area.rendered_html {
-      @include cell-output-background;
+.bd-content .nboutput {
+  .output_area {
+    &.rendered_html,
+    .jp-RenderedHTMLCommon {
+      // pandas
+      table.dataframe {
+        @include table-colors;
+      }
     }
 
-    .output_area.stderr {
-      background: var(--pst-color-danger);
+    // Dark theme special-cases
+    html[data-theme="dark"] & {
+      &.rendered_html:not(:has(table.dataframe)),
+      // ipywidgets
+      .widget-subarea {
+        @include cell-output-background;
+      }
+
+      &.stderr {
+        background-color: var(--pst-color-danger);
+      }
     }
   }
 }
@@ -44,11 +61,17 @@ div.cell_output .output {
   overflow-x: auto;
 }
 
-// Dark theme special-cases
-html[data-theme="dark"] .bd-content {
-  div.cell_output {
+.bd-content div.cell_output {
+  // pandas
+  table.dataframe {
+    @include table-colors;
+  }
+
+  html[data-theme="dark"] & {
     img,
-    .text_html {
+    .text_html:not(:has(table.dataframe)),
+    // ipywidgets
+    .widget-subarea {
       @include cell-output-background;
     }
   }

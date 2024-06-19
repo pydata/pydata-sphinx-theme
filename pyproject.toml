@@ -1,5 +1,7 @@
 [build-system]
-requires = ["sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip"]
+requires = [
+  "sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip",
+]
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
@@ -10,7 +12,7 @@ additional-compiled-static-assets = [
   "vendor/",
   "styles/bootstrap.css",
   "scripts/bootstrap.js",
-  "locale/"
+  "locale/",
 ]
 
 [project]
@@ -18,16 +20,16 @@ name = "pydata-sphinx-theme"
 description = "Bootstrap-based Sphinx theme from the PyData community"
 dynamic = ["version"]
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
-  "sphinx>=5.0",
+  "sphinx>=5",
   "beautifulsoup4",
   "docutils!=0.17.0",
   "packaging",
   "Babel",
   "pygments>=2.7",
   "accessible-pygments",
-  "typing-extensions"
+  "typing-extensions",
 ]
 license = { file = "LICENSE" }
 maintainers = [
@@ -36,10 +38,10 @@ maintainers = [
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Framework :: Sphinx",
   "Framework :: Sphinx :: Theme",
   "License :: OSI Approved :: BSD License",
@@ -52,14 +54,14 @@ classifiers = [
 [project.optional-dependencies]
 doc = [
   "numpydoc",
-  "linkify-it-py", # for link shortening
+  "linkify-it-py",         # for link shortening
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
   "sphinx-autoapi>=3.0.0",
   # For examples section
   "myst-parser",
-  "ablog>=0.11.0rc2",
+  "ablog>=0.11.8",
   "jupyter_sphinx",
   "pandas",
   "plotly",
@@ -70,16 +72,26 @@ doc = [
   "sphinx-design",
   "sphinx-togglebutton",
   "jupyterlite-sphinx",
-  "sphinxcontrib-youtube<1.4",
+  "sphinxcontrib-youtube>=1.4.1",
   "sphinx-favicon>=1.0.1",
   "ipykernel",
   "nbsphinx",
   "ipyleaflet",
   "colorama",
+  "ipywidgets",
+  "graphviz",
 ]
-test = ["pytest", "pytest-cov", "pytest-regressions"]
-dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]"]
+test = ["pytest", "pytest-cov", "pytest-regressions", "sphinx[test]"]
+dev = [
+  "pyyaml",
+  "pre-commit",
+  "pydata-sphinx-theme[doc,test]",
+  "tox",
+  "pandoc",
+  "sphinx-theme-builder[cli]",
+]
 a11y = ["pytest-playwright"]
+i18n = ["Babel", "jinja2"]
 
 [project.entry-points]
 "sphinx.html_themes" = { pydata_sphinx_theme = "pydata_sphinx_theme" }
@@ -88,19 +100,20 @@ a11y = ["pytest-playwright"]
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 
 [tool.ruff]
-ignore-init-module-imports = true
 fix = true
-select = ["E", "F", "W", "I", "D", "RUF"]
+
+[tool.ruff.lint]
 ignore = [
   "E501", # line too long | Black take care of it
   "D107", # Missing docstring in `__init__` | set the docstring in the class
-
 ]
+ignore-init-module-imports = true
+select = ["E", "F", "W", "I", "D", "RUF"]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.djlint]
@@ -119,6 +132,12 @@ markers = "a11y: mark a test as an accessibility test"
 [tool.coverage.run]
 source = ["pydata_sphinx_theme"]
 branch = true
+relative_files = true
 
 [tool.coverage.report]
-fail_under = 60
+fail_under = 80
+show_missing = true
+skip_covered = true
+
+[tool.coverage.paths]
+source = ["src", ".tox/py*/**/site-packages"]

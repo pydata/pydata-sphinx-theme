@@ -4,16 +4,31 @@
 Sphinx Design Components
 ========================
 
-The PyData Sphinx Theme uses `sphinx-design <https://sphinx-design.readthedocs.io/en/latest/index.html>`__
-to add several UI components and provide extra flexibility for content creation.
-These include badges, buttons, cards, and tabs, among other components.
-This theme provides custom CSS to ensure that `sphinx-design <https://sphinx-design.readthedocs.io/en/latest/index.html>`__ elements look and feel consistent with this theme.
+On this page, you will find user interface components such as badges, buttons,
+cards, and tabs.
+
+The components on this page are **not provided by PyData Theme**. They are
+provided by `Sphinx Design <https://sphinx-design.readthedocs.io/en/pydata-theme/index.html>_` (a Sphinx extension). This means that if you wish
+to use the components on this page, you must install Sphinx Design separately and add it to your `conf.py`.
 
 .. seealso::
 
-    For more information about how to use these extensions, see `the sphinx-design documentation <https://sphinx-design.readthedocs.io/en/latest/index.html>`_.
+    To add the Sphinx Design extension to your Sphinx project, refer to `Sphinx
+    Design - Getting Started
+    <https://sphinx-design.readthedocs.io/en/pydata-theme/get_started.html>`_.
 
-Below you can find some examples of the components created with the :code:`sphinx-design` extension.
+Contributors to both projects have worked to ensure compatible styling so that
+Sphinx Design components look and feel consistent with the PyData Theme.
+
+This page shows you how the Sphinx Design components would look on your site if
+you were to use them in combination with the PyData Theme. Sphinx Design also
+provides a `PyData-themed version of the Sphinx Design site
+<https://sphinx-design.readthedocs.io/en/pydata-theme/>`__; however, their site
+use an older version of this theme.
+
+Any customizations you make to the theme could affect how these components
+appear on your site. So what you see on this page might not match exactly what
+you see on your site even if your site uses this theme.
 
 .. _badges-buttons:
 
@@ -136,7 +151,10 @@ Cards
             Hidden content
 
     .. grid-item-card:: A clickable card
-        :link: https://example.com
+        :link: https://sphinx-design.readthedocs.io/en/pydata-theme/cards.html#clickable-cards
+        :link-alt: Clickable cards - Sphinx Design docs
+
+        Don't forget to add the alternative text with ``link-alt``!
 
 .. grid::
 
@@ -244,6 +262,17 @@ You can see it in action by hovering over the code cell below:
 .. code-block:: python
 
     print("A copybutton in the top-right!")
+
+.. admonition:: nbsphinx
+
+    If your documentation site uses both nbsphinx and Sphinx-copybutton, you
+    will want to add the following line to your ``conf.py`` file to prevent the
+    copy button from appearing on top of notebook cell numbers:
+
+    .. code-block:: python
+        :caption: conf.py
+
+        copybutton_selector = ":not(.prompt) > div.highlight pre"
 
 Toggle buttons
 ==============

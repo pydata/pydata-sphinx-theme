@@ -11,3 +11,8 @@ Sidebar depth variations
    :caption: Caption 2
 
    section2/index
+
+Other content
+-------------
+
+This is some other content.

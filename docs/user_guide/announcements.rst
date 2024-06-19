@@ -41,6 +41,23 @@ For example, the following configuration tells the theme to load the ``custom-te
       "announcement": "https://github.com/pydata/pydata-sphinx-theme/raw/main/docs/_templates/custom-template.html",
    }
 
+Update or remove announcement banner
+------------------------------------
+
+If you set ``html_theme_options["announcement"]`` to plain text or HTML, then to
+update the announcement banner you need to modify this string and rebuild your
+documentation pages. To remove the announcement banner, set this value to an
+empty string and rebuild your documentation pages.
+
+If you set ``html_theme_options["announcement"]`` to a URL string (starts with
+``http``), then you can edit the file at that URL to update the announcement
+banner. Saving an empty file at that URL will remove the announcement banner.
+That's the main advantage of using a URL--you can change the announcement banner
+without rebuilding and redeploying all of your documentation pages. For example,
+if you point the announcement to the URL of a file in your repo, as we do on
+this documentation site (see previous section), then you can edit, save and push
+your changes to just that file (empty file = remove announcement) without
+rebuilding and redeploying all your docs.
 
 .. _version-warning-banners:
 

@@ -13,6 +13,7 @@ from typing import Any, Dict
 
 import pydata_sphinx_theme
 from sphinx.application import Sphinx
+from sphinx.locale import _
 
 sys.path.append(str(Path(".").resolve()))
 
@@ -30,6 +31,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.graphviz",
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
@@ -58,6 +61,8 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
+
+intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
 
 # -- Sitemap -----------------------------------------------------------------
 
@@ -88,6 +93,26 @@ blog_authors = {
     "pydata": ("PyData", "https://pydata.org"),
     "jupyter": ("Jupyter", "https://jupyter.org"),
 }
+
+
+# -- sphinx_ext_graphviz options ---------------------------------------------
+
+graphviz_output_format = "svg"
+inheritance_graph_attrs = dict(
+    rankdir="LR",
+    fontsize=14,
+    ratio="compress",
+)
+
+# -- sphinx_togglebutton options ---------------------------------------------
+togglebutton_hint = str(_("Click to expand"))
+togglebutton_hint_hide = str(_("Click to collapse"))
+
+# -- Sphinx-copybutton options ---------------------------------------------
+# Exclude copy button from appearing over notebook cell numbers by using :not()
+# The default copybutton selector is `div.highlight pre`
+# https://github.com/executablebooks/sphinx-copybutton/blob/master/sphinx_copybutton/__init__.py#L82
+copybutton_selector = ":not(.prompt) > div.highlight pre"
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -153,9 +178,7 @@ html_theme_options = {
         {
             "name": "PyData",
             "url": "https://pydata.org",
-            "icon": "_static/pydata-logo.png",
-            "type": "local",
-            "attributes": {"target": "_blank"},
+            "icon": "fa-custom fa-pydata",
         },
     ],
     # alternative way to set twitter and github header icons
@@ -180,13 +203,15 @@ html_theme_options = {
     # "content_footer_items": ["test", "test"],
     "footer_start": ["copyright"],
     "footer_center": ["sphinx-version"],
-    # "secondary_sidebar_items": ["page-toc"],  # Remove the source buttons
+    "secondary_sidebar_items": {
+        "**/*": ["page-toc", "edit-this-page", "sourcelink"],
+        "examples/no-sidebar": [],
+    },
     "switcher": {
         "json_url": json_url,
         "version_match": version_match,
     },
-    "navigation_with_keys": False,
-    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
+    # "back_to_top_button": False,
 }
 
 html_sidebars = {
@@ -226,7 +251,7 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_js_files = ["custom-icon.js"]
+html_js_files = ["pydata-icon.js", "custom-icon.js"]
 todo_include_todos = True
 
 # -- favicon options ---------------------------------------------------------

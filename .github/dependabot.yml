@@ -1,8 +1,19 @@
 version: 2
 updates:
-  # Maintain dependencies for GitHub Actions
+  # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every week
       interval: "weekly"
+    labels:
+      - "tag: dependencies"
+      - "tag: CI"
+  # npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "tag: dependencies"
+      - "tag: javascript"
+    open-pull-requests-limit: 0 # security updates only

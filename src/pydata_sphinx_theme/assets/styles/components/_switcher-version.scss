@@ -1,17 +1,26 @@
 button.btn.version-switcher__button {
   border-color: var(--pst-color-border);
   color: var(--pst-color-text-base);
+
   // Add a margin on narrow screens to avoid feeling cramped
   margin-bottom: 1em;
+
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     margin-bottom: unset;
   }
 
-  @include link-style-hover;
-  @include focus-indicator;
+  &:hover {
+    box-shadow: 0 0 0 $focus-ring-width var(--pst-color-secondary);
+    border-color: transparent;
+  }
+
   &:active {
     color: var(--pst-color-text-base);
     border-color: var(--pst-color-border);
+  }
+
+  &:focus-visible {
+    border-color: transparent;
   }
 }
 
@@ -27,16 +36,20 @@ button.btn.version-switcher__button {
     &:not(:last-child) {
       border-bottom: 1px solid var(--pst-color-border);
     }
-    @include link-style-hover;
+
     &:hover {
+      @include link-style-hover;
+
       background-color: var(--pst-color-surface);
     }
+
     &.active {
       @include link-sidebar-current;
+
       position: relative;
       z-index: 1;
 
-      span:before {
+      span::before {
         content: "";
         width: 100%;
         height: 100%;
@@ -46,6 +59,10 @@ button.btn.version-switcher__button {
         top: 0;
       }
     }
+
+    &:focus-visible {
+      z-index: 10; // keep focus ring on top (prevent the hover background of the next dropdown item from covering the ring)
+    }
   }
 }
 
@@ -54,6 +71,11 @@ button.version-switcher__button,
 .version-switcher__menu {
   font-size: 1.1em; // A bit smaller than other menu font
   z-index: $zindex-modal; // higher than the sidebars
+
+  // Make sure it meets WCAG target size requirement no matter the version
+  // string displayed in the button
+  @include min-hit-area;
+
   @include media-breakpoint-up($breakpoint-sidebar-primary) {
     font-size: unset;
   }

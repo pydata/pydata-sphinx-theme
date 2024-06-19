@@ -8,7 +8,6 @@ import sphinx.errors
 from pydata_sphinx_theme.utils import escape_ansi
 
 COMMON_CONF_OVERRIDES = dict(
-    navigation_with_keys=False,
     surface_warnings=True,
 )
 
@@ -45,7 +44,6 @@ def test_toc_visibility(sphinx_build_factory) -> None:
     """Test that setting TOC level visibility works as expected."""
     confoverrides = {
         "html_theme_options.show_toc_level": 2,
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -58,7 +56,6 @@ def test_toc_visibility(sphinx_build_factory) -> None:
 def test_icon_links(sphinx_build_factory, file_regression) -> None:
     """Test that setting icon links are rendered in the documentation."""
     html_theme_options_icon_links = {
-        "navigation_with_keys": False,
         "icon_links": [
             {
                 "name": "FONTAWESOME",
@@ -130,7 +127,6 @@ def test_logo_alt_text(sphinx_build_factory, confoverrides, expected_alt_text) -
     confoverrides["html_theme_options"] = (
         confoverrides.get("html_theme_options", False) or dict()
     )
-    confoverrides["html_theme_options"].update({"navigation_with_keys": False})
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
     logo_image = index_html.select(".navbar-brand img")[0]
@@ -152,7 +148,6 @@ def test_logo_no_image(sphinx_build_factory) -> None:
     """Test that the text is shown if no image specified."""
     confoverrides = {
         "html_logo": "",
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -165,7 +160,6 @@ def test_logo_two_images(sphinx_build_factory) -> None:
     # Test with a specified title and a dark logo
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
             "logo": {
                 "text": "Foo Title",
                 "image_dark": "_static/emptydarklogo.png",
@@ -185,7 +179,6 @@ def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory) -> Non
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {},
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -201,7 +194,6 @@ def test_primary_logo_is_light_when_default_mode_is_set_to_auto(
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "auto"},
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -215,7 +207,6 @@ def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory) 
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "light"},
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -229,7 +220,6 @@ def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory) ->
     # Ensure no default mode is set
     confoverrides = {
         "html_context": {"default_mode": "dark"},
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -262,7 +252,6 @@ def test_logo_external_link(sphinx_build_factory) -> None:
     test_url = "https://secure.example.com"
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
             "logo": {
                 "link": test_url,
             },
@@ -280,7 +269,6 @@ def test_logo_external_image(sphinx_build_factory) -> None:
     test_url = "https://pydata.org/wp-content/uploads/2019/06/pydata-logo-final.png"
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
             "logo": {
                 "image_dark": test_url,
             },
@@ -297,7 +285,6 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
     # Test with a specified external logo image source
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
             "logo": {
                 "image_dark": "image_dark_t",
             },
@@ -305,6 +292,53 @@ def test_logo_template_rejected(sphinx_build_factory) -> None:
     }
     with pytest.raises(sphinx.errors.ExtensionError, match="static logo image"):
         sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+
+def test_sticky_header(sphinx_build_factory):
+    """Regression test, see #1630. Sticky header should be direct descendant of body."""
+    sphinx_build = sphinx_build_factory("test_navbar_no_in_page_headers").build()
+    index_html = sphinx_build.html_tree("index.html")
+    assert index_html.select_one("body > .bd-header")
+
+
+def test_local_announcement_banner(sphinx_build_factory) -> None:
+    """If announcement is not a URL, it should be rendered at build time."""
+    confoverrides = {
+        "html_theme_options.announcement": "Hello, world!",
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="bd-header-announcement")
+
+    # Template should only render one announcement banner
+    assert len(results) == 1
+    banner = results[0]
+
+    # Announcement banner should contain the value from the config
+    assert banner.text.strip() == "Hello, world!"
+
+
+def test_remote_announcement_banner(sphinx_build_factory) -> None:
+    """If announcement is a URL, it should not be rendered at build time."""
+    confoverrides = {
+        "html_theme_options.announcement": "http://example.com/announcement",
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="bd-header-announcement")
+
+    # Template should only render one announcement banner
+    assert len(results) == 1
+    banner = results[0]
+
+    # Remote announcement banner URL should be stored as data attribute
+    assert banner["data-pst-announcement-url"] == "http://example.com/announcement"
+
+    # Remote announcement should be empty at build time (filled at run time)
+    assert not banner.find_all()
+
+    # Remote announcement banner should be inside the async banner revealer
+    assert "pst-async-banner-revealer" in banner.parent["class"]
 
 
 @pytest.mark.parametrize(
@@ -319,7 +353,6 @@ def test_navbar_align(align, klass, sphinx_build_factory) -> None:
     """The navbar items align with the proper part of the page."""
     confoverrides = {
         "html_theme_options.navbar_align": align,
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -350,13 +383,14 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
 
     confoverrides = {
         "html_theme_options": {
-            "navigation_with_keys": False,
             "external_links": extra_links,
             "header_links_before_dropdown": n_links,
         }
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
+
+    # classic navbar:
     navbar = index_html.select("ul.bd-navbar-elements")[0]
     dropdowns = navbar.select("li.dropdown")
     standalone_links = navbar.select(".navbar-nav > li.nav-item:not(.dropdown)")
@@ -370,6 +404,13 @@ def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
         # There should be no dropdown and only standalone links
         assert standalone_links and not dropdowns
 
+    # sidebar nav should never have dropdown
+    navbar = index_html.select("ul.bd-navbar-elements")[1]
+    dropdowns = navbar.select("li.dropdown")
+    standalone_links = navbar.select(".navbar-nav > li.nav-item:not(.dropdown)")
+    assert len(standalone_links) == 7
+    assert len(dropdowns) == 0
+
 
 @pytest.mark.parametrize("dropdown_text", (None, "Other"))  # None -> default "More"
 def test_navbar_header_dropdown_button(sphinx_build_factory, dropdown_text) -> None:
@@ -377,7 +418,6 @@ def test_navbar_header_dropdown_button(sphinx_build_factory, dropdown_text) -> N
     if dropdown_text:
         confoverrides = {
             "html_theme_options": {
-                "navigation_with_keys": False,
                 "header_links_before_dropdown": 2,
                 "header_dropdown_text": dropdown_text,
             }
@@ -385,7 +425,6 @@ def test_navbar_header_dropdown_button(sphinx_build_factory, dropdown_text) -> N
     else:
         confoverrides = {
             "html_theme_options": {
-                "navigation_with_keys": False,
                 "header_links_before_dropdown": 2,
             }
         }
@@ -418,7 +457,7 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression) -> None:
 
     subindex_html = sphinx_build.html_tree("section1/subsection1/page1.html")
 
-    # For nested (uncollapsed) page, the label included `checked=""`
+    # For nested (uncollapsed) page, the disclosure widget should be open
     sidebar = subindex_html.select("nav.bd-docs-nav")[0]
     file_regression.check(sidebar.prettify(), extension=".html")
 
@@ -427,7 +466,6 @@ def test_sidebars_level2(sphinx_build_factory, file_regression) -> None:
     """Test sidebars in a second-level page w/ children."""
     confoverrides = {
         "templates_path": ["_templates_sidebar_level2"],
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
@@ -445,7 +483,6 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
     """
     confoverrides = {
         "html_theme_options.show_nav_level": 0,
-        "html_theme_options.navigation_with_keys": False,
     }
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
 
@@ -463,7 +500,6 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
     # part li
     assert "toctree-l0 has-children" in " ".join(li[0].attrs["class"])
     assert "caption-text" in li[0].select("p span")[0].attrs["class"]
-    assert "label-parts" in li[0].find("label").attrs["class"]
 
     # basic checks on other levels
     assert "toctree-l1 has-children" in " ".join(li[1].attrs["class"])
@@ -473,12 +509,13 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
     subsection_html = sphinx_build.html_tree("section1/subsection1/index.html")
     sidebar = subsection_html.select("nav.bd-docs-nav")[0]
 
-    # get all input elements
-    input_elem = sidebar.select("input")
+    # get all <details> elements
+    details_elem = sidebar.select("details")
+    assert len(details_elem) > 0, "There must be at least one details element"
 
-    # all input elements should be collapsed in this page
-    for ii in input_elem:
-        assert "checked" in ii.attrs
+    # all <details> elements should be open in this page
+    for ii in details_elem:
+        assert "open" in ii.attrs
 
 
 def test_included_toc(sphinx_build_factory) -> None:
@@ -641,7 +678,6 @@ all_edits = [
 def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) -> None:
     """Test the edit this page generated link."""
     confoverrides = {
-        "html_theme_options.navigation_with_keys": False,
         "html_theme_options.use_edit_page_button": True,
         "html_context": html_context,
     }
@@ -690,7 +726,6 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) ->
 def test_analytics(sphinx_build_factory, provider, tags) -> None:
     """Check the Google analytics."""
     confoverrides = provider
-    confoverrides.update({"html_theme_options.navigation_with_keys": False})
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
@@ -706,7 +741,6 @@ def test_analytics(sphinx_build_factory, provider, tags) -> None:
 def test_plausible(sphinx_build_factory) -> None:
     """Test the Plausible analytics."""
     provider = {
-        "html_theme_options.navigation_with_keys": False,
         "html_theme_options.analytics": {
             "plausible_analytics_domain": "toto",
             "plausible_analytics_url": "http://.../script.js",
@@ -728,7 +762,6 @@ def test_plausible(sphinx_build_factory) -> None:
 def test_show_nav_level(sphinx_build_factory) -> None:
     """The navbar items align with the proper part of the page."""
     confoverrides = {
-        "html_theme_options.navigation_with_keys": False,
         "html_theme_options.show_nav_level": 2,
     }
     sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides).build()
@@ -736,8 +769,8 @@ def test_show_nav_level(sphinx_build_factory) -> None:
     # Both the column alignment and the margin should be changed
     index_html = sphinx_build.html_tree("section1/index.html")
 
-    for checkbox in index_html.select("li.toctree-l1.has-children > input"):
-        assert "checked" in checkbox.attrs
+    for details_elem in index_html.select("li.toctree-l1.has-children > details"):
+        assert "open" in details_elem.attrs
 
 
 # the switcher files tested in test_version_switcher_error_states, not all of them exist
@@ -827,7 +860,7 @@ def test_math_header_item(sphinx_build_factory, file_regression) -> None:
         pytest.param(("fake_foo", "fake_bar"), ("#204a87", "#66d9ef"), id="fake"),
         pytest.param(
             ("a11y-high-contrast-light", "a11y-high-contrast-dark"),
-            ("#7928a1", "#dcc6e0"),
+            ("#6730c5", "#dcc6e0"),
             id="real",
         ),
     ),
@@ -841,8 +874,8 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     confoverrides = {
         "html_theme_options": {
             **COMMON_CONF_OVERRIDES,
-            "pygment_light_style": style_names[0],
-            "pygment_dark_style": style_names[1],
+            "pygments_light_style": style_names[0],
+            "pygments_dark_style": style_names[1],
         },
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build(
@@ -887,11 +920,8 @@ def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
     warnings = sphinx_build.warnings.strip("\n").split("\n")
     warnings = [w.lstrip("\x1b[91m").rstrip("\x1b[39;49;00m\n") for w in warnings]
     expected_warnings = (
-        "The default value for `navigation_with_keys` will change",
-        "The configuration `logo_text` is deprecated",
-        "The configuration `favicons` is deprecated.",
-        "`footer_items` is deprecated",
-        "unsupported theme option 'logo_text'",
+        'The parameter "pygment_dark_style" was renamed to',
+        'The parameter "pygment_light_style" was renamed to',
     )
     assert len(warnings) == len(expected_warnings)
     for exp_warn in expected_warnings:
@@ -924,7 +954,6 @@ def test_empty_templates(sphinx_build_factory) -> None:
     # When configured to be gone, the template should be removed w/ its parent.
     # ABlog needs to be added so we can test that template rendering works w/ it.
     confoverrides = {
-        "html_theme_options.navigation_with_keys": False,
         "html_show_sourcelink": False,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
@@ -954,7 +983,6 @@ def test_translations(sphinx_build_factory) -> None:
             "github_version": "main",
         },
         "html_theme_options": {
-            "navigation_with_keys": False,
             "use_edit_page_button": True,
         },
     }
@@ -964,7 +992,6 @@ def test_translations(sphinx_build_factory) -> None:
     index = sphinx_build.html_tree("section1/index.html")
 
     sidebar_primary = index.select(".bd-sidebar-primary")[0]
-    assert "Navigation du site" in str(sidebar_primary)
     assert "Navigation de la section" in str(sidebar_primary)
 
     sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
@@ -986,3 +1013,201 @@ def test_translations(sphinx_build_factory) -> None:
     # Search bar
     # TODO: Add translations where there are english phrases below
     assert "Search the docs" in str(index.select(".bd-search")[0])
+
+
+def test_render_secondary_sidebar_list(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a list of templates."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": ["page-toc", "edit-this-page"],
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the page-toc template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+
+    # Check that sourcelink is not rendered
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a dict of templates."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "**": ["page-toc", "edit-this-page"],
+                "section1/index": [],
+                "section2/index": ["sourcelink"],
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the page-toc template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar can be built with a dict of templates that globs a subdir."""
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "section1/index": [],
+                "section2/*": ["sourcelink"],
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory("sidebars", confoverrides=confoverrides)
+    # Basic build with defaults
+    sphinx_build.build()
+
+    # Check that the no page-toc template gets rendered
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.page-toc")
+
+    # Check that no edit-this-page template gets rendered
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")
+
+
+def test_render_secondary_sidebar_dict_multiple_glob_matches(
+    sphinx_build_factory,
+) -> None:
+    """Test that the secondary sidebar builds with a template dict with two conflicting globs.
+
+    The last specified glob pattern should win, but a warning should be emitted with the
+    offending pattern and affected pagenames.
+    """
+    confoverrides = {
+        "html_context": {
+            "github_user": "pydata",
+            "github_repo": "pydata-sphinx-theme",
+            "github_version": "main",
+        },
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "use_edit_page_button": True,
+            "secondary_sidebar_items": {
+                "**": [
+                    "page-toc",
+                    "edit-this-page",
+                ],  # <-- Some pages match both patterns
+                "section1/index": [],
+                "section2/*": ["sourcelink"],  # <-- Some pages match both patterns
+            },
+        },
+    }
+    sphinx_build = sphinx_build_factory(
+        "sidebars",
+        confoverrides=confoverrides,
+    )
+    # Basic build with defaults
+    sphinx_build.build(no_warning=False)
+
+    # Check that the proper warnings are emitted for the affected pages
+    for page in ["section2/index", "section2/page1"]:
+        assert (
+            f"WARNING: Page {page} matches two wildcard patterns "
+            "in secondary_sidebar_items: ** and section2/*"
+        ) in sphinx_build.warnings
+
+    # Check that the page-toc template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.page-toc")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.page-toc")
+
+    # Check that the edit-this-page template gets rendered
+    # (but not for section1/index or section2/*)
+    assert sphinx_build.html_tree("index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/index.html").select("div.editthispage")
+    assert not sphinx_build.html_tree("section2/page1.html").select("div.editthispage")
+
+    # Check that sourcelink is only rendered for section2/*
+    assert not sphinx_build.html_tree("index.html").select("div.sourcelink")
+    assert not sphinx_build.html_tree("section1/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/index.html").select("div.sourcelink")
+    assert sphinx_build.html_tree("section2/page1.html").select("div.sourcelink")
+
+
+def test_role_main_for_search_highlights(sphinx_build_factory):
+    """Sphinx searchtools.js looks for [role="main"], so make sure it's there.
+
+    This is a regression test. See #1676.
+    """
+    sphinx_build = sphinx_build_factory("base").build()
+    assert sphinx_build.html_tree("index.html").select_one('[role="main"]')
+
+
+def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
+    """Test that the secondary sidebar is removed if all templates are empty."""
+    confoverrides = {
+        "html_theme_options": {
+            **COMMON_CONF_OVERRIDES,
+            "secondary_sidebar_items": ["page-toc", "sourcelink"],
+        },
+        "html_show_sourcelink": False,
+    }
+
+    # The page-toc component is empty because there is no in-page toc for page1
+    # The sourcelink component is empty because we disabled it in configuration
+    # Hence the secondary sidebar has all its templates empty and should be removed
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    assert not sphinx_build.html_tree("page1.html").select("div.bd-sidebar-secondary")

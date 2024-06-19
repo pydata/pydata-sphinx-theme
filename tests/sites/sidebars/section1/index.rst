@@ -6,3 +6,8 @@ Section 1 index
 
    subsection1/index
    page2
+
+Other Content
+-------------
+
+This is some other content

@@ -37,7 +37,6 @@
     // Remove the little "x" that pops up when you start typing
     &::-webkit-search-cancel-button,
     &::-webkit-search-decoration {
-      -webkit-appearance: none;
       appearance: none;
     }
   }
@@ -58,8 +57,6 @@
   &:focus,
   &:focus-visible {
     border: none;
-    box-shadow: none;
-    outline: 3px solid var(--pst-color-accent);
     background-color: var(--pst-color-background);
     color: var(--pst-color-text-muted);
   }
@@ -70,20 +67,8 @@
  */
 
 // Search link icon should be a bit bigger since it is separate from icon links
-.search-button {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  color: var(--pst-color-text-muted);
-  // Needed to match other icons hover
-  padding: 0 0 0.25rem 0;
-  border-radius: 0;
-  @include icon-navbar-hover;
-  @include focus-indicator;
-
-  i {
-    font-size: 1.3rem;
-  }
+.search-button i {
+  font-size: 1.3rem;
 }
 
 // __search-container will only show up when we use the search pop-up bar
@@ -91,9 +76,11 @@
 .search-button__overlay {
   display: none;
 }
+
 .search-button__wrapper.show {
   .search-button__search-container {
     display: flex;
+
     // Center in middle of screen just underneath header
     position: fixed;
     z-index: $zindex-modal;
@@ -114,8 +101,8 @@
     opacity: 0.5;
     width: 100%;
     height: 100%;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
   }
 
   form.bd-search {
@@ -136,19 +123,22 @@
  * Lives at components/search-button-field.html
  */
 .search-button-field {
+  $search-button-border-radius: 1.5em;
+
   display: inline-flex;
   align-items: center;
   border: var(--pst-color-border) solid 1px;
-  border-radius: 1.5em;
+  border-radius: $search-button-border-radius;
   color: var(--pst-color-text-muted);
   padding: 0.5em;
   background-color: var(--pst-color-surface);
 
   &:hover {
-    border: 2px solid var(--pst-color-link-hover);
+    box-shadow: 0 0 0 $focus-ring-width var(--pst-color-link-hover);
   }
+
   &:focus-visible {
-    border: 2px solid var(--pst-color-accent);
+    border-radius: $search-button-border-radius;
   }
 
   // The keyboard shotcut text

@@ -6,8 +6,8 @@ April-2023: we are currently
 and reporting, so this may change soon.
 ```
 
-In general, accessibility-checking tools can find a limited number of common HTML patterns which
-assistive technology can't help users understand.
+In general, accessibility-checking tools can find a limited number of common HTML patterns that assistive technology
+can't help users understand.
 
 ## Accessibility checks as part of our development process
 

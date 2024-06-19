@@ -12,7 +12,7 @@ ul.bd-breadcrumbs {
 
   li.breadcrumb-item {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     white-space: nowrap;
     flex-shrink: 0;
 
@@ -28,12 +28,13 @@ ul.bd-breadcrumbs {
     // Style should look like heavier in-page links
     // keeping visited in the default link colour
     font-weight: bold;
+
     a {
       @include link-style-text;
     }
 
     // Items that aren't the home have a caret to the left
-    &:not(.breadcrumb-home):before {
+    &:not(.breadcrumb-home)::before {
       font: var(--fa-font-solid);
       font-size: 0.8rem;
       content: var(--pst-breadcrumb-divider);

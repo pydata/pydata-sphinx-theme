@@ -18,6 +18,7 @@ See the sections in the primary sidebar and below to explore.
     kitchen-sink/index
     pydata
     execution
+    graphviz
 
 
 .. Note: the caption below is intentionally long in order to test out what long captions look like.
@@ -29,6 +30,7 @@ See the sections in the primary sidebar and below to explore.
 
     no-sidebar
     persistent-search-field
+    in-page-toc
     subpages/index
     mult_headers
     Link to an external site <https://jupyterbook.org/>
