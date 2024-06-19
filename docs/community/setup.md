@@ -5,6 +5,29 @@ It uses automation and as few steps as possible to get things done.
 
 If you are comfortable with and prefer a more manual setup refer to the [](topics/manual-dev.md) section.
 
+## Testing pre-release and nightly
+
+You can test the alpha, beta
+and release candidates of pydata sphinx theme on your your projects. To do so
+simply install with pip using the `--pre` flag:
+
+```console
+$ pip install --pre pydata-sphinx-theme
+```
+
+If an `alpha`, `beta` or `rc` is available, pip will install it.
+
+You can use the `--pre` flag in your project's continuous integration test suite
+to catch regressions or bugs before their release.
+
+If you are even more adventurous pydata-sphinx-theme has nightly builds, you can try following the
+instructions provided [on the scientific-python/upload-nightly-action
+Readme](https://github.com/scientific-python/upload-nightly-action?tab=readme-ov-file#using-nightly-builds-in-ci)
+on installing nightly wheels.
+
+Installing nightly wheels in your project's CI jobs is a great way to help theme developers catch bugs ahead of
+time.
+
 ## Workflow for contributing changes
 
 We follow a [typical GitHub workflow](https://guides.github.com/introduction/flow/)
