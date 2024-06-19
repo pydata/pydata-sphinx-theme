@@ -37,7 +37,7 @@ and use as follows:
 
 And that's it!
 
-> **Note**
+> [!NOTE]
 > This theme may not work with the latest major versions of Sphinx, especially
 > if they have only recently been released. Please give us a few months of
 > time to work out any bugs and changes when new releases are made.
