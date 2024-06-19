@@ -15,6 +15,19 @@ class Mock:
 @pytest.mark.parametrize(
     "platform,url,expected",
     [
+        ("github", "https://github.com", "github"),
+        ("github", "https://github.com/pydata", "pydata"),
+        (
+            "github",
+            "https://github.com/pydata/pydata-sphinx-theme",
+            "pydata/pydata-sphinx-theme",
+        ),
+        (
+            "github",
+            "https://github.com/pydata/pydata-sphinx-theme/pull/1012",
+            "pydata/pydata-sphinx-theme#1012",
+        ),
+        ("github", "https://github.com/orgs/pydata/projects/2", "pydata/projects#2"),
         ("gitlab", "https://gitlab.com/tezos/tezos/-/issues", "tezos/tezos/issues"),
         ("gitlab", "https://gitlab.com/tezos/tezos/issues", "tezos/tezos/issues"),
         (
