@@ -15,7 +15,10 @@ class Mock:
 @pytest.mark.parametrize(
     "platform,url,expected",
     [
+        # TODO, I belive this is wrong as both github.com and github.com/github
+        # shorten to just github.
         ("github", "https://github.com", "github"),
+        ("github", "https://github.com/github", "github"),
         ("github", "https://github.com/pydata", "pydata"),
         (
             "github",
@@ -27,7 +30,13 @@ class Mock:
             "https://github.com/pydata/pydata-sphinx-theme/pull/1012",
             "pydata/pydata-sphinx-theme#1012",
         ),
+        # TODO, I belive this is wrong as both orgs/pydata/projects/2 and pydata/projects/issue/2
+        # shorten to the same
         ("github", "https://github.com/orgs/pydata/projects/2", "pydata/projects#2"),
+        ("github", "https://github.com/pydata/projects/pull/2", "pydata/projects#2"),
+        # issues and pulls are athe same, so it's ok to normalise to the same here
+        ("github", "https://github.com/pydata/projects/issues/2", "pydata/projects#2"),
+        # Gitlab
         ("gitlab", "https://gitlab.com/tezos/tezos/-/issues", "tezos/tezos/issues"),
         ("gitlab", "https://gitlab.com/tezos/tezos/issues", "tezos/tezos/issues"),
         (
@@ -36,7 +45,8 @@ class Mock:
             "gitlab-org/gitlab#375583",
         ),
         (
-            # todo, non cannonical url, needs extra parsing.
+            # TODO, non canonical url, discuss if should maybe  be shortened to
+            # gitlab-org/gitlab#375583
             "gitlab",
             "https://gitlab.com/gitlab-org/gitlab/issues/375583",
             "gitlab-org/gitlab/issues/375583",
@@ -47,7 +57,8 @@ class Mock:
             "gitlab-org/gitlab/issues",
         ),
         (
-            # todo, non cannonical url, needs extra parsing.
+            # TODO, non canonical url, discuss if should maybe  be shortened to
+            # gitlab-org/gitlab/issues (no trailing slash)
             "gitlab",
             "https://gitlab.com/gitlab-org/gitlab/issues/",
             "gitlab-org/gitlab/issues/",
