@@ -1,0 +1,164 @@
+# Chinese translations for pydata-sphinx-theme.
+# Copyright (C) 2023 PyData developers
+# This file is distributed under the same license as  the pydata-sphinx-theme.
+# 
+# Translators:
+# Han-Teng Liao <h.liao@ieee.org>, 2024.
+#
+msgid ""
+msgstr ""
+
+"Last-Translator: Han-Teng Liao <h.liao@ieee.org>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: docs/conf.py:94
+msgid "Click to expand"
+msgstr "点击展开"
+
+#: docs/conf.py:95
+msgid "Click to collapse"
+msgstr "点击折叠"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
+msgid "Skip to main content"
+msgstr "跳至主内容"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:51
+msgid "Back to top"
+msgstr "导航回顶部"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:28
+msgid "Search"
+msgstr "搜索"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:8
+msgid "Error"
+msgstr "错误"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
+msgid "Please activate JavaScript to enable the search functionality."
+msgstr "请启动浏览器JavaScript以激活搜索功能."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
+msgid "Breadcrumb"
+msgstr "面包屑导航"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:17
+msgid "Home"
+msgstr "主页"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
+#, python-format
+msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+msgstr "© <a href=\"%(path)s\">Copyright  著作权所有</a> %(copyright)s."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
+#, python-format
+msgid "© Copyright %(copyright)s."
+msgstr "© Copyright 著作权所有 %(copyright)s."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:10
+#, python-format
+msgid "Edit on %(provider)s"
+msgstr "编辑此 %(provider)s"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/edit-this-page.html:12
+msgid "Edit"
+msgstr "编辑"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:4
+msgid "Indices"
+msgstr "索引"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:11
+msgid "General Index"
+msgstr "一般索引"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:15
+msgid "Global Module Index"
+msgstr "全球模组索引"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:19
+msgid "Python Module Index"
+msgstr "Python 模组索引"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/last-updated.html:4
+#, python-format
+msgid "Last updated on %(last_updated)s."
+msgstr "最近更新于 %(last_updated)s."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/page-toc.html:8
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:43
+msgid "On this page"
+msgstr "在此页"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:6
+msgid "previous page"
+msgstr "前一页"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:9
+msgid "previous"
+msgstr "前一"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:17
+msgid "next page"
+msgstr "下一页"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:19
+msgid "next"
+msgstr "下一"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
+msgid "Section Navigation"
+msgstr "章节导航"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:5
+msgid "Show Source"
+msgstr "展示原代码"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sphinx-version.html:4
+#, python-format
+msgid ""
+"Created using <a href=\"https://www.sphinx-doc.org/\">Sphinx</a> "
+"%(sphinx_version)s."
+msgstr "使用<a href=\"https://www.sphinx-doc.org/\">Sphinx</a> "
+"%(sphinx_version)s 创建."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+msgid "light/dark"
+msgstr "亮屏/黑暗模式"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
+#, python-format
+msgid ""
+"Built with the <a href=\"https://pydata-sphinx-"
+"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+"%(theme_version)s."
+msgstr ""
+"使用 <a href=\"https://pydata-sphinx-"
+"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx 主题模板</a> "
+"%(theme_version)s 打造."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
+msgid "Version warning"
+msgstr "版本警告"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
+msgid "Announcement"
+msgstr "公告"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
+msgid "Site navigation"
+msgstr "网站导航"
+
