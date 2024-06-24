@@ -181,7 +181,7 @@ jobs:
           python -Im tox run -e docs-no-checks
 
       - name: "Audit with Lighthouse 🔦"
-        uses: treosh/lighthouse-ci-action@v11
+        uses: treosh/lighthouse-ci-action@v12
         with:
           configPath: ".github/workflows/lighthouserc.json"
           temporaryPublicStorage: true
