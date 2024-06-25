@@ -63,7 +63,6 @@ class ShortenLinkTransform(SphinxPostTransform):
             the reformated url title
         """
         path = uri.path
-
         if path == "":
             # plain url passed, return platform only
             return self.platform
@@ -99,12 +98,18 @@ class ShortenLinkTransform(SphinxPostTransform):
                 map(uri.path.__contains__, ["issues", "merge_requests"])
             ):
                 group_and_subgroups, parts, *_ = path.split("/-/")
-                parts = parts.split("/")
-                url_type, element_number, *_ = parts
-                if url_type == "issues":
-                    text = f"{group_and_subgroups}#{element_number}"
-                elif url_type == "merge_requests":
-                    text = f"{group_and_subgroups}!{element_number}"
+                parts = parts.rstrip("/")
+                if "/" not in parts:
+                    text = f"{group_and_subgroups}/{parts}"
+                else:
+                    parts = parts.split("/")
+                    url_type, element_number, *_ = parts
+                    if not element_number:
+                        text = group_and_subgroups
+                    elif url_type == "issues":
+                        text = f"{group_and_subgroups}#{element_number}"
+                    elif url_type == "merge_requests":
+                        text = f"{group_and_subgroups}!{element_number}"
             else:
                 # display the whole uri (after "gitlab.com/") including parameters
                 # for example "<group>/<subgroup1>/<subgroup2>/<repository>"
