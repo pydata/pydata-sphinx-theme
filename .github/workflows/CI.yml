@@ -223,6 +223,20 @@ jobs:
           path: htmlcov
         if: ${{ failure() }}
 
+      # seems we need to call this from the main CI workflow first
+      - name: "Coverage comment 💬"
+        uses: py-cov-action/python-coverage-comment-action@v3
+        id: coverage_comment
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Store Pull Request comment to be posted 📤"
+        uses: actions/upload-artifact@v3
+        if: steps.coverage_comment.output.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          name: python-coverage-comment-action
+          path: python-coverage-comment-action.txtX
+
   profiling:
     needs: [build-site, run-pytest]
     runs-on: ubuntu-latest
