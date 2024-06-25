@@ -205,6 +205,7 @@ jobs:
         with:
           pattern: coverage-data-*
           merge-multiple: true
+
       - name: "Get coverage data & fail if it's <80%"
         run: |
           # if we decide to check cov across versions and combine
@@ -216,6 +217,7 @@ jobs:
 
           # report again and fail if under 80%.
           python -Im coverage report --fail-under=80
+
       - name: "Upload HTML report if check failed 📤"
         uses: actions/upload-artifact@v4
         with:
@@ -232,10 +234,11 @@ jobs:
 
       - name: "Store Pull Request comment to be posted 📤"
         uses: actions/upload-artifact@v3
-        if: steps.coverage_comment.output.COMMENT_FILE_WRITTEN == 'true'
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
         with:
+          # leave default names
           name: python-coverage-comment-action
-          path: python-coverage-comment-action.txtX
+          path: python-coverage-comment-action.txt
 
   profiling:
     needs: [build-site, run-pytest]
