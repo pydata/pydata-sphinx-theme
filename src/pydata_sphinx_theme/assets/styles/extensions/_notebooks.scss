@@ -52,6 +52,28 @@ div.nblast.container {
   margin-bottom: 1rem;
 }
 
+// Notebook cell input line number
+.nbinput.container .prompt pre {
+  html[data-theme="light"] & {
+    color: #005b82;
+  }
+
+  html[data-theme="dark"] & {
+    color: #00e0e0;
+  }
+}
+
+// Notebook cell output line number
+.nboutput.container .prompt pre {
+  html[data-theme="light"] & {
+    color: #a12236;
+  }
+
+  html[data-theme="dark"] & {
+    color: #ffa07a;
+  }
+}
+
 /*******************************************************************************
  * myst NB
  */

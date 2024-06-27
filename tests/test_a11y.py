@@ -38,8 +38,9 @@ def filter_ignored_violations(violations, url_pathname):
     ]:
         filtered = []
         for violation in violations:
-            # TODO: eventually fix this rule violation. See
-            # https://github.com/pydata/pydata-sphinx-theme/issues/1479.
+            # TODO: remove this exclusion once the following update to Axe is
+            # released and we upgrade:
+            # https://github.com/dequelabs/axe-core/pull/4469
             if violation["id"] == "landmark-unique":
                 # Ignore landmark-unique only for .sidebar targets. Don't ignore
                 # it for other targets because then the test might fail to catch
@@ -167,6 +168,13 @@ def test_axe_core(
     # Wait for CSS transitions (Bootstrap's transitions are 300 ms)
     page.wait_for_timeout(301)
 
+    # On the PyData Library Styles page, wait for ipywidget to load and for our
+    # JavaScript to apply tabindex="0" before running Axe checker (to avoid
+    # false positives for scrollable-region-focusable).
+    if url_pathname == "/examples/pydata.html":
+        ipywidgets_pandas_table = page.locator("css=.jp-RenderedHTMLCommon").first
+        expect(ipywidgets_pandas_table).to_have_attribute("tabindex", "0")
+
     # Inject the Axe-core JavaScript library into the page
     page.add_script_tag(path="node_modules/axe-core/axe.min.js")
 
@@ -176,6 +184,35 @@ def test_axe_core(
 
     # Check found violations against known violations that we do not plan to fix
     filtered_violations = filter_ignored_violations(results["violations"], url_pathname)
+
+    # We expect notebook outputs on the PyData Library Styles page to have color
+    # contrast failures.
+    if url_pathname == "/examples/pydata.html":
+        # All violations should be color contrast violations
+        for violation in filtered_violations:
+            assert (
+                violation["id"] == "color-contrast"
+            ), f"Found {violation['id']} violation (expected color-contrast): {format_violations([violation])}"
+
+        # Now check that when we exclude notebook outputs, the page has no violations
+
+        results_sans_nbout = page.evaluate(
+            f"axe.run({{ include: '{selector}', exclude: '.nboutput > .output_area' }})"
+        )
+        violations_sans_nbout = filter_ignored_violations(
+            results_sans_nbout["violations"], url_pathname
+        )
+
+        # No violations on page when excluding notebook outputs
+        assert len(violations_sans_nbout) == 0, format_violations(violations_sans_nbout)
+
+        # TODO: for color contrast issues with common notebook outputs
+        # (ipywidget tabbed panels, Xarray, etc.), should we override
+        # third-party CSS with our own CSS or/and work with NbSphinx, MyST-NB,
+        # ipywidgets, and other third parties to use higher contrast colors in
+        # their CSS?
+        pytest.xfail("notebook outputs have color contrast violations")
+
     assert len(filtered_violations) == 0, format_violations(filtered_violations)
 
 
