@@ -13,6 +13,18 @@ ul.bd-breadcrumbs {
   li.breadcrumb-item {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    overflow-x: hidden;
+
+    a,
+    .ellipsis {
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
+      // Need to add margin, otherwise the overflow: hidden rule on the parent
+      // will hide the focus ring
+      margin: $focus-ring-width;
+    }
 
     // Style should look like heavier in-page links
     // keeping visited in the default link colour

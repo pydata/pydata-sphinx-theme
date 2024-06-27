@@ -1,9 +1,12 @@
 """Configuration of the pytest session."""
 
 import re
+import time
+from http.client import HTTPConnection
 from os import environ
 from pathlib import Path
 from shutil import copytree
+from subprocess import PIPE, Popen
 from typing import Callable
 
 import pytest
@@ -14,7 +17,9 @@ from typing_extensions import Self
 
 pytest_plugins = "sphinx.testing.fixtures"
 
-path_tests = Path(__file__).parent
+tests_path = Path(__file__).parent
+repo_path = tests_path.parent
+docs_build_path = repo_path / "docs" / "_build" / "html"
 
 # -- Utils method ------------------------------------------------------------
 
@@ -81,8 +86,49 @@ def sphinx_build_factory(make_app: Callable, tmp_path: Path, request) -> Callabl
 
             srcdir = sphinx_path(srcdir)
 
-        copytree(path_tests / "sites" / src_folder, tmp_path / src_folder)
+        copytree(tests_path / "sites" / src_folder, tmp_path / src_folder)
         app = make_app(srcdir=srcdir, **kwargs)
         return SphinxBuild(app, tmp_path / src_folder)
 
     yield _func
+
+
+@pytest.fixture(scope="module")
+def url_base():
+    """Start local server on built docs and return the localhost URL as the base URL."""
+    # Use a port that is not commonly used during development or else you will
+    # force the developer to stop running their dev server in order to run the
+    # tests.
+    port = "8213"
+    host = "localhost"
+    url = f"http://{host}:{port}"
+
+    # Try starting the server
+    process = Popen(
+        ["python", "-m", "http.server", port, "--directory", docs_build_path],
+        stdout=PIPE,
+    )
+
+    # Try connecting to the server
+    retries = 5
+    while retries > 0:
+        conn = HTTPConnection(host, port)
+        try:
+            conn.request("HEAD", "/")
+            response = conn.getresponse()
+            if response is not None:
+                yield url
+                break
+        except ConnectionRefusedError:
+            time.sleep(1)
+            retries -= 1
+
+    # If the code above never yields a URL, then we were never able to connect
+    # to the server and retries == 0.
+    if not retries:
+        raise RuntimeError("Failed to start http server in 5 seconds")
+    else:
+        # Otherwise the server started and this fixture is done now and we clean
+        # up by stopping the server.
+        process.terminate()
+        process.wait()

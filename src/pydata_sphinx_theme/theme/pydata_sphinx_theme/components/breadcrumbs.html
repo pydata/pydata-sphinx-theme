@@ -1,12 +1,5 @@
 {# Displays (and links to) the parent section(s) of the currently viewed page. #}
 {%- block breadcrumbs %}
-{#
-  If we have more than 3 parents (excluding the home page) then we remove
-  The ones in the middle and add an ellipsis.
-#}
-{% if parents|length>2 %}
-{% set parents=[parents[0], {"title": '<i class="fa-solid fa-ellipsis"></i>'}, parents[-1]] %}
-{% endif %}
 
 {#- Hide breadcrumbs on the home page #}
 {% if title and pagename != root_doc %}
@@ -25,7 +18,7 @@
     <li class="breadcrumb-item">{{ doc.title }}</li>
     {% endif %}
     {%- endfor %}
-    <li class="breadcrumb-item active" aria-current="page">{{ title|truncate(15, False) }}</li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">{{ title }}</span></li>
   </ul>
 </nav>
 {% endif %}
