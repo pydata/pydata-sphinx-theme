@@ -524,7 +524,9 @@ function showVersionWarningBanner(data) {
     const timeout_in_days = 14;
     if (days_passed < timeout_in_days) {
       console.info(
-        `[PST] Suppressing version warning banner; was dismissed ${Math.floor(days_passed)} day(s) ago`,
+        `[PST] Suppressing version warning banner; was dismissed ${Math.floor(
+          days_passed,
+        )} day(s) ago`,
       );
       return;
     }
@@ -727,10 +729,18 @@ function addTabStopsToScrollableElements() {
   const updateTabStops = () => {
     document
       .querySelectorAll(
-        "pre, " + // code blocks
-          ".nboutput > .output_area, " + // NBSphinx notebook output
-          ".cell_output > .output, " + // Myst-NB
-          ".jp-RenderedHTMLCommon", // ipywidgets
+        [
+          // code blocks
+          "pre",
+          // NBSphinx notebook output
+          ".nboutput > .output_area",
+          // Myst-NB
+          ".cell_output > .output",
+          // ipywidgets
+          ".jp-RenderedHTMLCommon",
+          // [rST table nodes](https://www.docutils.org/docs/ref/doctree.html#table)
+          ".pst-scrollable-table-container",
+        ].join(", "),
       )
       .forEach((el) => {
         el.tabIndex =
