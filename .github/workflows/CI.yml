@@ -228,6 +228,8 @@ jobs:
       - name: "Coverage comment 💬"
         uses: py-cov-action/python-coverage-comment-action@v3
         id: coverage_comment
+        # avoid running this on schedule or releases
+        if: github.event.workflow_run.event != 'schedule' && github.event.workflow_run.event != 'release'
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
