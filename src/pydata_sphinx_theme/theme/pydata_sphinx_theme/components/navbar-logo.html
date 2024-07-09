@@ -28,7 +28,7 @@
     {% endif %}
     {% set js_mode = "light" if default_mode == "dark" else "dark" %}
     <img src="{{ theme_logo['image_relative'][default_mode] }}" class="logo__image only-{{ default_mode }}" alt="{{ alt }}"/>
-    <script>document.write(`<img src="{{ theme_logo['image_relative'][js_mode] }}" class="logo__image only-{{ js_mode }}" alt="{{ alt }}"/>`);</script>
+    <img src="{{ theme_logo['image_relative'][js_mode] }}" class="logo__image only-{{ js_mode }} jsonly" alt="{{ alt }}"/>
   {% endif %}
   {% if not is_logo or theme_logo.get("text") %}
     <p class="title logo__title">{{ theme_logo.get("text") or docstitle }}</p>
