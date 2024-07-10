@@ -44,6 +44,9 @@ Thanks for your support!
 - title: MegEngine
   link-alt: MegEngine docs
   link: https://www.megengine.org.cn/doc/stable/en/index.html
+- title: PhaseFieldX
+  link-alt: PhaseFieldX docs
+  link: https://phasefieldx.readthedocs.io/en/latest/index.html
 - title: PyVista
   link-alt: PyVista docs
   link: https://docs.pyvista.org
