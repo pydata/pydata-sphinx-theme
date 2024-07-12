@@ -72,14 +72,20 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
   // on the WCAG color contrast guidelines
   --pst-color-#{$name}-text: #{a11y-combination($value)};
 
-  // TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
-  --pst-color-#{$name}-highlight: #{color.adjust($value, $lightness: -15%)};
+  // highlight is used for hover effects on buttons, here we make some fluid scaling
+  // to avoid jarring effects
+  --pst-color-#{$name}-highlight: #{color.scale(
+      $value,
+      $lightness: -15%,
+      $saturation: 10%
+    )};
 
   // override the sphinx-design variables
   --sd-color-#{$name}: var(--pst-color-#{$name});
   --sd-color-#{$name}-text: var(--pst-color-#{$name}-text);
 
-  // TODO: highlight seems to be used for buttons @trallard to fix on a11y follow-up work
+  // highlight is used for hover effects on buttons, here we make some fluid scaling
+  // to avoid jarring effects
   --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
 }
 
