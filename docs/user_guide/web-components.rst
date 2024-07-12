@@ -111,6 +111,24 @@ Here are some of the available button-style links, also using semantic colors:
 
             Dark
 
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: secondary
+            :shadow:
+
+            Secondary
+
+    .. grid-item::
+
+        .. button-ref:: badges-buttons
+            :ref-type: ref
+            :color: primary
+            :shadow:
+
+            Primary
+
 .. note::
 
    `Sphinx Design buttons
