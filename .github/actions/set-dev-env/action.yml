@@ -9,7 +9,11 @@ inputs:
   pandoc:
     description: Whether this should install pandoc or not
     required: false
-    default: "False"
+    default: "false"
+  graphviz:
+    description: Whether this should install Graphviz or not
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -30,3 +34,7 @@ runs:
       with:
         pandoc-version: "latest"
       if: ${{ inputs.pandoc }} == true
+
+    - name: "Install Graphviz"
+      uses: ts-graphviz/setup-graphviz@v2
+      if: ${{ inputs.graphviz }} == true

@@ -103,6 +103,8 @@ jobs:
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          pandoc: true
+          graphviz: true
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
         run: python -Im tox run -e py312-docs,a11y-tests
@@ -129,19 +131,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
-      - name: "Install Graphviz on Windows 🗔"
-        if: runner.os == 'Windows'
-        run: choco install graphviz
-      - name: "Install Graphviz on macOS "
-        if: runner.os == 'macOS'
-        run: |
-          brew update
-          brew install graphviz
-      - name: "Install Graphviz on Linux 🐧"
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends graphviz
+          graphviz: true
       - name: "Build docs and check for warnings 📖"
         shell: bash
         run: |
@@ -191,6 +181,9 @@ jobs:
     name: "check coverage"
     needs: run-pytest
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
