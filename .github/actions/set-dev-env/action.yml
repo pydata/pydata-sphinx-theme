@@ -31,10 +31,10 @@ runs:
     - run: python -Im pip install tox-uv
       shell: bash
 
-    # waiting for https://github.com/nikeee/setup-pandoc/pull/8
-    # using 12rambau fork until then
     - name: "Install pandoc 📝"
-      uses: 12rambau/setup-pandoc@test
+      uses: r-lib/actions/setup-pandoc@v2
+      with:
+        pandoc-version: "latest"
       if: ${{ inputs.pandoc }} == true
 
     - name: "Install Graphviz on Windows 🗔"

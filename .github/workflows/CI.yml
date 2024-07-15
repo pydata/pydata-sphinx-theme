@@ -135,11 +135,11 @@ jobs:
         shell: bash
         run: |
           # check if there is a specific Sphinx version to build with
-          # example substitution: tox run -e docs-py39-sphinx61-docs
+          # example substitution: tox run -e py39-sphinx61-docs
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-docs
-          # build with the default Sphinx version 
-          # example substitution: tox run -e docs-py312-docs
+          # build with the default Sphinx version
+          # example substitution: tox run -e py312-docs
           else
             python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-docs
           fi
