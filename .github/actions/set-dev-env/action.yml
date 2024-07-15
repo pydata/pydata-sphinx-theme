@@ -9,13 +9,11 @@ inputs:
   pandoc:
     description: Whether this should install pandoc or not
     required: false
-    type: boolean
-    default: false
+    default: "false"
   graphviz:
     description: Whether this should install Graphviz or not
     required: false
-    type: boolean
-    default: false
+    default: "false"
 
 runs:
   using: composite
@@ -35,24 +33,8 @@ runs:
       uses: r-lib/actions/setup-pandoc@v2
       with:
         pandoc-version: "latest"
-      if: ${{ inputs.pandoc }} == true
+      if: ${{ inputs.pandoc == true }}
 
-    - name: "Install Graphviz on Windows 🗔"
-      if: runner.os == 'Windows' && inputs.graphviz == true
-
-      shell: bash
-      run: choco install graphviz
-
-    - name: "Install Graphviz on macOS "
-      if: runner.os == 'macOS' && inputs.graphviz == true
-      shell: bash
-      run: |
-        brew update
-        brew install graphviz
-
-    - name: "Install Graphviz on Linux 🐧"
-      if: runner.os == 'Linux' && inputs.graphviz == true
-      shell: bash
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y --no-install-recommends graphviz
+    - name: "Install Graphviz"
+      uses: ts-graphviz/setup-graphviz@v2
+      if: ${{ inputs.graphviz == true }}
