@@ -66,6 +66,8 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
 
 @mixin create-sd-colors($value, $name) {
   // define the pst variables, so that downstream user overrides will work
+  @debug "Creating color variables for semantic color: #{$name}";
+
   --pst-color-#{$name}: #{$value};
 
   // we are now using a11y-combination to calculate the text color - this is based
@@ -73,11 +75,14 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
   --pst-color-#{$name}-text: #{a11y-combination($value)};
 
   // highlight is used for hover effects on buttons, here we make some fluid scaling
-  // to avoid jarring effects
+  // to avoid jarring effects -- we create a local variable that we can access
+  // later to calculate the text color
+  $highlight-color: color.scale($value, $lightness: -15%, $saturation: 5%);
+
   --pst-color-#{$name}-highlight: #{color.scale(
       $value,
       $lightness: -15%,
-      $saturation: 10%
+      $saturation: 5%
     )};
 
   // override the sphinx-design variables
@@ -87,10 +92,12 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
   // highlight is used for hover effects on buttons, here we make some fluid scaling
   // to avoid jarring effects
   --sd-color-#{$name}-highlight: var(--pst-color-#{$name}-highlight);
+  --sd-color-#{$name}-highlight-text: #{a11y-combination($highlight-color)};
 }
 
 // Now we override the --sd-color-* variables.
 @each $mode in (light, dark) {
+  @debug "Creating color variables for mode: #{$mode}";
   html[data-theme="#{$mode}"] {
     // check if this color is defined differently for light/dark
     @each $name in $sd-semantic-color-names {
@@ -105,7 +112,7 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
             @if string.index($key, "bg") {
               --sd-color-#{$name}-bg: #{$value};
 
-              // create local variable
+              // create local variable -- needed to calculate the text color
               $value: check-color($value);
 
               --sd-color-#{$name}-bg-text: #{a11y-combination($value)};
@@ -344,6 +351,14 @@ html {
       @include link-style-hover; // override Sphinx Design
 
       text-decoration-thickness: 1px;
+    }
+  }
+
+  @each $name in $sd-semantic-color-names {
+    .sd-btn-#{$name} {
+      &:hover {
+        color: var(--sd-color-#{$name}-highlight-text) !important;
+      }
     }
   }
 
