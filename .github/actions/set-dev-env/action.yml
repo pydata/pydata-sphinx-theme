@@ -12,7 +12,7 @@ inputs:
     type: boolean
     default: false
   graphviz:
-    description: Whether this should install pandoc or not
+    description: Whether this should install Graphviz or not
     required: false
     type: boolean
     default: false
@@ -38,19 +38,20 @@ runs:
       if: ${{ inputs.pandoc }} == true
 
     - name: "Install Graphviz on Windows 🗔"
-      if: runner.os == 'Windows' && ${{ inputs.graphviz }} == true
+      if: runner.os == 'Windows' && inputs.graphviz == true
+
       shell: bash
       run: choco install graphviz
 
     - name: "Install Graphviz on macOS "
-      if: runner.os == 'macOS' && ${{ inputs.graphviz }} == true
+      if: runner.os == 'macOS' && inputs.graphviz == true
       shell: bash
       run: |
         brew update
         brew install graphviz
 
     - name: "Install Graphviz on Linux 🐧"
-      if: runner.os == 'Linux' && ${{ inputs.graphviz }} == true
+      if: runner.os == 'Linux' && inputs.graphviz == true
       shell: bash
       run: |
         sudo apt-get update
