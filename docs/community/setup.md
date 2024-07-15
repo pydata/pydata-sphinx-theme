@@ -122,8 +122,10 @@ The caveat to using `tox` is that this will not install the required hooks to ru
 
 ## Build the documentation
 
-Now that you have `tox` installed and cloned the repository, you should be able to build the documentation locally.
+Now that you have `tox` installed and cloned the repository, you will need to install Graphviz to build the documentation.
+To install Graphviz, follow the instructions in the [Graphviz documentation for your operating system](https://graphviz.org/download/).
 
+Once you have `tox` and Graphviz installed, you can build the documentation.
 To build the documentation with `tox`, run the following command:
 
 ```console
