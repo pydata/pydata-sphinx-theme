@@ -5,7 +5,7 @@
     <title>Coverage for src/pydata_sphinx_theme/pygments.py: 95%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
     <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
-    <script src="coverage_html_cb_da166b87.js" defer></script>
+    <script src="coverage_html_cb_6fb7b396.js" defer></script>
 </head>
 <body class="pyfile">
 <header>
@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_e73019af99dc6336_short_link_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.1">coverage.py v7.5.1</a>,
-            created at 2024-05-24 12:25 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
+            created at 2024-07-15 19:35 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -155,7 +155,7 @@
     <p class="pln"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">    <span class="key">for</span> <span class="nam">light_or_dark</span><span class="op">,</span> <span class="nam">fallback</span> <span class="key">in</span> <span class="nam">fallbacks</span><span class="op">.</span><span class="nam">items</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">        <span class="com"># make sure our fallbacks work; if not fall(further)back to "default"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">        <span class="key">if</span> <span class="nam">fallback</span> <span class="key">not</span> <span class="key">in</span> <span class="nam">pygments_styles</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">74&#x202F;&#x219B;&#x202F;75</span><span class="annotate long">line 74 didn't jump to line 75, because the condition on line 74 was never true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">        <span class="key">if</span> <span class="nam">fallback</span> <span class="key">not</span> <span class="key">in</span> <span class="nam">pygments_styles</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">74&#x202F;&#x219B;&#x202F;75</span><span class="annotate long">line 74 didn't jump to line 75 because the condition on line 74 was never true</span></span></p>
     <p class="mis show_mis"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">            <span class="nam">fallback</span> <span class="op">=</span> <span class="nam">pygments_styles</span><span class="op">[</span><span class="num">0</span><span class="op">]</span>  <span class="com"># should resolve to "default"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t">        <span class="com"># see if user specified a light/dark pygments theme:</span>&nbsp;</span><span class="r"></span></p>
@@ -168,7 +168,7 @@
     <p class="pln"><span class="n"><a id="t84" href="#t84">84</a></span><span class="t">        <span class="com"># make sure we can load the style</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">        <span class="key">if</span> <span class="nam">style_name</span> <span class="key">not</span> <span class="key">in</span> <span class="nam">pygments_styles</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">            <span class="com"># only warn if user asked for a highlight theme that we can't find</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">            <span class="key">if</span> <span class="nam">style_name</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">87&#x202F;&#x219B;&#x202F;92</span><span class="annotate long">line 87 didn't jump to line 92, because the condition on line 87 was always true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">            <span class="key">if</span> <span class="nam">style_name</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">87&#x202F;&#x219B;&#x202F;92</span><span class="annotate long">line 87 didn't jump to line 92 because the condition on line 87 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">                <span class="nam">warning</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">Highlighting style </span><span class="op">{</span><span class="nam">style_name</span><span class="op">}</span><span class="fst"> not found by pygments, </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">falling back to </span><span class="op">{</span><span class="nam">fallback</span><span class="op">}</span><span class="fst">.</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
@@ -193,8 +193,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_e73019af99dc6336_short_link_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.1">coverage.py v7.5.1</a>,
-            created at 2024-05-24 12:25 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
+            created at 2024-07-15 19:35 +0000
         </p>
     </div>
 </footer>

@@ -2,17 +2,18 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/pydata/pydata-sphinx-theme/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                                          |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
-|---------------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
-| src/pydata\_sphinx\_theme/\_\_init\_\_.py     |      127 |       15 |       50 |        9 |     85% |41, 47->51, 67-68, 74-75, 128, 143, 160, 197->208, 199->208, 209-218, 261-262 |
-| src/pydata\_sphinx\_theme/edit\_this\_page.py |       27 |        0 |       11 |        0 |    100% |           |
-| src/pydata\_sphinx\_theme/logo.py             |       38 |        1 |       18 |        1 |     96% |        73 |
-| src/pydata\_sphinx\_theme/pygments.py         |       45 |        1 |       18 |        2 |     95% |75, 87->92 |
-| src/pydata\_sphinx\_theme/short\_link.py      |       50 |        0 |       28 |        5 |     94% |48->43, 88->90, 93->114, 96->114, 106->114 |
-| src/pydata\_sphinx\_theme/toctree.py          |      226 |       12 |      120 |       15 |     92% |94-97, 101->exit, 215-216, 329, 336, 356->354, 359, 361->395, 378->382, 423->421, 444, 455, 491, 594, 613->601, 620 |
-| src/pydata\_sphinx\_theme/translator.py       |       52 |       22 |       18 |        2 |     49% |36, 62-88, 92-93, 115-128 |
-| src/pydata\_sphinx\_theme/utils.py            |       65 |        3 |       35 |        2 |     93% |24-27, 73->exit |
-|                                     **TOTAL** |  **630** |   **54** |  **298** |   **36** | **89%** |           |
+| Name                                      |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
+|------------------------------------------ | -------: | -------: | -------: | -------: | ------: | --------: |
+| src/pydata\_sphinx\_theme/\_\_init\_\_.py |      130 |       16 |       52 |       10 |     85% |41, 47->51, 67-68, 74-75, 128, 143, 160, 163, 200->211, 202->211, 212-221, 264-265 |
+| src/pydata\_sphinx\_theme/logo.py         |       41 |        1 |       18 |        1 |     97% |        74 |
+| src/pydata\_sphinx\_theme/pygments.py     |       45 |        1 |       18 |        2 |     95% |75, 87->92 |
+| src/pydata\_sphinx\_theme/short\_link.py  |       55 |        1 |       32 |        6 |     92% |48->43, 87->89, 92->119, 95->119, 108, 111->119 |
+| src/pydata\_sphinx\_theme/toctree.py      |      229 |       14 |      122 |       17 |     91% |44, 94-97, 101->exit, 135, 215-216, 332, 339, 359->357, 362, 364->398, 381->385, 426->424, 447, 458, 494, 597, 616->604, 623 |
+| src/pydata\_sphinx\_theme/translator.py   |       42 |       21 |       16 |        1 |     41% |41-67, 71-72, 94-107 |
+| src/pydata\_sphinx\_theme/utils.py        |       65 |        3 |       35 |        2 |     93% |24-27, 73->exit |
+|                                 **TOTAL** |  **634** |   **57** |  **304** |   **39** | **88%** |           |
+
+1 file skipped due to complete coverage.
 
 
 ## Setup coverage badge

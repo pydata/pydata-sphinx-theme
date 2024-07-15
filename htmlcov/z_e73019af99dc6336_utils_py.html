@@ -5,7 +5,7 @@
     <title>Coverage for src/pydata_sphinx_theme/utils.py: 93%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
     <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
-    <script src="coverage_html_cb_da166b87.js" defer></script>
+    <script src="coverage_html_cb_6fb7b396.js" defer></script>
 </head>
 <body class="pyfile">
 <header>
@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="index.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.1">coverage.py v7.5.1</a>,
-            created at 2024-05-24 12:25 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
+            created at 2024-07-15 19:35 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -103,7 +103,7 @@
     <p class="pln"><span class="n"><a id="t19" href="#t19">19</a></span><span class="t"><span class="str">    their ``conf.py``); sometimes that copy never occurs though which is why we</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t20" href="#t20">20</a></span><span class="t"><span class="str">    check both.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t21" href="#t21">21</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t22" href="#t22">22</a></span><span class="t">    <span class="key">if</span> <span class="nam">hasattr</span><span class="op">(</span><span class="nam">app</span><span class="op">.</span><span class="nam">builder</span><span class="op">,</span> <span class="str">"theme_options"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">22&#x202F;&#x219B;&#x202F;24</span><span class="annotate long">line 22 didn't jump to line 24, because the condition on line 22 was always true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t22" href="#t22">22</a></span><span class="t">    <span class="key">if</span> <span class="nam">hasattr</span><span class="op">(</span><span class="nam">app</span><span class="op">.</span><span class="nam">builder</span><span class="op">,</span> <span class="str">"theme_options"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">22&#x202F;&#x219B;&#x202F;24</span><span class="annotate long">line 22 didn't jump to line 24 because the condition on line 22 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t23" href="#t23">23</a></span><span class="t">        <span class="key">return</span> <span class="nam">app</span><span class="op">.</span><span class="nam">builder</span><span class="op">.</span><span class="nam">theme_options</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t24" href="#t24">24</a></span><span class="t">    <span class="key">elif</span> <span class="nam">hasattr</span><span class="op">(</span><span class="nam">app</span><span class="op">.</span><span class="nam">config</span><span class="op">,</span> <span class="str">"html_theme_options"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t25" href="#t25">25</a></span><span class="t">        <span class="key">return</span> <span class="nam">app</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">html_theme_options</span>&nbsp;</span><span class="r"></span></p>
@@ -154,7 +154,7 @@
     <p class="pln"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">    <span class="nam">app</span><span class="op">:</span> <span class="nam">Sphinx</span><span class="op">,</span> <span class="nam">pagename</span><span class="op">:</span> <span class="nam">str</span><span class="op">,</span> <span class="nam">templatename</span><span class="op">:</span> <span class="nam">str</span><span class="op">,</span> <span class="nam">context</span><span class="op">,</span> <span class="nam">doctree</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">    <span class="str">"""Set the secondary sidebar items to render for the given pagename."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">    <span class="key">if</span> <span class="str">"theme_secondary_sidebar_items"</span> <span class="key">in</span> <span class="nam">context</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">73&#x202F;&#x219B;&#x202F;exit</span><span class="annotate long">line 73 didn't return from function 'set_secondary_sidebar_items', because the condition on line 73 was always true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">    <span class="key">if</span> <span class="str">"theme_secondary_sidebar_items"</span> <span class="key">in</span> <span class="nam">context</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">73&#x202F;&#x219B;&#x202F;exit</span><span class="annotate long">line 73 didn't return from function 'set_secondary_sidebar_items' because the condition on line 73 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">        <span class="nam">templates</span> <span class="op">=</span> <span class="nam">context</span><span class="op">[</span><span class="str">"theme_secondary_sidebar_items"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">        <span class="key">if</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">templates</span><span class="op">,</span> <span class="nam">dict</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">            <span class="nam">templates</span> <span class="op">=</span> <span class="nam">_get_matching_sidebar_items</span><span class="op">(</span><span class="nam">pagename</span><span class="op">,</span> <span class="nam">templates</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -265,8 +265,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="index.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.1">coverage.py v7.5.1</a>,
-            created at 2024-05-24 12:25 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
+            created at 2024-07-15 19:35 +0000
         </p>
     </div>
 </footer>
