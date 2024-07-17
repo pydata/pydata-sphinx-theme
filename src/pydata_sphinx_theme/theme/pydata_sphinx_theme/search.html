@@ -9,6 +9,7 @@
         <p>{% trans %}Please activate JavaScript to enable the search functionality.{% endtrans %}</p>
       </div>
     </noscript>
+    {%- set search_input_id="search-input-results-page" -%}
     {% include "../components/search-field.html" %}
     <div id="search-results"></div>
   </div>

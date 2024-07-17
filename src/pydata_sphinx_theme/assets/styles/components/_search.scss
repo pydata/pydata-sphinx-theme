@@ -16,6 +16,15 @@
     color: var(--pst-color-text-muted);
   }
 
+  // Hoist the focus ring from the input field to its parent
+  &:focus-within {
+    box-shadow: $focus-ring-box-shadow;
+
+    input:focus {
+      box-shadow: none;
+    }
+  }
+
   .icon {
     position: absolute;
     color: var(--pst-color-border);
@@ -28,7 +37,15 @@
     color: var(--pst-color-text-muted);
   }
 
-  input {
+  label {
+    display: flex;
+  }
+
+  input.form-control {
+    background-color: var(--pst-color-background);
+    color: var(--pst-color-text-base);
+    border: none;
+
     // Inner-text of the search bar
     &::placeholder {
       color: var(--pst-color-text-muted);
@@ -39,46 +56,36 @@
     &::-webkit-search-decoration {
       appearance: none;
     }
+
+    &:focus,
+    &:focus-visible {
+      color: var(--pst-color-text-muted);
+    }
   }
 
   // Shows off the keyboard shortcuts for the button
   .search-button__kbd-shortcut {
     display: flex;
-    position: absolute;
-    right: 0.5rem;
+    margin-inline-end: 0.5rem;
     color: var(--pst-color-border);
-  }
-}
-
-.form-control {
-  background-color: var(--pst-color-background);
-  color: var(--pst-color-text-base);
-
-  &:focus,
-  &:focus-visible {
-    border: none;
-    background-color: var(--pst-color-background);
-    color: var(--pst-color-text-muted);
   }
 }
 
 /**
  * Search button - located in the navbar
  */
-
-// Search link icon should be a bit bigger since it is separate from icon links
 .search-button i {
+  // Search link icon should be a bit bigger since it is separate from icon links
   font-size: 1.3rem;
 }
 
-// __search-container will only show up when we use the search pop-up bar
-.search-button__search-container,
-.search-button__overlay {
+/**
+ * The search pop-up <dialog>
+ */
+.search-button__search-container {
   display: none;
-}
 
-.search-button__wrapper.show {
-  .search-button__search-container {
+  &[open] {
     display: flex;
 
     // Center in middle of screen just underneath header
@@ -91,30 +98,24 @@
     margin-top: 0.5rem;
     width: 90%;
     max-width: 800px;
-  }
+    background-color: transparent;
+    padding: $focus-ring-width;
+    border: none;
 
-  .search-button__overlay {
-    display: flex;
-    position: fixed;
-    z-index: $zindex-modal-backdrop;
-    background-color: black;
-    opacity: 0.5;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
+    &::backdrop {
+      background-color: black;
+      opacity: 0.5;
+    }
 
-  form.bd-search {
-    flex-grow: 1;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+    form.bd-search {
+      flex-grow: 1;
 
-  // Font and input text a bit bigger
-  svg,
-  input {
-    font-size: var(--pst-font-size-icon);
+      // Font and input text a bit bigger
+      svg,
+      input {
+        font-size: var(--pst-font-size-icon);
+      }
+    }
   }
 }
 
@@ -141,7 +142,7 @@
     border-radius: $search-button-border-radius;
   }
 
-  // The keyboard shotcut text
+  // The keyboard shortcut text
   .search-button__default-text {
     font-size: var(--bs-nav-link-font-size);
     font-weight: var(--bs-nav-link-font-weight);

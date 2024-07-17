@@ -63,10 +63,10 @@
           id="pst-secondary-sidebar-checkbox"/>
   <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   {# A search field pop-up that will only show when the search button is clicked #}
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
-  </div>
+  <dialog class="search-button__search-container">
+    {%- set search_input_id="search-input-hidden" -%}
+    {% include "../components/search-field.html" %}
+  </dialog>
 
   {% include "sections/announcement.html" %}
 
