@@ -2,13 +2,12 @@
 <form class="bd-search d-flex align-items-center"
       action="{{ pathto('search') }}"
       method="get">
-  <label for="{{ search_input_id }}"
-         aria-label="{{ theme_search_bar_text }}"><i class="fa-solid fa-magnifying-glass"></i></label>
+  <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
          class="form-control"
          name="q"
-         id="{{ search_input_id }}"
          placeholder="{{ theme_search_bar_text }}"
+         aria-label="{{ theme_search_bar_text }}"
          autocomplete="off"
          autocorrect="off"
          autocapitalize="off"
