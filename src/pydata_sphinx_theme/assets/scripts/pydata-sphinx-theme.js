@@ -305,12 +305,17 @@ var setupSearchButtons = () => {
 
   // If user clicks outside the search modal dialog, then close it.
   const searchDialog = document.getElementById("pst-search-dialog");
+  // Dialog click handler includes clicks on dialog ::backdrop.
   searchDialog.addEventListener("click", (event) => {
     if (!searchDialog.open) {
       return;
     }
 
+    // Dialog.getBoundingClientRect() does not include ::backdrop. (This is the
+    // trick that allows us to determine if click was inside or outside of the
+    // dialog: click handler includes backdrop, getBoundingClientRect does not.)
     const { left, right, top, bottom } = searchDialog.getBoundingClientRect();
+
     // 0, 0 means top left
     const clickWasOutsideDialog =
       event.clientX < left ||
