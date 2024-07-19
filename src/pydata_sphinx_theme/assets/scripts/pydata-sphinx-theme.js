@@ -194,7 +194,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        ":not(.search-button__search-container) > form.bd-search",
+        ":not(#pst-search-dialog) > form.bd-search",
       );
     }
     return form.querySelector("input");
@@ -212,9 +212,7 @@ var toggleSearchField = () => {
 
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
-  const searchDialog = document.querySelector(
-    ".search-button__search-container",
-  );
+  const searchDialog = document.getElementById("pst-search-dialog");
   const hiddenInput = searchDialog.querySelector("input");
   if (input === hiddenInput) {
     if (searchDialog.open) {
@@ -306,9 +304,7 @@ var setupSearchButtons = () => {
   });
 
   // If user clicks outside the search modal dialog, then close it.
-  const searchDialog = document.querySelector(
-    ".search-button__search-container",
-  );
+  const searchDialog = document.getElementById("pst-search-dialog");
   searchDialog.addEventListener("click", (event) => {
     if (!searchDialog.open) {
       return;
