@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "axe-core": "^4.6.3",
-    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dedent": "^0.7.0",
