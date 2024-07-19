@@ -208,12 +208,14 @@ var findSearchInput = () => {
  */
 var toggleSearchField = () => {
   // Find the search input to highlight
-  let input = findSearchInput();
+  const input = findSearchInput();
 
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
-  let searchDialog = document.querySelector(".search-button__search-container");
-  let hiddenInput = searchDialog.querySelector("input");
+  const searchDialog = document.querySelector(
+    ".search-button__search-container",
+  );
+  const hiddenInput = searchDialog.querySelector("input");
   if (input === hiddenInput) {
     if (searchDialog.open) {
       searchDialog.close();
