@@ -109,22 +109,14 @@ module.exports = {
   output: {
     filename: "scripts/[name].js",
     path: staticPath,
-    // clean: true,
   },
-  // debugging
-  // output: {
-  //   filename: "scripts/[name].js",
-  //   path: resolve(__dirname, 'dist'),
-  //   // clean build directory before each build
-  //   clean: true,
-  // },
   optimization: {
     minimizer: [
       '...',
       new CssMinimizerPlugin(),
       new TerserPlugin({
         terserOptions: {
-          output: { ascii_only: true }
+          parallel: true,
         }
       })]
   },
