@@ -152,7 +152,7 @@ msgstr "版本警告"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
 msgid "Announcement"
-msgstr "声明"
+msgstr "公告"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
 msgid "Site navigation"
