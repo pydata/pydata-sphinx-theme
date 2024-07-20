@@ -43,7 +43,7 @@ msgstr "错误"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr "请激活JavaScript以便正常开启搜索功能"
+msgstr "请启用 JavaScript 以启用搜索功能。"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
 msgid "Breadcrumb"
