@@ -8,6 +8,10 @@
 # 
 msgid ""
 msgstr ""
+"Last-Translator: 温欣, 2024\n"
+"Language-Team: Chinese (https://app.transifex.com/12rambau/teams/166811/zh/)\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: docs/conf.py:94
 msgid "Click to expand"
@@ -129,7 +133,7 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
 msgid "light/dark"
-msgstr "明亮/暗黑"
+msgstr "亮色/暗色"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
