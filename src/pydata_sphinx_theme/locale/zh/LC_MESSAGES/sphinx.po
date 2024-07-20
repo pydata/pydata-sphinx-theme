@@ -159,7 +159,7 @@ msgid "Site navigation"
 msgstr "网页导航"
 
 #~ msgid "Breadcrumbs"
-#~ msgstr "Breadcrumbs"
+#~ msgstr "面包屑导航"
 
 #~ msgid "GitHub"
 #~ msgstr "GitHub"
