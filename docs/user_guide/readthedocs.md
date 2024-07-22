@@ -9,7 +9,8 @@ Its presence will be automatically detected by this theme, and placed in the `rt
 
 ```{warning}
 The {{ rtd }} version switcher will be hidden any time the primary sidebar is hidden (see [this section](layout-sidebar-primary) for discussion of when the primary sidebar might get hidden automatically and how to hide it purposely).
-We intend to make {{ rtd }} switcher placement more flexible; you can track progress toward that in [this issue](https://github.com/pydata/pydata-sphinx-theme/issues/705).
+We intend to make {{ rtd }} switcher placement more flexible; you can track progress toward that in [this issue](https://github.com/pydata/pydata-sphinx-theme/issues/705). This problem doesn't apply to the version switcher provided by
+the [flyout add-on](https://docs.readthedocs.io/en/stable/addons.html) which can be enabled through your project's settings.
 ```
 
 ## Add ethical advertisements to your sidebar
