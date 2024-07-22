@@ -2,10 +2,10 @@
 {# As the theme switcher will only work when JavaScript is enabled, we add it through JavaScript. #}
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="{{ _('light/dark') }}" aria-label="{{ _('light/dark') }}" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title='Current theme: light'></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title='Current theme: dark'></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title='Current theme: follows OS Default'></i>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="{{ _('Color mode') }}" aria-label="{{ _('light/dark') }}" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="{{ _('Light') }}"></i>
+    <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="{{ _('Dark') }}"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="{{ _('System Settings') }}"></i>
   </button>
 `);
 </script>
