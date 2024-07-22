@@ -1,8 +1,8 @@
 {# Displays a dropdown box for switching among different versions of your documentation. #}
 {%- set button_id = unique_html_id("pst-version-switcher-button") -%}
 {%- set dropdown_id = unique_html_id("pst-version-switcher-list") -%}
-{# As the version switcher will only work when JavaScript is enabled, we hide it with jsonly #}
-<div class="version-switcher__container dropdown jsonly">
+{# As the version switcher will only work when JavaScript is enabled, we hide it with pst-js-only #}
+<div class="version-switcher__container dropdown pst-js-only">
   <button id="{{ button_id }}"
     type="button"
     class="version-switcher__button btn btn-sm dropdown-toggle"
