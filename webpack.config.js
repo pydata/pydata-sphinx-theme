@@ -111,6 +111,9 @@ module.exports = {
     path: staticPath,
   },
   optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
     minimizer: [
       '...',
       new CssMinimizerPlugin(),
@@ -122,11 +125,13 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.scss$/,
+      test: /\.(sa|sc|c)ss$/,
       use: [
+        // Extracts CSS for each JS file that includes CSS
         { loader: MiniCssExtractPlugin.loader },
         {
-          loader: "css-loader",
+          // Interprets `@import` and `url()` like `import/require()` and will resolve them
+          loader: 'css-loader',
           options: {
             sourceMap: true,
             url: true,
@@ -134,6 +139,7 @@ module.exports = {
         },
         { loader: 'resolve-url-loader' },
         {
+          // Loads a SASS/SCSS file and compiles it to CSS
           loader: "sass-loader",
           options: {
             sourceMap: true,
@@ -154,7 +160,8 @@ module.exports = {
   plugins: [
     htmlWebpackPlugin,
     new MiniCssExtractPlugin({
-      filename: "styles/[name].css"
+      filename: "styles/[name].css",
+      chunkFilename: "styles/[id].css",
     })],
   experiments: {
     topLevelAwait: true,
