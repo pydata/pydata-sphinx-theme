@@ -8,10 +8,6 @@
 # 
 msgid ""
 msgstr ""
-"Last-Translator: 温欣, 2024\n"
-"Language-Team: Chinese (https://app.transifex.com/12rambau/teams/166811/zh/)\n"
-"Language: zh\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: docs/conf.py:94
 msgid "Click to expand"
