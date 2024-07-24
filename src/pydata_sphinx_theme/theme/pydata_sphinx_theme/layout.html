@@ -52,16 +52,6 @@
   </button>
   {%- endif %}
 
-  {# checkbox to toggle primary sidebar #}
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  {# Checkboxes to toggle the secondary sidebar #}
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   {# A search field pop-up that will only show when the search button is clicked #}
   <dialog id="pst-search-dialog">
     {% include "../components/search-field.html" %}
@@ -82,7 +72,8 @@
       {% if suppress_sidebar_toctree(includehidden=theme_sidebar_includehidden | tobool) %}
         {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
       {% endif %}
-      <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
       {# Using an ID here so that the skip-link works #}
@@ -117,7 +108,8 @@
             {# Secondary sidebar #}
             {% block docs_toc %}
               {% if not remove_sidebar_secondary %}
-                <div class="bd-sidebar-secondary bd-toc">{% include "sections/sidebar-secondary.html" %}</div>
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc">{% include "sections/sidebar-secondary.html" %}</div>
               {% endif %}
             {% endblock docs_toc %}
           </div>
