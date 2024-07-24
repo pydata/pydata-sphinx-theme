@@ -41,7 +41,7 @@ const vendorPath = resolve(staticPath, "vendor");
 
 function stylesheet(css) { return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet" />`; }
 function preload(js) { return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}" />`; }
-function script(js) { return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`; }
+function script(js) { return `<script defer src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`; }
 
 /*******************************************************************************
  * the assets to load in the macro
@@ -54,6 +54,9 @@ const theme_stylesheets = [
 const theme_scripts = [
   "scripts/bootstrap.js",
   "scripts/pydata-sphinx-theme.js",
+];
+const fa_scripts = [
+  "scripts/fontawesome.js",
 ];
 
 /*******************************************************************************
@@ -82,6 +85,7 @@ function macroTemplate({ compilation }) {
 
     {% macro body_post() %}
       <!-- Scripts loaded after <body> so the DOM is not blocked -->
+      ${fa_scripts.map(script.bind(compilation)).join("\n")}
       ${theme_scripts.map(script.bind(compilation)).join("\n")}
     {% endmacro %}
   `);
@@ -104,6 +108,7 @@ module.exports = {
   devtool: "source-map",
   entry: {
     "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
+    "fontawesome": resolve(scriptPath, "fontawesome.js"),
     "bootstrap": resolve(scriptPath, "bootstrap.js"),
   },
   output: {
@@ -111,9 +116,9 @@ module.exports = {
     path: staticPath,
   },
   optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
+    // splitChunks: {
+    //   chunks: 'all',
+    // },
     minimizer: [
       '...',
       new CssMinimizerPlugin(),
