@@ -1,8 +1,5 @@
-// Import Bootstrap core
-@import "~bootstrap/scss/functions";
-@import "variables/bootstrap";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+// Import all of Bootstrap scss
+@import "~bootstrap/scss/bootstrap";
 
 // Import FontAwesome from _node_modules
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
@@ -11,6 +8,7 @@
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
 // Variables
+@import "variables/bootstrap";
 @import "variables/layout";
 @import "variables/fonts";
 @import "variables/icons";
