@@ -1,10 +1,10 @@
 // TODO: @trallard might end up moving this to the main JS file
 // Import and setup functions to control Bootstrap's behavior.
 import "@popperjs/core";
+// Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
 import { documentReady } from "./mixin";
 
-import "../styles/bootstrap.scss";
 
 /*******************************************************************************
  * Trigger tooltips
