@@ -2,7 +2,6 @@
 import { documentReady } from "./mixin";
 import { compare, validate } from "compare-versions";
 
-import '@fortawesome/fontawesome-free/js/all.min.js';
 import "../styles/pydata-sphinx-theme.scss";
 
 /*******************************************************************************

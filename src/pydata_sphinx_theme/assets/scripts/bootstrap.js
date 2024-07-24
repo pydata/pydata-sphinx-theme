@@ -1,3 +1,4 @@
+// TODO: @trallard might end up moving this to the main JS file
 // Import and setup functions to control Bootstrap's behavior.
 import "@popperjs/core";
 import * as bootstrap from "bootstrap";
