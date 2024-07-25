@@ -194,7 +194,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search",
+        ":not(#pst-search-dialog) > form.bd-search",
       );
     }
     return form.querySelector("input");
@@ -208,22 +208,30 @@ var findSearchInput = () => {
  */
 var toggleSearchField = () => {
   // Find the search input to highlight
-  let input = findSearchInput();
+  const input = findSearchInput();
 
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
-  let searchPopupWrapper = document.querySelector(".search-button__wrapper");
-  let hiddenInput = searchPopupWrapper.querySelector("input");
+  const searchDialog = document.getElementById("pst-search-dialog");
+  const hiddenInput = searchDialog.querySelector("input");
   if (input === hiddenInput) {
-    searchPopupWrapper.classList.toggle("show");
-  }
-  // when toggling off the search field, remove its focus
-  if (document.activeElement === input) {
-    input.blur();
+    if (searchDialog.open) {
+      searchDialog.close();
+    } else {
+      // Note: browsers should focus the input field inside the modal dialog
+      // automatically when it is opened.
+      searchDialog.showModal();
+    }
   } else {
-    input.focus();
-    input.select();
-    input.scrollIntoView({ block: "center" });
+    // if the input field is not the hidden one, then toggle its focus state
+
+    if (document.activeElement === input) {
+      input.blur();
+    } else {
+      input.focus();
+      input.select();
+      input.scrollIntoView({ block: "center" });
+    }
   }
 };
 
@@ -295,11 +303,30 @@ var setupSearchButtons = () => {
     btn.onclick = toggleSearchField;
   });
 
-  // Add the search button overlay event callback
-  let overlay = document.querySelector(".search-button__overlay");
-  if (overlay) {
-    overlay.onclick = toggleSearchField;
-  }
+  // If user clicks outside the search modal dialog, then close it.
+  const searchDialog = document.getElementById("pst-search-dialog");
+  // Dialog click handler includes clicks on dialog ::backdrop.
+  searchDialog.addEventListener("click", (event) => {
+    if (!searchDialog.open) {
+      return;
+    }
+
+    // Dialog.getBoundingClientRect() does not include ::backdrop. (This is the
+    // trick that allows us to determine if click was inside or outside of the
+    // dialog: click handler includes backdrop, getBoundingClientRect does not.)
+    const { left, right, top, bottom } = searchDialog.getBoundingClientRect();
+
+    // 0, 0 means top left
+    const clickWasOutsideDialog =
+      event.clientX < left ||
+      right < event.clientX ||
+      event.clientY < top ||
+      bottom < event.clientY;
+
+    if (clickWasOutsideDialog) {
+      searchDialog.close();
+    }
+  });
 };
 
 /*******************************************************************************
