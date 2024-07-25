@@ -25,7 +25,6 @@ dependencies = [
   "sphinx>=5",
   "beautifulsoup4",
   "docutils!=0.17.0",
-  "packaging",
   "Babel",
   "pygments>=2.7",
   "accessible-pygments",
