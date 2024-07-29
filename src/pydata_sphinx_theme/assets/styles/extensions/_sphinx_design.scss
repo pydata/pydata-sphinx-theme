@@ -79,11 +79,7 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
   // later to calculate the text color
   $highlight-color: color.scale($value, $lightness: -15%, $saturation: 5%);
 
-  --pst-color-#{$name}-highlight: #{color.scale(
-      $value,
-      $lightness: -15%,
-      $saturation: 5%
-    )};
+  --pst-color-#{$name}-highlight: #{$highlight-color};
 
   // override the sphinx-design variables
   --sd-color-#{$name}: var(--pst-color-#{$name});
