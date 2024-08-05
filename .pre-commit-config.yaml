@@ -22,17 +22,17 @@ repos:
         exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 24.8.0
     hooks:
       - id: black
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.5.0"
+    rev: "v0.5.6"
     hooks:
       - id: ruff
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.16.0
+    rev: v3.17.0
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
@@ -59,7 +59,7 @@ repos:
       - id: remove-metadata
 
   - repo: https://github.com/thibaudcolas/pre-commit-stylelint
-    rev: v16.6.1
+    rev: v16.8.1
     hooks:
       - id: stylelint
         # automatically fix .scss files where possible
