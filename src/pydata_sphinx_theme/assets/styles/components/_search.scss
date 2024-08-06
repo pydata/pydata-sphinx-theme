@@ -61,9 +61,13 @@
 
   // Shows off the keyboard shortcuts for the button
   .search-button__kbd-shortcut {
-    display: flex;
+    display: none;
     margin-inline-end: 0.5rem;
     color: var(--pst-color-border);
+
+    @include media-breakpoint-up(lg) {
+      display: flex;
+    }
   }
 }
 
