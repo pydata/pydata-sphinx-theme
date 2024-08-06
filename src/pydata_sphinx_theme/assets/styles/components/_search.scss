@@ -65,7 +65,7 @@
     margin-inline-end: 0.5rem;
     color: var(--pst-color-border);
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
       display: flex;
     }
   }
