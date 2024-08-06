@@ -53,9 +53,13 @@
     border-radius: 0.25rem;
 
     &:hover {
+      // applying the same style as the SD "buttons"
+      @include link-style-hover;
+
+      text-decoration-thickness: 1px;
       background-color: $hover-background-color;
       border-color: $hover-background-color;
-      color: $color;
+      color: var(--pst-color-danger-highlight-text);
     }
 
     &:focus-visible {
