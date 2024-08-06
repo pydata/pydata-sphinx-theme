@@ -21,6 +21,10 @@ function autoTheme(e) {
     : "light";
 }
 
+if (window.pst_theme_change_hooks == undefined) {
+  window.pst_theme_change_hooks = [];
+}
+
 /**
  * Set the theme using the specified mode.
  * It can be one of ["auto", "dark", "light"]
@@ -55,6 +59,13 @@ function setTheme(mode) {
 
   // add a listener if set on auto
   prefersDark.onchange = mode == "auto" ? autoTheme : "";
+  for (var hook of window.pst_theme_change_hooks) {
+    try {
+      hook({ mode: mode });
+    } catch (e) {
+      console.error("Error running there change hook:", hook);
+    }
+  }
 }
 
 /**
