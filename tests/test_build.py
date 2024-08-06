@@ -184,7 +184,7 @@ def test_primary_logo_is_light_when_no_default_mode(sphinx_build_factory) -> Non
     index_html = sphinx_build.html_tree("index.html")
     navbar_brand = index_html.select(".navbar-brand")[0]
     assert navbar_brand.find("img", class_="only-light") is not None
-    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+    assert navbar_brand.find("img", class_="only-dark") is not None
 
 
 def test_primary_logo_is_light_when_default_mode_is_set_to_auto(
@@ -199,7 +199,7 @@ def test_primary_logo_is_light_when_default_mode_is_set_to_auto(
     index_html = sphinx_build.html_tree("index.html")
     navbar_brand = index_html.select(".navbar-brand")[0]
     assert navbar_brand.find("img", class_="only-light") is not None
-    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+    assert navbar_brand.find("img", class_="only-dark") is not None
 
 
 def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory) -> None:
@@ -212,7 +212,7 @@ def test_primary_logo_is_light_when_default_mode_is_light(sphinx_build_factory) 
     index_html = sphinx_build.html_tree("index.html")
     navbar_brand = index_html.select(".navbar-brand")[0]
     assert navbar_brand.find("img", class_="only-light") is not None
-    assert navbar_brand.find("script", string=re.compile("only-dark")) is not None
+    assert navbar_brand.find("img", class_="only-dark") is not None
 
 
 def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory) -> None:
@@ -225,7 +225,7 @@ def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory) ->
     index_html = sphinx_build.html_tree("index.html")
     navbar_brand = index_html.select(".navbar-brand")[0]
     assert navbar_brand.find("img", class_="only-dark") is not None
-    assert navbar_brand.find("script", string=re.compile("only-light")) is not None
+    assert navbar_brand.find("img", class_="only-light") is not None
 
 
 def test_logo_missing_image(sphinx_build_factory) -> None:
@@ -805,8 +805,9 @@ def test_version_switcher_error_states(
     if url == "switcher.json":  # this should work
         index = sphinx_build.html_tree("index.html")
         switcher = index.select(".navbar-header-items")[0].find(
-            "script", string=re.compile(".version-switcher__container")
+            "div", class_="version-switcher__container"
         )
+        assert switcher is not None
         file_regression.check(
             switcher.prettify(), basename="navbar_switcher", extension=".html"
         )
@@ -826,11 +827,7 @@ def test_version_switcher_error_states(
 def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
     """Regression test for the theme switcher button."""
     sphinx_build = sphinx_build_factory("base").build()
-    switcher = (
-        sphinx_build.html_tree("index.html")
-        .find(string=re.compile("theme-switch-button"))
-        .find_parent("script")
-    )
+    switcher = sphinx_build.html_tree("index.html").find(class_="theme-switch-button")
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extension=".html"
     )
