@@ -7,55 +7,10 @@
 */
 
 /*******************************************************************************
-* Buttons and overlays
-*/
-input.sidebar-toggle {
-  display: none;
-}
-
-// Background overlays
-label.overlay {
-  background-color: black;
-  opacity: 0.5;
-  height: 0;
-  width: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  transition: opacity $animation-time ease-out;
-  z-index: $zindex-modal-backdrop;
-}
-
-input {
-  // Show the correct overlay when its input is checked
-  &#pst-primary-sidebar-checkbox:checked + label.overlay.overlay-primary,
-  &#pst-secondary-sidebar-checkbox:checked + label.overlay.overlay-secondary {
-    height: 100vh;
-    width: 100vw;
-  }
-
-  // Primary sidebar slides in from the left
-  &#pst-primary-sidebar-checkbox:checked ~ .bd-container .bd-sidebar-primary {
-    visibility: visible;
-    margin-left: 0;
-  }
-
-  // Secondary sidebar slides in from the right
-  &#pst-secondary-sidebar-checkbox:checked
-    ~ .bd-container
-    .bd-sidebar-secondary {
-    visibility: visible;
-    margin-right: 0;
-  }
-}
-
-/*******************************************************************************
 * Sidebar drawer behavior
 */
 
 /**
- * Behavior for sliding drawer elements that will be toggled with an input
- *
  * NOTE: We use this mixin to define the toggle behavior on narrow screens,
  * And the wide-screen behavior of the sections is defined in their own section
  * .scss files.
@@ -73,6 +28,7 @@ input {
     visibility $animation-time ease-out,
     margin $animation-time ease-out;
   visibility: hidden;
+  border: 0;
 
   @if $side == "right" {
     margin-right: -75%;
@@ -83,33 +39,29 @@ input {
   }
 }
 
-// Primary sidebar hides/shows at earlier widths
-@include media-breakpoint-up($breakpoint-sidebar-primary) {
-  .sidebar-toggle.primary-toggle {
-    display: none;
-  }
-
-  input#pst-primary-sidebar-checkbox {
-    &:checked + label.overlay.overlay-primary {
-      height: 0;
-      width: 0;
-    }
-  }
-
-  .bd-sidebar-primary {
-    margin-left: 0;
-    visibility: visible;
-  }
+.bd-sidebar::backdrop {
+  background-color: black;
+  opacity: 0.5;
 }
 
 .bd-sidebar-primary {
   @include media-breakpoint-down($breakpoint-sidebar-primary) {
     @include sliding-drawer("left");
   }
+
+  &[open] {
+    margin-left: 0;
+    visibility: visible;
+  }
 }
 
 .bd-sidebar-secondary {
   @include media-breakpoint-down($breakpoint-sidebar-secondary) {
     @include sliding-drawer("right");
+  }
+
+  &[open] {
+    margin-right: 0;
+    visibility: visible;
   }
 }

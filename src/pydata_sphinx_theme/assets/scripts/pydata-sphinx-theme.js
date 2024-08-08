@@ -291,6 +291,29 @@ var changeSearchShortcutKey = () => {
   }
 };
 
+const closeDialogOnBackdropClick = ({
+  currentTarget: dialog,
+  clientX,
+  clientY,
+}) => {
+  if (!dialog.open) {
+    return;
+  }
+
+  // Dialog.getBoundingClientRect() does not include ::backdrop. (This is the
+  // trick that allows us to determine if click was inside or outside of the
+  // dialog: click handler includes backdrop, getBoundingClientRect does not.)
+  const { left, right, top, bottom } = dialog.getBoundingClientRect();
+
+  // 0, 0 means top left
+  const clickWasOutsideDialog =
+    clientX < left || right < clientX || clientY < top || bottom < clientY;
+
+  if (clickWasOutsideDialog) {
+    dialog.close();
+  }
+};
+
 /**
  * Activate callbacks for search button popup
  */
@@ -306,27 +329,7 @@ var setupSearchButtons = () => {
   // If user clicks outside the search modal dialog, then close it.
   const searchDialog = document.getElementById("pst-search-dialog");
   // Dialog click handler includes clicks on dialog ::backdrop.
-  searchDialog.addEventListener("click", (event) => {
-    if (!searchDialog.open) {
-      return;
-    }
-
-    // Dialog.getBoundingClientRect() does not include ::backdrop. (This is the
-    // trick that allows us to determine if click was inside or outside of the
-    // dialog: click handler includes backdrop, getBoundingClientRect does not.)
-    const { left, right, top, bottom } = searchDialog.getBoundingClientRect();
-
-    // 0, 0 means top left
-    const clickWasOutsideDialog =
-      event.clientX < left ||
-      right < event.clientX ||
-      event.clientY < top ||
-      bottom < event.clientY;
-
-    if (clickWasOutsideDialog) {
-      searchDialog.close();
-    }
-  });
+  searchDialog.addEventListener("click", closeDialogOnBackdropClick);
 };
 
 /*******************************************************************************
@@ -535,7 +538,7 @@ function showVersionWarningBanner(data) {
   const versionsAreComparable = validate(version) && validate(preferredVersion);
   if (versionsAreComparable && compare(version, preferredVersion, "=")) {
     console.log(
-      "This is the prefered version of the docs, not showing the warning banner.",
+      "[PST]: This is the preferred version of the docs, not showing the warning banner.",
     );
     return;
   }
@@ -665,84 +668,76 @@ async function fetchAndUseVersions() {
 }
 
 /*******************************************************************************
- * Add keyboard functionality to mobile sidebars.
- *
- * Wire up the hamburger-style buttons using the click event which (on buttons)
- * handles both mouse clicks and the space and enter keys.
+ * Sidebar modals (for mobile / narrow screens)
  */
 function setupMobileSidebarKeyboardHandlers() {
-  // These are hidden checkboxes at the top of the page whose :checked property
-  // allows the mobile sidebars to be hidden or revealed via CSS.
-  const primaryToggle = document.getElementById("pst-primary-sidebar-checkbox");
-  const secondaryToggle = document.getElementById(
-    "pst-secondary-sidebar-checkbox",
-  );
-  const primarySidebar = document.querySelector(".bd-sidebar-primary");
-  const secondarySidebar = document.querySelector(".bd-sidebar-secondary");
+  // These are the left and right sidebars for wider screens. We cut and paste
+  // the content from these widescreen sidebars into the mobile dialogs, when
+  // the user clicks the hamburger icon button
+  const primarySidebar = document.getElementById("pst-primary-sidebar");
+  const secondarySidebar = document.getElementById("pst-secondary-sidebar");
 
-  // Toggle buttons -
-  //
-  // These are the hamburger-style buttons in the header nav bar. When the user
-  // clicks, the button transmits the click to the hidden checkboxes used by the
-  // CSS to control whether the sidebar is open or closed.
-  const primaryClickTransmitter = document.querySelector(".primary-toggle");
-  const secondaryClickTransmitter = document.querySelector(".secondary-toggle");
+  // These are the corresponding left/right <dialog> elements, which are empty
+  // until the user clicks the hamburger icon
+  const primaryDialog = document.getElementById("pst-primary-sidebar-modal");
+  const secondaryDialog = document.getElementById(
+    "pst-secondary-sidebar-modal",
+  );
+
+  // These are the hamburger-style buttons in the header nav bar. They only
+  // appear at narrow screen width.
+  const primaryToggle = document.querySelector(".primary-toggle");
+  const secondaryToggle = document.querySelector(".secondary-toggle");
+
+  // Cut nodes and classes from `from`, paste into/onto `to`
+  const cutAndPasteNodesAndClasses = (from, to) => {
+    Array.from(from.childNodes).forEach((node) => to.appendChild(node));
+    Array.from(from.classList).forEach((cls) => {
+      from.classList.remove(cls);
+      to.classList.add(cls);
+    });
+  };
+
+  // Hook up the ways to open and close the dialog
   [
-    [primaryClickTransmitter, primaryToggle, primarySidebar],
-    [secondaryClickTransmitter, secondaryToggle, secondarySidebar],
-  ].forEach(([clickTransmitter, toggle, sidebar]) => {
-    if (!clickTransmitter) {
+    [primaryToggle, primaryDialog, primarySidebar],
+    [secondaryToggle, secondaryDialog, secondarySidebar],
+  ].forEach(([toggleButton, dialog, sidebar]) => {
+    if (!toggleButton || !dialog || !sidebar) {
       return;
     }
-    clickTransmitter.addEventListener("click", (event) => {
+
+    // Clicking the button can only open the sidebar, not close it.
+    // Clicking the button is also the *only* way to open the sidebar.
+    toggleButton.addEventListener("click", (event) => {
       event.preventDefault();
       event.stopPropagation();
-      toggle.checked = !toggle.checked;
 
-      // If we are opening the sidebar, move focus to the first focusable item
-      // in the sidebar
-      if (toggle.checked) {
-        // Note: this selector is not exhaustive, and we may need to update it
-        // in the future
-        const tabStop = sidebar.querySelector("a, button");
-        // use setTimeout because you cannot move focus synchronously during a
-        // click in the handler for the click event
-        setTimeout(() => tabStop.focus(), 100);
-      }
+      // When we open the dialog, we cut and paste the nodes and classes from
+      // the widescreen sidebar into the dialog
+      cutAndPasteNodesAndClasses(sidebar, dialog);
+
+      dialog.showModal();
     });
-  });
 
-  // Escape key -
-  //
-  // When sidebar is open, user should be able to press escape key to close the
-  // sidebar.
-  [
-    [primarySidebar, primaryToggle, primaryClickTransmitter],
-    [secondarySidebar, secondaryToggle, secondaryClickTransmitter],
-  ].forEach(([sidebar, toggle, transmitter]) => {
-    if (!sidebar) {
-      return;
-    }
-    sidebar.addEventListener("keydown", (event) => {
+    // Listen for clicks on the backdrop in order to close the dialog
+    dialog.addEventListener("click", closeDialogOnBackdropClick);
+
+    // We have to manually attach the escape key because there's some code in
+    // Sphinx's search-highlight.js that prevents the default behavior of the
+    // escape key
+    dialog.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         event.preventDefault();
         event.stopPropagation();
-        toggle.checked = false;
-        transmitter.focus();
+        dialog.close();
       }
     });
-  });
 
-  // When the <label> overlay is clicked to close the sidebar, return focus to
-  // the opener button in the nav bar.
-  [
-    [primaryToggle, primaryClickTransmitter],
-    [secondaryToggle, secondaryClickTransmitter],
-  ].forEach(([toggle, transmitter]) => {
-    toggle.addEventListener("change", (event) => {
-      if (!event.currentTarget.checked) {
-        transmitter.focus();
-      }
+    // When the dialog is closed, move the nodes (and classes) back to their
+    // original place
+    dialog.addEventListener("close", () => {
+      cutAndPasteNodesAndClasses(dialog, sidebar);
     });
   });
 }
