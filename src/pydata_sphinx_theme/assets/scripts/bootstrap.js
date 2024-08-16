@@ -5,7 +5,6 @@ import "@popperjs/core";
 import * as bootstrap from "bootstrap";
 import { documentReady } from "./mixin";
 
-
 /*******************************************************************************
  * Trigger tooltips
  */
