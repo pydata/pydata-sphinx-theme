@@ -48,7 +48,6 @@ function script(js) { return `<script defer src="{{ pathto('_static/${js}', 1) }
  */
 const theme_stylesheets = [
   "styles/theme.css", // basic sphinx css
-  "styles/bootstrap.css", // all bootstrap 5 css with variable adjustments
   "styles/pydata-sphinx-theme.css", // all the css created for this specific theme
 ];
 const theme_scripts = [
@@ -116,7 +115,7 @@ const filesToKeep =
       filename: "scripts/[name].js",
       path: staticPath,
       // clean webpack assets at the beginning of the build - except for 
-      // files we need to explicitly keep
+      // files we need to explicitly keep 
       clean: {
         keep(asset) {
           const filesToKeep = ["styles/theme.css", ".gitignore"];

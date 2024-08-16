@@ -1,4 +1,4 @@
-"""All the tests performed in the pydata-sphinx-theme test suit."""
+"""All the tests performed in the pydata-sphinx-theme test suite."""
 
 import re
 from pathlib import Path
