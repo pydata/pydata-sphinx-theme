@@ -2,4 +2,4 @@
 // Define the custom behavior of the page
 import { documentReady } from "./mixin";
 
-import '@fortawesome/fontawesome-free/js/all.min.js';
+import "@fortawesome/fontawesome-free/js/all.min.js";
