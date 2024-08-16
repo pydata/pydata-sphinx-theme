@@ -103,72 +103,78 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   templateContent: macroTemplate,
 });
 
-module.exports = {
-  mode: "production",
-  devtool: "source-map",
-  entry: {
-    "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
-    "fontawesome": resolve(scriptPath, "fontawesome.js"),
-    "bootstrap": resolve(scriptPath, "bootstrap.js"),
-  },
-  output: {
-    filename: "scripts/[name].js",
-    path: staticPath,
-  },
-  optimization: {
-    // splitChunks: {
-    //   chunks: 'all',
-    // },
-    minimizer: [
-      '...',
-      new CssMinimizerPlugin(),
-      new TerserPlugin({
-        terserOptions: {
-          parallel: true,
-        }
-      })]
-  },
-  module: {
-    rules: [{
-      test: /\.(sa|sc|c)ss$/,
-      use: [
-        // Extracts CSS for each JS file that includes CSS
-        { loader: MiniCssExtractPlugin.loader },
-        {
-          // Interprets `@import` and `url()` like `import/require()` and will resolve them
-          loader: 'css-loader',
-          options: {
-            sourceMap: true,
-            url: true,
-          }
-        },
-        { loader: 'resolve-url-loader' },
-        {
-          // Loads a SASS/SCSS file and compiles it to CSS
-          loader: "sass-loader",
-          options: {
-            sourceMap: true,
-            sassOptions: { outputStyle: "expanded" }
-          }
-        },
-      ],
+const filesToKeep =
+  module.exports = {
+    mode: "production",
+    devtool: "source-map",
+    entry: {
+      "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
+      "fontawesome": resolve(scriptPath, "fontawesome.js"),
+      "bootstrap": resolve(scriptPath, "bootstrap.js"),
     },
-    {
-      // Font vendoring and management - will separate FA and export the font files
-      test: /\.(woff|woff2|eot|ttf|otf)$/i,
-      type: 'asset/resource',
-      generator: {
-        filename: 'vendor/fontawesome/webfonts/[name][ext]'
-      }
-    },],
-  },
-  plugins: [
-    htmlWebpackPlugin,
-    new MiniCssExtractPlugin({
-      filename: "styles/[name].css",
-      chunkFilename: "styles/[id].css",
-    })],
-  experiments: {
-    topLevelAwait: true,
-  },
-};
+    output: {
+      filename: "scripts/[name].js",
+      path: staticPath,
+      // clean webpack assets at the beginning of the build - except for 
+      // files we need to explicitly keep
+      clean: {
+        keep(asset) {
+          const filesToKeep = ["styles/theme.css", ".gitignore"];
+          return filesToKeep.some(file => asset.includes(file));
+        }
+      },
+    },
+    optimization: {
+      minimizer: [
+        '...',
+        new CssMinimizerPlugin(),
+        new TerserPlugin({
+          terserOptions: {
+            parallel: true,
+          }
+        })]
+    },
+    module: {
+      rules: [{
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          // Extracts CSS for each JS file that includes CSS
+          { loader: MiniCssExtractPlugin.loader },
+          {
+            // Interprets `@import` and `url()` like `import/require()` and will resolve them
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              url: true,
+            }
+          },
+          { loader: 'resolve-url-loader' },
+          {
+            // Loads a SASS/SCSS file and compiles it to CSS
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+              sassOptions: { outputStyle: "expanded" }
+            }
+          },
+        ],
+      },
+      {
+        // Font vendoring and management - will separate FA and export the font files
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'vendor/fontawesome/webfonts/[name][ext]'
+        }
+      },],
+    },
+    plugins: [
+      htmlWebpackPlugin,
+      new MiniCssExtractPlugin({
+        filename: "styles/[name].css",
+        chunkFilename: "styles/[id].css",
+      })],
+    experiments: {
+      topLevelAwait: true,
+    },
+  };
