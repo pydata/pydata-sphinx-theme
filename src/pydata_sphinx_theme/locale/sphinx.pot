@@ -1,41 +1,42 @@
-# Translations template for PROJECT.
-# Copyright (C) 2024 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
+# Translations template for pydata-sphinx-theme.
+# Copyright (C) 2024 PyData
+# This file is distributed under the same license as the pydata-sphinx-theme
+# project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: pydata-sphinx-theme 0.15.4.dev0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-05-10 18:43+0200\n"
+"POT-Creation-Date: 2024-08-19 17:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.0\n"
+"Generated-By: Babel 2.16.0\n"
 
-#: docs/conf.py:94
+#: docs/conf.py:108
 msgid "Click to expand"
 msgstr ""
 
-#: docs/conf.py:95
+#: docs/conf.py:109
 msgid "Click to collapse"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:48
 msgid "Skip to main content"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:51
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:60
 msgid "Back to top"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:6
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:8
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:28
 msgid "Search"
@@ -49,17 +50,17 @@ msgstr ""
 msgid "Please activate JavaScript to enable the search functionality."
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:6
 msgid "Breadcrumb"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:17
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:10
 msgid "Home"
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
-msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+msgid "Copyright %(copyright)s"
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
@@ -134,7 +135,7 @@ msgid ""
 "%(sphinx_version)s."
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
 msgid "light/dark"
 msgstr ""
 
