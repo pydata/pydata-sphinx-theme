@@ -35,10 +35,6 @@ jobs:
           python-version: "3.9"
           pandoc: "False"
 
-      - name: "Install gettext for translations 🌐"
-        run: |
-          sudo apt-get install gettext
-
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@v2
         id: baipp
