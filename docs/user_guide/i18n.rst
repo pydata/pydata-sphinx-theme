@@ -4,19 +4,19 @@ Internationalization
 This theme contains translatable strings.
 There are two kinds of strings in this theme, with different steps to translate each.
 
-**Built-in strings** are hard-coded in the theme's templates.
-They will automatically be translated if the language is `supported <https://github.com/pydata/pydata-sphinx-theme/tree/master/pydata_sphinx_theme/locale>`__.
-To add another language, see :ref:`translating-the-theme`.
+* **Built-in strings** are hard-coded in the theme's templates. They will be automatically translated if the language is `supported <https://github.com/pydata/pydata-sphinx-theme/tree/main/src/pydata_sphinx_theme/locale>`__. To add another language, refer to the :ref:`translating-the-theme` and :ref:`adding-new-language` sections in the documentation.
 
-**Configurable strings** are user-defined with the ``html_theme_options`` variable in your ``conf.py`` file (see other sections in :doc:`the user guide<index>` for examples).
-To translate these strings, see the section below.
+* **Configurable strings** are user-defined with the ``html_theme_options`` variable in your ``conf.py`` file (see other sections in :doc:`the user guide<index>` for examples of these configurable strings).
 
 Translating configurable strings
 --------------------------------
 
-These instructions are for translating configurable strings (those that are customizable in ``html_theme_options``).
+These instructions are for translating configurable strings (those that are customizable in ``html_theme_options`` within
+the `config.py` file).
 
-These instructions assume that you store your translations in a ``locale`` directory under your documentation directory, and that you want to use ``theme`` as the name of the message catalog for these strings.
+These instructions assume that you store your translations in a ``locale`` directory under your documentation directory and that you want to use ``messages`` as the name of the message catalog for these strings.
+
+Note you will also need to install `pybabel <https://babel.pocoo.org/en/latest/installation.html>`__ to handle your documentation translations.
 
 #. In your ``conf.py`` file:
 
@@ -25,7 +25,7 @@ These instructions assume that you store your translations in a ``locale`` direc
       import os.path
       from sphinx.locale import get_translation
 
-      catalog = "theme"
+      catalog = "messages"
       _ = get_translation(catalog)
 
       html_theme_options = {
@@ -57,13 +57,15 @@ These instructions assume that you store your translations in a ``locale`` direc
 
    .. code-block:: bash
 
-      pybabel extract . -o locale/theme.pot
+      pybabel extract . -o locale/messages.pot
 
-#. Create a message catalog (changing the ``--locale`` option as desired):
+#. Create a message catalog by specifying the `ISO 639-1 code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`__ for the new language (using the ``--locale`` flag):
 
    .. code-block:: bash
 
-      pybabel init --input-file=locale/theme.pot --domain=theme --output-dir=locale --locale=fr
+      # for example, to add French (ISO 639-1 code: fr)
+      pybabel init --input-file=locale/messages.pot --domain=messages --output-dir=locale --locale=fr
+    
 
 #. Translate the message catalog by editing the file.
 
@@ -71,4 +73,4 @@ These instructions assume that you store your translations in a ``locale`` direc
 
    .. code-block:: bash
 
-      pybabel compile --directory=locale --domain=theme
+      pybabel compile --directory=locale --domain=messages
