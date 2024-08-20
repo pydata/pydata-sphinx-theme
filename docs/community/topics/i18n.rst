@@ -44,10 +44,10 @@ Once you've marked the text as translatable, complete the steps outlined in :ref
 
 .. _changing-natural-language-text:
 
-Adding or changing natural language text
+Updating the translation catalogs
 -----------------------------------------
 
-If you add or change natural language text in the theme, you must update the message catalogs to include the new or updated text. Follow these steps:
+When you add or change natural language text in the theme, you must update the message catalogs to include the new or updated text. Follow these steps:
 
 #. Edit the natural language text and ensure it is :ref:`marked as translatable <adding-translatable-text>`.
 
@@ -81,7 +81,7 @@ Otherwise, it will add a new translation entry.
 Adding a new language
 ----------------------
 
-The list of currently supported languages is available in the ``src/pydata_sphinx_theme/locale`` directory.
+The list of languages with existing (possibly incomplete) translations is available in the ``src/pydata_sphinx_theme/locale`` directory.
 
 To add a new language, follow these steps:
 
@@ -93,6 +93,8 @@ To add a new language, follow these steps:
       
       # for example, to add Quechua (ISO 639-1 code: qu)
       tox -e i18n-new-locale -- qu
+
+#. Start translating the theme's text into the newly added language (see :ref:`translating-the-theme`).
 
 
 .. _translating-the-theme:
@@ -125,7 +127,7 @@ Dealing with variables and markup in translations
 `````````````````````````````````````````````````````````````
 
 If a variable (like the ``edit_page_provider_name`` theme option) is used as part of a phrase, it must be included within the translatable string.
-Otherwise, the word order in other languages can be incorrect. In a Jinja template, simply surround the translatable string with ``{% trans variable=variable %}`` and ``{% endtrans %}}``. For example:
+Otherwise, the word order in other languages can be incorrect. In a Jinja template, surround the translatable string with ``{% trans variable=variable %}`` and ``{% endtrans %}``. For example:
 
 .. code-block:: jinja
 

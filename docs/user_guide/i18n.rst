@@ -12,7 +12,7 @@ Translating configurable strings
 --------------------------------
 
 These instructions are for translating configurable strings (those that are customizable in ``html_theme_options`` within
-the `config.py` file).
+the `conf.py` file).
 
 These instructions assume that you store your translations in a ``locale`` directory under your documentation directory and that you want to use ``messages`` as the name of the message catalog for these strings.
 
