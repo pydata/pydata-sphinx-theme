@@ -66,8 +66,10 @@ positions (line numbers) of the translatable strings.
 Updating positions is optional - the line numbers are to inform the human translator, not to perform the translation.
 
 If you change translatable strings, the ``extract`` command will extract the new or updated strings to the ``POT`` file,
-and the ``update`` command will try to fuzzy match the new or updated strings with existing translations in the ``PO`` files.
-If there is a fuzzy match, a comment like ``#, fuzzy`` is added before the matched entry.
+and the ``update`` command will try to perform a fuzzy match between the new or updated strings and existing translations in the ``PO`` files.
+If there is a fuzzy match, a comment like ``#, fuzzy`` is added before the matched entry,
+this means that the translation needs to be manually reviewed and possibly updated.
+If after reviewing the translation you decide to keep the existing translation, you can remove the ``#, fuzzy`` comment from the entry.
 Otherwise, it will add a new translation entry.
 
 .. _adding-new-language:
