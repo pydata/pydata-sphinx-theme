@@ -3,7 +3,11 @@ Internationalization
 
 We use `Gettext <https://docs.python.org/3/library/gettext.html>`__ message catalogs for the theme's internationalization (I18N) and localization (L10N) and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ to work with them.
 
-This section covers how to mark text as translatable, how to extract translatable text, and how to translate the theme.
+User-facing strings in the theme should be internationalized, so that they can be translated into other languages.
+This section covers how to mark text as translatable and how to translate the theme.
+
+..Note
+   Internationalization (or i18n) is the process of marking strings for translation so that the strings can be extracted from the source code and given to translators. Localization (l10n) is the process of translating the marked strings into different languages.
 
 The general process for internationalizing and localizing the theme is as follows:
 
@@ -16,8 +20,8 @@ The general process for internationalizing and localizing the theme is as follow
 
 .. _adding-translatable-text:
 
-Marking natural language text as translatable
------------------------------------------------
+Marking strings as translatable (internationalization)
+------------------------------------------------------
 
 All natural language text in the theme's components and layouts must be marked as translatable so that it can be extracted and translated.
 For example, if you add a button with the text "Next page", you will need to mark this text as translatable.
