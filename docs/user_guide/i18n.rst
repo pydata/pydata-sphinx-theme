@@ -65,7 +65,7 @@ Note you will also need to install `pybabel <https://babel.pocoo.org/en/latest/i
 
       # for example, to add French (ISO 639-1 code: fr)
       pybabel init --input-file=locale/messages.pot --domain=messages --output-dir=locale --locale=fr
-    
+
 
 #. Translate the message catalog by editing the file.
 
