@@ -19,22 +19,15 @@ const dedent = require("dedent");
 const { Compilation } = require("webpack");
 
 /*******************************************************************************
- * Compile our translation files
- */
-const { exec } = require("child_process");
-const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
-exec(`pybabel compile -d ${localePath} -D sphinx`);
-
-/*******************************************************************************
  * Paths for various assets (sources and destinations)
  */
 
-const vendorVersions = {fontAwesome: require("@fortawesome/fontawesome-free/package.json").version};
+const vendorVersions = { fontAwesome: require("@fortawesome/fontawesome-free/package.json").version };
 
 const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
-const staticPath = resolve(__dirname,"src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static");
+const staticPath = resolve(__dirname, "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static");
 const vendorPath = resolve(staticPath, "vendor");
-const faPath = {fontAwesome: resolve(vendorPath, "fontawesome", vendorVersions.fontAwesome)};
+const faPath = { fontAwesome: resolve(vendorPath, "fontawesome", vendorVersions.fontAwesome) };
 
 /*******************************************************************************
  * functions to load the assets in the html head
@@ -42,15 +35,15 @@ const faPath = {fontAwesome: resolve(vendorPath, "fontawesome", vendorVersions.f
  * the fonts are loaded from vendors
  */
 
-function stylesheet(css){ return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet" />`;}
-function preload(js){ return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}" />`;}
-function script(js){ return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`;}
-function font(woff2){ return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}" />`;}
+function stylesheet(css) { return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet" />`; }
+function preload(js) { return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}" />`; }
+function script(js) { return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`; }
+function font(woff2) { return `<link rel="preload" as="font" type="font/woff2" crossorigin href="{{ pathto('_static/${woff2}', 1) }}" />`; }
 
 /*******************************************************************************
  * the assets to load in the macro
  */
- const theme_stylesheets = [
+const theme_stylesheets = [
   "styles/theme.css", // basic sphinx css
   "styles/bootstrap.css", // all bootstrap 5 css with variable adjustments
   "styles/pydata-sphinx-theme.css", // all the css created for this specific theme
@@ -152,15 +145,15 @@ module.exports = {
     "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
     "bootstrap": resolve(scriptPath, "bootstrap.js"),
   },
-  output: {filename: "scripts/[name].js", path: staticPath},
-  optimization: {minimizer: ['...', new CssMinimizerPlugin()]},
+  output: { filename: "scripts/[name].js", path: staticPath },
+  optimization: { minimizer: ['...', new CssMinimizerPlugin()] },
   module: {
     rules: [{
       test: /\.scss$/,
       use: [
-        {loader: MiniCssExtractPlugin.loader},
-        {loader: "css-loader", options: { url: false }},
-        {loader: "sass-loader",},
+        { loader: MiniCssExtractPlugin.loader },
+        { loader: "css-loader", options: { url: false } },
+        { loader: "sass-loader", },
       ],
     }],
   },
