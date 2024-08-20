@@ -108,6 +108,24 @@ jobs:
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
         run: python -Im tox run -e py312-docs,a11y-tests
+  nox-tests:
+    name: "nox tests (ubuntu-latest, 3.12)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - name: "Run various nox commands"
+        # build PST, build docs, then run a11y-tests
+        run: |
+          pip install nox
+          nox -s translate -- init
+          nox -s translate -- extract
+          nox -s translate -- update
+          nox -s translate -- compile
 
   # Build our docs (PST) on major OSes and check for warnings
   build-site:
