@@ -65,7 +65,7 @@
 
   .navbar-header-items__end,
   .navbar-header-items__center {
-    column-gap: 1rem;
+    column-gap: $nav-icon-column-gap;
   }
 
   // A little smaller because this is displayed by default on mobile
