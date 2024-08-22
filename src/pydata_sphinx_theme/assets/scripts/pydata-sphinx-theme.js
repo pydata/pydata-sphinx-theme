@@ -724,7 +724,7 @@ function setupMobileSidebarKeyboardHandlers() {
     dialog.addEventListener("click", closeDialogOnBackdropClick);
 
     // We have to manually attach the escape key because there's some code in
-    // Sphinx's search-highlight.js that prevents the default behavior of the
+    // Sphinx's Sphinx_highlight.js that prevents the default behavior of the
     // escape key
     dialog.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
