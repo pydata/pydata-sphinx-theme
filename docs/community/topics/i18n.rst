@@ -33,7 +33,7 @@ Remember to `manually escape variables <https://jinja.palletsprojects.com/en/2.1
 For example, to mark the text "Next page" as translatable, you would write:
 
 .. code-block:: jinja
-   
+
    <button type="button">
       {{- _("Next page") -}}
    </button>
@@ -54,7 +54,7 @@ When you add or change natural language text in the theme, you must update the m
 #. Generate/update the message catalog template (``POT`` file):
 
    .. code-block:: bash
-      
+
       tox run -e i18n-extract
 
 #. Update the message catalogs (``PO`` files) for the existing locales:
@@ -90,7 +90,7 @@ To add a new language, follow these steps:
 #. Make a copy of the ``POT`` file for this new language:
 
    .. code-block:: bash
-      
+
       # for example, to add Quechua (ISO 639-1 code: qu)
       tox -e i18n-new-locale -- qu
 
@@ -108,7 +108,7 @@ To contribute translations, follow these steps:
 
 #. Sign up for a `Transifex account <https://www.transifex.com/signup/>`__.
 #. Join the `PyData Sphinx Theme project <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
-#. Select the language you want to translate. If the language you are looking for is not listed, you can `open an issue 
+#. Select the language you want to translate. If the language you are looking for is not listed, you can `open an issue
    on GitHub to request it <https://github.com/pydata/pydata-sphinx-theme/issues>`__.
 #. Now you are ready to start translating the theme. If you are new to Transifex you can visit the `Transifex documentation <https://help.transifex.com/en/articles/6240403-translating-html-content>`__ for more information.
 
@@ -132,7 +132,7 @@ Otherwise, the word order in other languages can be incorrect. In a Jinja templa
 .. code-block:: jinja
 
    {% trans provider=provider %}Edit on {{ provider }}{% endtrans %}
-   
+
 The translatable string is extracted as the Python format string ``Edit on %(provider)s``. This is so that the same translatable string can be used in both Python code and Jinja templates. It is the translator's responsibility to use ``%(provider)s`` verbatim in the translation.
 
 If a non-translatable word or token (like HTML markup) is used as part of a phrase, it must also be included within the translatable string. For example:
