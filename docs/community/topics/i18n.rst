@@ -1,7 +1,8 @@
 Internationalization
 ====================
 
-We use `Gettext <https://docs.python.org/3/library/gettext.html>`__ message catalogs for the theme's internationalization (I18N) and localization (L10N) and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ to work with them.
+We use `GNU Gettext <http://www.gnu.org/software/gettext/>`__ theme's internationalization (I18N) and localization (L10N) and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ to keep the catalogs up to date. 
+Crowd-sourced localizations are managed on `Transifex <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
 
 User-facing strings in the theme should be internationalized, so that they can be translated into other languages.
 This section covers how to mark text as translatable and how to translate the theme.
@@ -11,7 +12,7 @@ This section covers how to mark text as translatable and how to translate the th
 
 The general process for internationalizing and localizing the theme is as follows:
 
-#. Mark natural language text as translatable.
+#. Mark strings in the theme as translatable.
 #. Extract translatable text to a message catalog template ``POT`` (``PO`` template file).
 #. Make a copy of the ``POT`` file for each language (locale) you want to translate (or update existing templates).
 #. Compile the message catalogs to binary ``MO`` files.
