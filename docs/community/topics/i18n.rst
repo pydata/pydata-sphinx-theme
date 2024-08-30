@@ -1,37 +1,47 @@
 Internationalization
 ====================
 
-We use `GNU Gettext <http://www.gnu.org/software/gettext/>`__ theme's internationalization (I18N) and localization (L10N) and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ to keep the catalogs up to date. 
+This section covers how to internationalize (i18n) and localize (l10n) the PyData Sphinx Theme.
+For details on how to translate the configuration options in your Sphinx project, see the User guide section on :ref:`user-guide-i18n`.
+
+The PyData Sphinx Theme i18n/i10n workflows are based on `GNU Gettext <http://www.gnu.org/software/gettext/>`__
+and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ is used to keep the catalogs up to date. 
 Crowd-sourced localizations are managed on `Transifex <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
 
-User-facing strings in the theme should be internationalized, so that they can be translated into other languages.
-This section covers how to mark text as translatable and how to translate the theme.
+.. note::
+   **Internationalization** (or i18n) is the process of making a program or application aware of and able to support multiple
+   languages. 
 
-..Note
-   Internationalization (or i18n) is the process of marking strings for translation so that the strings can be extracted from the source code and given to translators. Localization (l10n) is the process of translating the marked strings into different languages.
+   **Localization** (l10n) is the process of translating localized programs or applications into different languages while
+   ensuring that the translations are correct for some native language and cultural habits.
+   
+   The formal description of specific set of cultural habits for some country, together with all associated translations
+   targeted to the same native language, is called the *locale* for this language or country.
+   For more information about localization and internationalization see `GNU gettext concepts <https://www.gnu.org/software/gettext/manual/html_node/Concepts.html>`__.
+
 
 The general process for internationalizing and localizing the theme is as follows:
 
-#. Mark strings in the theme as translatable.
-#. Extract translatable text to a message catalog template ``POT`` (``PO`` template file).
-#. Make a copy of the ``POT`` file for each language (locale) you want to translate (or update existing templates).
-#. Compile the message catalogs to binary ``MO`` files.
-#. Translate the message catalogs.
+#. :ref:`Mark strings in the theme as localizable <adding-localizable-text>`.
+#. :ref:`Extract localizable strings <updating-localization-files>` to a message catalog template ``POT`` (``PO`` template file).
+#. Make a copy of the ``POT`` file for :ref:`a new language (locale) you want to localize <adding-new-language>`
+   (or :ref:`update existing localization files <updating-localization-files>`).
+#. :ref:`Compile the message catalogs <compiling-localization-files>` to binary ``MO`` files.
+#. :ref:`Localize the theme <localizing-the-theme>`.
 
 
-.. _adding-translatable-text:
+.. _adding-localizable-text:
 
-Marking strings as translatable (internationalization)
-------------------------------------------------------
+Marking strings as localizable
+------------------------------
 
-All natural language text in the theme's components and layouts must be marked as translatable so that it can be extracted and translated.
-For example, if you add a button with the text "Next page", you will need to mark this text as translatable.
+All natural language text in the theme's components and layouts must be marked as localizable so that they can be later translated (or localized) into other languages.
+For example, if you add a button with the text **Next page**, you will need to mark this text as localizable.
 
-To do so, you can use the Jinja2 ``trans`` block and/or a ``_()`` function to mark text as translatable in corresponding ``HTML`` templates (located in the ``src/pydata_sphinx_theme/theme/`` directory).
-`Please refer to the Jinja2 documentation <https://jinja.palletsprojects.com/en/2.11.x/templates/#i18n>`__.
-Remember to `manually escape variables <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ if needed.
+``HTML`` templates (located in the ``src/pydata_sphinx_theme/theme/`` directory).
+To do so, you can use the Jinja2 ``trans`` block and/or a ``_()`` function to mark text as localizable in the corresponding 
 
-For example, to mark the text "Next page" as translatable, you would write:
+For example, to mark the text **Next page** as localizable, you would write:
 
 .. code-block:: jinja
 
@@ -39,43 +49,80 @@ For example, to mark the text "Next page" as translatable, you would write:
       {{- _("Next page") -}}
    </button>
 
+L10n comments need to be Jinja2 comments:
 
-Any text that is marked in this way will be discoverable by ``pybabel`` and used to generate the ``PO`` files.
-Once you've marked the text as translatable, complete the steps outlined in :ref:`changing-natural-language-text`.
+.. code-block:: jinja
 
-.. _changing-natural-language-text:
+   {# L10n: Navigation button at the bottom of the page #}
+   <button type="button">
+      {{- _("Next page") -}}
+   </button>
 
-Updating the translation catalogs
------------------------------------------
+Any text that is marked in this way will be discoverable by ``pybabel`` and used to generate the localization files
+(``PO`` files).
 
-When you add or change natural language text in the theme, you must update the message catalogs to include the new or updated text. Follow these steps:
+Once you've marked the text as localizable, complete the steps outlined in the :ref:`updating-localization-files`
+section of this documentation.
 
-#. Edit the natural language text and ensure it is :ref:`marked as translatable <adding-translatable-text>`.
+For more details on marking strings as localizable in jinja templates visit `the Jinja2 documentation <https://jinja.palletsprojects.com/en/3.0.x/templates/>`__.
 
-#. Generate/update the message catalog template (``POT`` file):
+.. tip::
+   Remember to `manually escape variables <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ if needed.
+
+.. _updating-localization-files:
+
+Updating the localization files
+-----------------------------------
+
+When you add or change natural language text in the theme, you must update the message catalogs to include the new or
+updated text. Follow these steps:
+
+#. Edit the natural language text and ensure it is :ref:`marked as translatable <adding-localizable-text>`.
+
+#. Extract the strings and update the localization files (``POT`` file):
 
    .. code-block:: bash
 
+      # note this will by default update all the localization files for all the supported locales
       tox run -e i18n-extract
 
-#. Update the message catalogs (``PO`` files) for the existing locales:
+This will update the localization files with new information about the position and text of the language you have modified.
 
-   .. code-block:: bash
-
-      tox run -e i18n-update
-
-This will update the translation files with new information about the position and text of the language you have modified.
-
-If you *only* change non-translatable text (like HTML markup), the ``extract`` and ``update`` commands will only update the
-positions (line numbers) of the translatable strings.
+If you *only* change non-translatable text (like HTML markup), the ``extract`` command will only update the
+positions (line numbers) of the localizable strings.
 Updating positions is optional - the line numbers are to inform the human translator, not to perform the translation.
+But it is best practice to keep the positions up to date.
 
-If you change translatable strings, the ``extract`` command will extract the new or updated strings to the ``POT`` file,
-and the ``update`` command will try to perform a fuzzy match between the new or updated strings and existing translations in the ``PO`` files.
-If there is a fuzzy match, a comment like ``#, fuzzy`` is added before the matched entry,
-this means that the translation needs to be manually reviewed and possibly updated.
-If after reviewing the translation you decide to keep the existing translation, you can remove the ``#, fuzzy`` comment from the entry.
-Otherwise, it will add a new translation entry.
+If you change localizable strings, the above command will extract the new or updated strings to localization template
+file (``POT``) and perform a fuzzy match between the new or updated strings and existing translations in the
+localization files.
+If there is a fuzzy match, a comment like ``#, fuzzy`` is added before the matched entry, this means that the
+translation needs to be manually reviewed and possibly updated.
+If after reviewing the translation you decide to keep the existing translation, you can remove the ``#, fuzzy``
+comment from the entry.
+If there is no fuzzy match, it will add a new translation entry.
+
+.. _compiling-localization-files:
+
+Compiling the localization files
+--------------------------------
+
+Gettext doesn't parse any text files, it reads a binary format for faster performance. To compile the latest PO files in
+the repository run:
+
+.. code-block:: bash
+
+   tox run -e i18n-compile
+
+You can also run the extract, update and compile commands in one go:
+
+.. code-block:: bash
+
+   tox run -m translations
+
+This will update the localization files and compile them into binary ``MO`` files in a single step.
+However, if there are fuzzy matches needing review, the compilation will fail, and you will need to review the translations manually.
+Then compile the files again.
 
 .. _adding-new-language:
 
@@ -95,57 +142,62 @@ To add a new language, follow these steps:
       # for example, to add Quechua (ISO 639-1 code: qu)
       tox -e i18n-new-locale -- qu
 
-#. Start translating the theme's text into the newly added language (see :ref:`translating-the-theme`).
+#. Update and compile the localization files as described in the :ref:`updating-localization-files` and 
+   :ref:`compiling-localization-files` sections.
+#. Localize the theme's into the newly added language (see :ref:`localizing-the-theme``).
 
+.. _localizing-the-theme:
 
-.. _translating-the-theme:
-
-Translating the theme
+Localizing the theme
 ---------------------
 
-We manage translations on the `PyData Sphinx Theme project on Transifex <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
+We manage localizations on the `PyData Sphinx Theme project on Transifex <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
 
-To contribute translations, follow these steps:
+To contribute localization, follow these steps:
 
 #. Sign up for a `Transifex account <https://www.transifex.com/signup/>`__.
 #. Join the `PyData Sphinx Theme project <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
-#. Select the language you want to translate. If the language you are looking for is not listed, you can `open an issue
-   on GitHub to request it <https://github.com/pydata/pydata-sphinx-theme/issues>`__.
+#. Select the language you want to localize. If the language you are looking for is not listed, you can `open an issue
+   on GitHub to request it <https://github.com/pydata/pydata-sphinx-theme/issues>`__. Then you can open a pull request 
+   to add the new language following the .
 #. Now you are ready to start translating the theme. If you are new to Transifex you can visit the `Transifex documentation <https://help.transifex.com/en/articles/6240403-translating-html-content>`__ for more information.
 
 Once you have completed your translation, the PyData Sphinx Theme maintainers will review and approve it.
 
-Translation tips
+Localization tips
 ----------------
 
-Translate phrases, not words
+Localize phrases, not words
 ````````````````````````````
 
-Full sentences and clauses must always be a single translatable string.
+Full sentences and clauses must always be a single localizable string.
 Otherwise, you can get ``next page`` translated as ``suivant page`` instead of as ``page suivante``, etc.
 
-Dealing with variables and markup in translations
-`````````````````````````````````````````````````````````````
+Dealing with variables and markup in localizations
+``````````````````````````````````````````````````
 
-If a variable (like the ``edit_page_provider_name`` theme option) is used as part of a phrase, it must be included within the translatable string.
-Otherwise, the word order in other languages can be incorrect. In a Jinja template, surround the translatable string with ``{% trans variable=variable %}`` and ``{% endtrans %}``. For example:
-
-.. code-block:: jinja
-
-   {% trans provider=provider %}Edit on {{ provider }}{% endtrans %}
-
-The translatable string is extracted as the Python format string ``Edit on %(provider)s``. This is so that the same translatable string can be used in both Python code and Jinja templates. It is the translator's responsibility to use ``%(provider)s`` verbatim in the translation.
-
-If a non-translatable word or token (like HTML markup) is used as part of a phrase, it must also be included within the translatable string. For example:
+A localizable string can be a combination of a fixed string and a variable, for example, ``Welcome to the Spanish version of the site``
+is a combination of the fixed parts ``Welcome to the`` and ``version of the site`` and the variable part ``Spanish``.
 
 .. code-block:: jinja
 
-   {% trans theme_version=theme_version|e %}
-   Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> {{ theme_version }}.
+   {% trans language=language %}
+   Welcome to the {{ language }} version of the site
    {% endtrans %}
 
-It is the translator's responsibility to use the HTML markup verbatim in the translation.
+Binding the variable as ``language=language`` ensures the string can be properly localized, especially as the word order
+may vary across locales.
+The above string will be extracted as ``Welcome to the %(language) version of the site``. 
+The translator must use ``%(language)`` verbatim while localizing the theme.
 
+When a block contains HTML with attributes, those which don't need to be localized should be passed as arguments. 
+This ensures strings won't need to be re-localized if those attributes change:
+
+.. code-block:: jinja
+
+   {% trans url="https://pydata.org/" %}
+    Please visit <a href="{{ url }}" title="PyData website">the PyData website</a> for more information.
+   {% endtrans %}
 
 Translation files
 ------------------
