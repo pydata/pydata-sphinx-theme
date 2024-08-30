@@ -144,7 +144,7 @@ To add a new language, follow these steps:
 
 #. Update and compile the localization files as described in the :ref:`updating-localization-files` and 
    :ref:`compiling-localization-files` sections.
-#. Localize the theme's into the newly added language (see :ref:`localizing-the-theme``).
+#. Localize the theme's into the newly added language (see :ref:`localizing-the-theme`).
 
 .. _localizing-the-theme:
 
@@ -165,7 +165,7 @@ To contribute localization, follow these steps:
 Once you have completed your translation, the PyData Sphinx Theme maintainers will review and approve it.
 
 Localization tips
-----------------
+-----------------
 
 Localize phrases, not words
 ````````````````````````````
