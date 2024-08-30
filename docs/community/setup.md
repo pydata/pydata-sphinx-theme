@@ -187,7 +187,8 @@ changes to `src/` are automatically bundled with the package, and the documentat
 To run the development server with `tox`, run the following command:
 
 ```console
-$ tox run -e docs-live-theme
+# note the -m flag vs. other commands in this guide
+$ tox run -m docs-live-server
 ```
 
 When working on the theme, making changes to any of these directories:
