@@ -107,7 +107,7 @@ jobs:
           graphviz: true
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
-        run: python -Im tox run -e py312-docs,a11y-tests
+        run: python -Im tox run -m a11y
 
   # Build our docs (PST) on major OSes and check for warnings
   build-site:
