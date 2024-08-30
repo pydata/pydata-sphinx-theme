@@ -162,7 +162,7 @@ These are then built and bundled with the theme (e.g., `scss` is turned into `cs
 To compile the CSS/JS assets with `tox`, run the following command:
 
 ```console
-$ tox run -e compile
+$ tox run -e compile-assets
 ```
 
 This will compile all assets and place them in the appropriate folder to be used with documentation builds.
