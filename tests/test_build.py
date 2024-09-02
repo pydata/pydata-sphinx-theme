@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 import sphinx.errors
+
 from pydata_sphinx_theme.utils import escape_ansi
 
 COMMON_CONF_OVERRIDES = dict(
