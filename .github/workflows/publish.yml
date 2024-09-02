@@ -20,6 +20,10 @@ jobs:
   # calls our general CI workflow (tests, build docs, etc.)
   tests:
     uses: ./.github/workflows/CI.yml
+    # needed for the coverage action
+    permissions:
+      contents: write
+      pull-requests: write
 
   build-package:
     name: "Build & verify PST package"
