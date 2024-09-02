@@ -178,9 +178,11 @@ jobs:
           runs: 3 # Multiple runs to reduce variance
 
   coverage:
-    name: "check coverage"
+    name: "Check coverage"
     needs: run-pytest
     runs-on: ubuntu-latest
+    # avoid running this on schedule, releases, or workflow_call
+    if: github.event.workflow_run.event != 'schedule' && github.event.workflow_run.event != 'release' && github.event.workflow_run.event != 'workflow_call'
     permissions:
       contents: write
       pull-requests: write
@@ -221,8 +223,6 @@ jobs:
       - name: "Coverage comment 💬"
         uses: py-cov-action/python-coverage-comment-action@v3
         id: coverage_comment
-        # avoid running this on schedule or releases
-        if: github.event.workflow_run.event != 'schedule' && github.event.workflow_run.event != 'release'
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
