@@ -5,9 +5,8 @@
  *
  * - Generates a `webpack-macros.html` file that defines macros used
  *   to insert CSS / JS at various places in the main `layout.html` template.
- * - Compiles our translation files into .mo files so they can be bundled with the theme
  * - Compiles our SCSS and JS and places them in the _static/ folder
- * - Downloads and links FontAwesome and some JS libraries (Bootstrap, etc)
+ * - Vendors FontAwesome and some JS libraries (Bootstrap, etc)
  */
 
 const { resolve } = require("path");
