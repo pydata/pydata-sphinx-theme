@@ -44,11 +44,15 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
         sphinx-version: [""]
         include:
-          # oldest Python version with the oldest Sphinx version
+          # oldest Python version with the oldest (major) Sphinx version
           - os: ubuntu-latest
             python-version: "3.9"
-            sphinx-version: "6.1"
-            # newest Python version with the newest Sphinx version
+            sphinx-version: "6.2"
+          # newest Python with the latest released Sphinx version
+          - os: ubuntu-latest
+            python-version: "3.12"
+            sphinx-version: "latest"
+          # newest Python version with the development Sphinx version
           - os: ubuntu-latest
             python-version: "3.12"
             # Sphinx HEAD
@@ -79,10 +83,12 @@ jobs:
           # example substitution: tox run -e compile,py39-sphinx61-tests
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-tests
-          # if not we use the default version
-          # example substitution: tox run -e compile,py39-tests
+            
+          # if there is no specified Sphinx version, run with the default;
+          # that is the latest for the corresponding Python version
+          # example substitution: tox run -e compile,py39-tests-sphinxlatest
           else
-            python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
+            python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinxlatest-tests
           fi
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
@@ -121,7 +127,11 @@ jobs:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
             python-version: "3.9"
-            sphinx-version: "6.1"
+            sphinx-version: "6.2"
+          # newest Python version with the development Sphinx version
+          - os: ubuntu-latest
+            python-version: "3.12"
+            sphinx-version: "dev"
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
@@ -139,10 +149,11 @@ jobs:
           # example substitution: tox run -e py39-sphinx61-docs
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-docs
-          # build with the default Sphinx version
-          # example substitution: tox run -e py312-docs
+
+          # build with the default Sphinx version (latest for the corresponding Python version)
+          # example substitution: tox run -e py312-sphinxlatest-docs
           else
-            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-docs
+            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-sphinxlatest-docs
           fi
 
   # Run Lighthouse audits on the built site (kitchen-sink only)
@@ -178,7 +189,7 @@ jobs:
           runs: 3 # Multiple runs to reduce variance
 
   coverage:
-    name: "check coverage"
+    name: "Check coverage"
     needs: run-pytest
     runs-on: ubuntu-latest
     permissions:
