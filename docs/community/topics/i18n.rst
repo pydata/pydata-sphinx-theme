@@ -177,7 +177,7 @@ To contribute localization, follow these steps:
 #. Sign up for a `Transifex account <https://www.transifex.com/signup/>`__.
 #. Join the `PyData Sphinx Theme project <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
 #. Select the language you want to localize. If the language you are looking for is not listed, you can `open an issue on GitHub to request it <https://github.com/pydata/pydata-sphinx-theme/issues>`__. Then you can open a pull request 
-   to add the new language following the steps outlined in :ref:`adding a new language`.
+   to add the new language following the steps outlined in :ref:`adding-new-language`.
 #. Now you are ready to start localizing the theme. If you are new to Transifex you can visit the 
    `Transifex documentation <https://help.transifex.com/en/articles/6240403-translating-html-content>`__ for more information.
 
