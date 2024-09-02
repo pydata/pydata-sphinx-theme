@@ -105,6 +105,7 @@ envs/
 .nodeenv/
 .yarn-packages
 node_modules/
+bun.lockb
 
 # Editors
 .vscode

@@ -72,34 +72,6 @@ $sidebar-padding-right: 1rem;
       margin-bottom: 0.5rem;
     }
 
-    // The dropdown toggle for extra links just shows them all instead.
-    .nav-item.dropdown {
-      // On mobile, the dropdown behaves like any other link, no hiding
-      button {
-        display: none;
-      }
-
-      .dropdown-menu {
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-        border: none;
-        background-color: inherit;
-        font-size: inherit;
-
-        .dropdown-item {
-          &:hover,
-          &:focus {
-            // In the mobile sidebar, the dropdown menu is inlined with the
-            // other links, which do not have background-color changes on hover
-            // and focus
-            background-color: unset;
-          }
-        }
-      }
-    }
-
     .bd-navbar-elements {
       .nav-link {
         &:focus-visible {
