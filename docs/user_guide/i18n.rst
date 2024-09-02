@@ -21,11 +21,11 @@ Translating configurable strings
 These instructions are for translating configurable strings (those that are customizable in ``html_theme_options`` within
 the ``conf.py`` file).
 
-These instructions assume that you store your translations in a ``locale`` directory under your documentation directory 
+These instructions assume that you store your translations in a ``locale`` directory under your documentation directory
 and that you want to use ``messages`` as the name of the message catalog for these strings (you can change this name if
 needed).
 
-Note you will also need to install `pybabel <https://babel.pocoo.org/en/latest/installation.html>`__ to handle your 
+Note you will also need to install `pybabel <https://babel.pocoo.org/en/latest/installation.html>`__ to handle your
 documentation translations.
 
 #. In your ``conf.py`` file:

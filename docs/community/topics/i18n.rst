@@ -2,20 +2,20 @@ Internationalization
 ====================
 
 This section covers how to internationalize (I18n) and localize (L10n) the PyData Sphinx Theme.
-For details on how to localize the configurable strings in your Sphinx project, see the 
+For details on how to localize the configurable strings in your Sphinx project, see the
 :ref:`User guide section on internationalization <user-guide-i18n>`.
 
 The PyData Sphinx Theme I18n/i10n workflows are based on `GNU Gettext <http://www.gnu.org/software/gettext/>`__
-and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ is used to keep the catalogs up to date. 
+and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ is used to keep the catalogs up to date.
 Crowd-sourced localizations are managed on `Transifex <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
 
 .. note::
    **Internationalization** (or I18n) is the process of making a program or application aware of and able to support multiple
-   languages. 
+   languages.
 
    **Localization** (L10n) is the process of translating localized programs or applications into different languages while
    ensuring that the translations are correct for some native language and cultural habits.
-   
+
    The formal description of specific set of cultural habits for some country, together with all associated translations
    targeted to the same native language, is called the *locale* for this language or country.
    For more information about localization and internationalization see `GNU gettext concepts <https://www.gnu.org/software/gettext/manual/html_node/Concepts.html>`__.
@@ -35,11 +35,11 @@ Localization files
 
 There are three types of files used in the localization process:
 
-#. `PO files <https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`__ ( Portable Object, also known as message catalogs) 
+#. `PO files <https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files>`__ ( Portable Object, also known as message catalogs)
    associate each original, translatable string (defined in ``msgid``) of a given program with its translation in a
-   particular target language (defined in ``msgstr`` fields). A single PO file is dedicated to a single target language. 
+   particular target language (defined in ``msgstr`` fields). A single PO file is dedicated to a single target language.
 #. ``MO`` (Machine Object) files are a binary version of a PO file.
-#. ``POT`` (Portable Object Template) files are similar to PO files, but with empty translations. 
+#. ``POT`` (Portable Object Template) files are similar to PO files, but with empty translations.
    They are used as a template for new languages.
 
 
@@ -52,7 +52,7 @@ All natural language text in the theme's components and layouts must be marked a
 For example, if you add a button with the text **Next page**, you will need to mark this text as localizable.
 
 ``HTML`` templates (located in the ``src/pydata_sphinx_theme/theme/`` directory).
-To do so, you can use the Jinja2 ``trans`` block and/or a ``_()`` function to mark text as localizable in the corresponding 
+To do so, you can use the Jinja2 ``trans`` block and/or a ``_()`` function to mark text as localizable in the corresponding
 
 For example, to mark the text **Next page** as localizable, you would write:
 
@@ -74,8 +74,8 @@ For more details on marking strings as localizable in jinja templates visit `the
    Remember to `manually escape variables <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ if needed.
 
 Sometimes, it can help localizers to describe where a string comes from or whether it refers to a noun or verb,
-particularly if it can be difficult to find in the theme, or if the string itself is not very self-descriptive (for example, very short strings). 
-If you immediately precede the string with a comment that starts with ``L10n:``, the comment will be added to the PO 
+particularly if it can be difficult to find in the theme, or if the string itself is not very self-descriptive (for example, very short strings).
+If you immediately precede the string with a comment that starts with ``L10n:``, the comment will be added to the PO
 file, and visible to localizers. For example:
 
 .. code-block:: jinja
@@ -147,7 +147,7 @@ Then compile the files again.
 Adding a new language
 ----------------------
 
-The list of languages with existing (possibly incomplete) localizations is available in the 
+The list of languages with existing (possibly incomplete) localizations is available in the
 ``src/pydata_sphinx_theme/locale`` directory.
 
 To add a new language, follow these steps:
@@ -161,7 +161,7 @@ To add a new language, follow these steps:
       # for example, to add Quechua (ISO 639-1 code: qu)
       tox -e i18n-new-locale -- qu
 
-#. Update and compile the localization files as described in the :ref:`updating-localization-files` and 
+#. Update and compile the localization files as described in the :ref:`updating-localization-files` and
    :ref:`compiling-localization-files` sections. Then commit the changes.
 #. Localize the theme's into the newly added language (see :ref:`localizing-the-theme`).
 
@@ -176,9 +176,9 @@ To contribute localization, follow these steps:
 
 #. Sign up for a `Transifex account <https://www.transifex.com/signup/>`__.
 #. Join the `PyData Sphinx Theme project <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
-#. Select the language you want to localize. If the language you are looking for is not listed, you can `open an issue on GitHub to request it <https://github.com/pydata/pydata-sphinx-theme/issues>`__. Then you can open a pull request 
+#. Select the language you want to localize. If the language you are looking for is not listed, you can `open an issue on GitHub to request it <https://github.com/pydata/pydata-sphinx-theme/issues>`__. Then you can open a pull request
    to add the new language following the steps outlined in :ref:`adding-new-language`.
-#. Now you are ready to start localizing the theme. If you are new to Transifex you can visit the 
+#. Now you are ready to start localizing the theme. If you are new to Transifex you can visit the
    `Transifex documentation <https://help.transifex.com/en/articles/6240403-translating-html-content>`__ for more information.
 
 Once you have completed your localization, the PyData Sphinx Theme maintainers will review and approve it.
@@ -206,10 +206,10 @@ is a combination of the fixed parts ``Welcome to the`` and ``version of the site
 
 Binding the variable as ``language=language`` ensures the string can be properly localized, especially as the word order
 may vary across locales.
-The above string will be extracted as ``Welcome to the %(language) version of the site``. 
+The above string will be extracted as ``Welcome to the %(language) version of the site``.
 The translator must use ``%(language)`` verbatim while localizing the theme.
 
-When a block contains HTML with attributes, those which don't need to be localized should be passed as arguments. 
+When a block contains HTML with attributes, those which don't need to be localized should be passed as arguments.
 This ensures strings won't need to be re-localized if those attributes change:
 
 .. code-block:: jinja
