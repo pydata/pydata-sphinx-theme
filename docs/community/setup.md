@@ -223,9 +223,6 @@ To run the build tests with `tox`, run the following command:
 # this will compile the assets and run the tests (with test coverage)
 # note the use of the `-m` flag vs. other commands in this guide
 $ tox run -m tests
-
-# to run the tests only without pre-compiling the assets and without coverage (for example if you recently compiled the assets)
-$ tox run -e tests-no-cov
 ```
 
 To run the accessibility checks:
