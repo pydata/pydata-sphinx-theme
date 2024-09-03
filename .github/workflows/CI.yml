@@ -84,7 +84,6 @@ jobs:
           else
             python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
-      - run: ls -la 
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
         uses: actions/upload-artifact@v4
