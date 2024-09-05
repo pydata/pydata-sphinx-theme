@@ -66,8 +66,6 @@ $all-colors: map.merge($pst-semantic-colors, $extra-semantic-colors);
 
 @mixin create-sd-colors($value, $name) {
   // define the pst variables, so that downstream user overrides will work
-  @debug "Creating color variables for semantic color: #{$name}";
-
   --pst-color-#{$name}: #{$value};
 
   // we are now using a11y-combination to calculate the text color - this is based
