@@ -10,8 +10,8 @@ theme-name = "pydata_sphinx_theme"
 additional-compiled-static-assets = [
   "webpack-macros.html",
   "vendor/",
-  "styles/bootstrap.css",
   "scripts/bootstrap.js",
+  "scripts/fontawesome.js",
   "locale/",
 ]
 
@@ -53,7 +53,7 @@ classifiers = [
 [project.optional-dependencies]
 doc = [
   "numpydoc",
-  "linkify-it-py",         # for link shortening
+  "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
   "sphinx-sitemap",
@@ -105,6 +105,7 @@ fix = true
 ignore = [
   "E501", # line too long | Black take care of it
   "D107", # Missing docstring in `__init__` | set the docstring in the class
+
 ]
 ignore-init-module-imports = true
 select = ["E", "F", "W", "I", "D", "RUF"]
