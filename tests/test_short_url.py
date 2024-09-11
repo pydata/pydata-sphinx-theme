@@ -3,6 +3,7 @@
 from urllib.parse import urlparse
 
 import pytest
+
 from pydata_sphinx_theme.short_link import ShortenLinkTransform
 
 
