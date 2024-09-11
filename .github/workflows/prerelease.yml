@@ -32,12 +32,12 @@ jobs:
           python -Im pip install --upgrade pip wheel setuptools
       - name: "Build PST docs and check for warnings 📖"
         run: |
-          # example substitution: tox run -e docs-py312-docs
-          python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
+          # example substitution: tox run -e docs-py312-sphinxlatest-docs
+          python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-sphinxlatest-docs -- --keep-going
       - name: "Run tests ✅ (no coverage)"
         run: |
           # this will compile the assets then run the tests
-          python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests-no-cov
+          python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinxlatest-tests
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
