@@ -89,6 +89,11 @@ In addition to the general-purpose announcement banner, the theme includes a bui
             "preferred": true
         }
 
+    If the active version compares less than the preferred version, the announcement will inform the user that
+    they are viewing an older version of the documentation and provide a link to the preferred version. If the
+    version compares greater than the preferred version (or if the version match contains the strings `"dev"`,
+    `"rc"` or `"pre"`), the announcement will say they are viewing an unstable development version instead.
+
 If you want similar functionality for *older* versions of your docs (i.e. those built before the ``show_version_warning_banner`` configuration option was available), you can manually add a banner by prepending the following HTML to all pages (be sure to replace ``URL_OF_STABLE_VERSION_OF_PROJECT`` with a valid URL, and adjust styling as desired):
 
 .. code-block:: html
