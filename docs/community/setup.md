@@ -7,9 +7,8 @@ If you are comfortable with and prefer a more manual setup refer to the [](topic
 
 ## Testing pre-release and nightly
 
-You can test the alpha, beta
-and release candidates of pydata sphinx theme on your your projects. To do so
-simply install with pip using the `--pre` flag:
+You can test the alpha, beta and release candidates of the PyData Sphinx theme on your projects.
+To do so install with pip using the `--pre` flag:
 
 ```console
 $ pip install --pre pydata-sphinx-theme
@@ -20,9 +19,9 @@ If an `alpha`, `beta` or `rc` is available, pip will install it.
 You can use the `--pre` flag in your project's continuous integration test suite
 to catch regressions or bugs before their release.
 
-If you are even more adventurous pydata-sphinx-theme has nightly builds, you can try following the
+If you are even more adventurous `pydata-sphinx-theme` has nightly builds, you can try following the
 instructions provided [on the scientific-python/upload-nightly-action
-Readme](https://github.com/scientific-python/upload-nightly-action?tab=readme-ov-file#using-nightly-builds-in-ci)
+README](https://github.com/scientific-python/upload-nightly-action?tab=readme-ov-file#using-nightly-builds-in-ci)
 on installing nightly wheels.
 
 Installing nightly wheels in your project's CI jobs is a great way to help theme developers catch bugs ahead of
@@ -145,6 +144,14 @@ $ python -m http.server -d docs/_build/html/
 
 This will print a local URL that you can open in a browser to explore the HTML files.
 
+You can also serve the documentation with live-reload using the following command:
+
+```console
+$ tox run -e docs-live
+```
+
+This command will build the documentation and watch for any changes to the `doc` folder and rebuild the documentation automatically.
+
 ### Change content and re-build
 
 Now that you've built the documentation, edit one of the source files to see how the documentation updates with new builds.
@@ -162,7 +169,7 @@ These are then built and bundled with the theme (e.g., `scss` is turned into `cs
 To compile the CSS/JS assets with `tox`, run the following command:
 
 ```console
-$ tox run -e compile
+$ tox run -e compile-assets
 ```
 
 This will compile all assets and place them in the appropriate folder to be used with documentation builds.
@@ -174,12 +181,14 @@ The `sphinx-theme-builder` will bundle these assets automatically when we make a
 
 ## Run a development server
 
-You can combine the above two actions (build the docs and compile JS/CSS assets) and run a development server so that changes to `src/` are automatically bundled with the package, and the documentation is immediately reloaded in a live preview window.
+You can combine the above two actions (build the docs and compile JS/CSS assets) and run a development server so that
+changes to `src/` are automatically bundled with the package, and the documentation is immediately reloaded in a live preview window.
 
 To run the development server with `tox`, run the following command:
 
 ```console
-$ tox run -e docs-live
+# note the -m flag vs. other commands in this guide
+$ tox run -m docs-live-server
 ```
 
 When working on the theme, making changes to any of these directories:

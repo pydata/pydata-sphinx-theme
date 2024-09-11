@@ -1,33 +1,30 @@
-# English translations for pydata-sphinx-theme.
-# Copyright (C) 2023 PyData developers
-# This file is distributed under the same license as the pydata-sphinx-theme
-# project.
+# Czech translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
-# Translators:
-# Jan Breuer <j123b567@jaybee.cz>, 2024
 msgid ""
 msgstr ""
 
-
-#: docs/conf.py:94
+#: docs/conf.py:108
 msgid "Click to expand"
 msgstr ""
 
-#: docs/conf.py:95
+#: docs/conf.py:109
 msgid "Click to collapse"
 msgstr ""
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:39
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:48
 msgid "Skip to main content"
 msgstr "Přejít k hlavnímu obsahu"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:51
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:60
 msgid "Back to top"
 msgstr "Zpět na začátek"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:6
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:8
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:28
 msgid "Search"
@@ -41,18 +38,18 @@ msgstr "Chyba"
 msgid "Please activate JavaScript to enable the search functionality."
 msgstr "Aktivujte prosím JavaScript, abyste umožnili vyhledávání."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:6
 msgid "Breadcrumb"
 msgstr "Struktura"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:17
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:10
 msgid "Home"
 msgstr "Domů"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
-msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
-msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+msgid "Copyright %(copyright)s"
+msgstr "© Copyright %(copyright)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
@@ -128,7 +125,7 @@ msgstr ""
 "Vytvořeno pomocí <a href=\"https://www.sphinx-doc.org/\">Sphinx</a> "
 "%(sphinx_version)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
 msgid "light/dark"
 msgstr "světlý/tmavý"
 
@@ -152,7 +149,6 @@ msgid "Announcement"
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
-#, fuzzy
 msgid "Site navigation"
 msgstr "Navigace na stránce"
 
@@ -170,4 +166,7 @@ msgstr "Navigace na stránce"
 
 #~ msgid "Twitter"
 #~ msgstr "Twitter"
+
+#~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+#~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 
