@@ -84,19 +84,19 @@
 
 
     .pst-gh-issue:before {
-        font-family: "Font Awesome 5 Free"; /* Ensure correct font family */
+        font-family: "Font Awesome 6 Free"; /* Ensure correct font family */
         font-weight: 900; /* Adjust font weight if necessary */
-        content: "\f05a"; /* Unicode for the (i) icon */
-        margin-right: 5px; /* Optional: Adjust spacing between icon and text */
-        text-decoration: none;
+        /* Unicode for the (i) icon + non breaking space, we don't use padding or
+         margin otherwise there is a gap in the underline */
+        content: "\f05a\0020";
     }
 
     .pst-gh-pull:before {
-        font-family: "Font Awesome 5 Free"; /* Ensure correct font family */
+        font-family: "Font Awesome 6 Free"; /* Ensure correct font family */
         font-weight: 900; /* Adjust font weight if necessary */
-        content: "\f126"; /* Unicode for the pull-request icon */
-        margin-right: 5px; /* Optional: Adjust spacing between icon and text */
-        text-decoration: none;
+        /* Unicode for the pull-request icon + non breaking space, we don't use padding or
+         margin otherwise there is a gap in the underline */
+        content: "\e13c\0020";
     }
   </style>
   {{ _webpack.head_pre_assets() }}
