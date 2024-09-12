@@ -6,13 +6,14 @@ html {
   // base font size - applied at body/html level
   --pst-font-size-base: 1rem;
 
-  // heading font sizes based on bootstrap sizing
-  --pst-font-size-h1: 2.5rem;
-  --pst-font-size-h2: 2rem;
+  // heading font sizes based on a medium contrast type scale
+  // - see: https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/97#issuecomment-2310531483
+  --pst-font-size-h1: 2.625rem;
+  --pst-font-size-h2: 2.125rem;
   --pst-font-size-h3: 1.75rem;
   --pst-font-size-h4: 1.5rem;
   --pst-font-size-h5: 1.25rem;
-  --pst-font-size-h6: 1.1rem;
+  --pst-font-size-h6: 1rem;
 
   // smaller than heading font sizes
   --pst-font-size-milli: 0.9rem;
@@ -28,7 +29,7 @@ html {
 
   // Font weights
   --pst-font-weight-caption: 300;
-  --pst-font-weight-heading: 400;
+  --pst-font-weight-heading: 600;
 
   // Font family
   // These are adapted from https://systemfontstack.com/ */
