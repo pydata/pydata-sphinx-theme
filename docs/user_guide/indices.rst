@@ -19,4 +19,4 @@ By design the indices pages are not linked in a documentation generated with thi
 
 .. note::
 
-    Don't forget to add back the ``"sidebar-ethical-ads.html"`` template if you are serving your documentation using `ReadTheDocs <https://readthedocs.org>`__.
+    Don't forget to add back the ``"sidebar-ethical-ads.html"`` template if you are serving your documentation using `ReadTheDocs <https://about.readthedocs.com/>`__.

@@ -18,7 +18,7 @@ To do so, use a tool like [conda](https://docs.conda.io/en/latest/), [mamba](htt
 Before you start, ensure that you have the following installed:
 
 - Python >= 3.9
-- [Pandoc](https://pandoc.org/installing.html): we use `nbsphinx` to support notebook (.ipynb) files in the documentation, which requires [installing Pandoc](https://pandoc.org/installing.html) at a system level (or within a Conda environment).
+- [Pandoc](https://pandoc.org/): we use `nbsphinx` to support notebook (`.ipynb`) files in the documentation, which requires [installing Pandoc](https://pandoc.org/installing.html) at a system level (or within a Conda environment).
 
 ## Clone the repository locally
 
@@ -66,7 +66,7 @@ To manually open a server to watch your documentation for changes, build them, a
 $ stb serve docs --open-browser
 ```
 
-## Run the tests
+## Manually Run the tests
 
 To manually run the tests for this theme, first set up your environment locally, and then run:
 

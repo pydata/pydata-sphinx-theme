@@ -10,7 +10,17 @@ from collections import defaultdict
 
 from bs4 import BeautifulSoup
 
-ignores = ["#", "next", "previous"]
+ignores = [
+    "#",
+    "next",
+    "previous",
+    "[source]",
+    "edit on github",
+    "[docs]",
+    "read more ...",
+    "show source",
+    "module",
+]
 
 
 def find_html_files(folder_path):
@@ -48,17 +58,26 @@ class Checker:
                 continue
             if content.split("\n")[0] in ignores:
                 continue
+            from urllib.parse import urljoin
 
-            self.links[content].append((url, identifier))
+            fullurl = urljoin(identifier, url)
+            self.links[content].append((fullurl, identifier))
 
     def duplicates(self):
         """Print potential duplicates."""
         for content, url_pages in self.links.items():
             uniq_url = {u for u, _ in url_pages}
             if len(uniq_url) >= 2:
-                print(f"{content} has divergent url:")
+                print(
+                    f"{len(url_pages)} time {content!r} has {len(uniq_url)} on divergent url on :"
+                )
+                dct = defaultdict(list)
                 for u, p in url_pages:
-                    print(" ", u, "in", p)
+                    dct[u].append(p)
+                for u, ps in dct.items():
+                    print(" ", u, "in")
+                    for p in ps:
+                        print("    ", p)
 
 
 # Example usage
