@@ -370,4 +370,10 @@ html {
       }
     }
   }
+
+  .sd-summary-title:hover {
+    // Use text underlining to make the hover effect more perceivable and
+    // therefore more accessible.
+    text-decoration: underline;
+  }
 }

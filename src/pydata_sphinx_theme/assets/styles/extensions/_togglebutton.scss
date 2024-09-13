@@ -17,8 +17,32 @@
     }
   }
 
+  // Apply this mixin to the element that will be hovered. These styles are
+  // intended to match what sphinx-design does for its dropdown admonitions.
+  @mixin icon-hover-effects {
+    &:hover .tb-icon {
+      opacity: 1;
+      scale: 1.1;
+    }
+
+    .tb-icon {
+      opacity: 0.6;
+    }
+  }
+
   // Admonition toggles
   .admonition {
+    .admonition-title {
+      @include icon-hover-effects;
+
+      &:hover,
+      &:hover button.toggle-button {
+        // Use text underlining to make the hover effect more perceivable and
+        // therefore more accessible.
+        text-decoration: underline;
+      }
+    }
+
     button.toggle-button {
       color: inherit;
 
@@ -50,7 +74,7 @@
       // the left border on the container's children). This makes it complicated
       // to get the focus ring to simultaneously cover the left border in the
       // header and align perfectly on the right with the body.
-      .admonition-title:focus-within::before {
+      .admonition-title:focus-within:has(:focus-visible)::before {
         content: "";
         transform: translateX(
           -$admonition-left-border-width
@@ -77,6 +101,13 @@
       border-left: 3px solid var(--pst-color-primary);
 
       @include chevron-down;
+      @include icon-hover-effects;
+
+      &:hover {
+        // Use text underlining to make the hover effect more perceivable and
+        // therefore more accessible.
+        text-decoration: underline;
+      }
     }
 
     // When expanded, sharpen the bottom left and right corners of the focus ring
