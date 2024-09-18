@@ -1,2 +1,4 @@
 WARNING: Cell printed to stderr:
 Matplotlib is building the font cache; this may take a moment.
+WARNING: failed to reach any of the inventories with the following issues:
+intersphinx inventory
