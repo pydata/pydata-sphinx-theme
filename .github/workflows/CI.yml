@@ -33,14 +33,7 @@ jobs:
       matrix:
         # macos-14==latest
         # ubuntu-20.04==latest
-        os:
-          [
-            "ubuntu-latest",
-            "ubuntu-24.04",
-            "macos-14",
-            "macos-13",
-            "windows-latest",
-          ]
+        os: ["ubuntu-latest", "ubuntu-24.04", "macos-14", "windows-latest"]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
         sphinx-version: [""]
         include:
@@ -74,15 +67,15 @@ jobs:
       - name: "Run tests ✅"
         shell: bash
         run: |
-          # this will compile the assets then run the tests
+          # this will compile the assets and translations then run the tests
           # check if there is a specific Sphinx version to test with
-          # example substitution: tox run -e compile,py39-sphinx61-tests
+          # example substitution: tox run -e compile-assets,i18n-compile,py39-sphinx61-tests
           if [ -n "${{matrix.sphinx-version}}" ]; then
-            python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-tests
+            python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-tests
           # if not we use the default version
-          # example substitution: tox run -e compile,py39-tests
+          # example substitution: tox run -e compile-assets,i18n-compile,py39-tests
           else
-            python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
+            python -Im tox run -e compile,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
@@ -108,7 +101,7 @@ jobs:
           graphviz: true
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
-        run: python -Im tox run -e py312-docs,a11y-tests
+        run: python -Im tox run -m a11y
 
   # Build our docs (PST) on major OSes and check for warnings
   build-site:

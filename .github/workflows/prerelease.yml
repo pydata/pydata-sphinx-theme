@@ -37,7 +37,7 @@ jobs:
       - name: "Run tests ✅ (no coverage)"
         run: |
           # this will compile the assets then run the tests
-          python -Im tox run -e compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests-no-cov
+          python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests-no-cov
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
