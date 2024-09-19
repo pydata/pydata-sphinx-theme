@@ -5,7 +5,7 @@ Search bar / search button
 On narrow viewports, users can access search by clicking the magnifying glass
 icon (:fas:`search`) in the :ref:`layout-header`. On wide viewports, the
 magnifying glass icon, search input field, and keyboard shortcut for focusing
-the search input field are all shown. The default keyboard shortcut is:
+the search input field are all shown. The keyboard shortcut is:
 
 * :kbd:`Ctrl` + :kbd:`K` (Linux, Windows)
 * :kbd:`⌘` + :kbd:`K` (macOS)
