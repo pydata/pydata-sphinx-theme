@@ -32,6 +32,9 @@ Thanks for your support!
 - title: CuPy
   link-alt: CuPy docs
   link: https://docs.cupy.dev/en/stable/index.html
+- title: DecentralChain
+  link-alt: DecentralChain docs
+  link: https://docs.decentralchain.io/en/master/
 - title: Fairlearn
   link-alt: Fairlearn docs
   link: https://fairlearn.org/main/about/
@@ -44,16 +47,13 @@ Thanks for your support!
 - title: MegEngine
   link-alt: MegEngine docs
   link: https://www.megengine.org.cn/doc/stable/en/index.html
+- title: Pastas
+  link-alt: Pastas docs
+  link: https://pastas.readthedocs.io/
 - title: PhaseFieldX
   link-alt: PhaseFieldX docs
   link: https://phasefieldx.readthedocs.io/en/latest/index.html
 - title: PyVista
   link-alt: PyVista docs
   link: https://docs.pyvista.org
-- title: Pastas
-  link-alt: Pastas docs
-  link: https://pastas.readthedocs.io/
-- title: DecentralChain
-  link-alt: DecentralChain docs
-  link: https://docs.decentralchain.io/en/master/
 ```
