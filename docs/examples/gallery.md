@@ -56,7 +56,4 @@ Thanks for your support!
 - title: PyVista
   link-alt: PyVista docs
   link: https://docs.pyvista.org
-- title: scikit-learn
-  link-alt: scikit-learn docs
-  link: https://scikit-learn.org/
 ```
