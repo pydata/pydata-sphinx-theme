@@ -51,7 +51,7 @@
   img-bottom: ../_static/gallery/scipy.png
 - title: scikit-learn
   link-alt: scikit-learn docs
-  link: https://scikit-learn.org/
+  link: https://scikit-learn.org/stable/
   img-bottom: ../_static/gallery/scikit-learn.png
 - title: SEPAL
   link-alt: SEPAL docs
