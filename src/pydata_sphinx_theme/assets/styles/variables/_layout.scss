@@ -42,3 +42,7 @@ $navbar-link-padding-y: 0.25rem;
 // contains the bounding box of the interactive element).
 // - https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/81#issuecomment-2251325783
 $nav-icon-column-gap: 1.12rem;
+
+// Determines vertical space between entries in both the section (left/primary
+// sidebar) and page (right/secondary sidebar) table of contents
+$toc-item-padding-y: 0.25rem;
