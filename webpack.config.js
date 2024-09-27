@@ -31,10 +31,10 @@ const staticPath = resolve(__dirname, "src/pydata_sphinx_theme/theme/pydata_sphi
  */
 
 function stylesheet(css) { return `<link href="{{ pathto('_static/${css}', 1) }}?digest=${this.hash}" rel="stylesheet" />`; }
-function preload(js) { return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}" />`; }
-function script(js) { return `<script defer src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`; }
+function preloadScript(js) { return `<link rel="preload" as="script" href="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}" />`; }
+function deferScript(js) { return `<script defer src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`; }
 // Adding FA without preloading
-function fascript(js) { return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`; }
+function script(js) { return `<script src="{{ pathto('_static/${js}', 1) }}?digest=${this.hash}"></script>`; }
 
 /*******************************************************************************
  * the assets to load in the macro
@@ -71,15 +71,15 @@ function macroTemplate({ compilation }) {
     {% endmacro %}
 
     {% macro head_js_preload() %}
-    <!-- So that users can add custom icons -->
-    ${fa_scripts.map(fascript.bind(compilation)).join("\n")}
-    <!-- Pre-loaded scripts that we'll load fully later -->
-      ${theme_scripts.map(preload.bind(compilation)).join("\n")}
+      <!-- So that users can add custom icons -->
+      ${fa_scripts.map(script.bind(compilation)).join("\n")}
+      <!-- Pre-loaded scripts that we'll load fully later -->
+      ${theme_scripts.map(preloadScript.bind(compilation)).join("\n")}
     {% endmacro %}
 
     {% macro body_post() %}
       <!-- Scripts loaded after <body> so the DOM is not blocked -->
-      ${theme_scripts.map(script.bind(compilation)).join("\n")}
+      ${theme_scripts.map(deferScript.bind(compilation)).join("\n")}
     {% endmacro %}
   `);
 }
