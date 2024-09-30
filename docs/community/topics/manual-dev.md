@@ -66,7 +66,7 @@ To manually open a server to watch your documentation for changes, build them, a
 $ stb serve docs --open-browser
 ```
 
-## Manually Run the tests
+## Manually run the tests
 
 To manually run the tests for this theme, first set up your environment locally, and then run:
 
