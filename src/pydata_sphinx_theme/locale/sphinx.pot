@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pydata-sphinx-theme 0.15.4.dev0\n"
+"Project-Id-Version: pydata-sphinx-theme 0.16.0rc0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-20 12:53+0100\n"
+"POT-Creation-Date: 2024-09-30 17:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: docs/conf.py:108
+#: docs/conf.py:109
 msgid "Click to expand"
 msgstr ""
 
-#: docs/conf.py:109
+#: docs/conf.py:110
 msgid "Click to collapse"
 msgstr ""
 
@@ -135,7 +135,19 @@ msgid ""
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
-msgid "light/dark"
+msgid "Color mode"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
+msgid "Light"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+msgid "Dark"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
+msgid "System Settings"
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
