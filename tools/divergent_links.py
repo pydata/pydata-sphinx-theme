@@ -1,14 +1,31 @@
-"""This script help checking divergent links.
+"""This script help checking inconsistent links.
 
-That is to say, links to the same page,
-that have different titles.
+That is to say, links that have the same title but link to the same place.
+This is useful for screen-reader and accessibility devices, where the user may
+say "Go to X", but is there are 2 links X this can be confusing.
+
+
+Example (links that have the same name, but different URL):
+
+   We have a JavaScript <a href="javascript.html">API</a> and
+   a Python <a href="python.html">API</a>.
+
+How to fix (give the links different names):
+
+   We have a <a href="javascript.html">JavaScript API</a> and
+   a <a href="python.html">Python API</a>.
 """
 
 import os
 import sys
 from collections import defaultdict
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
+
+# when looking at inconsistent links across pages,
+# a number of text is recurrent and appear on many pages.
+# So we'll ignore these.
 
 ignores = [
     "#",
@@ -41,7 +58,7 @@ class Checker:
     def __init__(self):
         self.links = defaultdict(list)
 
-    def scan(self, html_content, identifier):
+    def scan(self, html_content, file_path):
         """Scan given file for html links."""
         # Parse the HTML content using BeautifulSoup
         soup = BeautifulSoup(html_content, "html.parser")
@@ -51,17 +68,21 @@ class Checker:
         # Extract all anchor tags
         for a_tag in soup.find_all("a", href=True):
             url = a_tag["href"]
+
+            # These are usually link into the same page ("see below", or even
+            # header anchors  we thus exclude those.
             if url.startswith("#"):
                 continue
             content = a_tag.text.strip().lower()
             if content in ignores:
                 continue
+            # Some links are "$Title\nNext", or "$Title\nprev", so we only
+            # want to look at what is before the `\n`
             if content.split("\n")[0] in ignores:
                 continue
-            from urllib.parse import urljoin
 
-            fullurl = urljoin(identifier, url)
-            self.links[content].append((fullurl, identifier))
+            fullurl = urljoin(file_path, url)
+            self.links[content].append((fullurl, file_path))
 
     def duplicates(self):
         """Print potential duplicates."""
@@ -80,27 +101,33 @@ class Checker:
                         print("    ", p)
 
 
-# Example usage
-data = """
-<html>
-  <body>
-    <a href="https://example.com" title="Example Site">Visit Example</a>
-    <a href="https://example.com" title="Example Website">Check Example</a>
-    <a href="https://openai.com" title="OpenAI">Visit OpenAI</a>
-    <a href="https://openai.com" title="OpenAI">Learn about OpenAI</a>
-  </body>
-</html>
+if len(sys.argv) == 3 and sys.argv[2] == "--all":
+    c = Checker()
+
+    for file in find_html_files(sys.argv[1]):
+        with open(file) as f:
+            data = f.read()
+        c.scan(data, file)
+
+    c.duplicates()
+elif len(sys.argv) == 2:
+    for file in find_html_files(sys.argv[1]):
+        with open(file) as f:
+            data = f.read()
+        c = Checker()
+        c.scan(data, file)
+        c.duplicates()
+else:
+    print(
+        """
+Check each page individually for incoherent links
+
+      python tools/divergent_links.py docs/_build/html/
+
+Check all pages for global (and local) incoherent links
+
+      python tools/divergent_links.py docs/_build/html/ --all
+
 """
-
-c = Checker()
-# Call the function and print results
-# inconsistencies = c.scan(data, "C0")
-
-print(sys.argv)
-
-for file in find_html_files(sys.argv[1]):
-    with open(file) as f:
-        data = f.read()
-    c.scan(data, file)
-
-c.duplicates()
+    )
+    sys.exit(1)
