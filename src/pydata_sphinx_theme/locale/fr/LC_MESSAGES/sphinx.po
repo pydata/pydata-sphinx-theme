@@ -1,10 +1,18 @@
-# French translations for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-#
+# 
+# Translators:
+# Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
+# Denis Bitouzé <dbitouze@wanadoo.fr>, 2024
+# 
 msgid ""
 msgstr ""
+"Last-Translator: Denis Bitouzé <dbitouze@wanadoo.fr>, 2024\n"
+"Language-Team: French (https://app.transifex.com/12rambau/teams/166811/fr/)\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: docs/conf.py:108
 msgid "Click to expand"
@@ -49,7 +57,7 @@ msgstr "Accueil"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
 msgid "Copyright %(copyright)s"
-msgstr "© Copyright %(copyright)s."
+msgstr "Copyright %(copyright)s"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
@@ -172,4 +180,3 @@ msgstr "Navigation dans le site"
 
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
-
