@@ -176,7 +176,7 @@ jobs:
     needs: run-pytest
     runs-on: ubuntu-latest
     # avoid running this on schedule, releases, or workflow_call
-    if: github.event.workflow_run.event != 'schedule' && github.event.workflow_run.event != 'release' && github.event.workflow_run.event != 'workflow_call'
+    if: github.event_name != 'schedule' && github.event_name != 'release' && github.event_name != 'workflow_call'
     permissions:
       contents: write
       pull-requests: write
