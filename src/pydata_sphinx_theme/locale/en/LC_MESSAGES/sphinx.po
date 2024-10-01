@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 
-#: docs/conf.py:108
+#: docs/conf.py:109
 msgid "Click to expand"
 msgstr ""
 
-#: docs/conf.py:109
+#: docs/conf.py:110
 msgid "Click to collapse"
 msgstr ""
 
@@ -124,7 +124,19 @@ msgid ""
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
-msgid "light/dark"
+msgid "Color mode"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
+msgid "Light"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+msgid "Dark"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
+msgid "System Settings"
 msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
@@ -166,5 +178,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+#~ msgstr ""
+
+#~ msgid "light/dark"
 #~ msgstr ""
 
