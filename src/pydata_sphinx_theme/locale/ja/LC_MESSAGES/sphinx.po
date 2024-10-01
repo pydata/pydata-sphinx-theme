@@ -1,19 +1,18 @@
-# English translations for PROJECT.
-# Copyright (C) 2024 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+# English translations for pydata-sphinx-theme.
+# Copyright (C) 2023 PyData developers
+# This file is distributed under the same license as the pydata-sphinx-theme
+# project.
+#
 # Translators:
 # Tetsuo Koyama <tkoyama010@gmail.com>, 2024
-# 
 msgid ""
 msgstr ""
 
-#: docs/conf.py:108
+#: docs/conf.py:109
 msgid "Click to expand"
 msgstr "クリックして拡大"
 
-#: docs/conf.py:109
+#: docs/conf.py:110
 msgid "Click to collapse"
 msgstr "クリックして折りたたむ"
 
@@ -52,7 +51,7 @@ msgstr "ホーム"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
 msgid "Copyright %(copyright)s"
-msgstr "版権 %(copyright)s"
+msgstr "© Copyright %(copyright)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
@@ -129,8 +128,20 @@ msgstr ""
 "を使用して作成されました。"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
-msgid "light/dark"
-msgstr "ライト/ダーク"
+msgid "Color mode"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
+msgid "Light"
+msgstr "ライト"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+msgid "Dark"
+msgstr "ダーク"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
+msgid "System Settings"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
@@ -175,3 +186,4 @@ msgstr "サイトナビゲーション"
 
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+
