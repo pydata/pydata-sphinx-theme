@@ -1,20 +1,16 @@
-# English translations for PROJECT.
+# French translations for PROJECT.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
-# Translators:
-# Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
-# Denis Bitouzé <dbitouze@wanadoo.fr>, 2024
-# 
+#
 msgid ""
 msgstr ""
 
-#: docs/conf.py:108
+#: docs/conf.py:109
 msgid "Click to expand"
 msgstr "Cliquez pour développer"
 
-#: docs/conf.py:109
+#: docs/conf.py:110
 msgid "Click to collapse"
 msgstr "Cliquer pour réduire"
 
@@ -53,7 +49,7 @@ msgstr "Accueil"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
 msgid "Copyright %(copyright)s"
-msgstr "Copyright %(copyright)s"
+msgstr "© Copyright %(copyright)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
@@ -130,8 +126,20 @@ msgstr ""
 "%(sphinx_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
-msgid "light/dark"
-msgstr "clair/sombre"
+msgid "Color mode"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
+msgid "Light"
+msgstr "Clair"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+msgid "Dark"
+msgstr "Sombre"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
+msgid "System Settings"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
@@ -176,3 +184,4 @@ msgstr "Navigation dans le site"
 
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+
