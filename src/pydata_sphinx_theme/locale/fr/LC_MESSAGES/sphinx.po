@@ -1,8 +1,12 @@
-# French translations for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-#
+# 
+# Translators:
+# Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
+# Denis Bitouzé <dbitouze@wanadoo.fr>, 2024
+# 
 msgid ""
 msgstr ""
 
@@ -49,7 +53,7 @@ msgstr "Accueil"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
 msgid "Copyright %(copyright)s"
-msgstr "© Copyright %(copyright)s."
+msgstr "Copyright %(copyright)s"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
@@ -127,7 +131,7 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
 msgid "Color mode"
-msgstr ""
+msgstr "Mode de couleur"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
 msgid "Light"
@@ -139,7 +143,7 @@ msgstr "Sombre"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
 msgid "System Settings"
-msgstr ""
+msgstr "Paramètres du système"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
@@ -185,3 +189,5 @@ msgstr "Navigation dans le site"
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 
+#~ msgid "light/dark"
+#~ msgstr "clair/sombre"
