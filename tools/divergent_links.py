@@ -1,8 +1,8 @@
 """This script help checking inconsistent links.
 
-That is to say, links that have the same title but link to the same place.
+That is to say, links that have the same title but go to different places.
 This is useful for screen-reader and accessibility devices, where the user may
-say "Go to X", but is there are 2 links X this can be confusing.
+say "Go to X", but if there are 2 links named "X" this creates ambiguity.
 
 
 Example (links that have the same name, but different URL):
@@ -120,11 +120,13 @@ elif len(sys.argv) == 2:
 else:
     print(
         """
-Check each page individually for incoherent links
+Check page-wise link consistency 
+(links with the same name on the same page should go to the same URL)
 
       python tools/divergent_links.py docs/_build/html/
 
-Check all pages for global (and local) incoherent links
+Check site-wide link consistency 
+(links with the same name across all pages should go the same URL)
 
       python tools/divergent_links.py docs/_build/html/ --all
 
