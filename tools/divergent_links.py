@@ -120,12 +120,12 @@ elif len(sys.argv) == 2:
 else:
     print(
         """
-Check page-wise link consistency 
+Check page-wise link consistency
 (links with the same name on the same page should go to the same URL)
 
       python tools/divergent_links.py docs/_build/html/
 
-Check site-wide link consistency 
+Check site-wide link consistency
 (links with the same name across all pages should go the same URL)
 
       python tools/divergent_links.py docs/_build/html/ --all
