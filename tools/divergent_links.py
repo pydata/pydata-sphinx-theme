@@ -90,7 +90,8 @@ class Checker:
             uniq_url = {u for u, _ in url_pages}
             if len(uniq_url) >= 2:
                 print(
-                    f"{len(url_pages)} time {content!r} has {len(uniq_url)} on divergent url on :"
+                f'The link text "{content!r}" appears {len(url_pages)} times, '
+                f'and links to {len(uniq_url)} different URLs, on the following pages:'
                 )
                 dct = defaultdict(list)
                 for u, p in url_pages:
