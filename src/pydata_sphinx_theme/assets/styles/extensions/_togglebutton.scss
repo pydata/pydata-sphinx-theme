@@ -1,5 +1,7 @@
 /**
  * Sphinx togglebutton
+ *
+ * https://sphinx-togglebutton.readthedocs.io/en/latest/index.html
  */
 
 .bd-content {
@@ -30,8 +32,8 @@
     }
   }
 
-  // Admonition toggles
-  .admonition {
+  // Collapsible admonition, implemented as <div> + <button>
+  .dropdown.admonition.toggle {
     .admonition-title {
       @include icon-hover-effects;
 
@@ -94,7 +96,7 @@
     }
   }
 
-  // Details buttons
+  // Collapsible anything, implemented as <details> + <summary>
   details.toggle-details {
     // Over-ride border color to re-use our primary color
     summary {
