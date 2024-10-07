@@ -6,3 +6,9 @@ The source files for these pages are stored [in the `sphinx-themes.org` reposito
 
 To update the kitchen sink source files, there is a helper Python script that will loop through the known kitchen sink files and copy over the latest text.
 To use it, run the following from the root of the repository:
+
+- This links to a [closed issue](https://github.com/pydata/pydata-sphinx-theme/issue/1882) on GitHub
+- That to an [opened issue](https://github.com/pydata/pydata-sphinx-theme/issue/1895)
+- Pull Requests can also be [open](https://github.com/pydata/pydata-sphinx-theme/issue/1888)
+- But also [merged](https://github.com/pydata/pydata-sphinx-theme/issue/1893)
+- Or simply [closed](https://github.com/pydata/pydata-sphinx-theme/issue/1853)

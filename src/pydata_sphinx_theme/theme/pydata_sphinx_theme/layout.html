@@ -20,12 +20,108 @@
   <!-- 
     this give us a css class that will be invisible only if js is disabled 
   -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
+  <script type="module">
+      import { Octokit, App } from "https://esm.sh/octokit";
+      const octokit = new Octokit();
+      window.octokit = octokit;
+      const anchorTags = document.querySelectorAll('a');
 
-    </style>
-  </noscript>
+      // Regular expression to match the desired GitHub issue URL pattern
+      // the s in pulls/issues is technically wrong but we find it sometimes.
+      const regex = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/(pull|issue)s?\/(\d+)$/;
+
+      // Filter <a> tags that match the pattern
+      const githubIssueLinks = Array.prototype.filter.call(anchorTags, function(element) {
+          return regex.test(element.href);
+      });
+
+      // we can sometime be throttled, or just refused connection,
+      // just do one request on root, and if not 200, just do nothing.
+      const root_res = await octokit.request('GET /');
+      if (root_res.status == 200) {
+
+          githubIssueLinks.map(async (atag) =>  {
+            const match = atag.href.match(regex);
+            if (match) {
+                const [fullUrl, username, repo,pr, issueNumber] = match;
+                console.log("[PST] Username:", username);
+                console.log("[PST] Repository:", repo);
+                console.log("[PST] Issue Number:", issueNumber);
+                try {
+                    // `issues` redirect pull requests as well
+                    const tpl = `GET /repos/${username}/${repo}/issues/${issueNumber}`;
+                    const res = await octokit.request(tpl, {
+                      //owner: 'OWNER',
+                      //repo: 'REPO',
+                      //issue_number: 'ISSUE_NUMBER',
+                      headers: {
+                        'X-GitHub-Api-Version': '2024-09-30'
+                        }
+                    });
+                } catch (e){
+                    console.debug('[PST] Error reaching github')
+                    console.error(e);
+                    return
+                }
+                console.debug('[PST] DEBUG: 1')
+                let pull_issue = 'unset';
+                console.debug('[PST] DEBUG: 2')
+                let state = 'unset';
+                console.debug('[PST] DEBUG: 3')
+                if (res.data.pull_request !== undefined){
+                      console.debug('[PST] DEBUG: 4')
+                      pull_issue = 'pull';
+                      state = res.data.pull_request.merged_at != null ? 'merged': res.data.state ; 
+                      console.debug('[PST] DEBUG: 4b')
+                } else {
+                      console.debug('[PST] DEBUG: 5')
+                      pull_issue = 'issue';
+                      state = res.data.state;
+                      console.debug('[PST] DEBUG: 5b')
+                }
+                console.log('[PST] adding classes to', pull_issue, state);
+                atag.classList.add(`pst-gh-${pull_issue}`)
+                atag.classList.add(`pst-gh-${state}`)
+            }
+        })
+    }
+    
+  </script>
+  <style>
+    .pst-gh-open {
+    }
+    .pst-gh-closed {
+    }
+    .pst-gh-merged {
+    }
+    .pst-gh-open::before {
+        color: var(--pst-color-success);
+    }
+    .pst-gh-closed::before {
+        color: var(--pst-color-danger);
+    }
+
+    .pst-gh-merged::before {
+        color: var(--pst-color-accent);
+    }
+
+
+    .pst-gh-issue:before {
+        font-family: "Font Awesome 6 Free"; /* Ensure correct font family */
+        font-weight: 900; /* Adjust font weight if necessary */
+        /* Unicode for the (i) icon + non breaking space, we don't use padding or
+         margin otherwise there is a gap in the underline */
+        content: "\f05a\0020";
+    }
+
+    .pst-gh-pull:before {
+        font-family: "Font Awesome 6 Free"; /* Ensure correct font family */
+        font-weight: 900; /* Adjust font weight if necessary */
+        /* Unicode for the pull-request icon + non breaking space, we don't use padding or
+         margin otherwise there is a gap in the underline */
+        content: "\e13c\0020";
+    }
+  </style>
   {{ _webpack.head_pre_assets() }}
   {{- css() }}
   {{ _webpack.head_js_preload() }}
