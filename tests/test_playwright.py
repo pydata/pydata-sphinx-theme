@@ -29,6 +29,45 @@ def _is_overflowing(element):
     return element.evaluate("e => e.clientWidth < e.scrollWidth", element)
 
 
+def test_colors(sphinx_build_factory, page: Page, url_base: str) -> None:
+    """Test that things get colored the way we expect them to.
+
+    Note: this is not comprehensive! Please feel free to add to this test by editing
+    `../sites/colors/index.rst` and adding assertions below.
+    """
+    sphinx_build = sphinx_build_factory("colors")
+
+    # Basic build with defaults
+    sphinx_build.build()
+    assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
+    symlink_path = path_docs_build / "playwright_tests" / "colors"
+    symlink_path.parent.mkdir(exist_ok=True)
+    try:
+        symlink_path.symlink_to(sphinx_build.outdir, True)
+        page.goto(urljoin(url_base, "playwright_tests/colors/index.html"))
+    except (NotImplementedError, UnsupportedOperation):
+        print("filesystem doesn't support symlinking")
+    else:
+        # check the colors
+        primary_color = "rgb(10, 125, 145)"
+        hover_color = "rgb(128, 69, 229)"
+        spans = {
+            "text link": primary_color,
+            "cross reference link": primary_color,
+            "inline code": "rgb(145, 37, 131)",
+            "code link": "rgb(8, 93, 108)",  # teal-600, AKA #085d6c
+        }
+        for text, color in spans.items():
+            el = page.get_by_text(text).first
+            expect(el).to_have_css("color", color)
+            if "link" in text:
+                el.hover()
+                expect(el).to_have_css("color", hover_color)
+    finally:
+        symlink_path.unlink()
+        symlink_path.parent.rmdir()
+
+
 def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
     """In sidebar and topbar - version switcher should apply highlight color to currently selected version."""
     page.goto(url=url_base)
