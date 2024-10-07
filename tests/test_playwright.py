@@ -5,6 +5,11 @@ from urllib.parse import urljoin
 
 import pytest
 
+try:
+    from pathlib import UnsupportedOperation
+except ImportError:
+    UnsupportedOperation = None
+
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
 from playwright.sync_api import Page, expect  # noqa: E402
@@ -75,6 +80,9 @@ def test_breadcrumbs_everywhere(
         page.goto(
             urljoin(url_base, "playwright_tests/breadcrumbs/hansel/gretel/house.html")
         )
+    except (NotImplementedError, UnsupportedOperation):
+        print("filesystem doesn't support symlinking")
+    else:
         # sidebar should overflow
         text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
         el = page.locator("#main-content").get_by_text(text).last
