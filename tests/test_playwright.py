@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 import pytest
 
 try:
-    from pathlib import UnsupportedOperation
+    from pathlib import UnsupportedOperation  # added in Py 3.13
 except ImportError:
     UnsupportedOperation = None
 
