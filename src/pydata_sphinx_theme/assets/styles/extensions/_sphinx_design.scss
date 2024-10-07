@@ -323,8 +323,18 @@ details.sd-dropdown {
       top: 0.7rem;
     }
 
+    // Hover ring
+    &:hover {
+      $box-shadow-offset: 2px;
+
+      box-shadow:
+        0 0 0 $box-shadow-offset var(--pst-color-background),
+        0 0 0 calc($box-shadow-offset + $focus-ring-width)
+          var(--pst-color-link-hover);
+    }
+
     // Focus ring
-    &:focus-visible {
+    &:focus:focus-visible {
       outline: $focus-ring-outline;
       outline-offset: -$focus-ring-width;
     }
@@ -369,11 +379,5 @@ html {
         outline-offset: $focus-ring-width;
       }
     }
-  }
-
-  .sd-summary-title:hover {
-    // Use text underlining to make the hover effect more perceivable and
-    // therefore more accessible.
-    text-decoration: underline;
   }
 }

@@ -32,16 +32,29 @@
     }
   }
 
+  @mixin ring-base {
+    content: "";
+    transform: translateX(
+      -$admonition-left-border-width
+    ); // align left edges of admonition and ring
+
+    width: calc(100% + $admonition-left-border-width); // align right edges
+    height: 100%;
+  }
+
   // Collapsible admonition, implemented as <div> + <button>
   .dropdown.admonition.toggle {
+    overflow: visible;
+
     .admonition-title {
       @include icon-hover-effects;
 
-      &:hover,
-      &:hover button.toggle-button {
-        // Use text underlining to make the hover effect more perceivable and
-        // therefore more accessible.
-        text-decoration: underline;
+      &:hover::before {
+        @include ring-base;
+
+        outline: solid $focus-ring-width var(--pst-color-link-hover);
+        outline-offset: $focus-ring-width;
+        border-radius: $focus-ring-width;
       }
     }
 
@@ -77,13 +90,8 @@
       // to get the focus ring to simultaneously cover the left border in the
       // header and align perfectly on the right with the body.
       .admonition-title:focus-within:has(:focus-visible)::before {
-        content: "";
-        transform: translateX(
-          -$admonition-left-border-width
-        ); // align left edges of admonition and ring
+        @include ring-base;
 
-        width: calc(100% + $admonition-left-border-width); // align right edges
-        height: 100%;
         border: $focus-ring-outline;
         border-radius: $focus-ring-width;
       }
@@ -106,9 +114,8 @@
       @include icon-hover-effects;
 
       &:hover {
-        // Use text underlining to make the hover effect more perceivable and
-        // therefore more accessible.
-        text-decoration: underline;
+        outline: solid $focus-ring-width var(--pst-color-link-hover);
+        outline-offset: $focus-ring-width;
       }
     }
 
