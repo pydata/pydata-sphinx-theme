@@ -8,7 +8,7 @@ import pytest
 try:
     from pathlib import UnsupportedOperation  # added in Py 3.13
 except ImportError:
-    UnsupportedOperation = None
+    UnsupportedOperation = NotImplementedError
 
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
@@ -45,8 +45,8 @@ def test_colors(sphinx_build_factory, page: Page, url_base: str) -> None:
     try:
         symlink_path.symlink_to(sphinx_build.outdir, True)
         page.goto(urljoin(url_base, "playwright_tests/colors/index.html"))
-    except (NotImplementedError, UnsupportedOperation):
-        print("filesystem doesn't support symlinking")
+    except UnsupportedOperation:
+        pytest.xfail("filesystem doesn't support symlinking")
     else:
         # check the colors
         primary_color = "rgb(10, 125, 145)"
@@ -119,8 +119,8 @@ def test_breadcrumbs_everywhere(
         page.goto(
             urljoin(url_base, "playwright_tests/breadcrumbs/hansel/gretel/house.html")
         )
-    except (NotImplementedError, UnsupportedOperation):
-        print("filesystem doesn't support symlinking")
+    except UnsupportedOperation:
+        pytest.xfail("filesystem doesn't support symlinking")
     else:
         # sidebar should overflow
         text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
