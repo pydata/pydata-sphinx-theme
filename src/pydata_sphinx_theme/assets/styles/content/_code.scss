@@ -59,6 +59,10 @@ code.literal {
 
 a > code {
   color: var(--pst-color-inline-code-links);
+
+  &:hover {
+    color: var(--pst-color-link-hover);
+  }
 }
 
 // Minimum opacity needed for linenos to be WCAG AA conformant

@@ -1,16 +1,22 @@
 """Build minimal test sites with sphinx_build_factory and test them with Playwright."""
 
 from pathlib import Path
+from typing import Callable
 from urllib.parse import urljoin
 
 import pytest
+
+try:
+    from pathlib import UnsupportedOperation  # added in Py 3.13
+except ImportError:
+    UnsupportedOperation = NotImplementedError
 
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
 from playwright.sync_api import Page, expect  # noqa: E402
 
-path_repo = Path(__file__).parents[1]
-path_docs_build = path_repo / "docs" / "_build" / "html"
+repo_path = Path(__file__).parents[1]
+test_sites_dir = repo_path / "docs" / "_build" / "html" / "playwright_tests"
 
 
 def _is_overflowing(element):
@@ -22,6 +28,29 @@ def _is_overflowing(element):
     text.
     """
     return element.evaluate("e => e.clientWidth < e.scrollWidth", element)
+
+
+def _build_test_site(site_name: str, sphinx_build_factory: Callable) -> None:
+    """Helper function for building simple test sites (with no `confoverrides`)."""
+    sphinx_build = sphinx_build_factory(site_name)
+    sphinx_build.build()
+    assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
+    return sphinx_build.outdir
+
+
+def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
+    """Make the built test site available to Playwright, then run `test_func` on it."""
+    test_sites_dir.mkdir(exist_ok=True)
+    symlink_path = test_sites_dir / site_name
+    try:
+        symlink_path.symlink_to(site_path, True)
+    except UnsupportedOperation:
+        pytest.xfail("filesystem doesn't support symlinking")
+    else:
+        test_func()
+    finally:
+        symlink_path.unlink()
+        test_sites_dir.rmdir()
 
 
 def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
@@ -60,28 +89,51 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
 
 
 def test_breadcrumbs_everywhere(
-    sphinx_build_factory, page: Page, url_base: str
+    sphinx_build_factory: Callable, page: Page, url_base: str
 ) -> None:
-    """Test building the base html template and config."""
-    sphinx_build = sphinx_build_factory("breadcrumbs")
+    """Test breadcrumbs truncate properly when placed in various parts of the layout."""
+    site_name = "breadcrumbs"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
 
-    # Basic build with defaults
-    sphinx_build.build()
-    assert (sphinx_build.outdir / "index.html").exists(), sphinx_build.outdir.glob("*")
-    symlink_path = path_docs_build / "playwright_tests" / "breadcrumbs"
-    symlink_path.parent.mkdir(exist_ok=True)
-    try:
-        symlink_path.symlink_to(sphinx_build.outdir, True)
+    def check_breadcrumb_truncation():
         page.goto(
-            urljoin(url_base, "playwright_tests/breadcrumbs/hansel/gretel/house.html")
+            urljoin(url_base, f"playwright_tests/{site_name}/hansel/gretel/house.html")
         )
         # sidebar should overflow
         text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
         el = page.locator("#main-content").get_by_text(text).last
         assert _is_overflowing(el)
-        # footer containers will never trigger ellipsis overflow because... their min-width is content? TODO
+        # footer containers never trigger ellipsis overflow because min-width is content
         el = page.locator(".footer-items__center > .footer-item")
         assert not _is_overflowing(el)
-    finally:
-        symlink_path.unlink()
-        symlink_path.parent.rmdir()
+
+    _check_test_site(site_name, site_path, check_breadcrumb_truncation)
+
+
+def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> None:
+    """Test that things get colored the way we expect them to.
+
+    Note: this is not comprehensive! Please feel free to add to this test by editing
+    `../sites/colors/index.rst` and adding more `expect` statements below.
+    """
+    site_name = "colors"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+
+    def check_colors():
+        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/index.html"))
+        primary_color = "rgb(10, 125, 145)"
+        hover_color = "rgb(128, 69, 229)"
+        spans = {
+            "text link": primary_color,
+            "cross reference link": primary_color,
+            "inline code": "rgb(145, 37, 131)",
+            "code link": "rgb(8, 93, 108)",  # teal-600, AKA #085d6c
+        }
+        for text, color in spans.items():
+            el = page.get_by_text(text).first
+            expect(el).to_have_css("color", color)
+            if "link" in text:
+                el.hover()
+                expect(el).to_have_css("color", hover_color)
+
+    _check_test_site(site_name, site_path, check_colors)
