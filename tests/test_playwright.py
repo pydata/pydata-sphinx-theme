@@ -91,7 +91,7 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
 def test_breadcrumbs_everywhere(
     sphinx_build_factory: Callable, page: Page, url_base: str
 ) -> None:
-    """Test building the base html template and config."""
+    """Test breadcrumbs truncate properly when placed in various parts of the layout."""
     site_name = "breadcrumbs"
     site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
 
