@@ -22,6 +22,7 @@ from collections import defaultdict
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
+from rich import print
 
 # when looking at inconsistent links across pages,
 # a number of text is recurrent and appear on many pages.
@@ -90,16 +91,16 @@ class Checker:
             uniq_url = {u for u, _ in url_pages}
             if len(uniq_url) >= 2:
                 print(
-                    f'The link text "{content!r}" appears {len(url_pages)} times, '
+                    f"The link text [red]{content!r}[/red] appears {len(url_pages)} times, "
                     f"and links to {len(uniq_url)} different URLs, on the following pages:"
                 )
                 dct = defaultdict(list)
                 for u, p in url_pages:
                     dct[u].append(p)
                 for u, ps in dct.items():
-                    print(" ", u, "in")
-                    for p in ps:
-                        print("    ", p)
+                    print(f"  [blue]{u}[/blue] in")
+                    for p in set(ps):
+                        print(f"    [green]{p}[/green]")
 
 
 if len(sys.argv) == 3 and sys.argv[2] == "--all":
