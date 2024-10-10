@@ -3,7 +3,7 @@
 ## Location and structure of documentation
 
 The documentation for this theme is in the `docs/` folder.
-It is structured as a [Sphinx documentation site](https://sphinx-doc.org).
+It is structured as a [Sphinx documentation site](https://www.sphinx-doc.org/).
 The content is written in a combination of reStructuredText and MyST Markdown.
 
 ## Location and structure of CSS/JS assets
