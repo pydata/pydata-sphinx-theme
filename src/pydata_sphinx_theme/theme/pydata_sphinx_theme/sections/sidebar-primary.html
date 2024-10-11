@@ -37,7 +37,9 @@
       <div class="sidebar-primary-item">{%- include sidebartemplate %}</div>
     {%- endfor %}
   </div>
-  {# add the rtd flyout in the sidebar if existing #}
-  <div id="rtd-footer-container"></div>
+  {# add the rtd flyout in the sidebar if building on rtd #}
+  {% if READTHEDOCS %}
+    <div id="rtd-footer-container"></div>
+  {% endif %}
 {% endif %}
 {% endblock docs_sidebar %}
