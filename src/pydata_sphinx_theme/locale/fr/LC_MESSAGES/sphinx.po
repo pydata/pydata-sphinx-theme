@@ -4,8 +4,8 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 # 
 # Translators:
-# Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
 # Denis Bitouzé <dbitouze@wanadoo.fr>, 2024
+# Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
@@ -131,7 +131,7 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
 msgid "Color mode"
-msgstr "Mode de couleur"
+msgstr "Theme"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
 msgid "Light"
@@ -143,7 +143,7 @@ msgstr "Sombre"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
 msgid "System Settings"
-msgstr "Paramètres du système"
+msgstr "Paramètres système"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
