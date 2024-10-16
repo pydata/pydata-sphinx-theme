@@ -9,6 +9,10 @@
 # 
 msgid ""
 msgstr ""
+"Last-Translator: Denis Bitouzé <dbitouze@wanadoo.fr>, 2024\n"
+"Language-Team: French (https://app.transifex.com/12rambau/teams/166811/fr/)\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: docs/conf.py:109
 msgid "Click to expand"
@@ -40,7 +44,7 @@ msgstr "Erreur"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr "Veuillez activer le JavaScript pour que la recherche fonctionne."
+msgstr "Le JavaScript doit être activé pour que la recherche fonctionne."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:6
 msgid "Breadcrumb"
