@@ -188,7 +188,7 @@ msgstr "Navigation dans le site"
 #~ msgstr "Twitter"
 
 #~ msgid "Site Navigation"
-#~ msgstr "Navigation du site"
+#~ msgstr "Navigation dans le site"
 
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
