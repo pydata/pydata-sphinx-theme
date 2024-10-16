@@ -75,7 +75,7 @@ msgstr "Modifier"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:4
 msgid "Indices"
-msgstr "Indices"
+msgstr "Index"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:11
 msgid "General Index"
