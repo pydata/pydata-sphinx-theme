@@ -122,7 +122,7 @@ msgstr "Navigation de la section"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:5
 msgid "Show Source"
-msgstr "Montrer le code source"
+msgstr "Afficher le code source"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sphinx-version.html:4
 #, python-format
