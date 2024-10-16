@@ -157,7 +157,7 @@ msgid ""
 "%(theme_version)s."
 msgstr ""
 "Construit avec le <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">Thème PyData Sphinx</a> "
+"theme.readthedocs.io/en/stable/index.html\">thème PyData Sphinx</a> "
 "%(theme_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
