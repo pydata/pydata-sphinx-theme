@@ -1,5 +1,7 @@
 /**
  * Sphinx togglebutton
+ *
+ * https://sphinx-togglebutton.readthedocs.io/en/latest/index.html
  */
 
 .bd-content {
@@ -17,8 +19,45 @@
     }
   }
 
-  // Admonition toggles
-  .admonition {
+  // Apply this mixin to the element that will be hovered. These styles are
+  // intended to match what sphinx-design does for its dropdown admonitions.
+  @mixin icon-hover-effects {
+    &:hover .tb-icon {
+      opacity: 1;
+      scale: 1.1;
+    }
+
+    .tb-icon {
+      opacity: 0.6;
+    }
+  }
+
+  @mixin ring-base {
+    content: "";
+    transform: translateX(
+      -$admonition-left-border-width
+    ); // align left edges of admonition and ring
+
+    width: calc(100% + $admonition-left-border-width); // align right edges
+    height: 100%;
+  }
+
+  // Collapsible admonition, implemented as <div> + <button>
+  .dropdown.admonition.toggle {
+    overflow: visible;
+
+    .admonition-title {
+      @include icon-hover-effects;
+
+      &:hover::before {
+        @include ring-base;
+
+        outline: solid $focus-ring-width var(--pst-color-link-hover);
+        outline-offset: $focus-ring-width;
+        border-radius: $focus-ring-width;
+      }
+    }
+
     button.toggle-button {
       color: inherit;
 
@@ -50,14 +89,9 @@
       // the left border on the container's children). This makes it complicated
       // to get the focus ring to simultaneously cover the left border in the
       // header and align perfectly on the right with the body.
-      .admonition-title:focus-within::before {
-        content: "";
-        transform: translateX(
-          -$admonition-left-border-width
-        ); // align left edges of admonition and ring
+      .admonition-title:focus-within:has(:focus-visible)::before {
+        @include ring-base;
 
-        width: calc(100% + $admonition-left-border-width); // align right edges
-        height: 100%;
         border: $focus-ring-outline;
         border-radius: $focus-ring-width;
       }
@@ -70,13 +104,19 @@
     }
   }
 
-  // Details buttons
+  // Collapsible anything, implemented as <details> + <summary>
   details.toggle-details {
     // Over-ride border color to re-use our primary color
     summary {
       border-left: 3px solid var(--pst-color-primary);
 
       @include chevron-down;
+      @include icon-hover-effects;
+
+      &:hover {
+        outline: solid $focus-ring-width var(--pst-color-link-hover);
+        outline-offset: $focus-ring-width;
+      }
     }
 
     // When expanded, sharpen the bottom left and right corners of the focus ring
