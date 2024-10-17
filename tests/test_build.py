@@ -990,22 +990,14 @@ def test_translations(sphinx_build_factory) -> None:
     index = sphinx_build.html_tree("section1/index.html")
 
     sidebar_primary = index.select(".bd-sidebar-primary")[0]
-    assert "Navigation de la section" in str(sidebar_primary)
+    assert "Navigation dans la section" in str(sidebar_primary)
 
     sidebar_secondary = index.select(".bd-sidebar-secondary")[0]
     assert "Montrer le code source" in str(sidebar_secondary)
     assert "Modifier sur GitHub" in str(sidebar_secondary)
 
     header = index.select(".bd-header")[0]
-    ## TODO: update once translataion up to date
-    # assert "clair/sombre" in str(header)
-    # Text of theme switcher button have been changed,
-    # "light/dark" has been updated to "Color mode" and does not have a translation yet.
-    if "Color mode" not in str(header):
-        pytest.xfail(
-            "Please update test_build.py::test_translations now that new translation are available."
-        )
-    # End TODO
+    assert "Thème" in str(header)
 
     footer = index.select(".bd-footer")[0]
     assert "Copyright" in str(footer)
