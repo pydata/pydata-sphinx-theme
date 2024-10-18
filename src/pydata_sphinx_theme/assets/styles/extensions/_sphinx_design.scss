@@ -263,6 +263,11 @@ details.sd-dropdown {
     font-weight: 600;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    transition: box-shadow 0.15s ease-in-out;
+
+    @media (prefers-reduced-motion) {
+      transition: none;
+    }
 
     // Set a variable that we can re-use for colors later
     // We must set this in the current and content sibling container

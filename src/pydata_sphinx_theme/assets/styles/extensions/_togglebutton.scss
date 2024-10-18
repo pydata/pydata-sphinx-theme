@@ -49,12 +49,26 @@
     .admonition-title {
       @include icon-hover-effects;
 
+      &::before {
+        transition:
+          border-radius 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out;
+
+        @media (prefers-reduced-motion) {
+          transition: none;
+        }
+      }
+
       &:hover::before {
         @include ring-base;
 
-        outline: solid $focus-ring-width var(--pst-color-link-hover);
-        outline-offset: $focus-ring-width;
+        $box-shadow-offset: 2px;
+
         border-radius: $focus-ring-width;
+        box-shadow:
+          0 0 0 $box-shadow-offset var(--pst-color-background),
+          0 0 0 calc($box-shadow-offset + $focus-ring-width)
+            var(--pst-color-link-hover);
       }
     }
 
@@ -113,9 +127,19 @@
       @include chevron-down;
       @include icon-hover-effects;
 
+      transition: box-shadow 0.15s ease-in-out;
+
+      @media (prefers-reduced-motion) {
+        box-shadow: none;
+      }
+
       &:hover {
-        outline: solid $focus-ring-width var(--pst-color-link-hover);
-        outline-offset: $focus-ring-width;
+        $box-shadow-offset: 2px;
+
+        box-shadow:
+          0 0 0 $box-shadow-offset var(--pst-color-background),
+          0 0 0 calc($box-shadow-offset + $focus-ring-width)
+            var(--pst-color-link-hover);
       }
     }
 
