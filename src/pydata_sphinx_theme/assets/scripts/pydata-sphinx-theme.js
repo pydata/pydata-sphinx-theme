@@ -347,7 +347,7 @@ var setupSearchButtons = () => {
 var getCurrentUrlPath = () => {
   if (DOCUMENTATION_OPTIONS.BUILDER == "dirhtml") {
     return DOCUMENTATION_OPTIONS.pagename.endsWith("index")
-      ? `${DOCUMENTATION_OPTIONS.pagename.substring(0, DOCUMENTATION_OPTIONS.pagename.length - 5)}`
+      ? `${DOCUMENTATION_OPTIONS.pagename.substring(0, DOCUMENTATION_OPTIONS.pagename.length - 'index'.length)}`
       : `${DOCUMENTATION_OPTIONS.pagename}/`;
   }
   return `${DOCUMENTATION_OPTIONS.pagename}.html`;
