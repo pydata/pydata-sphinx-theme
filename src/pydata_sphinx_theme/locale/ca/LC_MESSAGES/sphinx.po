@@ -1,10 +1,18 @@
-# Catalan translations for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-#
+# 
+# Translators:
+# Cristhian Rivera, 2024
+# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024
+# 
 msgid ""
 msgstr ""
+"Last-Translator: Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024\n"
+"Language-Team: Catalan (https://app.transifex.com/12rambau/teams/166811/ca/)\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: docs/conf.py:109
 msgid "Click to expand"
@@ -49,7 +57,7 @@ msgstr "Inici"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
 msgid "Copyright %(copyright)s"
-msgstr "© Copyright %(copyright)s."
+msgstr "Copyright %(copyright)s"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
@@ -127,7 +135,7 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
 msgid "Color mode"
-msgstr ""
+msgstr "Mode de color"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
 msgid "Light"
@@ -139,7 +147,7 @@ msgstr "Fosc"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
 msgid "System Settings"
-msgstr ""
+msgstr "Configuració del sistema"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
@@ -185,3 +193,5 @@ msgstr "Navegació del lloc"
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 
+#~ msgid "light/dark"
+#~ msgstr "clar/fosc"
