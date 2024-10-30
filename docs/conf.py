@@ -287,6 +287,12 @@ autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
 
+# -- Options for nitpicky -----------------------------------------------------
+# Ensure that all references in the docs are resolved.
+
+nitpicky = True
+show_warning_types = True
+
 # -- application setup -------------------------------------------------------
 
 
