@@ -139,7 +139,7 @@ Here are some of the available button-style links, also using semantic colors:
    native button components such as using the correct `ARIA attributes
    <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role>`__.
 
-If in your site's `custom CSS file <static_assets>`_ you override the :ref:`CSS custom properties <css-variables>` ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
+If in your site's :ref:`custom CSS file <custom-css>` you override the :ref:`CSS custom properties <css-variables>` ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
 
 Cards
 =====
