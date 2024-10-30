@@ -2,6 +2,9 @@ version: 2
 formats:
   - htmlzip
 
+sphinx:
+  fail_on_warning: true
+
 # build with latest available ubuntu version
 build:
   os: ubuntu-20.04
