@@ -26,6 +26,85 @@
 
     </style>
   </noscript>
+  <script type="module">
+      import { Octokit, App } from "https://esm.sh/octokit";
+      const octokit = new Octokit();
+      const anchorTags = document.querySelectorAll('a');
+
+      // Regular expression to match the desired GitHub issue URL pattern
+      const regex = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/(pulls|issues)\/(\d+)$/;
+
+      // Filter <a> tags that match the pattern
+      const githubIssueLinks = Array.prototype.filter.call(anchorTags, function(element) {
+          return regex.test(element.href);
+      });
+
+      githubIssueLinks.map(async (atag) =>  {
+        const match = atag.href.match(regex);
+        if (match) {
+            const [fullUrl, username, repo,pr, issueNumber] = match;
+            console.log("Username:", username);
+            console.log("Repository:", repo);
+            console.log("Issue Number:", issueNumber);
+            const res = await octokit.request(`GET /repos/${username}/${repo}/issues/${issueNumber}`, {
+              //owner: 'OWNER',
+              //repo: 'REPO',
+              //issue_number: 'ISSUE_NUMBER',
+              headers: {
+                'X-GitHub-Api-Version': '2022-11-28'
+                }
+            });
+            let pull_issue = 'unset';
+            let state = 'unset';
+            if (res.data.pull_request !== undefined){
+                  pull_issue = 'pull';
+                  state = res.data.pull_request.merged_at != null ? 'merged': res.data.state ; 
+            } else {
+                  pull_issue = 'issue';
+                  state = res.data.state;
+            }
+            console.log(pull_issue, state);
+            atag.classList.add(`pst-gh-${pull_issue}`)
+            atag.classList.add(`pst-gh-${state}`)
+        }
+     })
+    
+  </script>
+  <style>
+    .pst-gh-open {
+    }
+    .pst-gh-closed {
+    }
+    .pst-gh-merged {
+    }
+    .pst-gh-open::before {
+        color: var(--pst-color-success);
+    }
+    .pst-gh-closed::before {
+        color: var(--pst-color-danger);
+    }
+
+    .pst-gh-merged::before {
+        color: var(--pst-color-accent);
+    }
+
+
+    .pst-gh-issue:before {
+        font-family: "Font Awesome 5 Free"; /* Ensure correct font family */
+        font-weight: 900; /* Adjust font weight if necessary */
+        content: "\f05a"; /* Unicode for the (i) icon */
+        margin-right: 5px; /* Optional: Adjust spacing between icon and text */
+        text-decoration: none;
+    }
+
+    .pst-gh-pull:before {
+        font-family: "Font Awesome 5 Free"; /* Ensure correct font family */
+        font-weight: 900; /* Adjust font weight if necessary */
+        content: "\f126"; /* Unicode for the pull-request icon */
+        margin-right: 5px; /* Optional: Adjust spacing between icon and text */
+        text-decoration: none;
+    }
+  </style>
   {{ _webpack.head_pre_assets() }}
   {{- css() }}
   {{ _webpack.head_js_preload() }}
