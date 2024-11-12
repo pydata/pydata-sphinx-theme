@@ -609,37 +609,6 @@ function showVersionWarningBanner(data) {
   banner.classList.remove("d-none");
 }
 
-/*******************************************************************************
- * MutationObserver to move the ReadTheDocs button
- */
-
-/**
- * intercept the RTD flyout and place it in the rtd-footer-container if existing
- * if not it stays where on top of the page
- */
-function initRTDObserver() {
-  const mutatedCallback = (mutationList, observer) => {
-    mutationList.forEach((mutation) => {
-      // Check whether the mutation is for RTD, which will have a specific structure
-      if (mutation.addedNodes.length === 0) {
-        return;
-      }
-      if (mutation.addedNodes[0].data === undefined) {
-        return;
-      }
-      if (mutation.addedNodes[0].data.search("Inserted RTD Footer") != -1) {
-        mutation.addedNodes.forEach((node) => {
-          document.getElementById("rtd-footer-container").append(node);
-        });
-      }
-    });
-  };
-
-  const observer = new MutationObserver(mutatedCallback);
-  const config = { childList: true };
-  observer.observe(document.body, config);
-}
-
 async function fetchAndUseVersions() {
   // fetch the JSON version data (only once), then use it to populate the version
   // switcher and maybe show the version warning bar
@@ -880,7 +849,6 @@ documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
-documentReady(initRTDObserver);
 documentReady(setupMobileSidebarKeyboardHandlers);
 
 // Determining whether an element has scrollable content depends on stylesheets,
