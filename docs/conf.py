@@ -113,6 +113,7 @@ togglebutton_hint_hide = str(_("Click to collapse"))
 # Exclude copy button from appearing over notebook cell numbers by using :not()
 # The default copybutton selector is `div.highlight pre`
 # https://github.com/executablebooks/sphinx-copybutton/blob/master/sphinx_copybutton/__init__.py#L82
+copybutton_exclude = ".linenos, .gp"
 copybutton_selector = ":not(.prompt) > div.highlight pre"
 
 # -- Options for HTML output -------------------------------------------------
