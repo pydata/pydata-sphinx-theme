@@ -9,9 +9,9 @@
 | src/pydata\_sphinx\_theme/pygments.py     |       45 |        1 |       16 |        2 |     95% |75, 87->92 |
 | src/pydata\_sphinx\_theme/short\_link.py  |       55 |        1 |       32 |        6 |     92% |48->43, 87->89, 92->119, 95->119, 108, 111->119 |
 | src/pydata\_sphinx\_theme/toctree.py      |      229 |       14 |      110 |       17 |     91% |44, 94-97, 101->exit, 135, 215-216, 332, 339, 359->357, 362, 364->398, 381->385, 426->424, 447, 458, 494, 597, 616->604, 623 |
-| src/pydata\_sphinx\_theme/translator.py   |       38 |       19 |       14 |        1 |     42% |39-62, 66-67, 89-102 |
+| src/pydata\_sphinx\_theme/translator.py   |       42 |       21 |       14 |        1 |     43% |39-62, 66-67, 81-83, 95-108 |
 | src/pydata\_sphinx\_theme/utils.py        |       65 |        3 |       30 |        2 |     93% |24-27, 73->exit |
-|                                 **TOTAL** |  **630** |   **55** |  **282** |   **39** | **88%** |           |
+|                                 **TOTAL** |  **634** |   **57** |  **282** |   **39** | **88%** |           |
 
 1 file skipped due to complete coverage.
 
