@@ -132,14 +132,17 @@ Here are some of the available button-style links, also using semantic colors:
 .. note::
 
    `Sphinx Design buttons
-   <https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html>`__
-   are actually links, meaning they are rendered in HTML with ``<a>`` tags
-   instead of ``<button>``. Use them if you need a link to look like a button,
-   however, be aware that they do not follow accessibility best practices for
-   native button components such as using the correct `ARIA attributes
-   <https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role>`__.
+   <https://sphinx-design.readthedocs.io/en/latest/badges_buttons.html>`__ are
+   actually links, meaning they are rendered in HTML with ``<a>`` tags instead
+   of ``<button>``. Use them if you need a link to look like a button, but try
+   not to overuse them as they are not considered best practice for
+   accessibility. (For example, the space bar can be used on a ``<button>``s but
+   not on ``<a>``-tag links.)
 
-If in your site's :ref:`custom CSS file <custom-css>` you override the :ref:`CSS custom properties <css-variables>` ``--pst-color-*`` (where ``*`` is one of the semantic color names, such as ``primary``, ``danger``), badges and buttons will automatically use the custom color.
+If in your site's :ref:`custom CSS file <custom-css>` you override the :ref:`CSS
+custom properties <css-variables>` ``--pst-color-*`` (where ``*`` is one of the
+semantic color names, such as ``primary``, ``danger``), badges and buttons will
+automatically use the custom color.
 
 Cards
 =====
