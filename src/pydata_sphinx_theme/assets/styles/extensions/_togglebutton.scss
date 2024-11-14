@@ -133,6 +133,10 @@
         box-shadow: none;
       }
 
+      &:focus-visible {
+        outline-offset: -$focus-ring-width;
+      }
+
       &:hover {
         $box-shadow-offset: 2px;
 
