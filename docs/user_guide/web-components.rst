@@ -136,8 +136,9 @@ Here are some of the available button-style links, also using semantic colors:
    actually links, meaning they are rendered in HTML with ``<a>`` tags instead
    of ``<button>``. Use them if you need a link to look like a button, but try
    not to overuse them as they are not considered best practice for
-   accessibility. (For example, the space bar can be used on a ``<button>``s but
-   not on ``<a>``-tag links.)
+   accessibility. (For example, it upsets user interface expectations because
+   the space bar can be used on ``<button>``-tag buttons but not on ``<a>``-tag
+   links that look like buttons.)
 
 If in your site's :ref:`custom CSS file <custom-css>` you override the :ref:`CSS
 custom properties <css-variables>` ``--pst-color-*`` (where ``*`` is one of the
