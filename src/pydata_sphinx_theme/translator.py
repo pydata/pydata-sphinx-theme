@@ -76,11 +76,17 @@ def setup_translators(app: Sphinx):
     If we don't detect an HTML-based translator, then we do nothing.
     """
     if not app.registry.translators.items():
+        try:
+            default_translator_class = app.builder.default_translator_class
+        except AttributeError:
+            # some builders, e.g. linkcheck, do not define 'default_translator_class'
+            return
+
         translator = types.new_class(
             "BootstrapHTML5Translator",
             (
                 BootstrapHTML5TranslatorMixin,
-                app.builder.default_translator_class,
+                default_translator_class,
             ),
             {},
         )

@@ -12,7 +12,7 @@ msgstr ""
 
 #: docs/conf.py:109
 msgid "Click to expand"
-msgstr "Cliquez pour développer"
+msgstr "Cliquer pour développer"
 
 #: docs/conf.py:110
 msgid "Click to collapse"
@@ -40,7 +40,7 @@ msgstr "Erreur"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr "Veuillez activer le JavaScript pour que la recherche fonctionne."
+msgstr "Le JavaScript doit être activé pour que la recherche fonctionne."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:6
 msgid "Breadcrumb"
@@ -71,7 +71,7 @@ msgstr "Modifier"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:4
 msgid "Indices"
-msgstr "Indices"
+msgstr "Index"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:11
 msgid "General Index"
@@ -114,11 +114,11 @@ msgstr "suivante"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
 msgid "Section Navigation"
-msgstr "Navigation de la section"
+msgstr "Navigation dans la section"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sourcelink.html:5
 msgid "Show Source"
-msgstr "Montrer le code source"
+msgstr "Afficher le code source"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sphinx-version.html:4
 #, python-format
@@ -131,7 +131,7 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
 msgid "Color mode"
-msgstr "Mode de couleur"
+msgstr "Thème"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
 msgid "Light"
@@ -143,7 +143,7 @@ msgstr "Sombre"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
 msgid "System Settings"
-msgstr "Paramètres du système"
+msgstr "Paramètres système"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
 #, python-format
@@ -153,7 +153,7 @@ msgid ""
 "%(theme_version)s."
 msgstr ""
 "Construit avec le <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">Thème PyData Sphinx</a> "
+"theme.readthedocs.io/en/stable/index.html\">thème PyData Sphinx</a> "
 "%(theme_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
@@ -184,7 +184,7 @@ msgstr "Navigation dans le site"
 #~ msgstr "Twitter"
 
 #~ msgid "Site Navigation"
-#~ msgstr "Navigation du site"
+#~ msgstr "Navigation dans le site"
 
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."

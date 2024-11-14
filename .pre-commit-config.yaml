@@ -22,23 +22,23 @@ repos:
         exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.10.0
     hooks:
       - id: black
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.6.3"
+    rev: "v0.7.2"
     hooks:
       - id: ruff
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.17.0
+    rev: v3.19.0
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
 
   - repo: https://github.com/Riverside-Healthcare/djLint
-    rev: v1.35.2
+    rev: v1.35.4
     hooks:
       - id: djlint-jinja
         types_or: ["html"]
@@ -49,7 +49,7 @@ repos:
       - id: doc8
 
   - repo: "https://github.com/kynan/nbstripout"
-    rev: "0.7.1"
+    rev: "0.8.0"
     hooks:
       - id: nbstripout
 
@@ -59,7 +59,7 @@ repos:
       - id: remove-metadata
 
   - repo: https://github.com/thibaudcolas/pre-commit-stylelint
-    rev: v16.9.0
+    rev: v16.10.0
     hooks:
       - id: stylelint
         # automatically fix .scss files where possible

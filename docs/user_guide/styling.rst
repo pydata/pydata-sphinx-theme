@@ -35,6 +35,8 @@ To add a custom stylesheet, follow these steps:
 
 When you build your documentation, this stylesheet should now be activated.
 
+.. _css-variables:
+
 CSS theme variables
 ===================
 

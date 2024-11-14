@@ -148,7 +148,7 @@ html_theme_options = {
     "external_links": [
         {
             "url": "https://pydata.org",
-            "name": "PyData",
+            "name": "PyData Website",
         },
         {
             "url": "https://numfocus.org/",

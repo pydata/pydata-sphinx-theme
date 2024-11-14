@@ -10,6 +10,7 @@ These steps should be taken in order to create a new release![^release-refs]
 **Double check for quality-control**
 
 - [ ] There are no [open issues with a `impact: block-release` label](https://github.com/pydata/pydata-sphinx-theme/labels/impact%3A%20block-release)
+- [ ] Check wether the localization files are up-to-date, or [open a PR to update them if needed](https://pydata-sphinx-theme.readthedocs.io/en/stable/community/topics/i18n.html#compiling-the-localization-files).
 
 **Prepare the codebase for a new version**
 

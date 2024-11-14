@@ -69,7 +69,7 @@ Site maps, usually served from a file called `sitemap.xml` are a broadly-employe
 approach to telling programs like search engines and assistive technologies where
 different content appears on a website.
 
-If using a service like [ReadTheDocs](https://readthedocs.com), these files
+If using a service like [ReadTheDocs](https://about.readthedocs.com/), these files
 will be created for you _automatically_, but for some other approaches below,
 it's handy to generate a `sitemap.xml` locally or in CI with a tool like
 [sphinx-sitemap](https://pypi.org/project/sphinx-sitemap/).
