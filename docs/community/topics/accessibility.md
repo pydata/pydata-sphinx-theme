@@ -55,4 +55,4 @@ findings](https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/72
 Nearly all of the issues have been fixed, but of course things do break / have
 already broken, and some things may have never been discovered, so please
 [create an issue](https://github.com/pydata/pydata-sphinx-theme/issues/new) on
-GitHub if you find something broken.
+GitHub if you find something inaccessible.
