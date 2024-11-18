@@ -41,13 +41,15 @@ suite.
 We have also made these tests part of our continuous integration process, so
 they are run in the cloud before we merge in new changes to the theme. We
 use the following tools:
-* GitHub Actions to provision machines in the cloud
-* `tox` to install the needed dependencies on those machines
-* `Pytest` with the Playwright plug-in to run the tests. 
+
+- GitHub Actions to provision machines in the cloud
+- `tox` to install the needed dependencies on those machines
+- `Pytest` with the Playwright plug-in to run the tests.
 
 Look for the string "accessibility" in the file
 [CI.yml](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/CI.yml)
 to find how we have configured GitHub Actions.
+
 ## Known limitations and manual auditing
 
 We are well aware that automated checks fall far short of comprehensive
