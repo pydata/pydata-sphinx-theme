@@ -104,19 +104,43 @@ sitemap_url_scheme = "{link}"
 
 ### Logo best practices
 
-If you use both light and dark themes, it's best to provide a logo that works
-well in both or to provide an alternative for the dark theme. If you have a
-logo, you can add alt-text to it by adding the following to your `conf.py`:
+If you use both light and dark themes (and you should if possible), it's best to
+provide one logo that works well in both, or to provide two separate versions.
+Here's how to do that in your `conf.py` file:
 
 ```python
 "logo": {
-    "image_dark": "_static/logo-dark.svg",
+    "image_light": "_static/logo-light.png",
+    "image_dark": "_static/logo-dark.png",
+}
+```
+
+You should also either provide alt text or normal text for your logo. Alt text
+will not be visible to sighted users but will be picked up by screen reader
+software.
+
+Here's how to provide alt text:
+
+```python
+"logo": {
     "alt_text": "<Your Project> home",
 },
 ```
 
-Note the use of "home" in the alt text to indicate that the logo is also a link
-to the home page.
+(Note the use of the word "home" in the alt text to indicate that the logo is
+also a link to the home page.)
+
+Here's how to provide normal text, which will be displayed right after your
+logo:
+
+```python
+"logo": {
+    "text": "<Your Project>",
+},
+```
+
+Do not provide both alt and normal text as that will result in something like
+"Your project home Your project" being read aloud by screen reader software.
 
 ### Test and inspect your site
 
