@@ -104,43 +104,12 @@ sitemap_url_scheme = "{link}"
 
 ### Logo best practices
 
-If you use both light and dark themes (and you should if possible), it's best to
-provide one logo that works well in both, or to provide two separate versions.
-Here's how to do that in your `conf.py` file:
+We recommend that you support dark mode by providing either a single version of
+your logo that works well in both light and dark modes, or two separate
+versions. We also recommend that you provide alt text for your logo if you do
+not provide visible text.
 
-```python
-"logo": {
-    "image_light": "_static/logo-light.png",
-    "image_dark": "_static/logo-dark.png",
-}
-```
-
-You should also either provide alt text or normal text for your logo. Alt text
-will not be visible to sighted users but will be picked up by screen reader
-software.
-
-Here's how to provide alt text:
-
-```python
-"logo": {
-    "alt_text": "<Your Project> home",
-},
-```
-
-(Note the use of the word "home" in the alt text to indicate that the logo is
-also a link to the home page.)
-
-Here's how to provide normal text, which will be displayed right after your
-logo:
-
-```python
-"logo": {
-    "text": "<Your Project>",
-},
-```
-
-Do not provide both alt and normal text as that will result in something like
-"Your project home Your project" being read aloud by screen reader software.
+These recommendations are covered in detail at the page [](./branding.rst)
 
 ### Test and inspect your site
 
