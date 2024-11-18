@@ -142,6 +142,9 @@ theme use when working to make websites more accessible. Some of these include:
 - [Axe DevTools](https://www.deque.com/axe/browser-extensions/)
 - [WAVE](https://wave.webaim.org/extension/)
 
+We have also found [Polypane](https://polypane.app/) to be a great tool (but it
+is not free and requires a license).
+
 #### Continuous Integration tools
 
 Two accessibility testing tools designed for continuous integration are
