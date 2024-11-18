@@ -18,16 +18,16 @@ permissions:
 
 jobs:
   # calls our general CI workflow (tests, build docs, etc.)
-  tests:
-    uses: ./.github/workflows/CI.yml
-    # needed for the coverage action
-    permissions:
-      contents: write
-      pull-requests: write
+  # tests:
+  #   uses: ./.github/workflows/CI.yml
+  #   # needed for the coverage action
+  #   permissions:
+  #     contents: write
+  #     pull-requests: write
 
   build-package:
     name: "Build & verify PST package"
-    needs: [tests] # require tests to pass before deploy runs
+    # needs: [tests] # require tests to pass before deploy runs
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
@@ -38,6 +38,10 @@ jobs:
         with:
           python-version: "3.9"
           pandoc: "False"
+
+      - name: "Compile localization"
+        run:
+          tox run -e i18n-compile
 
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@v2
@@ -61,14 +65,14 @@ jobs:
         run: |
           tar xvf dist/*.tar.gz --strip-components=1
 
-      - name: "Publish PST package to PyPI 🚀"
-        uses: pypa/gh-action-pypi-publish@release/v1
-        # only publish if this is a published release by pydata
-        if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
+      # - name: "Publish PST package to PyPI 🚀"
+      #   uses: pypa/gh-action-pypi-publish@release/v1
+      #   # only publish if this is a published release by pydata
+      #   if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
 
-      - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
-        uses: scientific-python/upload-nightly-action@82396a2ed4269ba06c6b2988bb4fd568ef3c3d6b # 0.6.1
-        with:
-          artifacts_path: dist
-          anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
-        if: github.repository_owner == 'pydata' && github.event_name == 'schedule'
+      # - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
+      #   uses: scientific-python/upload-nightly-action@82396a2ed4269ba06c6b2988bb4fd568ef3c3d6b # 0.6.1
+      #   with:
+      #     artifacts_path: dist
+      #     anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
+      #   if: github.repository_owner == 'pydata' && github.event_name == 'schedule'

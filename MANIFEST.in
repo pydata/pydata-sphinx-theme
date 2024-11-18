@@ -1,0 +1,1 @@
+recursive-include src/pydata_sphinx_theme/locale *.pot *.po *.mo

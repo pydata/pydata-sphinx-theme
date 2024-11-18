@@ -23,6 +23,14 @@ const { Compilation } = require("webpack");
 
 const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
 const staticPath = resolve(__dirname, "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static");
+const { exec } = require("child_process");
+const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
+
+
+/*******************************************************************************
+ * Compile our translation files
+ */
+// exec(`pybabel compile -d ${localePath} -D sphinx`);
 
 /*******************************************************************************
  * functions to load the assets in the html head
@@ -96,8 +104,8 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   templateContent: macroTemplate,
 });
 
-module.exports = {
-  mode: "production",
+// webpack main configuration
+var config = {
   devtool: "source-map",
   entry: {
     "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
@@ -169,4 +177,21 @@ module.exports = {
   experiments: {
     topLevelAwait: true,
   },
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'development') {
+    exec(`pybabel compile -d ${localePath} -D sphinx`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+    });
+  }
+  return config;
 };
