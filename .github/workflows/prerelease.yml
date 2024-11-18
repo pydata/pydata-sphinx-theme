@@ -39,11 +39,11 @@ jobs:
           # this will compile the assets then run the tests
           python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests-no-cov
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
-      
+
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@v2
         id: baipp
-  
+
       - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
