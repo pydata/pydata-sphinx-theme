@@ -2,13 +2,24 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+#
 # Translators:
 # Cristhian Rivera, 2024
 # Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024
-# 
 msgid ""
 msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-11-18 12:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ca\n"
+"Language-Team: ca <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
 
 #: docs/conf.py:109
 msgid "Click to expand"
@@ -145,11 +156,10 @@ msgstr "Fosc"
 msgid "System Settings"
 msgstr "Configuració del sistema"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:4
 #, python-format
 msgid ""
-"Built with the <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+"Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
 "Construïda amb el <a href=\"https://pydata-sphinx-"
@@ -191,3 +201,4 @@ msgstr "Navegació del lloc"
 
 #~ msgid "light/dark"
 #~ msgstr "clar/fosc"
+
