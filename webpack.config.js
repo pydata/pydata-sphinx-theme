@@ -16,6 +16,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const dedent = require("dedent");
 const { Compilation } = require("webpack");
+const { exec } = require("child_process");
 
 /*******************************************************************************
  * Paths for various assets (sources and destinations)
@@ -23,14 +24,7 @@ const { Compilation } = require("webpack");
 
 const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
 const staticPath = resolve(__dirname, "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static");
-const { exec } = require("child_process");
 const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
-
-
-/*******************************************************************************
- * Compile our translation files
- */
-// exec(`pybabel compile -d ${localePath} -D sphinx`);
 
 /*******************************************************************************
  * functions to load the assets in the html head
@@ -180,7 +174,8 @@ var config = {
 };
 
 module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
+  // since STB  isolates the build, we need to compile the translations here for releases
+  if (argv.mode === 'production') {
     exec(`pybabel compile -d ${localePath} -D sphinx`, (error, stdout, stderr) => {
       if (error) {
         console.error(`Error: ${error.message}`);
