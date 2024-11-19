@@ -1,12 +1,15 @@
 # Accessibility
 
-Creating and publishing content that does not exclude disabled users is a complex and iterative task.
+Creating and publishing content that does not exclude disabled users is a
+complex and iterative task.
 
 While there is no one-size-fits-all solution to maintaining accessible content,
-the PyData Sphinx Theme and this documentation site use some techniques to avoid common content shortcomings.
+the PyData Sphinx Theme and this documentation site use some techniques to avoid
+common content shortcomings.
 
 :::{note}
-Issues and pull requests to identify or fix accessibility issues on this theme or site are heartily welcomed!
+Issues and pull requests to identify or fix accessibility issues on this theme
+or site are heartily welcomed!
 :::
 
 ## What We've Done
@@ -26,12 +29,15 @@ page that lacks metadata, please open a pull request to add it!
   to choose from at https://github.com/Quansight-Labs/accessible-pygments.
 - We recently revisited the PyData Sphinx theme color palette to ensure that
   the colors we use meet WCAG 2 AA or AAA contrast requirements.
-- We also re-defined our `primary` and `secondary` colors to be more accessible and distinct from semantic colors used
-  to denote success, warning, info, and danger contexts or information.
-- We simplified the color palette and removed some colors that were problematic in meeting WCAG 2 AA or AAA contrast requirements
-  and for certain types of colorblindness.
-- We have improved how we assign text colors to interactive elements such as buttons and dropdowns to ensure that they meet
-  WCAG 2 AA or AAA contrast requirements.
+- We also re-defined our `primary` and `secondary` colors to be more accessible
+  and distinct from semantic colors used to denote success, warning, info, and
+  danger contexts or information.
+- We simplified the color palette and removed some colors that were problematic
+  in meeting WCAG 2 AA or AAA contrast requirements and for certain types of
+  colorblindness.
+- We have improved how we assign text colors to interactive elements such as
+  buttons and dropdowns to ensure that they meet WCAG 2 AA or AAA contrast
+  requirements.
 
 ### Keyboard Navigation Support
 
@@ -40,6 +46,11 @@ links and other interactive elements, we have worked to ensure they:
 
 - Have a visible focus indicator (WCAG 2.4.7)
 - Can be accessed via keyboard navigation (WCAG 2.1.1)
+
+### Testing and auditing
+
+We have also added automated tests and conducted manual audits. See
+[](../community/topics/accessibility.md).
 
 ## What You Can Do
 
@@ -55,10 +66,12 @@ specifying at least the baseline natural language will help assistive technology
 identify if the content is in a language the reader understands.
 
 :::{hint}
-In your `conf.py` file, [specifying the language your docs are written in](https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language) will propagate to the top-level `HTML` tag.
+In your `conf.py` file,
+[specifying the language your docs are written in](https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language)
+will propagate to the top-level `HTML` tag.
 
 ```python
-  language = "en"
+language = "en"
 ```
 
 :::
@@ -80,71 +93,67 @@ For a simple site (no extra languages or versions), ensure `sphinx-sitemap`
 is installed in your documentation environment, and modify your `conf.py`:
 
 ```python
-    extensions += ["sphinx_sitemap"]
+extensions += ["sphinx_sitemap"]
 
-    html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://127.0.0.1:8000/")
-    sitemap_locales = [None]
-    sitemap_url_scheme = "{link}"
+html_baseurl = os.environ.get("SPHINX_HTML_BASE_URL", "http://127.0.0.1:8000/")
+sitemap_locales = [None]
+sitemap_url_scheme = "{link}"
 ```
 
 :::
 
 ### Logo best practices
 
-If you use both light and dark themes, it's best to provide a logo that works well in both or to provide an alternative for the dark theme.
-If you have a logo, you can add alt-text to it by adding the following to your
-`conf.py`:
+We recommend that you support dark mode by providing either a single version of
+your logo that works well in both light and dark modes, or two separate
+versions. We also recommend that you provide alt text for your logo if you do
+not provide visible text.
 
-```python
-  "logo": {
-      "text": "PyData Theme",
-      "image_dark": "_static/logo-dark.svg",
-      "alt_text": "PyData Theme home",
-  },
-```
+These recommendations are covered in detail at the page [](./branding.rst)
 
-Note the use of "home" in the alt text to indicate that the logo is also a link to the home page.
+### Test and inspect your site
 
-### In the Browser
+Several browser tools exist for interactively debugging the accessibility
+of a single page at a time and can be useful during the content development
+cycle.
 
-Several in-browser tools exist for interactively debugging the accessibility
-of a single page at a time and can be useful during the content development cycle.
+Non-interactive tools also exist for use with CI (continuous integration).
 
-### Built-in tools
+#### Browser tools
 
-Most major browsers, including [Firefox](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector)
-and [Chrome](https://developers.google.com/web/tools/chrome-devtools/accessibility/reference),
-have accessibility tools built-in as part of their web developer tools.
-These tools can help to quickly identify accessibility issues and often include links to standards.
+Most major browsers, including Firefox and Chrome, have built-in accessibility
+tools as part of their web developer tools. These tools can help to quickly
+identify accessibility issues and often include links to standards:
 
-#### tota11y
+- [Firefox Accessibility Inspector](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector)
+- [Chrome DevTools Accessibility](https://developer.chrome.com/docs/devtools/accessibility/reference)
 
-[tota11y](https://khan.github.io/tota11y/#Installation) is an open source
-"bookmarklet" which modifies the currently-loaded page in place and highlights
-several accessibility issues.
+There are also a few browser extensions that some of the maintainers of this
+theme use when working to make websites more accessible. Some of these include:
 
-#### WAVE
+- [Accessibility Insights for Web](https://accessibilityinsights.io/docs/web/overview/)
+- [Axe DevTools](https://www.deque.com/axe/browser-extensions/)
+- [WAVE](https://wave.webaim.org/extension/)
 
-[WAVE](https://wave.webaim.org/extension/) is a proprietary (but _gratis_)
-browser extension which can highlight multiple issues.
+We have also found [Polypane](https://polypane.app/) to be a great tool (but it
+is not free and requires a license).
+
+#### Continuous Integration tools
+
+Two accessibility testing tools designed for continuous integration are
+[Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md)
+and [Pa11y CI](https://github.com/pa11y/pa11y-ci).
+
+The [foo-software/lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)
+may be helpful if the code for your site is hosted on GitHub.
+
+If you are curious about how we do accessibility CI for this theme, refer to the
+page [](../community/topics/accessibility.md).
 
 :::{warning}
-Note that automated testing and extensions such as the ones mentioned above will at best catch 30-40% of accessibility issues.
-They are not a replacement for manual testing and having a perfect score on any of these tools does not mean that
-the site can be used by disabled users but instead signals that it follows some accessibility best practices.
-:::
-
-### In Continuous Integration
-
-Several automated tools are available for assessing _glaring_ accessibility
-issues across some pages at once, usually with many configurable options.
-
-#### Lighthouse
-
-[Lighthouse](https://developers.google.com/web/tools/lighthouse) provides an automated assessment of basic accessibility issues in addition to search engine
-automation, page performance, and other best practices.
-
-:::{hint}
-Specifically, [foo-software/lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)
-is run on selected pages from the generated documentation site.
+Note that automated testing and extensions such as the ones mentioned above will
+at best catch 30-40% of accessibility issues. They are not a replacement for
+manual testing. Having a perfect score on any of these tools does not mean that
+your site can be used by disabled users. Instead, a good score signals that your
+site follows some best accessibility practices.
 :::
