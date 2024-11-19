@@ -1,7 +1,7 @@
 # Accessibility checks and manual auditing
 
 As part of our commitment to making this theme accessible, we run automated
-checks against all of the pages under [](../../examples/kitchen-sink/index.rst).
+checks against all the pages under [](../../examples/kitchen-sink/index.rst).
 
 The accessibility check is run every time that a pull request is created on
 GitHub. We forbid merging a pull request into the codebase if it breaks this
