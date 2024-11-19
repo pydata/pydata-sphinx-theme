@@ -2,13 +2,13 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+#
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
 # Cristhian Rivera, 2024
 # Felipe Moreno, 2024
 # Tania Allard, 2024
-# 
+#
 msgid ""
 msgstr ""
 

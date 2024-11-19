@@ -181,4 +181,3 @@ msgstr "Навигация по сайту"
 
 #~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
 #~ msgstr "© <a href=\\\"%(path)s\\\">Копирайт</a> %(copyright)s."
-
