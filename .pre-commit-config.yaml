@@ -68,3 +68,9 @@ repos:
           # stylelint itself needs to be here when using additional_dependencies.
           - stylelint@16.5.0
           - stylelint-config-standard-scss@13.1.0
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
