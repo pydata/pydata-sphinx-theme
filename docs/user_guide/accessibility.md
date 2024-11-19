@@ -39,6 +39,9 @@ page that lacks metadata, please open a pull request to add it!
   buttons and dropdowns to ensure that they meet WCAG 2 AA or AAA contrast
   requirements.
 
+To learn more about the PyData Sphinx Theme colors, check the [](../community/design-system.md)
+section.
+
 ### Keyboard Navigation Support
 
 For all buttons, dropdowns, tabbed panels, hamburger menus, modals, overlays,

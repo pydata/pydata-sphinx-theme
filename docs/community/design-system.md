@@ -169,6 +169,9 @@ like buttons, backgrounds, and text. They maintain consistency throughout the in
 - **Foundation Colors**: Black and white base colors used for backgrounds and
   surfaces (for example, cards, containers, modals) in light and dark modes.
 
+Color variables are also documented in the [](../user_guide/styling.rst) section
+of the User Guide.
+
 ### Semantic Colors
 
 Semantic colors, colors named for what they represent and how they are used,
