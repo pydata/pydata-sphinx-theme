@@ -21,15 +21,12 @@ repos:
         # exclude the pytest-regressions folder tests/test_ally
         exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
-  - repo: "https://github.com/psf/black"
-    rev: 24.10.0
-    hooks:
-      - id: black
-
   - repo: "https://github.com/astral-sh/ruff-pre-commit"
     rev: "v0.7.2"
     hooks:
       - id: ruff
+        args: [--exit-non-zero-on-fix]
+      - id: ruff-format
 
   - repo: "https://github.com/asottile/pyupgrade"
     rev: v3.19.0
