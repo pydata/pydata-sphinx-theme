@@ -1,18 +1,21 @@
 """Bootstrap-based sphinx theme from the PyData community."""
 
 import json
+
 from functools import partial
 from pathlib import Path
 from typing import Dict
 from urllib.parse import urlparse
 
 import requests
+
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
 from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
 from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
+
 
 __version__ = "0.16.1dev0"
 

@@ -6,6 +6,7 @@ from sphinx.application import Sphinx
 from sphinx.ext.autosummary import autosummary_table
 from sphinx.util import logging
 
+
 logger = logging.getLogger(__name__)
 
 

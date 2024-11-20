@@ -3,6 +3,7 @@
 from pathlib import Path
 from urllib.request import urlopen
 
+
 EXTRA_MESSAGE = """\
 .. note::
 

@@ -2,10 +2,12 @@
 
 import json
 import shlex
+
 from pathlib import Path
 from subprocess import run
 
 from yaml import dump
+
 
 COLLABORATORS_API = "https://api.github.com/repos/pydata/pydata-sphinx-theme/collaborators?affiliation=direct"
 

@@ -18,11 +18,13 @@ How to fix (give the links different names):
 
 import os
 import sys
+
 from collections import defaultdict
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 from rich import print
+
 
 # when looking at inconsistent links across pages,
 # a number of text is recurrent and appear on many pages.

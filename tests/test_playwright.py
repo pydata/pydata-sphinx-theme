@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 
 import pytest
 
+
 try:
     from pathlib import UnsupportedOperation  # added in Py 3.13
 except ImportError:
@@ -14,6 +15,7 @@ except ImportError:
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
 from playwright.sync_api import Page, expect  # noqa: E402
+
 
 repo_path = Path(__file__).parents[1]
 test_sites_dir = repo_path / "docs" / "_build" / "html" / "playwright_tests"

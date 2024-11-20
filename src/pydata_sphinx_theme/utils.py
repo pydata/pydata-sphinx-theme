@@ -3,6 +3,7 @@
 import copy
 import os
 import re
+
 from typing import Any, Callable, Dict, Iterable, List, Optional, Union
 
 from docutils.nodes import Node
@@ -158,9 +159,11 @@ def _get_matching_sidebar_items(
     for pattern, sidebar_items in sidebars.items():
         if matching.patmatch(pagename, pattern):
             if matched and _has_wildcard(pattern) and _has_wildcard(matched):
-                SPHINX_LOGGER.warning(
-                    f"Page {pagename} matches two wildcard patterns in secondary_sidebar_items: {matched} and {pattern}"
-                ),
+                (
+                    SPHINX_LOGGER.warning(
+                        f"Page {pagename} matches two wildcard patterns in secondary_sidebar_items: {matched} and {pattern}"
+                    ),
+                )
 
             matched = pattern
             secondary_sidebar_items = sidebar_items

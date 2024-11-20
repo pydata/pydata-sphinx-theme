@@ -8,6 +8,7 @@ from typing import Iterator, List, Tuple, Union
 from urllib.parse import urlparse
 
 import sphinx
+
 from bs4 import BeautifulSoup
 from docutils import nodes
 from docutils.nodes import Node

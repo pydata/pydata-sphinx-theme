@@ -19,6 +19,7 @@ from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
 from yaml import safe_load
 
+
 logger = logging.getLogger(__name__)
 
 

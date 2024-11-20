@@ -15,6 +15,7 @@ import argparse
 import shutil as sh
 import subprocess
 import tempfile
+
 from pathlib import Path
 from textwrap import dedent
 
@@ -30,7 +31,6 @@ def profile_docs(output: str = "profile.svg", n_extra_pages: int = 50) -> None:
     base_site_path = Path("tests/sites/base")
 
     with tempfile.TemporaryDirectory() as tmpdir:
-
         # copy over the base test site to the temporary folder
         target_path = Path(tmpdir) / base_site_path
         sh.copytree(base_site_path, target_path)
