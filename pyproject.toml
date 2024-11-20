@@ -112,8 +112,7 @@ ignore = [
   "W291", # let pre-commit handle trailing whitespace
 
 ]
-ignore-init-module-imports = true
-select = ["E", "F", "W", "I", "D", "RUF"]
+select = ["E", "F", "W", "I", "D", "RUF", "G"]
 
 [tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
