@@ -819,8 +819,10 @@ def test_version_switcher_error_states(
         )
 
     elif url == "http://a.b/switcher.json":  # this file doesn't exist"
-        not_read = """WARNING: The version switcher "http://a.b/switcher.json"
-                      file cannot be read due to the following error:\n"""
+        not_read = (
+            'WARNING: The version switcher "http://a.b/switcher.json" '
+            "file cannot be read due to the following error:\n"
+        )
         assert not_read in escape_ansi(sphinx_build.warnings).strip()
 
     elif url == "missing_url.json":  # this file is missing the url key for one version
@@ -1094,8 +1096,8 @@ def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
 
 def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None:
     """
-    Test that the secondary sidebar can be built with a dict of
-    templates that globs a subdir.
+    Test that the secondary sidebar can be built with a dict of templates that
+    globs a subdir.
     """
     confoverrides = {
         "html_context": {
@@ -1135,8 +1137,9 @@ def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None
 def test_render_secondary_sidebar_dict_multiple_glob_matches(
     sphinx_build_factory,
 ) -> None:
-    """Test that the secondary sidebar builds with a template dict with
-    two conflicting globs.
+    """
+    Test that the secondary sidebar builds with a template dict with two conflicting
+    globs.
 
     The last specified glob pattern should win, but a warning should be emitted with the
     offending pattern and affected pagenames.

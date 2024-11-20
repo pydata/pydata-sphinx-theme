@@ -170,8 +170,10 @@ def _get_matching_sidebar_items(
             if matched and _has_wildcard(pattern) and _has_wildcard(matched):
                 (
                     SPHINX_LOGGER.warning(
-                        f"""Page {pagename} matches two wildcard patterns in
-                            secondary_sidebar_items: {matched} and {pattern}"""
+                        "Page %s matches two wildcard patterns in secondary_sidebar_items: %s and %s",  # noqa: E501
+                        pagename,
+                        matched,
+                        pattern,
                     ),
                 )
 
