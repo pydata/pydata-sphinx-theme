@@ -1,11 +1,16 @@
-"""Uses the GitHub API to list a gallery of all people with direct access to the repository."""
+"""
+Uses the GitHub API to list a gallery of all people with direct access to
+the repository.
+"""
 
 import json
 import shlex
+
 from pathlib import Path
 from subprocess import run
 
 from yaml import dump
+
 
 COLLABORATORS_API = "https://api.github.com/repos/pydata/pydata-sphinx-theme/collaborators?affiliation=direct"
 

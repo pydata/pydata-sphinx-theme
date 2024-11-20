@@ -593,4 +593,3 @@ Please find here the full list of keys you can use in the ``html_theme_options``
 .. include:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/theme.conf
     :code: ini
     :class: highlight-ini
-
