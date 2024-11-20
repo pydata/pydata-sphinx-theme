@@ -116,6 +116,10 @@ docstring-quotes = "double"
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
+[tool.ruff.lint.isort]
+lines-between-types = 1
+lines-after-imports = 2
+
 [tool.djlint]
 profile = "jinja"
 extension = "html"
