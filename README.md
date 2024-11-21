@@ -4,13 +4,13 @@
 
 | Name                                      |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------------ | -------: | -------: | -------: | -------: | ------: | --------: |
-| src/pydata\_sphinx\_theme/\_\_init\_\_.py |      130 |       16 |       52 |       10 |     85% |41, 47->51, 67-68, 74-75, 128, 143, 160, 163, 200->211, 202->211, 212-221, 264-265 |
-| src/pydata\_sphinx\_theme/logo.py         |       41 |        1 |       18 |        1 |     97% |        74 |
+| src/pydata\_sphinx\_theme/\_\_init\_\_.py |      130 |       16 |       52 |       10 |     85% |44, 50->54, 70-71, 77-78, 131, 146, 163, 166, 203->214, 205->214, 215-224, 268-269 |
+| src/pydata\_sphinx\_theme/logo.py         |       41 |        1 |       18 |        1 |     97% |        76 |
 | src/pydata\_sphinx\_theme/pygments.py     |       45 |        1 |       16 |        2 |     95% |75, 87->92 |
-| src/pydata\_sphinx\_theme/short\_link.py  |       55 |        1 |       32 |        6 |     92% |48->43, 87->89, 92->119, 95->119, 108, 111->119 |
-| src/pydata\_sphinx\_theme/toctree.py      |      229 |       14 |      110 |       17 |     91% |44, 94-97, 101->exit, 135, 215-216, 332, 339, 359->357, 362, 364->398, 381->385, 426->424, 447, 458, 494, 597, 616->604, 623 |
-| src/pydata\_sphinx\_theme/translator.py   |       42 |       21 |       14 |        1 |     43% |39-62, 66-67, 81-83, 95-108 |
-| src/pydata\_sphinx\_theme/utils.py        |       65 |        3 |       30 |        2 |     93% |24-27, 73->exit |
+| src/pydata\_sphinx\_theme/short\_link.py  |       55 |        1 |       32 |        6 |     92% |52->47, 91->93, 96->123, 99->123, 112, 115->123 |
+| src/pydata\_sphinx\_theme/toctree.py      |      229 |       14 |      110 |       17 |     91% |48, 98-101, 105->exit, 141, 221-222, 349, 356, 376->374, 379, 381->415, 398->402, 443->441, 464, 475, 511, 618, 637->625, 644 |
+| src/pydata\_sphinx\_theme/translator.py   |       42 |       21 |       14 |        1 |     43% |42-65, 72-73, 89-91, 103-116 |
+| src/pydata\_sphinx\_theme/utils.py        |       65 |        3 |       30 |        2 |     93% |25-28, 74->exit |
 |                                 **TOTAL** |  **634** |   **57** |  **282** |   **39** | **88%** |           |
 
 1 file skipped due to complete coverage.
