@@ -412,14 +412,17 @@ async function fetchVersionSwitcherJSON(url) {
     var result = new URL(url);
   } catch (err) {
     if (err instanceof TypeError) {
-      // Assume we got a relative path, and fix accordingly. This also handles local
-      // static sites (i.e., when window.location.protocol == 'file:'). Normally for
-      // local static sites CORS policy will always block resource requests, so in
-      // general the version switcher will always fail to populate if you just open up
-      // the built HTML files (instead of spinning up a local server). Here instead of
-      // returning `null` we work out what the file path would be anyway (same code path
-      // as for served docs), as a convenience to folks who routinely disable CORS when
-      // they boot up their browser.
+      // Assume we got a relative path, and fix accordingly.
+      if (window.location.protocol == "file:") {
+        // Here instead of returning `null` we work out what the file path would be
+        // anyway (same code path as for served docs), as a convenience to folks who
+        // routinely disable CORS when they boot up their browser.
+        console.info(
+          "[PST] looks like you're viewing this site from a local filesystem, so " +
+            "the version switcher won't work unless you've disabled CORS. See " +
+            "https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/version-dropdown.html",
+        );
+      }
       const cutoff = window.location.href.indexOf(currentPath);
       // cutoff == -1 can happen e.g. on the homepage of locally served docs, where you
       // get something like http://127.0.0.1:8000/ (no trailing `index.html`)
