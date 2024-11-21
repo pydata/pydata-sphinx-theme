@@ -44,6 +44,9 @@ Thanks for your support!
 - title: idtracker&period;ai
   link-alt: idtracker&period;ai docs
   link: https://idtracker.ai/
+- title: itom measurement and simulation software
+  link-alt: itom documentation
+  link: https://itom-project.github.io/latest/docs/index.html
 - title: MegEngine
   link-alt: MegEngine docs
   link: https://www.megengine.org.cn/doc/stable/en/index.html
