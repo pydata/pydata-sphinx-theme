@@ -172,7 +172,7 @@ jobs:
           runs: 3 # Multiple runs to reduce variance
 
   coverage:
-    name: "Check coverage"
+    name: "check coverage"
     needs: run-pytest
     runs-on: ubuntu-latest
     # avoid running this on schedule, releases, or workflow_call
@@ -249,3 +249,21 @@ jobs:
           name: profile-results
           path: docbuild_profile.svg
           if-no-files-found: ignore
+
+  # build the docs and check for broken links
+  check-docs-links:
+    name: "check PST docs links"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@v4
+      - name: "Setup CI environment 🛠"
+        uses: ./.github/actions/set-dev-env
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          pandoc: true
+          graphviz: true
+      - name: "Build docs and check links 📖"
+        shell: bash
+        run: |
+          python -Im tox run -e docs-linkcheck
