@@ -6,6 +6,7 @@ GitHub file.
 """
 
 import re
+
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -13,6 +14,7 @@ from docutils import nodes
 from sphinx.application import Sphinx
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
+
 
 logger = logging.getLogger(__name__)
 

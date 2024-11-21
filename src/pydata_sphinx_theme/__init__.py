@@ -1,18 +1,21 @@
 """Bootstrap-based sphinx theme from the PyData community."""
 
 import json
+
 from functools import partial
 from pathlib import Path
 from typing import Dict
 from urllib.parse import urlparse
 
 import requests
+
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
 from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
 from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
+
 
 __version__ = "0.16.1dev0"
 
@@ -202,7 +205,7 @@ def update_and_remove_templates(
         for i in range(len(context["css_files"])):
             asset = context["css_files"][i]
             # TODO: eventually the contents of context['css_files'] etc should probably
-            #       only be _CascadingStyleSheet etc. For now, assume mixed with strings.
+            # only be _CascadingStyleSheet etc. For now, assume mixed with strings.
             asset_path = getattr(asset, "filename", str(asset))
             if asset_path == theme_css_name:
                 del context["css_files"][i]
@@ -233,7 +236,8 @@ def update_and_remove_templates(
         DOCUMENTATION_OPTIONS.theme_version = '{__version__}';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = '{json_url}';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = {str(context["theme_show_version_warning_banner"]).lower()};
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            {str(context["theme_show_version_warning_banner"]).lower()};
         """
         app.add_js_file(None, body=js)
 
