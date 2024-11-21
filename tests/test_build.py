@@ -819,8 +819,10 @@ def test_version_switcher_error_states(
         )
 
     elif url == "http://a.b/switcher.json":  # this file doesn't exist"
-        not_read = """WARNING: The version switcher "http://a.b/switcher.json"
-                    file cannot be read due to the following error:\n"""
+        not_read = (
+            'WARNING: The version switcher "http://a.b/switcher.json"'
+            " file cannot be read due to the following error:\n"
+        )
         assert not_read in escape_ansi(sphinx_build.warnings).strip()
 
     elif url == "missing_url.json":  # this file is missing the url key for one version
