@@ -205,7 +205,7 @@ def update_and_remove_templates(
         for i in range(len(context["css_files"])):
             asset = context["css_files"][i]
             # TODO: eventually the contents of context['css_files'] etc should probably
-            #       only be _CascadingStyleSheet etc. For now, assume mixed with strings.
+            # only be _CascadingStyleSheet etc. For now, assume mixed with strings.
             asset_path = getattr(asset, "filename", str(asset))
             if asset_path == theme_css_name:
                 del context["css_files"][i]
@@ -236,7 +236,8 @@ def update_and_remove_templates(
         DOCUMENTATION_OPTIONS.theme_version = '{__version__}';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = '{json_url}';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = {str(context["theme_show_version_warning_banner"]).lower()};
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            {str(context["theme_show_version_warning_banner"]).lower()};
         """
         app.add_js_file(None, body=js)
 

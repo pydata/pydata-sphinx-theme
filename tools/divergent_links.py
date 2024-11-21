@@ -93,8 +93,9 @@ class Checker:
             uniq_url = {u for u, _ in url_pages}
             if len(uniq_url) >= 2:
                 print(
-                    f"The link text [red]{content!r}[/red] appears {len(url_pages)} times, "
-                    f"and links to {len(uniq_url)} different URLs, on the following pages:"
+                    f"The link text [red]{content!r}[/red] appears {len(url_pages)} "
+                    f"times and links to {len(uniq_url)} different URLs, "
+                    f"on the following pages:"
                 )
                 dct = defaultdict(list)
                 for u, p in url_pages:

@@ -1,7 +1,10 @@
-"""Script to profile the build of the test site with py-spy.
+"""
+Script to profile the build of the test site with py-spy.
 
-This can be called with `python tools/profile.py` and will profile the build of the test site.
-You can additionally configure the number of extra pages to add to the build with the `-n` flag and the output file with the `-o` flag.
+This can be called with `python tools/profile.py` and will profile the build of the test
+site.
+You can additionally configure the number of extra pages to add to the build with the
+`-n` flag and the output file with the `-o` flag.
 
 $ python tools/profile.py -n 100 -o profile.svg
 
@@ -25,7 +28,8 @@ def profile_docs(output: str = "profile.svg", n_extra_pages: int = 50) -> None:
 
     Args:
         output (str): The output filename for generated chart, defaults to output.svg.
-        n_extra_pages (int): The number of extra pages to add to the build, defaults to 50.
+        n_extra_pages (int): The number of extra pages to add to the build, defaults to
+        50.
     """
     # base path of the test site
     base_site_path = Path("tests/sites/base")

@@ -35,7 +35,10 @@ def add_inline_math(node: Node) -> str:
 
 
 def _get_ancestor_pagename(app: Sphinx, pagename: str, startdepth: int) -> str:
-    """Get the name of `pagename`'s ancestor that is rooted `startdepth` levels below the global root."""
+    """
+    Get the name of `pagename`'s ancestor that is rooted `startdepth` levels below the
+    global root.
+    """
     toctree = TocTree(app.env)
     if sphinx.version_info[:2] >= (7, 2):
         from sphinx.environment.adapters.toctree import _get_toctree_ancestors
@@ -106,7 +109,9 @@ def add_toctree_functions(
                 yield f"{base_id}-{n}"
 
     def unique_html_id(base_id: str):
-        """Create an id that is unique from other ids created by this function at build time.
+        """
+        Create an id that is unique from other ids created by this function at build
+        time.
 
         The function works by sequentially returning "<base_id>", "<base_id>-2",
         "<base_id>-3", etc. each time it is called.
@@ -277,7 +282,8 @@ def add_toctree_functions(
         a cutoff.
 
         Parameters:
-            n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
+            n_links_before_dropdown:The number of links to show before nesting the
+                remaining links in a Dropdown element.
             dropdown_text:Text of the dropdown element button.
         """
         out, links_dropdown = _generate_header_nav_before_dropdown(
@@ -289,7 +295,9 @@ def add_toctree_functions(
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="{dropdown_id}">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="{dropdown_id}">
                     {_(dropdown_text)}
                 </button>
                 <ul id="{dropdown_id}" class="dropdown-menu">
@@ -321,13 +329,21 @@ def add_toctree_functions(
         ref: https://www.sphinx-doc.org/en/master/templating.html#toctree
 
         Parameters:
-            kind : "sidebar" or "raw". Whether to generate HTML meant for sidebar navigation ("sidebar") or to return the raw BeautifulSoup object ("raw").
-            startdepth : The level of the toctree at which to start. By default, for the navbar uses the normal toctree (`startdepth=0`), and for the sidebar starts from the second level (`startdepth=1`).
-            show_nav_level : The level of the navigation bar to toggle as visible on page load. By default, this level is 1, and only top-level pages are shown, with drop-boxes to reveal children. Increasing `show_nav_level` will show child levels as well.
+            kind : "sidebar" or "raw". Whether to generate HTML meant for sidebar
+                navigation ("sidebar") or to return the raw BeautifulSoup object
+                ("raw").
+            startdepth : The level of the toctree at which to start. By default,
+                for the navbar uses the normal toctree (`startdepth=0`), and for the
+                sidebar starts from the second level (`startdepth=1`).
+            show_nav_level : The level of the navigation bar to toggle as visible on
+                page load. By default, this level is 1, and only top-level pages are
+                shown, with drop-boxes to reveal children. Increasing `show_nav_level`
+                will show child levels as well.
             kwargs : passed to the Sphinx `toctree` template function.
 
         Returns:
-            HTML string (if kind == "sidebar") OR BeautifulSoup object (if kind == "raw")
+            HTML string (if kind == "sidebar") OR BeautifulSoup object
+                (if kind == "raw")
         """
         if startdepth == 0:
             html_toctree = context["toctree"](**kwargs)
@@ -552,7 +568,10 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
             "span",
             attrs={
                 "class": "toctree-toggle",
-                "role": "presentation",  # This element and the chevron it contains are purely decorative; the actual expand/collapse functionality is delegated to the <summary> tag
+                # This element and the chevron it contains are purely decorative;
+                # the actual expand/collapse functionality is delegated to the
+                # <summary> tag
+                "role": "presentation",
             },
         )
         span.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
@@ -561,7 +580,8 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # Prepend section heading (if there is one) to <summary>
         collapsible_section_heading = element.select_one("details > p.caption")
         if collapsible_section_heading:
-            # Put heading inside summary so that the heading text (and chevron) are both clickable
+            # Put heading inside summary so that the heading text (and chevron) are both
+            # clickable
             summary.insert(0, collapsible_section_heading)
 
         # Prepend <summary> to <details>

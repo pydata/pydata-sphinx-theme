@@ -193,7 +193,8 @@ html_theme_options = {
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
+    # [left, content, right] For testing that the navbar items align properly
+    "navbar_align": "left",
     # "show_nav_level": 2,
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     "show_version_warning_banner": True,
@@ -295,10 +296,15 @@ autoapi_member_order = "groupwise"
 def setup_to_main(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
-    """Add a function that jinja can access for returning an "edit this page" link pointing to `main`."""
+    """
+    Add a function that jinja can access for returning an "edit this page" link
+    pointing to `main`.
+    """
 
     def to_main(link: str) -> str:
-        """Transform "edit on github" links and make sure they always point to the main branch.
+        """
+        Transform "edit on github" links and make sure they always point to the
+        main branch.
 
         Args:
             link: the link to the github edit interface

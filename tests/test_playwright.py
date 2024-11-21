@@ -56,12 +56,16 @@ def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
 
 
 def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
-    """In sidebar and topbar - version switcher should apply highlight color to currently selected version."""
+    """
+    In sidebar and topbar - version switcher should apply highlight color to currently
+    selected version.
+    """
     page.goto(url=url_base)
     # no need to include_hidden here ↓↓↓, we just need to get the active version name
     button = page.get_by_role("button").filter(has_text="dev")
     active_version_name = button.get_attribute("data-active-version-name")
-    # here we do include_hidden, so sidebar & topbar menus should each have a matching entry:
+    # here we do include_hidden, so sidebar & topbar menus should each have a
+    # matching entry:
     entries = page.get_by_role("option", include_hidden=True).filter(
         has_text=active_version_name
     )

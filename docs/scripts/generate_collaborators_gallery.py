@@ -1,4 +1,7 @@
-"""Uses the GitHub API to list a gallery of all people with direct access to the repository."""
+"""
+Uses the GitHub API to list a gallery of all people with direct access to the
+repository.
+"""
 
 import json
 import shlex

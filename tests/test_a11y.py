@@ -194,7 +194,8 @@ def test_axe_core(
         for violation in filtered_violations:
             assert (
                 violation["id"] == "color-contrast"
-            ), f"Found {violation['id']} violation (expected color-contrast): {format_violations([violation])}"
+            ), f"""Found {violation['id']} violation (expected color-contrast):
+                    {format_violations([violation])}"""
 
         # Now check that when we exclude notebook outputs, the page has no violations
 
@@ -284,7 +285,7 @@ def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
 def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
     """Foo."""
     # page.goto(urljoin(url_base, "community/practices/merge.html"))
-    # expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text("Merge and review policy")
+    # expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text("Merge and review policy") # noqa: E501
     page.set_viewport_size({"width": 1440, "height": 720})
     page.goto(urljoin(url_base, "community/topics/config.html"))
     expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
