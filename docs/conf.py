@@ -326,3 +326,15 @@ def setup(app: Sphinx) -> Dict[str, Any]:
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
+
+
+linkcheck_anchors_ignore = [
+    # match any anchor that starts with a '/' since this is an invalid HTML anchor
+    r"\/.*",
+]
+
+linkcheck_ignore = [
+    # The crawler gets "Anchor not found" for GitHub anchors
+    r"https://github.com.+?#L\d+",
+    r"https://source.unsplash.com/.+",
+]
