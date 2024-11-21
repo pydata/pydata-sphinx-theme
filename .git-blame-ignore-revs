@@ -5,9 +5,11 @@
 # https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
 # https://github.com/pydata/pydata-sphinx-theme/pull/713
 #
-90550b66ace16a370caa446e54698b126fda740b  # initial black-format
-236d4c6d1f10f5da064d929e9eb594daecf23551  # apply black 20.8b1 format
-69f1a42a3b184f4ba4c98f1745779a277d56c5e2  # [pre-commit.ci] Automatic linting and formatting fixes
-a35529c9ee8d5863613df40787cda0021b3e0128  # Manual fixes for stylelint
-ce583b8f3136d52e8056c9a651bf6f92e7922f79  # Manual adjustments to autofixes
-d1ee9eb7a132cde51433e9594513319fdab41f2f  # Autofix (stylelint)
+90550b66ace16a370caa446e54698b126fda740b # initial black-format
+236d4c6d1f10f5da064d929e9eb594daecf23551 # apply black 20.8b1 format
+69f1a42a3b184f4ba4c98f1745779a277d56c5e2 # [pre-commit.ci] Automatic linting and formatting fixes
+a35529c9ee8d5863613df40787cda0021b3e0128 # Manual fixes for stylelint
+ce583b8f3136d52e8056c9a651bf6f92e7922f79 # Manual adjustments to autofixes
+d1ee9eb7a132cde51433e9594513319fdab41f2f # Autofix (stylelint)
+0f3aa5ca174fe1534ef4817d42f0e2ffa7d9d921 # [pre-commit.ci] Automatic linting and formatting fixes
+9c5a3d592d03849bd050fe946b246145ad171605 # Automated and manual fixes for pre-commits
