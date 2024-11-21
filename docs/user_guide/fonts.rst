@@ -7,6 +7,9 @@ icon font (the ``.fa-solid, .fa-regular, .fa-brands`` styles, which are used for
 This is the only *vendored* font, and otherwise, the theme by default relies on
 available system fonts for normal body text and headers.
 
+For more details on the PyData Sphinx Theme typography and text styles, see the
+:doc:`../community/design-system` section.
+
 The default body and header fonts can be changed as follows:
 
 - Using :ref:`custom-css`, you can specify which fonts to use for the body, header,
