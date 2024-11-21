@@ -334,7 +334,20 @@ linkcheck_anchors_ignore = [
 ]
 
 linkcheck_ignore = [
-    # The crawler gets "Anchor not found" for GitHub anchors
+    # The crawler gets "Anchor not found" for various anchors
     r"https://github.com.+?#L\d+",
+    "https://github.com/executablebooks/sphinx-remove-toctrees#install",
+    "https://github.com/scientific-python/upload-nightly-action?tab=readme-ov-file#using-nightly-builds-in-ci",
+    "https://www.sphinx-doc.org/en/master/extdev/appapi.html#event-html-page-context",
+    "https://www.sphinx-doc.org/en/master/development/templating.html#docstitle",
+    "https://www.sphinx-doc.org/en/master/development/theming.html#templating",
+    # Known broken links in kitchen sink
     r"https://source.unsplash.com/.+",
+    # sample urls
+    "http://someurl/release-0.1.0.tar-gz",
+    "http://python.py",
 ]
+
+linkcheck_allowed_redirects = {
+    "https://www.transifex.com/signup/": "https://app.transifex.com/signup/"
+}
