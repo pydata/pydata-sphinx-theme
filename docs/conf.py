@@ -335,19 +335,33 @@ linkcheck_anchors_ignore = [
 
 linkcheck_ignore = [
     # The crawler gets "Anchor not found" for various anchors
-    r"https://github.com.+?#L\d+",
-    "https://github.com/executablebooks/sphinx-remove-toctrees#install",
-    "https://github.com/scientific-python/upload-nightly-action?tab=readme-ov-file#using-nightly-builds-in-ci",
-    "https://www.sphinx-doc.org/en/master/extdev/appapi.html#event-html-page-context",
-    "https://www.sphinx-doc.org/en/master/development/templating.html#docstitle",
-    "https://www.sphinx-doc.org/en/master/development/theming.html#templating",
+    r"https://github.com.+?#.*",
+    r"https://www.sphinx-doc.org/en/master/*/.+?#.+?",
     # Known broken links in kitchen sink
     r"https://source.unsplash.com/.+",
     # sample urls
     "http://someurl/release-0.1.0.tar-gz",
     "http://python.py",
+    "../examples/blog/index.html",
 ]
 
 linkcheck_allowed_redirects = {
-    "https://www.transifex.com/signup/": "https://app.transifex.com/signup/"
+    r"http://www.python.org": "https://www.python.org/",
+    # :source:`something` linking files in the repository
+    r"https://github.com/pydata/pydata-sphinx-theme/tree/.*": r"https://github.com/pydata/pydata-sphinx-theme/blob/.*",
+    r"https://github.com/sphinx-themes/sphinx-themes.org/raw/.*": r"https://github.com/sphinx-themes/sphinx-themes.org/tree/.*",
+    # project redirects
+    r"https://pypi.org/project/[A-Za-z\d_\-\.]+/": r"https://pypi.org/project/[a-z\d\-\.]+/",
+    r"https://virtualenv.pypa.io/": "https://virtualenv.pypa.io/en/latest/",
+    # catching redirects in rtd
+    r"https://[A-Za-z\d_\-\.]+.readthedocs.io/": r"https://[A-Za-z\d_\-\.]+\.readthedocs\.io(/en)?/(stable|latest)/",
+    r"https://readthedocs.org/": r"https://about.readthedocs.com\?ref=readthedocs.org",
+    r"https://app.readthedocs.org/dashboard/": r"https://app.readthedocs.org/accounts/login/\?next=/dashboard/",
+    # miscellanenous urls
+    r"https://python.arviz.org/": "https://python.arviz.org/en/stable/",
+    r"https://www.sphinx-doc.org/": "https://www.sphinx-doc.org/en/master/",
+    r"https://idtracker.ai/": "https://idtracker.ai/latest/",
+    r"https://gitlab.com": "https://about.gitlab.com/",
+    r"http://www.yahoo.com": "https://www.yahoo.com/",
+    r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
 }

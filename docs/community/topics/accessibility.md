@@ -58,6 +58,7 @@ of three pages from the theme docs. We collected those findings in an issue on
 GitHub, [May 2024 PyData Theme audit
 findings](https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/72)
 
-Nearly all of the issues have been fixed, but of course things do break / have
+Nearly all the issues have been fixed, but naturally course things do break / have
 already broken, and some things may have never been discovered, so please
-[create a GitHub issue](https://github.com/pydata/pydata-sphinx-theme/issues/new) if you find something inaccessible.
+[create a GitHub issue](https://github.com/pydata/pydata-sphinx-theme/issues) if you
+find something inaccessible.
