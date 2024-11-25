@@ -183,9 +183,8 @@ module.exports = (env, argv) => {
   // that builds the theme:
   //    1. command to package theme
   //        a. compile translations
-  // The theme builder calls `npm run-script build`, which we have configured
-  // to call `webpack --mode=production` (which calls this file), which is why
-  // we compile the translations here.
+  // The theme builder calls `npm run-script build` (`webpack --mode=production` per our
+  // package.json) so we compile the translations here.
   if (argv.mode === 'production') {
     exec(`pybabel compile -d ${localePath} -D sphinx`, (error, stdout, stderr) => {
       if (error) {

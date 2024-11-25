@@ -42,9 +42,11 @@ jobs:
 
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@v2
+        if: matrix.python-version == '3.9'
         id: baipp
 
       - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+        if: matrix.python-version == '3.9'
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
       - name: "Create an issue if failure"
