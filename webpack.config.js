@@ -174,7 +174,18 @@ var config = {
 };
 
 module.exports = (env, argv) => {
-  // since STB  isolates the build, we need to compile the translations here for releases
+  // Sphinx Theme Builder creates a completely isolated working directory
+  // when packaging the theme. That means that we cannot follow a workflow
+  // like this:
+  //    1. run command to compile the translations
+  //    2. run command to package the theme (`stb package`)
+  // We must instead compile the translations **as part of** the command 
+  // that builds the theme:
+  //    1. command to package theme
+  //        a. compile translations
+  // The theme builder calls `npm run-script build`, which we have configured
+  // to call `webpack --mode=production` (which calls this file), which is why
+  // we compile the translations here.
   if (argv.mode === 'production') {
     exec(`pybabel compile -d ${localePath} -D sphinx`, (error, stdout, stderr) => {
       if (error) {
