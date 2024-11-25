@@ -165,9 +165,9 @@ html_theme_options = {
     "header_links_before_dropdown": 4,
     "icon_links": [
         {
-            "name": "Twitter",
-            "url": "https://twitter.com/PyData",
-            "icon": "fa-brands fa-twitter",
+            "name": "X",
+            "url": "https://x.com/PyData",
+            "icon": "fa-brands fa-x-twitter",
         },
         {
             "name": "GitHub",
