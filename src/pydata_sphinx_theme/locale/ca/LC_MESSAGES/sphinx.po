@@ -6,7 +6,6 @@
 # Translators:
 # Cristhian Rivera, 2024
 # Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024
-#
 msgid ""
 msgstr ""
 
@@ -145,11 +144,10 @@ msgstr "Fosc"
 msgid "System Settings"
 msgstr "Configuració del sistema"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:4
 #, python-format
 msgid ""
-"Built with the <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+"Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
 "Construïda amb el <a href=\"https://pydata-sphinx-"
