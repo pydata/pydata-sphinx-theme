@@ -161,7 +161,7 @@ jobs:
           path: python-coverage-comment-action.txt
 
   profiling:
-    needs: [build-site, run-pytest]
+    needs: [run-pytest]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
