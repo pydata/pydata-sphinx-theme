@@ -189,4 +189,3 @@ msgstr "Navegació del lloc"
 
 #~ msgid "light/dark"
 #~ msgstr "clar/fosc"
-

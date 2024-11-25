@@ -109,8 +109,8 @@ var config = {
   output: {
     filename: "scripts/[name].js",
     path: staticPath,
-    // clean webpack assets at the beginning of the build - except for 
-    // files we need to explicitly keep 
+    // clean webpack assets at the beginning of the build - except for
+    // files we need to explicitly keep
     clean: {
       keep(asset) {
         const filesToKeep = ["styles/theme.css", ".gitignore"];
@@ -179,7 +179,7 @@ module.exports = (env, argv) => {
   // like this:
   //    1. run command to compile the translations
   //    2. run command to package the theme (`stb package`)
-  // We must instead compile the translations **as part of** the command 
+  // We must instead compile the translations **as part of** the command
   // that builds the theme:
   //    1. command to package theme
   //        a. compile translations

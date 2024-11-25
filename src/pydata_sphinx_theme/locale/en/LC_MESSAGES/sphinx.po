@@ -187,4 +187,3 @@ msgstr ""
 #~ "sphinx-theme.readthedocs.io/en/stable/index.html\">PyData "
 #~ "Sphinx Theme</a> %(theme_version)s."
 #~ msgstr ""
-

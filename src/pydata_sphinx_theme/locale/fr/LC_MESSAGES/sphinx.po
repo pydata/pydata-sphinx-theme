@@ -189,4 +189,3 @@ msgstr "Navigation dans le site"
 
 #~ msgid "light/dark"
 #~ msgstr "clair/sombre"
-
