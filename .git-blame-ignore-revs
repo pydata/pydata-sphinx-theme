@@ -11,3 +11,6 @@
 a35529c9ee8d5863613df40787cda0021b3e0128 # Manual fixes for stylelint
 ce583b8f3136d52e8056c9a651bf6f92e7922f79 # Manual adjustments to autofixes
 d1ee9eb7a132cde51433e9594513319fdab41f2f # Autofix (stylelint)
+f6102b411fd00a8224545a9cd421223b79e9efc2 # combination of manual substantive changes and auto-fixes
+33333c8f710621eed89f98ce4d59425753d46a62 # revert of f6102b41
+da5104f70bb1cbdb77c4a515366a82ba2255da76 # just the automated part of f6102b41
