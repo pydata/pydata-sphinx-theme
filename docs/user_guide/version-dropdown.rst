@@ -29,6 +29,12 @@ The switcher requires the following configuration steps:
 
 Below is a more in-depth description of each of these configuration steps.
 
+.. warning::
+    Modern web browsers do not allow loading data when the request is made from a page loaded via the ``file:`` protocol. This means that if you build your documentation locally and then directly open one of its pages in the browser, **the version switcher will not be allowed to load its JSON data source** and you'll end up with an empty switcher menu. Possible work-arounds are:
+
+    1. View the locally-built files through a local webserver (Python provides a builtin module for this: https://docs.python.org/3/library/http.server.html).
+    2. Disabling your browser's security settings (either by passing a command-line flag when launching the browser, or through a browser add-on).
+
 
 Add a JSON file to define your switcher's versions
 --------------------------------------------------
