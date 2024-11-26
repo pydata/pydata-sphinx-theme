@@ -1,11 +1,13 @@
 """Check the list of warnings produced by a doc build."""
 
 import sys
+
 from pathlib import Path
 
 from colorama import Fore, init
 
 from pydata_sphinx_theme.utils import escape_ansi
+
 
 # init colors for all plateforms
 init()

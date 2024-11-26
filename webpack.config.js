@@ -109,8 +109,8 @@ var config = {
   output: {
     filename: "scripts/[name].js",
     path: staticPath,
-    // clean webpack assets at the beginning of the build - except for 
-    // files we need to explicitly keep 
+    // clean webpack assets at the beginning of the build - except for
+    // files we need to explicitly keep
     clean: {
       keep(asset) {
         const filesToKeep = ["styles/theme.css", ".gitignore"];
