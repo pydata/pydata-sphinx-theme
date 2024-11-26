@@ -56,11 +56,9 @@ def setup_logo_path(
 
 
 def copy_logo_images(app: Sphinx, exception=None) -> None:
-    """
-    Copy logo image to the _static directory.
+    """Copy logo image to the _static directory.
 
-    If logo image paths are given, copy them to the `_static` folder.
-    Then we can link to them directly in an html_page_context event.
+    If logo image paths are given, copy them to the `_static` folder Then we can link to them directly in an html_page_context event.
     """
     warning = partial(maybe_warn, app)
     logo = get_theme_options_dict(app).get("logo", {})
@@ -78,8 +76,7 @@ def copy_logo_images(app: Sphinx, exception=None) -> None:
         assert full_logo_path.is_absolute()
         if not full_logo_path.exists():
             warning(f"Path to {kind} image logo does not exist: {path_image}")
-        # Ensure templates cannot be passed for logo path to avoid security
-        # vulnerability
+        # Ensure templates cannot be passed for logo path to avoid security vulnerability
         if path_image.lower().endswith("_t"):
             raise ExtensionError(
                 f"The {kind} logo path '{path_image}' looks like a Sphinx template; "

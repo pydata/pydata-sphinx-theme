@@ -169,3 +169,4 @@ msgstr ""
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
 msgid "Site navigation"
 msgstr ""
+

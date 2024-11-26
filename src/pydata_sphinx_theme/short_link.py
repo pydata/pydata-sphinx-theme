@@ -11,24 +11,20 @@ from .utils import traverse_or_findall
 
 
 class ShortenLinkTransform(SphinxPostTransform):
-    """
-    Shorten link when they are coming from github or gitlab and add an extra class to
-    the tag for further styling.
+    """Shorten link when they are coming from github or gitlab and add an extra class to the tag for further styling.
 
     Before:
         .. code-block:: html
 
-            <a class="reference external"
-                href="https://github.com/2i2c-org/infrastructure/issues/1329">
-                https://github.com/2i2c-org/infrastructure/issues/1329
+            <a class="reference external" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+              https://github.com/2i2c-org/infrastructure/issues/1329
             </a>
 
     After:
         .. code-block:: html
 
-            <a class="reference external github"
-                href="https://github.com/2i2c-org/infrastructure/issues/1329">
-                2i2c-org/infrastructure#1329
+            <a class="reference external github" href="https://github.com/2i2c-org/infrastructure/issues/1329">
+               2i2c-org/infrastructure#1329
             </a>
     """
 

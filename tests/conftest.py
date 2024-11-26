@@ -2,7 +2,6 @@
 
 import re
 import time
-
 from http.client import HTTPConnection
 from os import environ
 from pathlib import Path
@@ -12,11 +11,9 @@ from typing import Callable
 
 import pytest
 import sphinx
-
 from bs4 import BeautifulSoup
 from sphinx.testing.util import SphinxTestApp
 from typing_extensions import Self
-
 
 pytest_plugins = "sphinx.testing.fixtures"
 

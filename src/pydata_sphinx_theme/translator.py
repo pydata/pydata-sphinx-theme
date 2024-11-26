@@ -6,7 +6,6 @@ from sphinx.application import Sphinx
 from sphinx.ext.autosummary import autosummary_table
 from sphinx.util import logging
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -32,11 +31,9 @@ class BootstrapHTML5TranslatorMixin:
         return super().starttag(*args, **kwargs)
 
     def visit_table(self, node):
-        """
-        Custom visit table method.
+        """Custom visit table method.
 
-        Copy of sphinx source to *not* add 'docutils' and 'align-default' classes but
-        add 'table' class.
+        Copy of sphinx source to *not* add 'docutils' and 'align-default' classes but add 'table' class.
         """
         # init the attributes
         atts = {}
@@ -65,21 +62,16 @@ class BootstrapHTML5TranslatorMixin:
         self.body.append(tag)
 
     def depart_table(self, node):
-        """
-        Custom depart_table method to close the scrollable div we add in
-        visit_table.
-        """
+        """Custom depart_table method to close the scrollable div we add in visit_table."""
         super().depart_table(node)
         self.body.append("</div>\n")
 
 
 def setup_translators(app: Sphinx):
-    """
-    Add bootstrap HTML functionality if we are using an HTML translator.
+    """Add bootstrap HTML functionality if we are using an HTML translator.
 
-    This re-uses the pre-existing Sphinx translator and adds extra functionality
-    defined in ``BootstrapHTML5TranslatorMixin``.
-    This way we can retain the original translator's
+    This re-uses the pre-existing Sphinx translator and adds extra functionality defined
+    in ``BootstrapHTML5TranslatorMixin``. This way we can retain the original translator's
     behavior and configuration, and _only_ add the extra bootstrap rules.
     If we don't detect an HTML-based translator, then we do nothing.
     """
