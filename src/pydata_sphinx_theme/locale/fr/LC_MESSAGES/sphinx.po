@@ -2,11 +2,11 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+#
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
 # Denis Bitouzé <dbitouze@wanadoo.fr>, 2024
-# 
+#
 msgid ""
 msgstr ""
 
