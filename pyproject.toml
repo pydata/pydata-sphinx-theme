@@ -100,29 +100,21 @@ ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 
 [tool.ruff]
 fix = true
-# keep consistent with black
-line-length = 88
-indent-width = 4
 
 [tool.ruff.lint]
 ignore = [
+  "E501", # line too long | Black take care of it
   "D107", # Missing docstring in `__init__` | set the docstring in the class
-  "D205", # 1 blank line required between summary line and description,
-  "D212",  # docstring summary must be on first physical line
-  "W291", # let pre-commit handle trailing whitespace
 
 ]
-select = ["E", "F", "W", "I", "D", "RUF", "G"]
+ignore-init-module-imports = true
+select = ["E", "F", "W", "I", "D", "RUF"]
 
 [tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
-
-[tool.ruff.lint.isort]
-lines-between-types = 1
-lines-after-imports = 2
 
 [tool.djlint]
 profile = "jinja"

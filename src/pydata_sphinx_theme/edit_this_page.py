@@ -1,7 +1,6 @@
 """Create an "edit this page" url compatible with bitbucket, gitlab and github."""
 
 import jinja2
-
 from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
 

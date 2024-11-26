@@ -19,7 +19,6 @@ from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
 from yaml import safe_load
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -77,7 +76,7 @@ class GalleryGridDirective(SphinxDirective):
             path_doc = Path(path_doc).parent
             path_data = (path_doc / path_data_rel).resolve()
             if not path_data.exists():
-                logger.info("Could not find grid data at %s.", path_data)
+                logger.info(f"Could not find grid data at {path_data}.")
                 nodes.text("No grid data found at {path_data}.")
                 return
             yaml_string = path_data.read_text()
