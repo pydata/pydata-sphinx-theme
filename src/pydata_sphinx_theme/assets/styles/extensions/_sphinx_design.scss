@@ -151,19 +151,18 @@ html[data-theme="light"] {
 .bd-content .sd-card {
   border: 1px solid var(--pst-color-border);
 
-  // TODO - --pst-color-panel-background is not defined... where is this coming from?
   .sd-card-header {
-    background-color: var(--pst-color-panel-background);
+    background-color: var(--pst-color-on-background);
     border-bottom: 1px solid var(--pst-color-border);
   }
 
   .sd-card-footer {
-    background-color: var(--pst-color-panel-background);
+    background-color: var(--pst-color-on-background);
     border-top: 1px solid var(--pst-color-border);
   }
 
   .sd-card-body {
-    background-color: var(--pst-color-panel-background);
+    background-color: var(--pst-color-on-background);
   }
 
   // Focus ring for link-cards
