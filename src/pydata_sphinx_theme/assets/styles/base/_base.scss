@@ -77,28 +77,28 @@ h1 {
 
   margin-top: 0;
   font-size: var(--pst-font-size-h1);
-  color: var(--pst-heading-color);
+  color: var(--pst-color-heading);
 }
 
 h2 {
   @extend %heading-style;
 
   font-size: var(--pst-font-size-h2);
-  color: var(--pst-heading-color);
+  color: var(--pst-color-heading);
 }
 
 h3 {
   @extend %heading-style;
 
   font-size: var(--pst-font-size-h3);
-  color: var(--pst-heading-color);
+  color: var(--pst-color-heading);
 }
 
 h4 {
   @extend %heading-style;
 
   font-size: var(--pst-font-size-h4);
-  color: var(--pst-heading-color);
+  color: var(--pst-color-heading);
 }
 
 h5 {
