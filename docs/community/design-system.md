@@ -128,28 +128,6 @@ Semantic colors (such as for success, warning, or error messages) can be used to
 convey meaning, but color should not be the only indicator.
 Pair these colors with icons or text labels to ensure clarity.
 
-### Relevant Links
-
-For further reference, you can access the following resources related to the
-typography in the PyData Sphinx theme:
-
-1. **GitHub Repository:** The source code for the PyData Sphinx theme is available on GitHub.
-   You can find the specific file that defines the typography settings,
-   including font stacks, sizes, and weights in the
-   [`fonts.scss` file](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_fonts.scss).
-2. **Figma Design File:** The Figma file contains the visual design and specifications
-   for the typography styles, including font sizes, line heights,
-   and spacing used throughout the theme.
-   You can access it [through this link to the Figma file](https://www.figma.com/design/BHkBFxg1Qg0h5RApUw1ZrR/PyData-Design-System---Ongoing?node-id=2-7).
-
-### References
-
-1. [https://carbondesignsystem.com/elements/typography/overview/](https://carbondesignsystem.com/elements/typography/overview/)
-2. [https://canvas.workday.com/styles/tokens/type](https://canvas.workday.com/styles/tokens/type)
-3. [https://atlassian.design/foundations/typography-beta](https://atlassian.design/foundations/typography-beta)
-
----
-
 ## Color
 
 The PyData Sphinx theme uses a well-defined color palette to ensure consistency,
@@ -179,12 +157,29 @@ are provided for success, errors, warnings, and information.
 Using these colors as named ensures users can easily understand system feedback
 through visual cues.
 
-### Relevant Links
+## Relevant Links
 
-For further reference, you can access the following resources related to colors
-in the PyData Sphinx theme:
+For further reference, you can access the following resources related to the
+color and typography in the PyData Sphinx theme:
 
-1. **GitHub Repository:** You find all the PyData Sphinx theme colors in the
-   [`color.scss` file](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss)
-2. **Figma Design File:** For specific color codes and detailed use cases,
+1. **GitHub Repository:** The source code for the PyData Sphinx theme is available on GitHub.
+   1. You can find the specific file that defines the typography settings,
+      including font stacks, sizes, and weights in the
+      [`fonts.scss` file](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_fonts.scss).
+   2. You can find all the PyData Sphinx theme colors in the
+      [`color.scss` file](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss)
+2. **Figma Design File:** The Figma file contains the visual design and specifications
+   for the typography styles, including font sizes, line heights,
+   and spacing used throughout the theme. It also includes our color palette and its use cases, as well as details on interactive components and their states.
+   You can access it [through this link to the Figma file][figma-library].
+
+### References
+
+1. [https://carbondesignsystem.com/elements/typography/overview/](https://carbondesignsystem.com/elements/typography/overview/)
+2. [https://canvas.workday.com/styles/tokens/type](https://canvas.workday.com/styles/tokens/type)
+3. [https://atlassian.design/foundations/typography-beta](https://atlassian.design/foundations/typography-beta)
    refer to the [Figma Design File](https://www.figma.com/design/BHkBFxg1Qg0h5RApUw1ZrR/PyData-Design-System---Ongoing?node-id=2-160).
+
+<!-- reusable links -->
+
+[figma-library]: https://www.figma.com/community/file/1443191723065200671
