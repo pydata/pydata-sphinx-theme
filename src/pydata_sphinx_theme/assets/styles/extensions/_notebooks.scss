@@ -30,7 +30,7 @@ html .jp-RenderedHTMLCommon {
       table.dataframe {
         @include table-colors;
 
-        &:hover {
+        tr:hover {
           background-color: var(--pst-color-table-row-hover-bg);
         }
       }
@@ -102,7 +102,7 @@ div.cell_output .output {
   table.dataframe {
     @include table-colors;
 
-    &:hover {
+    tr:hover {
       background-color: var(--pst-color-table-row-hover-bg);
     }
   }
