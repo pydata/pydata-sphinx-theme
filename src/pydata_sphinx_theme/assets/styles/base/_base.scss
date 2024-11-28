@@ -168,6 +168,7 @@ pre {
 
 // the back to top btn
 #pst-back-to-top {
+  // zindex-tooltip comes from Bootstrap https://getbootstrap.com/docs/5.2/layout/z-index/
   z-index: $zindex-tooltip;
   position: fixed;
   display: none;
