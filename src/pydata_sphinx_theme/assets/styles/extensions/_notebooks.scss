@@ -29,6 +29,10 @@ html .jp-RenderedHTMLCommon {
       // pandas
       table.dataframe {
         @include table-colors;
+
+        &:hover {
+          background-color: var(--pst-color-table-row-hover-bg);
+        }
       }
     }
 
@@ -97,6 +101,10 @@ div.cell_output .output {
   // pandas
   table.dataframe {
     @include table-colors;
+
+    &:hover {
+      background-color: var(--pst-color-table-row-hover-bg);
+    }
   }
 
   html[data-theme="dark"] & {
