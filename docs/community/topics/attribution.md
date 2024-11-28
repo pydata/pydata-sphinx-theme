@@ -1,6 +1,6 @@
 # Ignore formatting commits with `git blame`
 
-Please follow these steps to avoid obscuring files history when making commits that are
+Please follow these steps to avoid obscuring file history when making commits that are
 strictly formatting/style changes (e.g., after running a new version of black or running
 pyupgrade after dropping an old Python version).
 
@@ -13,7 +13,7 @@ pyupgrade after dropping an old Python version).
 6. Open a PR with these changes.
 
    ```{important}
-   This PR **must** be rebased-merged -- instead of the default squash-merge we
+   This PR **must** be rebase-merged -- instead of the default squash-merge we
    currently follow -- so a repository admin needs to enable this setting in the
    repository temporarily.
 
