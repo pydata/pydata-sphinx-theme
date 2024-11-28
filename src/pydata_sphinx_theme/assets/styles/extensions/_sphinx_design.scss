@@ -323,7 +323,7 @@ details.sd-dropdown {
     }
 
     // Focus ring
-    &:focus-visible {
+    &:focus:focus-visible {
       outline: $focus-ring-outline;
       outline-offset: -$focus-ring-width;
     }
