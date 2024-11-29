@@ -40,6 +40,10 @@
     .admonition-title {
       @include icon-hover-effects;
       @include hover-darken-lighten;
+
+      &:hover {
+        box-shadow: none;
+      }
     }
 
     button.toggle-button {
@@ -119,6 +123,10 @@
       @include chevron-down;
       @include icon-hover-effects;
       @include hover-darken-lighten;
+
+      &:hover {
+        box-shadow: none;
+      }
 
       &:focus-visible {
         outline-offset: $focus-ring-offset;

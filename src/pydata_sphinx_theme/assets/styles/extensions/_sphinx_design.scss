@@ -331,6 +331,11 @@ details.sd-dropdown {
       border-radius: $focus-ring-width;
     }
   }
+
+  &[open] summary.sd-card-header:focus:focus-visible {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 
 /*******************************************************************************
