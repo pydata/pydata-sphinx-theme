@@ -322,10 +322,12 @@ details.sd-dropdown {
       top: 0.7rem;
     }
 
+    @include hover-darken-lighten;
+
     // Focus ring
-    &:focus-visible {
+    &:focus:focus-visible {
       outline: $focus-ring-outline;
-      outline-offset: -$focus-ring-width;
+      outline-offset: $focus-ring-width;
     }
   }
 }
