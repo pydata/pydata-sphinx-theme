@@ -98,7 +98,7 @@
         width: calc(100% + $admonition-left-border-width);
         height: 100%;
         outline: $focus-ring-outline;
-        outline-offset: $focus-ring-width;
+        outline-offset: $focus-ring-offset;
         border-radius: $focus-ring-width;
       }
 
@@ -121,7 +121,7 @@
       @include hover-darken-lighten;
 
       &:focus-visible {
-        outline-offset: $focus-ring-width;
+        outline-offset: $focus-ring-offset;
       }
     }
 
