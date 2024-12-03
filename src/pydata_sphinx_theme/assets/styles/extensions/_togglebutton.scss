@@ -89,9 +89,8 @@
       result in a ring that looks off-centered. So we have to pull the ring left
       and stretch it right. That's what the pseudo-element allows us to do.
 
-      We do not have to do this with the other collapsible admonitions because
-      those implementations put the left border and the title together so that a
-      focus ring surrounds them both.
+      Note: we do not have to do this for collapsible admonitions made with
+      Sphinx Design (as opposed to sphinx-togglebutton).
       */
       .admonition-title::before {
         content: "";
