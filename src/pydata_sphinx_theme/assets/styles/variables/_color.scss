@@ -220,7 +220,7 @@ $pst-semantic-colors: (
   ),
   "table-row-hover": (
     "bg-light": #{map-deep-get($color-palette, "violet", "200")},
-    "bg-dark": #{map-deep-get($color-palette, "violet", "600")},
+    "bg-dark": #{map-deep-get($color-palette, "violet", "700")},
   ),
   "table-inner-border": (
     "light": #{map-deep-get($color-palette, "gray", "200")},
