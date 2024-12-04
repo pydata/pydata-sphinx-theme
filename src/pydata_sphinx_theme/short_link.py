@@ -103,12 +103,15 @@ class ShortenLinkTransform(SphinxPostTransform):
 
             if len(parts) > 0:
                 text = parts[0]  # organisation
-            if len(parts) > 1:
-                text += f"/{parts[1]}"  # repository
-            if len(parts) > 2:
-                if parts[2] in ["issues", "pull-requests"]:
-                    itemnumber = parts[3]
-                    text += f"#{itemnumber}"  # element number
+            if len(parts) > 1 and not (
+                parts[-2] == "workspace" and parts[-1] == "overview"
+            ):
+                if len(parts) > 1:
+                    text += f"/{parts[1]}"  # repository
+                if len(parts) > 2:
+                    if parts[2] in ["issues", "pull-requests"]:
+                        itemnumber = parts[3]
+                        text += f"#{itemnumber}"  # element number
 
         elif self.platform == "gitlab":
             # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
