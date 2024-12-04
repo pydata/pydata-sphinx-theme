@@ -12,8 +12,8 @@ from .utils import traverse_or_findall
 
 class ShortenLinkTransform(SphinxPostTransform):
     """
-    Shorten link when they are coming from github or gitlab and add an extra class to
-    the tag for further styling.
+    Shorten link when they are coming from github, gitlab, or bitbucket and add
+    an extra class to the tag for further styling.
 
     Before:
         .. code-block:: html
@@ -37,6 +37,7 @@ class ShortenLinkTransform(SphinxPostTransform):
     supported_platform: ClassVar[dict[str, str]] = {
         "github.com": "github",
         "gitlab.com": "gitlab",
+        "bitbucket.org": "bitbucket",
     }
     platform = None
 
@@ -95,6 +96,19 @@ class ShortenLinkTransform(SphinxPostTransform):
                 if len(parts) > 2:
                     if parts[2] in ["issues", "pull", "discussions"]:
                         text += f"#{parts[-1]}"  # element number
+
+        elif self.platform == "bitbucket":
+            # split the url content
+            parts = path.split("/")
+
+            if len(parts) > 0:
+                text = parts[0]  # organisation
+            if len(parts) > 1:
+                text += f"/{parts[1]}"  # repository
+            if len(parts) > 2:
+                if parts[2] in ["issues", "pull-requests"]:
+                    itemnumber = parts[3]
+                    text += f"#{itemnumber}"  # element number
 
         elif self.platform == "gitlab":
             # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references

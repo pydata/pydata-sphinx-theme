@@ -48,7 +48,8 @@ a {
 
   // set up a icon next to the shorten links from github and gitlab
   &.github,
-  &.gitlab {
+  &.gitlab,
+  &.bitbucket {
     &::before {
       color: var(--pst-color-text-muted);
       font: var(--fa-font-brands);
@@ -62,6 +63,10 @@ a {
 
   &.gitlab::before {
     content: var(--pst-icon-gitlab);
+  }
+
+  &.bitbucket::before {
+    content: var(--pst-icon-bitbucket);
   }
 }
 
