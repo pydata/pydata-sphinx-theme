@@ -277,18 +277,19 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
     if hasattr(app.config, "html_context"):
-        gitlab_url = app.config.html_context.get("gitlab_url", "")
+        github_url = app.config.html_content.get("github_url", None)
+        gitlab_url = app.config.html_context.get("gitlab_url", None)
 
-        if gitlab_url.startswith("https://"):
-            gitlab_url = {gitlab_url[8:].rstrip("/"): "gitlab"}
-        elif gitlab_url.startswith("http://"):
-            gitlab_url = {gitlab_url[7:].rstrip("/"): "gitlab"}
-        else:
-            gitlab_url = {}
+        url_update = {}
+        for url, platform in zip([github_url, gitlab_url], ["github", "gitlab"]):
+            if url:
+                # remove "http[s]://" and leading/trailing "/"s
+                url = urlparse(url)._replace(scheme="").geturl().lstrip("/").rstrip("/")
+                url_update[url] = platform
 
         class ShortenLinkTransformCustom(short_link.ShortenLinkTransform):
             supported_platform = short_link.ShortenLinkTransform.supported_platform
-            supported_platform.update(gitlab_url)
+            supported_platform.update(url_update)
 
         app.add_post_transform(ShortenLinkTransformCustom)
     else:
