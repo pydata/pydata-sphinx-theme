@@ -4,6 +4,8 @@ Source Buttons
 
 Source buttons are links to the source of your page's content (either on your site, or on hosting sites like GitHub).
 
+.. _add-edit-button:
+
 Add an edit button
 ==================
 
