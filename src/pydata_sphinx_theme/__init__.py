@@ -277,9 +277,9 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
     if hasattr(app.config, "html_context"):
-        github_url = app.config.html_content.get("github_url", None)
+        github_url = app.config.html_context.get("github_url", None)
         gitlab_url = app.config.html_context.get("gitlab_url", None)
-        bitbucket_url = app.config.html_content.get("bitbucket_url", None)
+        bitbucket_url = app.config.html_context.get("bitbucket_url", None)
 
         url_update = {}
         for url, platform in zip(
