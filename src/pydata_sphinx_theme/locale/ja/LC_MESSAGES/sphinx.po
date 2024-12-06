@@ -8,11 +8,11 @@
 msgid ""
 msgstr ""
 
-#: docs/conf.py:109
+#: docs/conf.py:111
 msgid "Click to expand"
 msgstr "クリックして拡大"
 
-#: docs/conf.py:110
+#: docs/conf.py:112
 msgid "Click to collapse"
 msgstr "クリックして折りたたむ"
 

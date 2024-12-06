@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pydata-sphinx-theme 0.16.1.dev0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-18 12:43+0000\n"
+"POT-Creation-Date: 2024-12-06 15:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: docs/conf.py:109
+#: docs/conf.py:111
 msgid "Click to expand"
 msgstr ""
 
-#: docs/conf.py:110
+#: docs/conf.py:112
 msgid "Click to collapse"
 msgstr ""
 
