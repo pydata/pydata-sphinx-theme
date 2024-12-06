@@ -64,3 +64,15 @@
   min-width: 24px;
   min-height: 24px;
 }
+
+// Meant to darken the element on hover in light mode, or
+// lighten on hover in dark mode.
+@mixin hover-darken-lighten {
+  &:hover {
+    filter: brightness(0.9);
+
+    html[data-theme="dark"] & {
+      filter: brightness(1.1);
+    }
+  }
+}

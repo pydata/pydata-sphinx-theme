@@ -322,11 +322,19 @@ details.sd-dropdown {
       top: 0.7rem;
     }
 
+    @include hover-darken-lighten;
+
     // Focus ring
     &:focus:focus-visible {
       outline: $focus-ring-outline;
-      outline-offset: -$focus-ring-width;
+      outline-offset: $focus-ring-offset;
+      border-radius: $focus-ring-width;
     }
+  }
+
+  &[open] summary.sd-card-header:focus:focus-visible {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
 
@@ -358,14 +366,16 @@ html {
     .sd-btn-#{$name},
     .sd-btn-outline-#{$name} {
       &:focus-visible {
+        outline: var(--sd-color-#{$name}) solid $focus-ring-width;
+        outline-offset: $focus-ring-offset;
+        border-radius: $focus-ring-width;
+
         // Override Sphinx Design's use of -highlight colors. The -highlight
         // colors are 15% darker, so this would create the effect of darkening
         // the button when focused but we just want the button to have a focus
         // ring of the same (non-highlight) color.
         background-color: var(--sd-color-#{$name}) !important;
         border-color: var(--sd-color-#{$name}) !important;
-        outline: var(--sd-color-#{$name}) solid $focus-ring-width;
-        outline-offset: $focus-ring-width;
       }
     }
   }

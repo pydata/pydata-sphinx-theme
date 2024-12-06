@@ -26,6 +26,11 @@ $focus-ring-color: var(--pst-color-accent);
 $focus-ring-blur: 0;
 $focus-ring-box-shadow: 0 0 $focus-ring-blur $focus-ring-width $focus-ring-color;
 
+// For many elements, we do not use `outline-offset`. For some we set the offset
+// equal to the focus ring width (either outwards or inwards). But for some
+// other elements (e.g., collapsible admonitions) we set it to this value.
+$focus-ring-offset: 0.125rem; // 2px at 100% zoom (0.125 * 16px base font = 2px)
+
 // outline creates the same style of focus ring, it just uses CSS outline instead of box shadow
 $focus-ring-outline: $focus-ring-color solid $focus-ring-width;
 $btn-focus-box-shadow: $focus-ring-box-shadow;
