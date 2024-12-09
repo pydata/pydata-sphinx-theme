@@ -8,15 +8,14 @@
 # Cristhian Rivera, 2024
 # Felipe Moreno, 2024
 # Tania Allard, 2024
-#
 msgid ""
 msgstr ""
 
-#: docs/conf.py:109
+#: docs/conf.py:111
 msgid "Click to expand"
 msgstr "Haga clic para ampliar"
 
-#: docs/conf.py:110
+#: docs/conf.py:112
 msgid "Click to collapse"
 msgstr "Haga clic para colapsar"
 
