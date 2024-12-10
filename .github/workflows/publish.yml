@@ -1,5 +1,5 @@
 # This workflow runs every day at 2AM UTC to publish a new nightly release to Anaconda.org
-# and every time there is a PST to make sure it gets uploaded to PyPI.
+# and every time there is a PST release to make sure it gets uploaded to PyPI.
 name: Publish PST package
 on:
   release:
@@ -43,6 +43,8 @@ jobs:
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@v2
         id: baipp
+        with:
+          attest-build-provenance-github: "true"
 
       - run: echo Packages can be found at ${BAIPP_DIST}
         env:
