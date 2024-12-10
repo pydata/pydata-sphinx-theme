@@ -40,6 +40,8 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
@@ -63,25 +65,29 @@ jobs:
   lighthouse-audit:
     needs: build-site
     runs-on: ubuntu-latest
-    env:
-      DOCS_DIR: "audit"
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: "Copy kitchen sink to a tiny site"
         run: |
-          mkdir -p ${{ env.DOCS_DIR }}/site
-          cp -r docs/examples/kitchen-sink ${{ env.DOCS_DIR }}/site/kitchen-sink
-          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > ${{ env.DOCS_DIR }}/site/index.rst
-          echo 'html_theme = "pydata_sphinx_theme"' > ${{ env.DOCS_DIR }}/site/conf.py
-          echo '.. toctree::\n   :glob:\n\n   *' >> ${{ env.DOCS_DIR }}/site/index.rst
+          # ensuring proper scaping of the variable
+          docs_dir="${DOCS_DIR}"
+          mkdir -p $docs_dir/site
+          cp -r docs/examples/kitchen-sink $docs_dir/site/kitchen-sink
+          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > $docs_dir/site/index.rst
+          echo 'html_theme = "pydata_sphinx_theme"' > $docs_dir/site/conf.py
+          echo '.. toctree::\n   :glob:\n\n   *' >> $docs_dir/site/index.rst
 
           # build docs without checking for warnings
           python -Im tox run -e docs-no-checks
+        env:
+          DOCS_DIR: "audit"
 
       - name: "Audit with Lighthouse 🔦"
         uses: treosh/lighthouse-ci-action@v12
@@ -97,6 +103,8 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
       - name: "Check for broken links 🔗"
