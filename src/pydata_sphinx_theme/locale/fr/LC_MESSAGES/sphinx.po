@@ -6,6 +6,7 @@
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
 # Denis Bitouzé <dbitouze@wanadoo.fr>, 2024
+#
 msgid ""
 msgstr ""
 
@@ -150,8 +151,7 @@ msgid ""
 "Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
-"Construit avec le <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">thème PyData Sphinx</a> "
+"Construit avec le <a href=\"%(PST_url)s\">thème PyData Sphinx</a> "
 "%(theme_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
@@ -189,3 +189,12 @@ msgstr "Navigation dans le site"
 
 #~ msgid "light/dark"
 #~ msgstr "clair/sombre"
+
+#~ msgid ""
+#~ "Built with the <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+#~ "%(theme_version)s."
+#~ msgstr ""
+#~ "Construit avec le <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">thème PyData Sphinx</a> "
+#~ "%(theme_version)s."
