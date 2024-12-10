@@ -21,6 +21,8 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - "*"
   workflow_call:
   # allow manual triggering of the workflow, while debugging
   workflow_dispatch:
