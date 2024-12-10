@@ -17,23 +17,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
+
       - name: "Install (prerelease) dependencies 📦"
         run: |
           python -Im pip install --upgrade pip wheel setuptools
+
       - name: "Build PST docs and check for warnings 📖"
         run: |
           # example substitution: tox run -e docs-py312-docs
           python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
+
       - name: "Run tests ✅ (no coverage)"
         run: |
           # this will compile the assets then run the tests
@@ -45,8 +51,10 @@ jobs:
         if: matrix.python-version == '3.9'
         id: baipp
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at ${BAIPP_DIST}
         if: matrix.python-version == '3.9'
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
       - name: "Create an issue if failure"

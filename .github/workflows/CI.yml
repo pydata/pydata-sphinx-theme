@@ -31,10 +31,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
+        # https://github.com/actions/runner-images
         # macos-14==latest
-        # ubuntu-20.04==latest
-        os: ["ubuntu-latest", "ubuntu-24.04", "macos-14", "windows-latest"]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        # ubuntu-24.04==latest
+        # windows-2022==latest
+        os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
@@ -61,11 +63,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
+
       - name: "Run tests ✅"
         shell: bash
         run: |
@@ -79,6 +83,7 @@ jobs:
           else
             python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
+
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
         uses: actions/upload-artifact@v4
@@ -97,12 +102,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           pandoc: true
           graphviz: true
+
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
         run: python -Im tox run -m a11y
@@ -175,10 +182,12 @@ jobs:
         with:
           # 3.12 is not supported by py-spy yet
           python-version: "3.11"
+
       - name: "Run profiling with py-spy 🕵️‍♂️"
         # profiling needs to be run as sudo
         run: python -m tox run -e py311-profile-docs -- -o docbuild_profile.svg
         continue-on-error: true
+
       - name: "Upload profiling data to GH artifacts 📤"
         uses: actions/upload-artifact@v4
         with:

@@ -26,11 +26,13 @@ jobs:
 
   build-package:
     name: "Build & verify PST package"
-    needs: [tests] # require tests to pass before deploy runs
+    needs: [tests] # require tests to pass before release runs
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
@@ -42,7 +44,9 @@ jobs:
         uses: hynek/build-and-inspect-python-package@v2
         id: baipp
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at ${BAIPP_DIST}
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
   release-PST:
     runs-on: ubuntu-latest
