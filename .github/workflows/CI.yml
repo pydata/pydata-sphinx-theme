@@ -199,3 +199,6 @@ jobs:
     name: "Post coverage comment"
     uses: ./.github/workflows/coverage.yml
     needs: [coverage]
+    permissions:
+      contents: write
+      pull-requests: write
