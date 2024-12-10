@@ -16,6 +16,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const dedent = require("dedent");
 const { Compilation } = require("webpack");
+const { exec } = require("child_process");
 
 /*******************************************************************************
  * Paths for various assets (sources and destinations)
@@ -23,6 +24,7 @@ const { Compilation } = require("webpack");
 
 const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
 const staticPath = resolve(__dirname, "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static");
+const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
 
 /*******************************************************************************
  * functions to load the assets in the html head
@@ -96,8 +98,8 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   templateContent: macroTemplate,
 });
 
-module.exports = {
-  mode: "production",
+// webpack main configuration
+var config = {
   devtool: "source-map",
   entry: {
     "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
@@ -107,8 +109,8 @@ module.exports = {
   output: {
     filename: "scripts/[name].js",
     path: staticPath,
-    // clean webpack assets at the beginning of the build - except for 
-    // files we need to explicitly keep 
+    // clean webpack assets at the beginning of the build - except for
+    // files we need to explicitly keep
     clean: {
       keep(asset) {
         const filesToKeep = ["styles/theme.css", ".gitignore"];
@@ -169,4 +171,32 @@ module.exports = {
   experiments: {
     topLevelAwait: true,
   },
+};
+
+module.exports = (env, argv) => {
+  // Sphinx Theme Builder creates a completely isolated working directory
+  // when packaging the theme. That means that we cannot follow a workflow
+  // like this:
+  //    1. run command to compile the translations
+  //    2. run command to package the theme (`stb package`)
+  // We must instead compile the translations **as part of** the command
+  // that builds the theme:
+  //    1. command to package theme
+  //        a. compile translations
+  // The theme builder calls `npm run-script build` (`webpack --mode=production` per our
+  // package.json) so we compile the translations here.
+  if (argv.mode === 'production') {
+    exec(`pybabel compile -d ${localePath} -D sphinx`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+    });
+  }
+  return config;
 };

@@ -2,19 +2,18 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+#
 # Translators:
 # Cristhian Rivera, 2024
 # Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024
-# 
 msgid ""
 msgstr ""
 
-#: docs/conf.py:109
+#: docs/conf.py:111
 msgid "Click to expand"
 msgstr "Fes clic per a desplegar"
 
-#: docs/conf.py:110
+#: docs/conf.py:112
 msgid "Click to collapse"
 msgstr "Fes clic per a replegar"
 
@@ -145,11 +144,10 @@ msgstr "Fosc"
 msgid "System Settings"
 msgstr "Configuració del sistema"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:4
 #, python-format
 msgid ""
-"Built with the <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+"Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
 "Construïda amb el <a href=\"https://pydata-sphinx-"

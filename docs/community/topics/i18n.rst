@@ -82,7 +82,7 @@ file, and visible to localizers. For example:
 
    {# L10n: Navigation button at the bottom of the page #}
    <button type="button">
-      {{- _("Next page") -}}
+      {{- _('Next page') -}}
    </button>
 
 .. _updating-localization-files:

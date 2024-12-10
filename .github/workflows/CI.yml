@@ -75,7 +75,7 @@ jobs:
           # if not we use the default version
           # example substitution: tox run -e compile-assets,i18n-compile,py39-tests
           else
-            python -Im tox run -e compile,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
+            python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
