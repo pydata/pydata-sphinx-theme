@@ -113,7 +113,7 @@ $foundation-white: #fff;
 
 // This is a custom - calculated  color between gray 100 and 200 - to reduce
 // the contrast ratio (avoid a jarring effect)
-$base-light-text: #ced6dd;
+$base-light-text: #2a313d;
 
 // used in sphinx_design - gray 100
 $foundation-light-gray: #f3f4f5;
@@ -122,7 +122,7 @@ $foundation-light-gray: #f3f4f5;
 $foundation-muted-gray: #29313d;
 
 // used in sphinx_design - gray 800
-$foundation-dark-gray: #222832;
+$foundation-dark-gray: #b8b8ba;
 $pst-semantic-colors: (
   "primary": (
     "light": #{map-deep-get($color-palette, "teal", "500")},
