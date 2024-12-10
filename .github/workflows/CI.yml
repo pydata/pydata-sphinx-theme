@@ -59,6 +59,8 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
@@ -93,6 +95,8 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: "Setup CI environment 🛠"
         uses: ./.github/actions/set-dev-env
         with:
@@ -181,3 +185,8 @@ jobs:
           name: profile-results
           path: docbuild_profile.svg
           if-no-files-found: ignore
+
+  coverage-comment:
+    name: "Post coverage comment"
+    uses: ./.github/workflows/coverage.yml
+    needs: [coverage]
