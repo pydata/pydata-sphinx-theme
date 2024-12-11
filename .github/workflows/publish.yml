@@ -30,23 +30,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: "3.9"
           pandoc: "False"
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@v2
+        uses: hynek/build-and-inspect-python-package@f01e4d047aadcc0c054c95ec9900da3ec3fc7a0f # 2.10.0
         id: baipp
         with:
           attest-build-provenance-github: "true"
 
-      - run: echo Packages can be found at ${BAIPP_DIST}
+      - run: echo Packages can be found at "${BAIPP_DIST}"
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
@@ -55,9 +55,12 @@ jobs:
     needs: [build-package]
     permissions:
       id-token: write # needed for PyPI upload
+    environment:
+      name: pst-release
+      url: https://pypi.org/p/pydata-sphinx-theme
     steps:
       - name: "Download PST built package 📦"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # 4.1.8
         with:
           name: Packages
           path: dist
@@ -67,9 +70,11 @@ jobs:
           tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70 # 1.12.3
         # only publish if this is a published release by pydata
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
+        with:
+          print-hash: true
 
       - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
         uses: scientific-python/upload-nightly-action@82396a2ed4269ba06c6b2988bb4fd568ef3c3d6b # 0.6.1
