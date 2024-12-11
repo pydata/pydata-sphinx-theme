@@ -46,7 +46,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -76,7 +76,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 
@@ -113,7 +113,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
 
       - name: "Check for broken links 🔗"
         run: python -Im tox -e docs-linkcheck

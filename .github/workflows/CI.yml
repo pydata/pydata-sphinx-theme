@@ -67,7 +67,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -106,7 +106,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           pandoc: true
@@ -128,11 +128,16 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
       - run: python -Im pip install --upgrade coverage[toml]
+
       - name: "Download coverage data 📥"
         uses: actions/download-artifact@v4
         with:
@@ -179,8 +184,11 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           # 3.12 is not supported by py-spy yet
           python-version: "3.11"

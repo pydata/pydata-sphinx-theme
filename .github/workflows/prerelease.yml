@@ -26,7 +26,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -51,7 +51,7 @@ jobs:
         if: matrix.python-version == '3.9'
         id: baipp
 
-      - run: echo Packages can be found at ${BAIPP_DIST}
+      - run: echo Packages can be found at "${BAIPP_DIST}"
         if: matrix.python-version == '3.9'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
