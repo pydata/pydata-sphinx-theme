@@ -17,9 +17,11 @@ jobs:
         id: get-run
         uses: octokit/request-action@v2.x
         with:
-          route: GET /repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}
+          route: GET /repos/"${REPO}"/actions/runs/"${WORKFLOW_RUN_ID}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
 
       # this needs the .coverage file so we download from the CI workflow artifacts
       - name: "Download coverage data 📥"

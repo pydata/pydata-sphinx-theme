@@ -1,4 +1,7 @@
-name: build PST docs
+# This workflow is checks that the documentation can be built across multiple OSes, Python, and Sphinx versions.
+# It also checks for broken links in the documentation and runs Lighthouse audits on the built site.
+
+name: docs-checks
 
 # Concurrency group that uses the workflow name and PR number if available
 # or commit SHA as a fallback. If a new build is triggered under that
@@ -21,6 +24,8 @@ on:
   pull_request:
     branches:
       - "*"
+  # allows this to be used as a composite action in other workflows
+  workflow_call:
   # allow manual triggering of the workflow, while debugging
   workflow_dispatch:
 

@@ -16,17 +16,21 @@ permissions:
   contents: read
 
 jobs:
-  # calls our general CI workflow (tests, build docs, etc.)
+  # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
     uses: ./.github/workflows/CI.yml
     # needed for the coverage action
     permissions:
       contents: write
       pull-requests: write
+  # calls our docs workflow (build docs, check broken links, lighthouse)
+  docs:
+    uses: ./.github/workflows/docs.yml
 
   build-package:
     name: "Build & verify PST package"
-    needs: [tests] # require tests to pass before release runs
+    # require tests and docs to pass before building the package
+    needs: [tests, docs]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
