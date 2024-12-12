@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-  "sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip",
+  "sphinx-theme-builder @ git+https://github.com/pradyunsg/sphinx-theme-builder.git@main"
 ]
 build-backend = "sphinx_theme_builder"
 
@@ -108,7 +108,7 @@ indent-width = 4
 ignore = [
   "D107", # Missing docstring in `__init__` | set the docstring in the class
   "D205", # 1 blank line required between summary line and description,
-  "D212",  # docstring summary must be on first physical line
+  "D212", # docstring summary must be on first physical line
   "W291", # let pre-commit handle trailing whitespace
 
 ]
