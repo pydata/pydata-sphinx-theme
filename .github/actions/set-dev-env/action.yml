@@ -1,3 +1,5 @@
+# Reusable action to set our PST development environment
+# DO NOT use for release jobs since we cache dependencies
 name: Setup PST CI environment
 description: Create a PST dev environment
 
