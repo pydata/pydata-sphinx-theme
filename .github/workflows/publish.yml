@@ -38,17 +38,16 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # 5.3.0
         with:
           python-version: "3.9"
-          pandoc: "False"
+
+      - run: python -Im pip install tox-uv
 
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@f01e4d047aadcc0c054c95ec9900da3ec3fc7a0f # 2.10.0
         id: baipp
-        with:
-          attest-build-provenance-github: "true"
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
         env:
