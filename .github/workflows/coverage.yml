@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: "Get the triggering workflow run details"
         id: get-run
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d
         with:
           route: GET /repos/"${REPO}"/actions/runs/"${WORKFLOW_RUN_ID}"
         env:
@@ -25,7 +25,7 @@ jobs:
 
       # this needs the .coverage file so we download from the CI workflow artifacts
       - name: "Download coverage data 📥"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
         with:
           pattern: coverage-data-*
           merge-multiple: true
@@ -36,7 +36,7 @@ jobs:
         run: ls -R
 
       - name: "Post coverage comment"
-        uses: py-cov-action/python-coverage-comment-action@v3
+        uses: py-cov-action/python-coverage-comment-action@b2eb38dd175bf053189b35f738f9207278b00925
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_PR_RUN_ID: ${{ github.event.workflow_run.id }}

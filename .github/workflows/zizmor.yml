@@ -20,12 +20,12 @@ jobs:
       security-events: write
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
 
       - name: "Install uv 📦"
-        uses: astral-sh/setup-uv@v4
+        uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a
 
       - name: "Run zizmor 🕵️‍♂️"
         run: uvx zizmor --format sarif . > results.sarif
