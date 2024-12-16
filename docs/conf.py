@@ -347,11 +347,14 @@ linkcheck_ignore = [
     r"https://www.sphinx-doc.org/en/master/*/.+?#.+?",
     # Known broken links in kitchen sink
     r"https://source.unsplash.com/.+",
-    r"https://.unsplash.com/.+",
+    r"https://unsplash.com/.+",
     # sample urls
     "http://someurl/release-0.1.0.tar-gz",
     "http://python.py",
+    # for whatever reason the Ablog index is treated as broken
     "../examples/blog/index.html",
+    # get a 403 on CI
+    "https://canvas.workday.com/styles/tokens/type",
 ]
 
 linkcheck_allowed_redirects = {
