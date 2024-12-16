@@ -2,19 +2,15 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+#
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
 # Cristhian Rivera, 2024
 # Felipe Moreno, 2024
 # Tania Allard, 2024
-# 
+#
 msgid ""
 msgstr ""
-"Last-Translator: Tania Allard, 2024\n"
-"Language-Team: Spanish (https://app.transifex.com/12rambau/teams/166811/es/)\n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: docs/conf.py:111
 msgid "Click to expand"
