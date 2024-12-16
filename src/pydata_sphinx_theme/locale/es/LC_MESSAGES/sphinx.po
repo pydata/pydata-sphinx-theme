@@ -2,14 +2,19 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-#
+# 
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2023
 # Cristhian Rivera, 2024
 # Felipe Moreno, 2024
 # Tania Allard, 2024
+# 
 msgid ""
 msgstr ""
+"Last-Translator: Tania Allard, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/12rambau/teams/166811/es/)\n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: docs/conf.py:111
 msgid "Click to expand"
@@ -41,7 +46,8 @@ msgstr "Error"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr "Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
+msgstr ""
+"Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:6
 msgid "Breadcrumb"
@@ -152,8 +158,7 @@ msgid ""
 "Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
-"Construido con el <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+"Construido con el <a href=\"%(PST_url)s\"> Tema PyData Sphinx </a> "
 "%(theme_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
@@ -191,3 +196,12 @@ msgstr "Navegación del sitio"
 
 #~ msgid "light/dark"
 #~ msgstr "claro/oscuro"
+
+#~ msgid ""
+#~ "Built with the <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+#~ "%(theme_version)s."
+#~ msgstr ""
+#~ "Construido con el <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+#~ "%(theme_version)s."
