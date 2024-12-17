@@ -128,7 +128,7 @@ Most major browsers, including Firefox and Chrome, have built-in accessibility
 tools as part of their web developer tools. These tools can help to quickly
 identify accessibility issues and often include links to standards:
 
-- [Firefox Accessibility Inspector](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector)
+- [Firefox Accessibility Inspector](https://firefox-source-docs.mozilla.org/devtools-user/accessibility_inspector/index.html)
 - [Chrome DevTools Accessibility](https://developer.chrome.com/docs/devtools/accessibility/reference)
 
 There are also a few browser extensions that some of the maintainers of this
