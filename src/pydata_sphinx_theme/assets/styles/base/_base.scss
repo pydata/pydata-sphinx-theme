@@ -72,6 +72,9 @@ a {
   line-height: 1.15;
 }
 
+// From 0.16.1, the preferred variable for headings is --pst-color-heading
+// if you have --pst-heading-color, this variable will be used, otherwise the default
+// --pst-color-heading will be used.
 h1 {
   @extend %heading-style;
 
