@@ -212,7 +212,7 @@ All will end up as numbers in the rendered HTML, but in the source they look lik
 
 ## Link shortening for git repository services
 
-Many projects have links back to their issues / PRs hosted on platforms like **GitHub** or **GitLab**.
+Many projects have links back to their issues / PRs hosted on platforms like **GitHub**, **GitLab**, or **Bitbucket**.
 Instead of displaying these as raw links, this theme does some lightweight formatting for these platforms specifically.
 
 In **reStructuredText**, URLs are automatically converted to links, so this works automatically.
@@ -252,5 +252,25 @@ There are a variety of link targets supported, here's a table for reference:
 - `https://gitlab.com/gitlab-org`: https://gitlab.com/gitlab-org
 - `https://gitlab.com/gitlab-org/gitlab`: https://gitlab.com/gitlab-org/gitlab
 - `https://gitlab.com/gitlab-org/gitlab/-/issues/375583`: https://gitlab.com/gitlab-org/gitlab/-/issues/375583
+- `https://gitlab.com/gitlab-org/gitlab/-/merge_requests/174667`: https://gitlab.com/gitlab-org/gitlab/-/merge_requests/174667
+
+**Bitbucket**
+
+- `https://bitbucket.org`: https://bitbucket.org
+- `https://bitbucket.org/atlassian/workspace/overview`: https://bitbucket.org/atlassian/workspace/overview
+- `https://bitbucket.org/atlassian/aui`: https://bitbucket.org/atlassian/aui
+- `https://bitbucket.org/atlassian/aui/pull-requests/4758`: https://bitbucket.org/atlassian/aui/pull-requests/4758
 
 Links provided with a text body won't be changed.
+
+If you have links to GitHub, GitLab, or Bitbucket repository URLs that are on non-standard domains
+(i.e., not on `github.com`, `gitlab.com`, or `bitbucket.org`, respectively), then these will be
+shortened if the base URL is given in the `html_context` section of your `conf.py` file (see
+{ref}`Add an edit button <add-edit-button>`), e.g.,
+
+```python
+html_context = {
+    "gitlab_url": "https://gitlab.mydomain.com",  # your self-hosted GitLab
+    ...
+}
+```
