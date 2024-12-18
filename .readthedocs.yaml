@@ -1,12 +1,13 @@
 version: 2
+
 formats:
   - htmlzip
 
 # build with latest available ubuntu version
 build:
-  os: ubuntu-20.04
+  os: ubuntu-lts-latest
   tools:
-    python: "3.10"
+    python: "3.12"
   apt_packages:
     - graphviz
   jobs:
@@ -16,7 +17,14 @@ build:
       - playwright install chromium
       - python ./docs/scripts/generate_gallery_images.py
 
+sphinx:
+  configuration: docs/conf.py
+  # builder: "dirhtml"
+  fail_on_warning: true
+
 python:
   install:
     - method: pip
-      path: .[doc]
+      path: .
+      extra_requirements:
+        - doc
