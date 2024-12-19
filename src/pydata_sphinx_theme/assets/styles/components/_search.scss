@@ -82,39 +82,26 @@
 /**
  * The search modal <dialog>
  */
-#pst-search-dialog {
-  display: none;
+#pst-search-dialog[open] {
+  margin: 25vh auto 0; // an open modal dialog has a fixed position, so these margins bring it 25% down the viewport height and center it horizontally
+  width: 90%;
+  max-width: 800px;
+  background-color: transparent;
+  padding: $focus-ring-width;
+  border: none;
 
-  &[open] {
-    display: flex;
+  &::backdrop {
+    background-color: black;
+    opacity: 0.5;
+  }
 
-    // Center in middle of screen just underneath header
-    position: fixed;
-    z-index: $zindex-modal;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    right: 1rem;
-    margin-top: 0.5rem;
-    width: 90%;
-    max-width: 800px;
-    background-color: transparent;
-    padding: $focus-ring-width;
-    border: none;
+  form.bd-search {
+    flex-grow: 1;
 
-    &::backdrop {
-      background-color: black;
-      opacity: 0.5;
-    }
-
-    form.bd-search {
-      flex-grow: 1;
-
-      // Font and input text a bit bigger
-      svg,
-      input {
-        font-size: var(--pst-font-size-icon);
-      }
+    // Font and input text a bit bigger
+    svg,
+    input {
+      font-size: var(--pst-font-size-icon);
     }
   }
 }
