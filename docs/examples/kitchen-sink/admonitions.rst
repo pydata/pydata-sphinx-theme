@@ -121,3 +121,10 @@ Sphinx provides several different types of admonitions.
 .. deprecated:: v0.1.1
 
    Here's a deprecation message.
+
+``versionremoved``
+==================
+
+.. versionremoved:: v0.1.1
+
+   Here's a version removed message.
