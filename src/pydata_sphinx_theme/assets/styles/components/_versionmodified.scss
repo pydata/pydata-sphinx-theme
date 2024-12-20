@@ -66,7 +66,13 @@ span.versionmodified.changed {
   }
 }
 
-span.versionmodified.deprecated,
+span.versionmodified.deprecated {
+  &::before {
+    color: var(--pst-color-danger);
+    content: var(--pst-icon-versionmodified-deprecated);
+  }
+}
+
 span.versionmodified.removed {
   &::before {
     color: var(--pst-color-danger);
