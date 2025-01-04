@@ -332,6 +332,16 @@ var setupSearchButtons = () => {
   searchDialog.addEventListener("click", closeDialogOnBackdropClick);
 };
 
+var setupSearchResults = () => {
+  // https://cs.opensource.google/pigweed/pigweed/+/c1053db0462769f382b50940b58d0d351f0f9402
+  // https://cs.opensource.google/pigweed/pigweed/+/4e78f9031b14b3a71f96692bfad80fbb4c91a3d2
+  const root =
+    "URL_ROOT" in DOCUMENTATION_OPTIONS
+      ? DOCUMENTATION_OPTIONS.URL_ROOT
+      : document.documentElement.dataset.content_root;
+  console.log(root);
+};
+
 /*******************************************************************************
  * Version Switcher
  * Note that this depends on two variables existing that are defined in
@@ -857,6 +867,7 @@ documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
+documentReady(setupSearchResults);
 documentReady(setupMobileSidebarKeyboardHandlers);
 
 // Determining whether an element has scrollable content depends on stylesheets,
