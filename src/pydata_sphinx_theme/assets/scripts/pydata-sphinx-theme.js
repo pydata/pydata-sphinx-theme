@@ -333,13 +333,26 @@ var setupSearchButtons = () => {
 };
 
 var setupSearchResults = () => {
-  // https://cs.opensource.google/pigweed/pigweed/+/c1053db0462769f382b50940b58d0d351f0f9402
-  // https://cs.opensource.google/pigweed/pigweed/+/4e78f9031b14b3a71f96692bfad80fbb4c91a3d2
+  // Don't interfere with the default search UX on /search.html.
+  if (window.location.pathname.endsWith('/search.html')) {
+    return;
+  }
+
+  // Bail if the Search class is not available. Search-as-you-type is
+  // impossible without that class. layout.html should ensure that
+  // searchtools.js loads.
+  if (!Search) {
+    return;
+  }
+
+  // Get the relative path back to the root of the website.
   const root =
     "URL_ROOT" in DOCUMENTATION_OPTIONS
-      ? DOCUMENTATION_OPTIONS.URL_ROOT
-      : document.documentElement.dataset.content_root;
-  console.log(root);
+      ? DOCUMENTATION_OPTIONS.URL_ROOT  // Sphinx v6 and earlier
+      : document.documentElement.dataset.content_root;  // Sphinx v7 and later
+
+  // https://cs.opensource.google/pigweed/pigweed/+/c1053db0462769f382b50940b58d0d351f0f9402
+  // https://cs.opensource.google/pigweed/pigweed/+/4e78f9031b14b3a71f96692bfad80fbb4c91a3d2
 };
 
 /*******************************************************************************
