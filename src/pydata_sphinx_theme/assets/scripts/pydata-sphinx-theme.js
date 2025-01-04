@@ -343,6 +343,7 @@ var resetSearchAsYouTypeResults = () => {
   // Create a new search-as-you-type results container.
   results = document.createElement('section');
   results.classList.add('search-results');
+  results.classList.add('empty');
   results.id = 'search-results';
   let modal = document.querySelector('#pst-search-dialog');
   modal.appendChild(results);
@@ -439,6 +440,7 @@ var setupSearchAsYouType = () => {
     }
     timeoutId = window.setTimeout(() => {
       Search.performSearch(query);
+      document.querySelector('#search-results').classList.remove('empty');
       timeoutId = null;
     }, delay_ms);
   });

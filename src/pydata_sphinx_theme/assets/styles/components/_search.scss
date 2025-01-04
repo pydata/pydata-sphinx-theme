@@ -125,13 +125,15 @@
      * built-in, JS-powered local search tools. */
     #search-results {
       overflow-y: scroll;
-      padding: 1em;
       background-color: var(--pst-color-background);
+      padding: 1em;
       a {
         color: var(--pst-color-link);
       }
+      &.empty {
+        display: none;
+      }
     }
-
   }
 }
 
