@@ -332,7 +332,67 @@ var setupSearchButtons = () => {
   searchDialog.addEventListener("click", closeDialogOnBackdropClick);
 };
 
-var setupSearchResults = () => {
+var resetSearchAsYouTypeResults = () => {
+  // If a search-as-you-type results container was previously added,
+  // remove it now.
+  let results = document.querySelector('#search-as-you-type-results');
+  if (results) {
+    results.remove();
+  }
+
+  // Create a new search-as-you-type results container.
+  results = document.createElement('section');
+  results.classList.add('search-as-you-type-results');
+  results.id = 'search-as-you-type-results';
+  let modal = document.querySelector('.search-button__search-container');  // looks like it may now be #pst-search-dialog
+  modal.appendChild(results);
+
+  // Get the relative path back to the root of the website.
+  const root =
+    "URL_ROOT" in DOCUMENTATION_OPTIONS
+      ? DOCUMENTATION_OPTIONS.URL_ROOT  // Sphinx v6 and earlier
+      : document.documentElement.dataset.content_root;  // Sphinx v7 and later
+
+  // As Sphinx populates the search results, this observer makes sure that
+  // each URL is correct (i.e. doesn't 404).
+  const linkObserver = new MutationObserver(() => {
+    const links = Array.from(
+      document.querySelectorAll('#search-as-you-type-results .search a'),
+    );
+    // Check every link every time because the timing of when new results are
+    // added is unpredictable and it's not an expensive operation.
+    links.forEach((link) => {
+      // Don't use the link.href getter because the browser computes the href
+      // as a full URL. We need the relative URL that Sphinx generates.
+      const href = link.getAttribute('href');
+      if (href.startsWith(root)) {
+        // No work needed. The root has already been prepended to the href.
+        return;
+      }
+      link.href = `${root}${href}`;
+    });
+  });
+
+  // The node that linkObserver watches doesn't exist until the user types
+  // something into the search textbox. This second observer (resultsObserver)
+  // just waits for #search-as-you-type-results to exist and then registers
+  // linkObserver on it.
+  let isObserved = false;
+  const resultsObserver = new MutationObserver(() => {
+    if (isObserved) {
+      return;
+    }
+    const container = document.querySelector('#search-as-you-type-results .search');
+    if (!container) {
+      return;
+    }
+    linkObserver.observe(container, { childList: true });
+    isObserved = true;
+  });
+  resultsObserver.observe(results, { childList: true });
+};
+
+var setupSearchAsYouType = () => {
   // Don't interfere with the default search UX on /search.html.
   if (window.location.pathname.endsWith('/search.html')) {
     return;
@@ -345,11 +405,43 @@ var setupSearchResults = () => {
     return;
   }
 
-  // Get the relative path back to the root of the website.
-  const root =
-    "URL_ROOT" in DOCUMENTATION_OPTIONS
-      ? DOCUMENTATION_OPTIONS.URL_ROOT  // Sphinx v6 and earlier
-      : document.documentElement.dataset.content_root;  // Sphinx v7 and later
+  // Destroy the previous search container and create a new one.
+  resetSearchAsYouTypeResults();
+  let timeoutId = null;
+  let lastQuery = '';
+  const searchInput = document.querySelector('#search-input');
+
+  // Initiate searches whenever the user types stuff in the search modal textbox.
+  searchInput.addEventListener('keyup', () => {
+    const query = searchInput.value;
+
+    // Don't search when there's nothing in the query textbox.
+    if (query === '') {
+      return;
+    }
+
+    // Don't search if there is no detectable change between
+    // the last query and the current query. E.g. the user presses
+    // Tab to start navigating the search results.
+    if (query === lastQuery) {
+      return;
+    }
+
+    // The user has changed the search query. Delete the old results
+    // and start setting up the new container.
+    resetSearchAsYouTypeResults();
+
+    // Debounce so that the search only starts when the user stops typing.
+    const delay_ms = 500;
+    lastQuery = query;
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+    timeoutId = window.setTimeout(() => {
+      Search.performSearch(query);
+      timeoutId = null;
+    }, delay_ms);
+  });
 
   // https://cs.opensource.google/pigweed/pigweed/+/c1053db0462769f382b50940b58d0d351f0f9402
   // https://cs.opensource.google/pigweed/pigweed/+/4e78f9031b14b3a71f96692bfad80fbb4c91a3d2
@@ -880,7 +972,7 @@ documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
-documentReady(setupSearchResults);
+documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
 
 // Determining whether an element has scrollable content depends on stylesheets,
