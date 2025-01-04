@@ -335,16 +335,16 @@ var setupSearchButtons = () => {
 var resetSearchAsYouTypeResults = () => {
   // If a search-as-you-type results container was previously added,
   // remove it now.
-  let results = document.querySelector('#search-as-you-type-results');
+  let results = document.querySelector('#search-results');  // TODO: Mention that the name must be #search-results
   if (results) {
     results.remove();
   }
 
   // Create a new search-as-you-type results container.
   results = document.createElement('section');
-  results.classList.add('search-as-you-type-results');
-  results.id = 'search-as-you-type-results';
-  let modal = document.querySelector('.search-button__search-container');  // looks like it may now be #pst-search-dialog
+  results.classList.add('search-results');
+  results.id = 'search-results';
+  let modal = document.querySelector('#pst-search-dialog');
   modal.appendChild(results);
 
   // Get the relative path back to the root of the website.
@@ -357,7 +357,7 @@ var resetSearchAsYouTypeResults = () => {
   // each URL is correct (i.e. doesn't 404).
   const linkObserver = new MutationObserver(() => {
     const links = Array.from(
-      document.querySelectorAll('#search-as-you-type-results .search a'),
+      document.querySelectorAll('#search-results .search a'),
     );
     // Check every link every time because the timing of when new results are
     // added is unpredictable and it's not an expensive operation.
@@ -375,14 +375,14 @@ var resetSearchAsYouTypeResults = () => {
 
   // The node that linkObserver watches doesn't exist until the user types
   // something into the search textbox. This second observer (resultsObserver)
-  // just waits for #search-as-you-type-results to exist and then registers
+  // just waits for #search-results to exist and then registers
   // linkObserver on it.
   let isObserved = false;
   const resultsObserver = new MutationObserver(() => {
     if (isObserved) {
       return;
     }
-    const container = document.querySelector('#search-as-you-type-results .search');
+    const container = document.querySelector('#search-results .search');
     if (!container) {
       return;
     }
@@ -409,7 +409,7 @@ var setupSearchAsYouType = () => {
   resetSearchAsYouTypeResults();
   let timeoutId = null;
   let lastQuery = '';
-  const searchInput = document.querySelector('#search-input');
+  const searchInput = document.querySelector('#pst-search-dialog input[name=q]');
 
   // Initiate searches whenever the user types stuff in the search modal textbox.
   searchInput.addEventListener('keyup', () => {

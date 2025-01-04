@@ -71,25 +71,6 @@
   }
 }
 
-/* Search-as-you-type UI. */
-.search-button__search-container {
-  /* Make the search-as-you-type results container display correctly. */
-  background-color: var(--pst-color-background);
-  flex-direction: column;
-  height: 50vh;
-  /* In pydata-sphinx-theme.js this container is appended below
-   * the query input node after the user types their search query.
-   * Search results are populated into this container using Sphinx's
-   * built-in, JS-powered local search tools. */
-  .search-as-you-type-results {
-    overflow-y: scroll;
-    padding: 1em;
-    a {
-      color: var(--pw-color-link);
-    }
-  }
-}
-
 /**
  * Search button - located in the navbar
  */
@@ -120,6 +101,8 @@
     background-color: transparent;
     padding: $focus-ring-width;
     border: none;
+    flex-direction: column;
+    height: 50vh;
 
     &::backdrop {
       background-color: black;
@@ -135,6 +118,20 @@
         font-size: var(--pst-font-size-icon);
       }
     }
+
+    /* In pydata-sphinx-theme.js this container is appended below
+     * the query input node after the user types their search query.
+     * Search results are populated into this container using Sphinx's
+     * built-in, JS-powered local search tools. */
+    #search-results {
+      overflow-y: scroll;
+      padding: 1em;
+      background-color: var(--pst-color-background);
+      a {
+        color: var(--pst-color-link);
+      }
+    }
+
   }
 }
 
