@@ -333,6 +333,9 @@ var setupSearchButtons = () => {
 };
 
 var resetSearchAsYouTypeResults = () => {
+  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
+    return;
+  }
   // If a search-as-you-type results container was previously added,
   // remove it now.
   let results = document.querySelector('#search-results');  // TODO: Mention that the name must be #search-results
@@ -394,6 +397,10 @@ var resetSearchAsYouTypeResults = () => {
 };
 
 var setupSearchAsYouType = () => {
+  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
+    return;
+  }
+
   // Don't interfere with the default search UX on /search.html.
   if (window.location.pathname.endsWith('/search.html')) {
     return;
