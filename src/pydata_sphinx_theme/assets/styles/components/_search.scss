@@ -93,8 +93,9 @@
     z-index: $zindex-modal;
     top: 30%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
     right: 1rem;
+    margin-bottom: 0;
     margin-top: 0.5rem;
     width: 90%;
     max-width: 800px;
@@ -102,7 +103,7 @@
     padding: $focus-ring-width;
     border: none;
     flex-direction: column;
-    height: 50vh;
+    height: 80vh;
 
     &::backdrop {
       background-color: black;
