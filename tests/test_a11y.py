@@ -296,13 +296,17 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
 def test_search_as_you_type(page: Page, url_base: str) -> None:
     page.set_viewport_size({"width": 1440, "height": 720})
     page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+    # Click the search textbox.
     searchbox = page.locator("css=.navbar-header-items .search-button__default-text")
     searchbox.click()
+    # Type a search query.
     query_input = page.locator("css=#pst-search-dialog input[type=search]")
     expect(query_input).to_be_visible()
     query_input.type("test")
+    page.wait_for_timeout(301)  # Search execution is debounced for 300 ms.
     search_results = page.locator("css=#search-results")
     expect(search_results).to_be_visible()
+    # Navigate into the inline search results.
     query_input.press("Tab")
     focused_element_actual_content = page.evaluate("document.activeElement.textContent")
     focused_element_expected_content = "1. Test of no sidebar"
