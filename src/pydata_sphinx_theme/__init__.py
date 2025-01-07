@@ -243,7 +243,9 @@ def update_and_remove_templates(
 
     # Specify whether search-as-you-type should be used or not.
     search_as_you_type = str(context["theme_search_as_you_type"]).lower()
-    app.add_js_file(None, body=f"DOCUMENTATION_OPTIONS.search_as_you_type = {search_as_you_type};")
+    app.add_js_file(
+        None, body=f"DOCUMENTATION_OPTIONS.search_as_you_type = {search_as_you_type};"
+    )
 
     # Update version number for the "made with version..." component
     context["theme_version"] = __version__

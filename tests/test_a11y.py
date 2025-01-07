@@ -292,6 +292,7 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
         "Update Sphinx configuration during the build"
     )
 
+
 @pytest.mark.a11y
 def test_search_as_you_type(page: Page, url_base: str) -> None:
     page.set_viewport_size({"width": 1440, "height": 720})

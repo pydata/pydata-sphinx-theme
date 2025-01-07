@@ -217,7 +217,7 @@ html_theme_options = {
         "version_match": version_match,
     },
     # "back_to_top_button": False,
-    "search_as_you_type": True
+    "search_as_you_type": True,
 }
 
 html_sidebars = {

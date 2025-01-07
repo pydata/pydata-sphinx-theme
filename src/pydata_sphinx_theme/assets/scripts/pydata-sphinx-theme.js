@@ -351,7 +351,7 @@ var setupSearchAsYouType = () => {
   }
 
   // Don't interfere with the default search UX on /search.html.
-  if (window.location.pathname.endsWith('/search.html')) {
+  if (window.location.pathname.endsWith("/search.html")) {
     return;
   }
 
@@ -368,16 +368,18 @@ var setupSearchAsYouType = () => {
   // Destroy the previous search container and create a new one.
   resetSearchAsYouTypeResults();
   let timeoutId = null;
-  let lastQuery = '';
-  const searchInput = document.querySelector('#pst-search-dialog input[name=q]');
+  let lastQuery = "";
+  const searchInput = document.querySelector(
+    "#pst-search-dialog input[name=q]",
+  );
 
   // Initiate searches whenever the user types stuff in the search modal textbox.
-  searchInput.addEventListener('keyup', () => {
+  searchInput.addEventListener("keyup", () => {
     const query = searchInput.value;
 
     // Don't search when there's nothing in the query textbox.
-    if (query === '') {
-      resetSearchAsYouTypeResults();  // Remove previous results.
+    if (query === "") {
+      resetSearchAsYouTypeResults(); // Remove previous results.
       return;
     }
 
@@ -400,7 +402,7 @@ var setupSearchAsYouType = () => {
     }
     timeoutId = window.setTimeout(() => {
       Search.performSearch(query);
-      document.querySelector('#search-results').classList.remove('empty');
+      document.querySelector("#search-results").classList.remove("empty");
       timeoutId = null;
     }, delay_ms);
   });
@@ -421,39 +423,39 @@ var resetSearchAsYouTypeResults = () => {
   }
   // If a search-as-you-type results container was previously added,
   // remove it now.
-  let results = document.querySelector('#search-results');
+  let results = document.querySelector("#search-results");
   if (results) {
     results.remove();
   }
 
   // Create a new search-as-you-type results container.
-  results = document.createElement('section');
-  results.classList.add('search-results');
-  results.classList.add('empty');
+  results = document.createElement("section");
+  results.classList.add("search-results");
+  results.classList.add("empty");
   // IMPORTANT: The search results container MUST have this exact ID.
   // searchtools.js is hardcoded to populate into the node with this ID.
-  results.id = 'search-results';
-  let modal = document.querySelector('#pst-search-dialog');
+  results.id = "search-results";
+  let modal = document.querySelector("#pst-search-dialog");
   modal.appendChild(results);
 
   // Get the relative path back to the root of the website.
   const root =
     "URL_ROOT" in DOCUMENTATION_OPTIONS
-      ? DOCUMENTATION_OPTIONS.URL_ROOT  // Sphinx v6 and earlier
-      : document.documentElement.dataset.content_root;  // Sphinx v7 and later
+      ? DOCUMENTATION_OPTIONS.URL_ROOT // Sphinx v6 and earlier
+      : document.documentElement.dataset.content_root; // Sphinx v7 and later
 
   // As Sphinx populates the search results, this observer makes sure that
   // each URL is correct (i.e. doesn't 404).
   const linkObserver = new MutationObserver(() => {
     const links = Array.from(
-      document.querySelectorAll('#search-results .search a'),
+      document.querySelectorAll("#search-results .search a"),
     );
     // Check every link every time because the timing of when new results are
     // added is unpredictable and it's not an expensive operation.
     links.forEach((link) => {
       // Don't use the link.href getter because the browser computes the href
       // as a full URL. We need the relative URL that Sphinx generates.
-      const href = link.getAttribute('href');
+      const href = link.getAttribute("href");
       if (href.startsWith(root)) {
         // No work needed. The root has already been prepended to the href.
         return;
@@ -471,7 +473,7 @@ var resetSearchAsYouTypeResults = () => {
     if (isObserved) {
       return;
     }
-    const container = document.querySelector('#search-results .search');
+    const container = document.querySelector("#search-results .search");
     if (!container) {
       return;
     }

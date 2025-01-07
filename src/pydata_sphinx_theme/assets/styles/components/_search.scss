@@ -128,9 +128,11 @@
       overflow-y: scroll;
       background-color: var(--pst-color-background);
       padding: 1em;
+
       a {
         color: var(--pst-color-link);
       }
+
       &.empty {
         display: none;
       }
