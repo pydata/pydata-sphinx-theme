@@ -295,7 +295,12 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
 
 @pytest.mark.a11y
 def test_search_as_you_type(page: Page, url_base: str) -> None:
-    """Pressing Tab after entering a search query should focus the inline search results."""
+    """Search-as-you-type feature should support keyboard navigation.
+
+    When the search-as-you-type (inline search results) feature is enabled,
+    pressing Tab after entering a search query should focus the first inline
+    search result.
+    """
     page.set_viewport_size({"width": 1440, "height": 720})
     page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
     # Click the search textbox.
