@@ -332,13 +332,96 @@ var setupSearchButtons = () => {
   searchDialog.addEventListener("click", closeDialogOnBackdropClick);
 };
 
+/*******************************************************************************
+ * Inline search results (search-as-you-type)
+ *
+ * Immediately displays search results under the search query textbox.
+ *
+ * The search is conducted by Sphinx's built-in search tools (searchtools.js).
+ * Usually searchtools.js is only available on /search.html but
+ * pydata-sphinx-theme (PST) has been modified to load searchtools.js on every
+ * page. After the user types something into PST's search query textbox,
+ * searchtools.js executes the search and populates the results into
+ * the #search-results container. searchtools.js expects the results container
+ * to have that exact ID.
+ */
+var setupSearchAsYouType = () => {
+  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
+    return;
+  }
+
+  // Don't interfere with the default search UX on /search.html.
+  if (window.location.pathname.endsWith('/search.html')) {
+    return;
+  }
+
+  // Bail if the Search class is not available. Search-as-you-type is
+  // impossible without that class. layout.html should ensure that
+  // searchtools.js loads.
+  //
+  // Search class is defined in upstream Sphinx:
+  // https://github.com/sphinx-doc/sphinx/blob/master/sphinx/themes/basic/static/searchtools.js#L181
+  if (!Search) {
+    return;
+  }
+
+  // Destroy the previous search container and create a new one.
+  resetSearchAsYouTypeResults();
+  let timeoutId = null;
+  let lastQuery = '';
+  const searchInput = document.querySelector('#pst-search-dialog input[name=q]');
+
+  // Initiate searches whenever the user types stuff in the search modal textbox.
+  searchInput.addEventListener('keyup', () => {
+    const query = searchInput.value;
+
+    // Don't search when there's nothing in the query textbox.
+    if (query === '') {
+      resetSearchAsYouTypeResults();  // Remove previous results.
+      return;
+    }
+
+    // Don't search if there is no detectable change between
+    // the last query and the current query. E.g. the user presses
+    // Tab to start navigating the search results.
+    if (query === lastQuery) {
+      return;
+    }
+
+    // The user has changed the search query. Delete the old results
+    // and start setting up the new container.
+    resetSearchAsYouTypeResults();
+
+    // Debounce so that the search only starts when the user stops typing.
+    const delay_ms = 300;
+    lastQuery = query;
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+    timeoutId = window.setTimeout(() => {
+      Search.performSearch(query);
+      document.querySelector('#search-results').classList.remove('empty');
+      timeoutId = null;
+    }, delay_ms);
+  });
+};
+
+// Delete the old search results container (if it exists) and set up a new one.
+//
+// There is some complexity around ensuring that the search results links are
+// correct because we're extending searchtools.js past its assumed usage.
+// Sphinx assumes that searches are only executed from /search.html and
+// therefore it assumes that all search results links should be relative to
+// the root directory of the website. In our case the search can now execute
+// from any page of the website so we must fix the relative URLs that
+// searchtools.js generates.
 var resetSearchAsYouTypeResults = () => {
   if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
     return;
   }
   // If a search-as-you-type results container was previously added,
   // remove it now.
-  let results = document.querySelector('#search-results');  // TODO: Mention that the name must be #search-results
+  let results = document.querySelector('#search-results');
   if (results) {
     results.remove();
   }
@@ -347,6 +430,8 @@ var resetSearchAsYouTypeResults = () => {
   results = document.createElement('section');
   results.classList.add('search-results');
   results.classList.add('empty');
+  // IMPORTANT: The search results container MUST have this exact ID.
+  // searchtools.js is hardcoded to populate into the node with this ID.
   results.id = 'search-results';
   let modal = document.querySelector('#pst-search-dialog');
   modal.appendChild(results);
@@ -394,67 +479,6 @@ var resetSearchAsYouTypeResults = () => {
     isObserved = true;
   });
   resultsObserver.observe(results, { childList: true });
-};
-
-var setupSearchAsYouType = () => {
-  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
-    return;
-  }
-
-  // Don't interfere with the default search UX on /search.html.
-  if (window.location.pathname.endsWith('/search.html')) {
-    return;
-  }
-
-  // Bail if the Search class is not available. Search-as-you-type is
-  // impossible without that class. layout.html should ensure that
-  // searchtools.js loads.
-  if (!Search) {
-    return;
-  }
-
-  // Destroy the previous search container and create a new one.
-  resetSearchAsYouTypeResults();
-  let timeoutId = null;
-  let lastQuery = '';
-  const searchInput = document.querySelector('#pst-search-dialog input[name=q]');
-
-  // Initiate searches whenever the user types stuff in the search modal textbox.
-  searchInput.addEventListener('keyup', () => {
-    const query = searchInput.value;
-
-    // Don't search when there's nothing in the query textbox.
-    if (query === '') {
-      resetSearchAsYouTypeResults();
-      return;
-    }
-
-    // Don't search if there is no detectable change between
-    // the last query and the current query. E.g. the user presses
-    // Tab to start navigating the search results.
-    if (query === lastQuery) {
-      return;
-    }
-
-    // The user has changed the search query. Delete the old results
-    // and start setting up the new container.
-    resetSearchAsYouTypeResults();
-
-    // Debounce so that the search only starts when the user stops typing.
-    const delay_ms = 500;
-    lastQuery = query;
-    if (timeoutId) {
-      window.clearTimeout(timeoutId);
-    }
-    timeoutId = window.setTimeout(() => {
-      Search.performSearch(query);
-      document.querySelector('#search-results').classList.remove('empty');
-      timeoutId = null;
-    }, delay_ms);
-  });
-
-  // https://cs.opensource.google/pigweed/pigweed/+/c1053db0462769f382b50940b58d0d351f0f9402
-  // https://cs.opensource.google/pigweed/pigweed/+/4e78f9031b14b3a71f96692bfad80fbb4c91a3d2
 };
 
 /*******************************************************************************
