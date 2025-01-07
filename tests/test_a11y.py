@@ -291,3 +291,19 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
     expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
         "Update Sphinx configuration during the build"
     )
+
+@pytest.mark.a11y
+def test_search_as_you_type(page: Page, url_base: str) -> None:
+    page.set_viewport_size({"width": 1440, "height": 720})
+    page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+    searchbox = page.locator("css=.navbar-header-items .search-button__default-text")
+    searchbox.click()
+    query_input = page.locator("css=#pst-search-dialog input[type=search]")
+    expect(query_input).to_be_visible()
+    query_input.type("test")
+    search_results = page.locator("css=#search-results")
+    expect(search_results).to_be_visible()
+    query_input.press("Tab")
+    focused_element_actual_content = page.evaluate("document.activeElement.textContent")
+    focused_element_expected_content = "1. Test of no sidebar"
+    assert focused_element_actual_content == focused_element_expected_content
