@@ -891,8 +891,8 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     # see if our warnings worked
     if style_names[0].startswith("fake"):
         assert len(warnings) == 2
-        re.match(r"Color theme fake_foo.*tango", warnings[0])
-        re.match(r"Color theme fake_bar.*monokai", warnings[1])
+        assert re.search(r"Highlighting style fake_foo.*tango", warnings[0])
+        assert re.search(r"Highlighting style fake_bar.*monokai", warnings[1])
     else:
         assert warnings == [""]
     # test that the rendered HTML has highlighting spans
