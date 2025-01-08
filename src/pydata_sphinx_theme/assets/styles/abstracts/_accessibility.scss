@@ -70,8 +70,10 @@
       $rgb-col: map.merge(
         $rgb-col,
         (
-          $channel:
-            math.pow(math.div((math.div($value, 255) + 0.055), 1.055), 2.4),
+          $channel: math.pow(
+              math.div((math.div($value, 255) + 0.055), 1.055),
+              2.4
+            ),
         )
       );
     }
