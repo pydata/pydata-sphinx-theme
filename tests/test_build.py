@@ -907,11 +907,9 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
         lines = css_file.readlines()
     assert lines[0].startswith('html[data-theme="light"]')
     for mode, color in dict(zip(["light", "dark"], keyword_colors)).items():
-        regexp = re.compile(
-            r'html\[data-theme="' + mode + r'"\].*\.k .*color: ' + color
-        )
-        matches = [regexp.match(line) is not None for line in lines]
-        assert sum(matches) == 1
+        regexp = re.compile(rf'html\[data-theme="{mode}"\].*\.k .*color:\s?{color}')
+        matches = [regexp.search(line) is not None for line in lines]
+        assert sum(matches) == 1, f"expected {mode}: {color}\n" + "\n".join(lines)
 
 
 def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
