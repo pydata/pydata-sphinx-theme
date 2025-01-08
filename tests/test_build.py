@@ -891,8 +891,8 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     # see if our warnings worked
     if style_names[0].startswith("fake"):
         assert len(warnings) == 2
-        re.match(r"Color theme fake_foo.*tango", warnings[0])
-        re.match(r"Color theme fake_bar.*monokai", warnings[1])
+        assert re.search(r"Highlighting style fake_foo.*tango", warnings[0])
+        assert re.search(r"Highlighting style fake_bar.*monokai", warnings[1])
     else:
         assert warnings == [""]
     # test that the rendered HTML has highlighting spans
@@ -908,10 +908,11 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     assert lines[0].startswith('html[data-theme="light"]')
     for mode, color in dict(zip(["light", "dark"], keyword_colors)).items():
         regexp = re.compile(
-            r'html\[data-theme="' + mode + r'"\].*\.k .*color: ' + color
+            r'html\[data-theme="' + mode + r'"\].*\.k .*color:\s?' + color,
+            re.IGNORECASE,
         )
-        matches = [regexp.match(line) is not None for line in lines]
-        assert sum(matches) == 1
+        matches = [regexp.search(line) is not None for line in lines]
+        assert sum(matches) == 1, f"expected {mode}: {color}\n" + "\n".join(lines)
 
 
 def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
