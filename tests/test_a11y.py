@@ -318,5 +318,7 @@ def test_search_as_you_type(page: Page, url_base: str) -> None:
     # Make sure that the first inline search result is focused.
     actual_focused_content = page.evaluate("document.activeElement.textContent")
     first_result_selector = "#search-results .search li:first-child a"
-    expected_focused_content = page.evaluate(f"document.querySelector('{first_result_selector}').textContent")
+    expected_focused_content = page.evaluate(
+        f"document.querySelector('{first_result_selector}').textContent"
+    )
     assert actual_focused_content == expected_focused_content
