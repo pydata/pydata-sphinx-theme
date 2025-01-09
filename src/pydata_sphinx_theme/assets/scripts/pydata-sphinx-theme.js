@@ -360,7 +360,7 @@ var setupSearchAsYouType = () => {
   // searchtools.js loads.
   //
   // Search class is defined in upstream Sphinx:
-  // https://github.com/sphinx-doc/sphinx/blob/master/sphinx/themes/basic/static/searchtools.js#L181
+  // https://github.com/sphinx-doc/sphinx/blob/6678e357048ea1767daaad68e7e0569786f3b458/sphinx/themes/basic/static/searchtools.js#L181
   if (!Search) {
     return;
   }
