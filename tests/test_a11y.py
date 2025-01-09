@@ -313,8 +313,10 @@ def test_search_as_you_type(page: Page, url_base: str) -> None:
     page.wait_for_timeout(301)  # Search execution is debounced for 300 ms.
     search_results = page.locator("css=#search-results")
     expect(search_results).to_be_visible()
-    # Navigate into the inline search results.
+    # Navigate with the keyboard.
     query_input.press("Tab")
-    focused_element_actual_content = page.evaluate("document.activeElement.textContent")
-    focused_element_expected_content = "1. Test of no sidebar"
-    assert focused_element_actual_content == focused_element_expected_content
+    # Make sure that the first inline search result is focused.
+    actual_focused_content = page.evaluate("document.activeElement.textContent")
+    first_result_selector = "#search-results .search li:first-child a"
+    expected_focused_content = page.evaluate(f"document.querySelector('{first_result_selector}').textContent")
+    assert actual_focused_content == expected_focused_content
