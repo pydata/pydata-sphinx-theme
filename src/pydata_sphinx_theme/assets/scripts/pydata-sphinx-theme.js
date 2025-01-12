@@ -261,6 +261,7 @@ var addEventListenerForSearchKeyboard = () => {
       // also allow Escape key to hide (but not show) the dynamic search field
       else if (document.activeElement === input && /Escape/i.test(event.key)) {
         toggleSearchField();
+        resetSearchAsYouTypeResults();
       }
     },
     true,
@@ -430,8 +431,20 @@ var resetSearchAsYouTypeResults = () => {
 
   // Create a new search-as-you-type results container.
   results = document.createElement("section");
-  results.classList.add("search-results");
   results.classList.add("empty");
+  // Remove the container element from the tab order. Individual search
+  // results are still focusable.
+  results.tabIndex = -1;
+  // When focus is on a search result, make sure that pressing Escape closes
+  // the search modal.
+  results.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleSearchField();
+      resetSearchAsYouTypeResults();
+    }
+  });
   // IMPORTANT: The search results container MUST have this exact ID.
   // searchtools.js is hardcoded to populate into the node with this ID.
   results.id = "search-results";
@@ -453,6 +466,7 @@ var resetSearchAsYouTypeResults = () => {
     // Check every link every time because the timing of when new results are
     // added is unpredictable and it's not an expensive operation.
     links.forEach((link) => {
+      link.tabIndex = 0;  // Use natural tab order for search results.
       // Don't use the link.href getter because the browser computes the href
       // as a full URL. We need the relative URL that Sphinx generates.
       const href = link.getAttribute("href");
