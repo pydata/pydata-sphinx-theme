@@ -466,7 +466,7 @@ var resetSearchAsYouTypeResults = () => {
     // Check every link every time because the timing of when new results are
     // added is unpredictable and it's not an expensive operation.
     links.forEach((link) => {
-      link.tabIndex = 0;  // Use natural tab order for search results.
+      link.tabIndex = 0; // Use natural tab order for search results.
       // Don't use the link.href getter because the browser computes the href
       // as a full URL. We need the relative URL that Sphinx generates.
       const href = link.getAttribute("href");
