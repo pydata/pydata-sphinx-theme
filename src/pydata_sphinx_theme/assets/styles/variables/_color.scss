@@ -26,8 +26,7 @@
 /* Assign base colors for the PyData theme */
 $color-palette: (
   // Primary color
-  "teal":
-    (
+  "teal": (
       "50": #f4fbfc,
       "100": #e9f6f8,
       "200": #d0ecf1,
@@ -40,8 +39,7 @@ $color-palette: (
       "900": #021b1f,
     ),
   // Secondary color
-  "violet":
-    (
+  "violet": (
       "50": #f4eefb,
       "100": #e0c7ff,
       "200": #d5b4fd,
@@ -54,8 +52,7 @@ $color-palette: (
       "900": #1e0e39,
     ),
   // Neutrals
-  "gray":
-    (
+  "gray": (
       "50": #f9f9fa,
       "100": #f3f4f5,
       "200": #e5e7ea,
@@ -68,8 +65,7 @@ $color-palette: (
       "900": #14181e,
     ),
   // Accent color
-  "pink":
-    (
+  "pink": (
       "50": #fcf8fd,
       "100": #fcf0fa,
       "200": #f8dff5,
@@ -161,8 +157,7 @@ $pst-semantic-colors: (
     "bg-dark": #002f17,
   ),
   // This is based on the warning color
-  "attention":
-    (
+  "attention": (
       "light": var(--pst-color-warning),
       "bg-light": var(--pst-color-warning-bg),
       "dark": var(--pst-color-warning),
@@ -229,15 +224,13 @@ $pst-semantic-colors: (
   // DEPTH COLORS - you can see the elevation colours and shades
   // in the Figma file https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1492%3A922&t=sQeQZehkOzposYEg-1
   // background: color of the canvas / the furthest back layer
-  "background":
-    (
+  "background": (
       "light": #{map-deep-get($color-palette, "foundation", "white")},
       "dark": #{map-deep-get($color-palette, "foundation", "black")},
     ),
   // on-background: provides slight contrast against background
   // (by use of shadows in light theme)
-  "on-background":
-    (
+  "on-background": (
       "light": #{map-deep-get($color-palette, "foundation", "white")},
       "dark": #{map-deep-get($color-palette, "gray", "800")},
     ),
@@ -246,8 +239,7 @@ $pst-semantic-colors: (
     "dark": #{map-deep-get($color-palette, "gray", "700")},
   ),
   // on_surface: object on top of surface object (without shadows)
-  "on-surface":
-    (
+  "on-surface": (
       "light": #{map-deep-get($color-palette, "gray", "800")},
       "dark": $foundation-light-gray,
     ),
@@ -286,6 +278,9 @@ $pst-semantic-colors: (
 
   // assign the "duplicate" colors (ones that just reference other variables)
   & {
+    // From 0.16.1, the preferred variable for headings is --pst-color-heading
+    // if you have --pst-heading-color, this variable will be used, otherwise the default
+    // --pst-color-heading will be used
     --pst-color-heading: var(--pst-color-text-base);
     --pst-color-link: var(--pst-color-primary);
     --pst-color-link-hover: var(--pst-color-secondary);
