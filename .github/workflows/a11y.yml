@@ -51,4 +51,4 @@ jobs:
 
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
-        run: python -Im tox run -m a11y -- --browser ${{ matrix.browser }}
+        run: python -Im tox run -e compile-assets,i18n-compile,py312-docs,a11y-tests -- --browser ${{ matrix.browser }}
