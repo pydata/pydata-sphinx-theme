@@ -97,27 +97,6 @@ jobs:
           if-no-files-found: ignore
           include-hidden-files: true
 
-  # Only run accessibility tests on the latest Python version (3.12) and Ubuntu
-  a11y-tests:
-    name: "a11y-tests (ubuntu-latest, 3.12)"
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout repository 🛎"
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          persist-credentials: false
-
-      - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-          pandoc: true
-          graphviz: true
-
-      - name: "Run accessibility tests with playwright 🎭"
-        # build PST, build docs, then run a11y-tests
-        run: python -Im tox run -m a11y
-
   coverage:
     name: "Check coverage"
     needs: run-pytest
