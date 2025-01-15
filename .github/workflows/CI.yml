@@ -90,7 +90,7 @@ jobs:
 
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
         with:
           name: coverage-data-${{ matrix.python-version }}
           path: .coverage
@@ -159,7 +159,7 @@ jobs:
           python -Im coverage report --fail-under=80
 
       - name: "Upload HTML report if check failed 📤"
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
         with:
           name: html-report
           path: htmlcov
@@ -173,7 +173,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Store Pull Request comment to be posted 📤"
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
         with:
           # leave default names
@@ -201,7 +201,7 @@ jobs:
         continue-on-error: true
 
       - name: "Upload profiling data to GH artifacts 📤"
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
         with:
           name: profile-results
           path: docbuild_profile.svg
