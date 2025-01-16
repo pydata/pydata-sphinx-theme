@@ -14,7 +14,7 @@ build:
     # build the gallery of themes before building the doc
     post_install:
       - pip install playwright
-      - playwright install chromium
+      - playwright install --with-deps chromium
       - python ./docs/scripts/generate_gallery_images.py
 
 sphinx:
