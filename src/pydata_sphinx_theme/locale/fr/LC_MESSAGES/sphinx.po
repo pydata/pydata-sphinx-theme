@@ -2,19 +2,19 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+#
 # Translators:
 # Rambaud Pierrick <pierrick.rambaud49@gmail.com>, 2024
 # Denis Bitouzé <dbitouze@wanadoo.fr>, 2024
-# 
+#
 msgid ""
 msgstr ""
 
-#: docs/conf.py:109
+#: docs/conf.py:111
 msgid "Click to expand"
 msgstr "Cliquer pour développer"
 
-#: docs/conf.py:110
+#: docs/conf.py:112
 msgid "Click to collapse"
 msgstr "Cliquer pour réduire"
 
@@ -145,15 +145,13 @@ msgstr "Sombre"
 msgid "System Settings"
 msgstr "Paramètres système"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:4
 #, python-format
 msgid ""
-"Built with the <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+"Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
-"Construit avec le <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">thème PyData Sphinx</a> "
+"Construit avec le <a href=\"%(PST_url)s\">thème PyData Sphinx</a> "
 "%(theme_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
@@ -191,3 +189,12 @@ msgstr "Navigation dans le site"
 
 #~ msgid "light/dark"
 #~ msgstr "clair/sombre"
+
+#~ msgid ""
+#~ "Built with the <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+#~ "%(theme_version)s."
+#~ msgstr ""
+#~ "Construit avec le <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">thème PyData Sphinx</a> "
+#~ "%(theme_version)s."

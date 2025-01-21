@@ -406,23 +406,31 @@ async function checkPageExistsAndRedirect(event) {
  * @param {string} url The URL to load version switcher entries from.
  */
 async function fetchVersionSwitcherJSON(url) {
+  const currentPath = getCurrentUrlPath();
   // first check if it's a valid URL
   try {
     var result = new URL(url);
   } catch (err) {
     if (err instanceof TypeError) {
-      if (!window.location.origin) {
-        // window.location.origin is null for local static sites
-        // (ie. window.location.protocol == 'file:')
-        //
-        // TODO: Fix this to return the static version switcher by working out
-        // how to get the correct path to the switcher JSON file on local static builds
-        return null;
+      // Assume we got a relative path, and fix accordingly.
+      if (window.location.protocol == "file:") {
+        // Here instead of returning `null` we work out what the file path would be
+        // anyway (same code path as for served docs), as a convenience to folks who
+        // routinely disable CORS when they boot up their browser.
+        console.info(
+          "[PST] looks like you're viewing this site from a local filesystem, so " +
+            "the version switcher won't work unless you've disabled CORS. See " +
+            "https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/version-dropdown.html",
+        );
       }
-      // assume we got a relative path, and fix accordingly. But first, we need to
-      // use `fetch()` to follow redirects so we get the correct final base URL
-      const origin = await fetch(window.location.origin, { method: "HEAD" });
-      result = new URL(url, origin.url);
+      const cutoff = window.location.href.indexOf(currentPath);
+      // cutoff == -1 can happen e.g. on the homepage of locally served docs, where you
+      // get something like http://127.0.0.1:8000/ (no trailing `index.html`)
+      const origin =
+        cutoff == -1
+          ? window.location.href
+          : window.location.href.substring(0, cutoff);
+      result = new URL(url, origin);
     } else {
       // something unexpected happened
       throw err;

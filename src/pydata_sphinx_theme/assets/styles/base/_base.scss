@@ -72,33 +72,36 @@ a {
   line-height: 1.15;
 }
 
+// From 0.16.1, the preferred variable for headings is --pst-color-heading
+// if you have --pst-heading-color, this variable will be used, otherwise the default
+// --pst-color-heading will be used.
 h1 {
   @extend %heading-style;
 
   margin-top: 0;
   font-size: var(--pst-font-size-h1);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h2 {
   @extend %heading-style;
 
   font-size: var(--pst-font-size-h2);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h3 {
   @extend %heading-style;
 
   font-size: var(--pst-font-size-h3);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h4 {
   @extend %heading-style;
 
   font-size: var(--pst-font-size-h4);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h5 {
@@ -168,6 +171,7 @@ pre {
 
 // the back to top btn
 #pst-back-to-top {
+  // zindex-tooltip comes from Bootstrap https://getbootstrap.com/docs/5.2/layout/z-index/
   z-index: $zindex-tooltip;
   position: fixed;
   display: none;
