@@ -291,6 +291,17 @@ autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
 
+# -- Warnings / Nitpicky -------------------------------------------------------
+
+nitpicky = True
+nitpick_ignore_regex = [
+    # we demo some `urllib` docs on our site; don't care that its xrefs fail to resolve
+    (
+        r"py:.*",
+        r"autosummary: stub file not found 'urllib\.parse\..*'. Check your autosummary_generate setting\.",  # noqa E501
+    ),
+]
+
 # -- application setup -------------------------------------------------------
 
 
