@@ -294,36 +294,22 @@ autoapi_member_order = "groupwise"
 # -- Warnings / Nitpicky -------------------------------------------------------
 
 nitpicky = True
-dead_classes = (
-    "api_sample.RandomNumberGenerator",
-    "b'abc def'",  # urllib.parse.unquote_to_bytes
-    "bs4.BeautifulSoup",
-    "docutils.nodes.Node",
-    "matplotlib.artist.Artist",  # matplotlib xrefs are in the class diagram demo
-    "matplotlib.figure.Figure",
-    "matplotlib.figure.FigureBase",
-    "pygments.formatters.HtmlFormatter",
+bad_classes = (
+    r".*abc def.*",  # urllib.parse.unquote_to_bytes
+    r"api_sample\.RandomNumberGenerator",
+    r"bs4\.BeautifulSoup",
+    r"docutils\.nodes\.Node",
+    r"matplotlib\.artist\.Artist",  # matplotlib xrefs are in the class diagram demo
+    r"matplotlib\.figure\.Figure",
+    r"matplotlib\.figure\.FigureBase",
+    r"pygments\.formatters\.HtmlFormatter",
 )
-# py:class reference target not found: b'abc def'. [ref.class]
-nitpick_ignore = [
-    ("py:class", f"reference target not found: {target} [ref.class]")
-    for target in dead_classes
-]
-urllib_pattern = r"urllib\.parse\.(Defrag|Parse|Split)Result(Bytes)?\.(count|index)"
 nitpick_ignore_regex = [
+    *[("py:class", target) for target in bad_classes],
     # we demo some `urllib` docs on our site; don't care that its xrefs fail to resolve
-    (r"py:obj", rf"reference target not found: {urllib_pattern} \[ref\.obj\]"),
-    (
-        r"py:.*",
-        rf"autosummary: stub file not found '{urllib_pattern}'\. Check your "
-        r"autosummary_generate setting\.",
-    ),
+    ("py:obj", r"urllib\.parse\.(Defrag|Parse|Split)Result(Bytes)?\.(count|index)"),
     # the kitchen sink pages include some intentional errors
-    (
-        r"py:.*",
-        r"'token' reference target not found: (suite|expression|target) \[ref\.token\]",
-    ),
-    #
+    ("token", r"(suite|expression|target)"),
 ]
 
 # -- application setup -------------------------------------------------------
