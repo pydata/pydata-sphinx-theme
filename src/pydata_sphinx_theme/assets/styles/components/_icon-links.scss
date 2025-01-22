@@ -35,7 +35,7 @@ ul.navbar-icon-links {
   list-style: none;
 
   // Icons styling
-  i {
+  svg {
     &.fa-brands,
     &.fa-regular,
     &.fa-solid {
@@ -44,18 +44,13 @@ ul.navbar-icon-links {
       font-size: var(--pst-font-size-icon);
     }
 
-    /* Social media buttons hard-code the brand color */
-    &.fa-square-twitter::before {
+    /* We no longer color the social media icons in their brand colors (makes a11y harder)
+       but this one is left in as an example in case we decide to go back to it someday:
+
+    &.fa-square-twitter {
       color: #55acee;
     }
-
-    &.fa-square-gitlab::before {
-      color: #548;
-    }
-
-    &.fa-bitbucket::before {
-      color: #0052cc;
-    }
+    */
   }
 
   // Force images to be icon-sized
