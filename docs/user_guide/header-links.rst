@@ -138,8 +138,6 @@ Here are several examples:
          color: #55acee;
       }
 
-   This has already been added for the brands that have *shortcuts* (:ref:`see below <icon-link-shortcuts>`).
-
 Image icons
 -----------
 
