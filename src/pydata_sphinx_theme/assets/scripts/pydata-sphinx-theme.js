@@ -963,6 +963,7 @@ async function setupAnnouncementBanner() {
       );
     }
     const data = await response.text();
+    data = data.trim();
     if (data.length === 0) {
       console.log(`[PST]: Empty announcement at: ${pstAnnouncementUrl}`);
       return;
