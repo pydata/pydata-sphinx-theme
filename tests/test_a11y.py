@@ -291,3 +291,34 @@ def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
     expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
         "Update Sphinx configuration during the build"
     )
+
+
+@pytest.mark.a11y
+def test_search_as_you_type(page: Page, url_base: str) -> None:
+    """Search-as-you-type feature should support keyboard navigation.
+
+    When the search-as-you-type (inline search results) feature is enabled,
+    pressing Tab after entering a search query should focus the first inline
+    search result.
+    """
+    page.set_viewport_size({"width": 1440, "height": 720})
+    page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+    # Click the search textbox.
+    searchbox = page.locator("css=.navbar-header-items .search-button__default-text")
+    searchbox.click()
+    # Type a search query.
+    query_input = page.locator("css=#pst-search-dialog input[type=search]")
+    expect(query_input).to_be_visible()
+    query_input.type("test")
+    page.wait_for_timeout(301)  # Search execution is debounced for 300 ms.
+    search_results = page.locator("css=#search-results")
+    expect(search_results).to_be_visible()
+    # Navigate with the keyboard.
+    query_input.press("Tab")
+    # Make sure that the first inline search result is focused.
+    actual_focused_content = page.evaluate("document.activeElement.textContent")
+    first_result_selector = "#search-results .search li:first-child a"
+    expected_focused_content = page.evaluate(
+        f"document.querySelector('{first_result_selector}').textContent"
+    )
+    assert actual_focused_content == expected_focused_content

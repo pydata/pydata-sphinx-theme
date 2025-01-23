@@ -17,7 +17,7 @@ from sphinx.errors import ExtensionError
 from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
 
-__version__ = "0.16.1rc0"
+__version__ = "0.16.1"
 
 
 def update_config(app):
@@ -240,6 +240,12 @@ def update_and_remove_templates(
             {str(context["theme_show_version_warning_banner"]).lower()};
         """
         app.add_js_file(None, body=js)
+
+    # Specify whether search-as-you-type should be used or not.
+    search_as_you_type = str(context["theme_search_as_you_type"]).lower()
+    app.add_js_file(
+        None, body=f"DOCUMENTATION_OPTIONS.search_as_you_type = {search_as_you_type};"
+    )
 
     # Update version number for the "made with version..." component
     context["theme_version"] = __version__
