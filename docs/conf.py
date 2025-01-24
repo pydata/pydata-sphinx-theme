@@ -292,6 +292,27 @@ autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
 
+# -- Warnings / Nitpicky -------------------------------------------------------
+
+nitpicky = True
+bad_classes = (
+    r".*abc def.*",  # urllib.parse.unquote_to_bytes
+    r"api_sample\.RandomNumberGenerator",
+    r"bs4\.BeautifulSoup",
+    r"docutils\.nodes\.Node",
+    r"matplotlib\.artist\.Artist",  # matplotlib xrefs are in the class diagram demo
+    r"matplotlib\.figure\.Figure",
+    r"matplotlib\.figure\.FigureBase",
+    r"pygments\.formatters\.HtmlFormatter",
+)
+nitpick_ignore_regex = [
+    *[("py:class", target) for target in bad_classes],
+    # we demo some `urllib` docs on our site; don't care that its xrefs fail to resolve
+    ("py:obj", r"urllib\.parse\.(Defrag|Parse|Split)Result(Bytes)?\.(count|index)"),
+    # the kitchen sink pages include some intentional errors
+    ("token", r"(suite|expression|target)"),
+]
+
 # -- application setup -------------------------------------------------------
 
 
