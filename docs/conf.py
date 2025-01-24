@@ -8,6 +8,7 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 # -- Path setup --------------------------------------------------------------
 import os
 import sys
+
 from pathlib import Path
 from typing import Any, Dict
 
@@ -15,6 +16,7 @@ from sphinx.application import Sphinx
 from sphinx.locale import _
 
 import pydata_sphinx_theme
+
 
 sys.path.append(str(Path(".").resolve()))
 
@@ -113,6 +115,7 @@ togglebutton_hint_hide = str(_("Click to collapse"))
 # Exclude copy button from appearing over notebook cell numbers by using :not()
 # The default copybutton selector is `div.highlight pre`
 # https://github.com/executablebooks/sphinx-copybutton/blob/master/sphinx_copybutton/__init__.py#L82
+copybutton_exclude = ".linenos, .gp"
 copybutton_selector = ":not(.prompt) > div.highlight pre"
 
 # -- Options for HTML output -------------------------------------------------
@@ -162,9 +165,9 @@ html_theme_options = {
     "header_links_before_dropdown": 4,
     "icon_links": [
         {
-            "name": "Twitter",
-            "url": "https://twitter.com/PyData",
-            "icon": "fa-brands fa-twitter",
+            "name": "X",
+            "url": "https://x.com/PyData",
+            "icon": "fa-brands fa-x-twitter",
         },
         {
             "name": "GitHub",
@@ -191,7 +194,8 @@ html_theme_options = {
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
+    # [left, content, right] For testing that the navbar items align properly
+    "navbar_align": "left",
     # "show_nav_level": 2,
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     "show_version_warning_banner": True,
@@ -213,6 +217,7 @@ html_theme_options = {
         "version_match": version_match,
     },
     # "back_to_top_button": False,
+    "search_as_you_type": True,
 }
 
 html_sidebars = {
@@ -287,16 +292,42 @@ autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
 
+# -- Warnings / Nitpicky -------------------------------------------------------
+
+nitpicky = True
+bad_classes = (
+    r".*abc def.*",  # urllib.parse.unquote_to_bytes
+    r"api_sample\.RandomNumberGenerator",
+    r"bs4\.BeautifulSoup",
+    r"docutils\.nodes\.Node",
+    r"matplotlib\.artist\.Artist",  # matplotlib xrefs are in the class diagram demo
+    r"matplotlib\.figure\.Figure",
+    r"matplotlib\.figure\.FigureBase",
+    r"pygments\.formatters\.HtmlFormatter",
+)
+nitpick_ignore_regex = [
+    *[("py:class", target) for target in bad_classes],
+    # we demo some `urllib` docs on our site; don't care that its xrefs fail to resolve
+    ("py:obj", r"urllib\.parse\.(Defrag|Parse|Split)Result(Bytes)?\.(count|index)"),
+    # the kitchen sink pages include some intentional errors
+    ("token", r"(suite|expression|target)"),
+]
+
 # -- application setup -------------------------------------------------------
 
 
 def setup_to_main(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
-    """Add a function that jinja can access for returning an "edit this page" link pointing to `main`."""
+    """
+    Add a function that jinja can access for returning an "edit this page" link
+    pointing to `main`.
+    """
 
     def to_main(link: str) -> str:
-        """Transform "edit on github" links and make sure they always point to the main branch.
+        """
+        Transform "edit on github" links and make sure they always point to the
+        main branch.
 
         Args:
             link: the link to the github edit interface

@@ -93,14 +93,17 @@
     z-index: $zindex-modal;
     top: 30%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
     right: 1rem;
+    margin-bottom: 0;
     margin-top: 0.5rem;
     width: 90%;
     max-width: 800px;
     background-color: transparent;
     padding: $focus-ring-width;
     border: none;
+    flex-direction: column;
+    height: 80vh;
 
     &::backdrop {
       background-color: black;
@@ -108,12 +111,30 @@
     }
 
     form.bd-search {
-      flex-grow: 1;
+      flex-grow: 0;
 
       // Font and input text a bit bigger
       svg,
       input {
         font-size: var(--pst-font-size-icon);
+      }
+    }
+
+    /* In pydata-sphinx-theme.js this container is appended below
+     * the query input node after the user types their search query.
+     * Search results are populated into this container using Sphinx's
+     * built-in, JS-powered local search tools. */
+    #search-results {
+      overflow-y: scroll;
+      background-color: var(--pst-color-background);
+      padding: 1em;
+
+      a {
+        color: var(--pst-color-link);
+      }
+
+      &.empty {
+        display: none;
       }
     }
   }

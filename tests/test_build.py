@@ -1,12 +1,14 @@
 """All the tests performed in the pydata-sphinx-theme test suite."""
 
 import re
+
 from pathlib import Path
 
 import pytest
 import sphinx.errors
 
 from pydata_sphinx_theme.utils import escape_ansi
+
 
 COMMON_CONF_OVERRIDES = dict(
     surface_warnings=True,
@@ -520,7 +522,10 @@ def test_sidebars_show_nav_level0(sphinx_build_factory) -> None:
 
 
 def test_included_toc(sphinx_build_factory) -> None:
-    """Test that Sphinx project containing TOC (.. toctree::) included via .. include:: can be successfully built."""
+    """
+    Test that Sphinx project containing TOC (.. toctree::) included via .. include::
+    can be successfully built.
+    """
     # Regression test for bug resolved in #347.
     # Tests mainly makes sure that the sphinx_build.build() does not raise exception.
     # https://github.com/pydata/pydata-sphinx-theme/pull/347
@@ -814,7 +819,10 @@ def test_version_switcher_error_states(
         )
 
     elif url == "http://a.b/switcher.json":  # this file doesn't exist"
-        not_read = 'WARNING: The version switcher "http://a.b/switcher.json" file cannot be read due to the following error:\n'
+        not_read = (
+            'WARNING: The version switcher "http://a.b/switcher.json"'
+            " file cannot be read due to the following error:\n"
+        )
         assert not_read in escape_ansi(sphinx_build.warnings).strip()
 
     elif url == "missing_url.json":  # this file is missing the url key for one version
@@ -883,8 +891,8 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     # see if our warnings worked
     if style_names[0].startswith("fake"):
         assert len(warnings) == 2
-        re.match(r"Color theme fake_foo.*tango", warnings[0])
-        re.match(r"Color theme fake_bar.*monokai", warnings[1])
+        assert re.search(r"Highlighting style fake_foo.*tango", warnings[0])
+        assert re.search(r"Highlighting style fake_bar.*monokai", warnings[1])
     else:
         assert warnings == [""]
     # test that the rendered HTML has highlighting spans
@@ -900,10 +908,11 @@ def test_pygments_fallbacks(sphinx_build_factory, style_names, keyword_colors) -
     assert lines[0].startswith('html[data-theme="light"]')
     for mode, color in dict(zip(["light", "dark"], keyword_colors)).items():
         regexp = re.compile(
-            r'html\[data-theme="' + mode + r'"\].*\.k .*color: ' + color
+            r'html\[data-theme="' + mode + r'"\].*\.k .*color:\s?' + color,
+            re.IGNORECASE,
         )
-        matches = [regexp.match(line) is not None for line in lines]
-        assert sum(matches) == 1
+        matches = [regexp.search(line) is not None for line in lines]
+        assert sum(matches) == 1, f"expected {mode}: {color}\n" + "\n".join(lines)
 
 
 def test_deprecated_build_html(sphinx_build_factory, file_regression) -> None:
@@ -1087,7 +1096,10 @@ def test_render_secondary_sidebar_dict(sphinx_build_factory) -> None:
 
 
 def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None:
-    """Test that the secondary sidebar can be built with a dict of templates that globs a subdir."""
+    """
+    Test that the secondary sidebar can be built with a dict of templates that globs a
+    subdir.
+    """
     confoverrides = {
         "html_context": {
             "github_user": "pydata",
@@ -1126,7 +1138,9 @@ def test_render_secondary_sidebar_dict_glob_subdir(sphinx_build_factory) -> None
 def test_render_secondary_sidebar_dict_multiple_glob_matches(
     sphinx_build_factory,
 ) -> None:
-    """Test that the secondary sidebar builds with a template dict with two conflicting globs.
+    """
+    Test that the secondary sidebar builds with a template dict with two conflicting
+    globs.
 
     The last specified glob pattern should win, but a warning should be emitted with the
     offending pattern and affected pagenames.

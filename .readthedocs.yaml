@@ -1,0 +1,34 @@
+version: 2
+
+formats:
+  - htmlzip
+
+# build with latest available ubuntu version
+build:
+  os: ubuntu-lts-latest
+  tools:
+    python: "3.12"
+  # need to install playwright deps via apt (lack of sudo means we can't use
+  # `playwright install-deps`).  NB: Graphviz is a separate dep urelated to playwright
+  apt_packages:
+    - graphviz
+    - libasound2
+    - libdbus-glib-1-2
+  jobs:
+    # build the gallery of themes before building the doc
+    post_install:
+      - pip install playwright
+      - playwright install chromium
+      - python ./docs/scripts/generate_gallery_images.py
+
+sphinx:
+  configuration: docs/conf.py
+  # builder: "dirhtml"
+  fail_on_warning: false # we have some unavoidable warnings, and a separate warnings checker
+
+python:
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - doc
