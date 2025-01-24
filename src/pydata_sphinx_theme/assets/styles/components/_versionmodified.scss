@@ -1,6 +1,7 @@
 div.versionadded,
 div.versionchanged,
-div.deprecated {
+div.deprecated,
+div.versionremoved {
   vertical-align: middle;
   margin: 1.5625em auto;
   padding: 0 0.6rem;
@@ -34,7 +35,8 @@ div.versionchanged {
   background-color: var(--pst-color-warning-bg);
 }
 
-div.deprecated {
+div.deprecated,
+div.versionremoved {
   border-color: var(--pst-color-danger);
   background-color: var(--pst-color-danger-bg);
 }
@@ -68,5 +70,12 @@ span.versionmodified.deprecated {
   &::before {
     color: var(--pst-color-danger);
     content: var(--pst-icon-versionmodified-deprecated);
+  }
+}
+
+span.versionmodified.removed {
+  &::before {
+    color: var(--pst-color-danger);
+    content: var(--pst-icon-versionmodified-removed);
   }
 }
