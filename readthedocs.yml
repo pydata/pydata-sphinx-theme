@@ -20,3 +20,6 @@ python:
   install:
     - method: pip
       path: .[doc]
+
+sphinx:
+  configuration: docs/conf.py
