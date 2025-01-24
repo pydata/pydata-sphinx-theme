@@ -89,6 +89,7 @@
   background-color: transparent;
   padding: $focus-ring-width;
   border: none;
+  height: 80vh;
 
   &::backdrop {
     background-color: black;
@@ -103,23 +104,23 @@
     input {
       font-size: var(--pst-font-size-icon);
     }
+  }
 
-    /* In pydata-sphinx-theme.js this container is appended below
-     * the query input node after the user types their search query.
-     * Search results are populated into this container using Sphinx's
-     * built-in, JS-powered local search tools. */
-    #search-results {
-      overflow-y: scroll;
-      background-color: var(--pst-color-background);
-      padding: 1em;
+  /* In pydata-sphinx-theme.js this container is appended below
+   * the query input node after the user types their search query.
+   * Search results are populated into this container using Sphinx's
+   * built-in, JS-powered local search tools. */
+  #search-results {
+    overflow-y: scroll;
+    background-color: var(--pst-color-background);
+    padding: 1em;
 
-      a {
-        color: var(--pst-color-link);
-      }
+    a {
+      color: var(--pst-color-link);
+    }
 
-      &.empty {
-        display: none;
-      }
+    &.empty {
+      display: none;
     }
   }
 }
