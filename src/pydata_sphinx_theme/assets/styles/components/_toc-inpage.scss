@@ -40,7 +40,8 @@ nav.page-toc {
 
     @include link-sidebar;
 
-    &.active {
+    &.active,
+    &[aria-current="true"] {
       @include link-sidebar-current;
 
       background-color: transparent;

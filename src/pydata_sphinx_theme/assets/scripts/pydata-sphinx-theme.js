@@ -96,30 +96,39 @@ function addModeListener() {
 }
 
 /*******************************************************************************
- * TOC interactivity
+ * Right sidebar table of contents (TOC) interactivity
  */
+function setupPageTableOfContents() {
+  const pageToc = document.querySelector("#pst-page-toc-nav");
+  pageToc.addEventListener("click", (event) => {
+    if (!event.target.matches(".nav-link")) {
+      return;
+    }
+    const clickedLink = event.target;
 
-/**
- * TOC sidebar - add "active" class to parent list
- *
- * Bootstrap's scrollspy adds the active class to the <a> link,
- * but for the automatic collapsing we need this on the parent list item.
- *
- * The event is triggered on "window" (and not the nav item as documented),
- * see https://github.com/twbs/bootstrap/issues/20086
- */
-function addTOCInteractivity() {
-  window.addEventListener("activate.bs.scrollspy", function () {
-    const navLinks = document.querySelectorAll(".bd-toc-nav a");
-
-    navLinks.forEach((navLink) => {
-      navLink.parentElement.classList.remove("active");
+    // First, clear all the added classes and attributes
+    // -----
+    pageToc.querySelectorAll("a[aria-current]").forEach((el) => {
+      el.removeAttribute("aria-current");
+    });
+    pageToc.querySelectorAll(".active").forEach((el) => {
+      el.classList.remove("active");
     });
 
-    const activeNavLinks = document.querySelectorAll(".bd-toc-nav a.active");
-    activeNavLinks.forEach((navLink) => {
-      navLink.parentElement.classList.add("active");
-    });
+    // Then add the classes and attributes to where they should go now
+    // -----
+    clickedLink.setAttribute("aria-current", "true");
+    clickedLink.classList.add("active");
+    // Find all parents (up to the TOC root) matching .toc-entry and add the
+    // active class. This activates style rules that expand the TOC when the
+    // user clicks a TOC entry that has nested entries.
+    let parentElement = clickedLink.parentElement;
+    while (parentElement && parentElement !== pageToc) {
+      if (parentElement.matches(".toc-entry")) {
+        parentElement.classList.add("active");
+      }
+      parentElement = parentElement.parentElement;
+    }
   });
 }
 
@@ -1021,7 +1030,7 @@ documentReady(fetchRevealBannersTogether);
 
 documentReady(addModeListener);
 documentReady(scrollToActive);
-documentReady(addTOCInteractivity);
+documentReady(setupPageTableOfContents);
 documentReady(setupSearchButtons);
 documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
