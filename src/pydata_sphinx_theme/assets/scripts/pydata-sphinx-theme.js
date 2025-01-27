@@ -101,10 +101,10 @@ function addModeListener() {
 function setupPageTableOfContents() {
   const pageToc = document.querySelector("#pst-page-toc-nav");
   pageToc.addEventListener("click", (event) => {
-    if (!event.target.matches(".nav-link")) {
+    const clickedLink = event.target.closest(".nav-link")
+    if (!clickedLink) {
       return;
     }
-    const clickedLink = event.target;
 
     // First, clear all the added classes and attributes
     // -----
