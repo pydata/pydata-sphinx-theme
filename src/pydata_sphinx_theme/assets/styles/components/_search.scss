@@ -85,6 +85,12 @@
 #pst-search-dialog {
   display: none;
 
+  // When we display search-as-you-type results in the modal, we need to
+  // increase its height
+  &.height-80vh {
+    height: 80vh;
+  }
+
   &[open] {
     display: flex;
 
@@ -103,7 +109,6 @@
     padding: $focus-ring-width;
     border: none;
     flex-direction: column;
-    height: 80vh;
 
     &::backdrop {
       background-color: black;

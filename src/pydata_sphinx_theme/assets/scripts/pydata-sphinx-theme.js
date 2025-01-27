@@ -370,9 +370,8 @@ var setupSearchAsYouType = () => {
   resetSearchAsYouTypeResults();
   let timeoutId = null;
   let lastQuery = "";
-  const searchInput = document.querySelector(
-    "#pst-search-dialog input[name=q]",
-  );
+  const searchDialog = document.querySelector("#pst-search-dialog");
+  const searchInput = searchDialog.querySelector("input[name=q]");
 
   // Initiate searches whenever the user types stuff in the search modal textbox.
   searchInput.addEventListener("keyup", () => {
@@ -380,6 +379,7 @@ var setupSearchAsYouType = () => {
 
     // Don't search when there's nothing in the query textbox.
     if (query === "") {
+      lastQuery = "";
       resetSearchAsYouTypeResults(); // Remove previous results.
       return;
     }
@@ -403,6 +403,7 @@ var setupSearchAsYouType = () => {
     }
     timeoutId = window.setTimeout(() => {
       Search.performSearch(query);
+      searchDialog.classList.add("height-80vh");
       document.querySelector("#search-results").classList.remove("empty");
       timeoutId = null;
     }, delay_ms);
@@ -449,6 +450,7 @@ var resetSearchAsYouTypeResults = () => {
   // searchtools.js is hardcoded to populate into the node with this ID.
   results.id = "search-results";
   let modal = document.querySelector("#pst-search-dialog");
+  modal.classList.remove("height-80vh");
   modal.appendChild(results);
 
   // Get the relative path back to the root of the website.
