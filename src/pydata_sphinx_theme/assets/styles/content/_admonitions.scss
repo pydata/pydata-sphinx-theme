@@ -40,8 +40,12 @@ div.admonition,
 
   // Defaults for all admonitions
   > .admonition-title {
+    $padding-top: 0.4rem;
+    $icon-width: 1rem;
+    $icon-margin-x: 0.5rem;
+
     margin: 0 -0.6rem;
-    padding: 0.4rem 0.6rem 0.4rem 2rem;
+    padding: 0.4rem 0.6rem $padding-top calc($icon-width + 2 * $icon-margin-x);
     font-weight: var(--pst-admonition-font-weight-heading);
     position: relative;
 
@@ -54,9 +58,10 @@ div.admonition,
 
     &::after {
       position: absolute;
-      top: 0.5rem;
-      left: 0.5rem;
-      width: 1rem;
+      top: $padding-top; // align icon with title text
+      left: 0;
+      margin: 0 $icon-margin-x;
+      width: $icon-width;
       height: 1rem;
       color: var(--pst-color-info);
       font: var(--fa-font-solid);
