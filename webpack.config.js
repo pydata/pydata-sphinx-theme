@@ -73,8 +73,6 @@ function macroTemplate({ compilation }) {
     {% endmacro %}
 
     {% macro head_js_preload() %}
-      <!-- So that users can add custom icons -->
-      ${fa_scripts.map(script.bind(compilation)).join("\n")}
       <!-- Pre-loaded scripts that we'll load fully later -->
       ${theme_scripts.map(preloadScript.bind(compilation)).join("\n")}
     {% endmacro %}
@@ -82,6 +80,8 @@ function macroTemplate({ compilation }) {
     {% macro body_post() %}
       <!-- Scripts loaded after <body> so the DOM is not blocked -->
       ${theme_scripts.map(deferScript.bind(compilation)).join("\n")}
+      <!-- So that users can add custom icons -->
+      ${fa_scripts.map(script.bind(compilation)).join("\n")}
     {% endmacro %}
   `);
 }
