@@ -86,15 +86,10 @@
   margin: 15vh auto 0; // an open modal dialog has a fixed position, so these margins bring it 15% down the viewport height and center it horizontally
   width: 90%;
   max-width: 800px;
+  max-height: 80vh; // when we display search-as-you-type results in the modal, it needs to be able to expand in height
   background-color: transparent;
   padding: $focus-ring-width;
   border: none;
-
-  // When we display search-as-you-type results in the modal, we need to
-  // increase its height
-  &.height-80vh {
-    height: 80vh;
-  }
 
   &::backdrop {
     background-color: black;
