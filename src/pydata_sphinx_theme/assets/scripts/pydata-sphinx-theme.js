@@ -96,43 +96,6 @@ function addModeListener() {
 }
 
 /*******************************************************************************
- * Right sidebar table of contents (TOC) interactivity
- */
-function setupPageTableOfContents() {
-  const pageToc = document.querySelector("#pst-page-toc-nav");
-  pageToc.addEventListener("click", (event) => {
-    const clickedLink = event.target.closest(".nav-link");
-    if (!clickedLink) {
-      return;
-    }
-
-    // First, clear all the added classes and attributes
-    // -----
-    pageToc.querySelectorAll("a[aria-current]").forEach((el) => {
-      el.removeAttribute("aria-current");
-    });
-    pageToc.querySelectorAll(".active").forEach((el) => {
-      el.classList.remove("active");
-    });
-
-    // Then add the classes and attributes to where they should go now
-    // -----
-    clickedLink.setAttribute("aria-current", "true");
-    clickedLink.classList.add("active");
-    // Find all parents (up to the TOC root) matching .toc-entry and add the
-    // active class. This activates style rules that expand the TOC when the
-    // user clicks a TOC entry that has nested entries.
-    let parentElement = clickedLink.parentElement;
-    while (parentElement && parentElement !== pageToc) {
-      if (parentElement.matches(".toc-entry")) {
-        parentElement.classList.add("active");
-      }
-      parentElement = parentElement.parentElement;
-    }
-  });
-}
-
-/*******************************************************************************
  * Scroll
  */
 
@@ -1020,6 +983,128 @@ async function fetchRevealBannersTogether() {
   }, 320);
 }
 
+/**
+ * Add the machinery needed to highlight elements in the TOC when scrolling.
+ *
+ */
+async function addTOCScrollSpy() {
+  const options = {
+    root: null, // Target the viewport
+    // Offset the rootMargin slightly so that intersections trigger _before_ headings begin to
+    // go offscreen
+    rootMargin: `${-2 * document.querySelector("header.bd-header").getBoundingClientRect().bottom}px 0px 0px 0px`,
+    threshold: 0, // Trigger as soon as 1 pixel is visible
+  };
+
+  const pageToc = document.querySelector("#pst-page-toc-nav");
+  const tocLinks = Array.from(document.querySelectorAll("#pst-page-toc-nav a"));
+
+  /**
+   * Activate an element and its parent TOC dropdowns; deactivate
+   * everything else in the TOC. Together with the theme CSS, this
+   * highlights the given TOC entry.
+   *
+   * @param {HTMLElement} tocElement The TOC entry to be highlighted
+   */
+  function activate(tocElement) {
+    // Deactivate all TOC links except the requested element
+    tocLinks
+      .filter((el) => el !== tocElement)
+      .forEach((el) => {
+        el.classList.remove("active");
+        el.removeAttribute("aria-current");
+      });
+
+    // Activate the requested element
+    tocElement.classList.add("active");
+    tocElement.setAttribute("aria-current", "true");
+
+    // Travel up the DOM from the requested element, collecting the set of
+    // all parent elements that need to be activated
+    const parents = new Set();
+    let el = tocElement.parentElement;
+    while (el && el !== pageToc) {
+      if (el.matches(".toc-entry")) {
+        parents.add(el);
+      }
+      el = el.parentElement;
+    }
+
+    // Iterate over all child elements of the TOC, deactivating everything
+    // that isn't a parent of the active node and activating the parents
+    // of the active TOC entry
+    pageToc.querySelectorAll(".toc-entry").forEach((el) => {
+      if (parents.has(el)) {
+        el.classList.add("active");
+      } else {
+        el.classList.remove("active");
+      }
+    });
+  }
+
+  /**
+   * Get the heading in the article associated with a TOC entry.
+   *
+   * @param {HTMLElement} tocElement TOC DOM element to use to grab an article heading
+   *
+   * @returns The article heading that the TOC element links to
+   */
+  function getHeading(tocElement) {
+    return document.querySelector(
+      `${tocElement.getAttribute("href")} > :is(h1,h2,h3,h4,h5,h6)`,
+    );
+  }
+
+  // Create a hashmap which stores the state of the headings. This object maps headings
+  // in the article to TOC elements, along with information about whether they are
+  // visible and the order in which they appear in the article.
+  const headingState = new Map(
+    Array.from(tocLinks).map((el, index) => {
+      return [
+        getHeading(el),
+        {
+          tocElement: el,
+          visible: false,
+          index: index,
+        },
+      ];
+    }),
+  );
+
+  /**
+   *
+   * @param {IntersectionObserverEntry} entries Objects containing threshold-crossing
+   * event information
+   *
+   */
+  function callback(entries) {
+    // Update the state of the TOC headings
+    entries.forEach((entry) => {
+      headingState.get(entry.target).visible = entry.isIntersecting;
+    });
+
+    // Sort the active headings by the order in which they appear in the TOC.
+    const sorted = Array.from(headingState.values())
+      .filter(({ visible }) => visible)
+      .sort((a, b) => a.index > b.index);
+
+    // If there are any visible results, activate the one _above_ the first visible
+    // heading. This ensures that when a heading scrolls offscreen, the TOC entry
+    // for that entry remains highlighted.
+    //
+    // If the first element is visible, just highlight the first entry in the TOC.
+    if (sorted.length > 0) {
+      const idx = sorted[0].index;
+      activate(tocLinks[idx > 0 ? idx - 1 : 0]);
+    }
+  }
+
+  const observer = new IntersectionObserver(callback, options);
+  tocLinks.forEach((tocElement) => {
+    observer.observe(getHeading(tocElement));
+  });
+}
+
 /*******************************************************************************
  * Call functions after document loading.
  */
@@ -1030,10 +1115,10 @@ documentReady(fetchRevealBannersTogether);
 
 documentReady(addModeListener);
 documentReady(scrollToActive);
-documentReady(setupPageTableOfContents);
 documentReady(setupSearchButtons);
 documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
+documentReady(addTOCScrollSpy);
 
 // Determining whether an element has scrollable content depends on stylesheets,
 // so we're checking for the "load" event rather than "DOMContentLoaded"
