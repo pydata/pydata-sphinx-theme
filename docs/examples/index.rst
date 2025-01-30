@@ -19,6 +19,7 @@ See the sections in the primary sidebar and below to explore.
     pydata
     execution
     graphviz
+    regressions
 
 
 .. Note: the caption below is intentionally long in order to test out what long captions look like.
