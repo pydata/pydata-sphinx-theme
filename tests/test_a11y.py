@@ -194,7 +194,7 @@ def test_axe_core(
         for violation in filtered_violations:
             assert (
                 violation["id"] == "color-contrast"
-            ), f"""Found {violation['id']} violation (expected color-contrast):
+            ), f"""Found {violation["id"]} violation (expected color-contrast):
                     {format_violations([violation])}"""
 
         # Now check that when we exclude notebook outputs, the page has no violations
