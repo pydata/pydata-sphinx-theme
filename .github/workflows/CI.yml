@@ -107,8 +107,8 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-results
-          path: playwright-results/
+          name: playwright-traces
+          path: test-results/
 
   # Build our docs (PST) on major OSes and check for warnings
   build-site:
