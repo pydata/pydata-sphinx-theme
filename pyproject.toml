@@ -52,6 +52,7 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
+  "astroid>=3",
   "numpydoc",
   "linkify-it-py", # for link shortening
   "rich",
