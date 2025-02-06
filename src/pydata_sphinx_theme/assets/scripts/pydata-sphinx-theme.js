@@ -991,9 +991,15 @@ async function addTOCScrollSpy() {
   const options = {
     root: null, // Target the viewport
     // Offset the rootMargin slightly so that intersections trigger _before_ headings begin to
-    // go offscreen
+    // go offscreen. Need to account for the height of the top menu bar which is sticky, and
+    // obscures the top part of the viewport. The factor of -1 is to move the location where the
+    // intersection triggers downward below this element; a factor of 2 was found to give
+    // good results in testing. If this is only -1 (the exact size of the top menu bar),
+    // the intersection doesn't trigger until the heading is scrolled off the top of the screen
+    // behind the menu bar, which also means that when clicking on a link in the TOC doesn't
+    // trigger the intersection (and therefore doesn't highlight the correct heading).
     rootMargin: `${-2 * document.querySelector("header.bd-header").getBoundingClientRect().bottom}px 0px 0px 0px`,
-    threshold: 0, // Trigger as soon as 1 pixel is visible
+    threshold: 0, // Trigger as soon as it becomes visible or invisible
   };
 
   const pageToc = document.querySelector("#pst-page-toc-nav");
@@ -1020,7 +1026,8 @@ async function addTOCScrollSpy() {
     tocElement.setAttribute("aria-current", "true");
 
     // Travel up the DOM from the requested element, collecting the set of
-    // all parent elements that need to be activated
+    // all parent elements that need to be activated. These are the collapsible
+    // <li> elements that can hold nested child headings.
     const parents = new Set();
     let el = tocElement.parentElement;
     while (el && el !== pageToc) {
@@ -1032,7 +1039,9 @@ async function addTOCScrollSpy() {
 
     // Iterate over all child elements of the TOC, deactivating everything
     // that isn't a parent of the active node and activating the parents
-    // of the active TOC entry
+    // of the active TOC entry. This closes all collapsible <li> elements
+    // of which the active element is not a direct descendent, and activates
+    // those which are.
     pageToc.querySelectorAll(".toc-entry").forEach((el) => {
       if (parents.has(el)) {
         el.classList.add("active");
@@ -1059,13 +1068,12 @@ async function addTOCScrollSpy() {
   // in the article to TOC elements, along with information about whether they are
   // visible and the order in which they appear in the article.
   const headingState = new Map(
-    Array.from(tocLinks).map((el, index) => {
+    Array.from(tocLinks).map((el) => {
       return [
         getHeading(el),
         {
           tocElement: el,
           visible: false,
-          index: index,
         },
       ];
     }),
@@ -1083,25 +1091,23 @@ async function addTOCScrollSpy() {
       headingState.get(entry.target).visible = entry.isIntersecting;
     });
 
-    // Sort the active headings by the order in which they appear in the TOC.
-    const sorted = Array.from(headingState.values())
-      .filter(({ visible }) => visible)
-      .sort((a, b) => a.index > b.index);
-
     // If there are any visible results, activate the one _above_ the first visible
     // heading. This ensures that when a heading scrolls offscreen, the TOC entry
     // for that entry remains highlighted.
     //
     // If the first element is visible, just highlight the first entry in the TOC.
-    if (sorted.length > 0) {
-      const idx = sorted[0].index;
-      activate(tocLinks[idx > 0 ? idx - 1 : 0]);
+    const visible = Array.from(headingState.values()).filter(
+      ({ visible }) => visible,
+    );
+    if (visible.length > 0) {
+      const indexAbove = Math.max(sorted[0].index - 1, 0);
+      activate(tocLinks[indexAbove]);
     }
   }
 
   const observer = new IntersectionObserver(callback, options);
-  tocLinks.forEach((tocElement) => {
-    observer.observe(getHeading(tocElement));
+  headingState.forEach((_, heading) => {
+    observer.observe(heading);
   });
 }
 
