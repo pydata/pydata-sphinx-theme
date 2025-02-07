@@ -102,10 +102,9 @@ jobs:
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
         run: python -Im tox run -m a11y
-        continue-on-error: true
-      - name: "Upload Playwright results (including traces, if any) 🐾"
+      - name: "Upload Playwright traces, if any 🐾"
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: ${{ failure() && steps.a11y-tests.conclusion == 'failure' }}
         with:
           name: playwright-traces
           path: test-results/
