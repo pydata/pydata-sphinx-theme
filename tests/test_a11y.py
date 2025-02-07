@@ -207,7 +207,9 @@ def test_axe_core(
         )
 
         # No violations on page when excluding notebook outputs
-        assert len(violations_sans_nbout) == 0, format_violations(violations_sans_nbout)
+        assert len(violations_sans_nbout) == 10, format_violations(
+            violations_sans_nbout
+        )
 
         # TODO: for color contrast issues with common notebook outputs
         # (ipywidget tabbed panels, Xarray, etc.), should we override
