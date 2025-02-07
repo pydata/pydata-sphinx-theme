@@ -962,7 +962,7 @@ async function setupAnnouncementBanner() {
         `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`,
       );
     }
-    const data = await response.text();
+    let data = await response.text();
     data = data.trim();
     if (data.length === 0) {
       console.log(`[PST]: Empty announcement at: ${pstAnnouncementUrl}`);

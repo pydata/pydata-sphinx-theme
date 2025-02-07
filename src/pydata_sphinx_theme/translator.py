@@ -52,11 +52,11 @@ class BootstrapHTML5TranslatorMixin:
 
         # add the width if set in a style attribute
         if "width" in node:
-            atts["style"] = f'width: {node["width"]}'
+            atts["style"] = f"width: {node['width']}"
 
         # add specific class if align is set
         if "align" in node:
-            classes.append(f'table-{node["align"]}')
+            classes.append(f"table-{node['align']}")
 
         # put table within a scrollable container (for tables that are too wide)
         self.body.append('<div class="pst-scrollable-table-container">')
