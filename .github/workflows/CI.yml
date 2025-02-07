@@ -104,7 +104,7 @@ jobs:
         run: python -Im tox run -m a11y
       - name: "Upload Playwright traces, if any 🐾"
         uses: actions/upload-artifact@v4
-        if: ${{ failure() && steps.a11y-tests.conclusion == 'failure' }}
+        if: ${{ failure() }}
         with:
           name: playwright-traces
           path: test-results/
