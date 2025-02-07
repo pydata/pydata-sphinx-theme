@@ -988,62 +988,57 @@ async function fetchRevealBannersTogether() {
  *
  */
 async function addTOCScrollSpy() {
+  // Intersection observer options
   const options = {
-    root: null, // Target the viewport
-    // Offset the rootMargin slightly so that intersections trigger _before_ headings begin to
-    // go offscreen. Need to account for the height of the top menu bar which is sticky, and
-    // obscures the top part of the viewport. The factor of -1 is to move the location where the
-    // intersection triggers downward below this element; a factor of 2 was found to give
-    // good results in testing. If this is only -1 (the exact size of the top menu bar),
-    // the intersection doesn't trigger until the heading is scrolled off the top of the screen
-    // behind the menu bar, which also means that when clicking on a link in the TOC doesn't
-    // trigger the intersection (and therefore doesn't highlight the correct heading).
-    rootMargin: `${-2 * document.querySelector("header.bd-header").getBoundingClientRect().bottom}px 0px 0px 0px`,
-    threshold: 0, // Trigger as soon as it becomes visible or invisible
+    root: null,
+    rootMargin: `0px 0px -70% 0px`, // Use -70% for the bottom margin to so that intersection events happen in only the top third of the viewport
+    threshold: 1, // Trigger once the heading becomes fully visible within the area described by the root margin
   };
 
+  // Right sidebar table of contents container
   const pageToc = document.querySelector("#pst-page-toc-nav");
-  const tocLinks = Array.from(document.querySelectorAll("#pst-page-toc-nav a"));
+
+  // The table of contents is a list of .toc-entry items each of which contains
+  // a link and possibly a nested list representing one level deeper in the
+  // table of contents.
+  const tocEntries = Array.from(pageToc.querySelectorAll(".toc-entry"));
+  const tocLinks = Array.from(pageToc.querySelectorAll("a"));
+
+  // When the website visitor clicks a link in the TOC, we want that link to be
+  // highlighted/activated, NOT whichever TOC link the intersection observer
+  // callback would otherwise highlight, so we turn off the observer and turn it
+  // back on later.
+  let disableObserver = false;
+  pageToc.addEventListener("click", (event) => {
+    disableObserver = true;
+    const clickedTocLink = tocLinks.find((el) => el.contains(event.target));
+    activate(clickedTocLink);
+    setTimeout(() => {
+      // Give the page ample time to finish scrolling, then re-enable the
+      // intersection observer.
+      disableObserver = false;
+    }, 1500);
+  });
 
   /**
-   * Activate an element and its parent TOC dropdowns; deactivate
-   * everything else in the TOC. Together with the theme CSS, this
-   * highlights the given TOC entry.
+   * Activate an element and its chain of ancestor TOC entries; deactivate
+   * everything else in the TOC. Together with the theme CSS, this unfolds
+   * the TOC out to the given entry and highlights that entry.
    *
-   * @param {HTMLElement} tocElement The TOC entry to be highlighted
+   * @param {HTMLElement} tocLink The TOC entry to be highlighted
    */
-  function activate(tocElement) {
-    // Deactivate all TOC links except the requested element
-    tocLinks
-      .filter((el) => el !== tocElement)
-      .forEach((el) => {
+  function activate(tocLink) {
+    tocLinks.forEach((el) => {
+      if (el === tocLink) {
+        el.classList.add("active");
+        el.setAttribute("aria-current", true);
+      } else {
         el.classList.remove("active");
         el.removeAttribute("aria-current");
-      });
-
-    // Activate the requested element
-    tocElement.classList.add("active");
-    tocElement.setAttribute("aria-current", "true");
-
-    // Travel up the DOM from the requested element, collecting the set of
-    // all parent elements that need to be activated. These are the collapsible
-    // <li> elements that can hold nested child headings.
-    const parents = new Set();
-    let el = tocElement.parentElement;
-    while (el && el !== pageToc) {
-      if (el.matches(".toc-entry")) {
-        parents.add(el);
       }
-      el = el.parentElement;
-    }
-
-    // Iterate over all child elements of the TOC, deactivating everything
-    // that isn't a parent of the active node and activating the parents
-    // of the active TOC entry. This closes all collapsible <li> elements
-    // of which the active element is not a direct descendent, and activates
-    // those which are.
-    pageToc.querySelectorAll(".toc-entry").forEach((el) => {
-      if (parents.has(el)) {
+    });
+    tocEntries.forEach((el) => {
+      if (el.contains(tocLink)) {
         el.classList.add("active");
       } else {
         el.classList.remove("active");
@@ -1052,61 +1047,43 @@ async function addTOCScrollSpy() {
   }
 
   /**
-   * Get the heading in the article associated with a TOC entry.
+   * Get the heading in the article associated with the link in the table of contents
    *
-   * @param {HTMLElement} tocElement TOC DOM element to use to grab an article heading
+   * @param {HTMLElement} tocLink TOC DOM element to use to grab an article heading
    *
    * @returns The article heading that the TOC element links to
    */
-  function getHeading(tocElement) {
+  function getHeading(tocLink) {
     return document.querySelector(
-      `${tocElement.getAttribute("href")} > :is(h1,h2,h3,h4,h5,h6)`,
+      `${tocLink.getAttribute("href")} > :is(h1,h2,h3,h4,h5,h6)`,
     );
   }
 
-  // Create a hashmap which stores the state of the headings. This object maps headings
-  // in the article to TOC elements, along with information about whether they are
-  // visible and the order in which they appear in the article.
-  const headingState = new Map(
-    Array.from(tocLinks).map((el) => {
-      return [
-        getHeading(el),
-        {
-          tocElement: el,
-          visible: false,
-        },
-      ];
-    }),
-  );
+  // Map article headings to their associated TOC links
+  const tocLinksByHeading = new Map();
+  tocLinks.forEach((link) => tocLinksByHeading.set(getHeading(link), link));
 
   /**
    *
-   * @param {IntersectionObserverEntry} entries Objects containing threshold-crossing
+   * @param {IntersectionObserverEntry[]} entries Objects containing threshold-crossing
    * event information
    *
    */
   function callback(entries) {
-    // Update the state of the TOC headings
-    entries.forEach((entry) => {
-      headingState.get(entry.target).visible = entry.isIntersecting;
-    });
-
-    // If there are any visible results, activate the one _above_ the first visible
-    // heading. This ensures that when a heading scrolls offscreen, the TOC entry
-    // for that entry remains highlighted.
-    //
-    // If the first element is visible, just highlight the first entry in the TOC.
-    const visible = Array.from(headingState.values()).filter(
-      ({ visible }) => visible,
-    );
-    if (visible.length > 0) {
-      const indexAbove = Math.max(sorted[0].index - 1, 0);
-      activate(tocLinks[indexAbove]);
+    if (disableObserver) {
+      return;
     }
+    const entry = entries.filter((entry) => entry.isIntersecting).pop();
+    if (!entry) {
+      return;
+    }
+    const heading = entry.target;
+    const tocLink = tocLinksByHeading.get(heading);
+    activate(tocLink);
   }
 
   const observer = new IntersectionObserver(callback, options);
-  headingState.forEach((_, heading) => {
+  tocLinksByHeading.keys().forEach((heading) => {
     observer.observe(heading);
   });
 }
