@@ -991,7 +991,7 @@ async function addTOCScrollSpy() {
   // Intersection observer options
   const options = {
     root: null,
-    rootMargin: `0px 0px -70% 0px`, // Use -70% for the bottom margin to so that intersection events happen in only the top third of the viewport
+    rootMargin: `0px 0px -70% 0px`, // Use -70% for the bottom margin so that intersection events happen in only the top third of the viewport
     threshold: 1, // Trigger once the heading becomes fully visible within the area described by the root margin
   };
 
