@@ -1,5 +1,7 @@
-# This workflow is checks that the documentation can be built across multiple OSes, Python, and Sphinx versions.
-# It also checks for broken links in the documentation and runs Lighthouse audits on the built site.
+# This workflow is checks that the documentation can be built across multiple OSes,
+# Python, and Sphinx versions.
+# It also checks for broken links in the documentation and runs Lighthouse audits
+# on the built site.
 
 name: docs-checks
 

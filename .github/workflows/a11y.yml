@@ -1,3 +1,5 @@
+# Accessibility tests for PST, using playwright and axe-core
+
 name: a11y-tests
 
 # Concurrency group that uses the workflow name and PR number if available

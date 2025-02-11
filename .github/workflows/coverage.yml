@@ -35,7 +35,7 @@ jobs:
       - name: "Check downloaded files"
         run: ls -R
 
-      - name: "Post coverage comment"
+      - name: "Post coverage comment 💬"
         uses: py-cov-action/python-coverage-comment-action@b2eb38dd175bf053189b35f738f9207278b00925
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

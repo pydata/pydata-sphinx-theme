@@ -1,4 +1,6 @@
-# Testing (pytest, a11y-tests), profiling, and coverage checks for PST
+# This workflow runs our usual CI jobs: testing with pytest, profiling,
+# and coverage checks for PST
+
 name: continuous-integration
 
 # Concurrency group that uses the workflow name and PR number if available
