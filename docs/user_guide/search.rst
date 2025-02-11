@@ -63,3 +63,14 @@ following configuration to your ``conf.py`` file:
    html_theme_options = {
        "search_bar_text": "Your text here..."
    }
+
+Configure the inline search results (search-as-you-type) feature
+----------------------------------------------------------------
+
+Set the ``search_as_you_type`` HTML theme option to ``True``.
+
+.. code:: python
+
+   html_theme_options = {
+       "search_as_you_type": True
+   }

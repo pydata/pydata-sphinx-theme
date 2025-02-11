@@ -109,8 +109,12 @@ sitemap_url_scheme = "{link}"
 
 We recommend that you support dark mode by providing either a single version of
 your logo that works well in both light and dark modes, or two separate
-versions. We also recommend that you provide alt text for your logo if you do
-not provide visible text.
+versions. We also recommend that you supply alt text for your logo in any place
+that the image appears by itself without a visible text version of the logo.
+For example, if you have the Python snake logo all by itself, you should supply
+the alt text "Python," whereas if you have the snake image followed by
+the word "Python" in visible, regular, copy-paste-able text, then you do not
+need to provide alt text.
 
 These recommendations are covered in detail at the page [](./branding.rst)
 

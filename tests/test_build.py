@@ -703,9 +703,9 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) ->
     assert edit_link, "no edit link found"
     assert edit_link[0].attrs["href"] == edit_url, f"edit link didn't match {edit_link}"
     # First child is the icon
-    assert (
-        list(edit_link[0].strings)[1].strip() == edit_text
-    ), f"edit text didn't match {edit_text}"
+    assert list(edit_link[0].strings)[1].strip() == edit_text, (
+        f"edit text didn't match {edit_text}"
+    )
 
 
 @pytest.mark.parametrize(

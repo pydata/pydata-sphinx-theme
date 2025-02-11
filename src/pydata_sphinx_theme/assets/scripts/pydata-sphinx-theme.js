@@ -261,6 +261,7 @@ var addEventListenerForSearchKeyboard = () => {
       // also allow Escape key to hide (but not show) the dynamic search field
       else if (document.activeElement === input && /Escape/i.test(event.key)) {
         toggleSearchField();
+        resetSearchAsYouTypeResults();
       }
     },
     true,
@@ -330,6 +331,170 @@ var setupSearchButtons = () => {
   const searchDialog = document.getElementById("pst-search-dialog");
   // Dialog click handler includes clicks on dialog ::backdrop.
   searchDialog.addEventListener("click", closeDialogOnBackdropClick);
+};
+
+/*******************************************************************************
+ * Inline search results (search-as-you-type)
+ *
+ * Immediately displays search results under the search query textbox.
+ *
+ * The search is conducted by Sphinx's built-in search tools (searchtools.js).
+ * Usually searchtools.js is only available on /search.html but
+ * pydata-sphinx-theme (PST) has been modified to load searchtools.js on every
+ * page. After the user types something into PST's search query textbox,
+ * searchtools.js executes the search and populates the results into
+ * the #search-results container. searchtools.js expects the results container
+ * to have that exact ID.
+ */
+var setupSearchAsYouType = () => {
+  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
+    return;
+  }
+
+  // Don't interfere with the default search UX on /search.html.
+  if (window.location.pathname.endsWith("/search.html")) {
+    return;
+  }
+
+  // Bail if the Search class is not available. Search-as-you-type is
+  // impossible without that class. layout.html should ensure that
+  // searchtools.js loads.
+  //
+  // Search class is defined in upstream Sphinx:
+  // https://github.com/sphinx-doc/sphinx/blob/6678e357048ea1767daaad68e7e0569786f3b458/sphinx/themes/basic/static/searchtools.js#L181
+  if (!Search) {
+    return;
+  }
+
+  // Destroy the previous search container and create a new one.
+  resetSearchAsYouTypeResults();
+  let timeoutId = null;
+  let lastQuery = "";
+  const searchInput = document.querySelector(
+    "#pst-search-dialog input[name=q]",
+  );
+
+  // Initiate searches whenever the user types stuff in the search modal textbox.
+  searchInput.addEventListener("keyup", () => {
+    const query = searchInput.value;
+
+    // Don't search when there's nothing in the query textbox.
+    if (query === "") {
+      resetSearchAsYouTypeResults(); // Remove previous results.
+      return;
+    }
+
+    // Don't search if there is no detectable change between
+    // the last query and the current query. E.g. the user presses
+    // Tab to start navigating the search results.
+    if (query === lastQuery) {
+      return;
+    }
+
+    // The user has changed the search query. Delete the old results
+    // and start setting up the new container.
+    resetSearchAsYouTypeResults();
+
+    // Debounce so that the search only starts when the user stops typing.
+    const delay_ms = 300;
+    lastQuery = query;
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+    timeoutId = window.setTimeout(() => {
+      Search.performSearch(query);
+      document.querySelector("#search-results").classList.remove("empty");
+      timeoutId = null;
+    }, delay_ms);
+  });
+};
+
+// Delete the old search results container (if it exists) and set up a new one.
+//
+// There is some complexity around ensuring that the search results links are
+// correct because we're extending searchtools.js past its assumed usage.
+// Sphinx assumes that searches are only executed from /search.html and
+// therefore it assumes that all search results links should be relative to
+// the root directory of the website. In our case the search can now execute
+// from any page of the website so we must fix the relative URLs that
+// searchtools.js generates.
+var resetSearchAsYouTypeResults = () => {
+  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
+    return;
+  }
+  // If a search-as-you-type results container was previously added,
+  // remove it now.
+  let results = document.querySelector("#search-results");
+  if (results) {
+    results.remove();
+  }
+
+  // Create a new search-as-you-type results container.
+  results = document.createElement("section");
+  results.classList.add("empty");
+  // Remove the container element from the tab order. Individual search
+  // results are still focusable.
+  results.tabIndex = -1;
+  // When focus is on a search result, make sure that pressing Escape closes
+  // the search modal.
+  results.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleSearchField();
+      resetSearchAsYouTypeResults();
+    }
+  });
+  // IMPORTANT: The search results container MUST have this exact ID.
+  // searchtools.js is hardcoded to populate into the node with this ID.
+  results.id = "search-results";
+  let modal = document.querySelector("#pst-search-dialog");
+  modal.appendChild(results);
+
+  // Get the relative path back to the root of the website.
+  const root =
+    "URL_ROOT" in DOCUMENTATION_OPTIONS
+      ? DOCUMENTATION_OPTIONS.URL_ROOT // Sphinx v6 and earlier
+      : document.documentElement.dataset.content_root; // Sphinx v7 and later
+
+  // As Sphinx populates the search results, this observer makes sure that
+  // each URL is correct (i.e. doesn't 404).
+  const linkObserver = new MutationObserver(() => {
+    const links = Array.from(
+      document.querySelectorAll("#search-results .search a"),
+    );
+    // Check every link every time because the timing of when new results are
+    // added is unpredictable and it's not an expensive operation.
+    links.forEach((link) => {
+      link.tabIndex = 0; // Use natural tab order for search results.
+      // Don't use the link.href getter because the browser computes the href
+      // as a full URL. We need the relative URL that Sphinx generates.
+      const href = link.getAttribute("href");
+      if (href.startsWith(root)) {
+        // No work needed. The root has already been prepended to the href.
+        return;
+      }
+      link.href = `${root}${href}`;
+    });
+  });
+
+  // The node that linkObserver watches doesn't exist until the user types
+  // something into the search textbox. This second observer (resultsObserver)
+  // just waits for #search-results to exist and then registers
+  // linkObserver on it.
+  let isObserved = false;
+  const resultsObserver = new MutationObserver(() => {
+    if (isObserved) {
+      return;
+    }
+    const container = document.querySelector("#search-results .search");
+    if (!container) {
+      return;
+    }
+    linkObserver.observe(container, { childList: true });
+    isObserved = true;
+  });
+  resultsObserver.observe(results, { childList: true });
 };
 
 /*******************************************************************************
@@ -797,7 +962,8 @@ async function setupAnnouncementBanner() {
         `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`,
       );
     }
-    const data = await response.text();
+    let data = await response.text();
+    data = data.trim();
     if (data.length === 0) {
       console.log(`[PST]: Empty announcement at: ${pstAnnouncementUrl}`);
       return;
@@ -857,6 +1023,7 @@ documentReady(addModeListener);
 documentReady(scrollToActive);
 documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
+documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
 
 // Determining whether an element has scrollable content depends on stylesheets,

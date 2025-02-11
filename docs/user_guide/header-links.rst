@@ -134,11 +134,9 @@ Here are several examples:
 
    .. code:: css
 
-      i.fa-twitter-square:before {
+      svg.fa-square-twitter {
          color: #55acee;
       }
-
-   This has already been added for the brands that have *shortcuts* (:ref:`see below <icon-link-shortcuts>`).
 
 Image icons
 -----------

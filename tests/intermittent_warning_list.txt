@@ -2,3 +2,7 @@ WARNING: Cell printed to stderr:
 Matplotlib is building the font cache; this may take a moment.
 WARNING: failed to reach any of the inventories with the following issues:
 intersphinx inventory
+# THESE 3 WILL GO AWAY WHEN OUR MIN SPHINX VERSION IS 7.3 OR HIGHER
+Here's a version removed message.
+.. versionremoved:: v0.1.1
+ERROR: Unknown directive type "versionremoved".
