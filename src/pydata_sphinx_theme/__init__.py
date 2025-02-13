@@ -40,11 +40,12 @@ def update_config(app):
             )
 
     # Validate icon links
-    if not isinstance(theme_options.get("icon_links", []), list):
-        raise ExtensionError(
-            "`icon_links` must be a list of dictionaries, you provided "
-            f"type {type(theme_options.get('icon_links'))}."
-        )
+    if theme_options.get("icon_links") is not None:
+        if not isinstance(theme_options.get("icon_links", []), list):
+            raise ExtensionError(
+                "`icon_links` must be a list of dictionaries, you provided "
+                f"type {type(theme_options.get('icon_links'))}."
+            )
 
     # Set the anchor link default to be # if the user hasn't provided their own
     if not utils.config_provided_by_user(app, "html_permalinks_icon"):
@@ -140,18 +141,19 @@ def update_config(app):
     # Add extra icon links entries if there were shortcuts present
     # TODO: Deprecate this at some point in the future?
     icon_links = theme_options.get("icon_links", [])
-    for url, icon, name in shortcuts:
-        if theme_options.get(url):
-            # This defaults to an empty list so we can always insert
-            icon_links.insert(
-                0,
-                {
-                    "url": theme_options.get(url),
-                    "icon": icon,
-                    "name": name,
-                    "type": "fontawesome",
-                },
-            )
+    if icon_links is not None:
+        for url, icon, name in shortcuts:
+            if theme_options.get(url):
+                # This defaults to an empty list so we can always insert
+                icon_links.insert(
+                    0,
+                    {
+                        "url": theme_options.get(url),
+                        "icon": icon,
+                        "name": name,
+                        "type": "fontawesome",
+                    },
+                )
     theme_options["icon_links"] = icon_links
 
     # Prepare the logo config dictionary
@@ -282,7 +284,9 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    app.add_post_transform(short_link.ShortenLinkTransform)
+    theme_options = utils.get_theme_options_dict(app)
+    if theme_options.get("shorten_urls") is True:
+        app.add_post_transform(short_link.ShortenLinkTransform)
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
