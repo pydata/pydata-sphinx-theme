@@ -992,7 +992,7 @@ async function addTOCScrollSpy() {
   const options = {
     root: null,
     rootMargin: `0px 0px -70% 0px`, // Use -70% for the bottom margin so that intersection events happen in only the top third of the viewport
-    threshold: 1, // Trigger once the heading becomes fully visible within the area described by the root margin
+    threshold: 0, // Trigger as soon as the heading goes into (or out of) the top 30% of the viewport
   };
 
   // Right sidebar table of contents container
@@ -1017,7 +1017,7 @@ async function addTOCScrollSpy() {
       // Give the page ample time to finish scrolling, then re-enable the
       // intersection observer.
       disableObserver = false;
-    }, 1500);
+    }, 1000);
   });
 
   /**
