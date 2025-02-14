@@ -151,7 +151,7 @@ def test_secondary_sidebar_toc_scrollspy(
     url_base: str,
 ) -> None:
     """Test that the secondary sidebar TOC highlights the correct item upon scroll."""
-    site_name = "colors"
+    site_name = "scroll"
     site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
 
     def check_toc():
