@@ -21,6 +21,26 @@ Heading 3
 
 Some text with a |code link|_.
 
+Heading 4
+---------
+
+Some other text
+
+Heading 5
+---------
+
+Some other text
+
+Heading 6
+---------
+
+Some other text
+
+Heading 7
+---------
+
+Some other text
+
 
 .. the below replacement is included to emulate what intersphinx / autodoc / numpydoc generate (links on text formatted as code), which (sadly) can't be done using nesting of standard rST markup.
 
