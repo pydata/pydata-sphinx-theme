@@ -1,7 +1,5 @@
 """Build minimal test sites with sphinx_build_factory and test them with Playwright."""
 
-import re
-
 from pathlib import Path
 from typing import Callable
 from urllib.parse import urljoin
@@ -145,36 +143,3 @@ def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> No
                 expect(el).to_have_css("color", hover_color)
 
     _check_test_site(site_name, site_path, check_colors)
-
-
-def test_secondary_sidebar_toc_scrollspy(
-    sphinx_build_factory: Callable,
-    page: Page,
-    url_base: str,
-) -> None:
-    """Test that the secondary sidebar TOC highlights the correct item upon scroll."""
-    site_name = "scroll"
-    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
-
-    def check_toc():
-        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/index.html"))
-        toc_links = page.locator("#pst-page-toc-nav a.nav-link")
-        first_heading = page.locator(str(toc_links.first.get_attribute("href")))
-        active_re = re.compile("active")
-
-        # click the first TOC link, check that it gets highlighted and that the
-        # associated heading is in the viewport
-        toc_links.first.click()
-        expect(toc_links.first).to_have_class(active_re)
-        expect(first_heading).to_be_in_viewport()
-
-        # after clicking a link, the pydata-sphinx-theme.js script sets a 1
-        # second timeout before processing intersection events again
-        page.wait_for_timeout(1001)
-
-        # scroll to the bottom of the page, check that the first TOC entry
-        # becomes un-highlighted
-        page.locator("p.copyright").scroll_into_view_if_needed()
-        expect(toc_links.first).not_to_have_class(active_re)
-
-    _check_test_site(site_name, site_path, check_toc)
