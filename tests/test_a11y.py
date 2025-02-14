@@ -1,8 +1,11 @@
 """Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
 
+from typing import Callable
 from urllib.parse import urljoin
 
 import pytest
+
+from .test_playwright import _build_test_site, _check_test_site
 
 
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
@@ -322,3 +325,32 @@ def test_search_as_you_type(page: Page, url_base: str) -> None:
         f"document.querySelector('{first_result_selector}').textContent"
     )
     assert actual_focused_content == expected_focused_content
+
+
+def test_secondary_sidebar_toc_scrollspy(
+    sphinx_build_factory: Callable,
+    page: Page,
+    url_base: str,
+) -> None:
+    """Test that the secondary sidebar TOC highlights the correct item upon scroll."""
+    site_name = "scroll"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+
+    def check_toc():
+        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/index.html"))
+
+        toclinks = page.locator("#pst-page-toc-nav a.nav-link").all()
+        headings = []
+        for link in toclinks:
+            headings.append(page.locator(link.get_attribute("href")).first)
+
+        # Upon click, the first element should be active
+        toclinks[0].click()
+        expect(page.locator("p.copyright")).not_to_be_in_viewport()
+        assert "active" in toclinks[0].get_attribute("class")
+
+        # After scrolling down, the first element shouldn't be active anymore
+        page.locator("p.copyright").scroll_into_view_if_needed()
+        expect(toclinks.first).to_not_have_class("active", timeout=1000)
+
+    _check_test_site(site_name, site_path, check_toc)

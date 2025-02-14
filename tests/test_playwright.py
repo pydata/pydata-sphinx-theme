@@ -143,38 +143,3 @@ def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> No
                 expect(el).to_have_css("color", hover_color)
 
     _check_test_site(site_name, site_path, check_colors)
-
-
-def test_secondary_sidebar_toc_scrollspy(
-    sphinx_build_factory: Callable,
-    page: Page,
-    url_base: str,
-) -> None:
-    """Test that the secondary sidebar TOC highlights the correct item upon scroll."""
-    site_name = "scroll"
-    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
-
-    def check_toc():
-        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/index.html"))
-
-        toclinks = page.locator("#pst-page-toc-nav a.nav-link").all()
-        headings = []
-        for link in toclinks:
-            headings.append(page.locator(link.get_attribute("href")).first)
-
-        # Upon click, the first element should be active
-        toclinks[0].click()
-        expect(page.locator("p.copyright")).not_to_be_in_viewport()
-        assert "active" in toclinks[0].get_attribute("class")
-        page.locator("p.copyright").scroll_into_view_if_needed()
-
-        # After scrolling down, the first element shouldn't be active anymore
-        page.wait_for_function(
-            """() => !document
-                .querySelector('#pst-page-toc-nav a.nav-link')
-                .classList
-                .contains('active')
-            """
-        )
-
-    _check_test_site(site_name, site_path, check_toc)
