@@ -987,7 +987,7 @@ async function fetchRevealBannersTogether() {
  * Add the machinery needed to highlight elements in the TOC when scrolling.
  *
  */
-async function addTOCScrollSpy() {
+async function addArticleTOCSyncing() {
   // Intersection observer options
   const options = {
     root: null,
@@ -1031,7 +1031,7 @@ async function addTOCScrollSpy() {
     tocLinks.forEach((el) => {
       if (el === tocLink) {
         el.classList.add("active");
-        el.setAttribute("aria-current", true);
+        el.setAttribute("aria-current", "true");
       } else {
         el.classList.remove("active");
         el.removeAttribute("aria-current");
@@ -1101,7 +1101,7 @@ documentReady(scrollToActive);
 documentReady(setupSearchButtons);
 documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(addTOCScrollSpy);
+documentReady(addArticleTOCSyncing);
 
 // Determining whether an element has scrollable content depends on stylesheets,
 // so we're checking for the "load" event rather than "DOMContentLoaded"
