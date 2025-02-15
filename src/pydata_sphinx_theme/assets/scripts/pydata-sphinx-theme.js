@@ -987,22 +987,30 @@ async function fetchRevealBannersTogether() {
  * Add the machinery needed to highlight elements in the TOC when scrolling.
  *
  */
-async function addArticleTOCSyncing() {
-  // Intersection observer options
-  const options = {
-    root: null,
-    rootMargin: `0px 0px -70% 0px`, // Use -70% for the bottom margin so that intersection events happen in only the top third of the viewport
-    threshold: 0, // Trigger as soon as the heading goes into (or out of) the top 30% of the viewport
-  };
-
+function setupArticleTocSyncing() {
   // Right sidebar table of contents container
   const pageToc = document.querySelector("#pst-page-toc-nav");
+
+  // Not all pages have or include a table of contents. (For example, in the PST
+  // docs, at the time of this writing: /user_guide/index.html.)
+  if (!pageToc) {
+    return;
+  }
 
   // The table of contents is a list of .toc-entry items each of which contains
   // a link and possibly a nested list representing one level deeper in the
   // table of contents.
   const tocEntries = Array.from(pageToc.querySelectorAll(".toc-entry"));
   const tocLinks = Array.from(pageToc.querySelectorAll("a"));
+
+  // If there are no links in the TOC, there's no syncing to be done.
+  // (Currently, the template does not render the TOC container if there are no
+  // TOC links, so this condition should never evaluate to true if the TOC
+  // container is found on the page, but should the template change in the
+  // future, this check will prevent a runtime error.)
+  if (tocLinks.length === 0) {
+    return;
+  }
 
   // When the website visitor clicks a link in the TOC, we want that link to be
   // highlighted/activated, NOT whichever TOC link the intersection observer
@@ -1054,38 +1062,79 @@ async function addArticleTOCSyncing() {
    * @returns The article heading that the TOC element links to
    */
   function getHeading(tocLink) {
-    return document.querySelector(
-      `${tocLink.getAttribute("href")} > :is(h1,h2,h3,h4,h5,h6)`,
-    );
-  }
-
-  // Map article headings to their associated TOC links
-  const tocLinksByHeading = new Map();
-  tocLinks.forEach((link) => tocLinksByHeading.set(getHeading(link), link));
-
-  /**
-   *
-   * @param {IntersectionObserverEntry[]} entries Objects containing threshold-crossing
-   * event information
-   *
-   */
-  function callback(entries) {
-    if (disableObserver) {
+    const href = tocLink.getAttribute("href");
+    if (!href.startsWith("#")) {
       return;
     }
-    const entry = entries.filter((entry) => entry.isIntersecting).pop();
-    if (!entry) {
+    const id = href.substring(1);
+    // There are cases where href="#" (for example, the first one at /examples/kitchen-sink/structure.html)
+    if (!id) {
       return;
     }
-    const heading = entry.target;
-    const tocLink = tocLinksByHeading.get(heading);
-    activate(tocLink);
+    // Use getElementById() because querySelector() requires escaping the id string
+    const target = document.getElementById(id);
+    // Often the target is a section but we want to track section's heading
+    const heading = target.querySelector(":is(h1,h2,h3,h4,h5,h6)");
+    // Fallback to the target if there is no heading (for example, links on the
+    // PST docs page /examples/kitchen-sink/api.html target <dt> elements)
+    return heading || target;
   }
 
-  const observer = new IntersectionObserver(callback, options);
-  tocLinksByHeading.keys().forEach((heading) => {
-    observer.observe(heading);
+  // Map heading elements to their associated TOC links
+  const headingsToTocLinks = new Map();
+  tocLinks.forEach((tocLink) => {
+    const heading = getHeading(tocLink);
+    if (heading) {
+      headingsToTocLinks.set(heading, tocLink);
+    }
   });
+
+  let observer;
+
+  function connectIntersectionObserver() {
+    if (observer) {
+      observer.disconnect();
+    }
+
+    const header = document.querySelector("#pst-header");
+    const headerHeight = header.getBoundingClientRect().height;
+
+    // Intersection observer options
+    const options = {
+      root: null,
+      rootMargin: `-${headerHeight}px 0px -70% 0px`, // Use -70% for the bottom margin so that intersection events happen in only the top third of the viewport
+      threshold: 0, // Trigger as soon as the heading goes into (or out of) the top 30% of the viewport
+    };
+
+    /**
+     *
+     * @param {IntersectionObserverEntry[]} entries Objects containing threshold-crossing
+     * event information
+     *
+     */
+    function callback(entries) {
+      if (disableObserver) {
+        return;
+      }
+      const entry = entries.filter((entry) => entry.isIntersecting).pop();
+      if (!entry) {
+        return;
+      }
+      const heading = entry.target;
+      const tocLink = headingsToTocLinks.get(heading);
+      activate(tocLink);
+    }
+
+    observer = new IntersectionObserver(callback, options);
+    headingsToTocLinks.keys().forEach((heading) => {
+      observer.observe(heading);
+    });
+  }
+
+  // If the user resizes the window, the header height may change and the
+  // intersection observer's root margin will need to be recalculated
+  window.addEventListener("resize", debounce(connectIntersectionObserver, 300));
+  connectIntersectionObserver();
 }
 
 /*******************************************************************************
@@ -1101,7 +1150,7 @@ documentReady(scrollToActive);
 documentReady(setupSearchButtons);
 documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(addArticleTOCSyncing);
+documentReady(setupArticleTocSyncing);
 
 // Determining whether an element has scrollable content depends on stylesheets,
 // so we're checking for the "load" event rather than "DOMContentLoaded"
