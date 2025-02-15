@@ -31,6 +31,23 @@
           padding-top: 1.5rem;
           padding-left: 2rem;
         }
+
+        // If the user clicks a TOC link or opens a URL that goes directly to a
+        // section of the article, then highlight the heading for that section.
+        // The rule is written this way because Sphinx puts ids on sections
+        // rather than headings.
+        :target > :is(h1, h2, h3, h4, h5, h5) {
+          background-color: var(--pst-color-target);
+        }
+
+        // If an inline element has padding, then it can take up more height
+        // than its parent. This becomes really apparent when highlighting the
+        // parent element, i.e., setting its background color to
+        // `var(--pst-color-target)`. In that case, the inline element extends
+        // outside the highlighted area and it looks bad.
+        :is(h1, h2, h3, h4, h5, h6) > code {
+          display: inline-block;
+        }
       }
     }
   }
