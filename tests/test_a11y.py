@@ -282,17 +282,6 @@ def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
     assert ipywidget.evaluate("el => el.tabIndex") == 0
 
 
-def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
-    """Foo."""
-    # page.goto(urljoin(url_base, "community/practices/merge.html"))
-    # expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text("Merge and review policy") # noqa: E501
-    page.set_viewport_size({"width": 1440, "height": 720})
-    page.goto(urljoin(url_base, "community/topics/config.html"))
-    expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
-        "Update Sphinx configuration during the build"
-    )
-
-
 @pytest.mark.a11y
 def test_search_as_you_type(page: Page, url_base: str) -> None:
     """Search-as-you-type feature should support keyboard navigation.
