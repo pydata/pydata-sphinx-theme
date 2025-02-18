@@ -35,6 +35,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
+        # ubuntu-latest = 24.04, windows-latest = windows-2022
         os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
         browser: ["firefox", "chromium"]
     runs-on: ${{ matrix.os }}
@@ -53,4 +54,11 @@ jobs:
 
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
-        run: python -Im tox run -e compile-assets,i18n-compile,py312-docs,a11y-tests -- --browser ${{ matrix.browser }}
+        run: python -Im tox run -m a11y -- --browser ${{ matrix.browser }}
+
+      - name: "Upload Playwright traces, if any 🐾"
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: playwright-traces
+          path: test-results/
