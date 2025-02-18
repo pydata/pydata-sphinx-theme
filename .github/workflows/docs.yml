@@ -126,7 +126,7 @@ jobs:
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
 
       - name: "Check for broken links 🔗"
-        run: python -Im tox -e docs-linkcheck
+        run: python -Im tox run -e docs-linkcheck
 
       - name: "Upload file with broken links 📤"
         uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
