@@ -1,0 +1,19 @@
+# Workflow to add a comment to a PR with a link to the preview of the docs
+
+name: rtd-preview-link
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions: {}
+
+jobs:
+  add-preview-link:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: readthedocs/actions/preview@cc0920454cf03ca8a3fbd3cbaa2ce2e509e70636
+        with:
+          project-slug: "pydata-sphinx-theme"

@@ -68,10 +68,10 @@ Any text that is marked in this way will be discoverable by ``pybabel`` and used
 Once you've marked the text as localizable, complete the steps outlined in the :ref:`updating-localization-files`
 section of this documentation.
 
-For more details on marking strings as localizable in jinja templates visit `the Jinja2 documentation <https://jinja.palletsprojects.com/en/3.0.x/templates/>`__.
+For more details on marking strings as localizable in jinja templates visit `the Jinja2 documentation <https://jinja.palletsprojects.com/en/stable/templates/>`__.
 
 .. tip::
-   Remember to `manually escape variables <https://jinja.palletsprojects.com/en/2.11.x/templates/#working-with-manual-escaping>`__ if needed.
+   Remember to `manually escape variables <https://jinja.palletsprojects.com/en/stable/templates/#working-with-manual-escaping>`__ if needed.
 
 Sometimes, it can help localizers to describe where a string comes from or whether it refers to a noun or verb,
 particularly if it can be difficult to find in the theme, or if the string itself is not very self-descriptive (for example, very short strings).
@@ -174,7 +174,7 @@ We manage localizations on the `PyData Sphinx Theme project on Transifex <https:
 
 To contribute localization, follow these steps:
 
-#. Sign up for a `Transifex account <https://www.transifex.com/signup/>`__.
+#. Sign up for a `Transifex account <https://app.transifex.com/signup/>`__.
 #. Join the `PyData Sphinx Theme project <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
 #. Select the language you want to localize. If the language you are looking for is not listed, you can `open an issue on GitHub to request it <https://github.com/pydata/pydata-sphinx-theme/issues>`__. Then you can open a pull request
    to add the new language following the steps outlined in :ref:`adding-new-language`.
