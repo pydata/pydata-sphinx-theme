@@ -4,8 +4,8 @@
 
 This accessibility statement applies to
 
-* The PyData Sphinx Theme
-* This documentation website, which uses the PyData Sphinx Theme
+- The PyData Sphinx Theme
+- This documentation website, which uses the PyData Sphinx Theme
 
 Other projects that use the PyData Sphinx Theme will inherit the theme's accessibility if they set up their projects with theme defaults, but other projects are ultimately outside this community's control.
 
@@ -13,10 +13,10 @@ Other projects that use the PyData Sphinx Theme will inherit the theme's accessi
 
 The team has taken the following measures to ensure the accessibility of the PyData Sphinx Theme
 
-* Agree to accessibility goals for the theme.
-* Acquire funding for contributors to make and test large accessibility changes.
-* Integrate accessibility into our review and decision-making processes.
-    * For example, code changes that break the automated accessibility tests are automatically blocked by the system until the test failures are fixed.
+- Agree to accessibility goals for the theme.
+- Acquire funding for contributors to make and test large accessibility changes.
+- Integrate accessibility into our review and decision-making processes.
+  - For example, code changes that break the automated accessibility tests are automatically blocked by the system until the test failures are fixed.
 
 ## Conformance
 
@@ -28,9 +28,9 @@ PyData Sphinx Theme is **fully conformant** with [Web Content Accessibility Guid
 
 PyData Sphinx theme aims to
 
-* Provide an equitable user experience, inclusive of disability
-* Conform with Web Content Accessibility Guidelines (WCAG) 2.1 level AA
-* Make all features compatible with assistive technology
+- Provide an equitable user experience, inclusive of disability
+- Conform with Web Content Accessibility Guidelines (WCAG) 2.1 level AA
+- Make all features compatible with assistive technology
 
 ## Known issues
 
@@ -42,20 +42,20 @@ Please let us know if you encounter accessibility barriers on PyData Sphinx Them
 
 PyData Sphinx Theme is tested automatically on the following and expected to work best:
 
-* Chrome
-* Ubuntu
+- Chrome
+- Ubuntu
 
 PyData Sphinx Theme is tested ad hoc manually on the following and expected to work well:
 
-* Firefox
-* MacOS
-* Windows
-* VoiceOver (by people who are not regular screen reader users)
-* NVDA (by people who are not regular screen reader users)
+- Firefox
+- MacOS
+- Windows
+- VoiceOver (by people who are not regular screen reader users)
+- NVDA (by people who are not regular screen reader users)
 
 PyData Sphinx Theme is not tested on the following and may or may not work as expected:
 
-* Safari
+- Safari
 
 ## Assessment approach
 
@@ -63,7 +63,7 @@ The PyData Sphinx Theme community has self-assessed the theme manually with the 
 
 PyData Sphinx Theme has not been assessed by a professional auditor.
 
-### Most recent assesment 
+### Most recent assesment
 
 The most recent accessibility assessment for PyData Sphinx Theme was conducted in 2024 using Accessibility Insights.
 
