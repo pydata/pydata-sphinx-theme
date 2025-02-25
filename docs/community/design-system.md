@@ -178,8 +178,8 @@ color and typography in the PyData Sphinx theme:
 1. [https://carbondesignsystem.com/elements/typography/overview/](https://carbondesignsystem.com/elements/typography/overview/)
 2. [https://canvas.workday.com/styles/tokens/type](https://canvas.workday.com/styles/tokens/type)
 3. [https://atlassian.design/foundations/typography-beta](https://atlassian.design/foundations/typography-beta)
-   refer to the [Figma Design File](https://www.figma.com/design/BHkBFxg1Qg0h5RApUw1ZrR/PyData-Design-System---Ongoing?node-id=2-160).
+   refer to the [Figma Design File](https://www.figma.com/community/file/1443191723065200671/pydata-sphinx-theme-design-system).
 
 <!-- reusable links -->
 
-[figma-library]: https://www.figma.com/community/file/1443191723065200671
+[figma-library]: https://www.figma.com/community/file/1443191723065200671/pydata-sphinx-theme-design-system

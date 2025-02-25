@@ -13,27 +13,35 @@ env:
 
 jobs:
   prerelease:
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
+
       - name: "Install (prerelease) dependencies 📦"
         run: |
           python -Im pip install --upgrade pip wheel setuptools
+
       - name: "Build PST docs and check for warnings 📖"
         run: |
           # example substitution: tox run -e docs-py312-docs
           python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
+
       - name: "Run tests ✅ (no coverage)"
         run: |
           # this will compile the assets then run the tests
@@ -41,12 +49,14 @@ jobs:
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@v2
+        uses: hynek/build-and-inspect-python-package@14c7e53f5d033cfa99f7af916fa59a6f7f356394
         if: matrix.python-version == '3.9'
         id: baipp
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at "${BAIPP_DIST}"
         if: matrix.python-version == '3.9'
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
       - name: "Create an issue if failure"
