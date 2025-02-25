@@ -61,9 +61,14 @@ def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
     selected version.
     """
     page.goto(url=url_base)
+    # Get the version switcher button; by default the (stable) version is selected
     # no need to include_hidden here ↓↓↓, we just need to get the active version name
-    button = page.get_by_role("button").filter(has_text="dev")
-    active_version_name = button.get_attribute("data-active-version-name")
+    active_version_name = (
+        page.get_by_role("button")
+        .filter(has_text="(stable)")
+        .get_attribute("data-active-version-name")
+    )
+
     # here we do include_hidden, so sidebar & topbar menus should each have a
     # matching entry:
     entries = page.get_by_role("option", include_hidden=True).filter(
