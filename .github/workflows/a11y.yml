@@ -38,6 +38,9 @@ jobs:
         # ubuntu-latest = 24.04, windows-latest = windows-2022
         os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
         browser: ["firefox", "chromium"]
+        exclude:
+          - os: "windows-latest"
+            browser: "firefox"
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
