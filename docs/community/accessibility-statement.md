@@ -7,11 +7,11 @@ This accessibility statement applies to
 - The PyData Sphinx Theme
 - This documentation website, which uses the PyData Sphinx Theme
 
-Other projects that use the PyData Sphinx Theme will inherit the theme's accessibility if they set up their projects with theme defaults, but other projects are ultimately outside this community's control.
+Other projects that use the PyData Sphinx Theme will inherit the theme's accessibility if they set up their projects with theme defaults. Other projects are ultimately outside this community's control (for example, content/documentation creators are responsible for ensuring any customizations and content added are accessible).
 
 ## Measures to support accessibility
 
-The team has taken the following measures to ensure the accessibility of the PyData Sphinx Theme
+The PyData Sphinx Theme team has taken the following measures to ensure the accessibility of the PyData Sphinx Theme
 
 - Agree to accessibility goals for the theme.
 - Acquire funding for contributors to make and test large accessibility changes.
