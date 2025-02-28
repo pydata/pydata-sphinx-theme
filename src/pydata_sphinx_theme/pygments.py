@@ -99,5 +99,6 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
 
     # re-write pygments.css
     pygments_css = Path(app.builder.outdir) / "_static" / "pygments.css"
-    with pygments_css.open("w") as f:
-        f.write(get_pygments_stylesheet(light_theme, dark_theme))
+    # Ensure the _static folder exists for all builders
+    pygments_css.parent.mkdir(exist_ok=True)
+    pygments_css.write_text(get_pygments_stylesheet(light_theme, dark_theme))
