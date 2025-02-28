@@ -1,4 +1,8 @@
-"""Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
+"""
+Using Axe-core, scan the Kitchen Sink pages for accessibility violations.
+Note that in contrast with the rest of our tests, the accessibility tests in this file
+are run against a build of our PST documentation, not purposedly-built test sites.
+"""
 
 from urllib.parse import urljoin
 
