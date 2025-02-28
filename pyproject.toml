@@ -81,7 +81,6 @@ doc = [
   "ipywidgets",
   "graphviz",
 ]
-test = ["pytest", "pytest-cov", "pytest-regressions", "sphinx[test]"]
 dev = [
   "pyyaml",
   "pre-commit",
@@ -90,7 +89,13 @@ dev = [
   "pandoc",
   "sphinx-theme-builder[cli]",
 ]
-a11y = ["pytest-playwright"]
+test = [
+  "pytest",
+  "pytest-cov",
+  "pytest-regressions",
+  "sphinx[test]",
+  "pytest-playwright"
+]
 i18n = ["Babel", "jinja2"]
 
 [project.entry-points]
@@ -109,7 +114,7 @@ indent-width = 4
 ignore = [
   "D107", # Missing docstring in `__init__` | set the docstring in the class
   "D205", # 1 blank line required between summary line and description,
-  "D212",  # docstring summary must be on first physical line
+  "D212", # docstring summary must be on first physical line
   "W291", # let pre-commit handle trailing whitespace
 
 ]
