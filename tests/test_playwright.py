@@ -69,7 +69,7 @@ def test_version_switcher_highlighting(
     In sidebar and topbar - version switcher should apply highlight color to currently
     selected version.
     """
-    site_name = "base"
+    site_name = "version_switcher"
     site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
 
     def check_version_switcher_highlighting():
