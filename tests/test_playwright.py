@@ -46,7 +46,8 @@ def _build_test_site(site_name: str, sphinx_build_factory: Callable) -> None:
 
 def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
     """Make the built test site available to Playwright, then run `test_func` on it."""
-    test_sites_dir.mkdir(exist_ok=True)
+    # Need to ensure parent directories exist in CI
+    test_sites_dir.mkdir(exist_ok=True, parents=True)
     symlink_path = test_sites_dir / site_name
     try:
         symlink_path.symlink_to(site_path, True)
