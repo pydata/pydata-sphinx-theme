@@ -25,6 +25,7 @@ repo_path = Path(__file__).parents[1]
 test_sites_dir = repo_path / "docs" / "_build" / "html" / "playwright_tests"
 
 
+# ------------------------- Helper functions -------------------------
 def _is_overflowing(element):
     """Check if an element is being shortened via CSS due to text-overflow property.
 
@@ -60,6 +61,7 @@ def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
         test_sites_dir.rmdir()
 
 
+# ------------------------- Test functions: style -------------------------
 def test_version_switcher_highlighting(
     sphinx_build_factory: Callable, page: Page, url_base: str
 ) -> None:
@@ -91,45 +93,6 @@ def test_version_switcher_highlighting(
     _check_test_site(site_name, site_path, check_version_switcher_highlighting)
 
 
-def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
-    """Test breadcrumb text-overflow."""
-    # wide viewport width → no truncation
-    page.set_viewport_size({"width": 1440, "height": 720})
-    page.goto(urljoin(url_base, "community/topics/config.html"))
-    expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
-        "Update Sphinx configuration during the build"
-    )
-    el = page.get_by_text("Update Sphinx configuration during the build").nth(1)
-    expect(el).to_have_css("overflow-x", "hidden")
-    expect(el).to_have_css("text-overflow", "ellipsis")
-    assert not _is_overflowing(el)
-    # narrow viewport width → truncation
-    page.set_viewport_size({"width": 150, "height": 720})
-    assert _is_overflowing(el)
-
-
-def test_breadcrumbs_everywhere(
-    sphinx_build_factory: Callable, page: Page, url_base: str
-) -> None:
-    """Test breadcrumbs truncate properly when placed in various parts of the layout."""
-    site_name = "breadcrumbs"
-    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
-
-    def check_breadcrumb_truncation():
-        page.goto(
-            urljoin(url_base, f"playwright_tests/{site_name}/hansel/gretel/house.html")
-        )
-        # sidebar should overflow
-        text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
-        el = page.locator("#main-content").get_by_text(text).last
-        assert _is_overflowing(el)
-        # footer containers never trigger ellipsis overflow because min-width is content
-        el = page.locator(".footer-items__center > .footer-item")
-        assert not _is_overflowing(el)
-
-    _check_test_site(site_name, site_path, check_breadcrumb_truncation)
-
-
 def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> None:
     """Test that things get colored the way we expect them to.
 
@@ -157,3 +120,53 @@ def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> No
                 expect(el).to_have_css("color", hover_color)
 
     _check_test_site(site_name, site_path, check_colors)
+
+
+# ------------------------- Test functions: layout & components -----------------------
+
+
+def test_breadcrumb_expansion(
+    sphinx_build_factory: Callable, page: Page, url_base: str
+) -> None:
+    """Test breadcrumb text-overflow."""
+    site_name = "breadcrumbs"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+
+    def check_breadcrumb_expansion():
+        # wide viewport width → no truncation
+        page.set_viewport_size({"width": 1440, "height": 720})
+        page.goto(urljoin(url_base, "community/topics/config.html"))
+        expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
+            "Update Sphinx configuration during the build"
+        )
+        el = page.get_by_text("Update Sphinx configuration during the build").nth(1)
+        expect(el).to_have_css("overflow-x", "hidden")
+        expect(el).to_have_css("text-overflow", "ellipsis")
+        assert not _is_overflowing(el)
+        # narrow viewport width → truncation
+        page.set_viewport_size({"width": 150, "height": 720})
+        assert _is_overflowing(el)
+
+        _check_test_site(site_name, site_path, check_breadcrumb_expansion)
+
+
+def test_breadcrumbs_everywhere(
+    sphinx_build_factory: Callable, page: Page, url_base: str
+) -> None:
+    """Test breadcrumbs truncate properly when placed in various parts of the layout."""
+    site_name = "breadcrumbs"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+
+    def check_breadcrumb_truncation():
+        page.goto(
+            urljoin(url_base, f"playwright_tests/{site_name}/hansel/gretel/house.html")
+        )
+        # sidebar should overflow
+        text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
+        el = page.locator("#main-content").get_by_text(text).last
+        assert _is_overflowing(el)
+        # footer containers never trigger ellipsis overflow because min-width is content
+        el = page.locator(".footer-items__center > .footer-item")
+        assert not _is_overflowing(el)
+
+    _check_test_site(site_name, site_path, check_breadcrumb_truncation)
