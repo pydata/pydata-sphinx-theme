@@ -73,17 +73,20 @@ def test_version_switcher_highlighting(
     site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
 
     def check_version_switcher_highlighting():
-        page.goto(url=url_base)
+        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/index.html"))
         # no need to include_hidden here ↓↓↓, we just need to get the active
         # version name
         button = page.get_by_role("button").filter(has_text="dev")
         active_version_name = button.get_attribute("data-active-version-name")
-        # here we do include_hidden, so sidebar & topbar menus should each have a
-        # matching entry:
+
+        active_version_name = button.get_attribute("data-active-version-name")
+        print(active_version_name)
+        # here we do include_hidden, since we are not adding this in the sidebar
+        # we should only get one entry
         entries = page.get_by_role("option", include_hidden=True).filter(
             has_text=active_version_name
         )
-        assert entries.count() == 2
+        assert entries.count() == 1
         # make sure they're highlighted
         for entry in entries.all():
             light_mode = "rgb(10, 125, 145)"  # pst-color-primary
