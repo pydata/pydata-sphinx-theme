@@ -5,7 +5,7 @@ This theme comes with support for {{ rtd }}, a popular service for hosting docum
 ## Version switcher
 
 Read the Docs provides a version switcher by default to projects as part of a
-[flyout menu](https://docs.readthedocs.io/en/stable/flyout-menu.html) that can
+[flyout menu](https://docs.readthedocs.com/platform/stable/flyout-menu.html) that can
 be disabled.
 
 This means that you have one of three options if you are hosting a PyData

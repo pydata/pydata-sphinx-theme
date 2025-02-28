@@ -71,4 +71,4 @@ The results of that assessment were not formally published, but the problems rev
 
 ## Date
 
-This statement was created in February 2025 using the [W3C Accessibility Statement Generator Tool](https://www.w3.org/WAI/planning/statements/generator/#create). It was then edited to fit the accessibility efforts of the PyData Sphinx Theme community. It was last updated in February 2025.
+This statement was created in February 2025 using the [W3C Accessibility Statement Generator Tool](https://www.w3.org/WAI/planning/statements/generator). It was then edited to fit the accessibility efforts of the PyData Sphinx Theme community. It was last updated in February 2025.
