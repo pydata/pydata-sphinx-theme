@@ -102,6 +102,12 @@ jobs:
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
         run: python -Im tox run -m a11y
+      - name: "Upload Playwright traces, if any 🐾"
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: playwright-traces
+          path: test-results/
 
   # Build our docs (PST) on major OSes and check for warnings
   build-site:
