@@ -81,8 +81,11 @@ def setup_translators(app: Sphinx):
     defined in ``BootstrapHTML5TranslatorMixin``.
     This way we can retain the original translator's
     behavior and configuration, and _only_ add the extra bootstrap rules.
-    If we don't detect an HTML-based translator, then we do nothing.
+    If we don't detect an HTML-based builder, then we do nothing.
     """
+    # Skip builders that are not HTML
+    if app.builder.format != "html":
+        return
     if not app.registry.translators.items():
         try:
             default_translator_class = app.builder.default_translator_class
@@ -101,10 +104,6 @@ def setup_translators(app: Sphinx):
         app.set_translator(app.builder.name, translator, override=True)
     else:
         for name, klass in app.registry.translators.items():
-            if app.builder.format != "html":
-                # Skip translators that are not HTML
-                continue
-
             translator = types.new_class(
                 "BootstrapHTML5Translator",
                 (
