@@ -42,7 +42,7 @@ jobs:
         # ubuntu-24.04==latest
         # windows-2022==latest
         os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.9", "3.13"]
         sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
