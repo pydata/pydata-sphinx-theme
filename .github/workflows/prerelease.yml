@@ -70,10 +70,13 @@ jobs:
 
       # Run tests on the built package (which will be later uploaded to PyPI)
       - name: "Install PST from wheel and test"
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
+          PST_VERSION: ${{ env.PST_VERSION }}
         run: |
           # calling with --installpkg so we can use the already built package
           tox run -e py312-tests-no-cov \
-          --installpkg ${{ steps.baipp.outputs.dist }}/pydata_sphinx_theme-${{ env.PST_VERSION }}-py3-none-any.whl \
+          --installpkg "${BAIPP_DIST}"/pydata_sphinx_theme-"${PST_VERSION}"-py3-none-any.whl \
           -- --deselect tests/test_build.py::test_translations
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
