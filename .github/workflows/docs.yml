@@ -2,6 +2,8 @@
 # Python, and Sphinx versions.
 # It also checks for broken links in the documentation and runs Lighthouse audits
 # on the built site.
+# IMPORTANT: if you make changes to this workflow, you will need to open a follow-up
+# PR after merge to update the action SHA in the publish workflow
 
 name: docs-checks
 
@@ -56,6 +58,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ matrix.python-version }}
@@ -86,6 +89,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
@@ -123,6 +127,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
 
       - name: "Check for broken links 🔗"

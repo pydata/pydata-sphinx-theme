@@ -18,14 +18,18 @@ permissions:
 jobs:
   # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
-    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml
+    # TODO @trallard: replace SHA after merge to main
+    # Important: make sure to update the SHA after making any changes to the CI workflow
+    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@417d83135293eca5a3bbec100fece34467ced065
     # needed for the coverage action
     permissions:
       contents: write
       pull-requests: write
-  # calls our docs workflow (build docs, check broken links, lighthouse)
+      # calls our docs workflow (build docs, check broken links, lighthouse)
   docs:
-    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml
+    # TODO @trallard: replace SHA after merge to main
+    # Important: make sure to update the SHA after making any changes to the docs workflow
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@417d83135293eca5a3bbec100fece34467ced065
 
   build-package:
     name: "Build & verify PST package"

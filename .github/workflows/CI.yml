@@ -1,5 +1,7 @@
 # This workflow runs our usual CI jobs: testing with pytest, profiling,
 # and coverage checks for PST
+# IMPORTANT: if you make changes to this workflow, you will need to open a follow-up
+# PR after merge to update the action SHA in the publish workflow
 
 name: continuous-integration
 
@@ -71,6 +73,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ matrix.python-version }}

@@ -11,6 +11,8 @@ env:
   FORCE_COLOR: "1" # Make tools pretty
   PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
 
+permissions: {}
+
 jobs:
   prerelease:
     # only run this workflow for pydata owned repositories (avoid forks)
@@ -28,6 +30,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@01731d0cc57768b9eff1c97f38909932ecd7e7d1
         with:
           python-version: ${{ matrix.python-version }}
@@ -60,7 +63,7 @@ jobs:
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
       - name: "Create an issue if failure"
-        uses: JasonEtco/create-an-issue@v2
+        uses: JasonEtco/create-an-issue@1b14a70e4d8dc185e5cc76d3bec9eab20257b2c5
         if: ${{ env.SPHINX_BUILD_UNEXPECTED_WARNINGS || !env.PYTEST_ERRORS }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
