@@ -14,6 +14,6 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: readthedocs/actions/preview@cc0920454cf03ca8a3fbd3cbaa2ce2e509e70636
+      - uses: readthedocs/actions/preview@b8bba1484329bda1a3abe986df7ebc80a8950333
         with:
           project-slug: "pydata-sphinx-theme"

@@ -41,14 +41,14 @@ jobs:
           persist-credentials: false
 
       - name: "Setup Python 🐍"
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # 5.3.0
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # 5.4.0
         with:
           python-version: "3.9"
 
       - run: python -Im pip install tox-uv
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@14c7e53f5d033cfa99f7af916fa59a6f7f356394 # 2.11.0
+        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310 # 2.12.0
         id: baipp
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
