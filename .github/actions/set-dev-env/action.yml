@@ -1,3 +1,8 @@
+# Reusable action to set our PST development environment
+# DO NOT use for release jobs since we cache dependencies
+# IMPORTANT: if you make changes to this action, you will need to open a follow-up
+# PR after merge to update the action SHA in the a11y, CI, docs, and prerelease
+# workflows
 name: Setup PST CI environment
 description: Create a PST dev environment
 

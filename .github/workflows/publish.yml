@@ -1,7 +1,6 @@
-# This will run every time a release is created and published.
-# It calls our tests workflow via a `workflow_call`, and if tests pass
-# then it triggers our upload to PyPI for a new release.
-name: Publish to PyPI
+# This workflow runs every day at 2AM UTC to publish a new nightly release to Anaconda.org
+# and every time there is a PST release to make sure it gets uploaded to PyPI.
+name: Publish PST package
 on:
   release:
     types:
@@ -17,42 +16,58 @@ permissions:
   contents: read
 
 jobs:
-  # calls our general CI workflow (tests, build docs, etc.)
+  # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
-    uses: ./.github/workflows/CI.yml
+    # TODO @trallard: replace SHA after merge to main
+    # Important: make sure to update the SHA after making any changes to the CI workflow
+    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@417d83135293eca5a3bbec100fece34467ced065
     # needed for the coverage action
     permissions:
       contents: write
       pull-requests: write
+      # calls our docs workflow (build docs, check broken links, lighthouse)
+  docs:
+    # TODO @trallard: replace SHA after merge to main
+    # Important: make sure to update the SHA after making any changes to the docs workflow
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@417d83135293eca5a3bbec100fece34467ced065
 
   build-package:
     name: "Build & verify PST package"
-    needs: [tests] # require tests to pass before deploy runs
+    # require tests and docs to pass before building the package
+    needs: [tests, docs]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+        with:
+          persist-credentials: false
 
-      - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # 5.3.0
         with:
           python-version: "3.9"
-          pandoc: "False"
+
+      - run: python -Im pip install tox-uv
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@v2
+        uses: hynek/build-and-inspect-python-package@14c7e53f5d033cfa99f7af916fa59a6f7f356394 # 2.11.0
         id: baipp
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at "${BAIPP_DIST}"
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
-  release-pypi:
+  release-PST:
     runs-on: ubuntu-latest
     needs: [build-package]
     permissions:
       id-token: write # needed for PyPI upload
+    environment:
+      name: pst-release
+      url: https://pypi.org/p/pydata-sphinx-theme
     steps:
       - name: "Download PST built package 📦"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # 4.1.8
         with:
           name: Packages
           path: dist
@@ -62,9 +77,11 @@ jobs:
           tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70 # 1.12.3
         # only publish if this is a published release by pydata
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
+        with:
+          print-hash: true
 
       - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
         uses: scientific-python/upload-nightly-action@82396a2ed4269ba06c6b2988bb4fd568ef3c3d6b # 0.6.1
