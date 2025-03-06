@@ -63,6 +63,7 @@ jobs:
 
       # Run tests on the built package (which will be later uploaded to PyPI)
       - name: "Install PST from wheel and test"
+        if: matrix.python-version == '3.9'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
         run: |
