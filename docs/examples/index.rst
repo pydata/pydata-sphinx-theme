@@ -28,6 +28,7 @@ See the sections in the primary sidebar and below to explore.
     :numbered:
     :caption: Reference and test section. Mostly meant for developers to check that things look OK.
 
+    regressions
     no-sidebar
     persistent-search-field
     in-page-toc
