@@ -79,7 +79,6 @@ def test_version_switcher_highlighting(
         button = page.get_by_role("button").filter(has_text="dev")
         active_version_name = button.get_attribute("data-active-version-name")
 
-        print(active_version_name)
         # here we do include_hidden, since we are not adding this in the sidebar
         # we should only get one entry
         entries = page.get_by_role("option", include_hidden=True).filter(
