@@ -69,7 +69,7 @@ jobs:
         run: |
           # calling with --installpkg so we can use the already built package
           tox run -e py312-tests-no-cov \
-          --installpkg "${ BAIPP_DIST }"/*.whl \
+          --installpkg ${ BAIPP_DIST }/*.whl \
           -- --deselect tests/test_build.py::test_translations
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
