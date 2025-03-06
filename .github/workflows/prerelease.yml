@@ -16,7 +16,7 @@ permissions: {}
 jobs:
   prerelease:
     # only run this workflow for pydata owned repositories (avoid forks)
-    if: github.repository_owner == 'pydata'
+    # if: github.repository_owner == 'pydata'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
