@@ -96,6 +96,7 @@ test = [
   "sphinx[test]",
   "pytest-playwright"
 ]
+a11y = ["pydata-sphinx-theme[test]"]
 i18n = ["Babel", "jinja2"]
 
 [project.entry-points]
