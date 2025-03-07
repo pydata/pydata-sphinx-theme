@@ -3,7 +3,7 @@
  */
 
 .bd-sidebar-primary {
-  #pst-collapse-button-sidebar-primary {
+  #pst-collapse-sidebar-button {
     // Only show this button when there's enough width for both sidebar and main
     // content. Do not show the button in the mobile menu where it would not
     // make any sense.
@@ -76,7 +76,7 @@
 
     transition: width $duration ease;
 
-    #pst-collapse-button-sidebar-primary {
+    #pst-collapse-sidebar-button {
       .pst-icon {
         transition: transform $duration linear;
       }
@@ -104,7 +104,7 @@
             height 0s linear $delay;
         }
 
-        > .sidebar-primary__section {
+        .sidebar-primary-item:not(.pst-sidebar-collapse) {
           transition:
             opacity $duration linear,
             visibility 0s linear $delay;
@@ -129,7 +129,7 @@
     width: 4rem;
     overflow: hidden;
 
-    #pst-collapse-button-sidebar-primary {
+    #pst-collapse-sidebar-button {
       .pst-icon {
         transform: translateX(0.25em) rotate(180deg);
       }
@@ -146,7 +146,7 @@
       }
     }
 
-    > .sidebar-primary__section {
+    .sidebar-primary-item:not(.pst-sidebar-collapse) {
       opacity: 0;
       visibility: hidden;
     }

@@ -1,6 +1,3 @@
-{% block collapse_button %}
-  {% include "../components/collapse-button-sidebar-primary.html" %}
-{% endblock %}
 {% block docs_sidebar %}
 {% if theme_navbar_center or theme_navbar_end or sidebars or theme_primary_sidebar_end %}
   {# Header items that will be displayed in the sidebar on mobile #}
@@ -30,7 +27,7 @@
   {% if sidebars %}
     <div class="sidebar-primary-items__start sidebar-primary__section">
       {%- for sidebartemplate in sidebars %}
-        <div class="sidebar-primary-item">{%- include sidebartemplate %}</div>
+        <div class="sidebar-primary-item{% if sidebartemplate == 'sidebar-collapse.html' %} pst-sidebar-collapse{% endif %}">{%- include sidebartemplate %}</div>
       {%- endfor %}
     </div>
   {% endif %}
