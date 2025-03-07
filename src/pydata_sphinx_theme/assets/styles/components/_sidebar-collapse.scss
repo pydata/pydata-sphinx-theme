@@ -77,8 +77,10 @@
     transition: width $duration ease;
 
     #pst-collapse-sidebar-button {
+      transition: transform $duration ease;
+
       .pst-icon {
-        transition: transform $duration linear;
+        transition: transform $duration ease;
       }
     }
 
@@ -130,8 +132,10 @@
     overflow: hidden;
 
     #pst-collapse-sidebar-button {
+      transform: translateY(-0.4em);
+
       .pst-icon {
-        transform: translateX(0.25em) rotate(180deg);
+        transform: translateX(0.25em) rotate(180deg) scale(1.4);
       }
 
       .pst-collapse-sidebar-label {
