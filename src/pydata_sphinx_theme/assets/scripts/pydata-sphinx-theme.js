@@ -1016,7 +1016,7 @@ async function fetchRevealBannersTogether() {
  * Set up expand/collapse button for primary sidebar
  */
 function setupCollapseSidebarButton() {
-  const button = document.getElementById("pst-collapse-button-sidebar-primary");
+  const button = document.getElementById("pst-collapse-sidebar-button");
   const sidebar = document.getElementById("pst-primary-sidebar");
 
   // If this page rendered without the button or sidebar, then there's nothing to do.
