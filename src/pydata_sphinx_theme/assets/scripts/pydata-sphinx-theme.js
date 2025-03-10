@@ -1112,13 +1112,15 @@ function setupCollapseSidebarButton() {
   }
 
   button.addEventListener("click", () => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion)", // must be in parentheses
-    ).matches;
     if (button.dataset.busy === "true") {
       return;
     }
     button.dataset.busy = "true";
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion)", // must be in parentheses
+    ).matches;
+
     if (button.getAttribute("aria-expanded") === "true") {
       squeezeSidebar(prefersReducedMotion);
     } else {
