@@ -22,11 +22,14 @@
     outline-offset: $focus-ring-offset;
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 0.25rem;
 
     // min width and height of the button must be 24px to meet WCAG Success Criterion 2.5.8
     min-width: 24px;
     min-height: 24px;
+    position: relative;
+    bottom: 0.2em;
 
     .pst-icon {
       color: var(--pst-color-link);
@@ -37,6 +40,7 @@
       // the padding top value must match the padding bottom value because the
       // icon undergoes a 180deg rotation when the sidebar is collapsed.
       padding: 0.4em 0;
+      height: 1.4em;
     }
 
     .pst-collapse-sidebar-label {
@@ -137,7 +141,7 @@
 
     #pst-collapse-sidebar-button {
       .pst-icon {
-        transform: translateX(0.25em) rotate(180deg) scale(1.4);
+        transform: translateX(0.25em) rotate(180deg);
       }
 
       .pst-collapse-sidebar-label {
