@@ -235,9 +235,11 @@ def test_code_block_tab_stop(page: Page, url_base: str) -> None:
 
     page.set_viewport_size({"width": 400, "height": 720})
 
+    # Narrow viewport, content overflows ...
     assert code_block.evaluate("el => el.scrollWidth > el.clientWidth") is True
 
-    # Narrow viewport, content overflows and code block should be a tab stop.
+    # ... and code block should be a tab stop.
+    #
     # Note: expect() will wait until the expect condition is true (up to the
     # test timeout limit). This is important because the resize handler is
     # debounced.
@@ -278,9 +280,11 @@ def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
     assert ipywidget.evaluate("el => el.scrollWidth > el.clientWidth") is True
 
     # ... and so our js code on the page should make it keyboard-focusable
-    # (tabIndex=0). Note: expect() will wait until the expect condition is true
-    # (up to the test timeout limit). This is important because the mutation
-    # callback that sets tabIndex=0 is debounced.
+    # (tabIndex=0).
+    #
+    # Note: expect() will wait until the expect condition is true (up to the
+    # test timeout limit). This is important because the mutation callback that
+    # sets tabIndex=0 is debounced.
     expect(ipywidget).to_have_attribute("tabindex", "0")
 
 
