@@ -40,7 +40,9 @@
       // the padding top value must match the padding bottom value because the
       // icon undergoes a 180deg rotation when the sidebar is collapsed.
       padding: 0.4em 0;
-      height: 1.4em;
+
+      // This value was also chosen by trial and error until it looked good.
+      height: 1.3em;
     }
 
     .pst-collapse-sidebar-label {
