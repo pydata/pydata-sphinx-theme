@@ -20,6 +20,8 @@ jobs:
   tests:
     # Important: make sure to update the SHA after making any changes to the CI workflow
     uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     # needed for the coverage action
     permissions:
       contents: write
@@ -29,11 +31,15 @@ jobs:
   docs:
     # Important: make sure to update the SHA after making any changes to the docs workflow
     uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
 
   build-package:
     name: "Build & verify PST package"
     # require tests and docs to pass before building the package
     needs: [tests, docs]
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
@@ -70,6 +76,8 @@ jobs:
   release-PST:
     runs-on: ubuntu-latest
     needs: [build-package]
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     permissions:
       id-token: write # needed for PyPI upload
     environment:
