@@ -1,4 +1,8 @@
-"""Build minimal test sites with sphinx_build_factory and test them with Playwright."""
+"""
+Build minimal test sites with sphinx_build_factory and test them with Playwright.
+When adding new tests to this file, remember to also add the corresponding test site
+to `tests/sites/` or use an existing one.
+"""
 
 from pathlib import Path
 from typing import Callable
@@ -21,6 +25,7 @@ repo_path = Path(__file__).parents[1]
 test_sites_dir = repo_path / "docs" / "_build" / "html" / "playwright_tests"
 
 
+# ------------------------- Helper functions -------------------------
 def _is_overflowing(element):
     """Check if an element is being shortened via CSS due to text-overflow property.
 
@@ -42,7 +47,8 @@ def _build_test_site(site_name: str, sphinx_build_factory: Callable) -> None:
 
 def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
     """Make the built test site available to Playwright, then run `test_func` on it."""
-    test_sites_dir.mkdir(exist_ok=True)
+    # Need to ensure parent directories exist in CI
+    test_sites_dir.mkdir(exist_ok=True, parents=True)
     symlink_path = test_sites_dir / site_name
     try:
         symlink_path.symlink_to(site_path, True)
@@ -55,65 +61,37 @@ def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
         test_sites_dir.rmdir()
 
 
-def test_version_switcher_highlighting(page: Page, url_base: str) -> None:
+# ------------------------- Test functions: style -------------------------
+def test_version_switcher_highlighting(
+    sphinx_build_factory: Callable, page: Page, url_base: str
+) -> None:
     """
     In sidebar and topbar - version switcher should apply highlight color to currently
     selected version.
     """
-    page.goto(url=url_base)
-    # no need to include_hidden here ↓↓↓, we just need to get the active version name
-    button = page.get_by_role("button").filter(has_text="dev")
-    active_version_name = button.get_attribute("data-active-version-name")
-    # here we do include_hidden, so sidebar & topbar menus should each have a
-    # matching entry:
-    entries = page.get_by_role("option", include_hidden=True).filter(
-        has_text=active_version_name
-    )
-    assert entries.count() == 2
-    # make sure they're highlighted
-    for entry in entries.all():
-        light_mode = "rgb(10, 125, 145)"  # pst-color-primary
-        # dark_mode = "rgb(63, 177, 197)"
-        expect(entry).to_have_css("color", light_mode)
-
-
-def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
-    """Test breadcrumb text-overflow."""
-    # wide viewport width → no truncation
-    page.set_viewport_size({"width": 1440, "height": 720})
-    page.goto(urljoin(url_base, "community/topics/config.html"))
-    expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
-        "Update Sphinx configuration during the build"
-    )
-    el = page.get_by_text("Update Sphinx configuration during the build").nth(1)
-    expect(el).to_have_css("overflow-x", "hidden")
-    expect(el).to_have_css("text-overflow", "ellipsis")
-    assert not _is_overflowing(el)
-    # narrow viewport width → truncation
-    page.set_viewport_size({"width": 150, "height": 720})
-    assert _is_overflowing(el)
-
-
-def test_breadcrumbs_everywhere(
-    sphinx_build_factory: Callable, page: Page, url_base: str
-) -> None:
-    """Test breadcrumbs truncate properly when placed in various parts of the layout."""
-    site_name = "breadcrumbs"
+    site_name = "version_switcher"
     site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
 
-    def check_breadcrumb_truncation():
-        page.goto(
-            urljoin(url_base, f"playwright_tests/{site_name}/hansel/gretel/house.html")
-        )
-        # sidebar should overflow
-        text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
-        el = page.locator("#main-content").get_by_text(text).last
-        assert _is_overflowing(el)
-        # footer containers never trigger ellipsis overflow because min-width is content
-        el = page.locator(".footer-items__center > .footer-item")
-        assert not _is_overflowing(el)
+    def check_version_switcher_highlighting():
+        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/index.html"))
+        # no need to include_hidden here ↓↓↓, we just need to get the active
+        # version name
+        button = page.get_by_role("button").filter(has_text="dev")
+        active_version_name = button.get_attribute("data-active-version-name")
 
-    _check_test_site(site_name, site_path, check_breadcrumb_truncation)
+        # here we do include_hidden, since we are not adding this in the sidebar
+        # we should only get one entry
+        entries = page.get_by_role("option", include_hidden=True).filter(
+            has_text=active_version_name
+        )
+        assert entries.count() == 1
+        # make sure they're highlighted
+        for entry in entries.all():
+            light_mode = "rgb(10, 125, 145)"  # pst-color-primary
+            # dark_mode = "rgb(63, 177, 197)"
+            expect(entry).to_have_css("color", light_mode)
+
+    _check_test_site(site_name, site_path, check_version_switcher_highlighting)
 
 
 def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> None:
@@ -143,3 +121,53 @@ def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> No
                 expect(el).to_have_css("color", hover_color)
 
     _check_test_site(site_name, site_path, check_colors)
+
+
+# ------------------------- Test functions: layout & components -----------------------
+
+
+def test_breadcrumb_expansion(
+    sphinx_build_factory: Callable, page: Page, url_base: str
+) -> None:
+    """Test breadcrumb text-overflow."""
+    site_name = "breadcrumbs"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+
+    def check_breadcrumb_expansion():
+        # wide viewport width → no truncation
+        page.set_viewport_size({"width": 1440, "height": 720})
+        page.goto(urljoin(url_base, "community/topics/config.html"))
+        expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
+            "Update Sphinx configuration during the build"
+        )
+        el = page.get_by_text("Update Sphinx configuration during the build").nth(1)
+        expect(el).to_have_css("overflow-x", "hidden")
+        expect(el).to_have_css("text-overflow", "ellipsis")
+        assert not _is_overflowing(el)
+        # narrow viewport width → truncation
+        page.set_viewport_size({"width": 150, "height": 720})
+        assert _is_overflowing(el)
+
+        _check_test_site(site_name, site_path, check_breadcrumb_expansion)
+
+
+def test_breadcrumbs_everywhere(
+    sphinx_build_factory: Callable, page: Page, url_base: str
+) -> None:
+    """Test breadcrumbs truncate properly when placed in various parts of the layout."""
+    site_name = "breadcrumbs"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+
+    def check_breadcrumb_truncation():
+        page.goto(
+            urljoin(url_base, f"playwright_tests/{site_name}/hansel/gretel/house.html")
+        )
+        # sidebar should overflow
+        text = "In the oven with my sister, so hot right now. Soooo. Hotttt."
+        el = page.locator("#main-content").get_by_text(text).last
+        assert _is_overflowing(el)
+        # footer containers never trigger ellipsis overflow because min-width is content
+        el = page.locator(".footer-items__center > .footer-item")
+        assert not _is_overflowing(el)
+
+    _check_test_site(site_name, site_path, check_breadcrumb_truncation)
