@@ -47,7 +47,7 @@ use the following tools:
 - `Pytest` with the Playwright plug-in to run the tests.
 
 Look for the string "accessibility" in the file
-[CI.yml](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/CI.yml)
+[CI.yml](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/a11y.yml)
 to find how we have configured GitHub Actions.
 
 ## Known limitations and manual auditing
