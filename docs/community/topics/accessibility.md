@@ -44,11 +44,10 @@ use the following tools:
 
 - GitHub Actions to provision machines in the cloud
 - `tox` to install the needed dependencies on those machines
-- `Pytest` with the Playwright plug-in to run the tests.
+- `pytest` with the Playwright plug-in to run the tests.
 
-Look for the string "accessibility" in the file
-[CI.yml](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/a11y.yml)
-to find how we have configured GitHub Actions.
+You can check out the [a11y.yml](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/a11y.yml)
+file to find how we have configured GitHub Actions.
 
 ## Known limitations and manual auditing
 
