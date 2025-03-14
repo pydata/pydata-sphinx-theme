@@ -235,12 +235,15 @@ def test_code_block_tab_stop(page: Page, url_base: str) -> None:
 
     page.set_viewport_size({"width": 400, "height": 720})
 
-    # Resize handler is debounced with 300 ms wait time
-    page.wait_for_timeout(301)
-
-    # Narrow viewport, content overflows and code block should be a tab stop
+    # Narrow viewport, content overflows ...
     assert code_block.evaluate("el => el.scrollWidth > el.clientWidth") is True
-    assert code_block.evaluate("el => el.tabIndex") == 0
+
+    # ... and code block should be a tab stop.
+    #
+    # Note: expect() will wait until the expect condition is true (up to the
+    # test timeout limit). This is important because the resize handler is
+    # debounced.
+    expect(code_block).to_have_attribute("tabindex", "0")
 
 
 @pytest.mark.a11y
@@ -269,17 +272,20 @@ def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
     ipywidget = page.locator("css=.jp-RenderedHTMLCommon").first
 
     # As soon as the ipywidget is attached to the page it should trigger the
-    # mutation observer, which has a 300 ms debounce
+    # mutation observer
     ipywidget.wait_for(state="attached")
-    page.wait_for_timeout(301)
 
     # At the default viewport size (1280 x 720) the data table inside the
     # ipywidget has overflow...
     assert ipywidget.evaluate("el => el.scrollWidth > el.clientWidth") is True
 
-    # ...and so our js code on the page should make it keyboard-focusable
-    # (tabIndex = 0)
-    assert ipywidget.evaluate("el => el.tabIndex") == 0
+    # ... and so our js code on the page should make it keyboard-focusable
+    # (tabIndex=0).
+    #
+    # Note: expect() will wait until the expect condition is true (up to the
+    # test timeout limit). This is important because the mutation callback that
+    # sets tabIndex=0 is debounced.
+    expect(ipywidget).to_have_attribute("tabindex", "0")
 
 
 def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
