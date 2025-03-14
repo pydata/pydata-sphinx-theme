@@ -427,7 +427,7 @@ def add_toctree_functions(
             if ul is None:
                 return
             if level <= (context["theme_show_toc_level"] + 1):
-                ul["class"] = [*ul.get("class", []), "visible"]
+                ul["class"] = [*ul.get("class", []), "pst-show_toc_level"]
             for li in ul("li", recursive=False):
                 li["class"] = [*li.get("class", []), f"toc-h{level}"]
                 add_header_level_recursive(li.find("ul", recursive=False), level + 1)

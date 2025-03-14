@@ -52,8 +52,8 @@ def test_toc_visibility(sphinx_build_factory) -> None:
     index_html = sphinx_build.html_tree("index.html")
 
     # The 3rd level headers should be visible, but not the fourth-level
-    assert "visible" in index_html.select(".toc-h2 ul")[0].attrs["class"]
-    assert "visible" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
+    assert "pst-show_toc_level" in index_html.select(".toc-h2 ul")[0].attrs["class"]
+    assert "pst-show_toc_level" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
 
 
 def test_icon_links(sphinx_build_factory, file_regression) -> None:
