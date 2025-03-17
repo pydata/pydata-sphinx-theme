@@ -282,7 +282,27 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    app.add_post_transform(short_link.ShortenLinkTransform)
+    if hasattr(app.config, "html_context"):
+        github_url = app.config.html_context.get("github_url", None)
+        gitlab_url = app.config.html_context.get("gitlab_url", None)
+        bitbucket_url = app.config.html_context.get("bitbucket_url", None)
+
+        url_update = {}
+        for url, platform in zip(
+            [github_url, gitlab_url, bitbucket_url], ["github", "gitlab", "bitbucket"]
+        ):
+            if url:
+                # remove "http[s]://" and leading/trailing "/"s
+                url = urlparse(url)._replace(scheme="").geturl().lstrip("/").rstrip("/")
+                url_update[url] = platform
+
+        class ShortenLinkTransformCustom(short_link.ShortenLinkTransform):
+            supported_platform = short_link.ShortenLinkTransform.supported_platform
+            supported_platform.update(url_update)
+
+        app.add_post_transform(ShortenLinkTransformCustom)
+    else:
+        app.add_post_transform(short_link.ShortenLinkTransform)
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
