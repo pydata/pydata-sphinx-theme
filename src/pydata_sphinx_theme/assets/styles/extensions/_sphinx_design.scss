@@ -150,6 +150,7 @@ html[data-theme="light"] {
 
 .bd-content .sd-card {
   border: 1px solid var(--pst-color-border);
+  overflow: hidden;
 
   .sd-card-header {
     background-color: var(--pst-color-on-background);
