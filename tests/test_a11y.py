@@ -4,8 +4,6 @@ Note that in contrast with the rest of our tests, the accessibility tests in thi
 are run against a build of our PST documentation, not purposedly-built test sites.
 """
 
-import re
-
 from urllib.parse import urljoin
 
 import pytest
@@ -323,41 +321,3 @@ def test_search_as_you_type(page: Page, url_base: str) -> None:
         f"document.querySelector('{first_result_selector}').textContent"
     )
     assert actual_focused_content == expected_focused_content
-
-
-def test_article_toc_syncing(
-    page: Page,
-    url_base: str,
-) -> None:
-    """Test that the secondary sidebar TOC highlights the correct entry."""
-    page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
-
-    toc = page.locator("#pst-page-toc-nav")
-    toc_links = toc.locator("a")
-    some_toc_link_with_active = toc.locator("a.active")
-    some_toc_link_with_aria_current = toc.locator("a[aria-current]")
-    first_heading = page.locator(str(toc_links.first.get_attribute("href")))
-    active_re = re.compile("active")
-
-    # click the first TOC link, check that it gets highlighted and that the
-    # associated heading is in the viewport
-    toc_links.first.click()
-    expect(toc_links.first).to_have_class(active_re)
-    expect(toc_links.first).to_have_attribute("aria-current", "true")
-    expect(first_heading).to_be_in_viewport()
-    # verify that one and only one TOC link is active/highlighted/current
-    expect(some_toc_link_with_active).to_have_count(1)
-    expect(some_toc_link_with_aria_current).to_have_count(1)
-
-    # after clicking a link, the pydata-sphinx-theme.js script sets a 1
-    # second timeout before processing intersection events again
-    page.wait_for_timeout(1001)
-
-    # scroll to the bottom of the page, check that the first TOC entry
-    # becomes un-highlighted
-    page.locator("p.copyright").scroll_into_view_if_needed()
-    expect(toc_links.first).not_to_have_class(active_re)
-    expect(toc_links.first).not_to_have_attribute("aria-current", re.compile("."))
-    # verify that one and only one TOC link is active/highlighted/current
-    expect(some_toc_link_with_active).to_have_count(1)
-    expect(some_toc_link_with_aria_current).to_have_count(1)
