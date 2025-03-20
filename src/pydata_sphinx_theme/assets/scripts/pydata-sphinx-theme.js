@@ -352,6 +352,7 @@ var setupSearchAsYouType = () => {
 
     // Don't search when there's nothing in the query textbox.
     if (query === "") {
+      lastQuery = "";
       resetSearchAsYouTypeResults(); // Remove previous results.
       return;
     }
