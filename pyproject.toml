@@ -81,7 +81,6 @@ doc = [
   "ipywidgets",
   "graphviz",
 ]
-test = ["pytest", "pytest-cov", "pytest-regressions", "sphinx[test]"]
 dev = [
   "pyyaml",
   "pre-commit",
@@ -90,7 +89,14 @@ dev = [
   "pandoc",
   "sphinx-theme-builder[cli]",
 ]
-a11y = ["pytest-playwright"]
+test = [
+  "pytest",
+  "pytest-cov",
+  "pytest-regressions",
+  "sphinx[test]",
+  "pytest-playwright"
+]
+a11y = ["pydata-sphinx-theme[test]"]
 i18n = ["Babel", "jinja2"]
 
 [project.entry-points]
