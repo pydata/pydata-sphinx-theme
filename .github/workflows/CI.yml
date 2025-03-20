@@ -195,8 +195,7 @@ jobs:
   # we might want to pin the SHA once merged
   coverage-comment:
     # Important: make sure to update the SHA after making any changes to the coverage workflow
-    # Temporary change to debug the coverage comment action
-    uses: ./.github/workflows/coverage.yml
+    uses: pydata/pydata-sphinx-theme/.github/workflows/coverage.yml@4a1e7898d6c92dade5e489684277ab4ffd0eb053
     needs: [coverage]
     # ensures this runs even if the coverage step does not continue - e.g. the
     # default coverage action will fail at first for external PRs, this is a workaround
