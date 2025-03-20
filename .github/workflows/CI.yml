@@ -194,8 +194,13 @@ jobs:
   # Calling the coverage-comment action from the main CI workflow
   # we might want to pin the SHA once merged
   coverage-comment:
-    uses: ./.github/workflows/coverage.yml
+    # Important: make sure to update the SHA after making any changes to the coverage workflow
+    uses: pydata/pydata-sphinx-theme/.github/workflows/coverage.yml@4a1e7898d6c92dade5e489684277ab4ffd0eb053
     needs: [coverage]
+    # ensures this runs even if the coverage step does not continue - e.g. the
+    # default coverage action will fail at first for external PRs, this is a workaround
+    # to ensure the comment is posted
+    if: ${{ always() }}
     permissions:
       contents: write
       pull-requests: write
