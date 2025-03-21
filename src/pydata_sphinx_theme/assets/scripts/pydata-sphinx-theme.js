@@ -1149,7 +1149,15 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
-documentReady(setupCollapseSidebarButton);
+documentReady(() => {
+  try {
+    setupCollapseSidebarButton();
+  } catch (err) {
+    // This exact error message is used in pytest tests
+    console.log("[PST] Error setting up collapse sidebar button");
+    console.error(err);
+  }
+});
 
 // Determining whether an element has scrollable content depends on stylesheets,
 // so we're checking for the "load" event rather than "DOMContentLoaded"

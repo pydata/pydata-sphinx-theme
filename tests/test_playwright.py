@@ -18,7 +18,7 @@ except ImportError:
 
 # Using importorskip to ensure these tests are only loaded if Playwright is installed.
 playwright = pytest.importorskip("playwright")
-from playwright.sync_api import Page, expect  # noqa: E402
+from playwright.sync_api import ConsoleMessage, Page, expect  # noqa: E402
 
 
 repo_path = Path(__file__).parents[1]
@@ -171,3 +171,135 @@ def test_breadcrumbs_everywhere(
         assert not _is_overflowing(el)
 
     _check_test_site(site_name, site_path, check_breadcrumb_truncation)
+
+
+# ----------------- Test functions: collapse primary sidebar button --------------------
+class TestCollapseSidebarButton:
+    """Group the tests for the collapse sidebar button."""
+
+    site_name = "collapse_sidebar_button"
+
+    def test_collapse_sidebar_button(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """Test basic functionality of the collapse sidebar button.
+
+        Clicking the button should collapse the sidebar. Clicking again should expand.
+        """
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def get_width(locator):
+            bbox = locator.bounding_box()
+            assert bbox is not None
+            return bbox["width"]
+
+        def check_collapse_expand():
+            page.goto(
+                urljoin(
+                    url_base, f"playwright_tests/{self.site_name}/section1/page1.html"
+                )
+            )
+            sidebar = page.locator("#pst-primary-sidebar")
+            expanded_sidebar_width = get_width(sidebar)
+
+            # Before collapsing the sidebar, a link to another page should be visible
+            toc_link = sidebar.get_by_role("link", name="Section 1 page2")
+            expect(toc_link).to_be_visible()
+
+            button = page.locator("#pst-collapse-sidebar-button")
+            expect(button).to_have_attribute("aria-expanded", "true")
+            expanded_button_width = get_width(button)
+
+            # Collapse the sidebar
+            button.click()
+
+            # Wait for the button have aria-expanded=false so we know the CSS
+            # transitions have finished
+            expect(button).to_have_attribute("aria-expanded", "false")
+
+            # After collapsing sidebar, the link to another page should NOT be visible
+            expect(toc_link).not_to_be_visible()
+
+            # But the button should still be visible though smaller
+            expect(button).to_be_visible()
+            assert get_width(button) < expanded_button_width
+
+            # After collapsing the sidebar, its width should be smaller than it
+            # was before collapse
+            assert get_width(sidebar) < expanded_sidebar_width
+
+            # Expand the sidebar
+            button.click()
+
+            # Wait for aria-expanded=true so we know CSS transitions have finished
+            expect(button).to_have_attribute("aria-expanded", "true")
+            expect(toc_link).to_be_visible()
+            assert get_width(sidebar) == expanded_sidebar_width
+            assert get_width(button) == expanded_button_width
+
+        _check_test_site(self.site_name, site_path, check_collapse_expand)
+
+    def test_collapse_sidebar_button_not_in_mobile(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """Collapse button should not appear in mobile sidebar."""
+        # Size viewport to mobile phone
+        page.set_viewport_size({"width": 400, "height": 900})
+
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_not_in_mobile():
+            page.goto(
+                urljoin(
+                    url_base, f"playwright_tests/{self.site_name}/section1/page1.html"
+                )
+            )
+
+            dialog = page.locator("#pst-primary-sidebar-modal")
+            hamburger = page.get_by_role("button", name="Site navigation")
+            collapse_button = page.locator("#pst-collapse-sidebar-button")
+
+            expect(dialog).not_to_be_visible()
+            expect(collapse_button).not_to_be_visible()
+
+            # open the mobile menu
+            hamburger.click()
+
+            expect(dialog).to_be_visible()
+            expect(collapse_button).not_to_be_visible()
+
+        _check_test_site(self.site_name, site_path, check_not_in_mobile)
+
+    def test_no_collapse_sidebar_button(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """No sidebar -> no collapse button."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_console_msg(msg: ConsoleMessage):
+            if msg.text == "[PST] Error setting up collapse sidebar button":
+                pytest.fail("Error setting up collapse sidebar button")
+
+        page.on("console", check_console_msg)
+
+        def check_no_collapse_sidebar_button():
+            page.goto(
+                urljoin(url_base, f"playwright_tests/{self.site_name}/no-sidebar.html")
+            )
+            # Need to wait for the JavaScript to finish executing because this
+            # test passes if things do NOT occur on the page, conditions which
+            # could be true until the page finishes loading.
+            page.wait_for_load_state("load")
+            button = page.locator("#pst-collapse-sidebar-button")
+            expect(button).not_to_be_attached()
+
+        _check_test_site(self.site_name, site_path, check_no_collapse_sidebar_button)

@@ -2,5 +2,5 @@ Section 1 index
 ===============
 .. toctree::
 
-   Foobar
-   https://google.com
+   page1
+   page2
