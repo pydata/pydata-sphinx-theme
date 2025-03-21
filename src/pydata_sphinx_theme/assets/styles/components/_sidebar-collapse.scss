@@ -1,0 +1,178 @@
+/**
+ * The collapse/expand primary sidebar button
+ */
+
+.bd-sidebar-primary {
+  .sidebar-primary-item.pst-sidebar-collapse {
+    padding-top: 0;
+  }
+
+  #pst-collapse-sidebar-button {
+    // Only show this button when there's enough width for both sidebar and main
+    // content. Do not show the button in the mobile menu where it would not
+    // make any sense.
+    @include media-breakpoint-down($breakpoint-sidebar-primary) {
+      display: none;
+    }
+
+    border: 0; // reset
+    padding: 0; // reset
+    text-align: start; // reset;
+    background-color: transparent;
+    outline-offset: $focus-ring-offset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+
+    // min width and height of the button must be 24px to meet WCAG Success Criterion 2.5.8
+    min-width: 24px;
+    min-height: 24px;
+    position: relative;
+    bottom: 0.2em;
+
+    .pst-icon {
+      color: var(--pst-color-link);
+
+      // The padding value was chosen by trial and error. For reference, the
+      // svg-inline--fa class normally applies a -.125em adjustment but this
+      // adjustment doesn't work when the icon is within a flex box. Important:
+      // the padding top value must match the padding bottom value because the
+      // icon undergoes a 180deg rotation when the sidebar is collapsed.
+      padding: 0.4em 0;
+
+      // This value was also chosen by trial and error until it looked good.
+      height: 1.3em;
+    }
+
+    .pst-collapse-sidebar-label {
+      // // inline-flex so we can set dimensions (width, height)
+      // display: inline-flex;
+      width: 100%;
+      height: 100%;
+
+      @include link-style-default;
+    }
+
+    .pst-expand-sidebar-label {
+      // inline-flex so we can set dimensions (width, height)
+      // display: inline-flex;
+
+      // When the sidebar is squeezed, there is no space to show the "expand
+      // sidebar" label. However, the label text is copied to a Bootstrap
+      // tooltip. It's also exposed to screen readers with this
+      // `visually-hidden` mixin from Bootstrap.
+      @include visually-hidden;
+
+      // Turn off for screen readers initially because the sidebar starts off in the expanded state.
+      // When the
+      visibility: hidden;
+    }
+
+    &:hover {
+      .pst-icon {
+        color: var(--pst-color-link-hover);
+      }
+
+      .pst-collapse-sidebar-label {
+        @include link-style-hover;
+      }
+    }
+  }
+
+  // Define transitions (if the environment permits animation)
+  @media (prefers-reduced-motion: no-preference) {
+    $duration: 400ms;
+
+    transition: width $duration ease;
+
+    #pst-collapse-sidebar-button {
+      .pst-icon {
+        transition:
+          transform $duration ease,
+          padding $duration ease;
+      }
+    }
+
+    @each $selector,
+      $delay
+        in (
+          // When the sidebar is collapsing, we need to delay the transition of
+          // properties that make the elements invisible so the user can see the
+          // opacity transition from 1 to 0 first.
+          ".pst-squeeze": $duration,
+          // When the sidebar is expanding, it's the opposite: we need to transition
+          // the properties that make the elements visible immediately so the user
+          // can watch the opacity transition from 0 to 1.
+          ":not(.pst-squeeze)": "0s"
+        )
+    {
+      &#{$selector} {
+        .pst-collapse-sidebar-label {
+          transition:
+            opacity $duration linear,
+            visibility 0s linear $delay,
+            width 0s linear $delay,
+            height 0s linear $delay;
+        }
+
+        .sidebar-primary-item:not(.pst-sidebar-collapse) {
+          transition:
+            opacity $duration linear,
+            visibility 0s linear $delay;
+        }
+
+        // There is no need to transition any other properties on the expand
+        // label (width, height, opacity) because it is always visually hidden
+        // (i.e., width 0, height 0, etc), but toggles its availability to
+        // screen readers as the sidebar collapses or expands via the
+        // `visibility` property.
+        .pst-expand-sidebar-label {
+          transition: visibility 0s linear $delay;
+        }
+      }
+    }
+  }
+
+  // Why "squeeze" and not "collapse"? Bootstrap uses the class name `collapse`
+  // so it seemed best to avoid possible confusion. (Later the class name was
+  // prefixed with `pst-`.)
+  &.pst-squeeze {
+    width: 4rem;
+    overflow: hidden;
+
+    #pst-collapse-sidebar-button {
+      .pst-icon {
+        transform: translateX(0.25em) rotate(180deg);
+      }
+
+      .pst-collapse-sidebar-label {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+      }
+
+      .pst-expand-sidebar-label {
+        visibility: visible;
+      }
+    }
+
+    .sidebar-primary-item:not(.pst-sidebar-collapse) {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  &:not(.pst-squeeze) {
+    // When the sidebar is expanded, hide the "Expand Sidebar" label.
+    .pst-expand-sidebar-label {
+      visibility: hidden;
+    }
+
+    // This block is shorter than its counterpart above because there's no need,
+    // for example, to explicitly set `visibility: visible` or `opacity: 1` on
+    // the collapse label and sidebar subsections because those are the default
+    // values.
+  }
+}
