@@ -176,40 +176,58 @@ def test_breadcrumbs_everywhere(
 
 
 def test_article_toc_syncing(
+    sphinx_build_factory: Callable,
     page: Page,
     url_base: str,
 ) -> None:
     """Test that the secondary sidebar TOC highlights the correct entry."""
-    page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+    site_name = "version_switcher"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+    assert site_path
 
-    toc = page.locator("#pst-page-toc-nav")
-    toc_links = toc.locator("a")
-    some_toc_link_with_active = toc.locator("a.active")
-    some_toc_link_with_aria_current = toc.locator("a[aria-current]")
-    first_heading = page.locator(str(toc_links.first.get_attribute("href")))
-    active_re = re.compile("active")
+    def check_toc_syncing():
+        page.goto(
+            urljoin(url_base, f"playwright_tests/{site_name}/fixture_blocks.html")
+        )
 
-    # click the first TOC link, check that it gets highlighted and that the
-    # associated heading is in the viewport
-    toc_links.first.click()
-    expect(toc_links.first).to_have_class(active_re)
-    expect(toc_links.first).to_have_attribute("aria-current", "true")
-    expect(first_heading).to_be_in_viewport()
+        # define locators and other variables
+        toc = page.locator("#pst-page-toc-nav")
+        first_toc_link = toc.get_by_role("link", name="Block Quotes")
+        some_toc_link_with_active = toc.locator("a.active")
+        some_toc_link_with_aria_current = toc.locator("a[aria-current]")
+        first_heading = page.locator(str(first_toc_link.get_attribute("href")))
+        active_re = re.compile("active")
 
-    # verify that one and only one TOC link is active/highlighted/current
-    expect(some_toc_link_with_active).to_have_count(1)
-    expect(some_toc_link_with_aria_current).to_have_count(1)
+        # click the first TOC link, check that it gets highlighted and that the
+        # associated heading is in the viewport
+        first_toc_link.click()
+        expect(first_toc_link).to_have_class(active_re)
+        expect(first_toc_link).to_have_attribute("aria-current", "true")
+        expect(first_heading).to_be_in_viewport()
 
-    # after clicking a link, the pydata-sphinx-theme.js script sets a 1
-    # second timeout before processing intersection events again
-    page.wait_for_timeout(1001)
+        # verify that one and only one TOC link is active/highlighted/current
+        expect(some_toc_link_with_active).to_have_count(1)
+        expect(some_toc_link_with_aria_current).to_have_count(1)
 
-    # scroll to the bottom of the page, check that the first TOC entry
-    # becomes un-highlighted
-    page.locator("p.copyright").scroll_into_view_if_needed()
-    expect(toc_links.first).not_to_have_class(active_re)
-    expect(toc_links.first).not_to_have_attribute("aria-current", re.compile("."))
+        # after clicking a link, the pydata-sphinx-theme.js script sets a 1
+        # second timeout before processing intersection events again
+        page.wait_for_timeout(1001)
 
-    # verify that one and only one TOC link is active/highlighted/current
-    expect(some_toc_link_with_active).to_have_count(1)
-    expect(some_toc_link_with_aria_current).to_have_count(1)
+        # scroll to the bottom of the page, check that the first TOC entry
+        # becomes un-highlighted
+
+        # for some reason, we have to use page.evaluate rather than:
+        #
+        #     page.locator("p.copyright").scroll_into_view_if_needed()
+        #
+        # seems like the Playwright scroll function does not trigger the
+        # IntersectionObserver callback
+        page.evaluate("document.querySelector('p.copyright').scrollIntoViewIfNeeded()")
+        expect(first_toc_link).not_to_have_class(active_re)
+        expect(first_toc_link).not_to_have_attribute("aria-current", re.compile("."))
+
+        # verify that one and only one TOC link is active/highlighted/current
+        expect(some_toc_link_with_active).to_have_count(1)
+        expect(some_toc_link_with_aria_current).to_have_count(1)
+
+    _check_test_site(site_name, site_path, check_toc_syncing)
