@@ -20,11 +20,11 @@ msgstr "Haga clic para ampliar"
 msgid "Click to collapse"
 msgstr "Haga clic para colapsar"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:48
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:57
 msgid "Skip to main content"
 msgstr "Saltar al contenido principal"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:60
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:69
 msgid "Back to top"
 msgstr "Volver arriba"
 
@@ -42,8 +42,7 @@ msgstr "Error"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:9
 msgid "Please activate JavaScript to enable the search functionality."
-msgstr ""
-"Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
+msgstr "Por favor, active JavaScript para habilitar la funcionalidad de búsqueda."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:6
 msgid "Breadcrumb"
@@ -113,6 +112,14 @@ msgstr "siguiente página"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:19
 msgid "next"
 msgstr "siguiente"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:6
+msgid "Collapse Sidebar"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:11
+msgid "Expand Sidebar"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
