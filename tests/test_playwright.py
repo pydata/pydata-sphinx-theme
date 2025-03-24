@@ -190,7 +190,7 @@ def test_article_toc_syncing(
             urljoin(url_base, f"playwright_tests/{site_name}/fixture_blocks.html")
         )
 
-        # define locators and other variables
+        # Define locators and other variables
         toc = page.locator("#pst-page-toc-nav")
         first_toc_link = toc.get_by_role("link", name="Block Quotes")
         some_toc_link_with_active = toc.locator("a.active")
@@ -198,35 +198,42 @@ def test_article_toc_syncing(
         first_heading = page.locator(str(first_toc_link.get_attribute("href")))
         active_re = re.compile("active")
 
-        # click the first TOC link, check that it gets highlighted and that the
+        # Click the first TOC link, check that it gets highlighted and that the
         # associated heading is in the viewport
         first_toc_link.click()
         expect(first_toc_link).to_have_class(active_re)
         expect(first_toc_link).to_have_attribute("aria-current", "true")
         expect(first_heading).to_be_in_viewport()
 
-        # verify that one and only one TOC link is active/highlighted/current
+        # Verify that one and only one TOC link is active/highlighted/current
         expect(some_toc_link_with_active).to_have_count(1)
         expect(some_toc_link_with_aria_current).to_have_count(1)
 
-        # after clicking a link, the pydata-sphinx-theme.js script sets a 1
+        # After clicking a link, the pydata-sphinx-theme.js script sets a 1
         # second timeout before processing intersection events again
         page.wait_for_timeout(1500)
 
-        # scroll to the bottom of the page, check that the first TOC entry
-        # becomes un-highlighted
-
-        # for some reason, we have to use page.evaluate rather than:
+        # Scroll to the bottom of the page, check that the first TOC entry
+        # becomes un-highlighted. For some reason, we have to use page.mouse
+        # rather than:
         #
         #     page.locator("p.copyright").scroll_into_view_if_needed()
         #
-        # seems like the Playwright scroll function does not trigger the
-        # IntersectionObserver callback
-        page.evaluate("document.querySelector('p.copyright').scrollIntoViewIfNeeded()")
+        # Apparently the Playwright scroll function does not trigger the
+        # IntersectionObserver callback.
+        page_height = page.evaluate("document.body.offsetHeight")
+        # If we scroll 1 pixel per turn of the loop, the test can take a long
+        # time to run, so we limit the number of loops
+        num_loops = 200
+        delta_y = int(page_height / num_loops)
+        for _ in range(num_loops + 1):  # add +1 because int() always rounds down
+            page.mouse.wheel(0, delta_y)
+
+        # Verify that the active state is removed from the first TOC link
         expect(first_toc_link).not_to_have_class(active_re)
         expect(first_toc_link).not_to_have_attribute("aria-current", re.compile("."))
 
-        # verify that one and only one TOC link is active/highlighted/current
+        # Verify that one and only one TOC link is active/highlighted/current
         expect(some_toc_link_with_active).to_have_count(1)
         expect(some_toc_link_with_aria_current).to_have_count(1)
 
