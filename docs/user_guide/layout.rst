@@ -382,7 +382,7 @@ By default, it has the following templates:
       # ...
     }
 
-`sidebar-ethical-ads.html`` is a placement for ReadTheDocs's Ethical Ads (will only show up on ReadTheDocs).
+``sidebar-ethical-ads.html`` is a placement for ReadTheDocs's Ethical Ads (will only show up on ReadTheDocs).
 
 Remove the primary sidebar from pages
 -------------------------------------
