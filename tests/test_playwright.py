@@ -211,7 +211,7 @@ def test_article_toc_syncing(
 
         # after clicking a link, the pydata-sphinx-theme.js script sets a 1
         # second timeout before processing intersection events again
-        page.wait_for_timeout(1001)
+        page.wait_for_timeout(1500)
 
         # scroll to the bottom of the page, check that the first TOC entry
         # becomes un-highlighted
