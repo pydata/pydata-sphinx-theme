@@ -203,7 +203,7 @@ jobs:
     # to ensure the comment is posted
     if: ${{ github.event.name == 'pull_request'}}
     with:
-      # this is the workflow run ID of the CI workflow
+      # this is the workflow run ID of the `CI.yml` workflow
       workflow_run_id: ${{ github.event.workflow_run.id }}
     permissions:
       contents: write
