@@ -1,5 +1,5 @@
-No Sidebar
-==========
+No Primary Sidebar
+==================
 
 This test fixture page has been configured to not have a primary sidebar via conf.py:
 
@@ -9,3 +9,8 @@ This test fixture page has been configured to not have a primary sidebar via con
     html_sidebars = {
         "no-sidebar": []  # Turn off primary/left sidebar
     }
+
+Yes secondary
+-------------
+
+It can have a secondary sidebar.

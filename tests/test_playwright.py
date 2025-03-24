@@ -177,7 +177,7 @@ def test_breadcrumbs_everywhere(
 class TestCollapseSidebarButton:
     """Group the tests for the collapse sidebar button."""
 
-    site_name = "collapse_sidebar_button"
+    site_name = "sidebars"
 
     def test_collapse_sidebar_button(
         self, sphinx_build_factory: Callable, page: Page, url_base: str
@@ -199,14 +199,14 @@ class TestCollapseSidebarButton:
         def check_collapse_expand():
             page.goto(
                 urljoin(
-                    url_base, f"playwright_tests/{self.site_name}/section1/page1.html"
+                    url_base, f"playwright_tests/{self.site_name}/section1/index.html"
                 )
             )
             sidebar = page.locator("#pst-primary-sidebar")
             expanded_sidebar_width = get_width(sidebar)
 
             # Before collapsing the sidebar, a link to another page should be visible
-            toc_link = sidebar.get_by_role("link", name="Section 1 page2")
+            toc_link = sidebar.get_by_role("link", name="Section 1 page 1")
             expect(toc_link).to_be_visible()
 
             button = page.locator("#pst-collapse-sidebar-button")
@@ -257,7 +257,7 @@ class TestCollapseSidebarButton:
         def check_not_in_mobile():
             page.goto(
                 urljoin(
-                    url_base, f"playwright_tests/{self.site_name}/section1/page1.html"
+                    url_base, f"playwright_tests/{self.site_name}/section1/index.html"
                 )
             )
 
@@ -292,13 +292,20 @@ class TestCollapseSidebarButton:
         page.on("console", check_console_msg)
 
         def check_no_collapse_sidebar_button():
-            page.goto(
-                urljoin(url_base, f"playwright_tests/{self.site_name}/no-sidebar.html")
+            response = page.goto(
+                urljoin(
+                    url_base,
+                    f"playwright_tests/{self.site_name}/section2/no-sidebar.html",
+                )
             )
-            # Need to wait for the JavaScript to finish executing because this
-            # test passes if things do NOT occur on the page, conditions which
-            # could be true until the page finishes loading.
+
+            # Need to check that the response is 200 and need to wait for the
+            # JavaScript to finish executing. Otherwise, if the page is a 404 or
+            # if the JavaScript hasn't finished loading, then the test will
+            # check for the button, not find it, and pass.
+            assert response is not None and response.status == 200
             page.wait_for_load_state("load")
+
             button = page.locator("#pst-collapse-sidebar-button")
             expect(button).not_to_be_attached()
 
