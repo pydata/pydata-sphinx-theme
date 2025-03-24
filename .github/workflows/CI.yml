@@ -11,7 +11,7 @@ name: continuous-integration
 # Repeated pushes to a PR will cancel all previous builds, while multiple
 # merges to main will not cancel.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 env:

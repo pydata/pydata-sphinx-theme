@@ -44,7 +44,7 @@ You can add a link to equations like the one above {eq}`My label` and {eq}`My la
 
 ## Code blocks
 
-Code block styling is inspired by [GitHub's code block style](https://primer.style/components/markdown) and also has support for Code Block captions/titles.
+Code block styling is inspired by [GitHub's code block style](https://primer.style/product/getting-started/rails/components/markdown/) and also has support for Code Block captions/titles.
 See [the Sphinx documentation on code blocks](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-code-block) for more information.
 
 ```python
