@@ -2,12 +2,15 @@ name: Post coverage comment
 
 on:
   workflow_call:
-
+    inputs:
+      # this is the workflow run ID of the `CI.yml` workflow
+      workflow_run_id:
+        required: true
+        type: string
 jobs:
   test:
     name: "Display code coverage"
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     permissions:
       pull-requests: write
       contents: write # needed to edit the comment vs opening multiple ones
@@ -21,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
-          WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+          WORKFLOW_RUN_ID: ${{ inputs.workflow_run_id }}
 
       # this needs the .coverage file so we download from the CI workflow artifacts
       - name: "Download coverage data 📥"
@@ -30,7 +33,7 @@ jobs:
           pattern: coverage-data-*
           merge-multiple: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
+          run-id: ${{ inputs.workflow_run_id }}
 
       - name: "Check downloaded files"
         run: ls -R
@@ -39,4 +42,4 @@ jobs:
         uses: py-cov-action/python-coverage-comment-action@b2eb38dd175bf053189b35f738f9207278b00925
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_PR_RUN_ID: ${{ github.event.workflow_run.id }}
+          GITHUB_PR_RUN_ID: ${{ inputs.workflow_run_id }}
