@@ -1013,6 +1013,129 @@ async function fetchRevealBannersTogether() {
 }
 
 /*******************************************************************************
+ * Set up expand/collapse button for primary sidebar
+ */
+function setupCollapseSidebarButton() {
+  const button = document.getElementById("pst-collapse-sidebar-button");
+  const sidebar = document.getElementById("pst-primary-sidebar");
+
+  // If this page rendered without the button or sidebar, then there's nothing to do.
+  if (!button || !sidebar) {
+    return;
+  }
+
+  const sidebarSections = Array.from(sidebar.children);
+
+  const expandTooltip = new bootstrap.Tooltip(button, {
+    title: button.querySelector(".pst-expand-sidebar-label").textContent,
+
+    // In manual testing, relying on Bootstrap to handle "hover" and "focus" was buggy.
+    trigger: "manual",
+
+    placement: "left",
+    fallbackPlacements: ["right"],
+
+    // Offsetting the tooltip a bit more than the default [0, 0] solves an issue
+    // where the appearance of the tooltip triggers a mouseleave event which in
+    // turn triggers the call to hide the tooltip. So in certain areas around
+    // the button, it would appear to the user that tooltip flashes in and then
+    // back out.
+    offset: [0, 12],
+  });
+
+  const showTooltip = () => {
+    // Only show the "expand sidebar" tooltip when the sidebar is not expanded
+    if (button.getAttribute("aria-expanded") === "false") {
+      expandTooltip.show();
+    }
+  };
+  const hideTooltip = () => {
+    expandTooltip.hide();
+  };
+
+  function squeezeSidebar(prefersReducedMotion, done) {
+    // Before squeezing the sidebar, freeze the widths of its subsections.
+    // Otherwise, the subsections will also narrow and cause the text in the
+    // sidebar to reflow and wrap, which we don't want. This is necessary
+    // because we do not remove the sidebar contents from the layout (with
+    // `display: none`). Rather, we hide the contents from both sighted users
+    // and screen readers (with `visibility: hidden`). This provides better
+    // stability to the overall layout.
+    sidebarSections.forEach(
+      (el) => (el.style.width = el.getBoundingClientRect().width + "px"),
+    );
+
+    const afterSqueeze = () => {
+      // After squeezing the sidebar, set aria-expanded to false
+      button.setAttribute("aria-expanded", "false"); // "false" is in quotes because HTML attributes are strings
+
+      button.dataset.busy = false;
+    };
+
+    if (prefersReducedMotion) {
+      sidebar.classList.add("pst-squeeze");
+      afterSqueeze();
+    } else {
+      sidebar.addEventListener("transitionend", function onTransitionEnd() {
+        afterSqueeze();
+        sidebar.removeEventListener("transitionend", onTransitionEnd);
+      });
+      sidebar.classList.add("pst-squeeze");
+    }
+  }
+
+  function expandSidebar(prefersReducedMotion, done) {
+    hideTooltip();
+
+    const afterExpand = () => {
+      // After expanding the sidebar (which may be delayed by a CSS transition),
+      // unfreeze the widths of the subsections that were frozen when the sidebar
+      // was squeezed.
+      sidebarSections.forEach((el) => (el.style.width = null));
+
+      // After expanding the sidebar, set aria-expanded to "true" - in quotes
+      // because HTML attributes are strings.
+      button.setAttribute("aria-expanded", "true");
+
+      button.dataset.busy = false;
+    };
+
+    if (prefersReducedMotion) {
+      sidebar.classList.remove("pst-squeeze");
+      afterExpand();
+    } else {
+      sidebar.addEventListener("transitionend", function onTransitionEnd() {
+        afterExpand();
+        sidebar.removeEventListener("transitionend", onTransitionEnd);
+      });
+      sidebar.classList.remove("pst-squeeze");
+    }
+  }
+
+  button.addEventListener("click", () => {
+    if (button.dataset.busy === "true") {
+      return;
+    }
+    button.dataset.busy = "true";
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion)", // must be in parentheses
+    ).matches;
+
+    if (button.getAttribute("aria-expanded") === "true") {
+      squeezeSidebar(prefersReducedMotion);
+    } else {
+      expandSidebar(prefersReducedMotion);
+    }
+  });
+
+  button.addEventListener("focus", showTooltip);
+  button.addEventListener("mouseenter", showTooltip);
+  button.addEventListener("mouseleave", hideTooltip);
+  button.addEventListener("blur", hideTooltip);
+}
+
+/*******************************************************************************
  * Call functions after document loading.
  */
 
@@ -1026,6 +1149,15 @@ documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
+documentReady(() => {
+  try {
+    setupCollapseSidebarButton();
+  } catch (err) {
+    // This exact error message is used in pytest tests
+    console.log("[PST] Error setting up collapse sidebar button");
+    console.error(err);
+  }
+});
 
 // Determining whether an element has scrollable content depends on stylesheets,
 // so we're checking for the "load" event rather than "DOMContentLoaded"

@@ -14,11 +14,11 @@ msgstr "展开"
 msgid "Click to collapse"
 msgstr "收缩"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:48
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:57
 msgid "Skip to main content"
 msgstr "跳转至主要内容"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:60
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:69
 msgid "Back to top"
 msgstr "回到顶部"
 
@@ -106,6 +106,14 @@ msgstr "下一页"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:19
 msgid "next"
 msgstr "下一条"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:6
+msgid "Collapse Sidebar"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:11
+msgid "Expand Sidebar"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
