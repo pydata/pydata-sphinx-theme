@@ -7,6 +7,7 @@ Simple site with version switcher
 
    page1
    page2
+   fixture_blocks
    section1/index
 
 Other content

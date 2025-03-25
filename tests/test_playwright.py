@@ -4,6 +4,8 @@ When adding new tests to this file, remember to also add the corresponding test 
 to `tests/sites/` or use an existing one.
 """
 
+import re
+
 from pathlib import Path
 from typing import Callable
 from urllib.parse import urljoin
@@ -171,6 +173,71 @@ def test_breadcrumbs_everywhere(
         assert not _is_overflowing(el)
 
     _check_test_site(site_name, site_path, check_breadcrumb_truncation)
+
+
+def test_article_toc_syncing(
+    sphinx_build_factory: Callable,
+    page: Page,
+    url_base: str,
+) -> None:
+    """Test that the secondary sidebar TOC highlights the correct entry."""
+    site_name = "version_switcher"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+    assert site_path
+
+    def check_toc_syncing():
+        page.goto(
+            urljoin(url_base, f"playwright_tests/{site_name}/fixture_blocks.html")
+        )
+
+        # Define locators and other variables
+        toc = page.locator("#pst-page-toc-nav")
+        first_toc_link = toc.get_by_role("link", name="Block Quotes")
+        some_toc_link_with_active = toc.locator("a.active")
+        some_toc_link_with_aria_current = toc.locator("a[aria-current]")
+        first_heading = page.locator(str(first_toc_link.get_attribute("href")))
+        active_re = re.compile("active")
+
+        # Click the first TOC link, check that it gets highlighted and that the
+        # associated heading is in the viewport
+        first_toc_link.click()
+        expect(first_toc_link).to_have_class(active_re)
+        expect(first_toc_link).to_have_attribute("aria-current", "true")
+        expect(first_heading).to_be_in_viewport()
+
+        # Verify that one and only one TOC link is active/highlighted/current
+        expect(some_toc_link_with_active).to_have_count(1)
+        expect(some_toc_link_with_aria_current).to_have_count(1)
+
+        # After clicking a link, the pydata-sphinx-theme.js script sets a 1
+        # second timeout before processing intersection events again
+        page.wait_for_timeout(1500)
+
+        # Scroll to the bottom of the page, check that the first TOC entry
+        # becomes un-highlighted. For some reason, we have to use page.mouse
+        # rather than:
+        #
+        #     page.locator("p.copyright").scroll_into_view_if_needed()
+        #
+        # Apparently the Playwright scroll function does not trigger the
+        # IntersectionObserver callback.
+        page_height = page.evaluate("document.body.offsetHeight")
+        # If we scroll 1 pixel per turn of the loop, the test can take a long
+        # time to run, so we limit the number of loops
+        num_loops = 200
+        delta_y = int(page_height / num_loops)
+        for _ in range(num_loops + 1):  # add +1 because int() always rounds down
+            page.mouse.wheel(0, delta_y)
+
+        # Verify that the active state is removed from the first TOC link
+        expect(first_toc_link).not_to_have_class(active_re)
+        expect(first_toc_link).not_to_have_attribute("aria-current", re.compile("."))
+
+        # Verify that one and only one TOC link is active/highlighted/current
+        expect(some_toc_link_with_active).to_have_count(1)
+        expect(some_toc_link_with_aria_current).to_have_count(1)
+
+    _check_test_site(site_name, site_path, check_toc_syncing)
 
 
 # ----------------- Test functions: collapse primary sidebar button --------------------
