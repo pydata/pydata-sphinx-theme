@@ -16,11 +16,11 @@ msgstr "クリックして拡大"
 msgid "Click to collapse"
 msgstr "クリックして折りたたむ"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:48
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:57
 msgid "Skip to main content"
 msgstr "本文へスキップ"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:60
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:69
 msgid "Back to top"
 msgstr "トップに戻る"
 
@@ -108,6 +108,14 @@ msgstr "次ページ"
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/prev-next.html:19
 msgid "next"
 msgstr "次"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:6
+msgid "Collapse Sidebar"
+msgstr ""
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:11
+msgid "Expand Sidebar"
+msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
