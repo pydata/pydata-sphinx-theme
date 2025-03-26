@@ -2,17 +2,13 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-# 
+#
 # Translators:
 # Cristhian Rivera, 2024
 # Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2025
-# 
+#
 msgid ""
 msgstr ""
-"Last-Translator: Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2025\n"
-"Language-Team: Catalan (https://app.transifex.com/12rambau/teams/166811/ca/)\n"
-"Language: ca\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: docs/conf.py:111
 msgid "Click to expand"
