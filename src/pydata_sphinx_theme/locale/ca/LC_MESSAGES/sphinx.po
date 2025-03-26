@@ -2,12 +2,17 @@
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-#
+# 
 # Translators:
 # Cristhian Rivera, 2024
-# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024
+# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2025
+# 
 msgid ""
 msgstr ""
+"Last-Translator: Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2025\n"
+"Language-Team: Catalan (https://app.transifex.com/12rambau/teams/166811/ca/)\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: docs/conf.py:111
 msgid "Click to expand"
@@ -112,11 +117,11 @@ msgstr "següent"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:6
 msgid "Collapse Sidebar"
-msgstr ""
+msgstr "Oculta la barra lateral"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:11
 msgid "Expand Sidebar"
-msgstr ""
+msgstr "Mostra la barra lateral"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
@@ -158,8 +163,7 @@ msgid ""
 "Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
-"Construïda amb el <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+"Construïda amb el <a href=\"%(PST_url)s\">Tema PyData Sphinx</a> "
 "%(theme_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
@@ -197,3 +201,12 @@ msgstr "Navegació del lloc"
 
 #~ msgid "light/dark"
 #~ msgstr "clar/fosc"
+
+#~ msgid ""
+#~ "Built with the <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+#~ "%(theme_version)s."
+#~ msgstr ""
+#~ "Construïda amb el <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+#~ "%(theme_version)s."
