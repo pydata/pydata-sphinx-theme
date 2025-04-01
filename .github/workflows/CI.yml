@@ -151,7 +151,7 @@ jobs:
 
       # seems we need to call this from the main CI workflow first
       - name: "Coverage comment 💬"
-        uses: py-cov-action/python-coverage-comment-action@b2eb38dd175bf053189b35f738f9207278b00925
+        uses: py-cov-action/python-coverage-comment-action@d1ff8fbb5ff80feedb3faa0f6d7b424f417ad0e1
         id: coverage_comment
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
