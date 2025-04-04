@@ -1018,16 +1018,31 @@ function setupArticleTocSyncing() {
   // callback would otherwise highlight, so we turn off the observer and turn it
   // back on later.
   let disableObserver = false;
-  pageToc.addEventListener("click", (event) => {
+  const timeoutObserver = () => {
     disableObserver = true;
-    const clickedTocLink = tocLinks.find((el) => el.contains(event.target));
-    activate(clickedTocLink);
     setTimeout(() => {
       // Give the page ample time to finish scrolling, then re-enable the
       // intersection observer.
       disableObserver = false;
     }, 1000);
+  };
+  pageToc.addEventListener("click", (event) => {
+    timeoutObserver();
+    const clickedTocLink = tocLinks.find((el) => el.contains(event.target));
+    activate(clickedTocLink);
   });
+
+  // When the page loads, if the user has followed a URL with a hash,
+  // activate the corresponding TOC entry (if it exists) and wait for
+  // the page to scroll to the heading.
+  const { hash: pageHash } = window.location;
+  if (pageHash.length > 1) {
+    const matchingTocLink = tocLinks.find((link) => link.hash === pageHash);
+    if (matchingTocLink) {
+      timeoutObserver();
+      activate(matchingTocLink);
+    }
+  }
 
   /**
    * Activate an element and its chain of ancestor TOC entries; deactivate
