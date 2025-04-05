@@ -1142,7 +1142,7 @@ function setupArticleTocSyncing() {
     }
 
     observer = new IntersectionObserver(callback, options);
-    headingsToTocLinks.keys().forEach((heading) => {
+    Array.from(headingsToTocLinks.keys()).forEach((heading) => {
       observer.observe(heading);
     });
   }
