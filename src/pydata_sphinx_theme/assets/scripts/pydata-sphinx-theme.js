@@ -1013,36 +1013,51 @@ function setupArticleTocSyncing() {
     return;
   }
 
-  // When the website visitor clicks a link in the TOC, we want that link to be
-  // highlighted/activated, NOT whichever TOC link the intersection observer
-  // callback would otherwise highlight, so we turn off the observer and turn it
-  // back on later.
+  // Create a boolean variable that allows us to turn off the intersection
+  // observer (and then later back on). When the website visitor clicks an
+  // in-page link, we want the entry in the TOC to be highlighted/activated, NOT
+  // whichever TOC link the intersection observer callback would otherwise
+  // highlight.
   let disableObserver = false;
-  const timeoutObserver = () => {
-    disableObserver = true;
-    setTimeout(() => {
-      // Give the page ample time to finish scrolling, then re-enable the
-      // intersection observer.
-      disableObserver = false;
-    }, 1000);
-  };
-  pageToc.addEventListener("click", (event) => {
-    timeoutObserver();
-    const clickedTocLink = tocLinks.find((el) => el.contains(event.target));
-    activate(clickedTocLink);
-  });
 
-  // When the page loads, if the user has followed a URL with a hash,
-  // activate the corresponding TOC entry (if it exists) and wait for
-  // the page to scroll to the heading.
-  const { hash: pageHash } = window.location;
-  if (pageHash.length > 1) {
-    const matchingTocLink = tocLinks.find((link) => link.hash === pageHash);
-    if (matchingTocLink) {
-      timeoutObserver();
-      activate(matchingTocLink);
+  /**
+   * Check the hash portion of the page URL. If it matches an entry in the page
+   * table of contents, highlight that entry and temporarily disable the
+   * intersection observer while the page scrolls to the corresponding heading.
+   */
+  function syncTocHash() {
+    const { hash: pageHash } = window.location;
+    if (pageHash.length > 1) {
+      const matchingTocLink = tocLinks.find((link) => link.hash === pageHash);
+      if (matchingTocLink) {
+        disableObserver = true;
+        setTimeout(() => {
+          // Give the page ample time to finish scrolling, then re-enable the
+          // intersection observer.
+          disableObserver = false;
+        }, 1000);
+        activate(matchingTocLink);
+      }
     }
   }
+
+  // When the page loads and when the user clicks an in-page link,
+  // sync the page's table of contents.
+  syncTocHash();
+  // Note we cannot use the "hashchange" event because if the user clicks a hash
+  // link, scrolls away, then clicks the same hash link again, it will not fire
+  // the change event (because it's the same hash), but we still want to re-sync
+  // the table of contents.
+  window.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
+      // Defer the sync operation because window.location.hash does not change
+      // until after the default action (i.e., the link click) for the event has
+      // happened.
+      setTimeout(() => {
+        syncTocHash();
+      }, 0);
+    }
+  });
 
   /**
    * Activate an element and its chain of ancestor TOC entries; deactivate
