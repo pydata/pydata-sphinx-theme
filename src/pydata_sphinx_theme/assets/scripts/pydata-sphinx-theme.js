@@ -1050,9 +1050,9 @@ function setupArticleTocSyncing() {
   // the table of contents.
   window.addEventListener("click", (event) => {
     // Match any link because an in-page ("hash link") can occur anywhere on the
-    // page (e.g., one section of the page linking to another section of the
-    // page, also each of the headings contains a link to itself), not just in
-    // the side table of contents.
+    // page, not just in the side table of contents (e.g., one section of the
+    // page linking to another section of the page, also each of the headings
+    // contains a link to itself).
     if (event.target.closest("a")) {
       // Defer the sync operation because window.location.hash does not change
       // until after the default action (i.e., the link click) for the event has
