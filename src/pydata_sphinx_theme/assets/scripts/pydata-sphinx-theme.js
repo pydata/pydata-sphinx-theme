@@ -1055,8 +1055,8 @@ function setupArticleTocSyncing() {
     // contains a link to itself).
     if (event.target.closest("a")) {
       // Defer the sync operation because window.location.hash does not change
-      // until after the default action (i.e., the link click) for the event has
-      // happened.
+      // until after the default action for the event has happened (i.e., the
+      // link click).
       setTimeout(() => {
         syncTocHash();
       }, 0);
