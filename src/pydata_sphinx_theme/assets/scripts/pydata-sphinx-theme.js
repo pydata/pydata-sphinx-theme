@@ -1015,8 +1015,8 @@ function setupArticleTocSyncing() {
 
   // Create a boolean variable that allows us to turn off the intersection
   // observer (and then later back on). When the website visitor clicks an
-  // in-page link, we want the entry in the TOC to be highlighted/activated, NOT
-  // whichever TOC link the intersection observer callback would otherwise
+  // in-page link, we want that entry in the TOC to be highlighted/activated,
+  // NOT whichever TOC link the intersection observer callback would otherwise
   // highlight.
   let disableObserver = false;
 
