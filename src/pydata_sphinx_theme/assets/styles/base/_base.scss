@@ -153,7 +153,7 @@ code {
   color: var(--pst-color-inline-code);
 }
 
-pre {
+%pre-style {
   margin: 1.5em 0;
   padding: 1rem;
   background-color: var(--pst-color-surface);
@@ -167,6 +167,10 @@ pre {
     opacity: 0.8;
     padding-right: 10px;
   }
+}
+
+pre {
+  @extend %pre-style;
 }
 
 // the back to top btn
