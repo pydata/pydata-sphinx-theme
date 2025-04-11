@@ -53,11 +53,6 @@ html .jp-RenderedHTMLCommon {
   }
 }
 
-// Add extra padding to the final item in an nbsphinx container
-div.nblast.container {
-  margin-bottom: 1rem;
-}
-
 // Override nbsphinx's colors for notebook cell prompts because they do not have
 // sufficient contrast. Colors chosen from accessible-pygments
 // a11y-high-contrast-{light,dark} themes.
@@ -87,6 +82,91 @@ div.nblast.container {
   html[data-theme="dark"] & {
     // Copied from accessible-pygments [a11y-high-contrast-dark](https://github.com/Quansight-Labs/accessible-pygments/tree/main/a11y_pygments/a11y_high_contrast_dark)
     color: #ffa07a;
+  }
+}
+
+.bd-container div.nbinput.container {
+  margin-top: 1.2em;
+  padding-top: 0;
+
+  div.input_area {
+    border: none; // border taken care of by <pre> styles
+  }
+}
+
+.bd-container div.nboutput.container {
+  padding-top: 1.2em;
+
+  div.output_area {
+    &.stderr div[class*="highlight"] > pre {
+      background-color: var(--pst-color-error);
+    }
+
+    :last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.bd-container {
+  div.nboutput.container div.output_area.rendered_html,
+  div.nboutput.container div.output_area > div.output_javascript,
+  div.nboutput.container div.output_area:not(.rendered_html) > img {
+    padding-bottom: 0;
+  }
+
+  div.nbinput.container div.input_area div[class*="highlight"] > pre,
+  div.nboutput.container div.output_area div[class*="highlight"] > pre {
+    padding: 1rem;
+    background-color: var(--pst-color-surface);
+    color: var(--pst-color-text-base);
+    line-height: 1.2em;
+    border: 1px solid var(--pst-color-border);
+    border-radius: $admonition-border-radius;
+
+    .linenos {
+      // minimum opacity to make the line numbers WCAG AA conformant
+      opacity: 0.8;
+      padding-right: 10px;
+    }
+  }
+}
+
+.bd-container div.container.nblast {
+  padding-bottom: 0;
+  margin-bottom: 1.2em;
+}
+
+.bd-container div.nbinput.container,
+.bd-container div.nboutput.container {
+  display: block;
+  position: relative;
+  padding-left: 1em;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0.2em;
+    background: var(--pst-color-success);
+    border-radius: 1px;
+  }
+
+  div.prompt {
+    width: auto;
+    margin-bottom: 0.7em;
+    padding-top: 0;
+
+    div.highlight {
+      position: static;
+
+      pre {
+        color: inherit;
+      }
+    }
   }
 }
 

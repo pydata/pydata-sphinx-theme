@@ -80,6 +80,7 @@ doc = [
   "colorama",
   "ipywidgets",
   "graphviz",
+  "ipympl",
 ]
 dev = [
   "pyyaml",
