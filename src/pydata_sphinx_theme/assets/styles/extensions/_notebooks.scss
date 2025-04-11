@@ -89,6 +89,10 @@ html .jp-RenderedHTMLCommon {
   margin-top: 1.2em;
   padding-top: 0;
 
+  div.prompt pre::before {
+    content: "In ";
+  }
+
   div.input_area {
     border: none; // border taken care of by <pre> styles
   }
@@ -96,6 +100,10 @@ html .jp-RenderedHTMLCommon {
 
 .bd-container div.nboutput.container {
   padding-top: 1.2em;
+
+  div.prompt pre::before {
+    content: "Out ";
+  }
 
   div.output_area {
     &.stderr div[class*="highlight"] > pre {
