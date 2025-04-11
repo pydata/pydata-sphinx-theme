@@ -45,136 +45,166 @@ html .jp-RenderedHTMLCommon {
       .widget-subarea {
         @include cell-output-background;
       }
+    }
+  }
+}
 
-      &.stderr {
-        background-color: var(--pst-color-danger);
+// The following block implements Isabela's design for notebook code cells:
+// https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/142#issuecomment-2759132381.
+// They selectors are all nested under .bd-article-container so that they have
+// higher specificity and can therefore override the rules in the nbphinx
+// stylesheet.
+.bd-article-container {
+  $space-between-vertical-bar-and-cell: 1em;
+  $top-and-bottom-container-space: 1.2em;
+
+  // Common styles for both input and output containers
+  div.nbinput.container,
+  div.nboutput.container {
+    display: block; // override nbsphinx display: flex
+    position: relative; // needed for the absolute positioning of the ::before pseudo-element
+
+    // This is the vertical bar that connects the input and output containers
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 0.2em;
+      background: var(--pst-color-success);
+      border-radius: 1px;
+    }
+
+    // This is the label for the input or output
+    div.prompt {
+      width: auto; // override nbsphinx
+      margin-bottom: 0.7em; // space between the label and the input or output
+      padding-top: 0; // override nbsphinx - all whitespace is managed by the margin-bottom rule above
+
+      // Create space between the prompt and the vertical bar. This reason that
+      // we do not put the padding inside the left edge of the container is that
+      // we need to add padding to the inputs and outputs so that if they are
+      // focusable the focus ring will be visible. Nbsphinx has a lot of
+      // `overflow: auto` or `overflow: hidden` rules so without a padding area
+      // in which to draw the focus ring, it would be otherwise hidden.
+      padding-left: $space-between-vertical-bar-and-cell;
+
+      div.highlight {
+        position: static; // override nbsphinx - position: absolute
+
+        pre {
+          color: inherit; // override nbsphinx - get the color from PST rules applied to the parent elements
+        }
       }
     }
   }
-}
 
-// Override nbsphinx's colors for notebook cell prompts because they do not have
-// sufficient contrast. Colors chosen from accessible-pygments
-// a11y-high-contrast-{light,dark} themes.
+  // Input-specific styles
+  div.nbinput.container {
+    margin-top: $top-and-bottom-container-space; // space between the top of the notebook cell and the surrounding content
+    padding-top: 0; // override nbsphinx - let the apparent whitespace be controlled by the margin-top rule above
 
-// Notebook cell input line number. Replace nbsphinx's low contrast blue with
-// higher contrast blues.
-.nbinput.container .prompt pre {
-  html[data-theme="light"] & {
-    // Copied from accessible-pygments [a11y-high-contrast-light](https://github.com/Quansight-Labs/accessible-pygments/tree/main/a11y_pygments/a11y_high_contrast_light)
-    color: #005b82;
-  }
-
-  html[data-theme="dark"] & {
-    // Copied from accessible-pygments [a11y-high-contrast-dark](https://github.com/Quansight-Labs/accessible-pygments/tree/main/a11y_pygments/a11y_high_contrast_dark)
-    color: #00e0e0;
-  }
-}
-
-// Notebook cell output line number. Replace nbsphinx's low contrast red with
-// higher contrast red / orange.
-.nboutput.container .prompt pre {
-  html[data-theme="light"] & {
-    // Copied from accessible-pygments [a11y-high-contrast-light](https://github.com/Quansight-Labs/accessible-pygments/tree/main/a11y_pygments/a11y_high_contrast_light)
-    color: #a12236;
-  }
-
-  html[data-theme="dark"] & {
-    // Copied from accessible-pygments [a11y-high-contrast-dark](https://github.com/Quansight-Labs/accessible-pygments/tree/main/a11y_pygments/a11y_high_contrast_dark)
-    color: #ffa07a;
-  }
-}
-
-.bd-container div.nbinput.container {
-  margin-top: 1.2em;
-  padding-top: 0;
-
-  div.prompt pre::before {
-    content: "In ";
-  }
-
-  div.input_area {
-    border: none; // border taken care of by <pre> styles
-  }
-}
-
-.bd-container div.nboutput.container {
-  padding-top: 1.2em;
-
-  div.prompt pre::before {
-    content: "Out ";
-  }
-
-  div.output_area {
-    &.stderr div[class*="highlight"] > pre {
-      background-color: var(--pst-color-error);
+    // Prefix the cell number with the word "In".
+    // TODO: add to translations
+    div.prompt pre::before {
+      content: "In ";
     }
 
-    :last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
+    div.input_area {
+      border: none; // border taken care of by <pre> styles elsewhere in the theme
+      padding: $focus-ring-width; // give the input_area a padding area in which to draw the focus ring
+      padding-left: $space-between-vertical-bar-and-cell;
+
+      > div.highlight {
+        overflow: visible; // necessary for focus ring
+      }
     }
   }
-}
 
-.bd-container {
-  div.nboutput.container div.output_area.rendered_html,
-  div.nboutput.container div.output_area > div.output_javascript,
-  div.nboutput.container div.output_area:not(.rendered_html) > img {
-    padding-bottom: 0;
+  // Output-specific styles
+  div.nboutput.container {
+    // Space between the input portion and the output portion. Cannot use margin
+    // here because we do not want to create a break in the vertical bar running
+    // down the left side.
+    padding-top: $top-and-bottom-container-space;
+
+    // Prefix the cell number with the word "Out".
+    // TODO: add to translations
+    div.prompt pre::before {
+      content: "Out ";
+    }
+
+    div.output_area {
+      // What this selector attempts to do is to override a bunch of CSS rules
+      // that come from multiple places that add bottom whitespace to elements,
+      // like paragraph elements. These rules mess up the alignment between
+      // bottom of the notebook cell content and the left bar that we've added.
+      // They also create unnecessary extra whitespace at the bottom of notebook
+      // cells. However, this selector may be a bit too wide, too blunt. We may
+      // need find a different way to achieve this.
+      :not(.highlight, .widget-tab-contents, .jupyter-widgets):last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      // Create a padding area within which to draw the focus ring. Yes, we are
+      // putting this padding both on the `.output_area` container as well as
+      // some of its descendants. This is okay because these descendant types,
+      // like output_javascript, img, and .math, do not have left borders which
+      // would otherwise make them look unaligned with the output container
+      // label.
+      &.rendered_html,
+      div[class*="highlight"],
+      & > div.output_javascript,
+      &:not(.rendered_html) > img,
+      div[class*="highlight"].math {
+        padding: $focus-ring-width;
+      }
+
+      &,
+      // must have this second selector, `&.rendered_html`, to override nbsphinx's padding rules
+      &.rendered_html {
+        padding-left: $space-between-vertical-bar-and-cell;
+      }
+
+      .jupyter-widgets,
+      .jupyter-matplotlib-canvas-container {
+        overflow: visible; // for focus ring
+      }
+
+      // use theme color for stderr
+      &.stderr {
+        background-color: transparent;
+
+        div[class*="highlight"] > pre {
+          background-color: var(--pst-color-danger-bg);
+        }
+      }
+
+      div.highlight {
+        overflow: visible;
+      }
+    }
   }
 
+  // Override nbsphinx's styles with our own <pre> tag styles
   div.nbinput.container div.input_area div[class*="highlight"] > pre,
   div.nboutput.container div.output_area div[class*="highlight"] > pre {
-    padding: 1rem;
-    background-color: var(--pst-color-surface);
-    color: var(--pst-color-text-base);
-    line-height: 1.2em;
-    border: 1px solid var(--pst-color-border);
-    border-radius: $admonition-border-radius;
+    @extend %pre-style;
 
-    .linenos {
-      // minimum opacity to make the line numbers WCAG AA conformant
-      opacity: 0.8;
-      padding-right: 10px;
-    }
-  }
-}
-
-.bd-container div.container.nblast {
-  padding-bottom: 0;
-  margin-bottom: 1.2em;
-}
-
-.bd-container div.nbinput.container,
-.bd-container div.nboutput.container {
-  display: block;
-  position: relative;
-  padding-left: 1em;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 0.2em;
-    background: var(--pst-color-success);
-    border-radius: 1px;
+    margin: 0;
   }
 
-  div.prompt {
-    width: auto;
-    margin-bottom: 0.7em;
-    padding-top: 0;
+  // Last container styles
+  div.container.nblast {
+    margin-bottom: $top-and-bottom-container-space;
 
-    div.highlight {
-      position: static;
-
-      pre {
-        color: inherit;
-      }
-    }
+    // override nbsphinx's padding rule. Let the whitespace be controlled by the
+    // margin-bottom rule above. This is important because if we achieve
+    // whitespace with padding instead of margin, then we create a misalignment
+    // between the vertical left bar and the bottom of the notebook cell.
+    padding-bottom: 0;
   }
 }
 
