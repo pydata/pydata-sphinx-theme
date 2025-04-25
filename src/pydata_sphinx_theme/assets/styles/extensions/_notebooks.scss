@@ -73,7 +73,13 @@ html .jp-RenderedHTMLCommon {
       left: 0;
       width: 0.2em;
       background: var(--pst-color-success);
-      border-radius: 1px;
+
+      // TODO: figure out a way to create a single vertical bar that runs the
+      // entire height of both the input and output cells, rather than two
+      // stacked bars, that way we can add border radius to the ends without it
+      // looking funky.
+
+      // border-radius: 1px;
     }
 
     // This is the label for the input or output
@@ -88,7 +94,7 @@ html .jp-RenderedHTMLCommon {
       // focusable the focus ring will be visible. Nbsphinx has a lot of
       // `overflow: auto` or `overflow: hidden` rules so without a padding area
       // in which to draw the focus ring, it would be otherwise hidden.
-      padding-left: $space-between-vertical-bar-and-cell;
+      margin-left: $space-between-vertical-bar-and-cell;
 
       div.highlight {
         position: static; // override nbsphinx - position: absolute
@@ -114,7 +120,7 @@ html .jp-RenderedHTMLCommon {
     div.input_area {
       border: none; // border taken care of by <pre> styles elsewhere in the theme
       padding: $focus-ring-width; // give the input_area a padding area in which to draw the focus ring
-      padding-left: $space-between-vertical-bar-and-cell;
+      margin-left: $space-between-vertical-bar-and-cell;
 
       > div.highlight {
         overflow: visible; // necessary for focus ring
@@ -129,45 +135,41 @@ html .jp-RenderedHTMLCommon {
     // down the left side.
     padding-top: $top-and-bottom-container-space;
 
-    // Prefix the cell number with the word "Out".
-    // TODO: add to translations
+    // Prefix the cell number with the word "Out". TODO: add to translations
     div.prompt pre::before {
       content: "Out ";
     }
 
     div.output_area {
+      // Override nbsphinx. Things like box shadows on elements that are
+      // children of div.output_area do not work if the overflow is not set to
+      // visible. But do not apply to .rendered_html because it could be, for
+      // example, a long pandas data table that is rendered without a
+      // non-overflowing container.
+      &:not(.rendered_html) {
+        overflow: visible;
+      }
+
       // What this selector attempts to do is to override a bunch of CSS rules
-      // that come from multiple places that add bottom whitespace to elements,
+      // that come from multiple places that add top and bottom whitespace to elements,
       // like paragraph elements. These rules mess up the alignment between
       // bottom of the notebook cell content and the left bar that we've added.
       // They also create unnecessary extra whitespace at the bottom of notebook
       // cells. However, this selector may be a bit too wide, too blunt. We may
       // need find a different way to achieve this.
       :not(.highlight, .widget-tab-contents, .jupyter-widgets):last-child {
+        margin-top: 0;
         margin-bottom: 0;
-        padding-bottom: 0;
-      }
-
-      // Create a padding area within which to draw the focus ring. Yes, we are
-      // putting this padding both on the `.output_area` container as well as
-      // some of its descendants. This is okay because these descendant types,
-      // like output_javascript, img, and .math, do not have left borders which
-      // would otherwise make them look unaligned with the output container
-      // label.
-      &.rendered_html,
-      div[class*="highlight"],
-      & > div.output_javascript,
-      &:not(.rendered_html) > img,
-      div[class*="highlight"].math {
-        padding: $focus-ring-width;
       }
 
       &,
       // must have this second selector, `&.rendered_html`, to override nbsphinx's padding rules
       &.rendered_html {
-        padding-left: $space-between-vertical-bar-and-cell;
+        margin-left: $space-between-vertical-bar-and-cell;
+        padding-left: 0;
       }
 
+      div.highlight,
       .jupyter-widgets,
       .jupyter-matplotlib-canvas-container {
         overflow: visible; // for focus ring
@@ -180,10 +182,6 @@ html .jp-RenderedHTMLCommon {
         div[class*="highlight"] > pre {
           background-color: var(--pst-color-danger-bg);
         }
-      }
-
-      div.highlight {
-        overflow: visible;
       }
     }
   }
