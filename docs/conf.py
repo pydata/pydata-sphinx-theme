@@ -40,22 +40,40 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "autoapi.extension",
-    # custom extentions
+    # custom extensions (extensions defined in this repo)
     "_extension.gallery_directive",
     "_extension.component_directive",
     # For extension examples and demos
-    "myst_parser",
     "ablog",
     "jupyter_sphinx",
     "sphinxcontrib.youtube",
-    "nbsphinx",
     "numpydoc",
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
 ]
 
-jupyterlite_config = "jupyterlite_config.json"
+# Determine which notebook parsing extension to use (nbsphinx or MyST-NB)
+
+default_notebook_parser = "nbsphinx"
+
+# Get the notebook parser from the environment variable
+notebook_parser = os.environ.get("PST_NOTEBOOK_PARSER", default_notebook_parser)
+
+print(f"Notebook parser: {notebook_parser}")
+
+if notebook_parser == default_notebook_parser:
+    extensions += [
+        "myst_parser",
+        "nbsphinx",
+    ]
+elif notebook_parser == "myst-nb":
+    extensions += [
+        "myst_nb",
+    ]
+    # MyST-NB treats markdown cells in notebooks as MyST markdown but the
+    # example notebooks were not made for MyST so use CommonMark
+    nb_render_markdown_format = "commonmark"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -66,6 +84,16 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
+
+# -- JupyterLite Sphinx ------------------------------------------------------
+
+jupyterlite_config = "jupyterlite_config.json"
+
+
+# We want .ipynb files in the repo to be handled by the notebook parsing
+# extension (nbsphinx or MyST-NB), NOT JupyterLite.
+jupyterlite_bind_ipynb_suffix = False
+
 
 # -- Sitemap -----------------------------------------------------------------
 
