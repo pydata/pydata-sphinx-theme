@@ -150,7 +150,6 @@ if not version_match or version_match.isdigit() or version_match == "latest":
 elif version_match == "stable":
     version_match = f"v{release}"
 
-# Update the switcher configuration to include language_match
 html_theme_options = {
     "external_links": [
         {
