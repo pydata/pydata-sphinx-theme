@@ -125,7 +125,7 @@ html_favicon = "_static/logo.svg"
 html_sourcelink_suffix = ""
 html_last_updated_fmt = ""  # to reveal the build date in the pages meta
 
-# Update the json_url to point to the new structure
+# Define the json_url for our version switcher.
 json_url = "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json"
 
 # Add language_match to support language switching
