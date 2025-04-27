@@ -17,6 +17,7 @@ from sphinx.locale import _
 
 import pydata_sphinx_theme
 
+
 sys.path.append(str(Path(".").resolve()))
 
 # -- Project information -----------------------------------------------------
