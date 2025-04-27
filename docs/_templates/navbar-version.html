@@ -1,25 +1,2 @@
-<!-- Language and Version Switcher -->
-<div class="navbar-switcher">
-  <select id="language-switcher" onchange="switchLanguage(this.value)">
-    <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
-    <option value="ja" {% if language == 'ja' %}selected{% endif %}>日本語</option>
-  </select>
-  <select id="version-switcher" onchange="switchVersion(this.value)">
-    {% for version in versions %}
-    <option value="{{ version.url }}" {% if version.version == version_match %}selected{% endif %}>
-      {{ version.name or version.version }}
-    </option>
-    {% endfor %}
-  </select>
-</div>
-<script>
-  function switchLanguage(lang) {
-    const currentUrl = window.location.href;
-    const newUrl = currentUrl.replace(/\/en\/|\/ja\//, `/${lang}/`);
-    window.location.href = newUrl;
-  }
-
-  function switchVersion(url) {
-    window.location.href = url;
-  }
-</script>
+<!-- A small template snippet for theme testing -->
+TEST: v{{ version }}
