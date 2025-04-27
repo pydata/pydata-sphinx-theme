@@ -181,22 +181,7 @@ html_theme_options = {
             "url": "https://pypi.org/project/pydata-sphinx-theme",
             "icon": "fa-custom fa-pypi",
         },
-        {# Define the version we use for matching in the version switcher.
-version_match = os.environ.get("READTHEDOCS_VERSION")
-release = pydata_sphinx_theme.__version__
-# If READTHEDOCS_VERSION doesn't exist, we're not on RTD
-# If it is an integer, we're in a PR build and the version isn't correct.
-# If it's "latest" → change to "dev" (that's what we want the switcher to call it)
-if not version_match or version_match.isdigit() or version_match == "latest":
-    # For local development, infer the version to match from the package.
-    if "dev" in release or "rc" in release:
-        version_match = "dev"
-        # We want to keep the relative reference if we are in dev mode
-        # but we want the whole url if we are effectively in a released version
-        json_url = "_static/switcher.json"
-    else:
-        version_match = f"v{release}"
-elif version_match == "stable":
+        {
             "name": "PyData",
             "url": "https://pydata.org",
             "icon": "fa-custom fa-pydata",
