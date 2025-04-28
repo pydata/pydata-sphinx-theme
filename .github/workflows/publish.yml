@@ -48,7 +48,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup Python 🐍"
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # 5.4.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # 5.5.0
         with:
           python-version: "3.9"
 
@@ -85,7 +85,7 @@ jobs:
       url: https://pypi.org/p/pydata-sphinx-theme
     steps:
       - name: "Download PST built package 📦"
-        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # 4.1.8
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # 4.2.1
         with:
           name: Packages
           path: dist
@@ -102,7 +102,7 @@ jobs:
           print-hash: true
 
       - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
-        uses: scientific-python/upload-nightly-action@82396a2ed4269ba06c6b2988bb4fd568ef3c3d6b # 0.6.1
+        uses: scientific-python/upload-nightly-action@b36e8c0c10dbcfd2e05bf95f17ef8c14fd708dbf # 0.6.2
         with:
           artifacts_path: dist
           anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
