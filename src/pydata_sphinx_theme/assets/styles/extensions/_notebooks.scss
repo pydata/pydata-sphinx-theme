@@ -9,52 +9,10 @@
 /*******************************************************************************
  * nbsphinx
  */
-html div.rendered_html,
-// NBsphinx ipywidgets output selector
-html .jp-RenderedHTMLCommon {
-  // Add some margin around the element box for the focus ring. Otherwise the
-  // focus ring gets clipped because the containing elements have `overflow:
-  // hidden` applied to them (via the `.lm-Widget` selector)
-  margin: $focus-ring-width;
-
-  table {
-    table-layout: auto;
-  }
-}
-
-.bd-content .nboutput {
-  .output_area {
-    &.rendered_html,
-    .jp-RenderedHTMLCommon {
-      // pandas
-      table.dataframe {
-        @include table-colors;
-
-        tbody {
-          tr:hover {
-            background-color: var(--pst-color-table-row-hover-bg);
-          }
-        }
-      }
-    }
-
-    // Dark theme special-cases
-    html[data-theme="dark"] & {
-      &.rendered_html:not(:has(table.dataframe)),
-      // ipywidgets
-      .widget-subarea {
-        @include cell-output-background;
-      }
-    }
-  }
-}
 
 // The following block implements Isabela's design for notebook code cells:
 // https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/142#issuecomment-2759132381.
-// They selectors are all nested under .bd-article-container so that they have
-// higher specificity and can therefore override the rules in the nbphinx
-// stylesheet.
-.bd-article-container {
+@mixin -nbsphinx-restyle {
   $space-between-vertical-bar-and-cell: 1em;
   $top-and-bottom-container-space: 1.2em;
 
@@ -203,6 +161,52 @@ html .jp-RenderedHTMLCommon {
     // whitespace with padding instead of margin, then we create a misalignment
     // between the vertical left bar and the bottom of the notebook cell.
     padding-bottom: 0;
+  }
+}
+
+// Nest under .bd-article-container so that selectors have higher specificity
+// and can therefore override the rules in the nbphinx stylesheet.
+.bd-article-container {
+  @include _nbsphinx-restyle;
+
+  div.rendered_html,
+  // NBsphinx ipywidgets output selector
+  .jp-RenderedHTMLCommon {
+    // Add some margin around the element box for the focus ring. Otherwise the
+    // focus ring gets clipped because the containing elements have `overflow:
+    // hidden` applied to them (via the `.lm-Widget` selector)
+    margin: $focus-ring-width;
+
+    table {
+      table-layout: auto;
+    }
+  }
+
+  .nboutput {
+    .output_area {
+      &.rendered_html,
+      .jp-RenderedHTMLCommon {
+        // pandas
+        table.dataframe {
+          @include table-colors;
+
+          tbody {
+            tr:hover {
+              background-color: var(--pst-color-table-row-hover-bg);
+            }
+          }
+        }
+      }
+
+      // Dark theme special-cases
+      html[data-theme="dark"] & {
+        &.rendered_html:not(:has(table.dataframe)),
+        // ipywidgets
+        .widget-subarea {
+          @include cell-output-background;
+        }
+      }
+    }
   }
 }
 
