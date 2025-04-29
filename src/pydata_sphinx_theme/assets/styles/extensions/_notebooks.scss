@@ -10,32 +10,6 @@
  * myst NB
  */
 
-div.cell_output .output {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.bd-content div.cell_output {
-  // pandas
-  table.dataframe {
-    @include table-colors;
-
-    tbody {
-      tr:hover {
-        background-color: var(--pst-color-table-row-hover-bg);
-      }
-    }
-  }
-
-  // Special cases, dark mode
-  img,
-  .text_html:not(:has(table.dataframe)),
-  // ipywidgets
-  .widget-subarea {
-    @include cell-output-force-light-background;
-  }
-}
-
 // Prevent tables from scrunching together
 .bd-content {
   div.cell_input {
@@ -52,6 +26,117 @@ div.cell_output .output {
   div.output {
     table {
       table-layout: auto;
+    }
+  }
+}
+
+.bd-article-container {
+  div.container.cell {
+    // Vertical whitespace between notebook code cell area (input + output) and
+    // surrounding prose
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+
+    // Styles for vertical bar
+    position: relative; // must set position relative in order to set position absolute on ::before pseudo-element
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 0.2em;
+      background: var(--pst-color-success);
+      border-radius: 1px;
+    }
+
+    // Space between vertical left bar and code cells
+    padding-left: 1em;
+
+    // "In:" and "Out:" labels
+    .cell_input::before {
+      content: "In:";
+    }
+
+    .cell_output::before {
+      content: "Out:";
+    }
+
+    .cell_input,
+    .cell_output {
+      background-color: transparent; // override MyST-NB
+      border: none; // override MyST-NB
+
+      // shared label styles
+      &::before {
+        display: block;
+        font-family: var(--pst-font-family-monospace);
+        font-size: 0.875rem; // match nbsphinx label font-size
+        line-height: 1; // align top of label with top of left bar
+        margin-bottom: 0.7em;
+      }
+
+      pre {
+        @extend %pre-style;
+
+        margin: 0; // override %pre-style
+      }
+    }
+
+    .cell_input {
+      margin-bottom: 1.2em;
+    }
+
+    .cell_output {
+      margin-top: 1.2em;
+
+      .stderr pre {
+        background-color: var(--pst-color-danger-bg);
+      }
+
+      .output {
+        &.text_html {
+          max-width: 100%;
+          overflow-x: auto;
+        }
+
+        &:first-child {
+          margin-top: 0; // override MyST-NB (let the margin-top rule on .cell_output control the whitespace)
+        }
+
+        :last-child:not(.highlight, .widget-tab-contents, .jupyter-widgets) {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+
+        &.traceback {
+          background: transparent;
+          border: none;
+
+          pre {
+            border: 1px solid var(--pst-color-danger);
+          }
+        }
+      }
+
+      // pandas
+      table.dataframe {
+        @include table-colors;
+
+        tbody {
+          tr:hover {
+            background-color: var(--pst-color-table-row-hover-bg);
+          }
+        }
+      }
+
+      // some notebook outputs (such as images and ipywidgets) are typically
+      // generated for light mode and do not adapt well to dark mode
+      .text_html:not(:has(table.dataframe)),
+      // ipywidgets
+      .widget-subarea {
+        @include cell-output-force-light-background;
+      }
     }
   }
 }
