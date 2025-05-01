@@ -95,7 +95,7 @@ jobs:
           tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
-        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70 # 1.12.3
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # 1.12.4
         # only publish if this is a published release by pydata
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
         with:
