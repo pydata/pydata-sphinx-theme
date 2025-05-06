@@ -21,6 +21,7 @@
   div.nboutput.container {
     display: block; // override nbsphinx display: flex
     position: relative; // needed for the absolute positioning of the ::before pseudo-element
+    padding-left: $space-between-vertical-bar-and-cell;
 
     // This is the vertical bar that connects the input and output containers
     &::before {
@@ -44,15 +45,7 @@
     div.prompt {
       width: auto; // override nbsphinx
       margin-bottom: 0.7em; // space between the label and the input or output
-      padding-top: 0; // override nbsphinx - all whitespace is managed by the margin-bottom rule above
-
-      // Create space between the prompt and the vertical bar. This reason that
-      // we do not put the padding inside the left edge of the container is that
-      // we need to add padding to the inputs and outputs so that if they are
-      // focusable the focus ring will be visible. Nbsphinx has a lot of
-      // `overflow: auto` or `overflow: hidden` rules so without a padding area
-      // in which to draw the focus ring, it would be otherwise hidden.
-      margin-left: $space-between-vertical-bar-and-cell;
+      padding: 0; // override nbsphinx, we control the whitespace around the label with other rules
 
       div.highlight {
         position: static; // override nbsphinx - position: absolute
@@ -77,8 +70,7 @@
 
     div.input_area {
       border: none; // border taken care of by <pre> styles elsewhere in the theme
-      padding: $focus-ring-width; // give the input_area a padding area in which to draw the focus ring
-      margin-left: $space-between-vertical-bar-and-cell;
+      overflow: visible;
 
       > div.highlight {
         overflow: visible; // necessary for focus ring
@@ -99,6 +91,16 @@
     }
 
     div.output_area {
+      &.rendered_html,
+      div[class*="highlight"].math,
+      > div.output_javascript,
+      > img {
+        // Override nbsphinx. We want the left edge of the output area to be
+        // left-aligned with the output label, the input area, and the input
+        // label.
+        padding: 0;
+      }
+
       // Override nbsphinx. Things like box shadows on elements that are
       // children of div.output_area do not work if the overflow is not set to
       // visible. But do not apply to .rendered_html because it could be, for
@@ -120,14 +122,8 @@
         margin-bottom: 0;
       }
 
-      &,
-      // must have this second selector, `&.rendered_html`, to override nbsphinx's padding rules
-      &.rendered_html {
-        margin-left: $space-between-vertical-bar-and-cell;
-        padding-left: 0;
-      }
-
       div.highlight,
+      div.nohighlight,
       .jupyter-widgets,
       .jupyter-matplotlib-canvas-container {
         overflow: visible; // for focus ring
@@ -140,6 +136,15 @@
         div[class*="highlight"] > pre {
           background-color: var(--pst-color-danger-bg);
         }
+      }
+
+      // Override our own style rule in _math.scss
+      div.math {
+        display: block;
+      }
+
+      span.math {
+        display: inline;
       }
     }
   }
@@ -156,8 +161,8 @@
   div.container.nblast {
     margin-bottom: $top-and-bottom-container-space;
 
-    // override nbsphinx's padding rule. Let the whitespace be controlled by the
-    // margin-bottom rule above. This is important because if we achieve
+    // Override nbsphinx's padding rule. Let the whitespace be controlled by the
+    // margin-bottom rule above. This is important because if we create
     // whitespace with padding instead of margin, then we create a misalignment
     // between the vertical left bar and the bottom of the notebook cell.
     padding-bottom: 0;
@@ -168,19 +173,6 @@
 // and can therefore override the rules in the nbphinx stylesheet.
 .bd-article-container {
   @include _nbsphinx-restyle;
-
-  div.rendered_html,
-  // NBsphinx ipywidgets output selector
-  .jp-RenderedHTMLCommon {
-    // Add some margin around the element box for the focus ring. Otherwise the
-    // focus ring gets clipped because the containing elements have `overflow:
-    // hidden` applied to them (via the `.lm-Widget` selector)
-    margin: $focus-ring-width;
-
-    table {
-      table-layout: auto;
-    }
-  }
 
   .nboutput {
     .output_area {
