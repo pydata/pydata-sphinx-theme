@@ -105,7 +105,7 @@ Field list
 Glossary
 --------
 
-This is a glossary with definition terms for thing like :term:`Writing`:
+This is a glossary with definition terms for things like :term:`Writing`:
 
 .. glossary::
 
@@ -174,9 +174,9 @@ Complex
 
   * Nested item 3.
 
-- ``inline literall``
-- ``inline literall``
-- ``inline literall``
+- ``inline literal``
+- ``inline literal``
+- ``inline literal``
 - This item has multiple paragraphs.
 
   This item has multiple paragraphs.
@@ -189,13 +189,13 @@ Second list level
 ^^^^^^^^^^^^^^^^^
 
 - here is a list in a second-level section.
-- `yahoo <http://www.yahoo.com>`_
-- `yahoo <http://www.yahoo.com>`_
+- `yahoo <https://www.yahoo.com/>`_
+- `yahoo <https://www.yahoo.com/>`_
 
-  - `yahoo <http://www.yahoo.com>`_
+  - `yahoo <https://www.yahoo.com/>`_
   - here is an inner bullet ``oh``
 
-    - one more ``with an inline literally``. `yahoo <http://www.yahoo.com>`_
+    - one more ``with an inline literally``. `yahoo <https://www.yahoo.com/>`_
 
       heh heh. child. try to beat this embed:
 
@@ -204,8 +204,8 @@ Second list level
           :linenos:
           :lines: 10-20
 
-  - and another. `yahoo <http://www.yahoo.com>`_
-  - `yahoo <http://www.yahoo.com>`_
+  - and another. `yahoo <https://www.yahoo.com/>`_
+  - `yahoo <https://www.yahoo.com/>`_
   - ``hi``
 - how about an admonition?
 
@@ -217,15 +217,15 @@ Second list level
 But deeper down the rabbit hole
 """""""""""""""""""""""""""""""
 
-- I kept saying that, "deeper down the rabbit hole". `yahoo <http://www.yahoo.com>`_
+- I kept saying that, "deeper down the rabbit hole". `yahoo <https://www.yahoo.com/>`_
 
-  - I cackle at night `yahoo <http://www.yahoo.com>`_.
+  - I cackle at night `yahoo <https://www.yahoo.com/>`_.
 - I'm so lonely here in GZ ``guangzhou``
-- A man of python destiny, hopes and dreams. `yahoo <http://www.yahoo.com>`_
+- A man of python destiny, hopes and dreams. `yahoo <https://www.yahoo.com/>`_
 
-  - `yahoo <http://www.yahoo.com>`_
+  - `yahoo <https://www.yahoo.com/>`_
 
-    - `yahoo <http://www.yahoo.com>`_ ``hi``
+    - `yahoo <https://www.yahoo.com/>`_ ``hi``
     - ``destiny``
 
 Hlists
@@ -237,20 +237,20 @@ Hlists
     - First item
     - Second item
     - Third item
-    - Forth item
+    - Fourth item
     - Fifth item
-    - Sixths item
+    - Sixth item
 
 .. rubric:: Hlist with images
 
 .. hlist::
     :columns: 2
 
-    - .. figure:: https://source.unsplash.com/200x200/daily?cute+puppy
+    - .. figure:: https://picsum.photos/200/200
 
          This is a short caption for a figure.
 
-    - .. figure:: https://source.unsplash.com/200x200/daily?cute+puppy
+    - .. figure:: https://picsum.photos/200/200
 
          This is a long caption for a figure. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
          Donec porttitor dolor in odio posuere, vitae ornare libero mattis. In lobortis justo vestibulum nibh aliquet, non.
