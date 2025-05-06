@@ -176,15 +176,21 @@
 
   .nboutput {
     .output_area {
-      &.rendered_html,
+      &div.rendered_html,
       .jp-RenderedHTMLCommon {
-        // pandas
-        table.dataframe {
-          @include table-colors;
+        table {
+          // Override nbsphinx's `table-layout: fixed` rule. GitHub issue #952:
+          // https://github.com/pydata/pydata-sphinx-theme/issues/952
+          table-layout: auto;
 
-          tbody {
-            tr:hover {
-              background-color: var(--pst-color-table-row-hover-bg);
+          // pandas
+          &.dataframe {
+            @include table-colors;
+
+            tbody {
+              tr:hover {
+                background-color: var(--pst-color-table-row-hover-bg);
+              }
             }
           }
         }
