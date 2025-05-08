@@ -96,34 +96,6 @@ function addModeListener() {
 }
 
 /*******************************************************************************
- * TOC interactivity
- */
-
-/**
- * TOC sidebar - add "active" class to parent list
- *
- * Bootstrap's scrollspy adds the active class to the <a> link,
- * but for the automatic collapsing we need this on the parent list item.
- *
- * The event is triggered on "window" (and not the nav item as documented),
- * see https://github.com/twbs/bootstrap/issues/20086
- */
-function addTOCInteractivity() {
-  window.addEventListener("activate.bs.scrollspy", function () {
-    const navLinks = document.querySelectorAll(".bd-toc-nav a");
-
-    navLinks.forEach((navLink) => {
-      navLink.parentElement.classList.remove("active");
-    });
-
-    const activeNavLinks = document.querySelectorAll(".bd-toc-nav a.active");
-    activeNavLinks.forEach((navLink) => {
-      navLink.parentElement.classList.add("active");
-    });
-  });
-}
-
-/*******************************************************************************
  * Scroll
  */
 
@@ -1012,6 +984,283 @@ async function fetchRevealBannersTogether() {
   }, 320);
 }
 
+/**
+ * Add the machinery needed to highlight elements in the TOC when scrolling.
+ *
+ */
+function setupArticleTocSyncing() {
+  // Right sidebar table of contents container
+  const pageToc = document.querySelector("#pst-page-toc-nav");
+
+  // Not all pages have or include a table of contents. (For example, in the PST
+  // docs, at the time of this writing: /user_guide/index.html.)
+  if (!pageToc) {
+    return;
+  }
+
+  // The table of contents is a list of .toc-entry items each of which contains
+  // a link and possibly a nested list representing one level deeper in the
+  // table of contents.
+  const tocEntries = Array.from(pageToc.querySelectorAll(".toc-entry"));
+  const tocLinks = Array.from(pageToc.querySelectorAll("a"));
+
+  // If there are no links in the TOC, there's no syncing to be done.
+  // (Currently, the template does not render the TOC container if there are no
+  // TOC links, so this condition should never evaluate to true if the TOC
+  // container is found on the page, but should the template change in the
+  // future, this check will prevent a runtime error.)
+  if (tocLinks.length === 0) {
+    return;
+  }
+
+  // When the website visitor clicks a link in the TOC, we want that link to be
+  // highlighted/activated, NOT whichever TOC link the intersection observer
+  // callback would otherwise highlight, so we turn off the observer and turn it
+  // back on later.
+  let disableObserver = false;
+  pageToc.addEventListener("click", (event) => {
+    disableObserver = true;
+    const clickedTocLink = tocLinks.find((el) => el.contains(event.target));
+    activate(clickedTocLink);
+    setTimeout(() => {
+      // Give the page ample time to finish scrolling, then re-enable the
+      // intersection observer.
+      disableObserver = false;
+    }, 1000);
+  });
+
+  /**
+   * Activate an element and its chain of ancestor TOC entries; deactivate
+   * everything else in the TOC. Together with the theme CSS, this unfolds
+   * the TOC out to the given entry and highlights that entry.
+   *
+   * @param {HTMLElement} tocLink The TOC entry to be highlighted
+   */
+  function activate(tocLink) {
+    tocLinks.forEach((el) => {
+      if (el === tocLink) {
+        el.classList.add("active");
+        el.setAttribute("aria-current", "true");
+      } else {
+        el.classList.remove("active");
+        el.removeAttribute("aria-current");
+      }
+    });
+    tocEntries.forEach((el) => {
+      if (el.contains(tocLink)) {
+        el.classList.add("active");
+      } else {
+        el.classList.remove("active");
+      }
+    });
+  }
+
+  /**
+   * Get the heading in the article associated with the link in the table of contents
+   *
+   * @param {HTMLElement} tocLink TOC DOM element to use to grab an article heading
+   *
+   * @returns The article heading that the TOC element links to
+   */
+  function getHeading(tocLink) {
+    const href = tocLink.getAttribute("href");
+    if (!href.startsWith("#")) {
+      return;
+    }
+    const id = href.substring(1);
+    // There are cases where href="#" (for example, the first one at /examples/kitchen-sink/structure.html)
+    if (!id) {
+      return;
+    }
+    // Use getElementById() because querySelector() requires escaping the id string
+    const target = document.getElementById(id);
+    // Often the target is a section but we want to track section's heading
+    const heading = target.querySelector(":is(h1,h2,h3,h4,h5,h6)");
+    // Fallback to the target if there is no heading (for example, links on the
+    // PST docs page /examples/kitchen-sink/api.html target <dt> elements)
+    return heading || target;
+  }
+
+  // Map heading elements to their associated TOC links
+  const headingsToTocLinks = new Map();
+  tocLinks.forEach((tocLink) => {
+    const heading = getHeading(tocLink);
+    if (heading) {
+      headingsToTocLinks.set(heading, tocLink);
+    }
+  });
+
+  let observer;
+
+  function connectIntersectionObserver() {
+    if (observer) {
+      observer.disconnect();
+    }
+
+    const header = document.querySelector("#pst-header");
+    const headerHeight = header.getBoundingClientRect().height;
+
+    // Intersection observer options
+    const options = {
+      root: null,
+      rootMargin: `-${headerHeight}px 0px -70% 0px`, // Use -70% for the bottom margin so that intersection events happen in only the top third of the viewport
+      threshold: 0, // Trigger as soon as the heading goes into (or out of) the top 30% of the viewport
+    };
+
+    /**
+     *
+     * @param {IntersectionObserverEntry[]} entries Objects containing threshold-crossing
+     * event information
+     *
+     */
+    function callback(entries) {
+      if (disableObserver) {
+        return;
+      }
+      const entry = entries.filter((entry) => entry.isIntersecting).pop();
+      if (!entry) {
+        return;
+      }
+      const heading = entry.target;
+      const tocLink = headingsToTocLinks.get(heading);
+      activate(tocLink);
+    }
+
+    observer = new IntersectionObserver(callback, options);
+    headingsToTocLinks.keys().forEach((heading) => {
+      observer.observe(heading);
+    });
+  }
+
+  // If the user resizes the window, the header height may change and the
+  // intersection observer's root margin will need to be recalculated
+  window.addEventListener("resize", debounce(connectIntersectionObserver, 300));
+  connectIntersectionObserver();
+}
+
+/*******************************************************************************
+ * Set up expand/collapse button for primary sidebar
+ */
+function setupCollapseSidebarButton() {
+  const button = document.getElementById("pst-collapse-sidebar-button");
+  const sidebar = document.getElementById("pst-primary-sidebar");
+
+  // If this page rendered without the button or sidebar, then there's nothing to do.
+  if (!button || !sidebar) {
+    return;
+  }
+
+  const sidebarSections = Array.from(sidebar.children);
+
+  const expandTooltip = new bootstrap.Tooltip(button, {
+    title: button.querySelector(".pst-expand-sidebar-label").textContent,
+
+    // In manual testing, relying on Bootstrap to handle "hover" and "focus" was buggy.
+    trigger: "manual",
+
+    placement: "left",
+    fallbackPlacements: ["right"],
+
+    // Offsetting the tooltip a bit more than the default [0, 0] solves an issue
+    // where the appearance of the tooltip triggers a mouseleave event which in
+    // turn triggers the call to hide the tooltip. So in certain areas around
+    // the button, it would appear to the user that tooltip flashes in and then
+    // back out.
+    offset: [0, 12],
+  });
+
+  const showTooltip = () => {
+    // Only show the "expand sidebar" tooltip when the sidebar is not expanded
+    if (button.getAttribute("aria-expanded") === "false") {
+      expandTooltip.show();
+    }
+  };
+  const hideTooltip = () => {
+    expandTooltip.hide();
+  };
+
+  function squeezeSidebar(prefersReducedMotion, done) {
+    // Before squeezing the sidebar, freeze the widths of its subsections.
+    // Otherwise, the subsections will also narrow and cause the text in the
+    // sidebar to reflow and wrap, which we don't want. This is necessary
+    // because we do not remove the sidebar contents from the layout (with
+    // `display: none`). Rather, we hide the contents from both sighted users
+    // and screen readers (with `visibility: hidden`). This provides better
+    // stability to the overall layout.
+    sidebarSections.forEach(
+      (el) => (el.style.width = el.getBoundingClientRect().width + "px"),
+    );
+
+    const afterSqueeze = () => {
+      // After squeezing the sidebar, set aria-expanded to false
+      button.setAttribute("aria-expanded", "false"); // "false" is in quotes because HTML attributes are strings
+
+      button.dataset.busy = false;
+    };
+
+    if (prefersReducedMotion) {
+      sidebar.classList.add("pst-squeeze");
+      afterSqueeze();
+    } else {
+      sidebar.addEventListener("transitionend", function onTransitionEnd() {
+        afterSqueeze();
+        sidebar.removeEventListener("transitionend", onTransitionEnd);
+      });
+      sidebar.classList.add("pst-squeeze");
+    }
+  }
+
+  function expandSidebar(prefersReducedMotion, done) {
+    hideTooltip();
+
+    const afterExpand = () => {
+      // After expanding the sidebar (which may be delayed by a CSS transition),
+      // unfreeze the widths of the subsections that were frozen when the sidebar
+      // was squeezed.
+      sidebarSections.forEach((el) => (el.style.width = null));
+
+      // After expanding the sidebar, set aria-expanded to "true" - in quotes
+      // because HTML attributes are strings.
+      button.setAttribute("aria-expanded", "true");
+
+      button.dataset.busy = false;
+    };
+
+    if (prefersReducedMotion) {
+      sidebar.classList.remove("pst-squeeze");
+      afterExpand();
+    } else {
+      sidebar.addEventListener("transitionend", function onTransitionEnd() {
+        afterExpand();
+        sidebar.removeEventListener("transitionend", onTransitionEnd);
+      });
+      sidebar.classList.remove("pst-squeeze");
+    }
+  }
+
+  button.addEventListener("click", () => {
+    if (button.dataset.busy === "true") {
+      return;
+    }
+    button.dataset.busy = "true";
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion)", // must be in parentheses
+    ).matches;
+
+    if (button.getAttribute("aria-expanded") === "true") {
+      squeezeSidebar(prefersReducedMotion);
+    } else {
+      expandSidebar(prefersReducedMotion);
+    }
+  });
+
+  button.addEventListener("focus", showTooltip);
+  button.addEventListener("mouseenter", showTooltip);
+  button.addEventListener("mouseleave", hideTooltip);
+  button.addEventListener("blur", hideTooltip);
+}
+
 /*******************************************************************************
  * Call functions after document loading.
  */
@@ -1022,10 +1271,19 @@ documentReady(fetchRevealBannersTogether);
 
 documentReady(addModeListener);
 documentReady(scrollToActive);
-documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
 documentReady(setupSearchAsYouType);
 documentReady(setupMobileSidebarKeyboardHandlers);
+documentReady(setupArticleTocSyncing);
+documentReady(() => {
+  try {
+    setupCollapseSidebarButton();
+  } catch (err) {
+    // This exact error message is used in pytest tests
+    console.log("[PST] Error setting up collapse sidebar button");
+    console.error(err);
+  }
+});
 
 // Determining whether an element has scrollable content depends on stylesheets,
 // so we're checking for the "load" event rather than "DOMContentLoaded"

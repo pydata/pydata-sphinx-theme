@@ -358,6 +358,8 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     }
 
 
+# -- linkcheck options ---------------------------------------------------------
+
 linkcheck_anchors_ignore = [
     # match any anchor that starts with a '/' since this is an invalid HTML anchor
     r"\/.*",
@@ -399,3 +401,7 @@ linkcheck_allowed_redirects = {
     r"http://www.yahoo.com": "https://www.yahoo.com/",
     r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
 }
+
+# we have had issues with linkcheck timing and retries on www.gnu.org
+linkcheck_retries = 3
+linkcheck_timeout = 50
