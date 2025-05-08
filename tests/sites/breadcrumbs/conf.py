@@ -30,3 +30,6 @@ html_theme_options = {
     "secondary_sidebar_items": ["breadcrumbs"],
     "article_header_start": ["breadcrumbs"],
 }
+
+# see https://github.com/sphinx-doc/sphinx/issues/13462
+linkcheck_allowed_redirects = {}
