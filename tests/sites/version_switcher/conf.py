@@ -20,3 +20,6 @@ html_theme_options = {
     },
     "navbar_start": ["navbar-logo", "version-switcher"],
 }
+
+# see https://github.com/sphinx-doc/sphinx/issues/13462
+linkcheck_allowed_redirects = {}
