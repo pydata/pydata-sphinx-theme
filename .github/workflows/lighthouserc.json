@@ -2,6 +2,18 @@
   "ci": {
     "collect": {
       "staticDistDir": "./audit/_build/",
+      "url": [
+        "http://localhost/kitchen-sink/admonitions.html",
+        "http://localhost/kitchen-sink/api.html",
+        "http://localhost/kitchen-sink/blocks.html",
+        "http://localhost/kitchen-sink/generic.html",
+        "http://localhost/kitchen-sink/images.html",
+        "http://localhost/kitchen-sink/lists.html",
+        "http://localhost/kitchen-sink/really-long.html",
+        "http://localhost/kitchen-sink/structure.html",
+        "http://localhost/kitchen-sink/tables.html",
+        "http://localhost/kitchen-sink/typography.html"
+      ],
       "settings": {
         "skipAudits": ["canonical"]
       }
