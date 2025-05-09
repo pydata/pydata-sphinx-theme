@@ -369,8 +369,6 @@ linkcheck_ignore = [
     # The crawler gets "Anchor not found" for various anchors
     r"https://github.com.+?#.*",
     r"https://www.sphinx-doc.org/en/master/*/.+?#.+?",
-    # Known broken links in kitchen sink
-    r"https://source.unsplash.com/.+",
     # sample urls
     "http://someurl/release-0.1.0.tar-gz",
     "http://python.py",

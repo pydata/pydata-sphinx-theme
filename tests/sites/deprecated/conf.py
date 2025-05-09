@@ -27,3 +27,6 @@ html_theme_options = {
 }
 
 html_sidebars = {"section1/index": ["sidebar-nav-bs.html"]}
+
+# see https://github.com/sphinx-doc/sphinx/issues/13462
+linkcheck_allowed_redirects = {}

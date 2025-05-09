@@ -58,7 +58,7 @@ code.literal {
 }
 
 a > code {
-  color: var(--pst-color-inline-code-links);
+  color: var(--pst-color-link-higher-contrast);
 
   &:hover {
     color: var(--pst-color-link-hover);

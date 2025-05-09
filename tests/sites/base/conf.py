@@ -21,3 +21,6 @@ html_sourcelink_suffix = ""
 
 # Base options, we can add other key/vals later
 html_sidebars = {"section1/index": ["sidebar-nav-bs.html"]}
+
+# see https://github.com/sphinx-doc/sphinx/issues/13462
+linkcheck_allowed_redirects = {}
