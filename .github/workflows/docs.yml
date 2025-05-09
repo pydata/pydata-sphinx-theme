@@ -101,10 +101,8 @@ jobs:
           # ensuring proper scaping of the variable
           docs_dir="${DOCS_DIR}"
           mkdir -p $docs_dir/site
-          cp -r docs/examples/kitchen-sink $docs_dir/site/kitchen-sink
-          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > $docs_dir/site/index.rst
+          cp -r docs/examples/kitchen-sink/* $docs_dir/site/
           echo 'html_theme = "pydata_sphinx_theme"' > $docs_dir/site/conf.py
-          echo '.. toctree::\n   :glob:\n\n   *' >> $docs_dir/site/index.rst
 
           # build docs without checking for warnings
           python -Im tox run -e docs-no-checks
