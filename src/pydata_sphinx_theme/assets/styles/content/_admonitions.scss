@@ -300,6 +300,10 @@ aside.topic {
     color: var(--pst-color-on-surface) !important;
   }
 
+  a {
+    color: var(--pst-color-link-higher-contrast);
+  }
+
   // Over-ride large default padding
   ul.simple {
     padding-left: 1rem;

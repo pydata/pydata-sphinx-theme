@@ -199,10 +199,12 @@ $pst-semantic-colors: (
     "light": #{map-deep-get($color-palette, "pink", "600")},
     "dark": #{map-deep-get($color-palette, "pink", "300")},
   ),
-  "inline-code-links": (
-    // need to make sure there is enough contrast against the code bg
+  "link-higher-contrast": (
+    // teal-600 provides higher contrast than teal-500 (our regular light mode
+    // link color) for off-white or non-white backgrounds
     "light": #{map-deep-get($color-palette, "teal", "600")},
-    // keep primary color for dark mode
+    // teal-400 is actually the same color already used for links in dark mode,
+    // but it actually works for most of our other dark mode backgrounds
     "dark": #{map-deep-get($color-palette, "teal", "400")},
   ),
   "target": (
