@@ -52,5 +52,5 @@ Our Webpack build generates a collection of [Jinja macros](https://jinja.pallets
 
 These macros are imported in the main `layout.html` file, and then inserted at various places on the page to link the static assets.
 
-Some assets [are "preloaded"](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload), meaning that the browser begins requesting these resources before they're needed.
+Some assets [are "preloaded"](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/preload), meaning that the browser begins requesting these resources before they're needed.
 In particular, our JavaScript assets are preloaded in `<head>`, and the scripts are loaded at the end of `<body>`.
