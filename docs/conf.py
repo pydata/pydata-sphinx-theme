@@ -377,7 +377,7 @@ linkcheck_ignore = [
     # get a 403 on CI
     "https://canvas.workday.com/styles/tokens/type",
     "https://unsplash.com/",
-    r"https://www.gnu.org/software/gettext/manual/*/.+?#.*",
+    r"https://www.gnu.org/software/gettext/*/.+?#.*",
 ]
 
 linkcheck_allowed_redirects = {
