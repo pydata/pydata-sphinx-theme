@@ -403,5 +403,6 @@ linkcheck_allowed_redirects = {
 }
 
 # we have had issues with linkcheck timing and retries on www.gnu.org
-# linkcheck_retries = 3
-# linkcheck_timeout = 30
+linkcheck_retries = 3
+linkcheck_timeout = 30
+linkcheck_anchors = False
