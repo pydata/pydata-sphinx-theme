@@ -377,6 +377,7 @@ linkcheck_ignore = [
     # get a 403 on CI
     "https://canvas.workday.com/styles/tokens/type",
     "https://unsplash.com/",
+    r"https://www.gnu.org/software/gettext/manual/*/.+?#.*",
 ]
 
 linkcheck_allowed_redirects = {
@@ -389,7 +390,7 @@ linkcheck_allowed_redirects = {
     r"https://virtualenv.pypa.io/": "https://virtualenv.pypa.io/en/latest/",
     # catching redirects in rtd
     r"https://[A-Za-z\d_\-\.]+.readthedocs.io/": r"https://[A-Za-z\d_\-\.]+\.readthedocs\.io(/en)?/(stable|latest)/",
-    r"https://readthedocs.org/": r"https://about.readthedocs.com\?ref=readthedocs.org",
+    r"https://readthedocs.org/": r"https://about.readthedocs.com/\?ref=app.readthedocs.org",
     r"https://app.readthedocs.org/dashboard/": r"https://app.readthedocs.org/accounts/login/\?next=/dashboard/",
     # miscellanenous urls
     r"https://python.arviz.org/": "https://python.arviz.org/en/stable/",
@@ -398,8 +399,9 @@ linkcheck_allowed_redirects = {
     r"https://gitlab.com": "https://about.gitlab.com/",
     r"http://www.yahoo.com": "https://www.yahoo.com/",
     r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
+    r"https://picsum.photos/": "https://fastly.picsum.photos/",
 }
 
 # we have had issues with linkcheck timing and retries on www.gnu.org
-linkcheck_retries = 3
-linkcheck_timeout = 50
+# linkcheck_retries = 3
+# linkcheck_timeout = 30
