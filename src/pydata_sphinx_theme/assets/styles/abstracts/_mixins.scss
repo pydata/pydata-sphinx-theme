@@ -26,6 +26,13 @@
   color: var(--pst-color-table);
   border: 1px solid var(--pst-color-table-outer-border);
 
+  // Our tables are zebra striped: header rows and odd-numbered rows have an
+  // off-white background, or off-black in dark mode. So they require a
+  // higher contrast link color.
+  a {
+    color: var(--pst-color-link-higher-contrast);
+  }
+
   th,
   td {
     ~ th,

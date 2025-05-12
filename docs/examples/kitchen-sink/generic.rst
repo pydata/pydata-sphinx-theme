@@ -3,7 +3,7 @@
    Licensed under Creative Commons Attribution-ShareAlike 4.0 International License
    SPDX-License-Identifier: CC-BY-SA-4.0
 
-.. |EXAMPLE| image:: https://source.unsplash.com/32x32/daily?icon
+.. |EXAMPLE| image:: https://picsum.photos/16/16
     :width: 1em
 
 =============
@@ -28,9 +28,9 @@ a :sup:`superscript`, :emphasis:`emphasis`, :strong:`strong`, and
 Hyperlinks
 ----------
 
-It is a website, so it'll have hyperlinks like http://www.python.org (inline),
+It is a website, so it'll have hyperlinks like https://www.python.org/ (inline),
 or Python_ (external reference), example_ (internal reference),
-`Python web site <http://www.python.org>`__ (external hyperlinks with embedded
+`Python web site <https://www.python.org/>`__ (external hyperlinks with embedded
 URI), footnote references (manually numbered [1]_, anonymous auto-numbered [#]_,
 labeled auto-numbered [#label]_, or symbolic [*]_), citation references ([12]_),
 substitution references (|example|), and _`inline hyperlink targets`
@@ -110,7 +110,7 @@ Sidebar
 
     Lorem ipsum dolor sit amet consectetur adipisicing elit.
 
-    .. image:: https://source.unsplash.com/200x200/daily?cute+puppy
+    .. image:: https://picsum.photos/200/200
 
     Lorem ipsum dolor sit amet consectetur adipisicing elit.
 
@@ -199,7 +199,7 @@ Targets_.
 
 Explicit external targets are interpolated into references such as "Python_".
 
-.. _Python: http://www.python.org/
+.. _Python: https://www.python.org/
 
 Targets may be indirect and anonymous.  Thus `this phrase`__ may also
 refer to the Targets_ section.
@@ -268,4 +268,4 @@ voluptatem officia culpa optio atque. Quaerat sed quibusdam ratione nam.
 Download Links
 ==============
 
-:download:`This long long long long long long long long long long long long long long long download link should wrap white-spaces <https://source.unsplash.com/200x200/daily?cute+puppy>`
+:download:`This long long long long long long long long long long long long long long long download link should wrap white-spaces <https://picsum.photos/200/200>`
