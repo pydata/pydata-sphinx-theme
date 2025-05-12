@@ -1,7 +1,12 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": "./audit/_build/kitchen-sink/",
+      "staticDistDir": "./audit/_build/",
+      "autodiscoverUrlBlocklist": [
+        "/genindex.html",
+        "/search.html",
+        "/_static/webpack-macros.html"
+      ],
       "settings": {
         "skipAudits": ["canonical"]
       }

@@ -23,6 +23,11 @@ div.versionremoved {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
   }
+
+  // fix color contrast failures (accessibility)
+  a {
+    color: var(--pst-color-link-higher-contrast);
+  }
 }
 
 div.versionadded {
@@ -33,6 +38,14 @@ div.versionadded {
 div.versionchanged {
   border-color: var(--pst-color-warning);
   background-color: var(--pst-color-warning-bg);
+
+  html[data-theme="dark"] & {
+    // This is a one-off because `--pst-color-link-higher-contrast` works for
+    // all of the other admonitions except this one in dark mode.
+    a {
+      color: map-deep-get($color-palette, "teal", "300");
+    }
+  }
 }
 
 div.deprecated,
