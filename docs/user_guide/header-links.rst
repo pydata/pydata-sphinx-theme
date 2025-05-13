@@ -263,7 +263,6 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
       ]
 
 That's it, your icon will now be inserted with the ``<svg>`` tag and not ``<img>``! You can reference your custom FontAwesome icon in CSS using the pattern ``.fa-<iconName>`` , for example ``.fa-pypi``.
-You can reference all of your custom icons at once in the CSS using ``.fa-custom``.
 
 .. _icon-link-shortcuts:
 
