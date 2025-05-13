@@ -5,7 +5,8 @@
       "autodiscoverUrlBlocklist": [
         "/genindex.html",
         "/search.html",
-        "/_static/webpack-macros.html"
+        "/_static/webpack-macros.html",
+        "/images.html"
       ],
       "settings": {
         "skipAudits": ["canonical"]
