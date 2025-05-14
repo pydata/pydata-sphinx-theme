@@ -205,7 +205,7 @@ SVG image icons
 In order to make use of the full feature set of ``.svg`` images provided by HTML you will need
 to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly straightforward process:
 
-#. Copy `custom-icon.js <https://github.com/pydata/pydata-sphinx-theme/blob/main/docs/_static/custom-icon.js>`_
+#. Copy `custom-icons.js <https://github.com/pydata/pydata-sphinx-theme/blob/main/docs/_static/custom-icons.js>`_
    into an appropriate directory of your documentation source (typically ``source/js``). In that file you will
    find a list of custom icon definitions. Each definition looks like this:
 
@@ -237,7 +237,7 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
 
       html_js_files = [
          ...
-         ("js/pypi-icon.js", {"defer": "defer"}),
+         ("js/custom-icons.js", {"defer": "defer"}),
          ...
       ]
 
