@@ -245,6 +245,14 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
 
       ``defer`` attribute is required.
 
+   .. important::
+
+      Do not add more than one ``custom-icons.js`` file in your ``conf.py``.
+
+      Each custom icon js file includes a call to ``FontAwesome.library.add()``.
+      Your site's JavaScript can only call that function once. In our testing,
+      subsequent calls to that function do not load additional icons.
+
 #. Set up the icon link in the ``html_theme_options`` as a FontAwesome icon:
 
    .. code:: python
