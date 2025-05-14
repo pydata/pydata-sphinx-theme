@@ -223,7 +223,7 @@ to set up the ``.svg`` to be used as a FontAwesome type icon. This is a fairly s
        ],
      }
 
-#. You will clear the list of icon definitions and add your own using the same pattern as above:
+#. Remove the existing list of icon definitions and add your own using the same pattern as above:
 
    #.  Keep the value of ``prefix`` as "fa-custom"
    #.  Set the value of ``iconName``  to a short, sensible, lowercase name for your icon
