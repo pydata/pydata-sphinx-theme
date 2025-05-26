@@ -19,7 +19,7 @@ When making new decisions about design and UI/UX, we often consult these themes 
   link: https://docs.docker.com/
   image: ../_static/inspiration/docker-mark-blue.svg
 - title: "**PyTorch**"
-  link: https://pytorch.org/docs/stable/index.html
+  link: https://docs.pytorch.org/docs/stable/index.html
   image: https://docs.pytorch.org/docs/stable/_static/images/logo-dark.svg
 - title: "**Docasaurus**"
   link: https://docusaurus.io/docs
