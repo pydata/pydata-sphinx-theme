@@ -20,6 +20,10 @@
   background-color: var(--pst-color-text-base);
   border-radius: 0.25rem;
   padding: 0.5rem;
+
+  :focus-visible {
+    outline-color: #{map-deep-get($pst-semantic-colors, "accent", "light")};
+  }
 }
 
 @mixin table-colors {
