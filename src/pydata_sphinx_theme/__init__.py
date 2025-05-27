@@ -14,7 +14,16 @@ from sphinx.application import Sphinx
 from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
-from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
+from . import (
+    edit_this_page,
+    logo,
+    nbsphinx,
+    pygments,
+    short_link,
+    toctree,
+    translator,
+    utils,
+)
 
 
 __version__ = "0.16.2dev0"
@@ -200,29 +209,9 @@ def update_and_remove_templates(
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
     # - theme.conf
     # - manually linked in `webpack-macros.html`
-    # Also remove NBSphinx CSS
     if "css_files" in context:
         theme_css_name = "_static/styles/pydata-sphinx-theme.css"
-        nbsphinx_css_name = "_static/nbsphinx-code-cells.css"
-        removal_indexes = []
-        for i in range(len(context["css_files"])):
-            asset = context["css_files"][i]
-            # TODO: eventually the contents of context['css_files'] etc should probably
-            # only be _CascadingStyleSheet etc. For now, assume mixed with strings.
-            asset_path = getattr(asset, "filename", str(asset))
-            print(asset_path)
-            if asset_path == theme_css_name:
-                removal_indexes += [i]
-            # Remove nbsphinx CSS
-            elif asset_path == nbsphinx_css_name:
-                removal_indexes += [i]
-
-            if len(removal_indexes) == 2:
-                break
-
-        # Go backwards to mutate safely
-        for i in reversed(removal_indexes):
-            del context["css_files"][i]
+        utils._delete_from_css_files(context["css_files"], theme_css_name)
 
     # Add links for favicons in the topbar
     for favicon in context.get("theme_favicons", []):
@@ -300,12 +289,14 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("builder-inited", nbsphinx.delete_nbsphinx_css)
     app.connect("html-page-context", _fix_canonical_url)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
     app.connect("html-page-context", utils.set_secondary_sidebar_items)
+    app.connect("html-page-context", nbsphinx.point_nbsphinx_pages_to_our_css)
     app.connect("build-finished", pygments.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 

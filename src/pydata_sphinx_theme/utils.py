@@ -8,6 +8,7 @@ from typing import Any, Callable, Dict, Iterable, List, Optional, Union
 
 from docutils.nodes import Node
 from sphinx.application import Sphinx
+from sphinx.builders.html._assets import _CascadingStyleSheet
 from sphinx.util import logging, matching
 
 
@@ -185,3 +186,20 @@ def _has_wildcard(pattern: str) -> bool:
     Taken from sphinx.builders.StandaloneHTMLBuilder.add_sidebars.
     """
     return any(char in pattern for char in "*?[")
+
+
+def _delete_from_css_files(
+    css_files: List[Union[_CascadingStyleSheet, str]], path: str
+) -> bool:
+    """Remove entry from page's context["css_files"] if it exists.
+    Mutates list and returns True if found and removed, False otherwise.
+    """
+    for i in range(len(css_files)):
+        asset = css_files[i]
+        # TODO: eventually the contents of context['css_files'] etc should probably
+        # only be _CascadingStyleSheet etc. For now, assume mixed with strings.
+        asset_path = getattr(asset, "filename", str(asset))
+        if asset_path == path:
+            del css_files[i]
+            return True
+    return False

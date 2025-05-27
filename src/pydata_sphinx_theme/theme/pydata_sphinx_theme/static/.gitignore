@@ -3,6 +3,8 @@ scripts/pydata-sphinx-theme.js
 scripts/pydata-sphinx-theme.js.map
 styles/pydata-sphinx-theme.css
 styles/pydata-sphinx-theme.css.map
+styles/nbsphinx-pydata-theme.css
+styles/nbsphinx-pydata-theme.css.map
 
 # bootstrap generated webpack outputs
 scripts/bootstrap.js

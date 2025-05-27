@@ -1,14 +1,15 @@
 /*******************************************************************************
- * nbsphinx
+ * PyData Sphinx Theme replacement stylesheet for nbsphinx
  *
- * nbsphinx is a Sphinx extension for turning Jupyter notebooks (.ipynb) into doc pages.
+ * nbsphinx is a Sphinx extension for turning Jupyter notebooks (.ipynb) into
+ * doc pages.
  *
- * This stylesheet is a replacement for nbsphinx's default stylesheet, `nbsphinx-code-cells.css`
+ * This stylesheet is a replacement for nbsphinx's default stylesheet,
+ * nbsphinx-code-cells.css. Some of the style rules in this file were copied
+ * from there.
  *
  * This file implements Isabela's design for notebook code cells:
  * https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/142#issuecomment-2759132381.
- *
- * Some of the style rules in this file were copied from nbsphinx's `nbsphinx-code-cells.css`.
  */
 
 @import "./abstracts/all";
