@@ -185,6 +185,19 @@ div.nboutput.container {
       }
     }
 
+    .widget-slider {
+      // Fix accessibility contrast failure. (This was added primarily to
+      // prevent the theme docs from having an accessibility violation, but
+      // putting it here extends this fix to other sites that use this theme.)
+      .noUi-handle {
+        border-color: var(--pst-gray-600);
+      }
+
+      .noUi-connects {
+        background: var(--pst-gray-600);
+      }
+    }
+
     // Dark theme special-cases
     html[data-theme="dark"] & {
       &.rendered_html:not(:has(table.dataframe, .xr-wrap)),
