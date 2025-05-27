@@ -8,204 +8,352 @@
 
 /*******************************************************************************
  * nbsphinx
+
+ The following block implements Isabela's design for notebook code cells:
+ https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/142#issuecomment-2759132381.
+
  */
 
-// The following block implements Isabela's design for notebook code cells:
-// https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/142#issuecomment-2759132381.
-@mixin -nbsphinx-restyle {
-  $space-between-vertical-bar-and-cell: 1em;
-  $top-and-bottom-container-space: 1.2em;
+/* ANSI colors - these don't benefit much from nesting, keep as is */
+.ansi-black-fg {
+  color: #3e424d;
+}
 
-  // Common styles for both input and output containers
-  div.nbinput.container,
-  div.nboutput.container {
-    display: block; // override nbsphinx display: flex
-    position: relative; // needed for the absolute positioning of the ::before pseudo-element
-    padding-left: $space-between-vertical-bar-and-cell;
+.ansi-black-bg {
+  background-color: #3e424d;
+}
 
-    // This is the vertical bar that connects the input and output containers
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 0.2em;
-      background: var(--pst-color-success);
+.ansi-black-intense-fg {
+  color: #282c36;
+}
 
-      // TODO: figure out a way to create a single vertical bar that runs the
-      // entire height of both the input and output cells, rather than two
-      // stacked bars, that way we can add border radius to the ends without it
-      // looking funky.
+.ansi-black-intense-bg {
+  background-color: #282c36;
+}
 
-      // border-radius: 1px;
-    }
+.ansi-red-fg {
+  color: #e75c58;
+}
 
-    // This is the label for the input or output
-    div.prompt {
-      width: auto; // override nbsphinx
-      margin-bottom: 0.7em; // space between the label and the input or output
-      padding: 0; // override nbsphinx, we control the whitespace around the label with other rules
+.ansi-red-bg {
+  background-color: #e75c58;
+}
 
-      div.highlight {
-        position: static; // override nbsphinx - position: absolute
+.ansi-red-intense-fg {
+  color: #b22b31;
+}
 
-        pre {
-          color: inherit; // override nbsphinx - get the color from PST rules applied to the parent elements
-        }
-      }
-    }
+.ansi-red-intense-bg {
+  background-color: #b22b31;
+}
+
+.ansi-green-fg {
+  color: #00a250;
+}
+
+.ansi-green-bg {
+  background-color: #00a250;
+}
+
+.ansi-green-intense-fg {
+  color: #007427;
+}
+
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+
+.ansi-yellow-fg {
+  color: #ddb62b;
+}
+
+.ansi-yellow-bg {
+  background-color: #ddb62b;
+}
+
+.ansi-yellow-intense-fg {
+  color: #b27d12;
+}
+
+.ansi-yellow-intense-bg {
+  background-color: #b27d12;
+}
+
+.ansi-blue-fg {
+  color: #208ffb;
+}
+
+.ansi-blue-bg {
+  background-color: #208ffb;
+}
+
+.ansi-blue-intense-fg {
+  color: #0065ca;
+}
+
+.ansi-blue-intense-bg {
+  background-color: #0065ca;
+}
+
+.ansi-magenta-fg {
+  color: #d160c4;
+}
+
+.ansi-magenta-bg {
+  background-color: #d160c4;
+}
+
+.ansi-magenta-intense-fg {
+  color: #a03196;
+}
+
+.ansi-magenta-intense-bg {
+  background-color: #a03196;
+}
+
+.ansi-cyan-fg {
+  color: #60c6c8;
+}
+
+.ansi-cyan-bg {
+  background-color: #60c6c8;
+}
+
+.ansi-cyan-intense-fg {
+  color: #258f8f;
+}
+
+.ansi-cyan-intense-bg {
+  background-color: #258f8f;
+}
+
+.ansi-white-fg {
+  color: #c5c1b4;
+}
+
+.ansi-white-bg {
+  background-color: #c5c1b4;
+}
+
+.ansi-white-intense-fg {
+  color: #a1a6b2;
+}
+
+.ansi-white-intense-bg {
+  background-color: #a1a6b2;
+}
+
+.ansi-default-inverse-fg {
+  color: #fff;
+}
+
+.ansi-default-inverse-bg {
+  background-color: #000;
+}
+
+.ansi-bold {
+  font-weight: bold;
+}
+
+.ansi-underline {
+  text-decoration: underline;
+}
+
+$space-between-vertical-bar-and-cell: 1em;
+$top-and-bottom-container-space: 1.2em;
+
+// Common styles for both input and output containers
+div.nbinput.container,
+div.nboutput.container {
+  position: relative; // needed for the absolute positioning of the ::after pseudo-element
+  padding-left: $space-between-vertical-bar-and-cell;
+
+  > div[class*="highlight"] {
+    margin: 0; // Override Sphinx base styles
   }
 
-  // Input-specific styles
-  div.nbinput.container {
-    margin-top: $top-and-bottom-container-space; // space between the top of the notebook cell and the surrounding content
-    padding-top: 0; // override nbsphinx - let the apparent whitespace be controlled by the margin-top rule above
-
-    // Prefix the cell number with the word "In".
-    // TODO: add to translations
-    div.prompt pre::before {
-      content: "In ";
-    }
-
-    div.input_area {
-      border: none; // border taken care of by <pre> styles elsewhere in the theme
-      overflow: visible;
-
-      > div.highlight {
-        overflow: visible; // necessary for focus ring
-      }
-    }
+  // Common styles for the both input and output labels
+  &::before {
+    display: block;
+    color: var(--pst-color-text-base);
+    font-family: var(--pst-font-family-monospace-system);
+    font-size: 0.875em; // * 16px = 14px (14px monospace font looks about the same size as 16px regular font)
+    line-height: 1; // align with top of container
+    margin-bottom: 0.7em; // space between label and in/output
   }
 
-  // Output-specific styles
-  div.nboutput.container {
-    // Space between the input portion and the output portion. Cannot use margin
-    // here because we do not want to create a break in the vertical bar running
-    // down the left side.
-    padding-top: $top-and-bottom-container-space;
+  // This is the vertical bar that connects the input and output containers
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0.2em;
+    background: var(--pst-color-primary);
 
-    // Prefix the cell number with the word "Out". TODO: add to translations
-    div.prompt pre::before {
-      content: "Out ";
-    }
+    // TODO: figure out a way to create a single vertical bar that runs the
+    // entire height of both the input and output cells, rather than two
+    // stacked bars, that way we can add border radius to the ends without it
+    // looking funky.
 
-    div.output_area {
-      &.rendered_html,
-      div[class*="highlight"].math,
-      > div.output_javascript,
-      > img {
-        // Override nbsphinx. We want the left edge of the output area to be
-        // left-aligned with the output label, the input area, and the input
-        // label.
-        padding: 0;
-      }
-
-      // Override nbsphinx. Things like box shadows on elements that are
-      // children of div.output_area do not work if the overflow is not set to
-      // visible. But do not apply to .rendered_html because it could be, for
-      // example, a long pandas data table that is rendered without a
-      // non-overflowing container.
-      &:not(.rendered_html) {
-        overflow: visible;
-      }
-
-      // What this selector attempts to do is to override a bunch of CSS rules
-      // that come from multiple places that add top and bottom whitespace to elements,
-      // like paragraph elements. These rules mess up the alignment between
-      // bottom of the notebook cell content and the left bar that we've added.
-      // They also create unnecessary extra whitespace at the bottom of notebook
-      // cells. However, this selector may be a bit too wide, too blunt. We may
-      // need find a different way to achieve this.
-      :not(.highlight, .widget-tab-contents, .jupyter-widgets):last-child {
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-
-      div.highlight,
-      div.nohighlight,
-      .jupyter-widgets,
-      .jupyter-matplotlib-canvas-container {
-        overflow: visible; // for focus ring
-      }
-
-      // use theme color for stderr
-      &.stderr {
-        background-color: transparent;
-
-        div[class*="highlight"] > pre {
-          background-color: var(--pst-color-danger-bg);
-        }
-      }
-
-      // Override our own style rule in _math.scss
-      div.math {
-        display: block;
-      }
-
-      span.math {
-        display: inline;
-      }
-    }
+    // border-radius: 1px;
   }
 
-  // Override nbsphinx's styles with our own <pre> tag styles
-  div.nbinput.container div.input_area div[class*="highlight"] > pre,
-  div.nboutput.container div.output_area div[class*="highlight"] > pre {
-    @extend %pre-style;
-
-    margin: 0;
-  }
-
-  // Last container styles
-  div.container.nblast {
-    margin-bottom: $top-and-bottom-container-space;
-
-    // Override nbsphinx's padding rule. Let the whitespace be controlled by the
-    // margin-bottom rule above. This is important because if we create
-    // whitespace with padding instead of margin, then we create a misalignment
-    // between the vertical left bar and the bottom of the notebook cell.
-    padding-bottom: 0;
+  // Hide the label that nbsphinx generates. We add our own.
+  div.prompt {
+    display: none;
   }
 }
 
-// Nest under .bd-article-container so that selectors have higher specificity
-// and can therefore override the rules in the nbphinx stylesheet.
-.bd-article-container {
-  @include _nbsphinx-restyle;
+// Styles for input containers (one per notebook code cell)
+div.nbinput.container {
+  margin-top: $top-and-bottom-container-space; // space between the top of the notebook cell and the surrounding content
 
-  .nboutput {
-    .output_area {
-      &div.rendered_html,
-      .jp-RenderedHTMLCommon {
-        table {
-          // Override nbsphinx's `table-layout: fixed` rule. GitHub issue #952:
-          // https://github.com/pydata/pydata-sphinx-theme/issues/952
-          table-layout: auto;
+  // Label for input
+  &::before {
+    // TODO: add to translations
+    content: "In:";
+  }
 
-          // pandas
-          &.dataframe {
-            @include table-colors;
+  div.input_area {
+    border: none; // border taken care of by <pre> styles elsewhere in the theme
+    overflow: visible;
 
-            tbody {
-              tr:hover {
-                background-color: var(--pst-color-table-row-hover-bg);
-              }
+    > div.highlight {
+      overflow: visible; // necessary for focus ring
+    }
+  }
+}
+
+// Styles for output containers (0, 1, or more per notebook code cell)
+div.nboutput.container {
+  // Space between the input portion and the output portion. Cannot use margin
+  // here because we do not want to create a break in the vertical bar running
+  // down the left side.
+  padding-top: $top-and-bottom-container-space;
+
+  /* Label for output
+   *
+   * Why the next sibling (+) selector? The way that nbsphinx converts notebook
+   * code cells, they have exactly one div.nbinput but can have 0, 1 or multiple
+   * div.nboutput. We only want one "Out" label and we want it above the first
+   * .nboutput that follows a .nbinput.
+   */
+  div.nbinput.container + &::before {
+    // TODO: add to translations
+    content: "Out:";
+  }
+
+  div.output_area {
+    // What this selector attempts to do is to override a bunch of CSS rules
+    // that come from multiple places that add top and bottom whitespace to elements,
+    // like paragraph elements. These rules mess up the alignment between the
+    // bottom of the notebook cell content and the left bar that we've added.
+    // They also create unnecessary extra whitespace at the bottom of notebook
+    // cells. However, this selector may be a bit too wide, too blunt. We may
+    // need find a different way to achieve this.
+    :last-child:not(.highlight, .widget-tab-contents, .jupyter-widgets) {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    &.rendered_html {
+      overflow-x: auto;
+    }
+
+    &.stderr {
+      div[class*="highlight"] > pre {
+        background-color: var(--pst-color-danger-bg);
+      }
+    }
+
+    // Override our own styles in _math.scss
+    div.math {
+      display: block;
+      overflow: visible;
+    }
+
+    span.math {
+      display: inline;
+    }
+
+    /* Some of these rules were taken from the Jupyter notebook CSS */
+    &.rendered_html,
+    .jp-RenderedHTMLCommon {
+      table {
+        border: none;
+        border-collapse: collapse;
+        border-spacing: 0;
+        color: black;
+        font-size: 12px;
+
+        thead {
+          border-bottom: 1px solid black;
+          vertical-align: bottom;
+        }
+
+        tr,
+        th,
+        td {
+          text-align: right;
+          vertical-align: middle;
+          padding: 0.5em;
+          line-height: normal;
+          white-space: normal;
+          max-width: none;
+          border: none;
+        }
+
+        th {
+          font-weight: bold;
+        }
+
+        tbody tr:nth-child(odd) {
+          background: #131111;
+        }
+
+        tbody tr:hover {
+          background: rgb(66 165 245 / 20%);
+        }
+
+        // pandas
+        &.dataframe {
+          @include table-colors;
+
+          tbody {
+            tr:hover {
+              background-color: var(--pst-color-table-row-hover-bg);
             }
           }
         }
       }
+    }
 
-      // Dark theme special-cases
-      html[data-theme="dark"] & {
-        &.rendered_html:not(:has(table.dataframe)),
-        // ipywidgets
-        .widget-subarea {
-          @include cell-output-background;
-        }
+    // Dark theme special-cases
+    html[data-theme="dark"] & {
+      &.rendered_html:not(:has(table.dataframe, .xr-wrap)),
+      // ipywidgets
+      .widget-subarea {
+        @include cell-output-background;
       }
     }
   }
+}
+
+// Styles for the last container in the group that represents a notebook code
+// cell. Examples:
+// - Code cell with only input:
+//   - div.nbinput.nblast
+// - Code cell with input and output:
+//   - div.nbinput
+//   - div.nboutput.nblast
+// - Code cell with one input and multiple output containers:
+//   - div.nbinput
+//   - div.nboutput
+//   - div.nboutput.nblast
+div.container.nblast {
+  margin-bottom: $top-and-bottom-container-space;
 }
 
 /*******************************************************************************
