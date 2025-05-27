@@ -287,6 +287,8 @@ These may be removed in a future release in favor of ``icon_links``:
        "github_url": "https://github.com/<your-org>/<your-repo>",
        "gitlab_url": "https://gitlab.com/<your-org>/<your-repo>",
        "bitbucket_url": "https://bitbucket.org/<your-org>/<your-repo>",
+       "forgejo_url": "https://codeberg.org/<your-handle>/<your-repo>",
+       "gitea_url": "https://gitea.com/<your-handle>/<your-repo>",
        "twitter_url": "https://twitter.com/<your-handle>",
        ...
    }
