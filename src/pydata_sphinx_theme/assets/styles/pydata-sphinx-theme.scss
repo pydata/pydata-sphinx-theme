@@ -12,16 +12,16 @@
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
-// Variables
+// re-usable SCSS variables / functions / classes
+@import "abstracts/all";
+
+// These files output *CSS* variables (not to be confused with SCSS variables)
 @import "variables/layout";
 @import "variables/fonts";
 @import "variables/icons";
 @import "variables/admonitions";
 @import "variables/versionmodified";
 @import "variables/color";
-
-// re-usable SCSS functions / classes
-@import "abstracts/all";
 
 // Basic styling applied throughout site
 @import "./base/base";

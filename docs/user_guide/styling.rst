@@ -190,7 +190,7 @@ The following image should help you understand these overlays:
    https://github.com/pygments/pygments/issues/2130). So for now it's
    just a raw download link.
 
-For a complete list of the theme colors that you may override, see the :download:`PyData theme CSS colors stylesheet <../../src/pydata_sphinx_theme/assets/styles/variables/_color.scss>`.
+For a complete list of the theme colors that you may override, see the :download:`PyData theme CSS colors stylesheet <../../src/pydata_sphinx_theme/assets/styles/abstracts/_color.scss>`.
 
 Configure pygments theme
 ========================
