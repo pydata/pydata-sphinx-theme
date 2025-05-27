@@ -894,6 +894,19 @@ def test_shorten_link(sphinx_build_factory, file_regression) -> None:
     """Regression test for "edit on <provider>" link shortening."""
     sphinx_build = sphinx_build_factory("base").build()
 
+    codeberg = sphinx_build.html_tree("page1.html").select(".codeberg-container")[0]
+    file_regression.check(
+        codeberg.prettify(), basename="codeberg_links", extension=".html"
+    )
+
+    forgejo = sphinx_build.html_tree("page1.html").select(".forgejo-container")[0]
+    file_regression.check(
+        forgejo.prettify(), basename="forgejo_links", extension=".html"
+    )
+
+    gitea = sphinx_build.html_tree("page1.html").select(".gitea-container")[0]
+    file_regression.check(gitea.prettify(), basename="gitea_links", extension=".html")
+
     github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
     file_regression.check(github.prettify(), basename="github_links", extension=".html")
 

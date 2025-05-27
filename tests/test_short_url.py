@@ -89,6 +89,54 @@ class Mock:
             "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/6788",
             "gitlab-com/gl-infra/production#6788",
         ),
+        # codeberg
+        (
+            "codeberg",
+            "https://codeberg.org/",
+            "codeberg",
+        ),
+        (
+            "codeberg",
+            "https://codeberg.org/f-org/f-proj/issues/42",
+            "f-org/f-proj#42",
+        ),
+        # forgejo
+        (
+            "forgejo",
+            "https://my-forgejo.com/",
+            "forgejo",
+        ),
+        (
+            "forgejo",
+            "https://forgejo-host.org/f-org/f-proj/issues/42",
+            "f-org/f-proj#42",
+        ),
+        (
+            "forgejo",
+            "https://forgejo-host.org/f-org/f-proj/pulls/43",
+            "f-org/f-proj#43",
+        ),
+        # gitea
+        (
+            "gitea",
+            "https://gitea.com",
+            "gitea",
+        ),
+        (
+            "gitea",
+            "https://my-gitea.com/",
+            "gitea",
+        ),
+        (
+            "gitea",
+            "https://gitea.com/gitea-org/g-proj/issues/42",
+            "gitea-org/g-proj#42",
+        ),
+        (
+            "gitea",
+            "https://gitea.com/gitea-org/g-proj/pulls/43",
+            "gitea-org/g-proj#43",
+        ),
     ],
 )
 def test_shorten(platform, url, expected):
@@ -107,3 +155,73 @@ def test_shorten(platform, url, expected):
     URI = urlparse(url)
 
     assert sl.parse_url(URI) == expected
+
+
+@pytest.fixture(scope="session")
+def shortener():
+    """Setup ShortenLinkTransform object for testing."""
+    document = Mock()
+    document.settings = Mock()
+    document.settings.language_code = "en"
+    document.reporter = None
+    return ShortenLinkTransform(document)
+
+
+@pytest.mark.parametrize(
+    "url,html_options,expected",
+    [
+        # forgejo
+        (
+            "https://forgejo-instance.com/f-org/f-proj/pulls/43",
+            {},
+            "forgejo",
+        ),
+        (
+            "https://forgejo-instance.com/f-org/",
+            {},
+            None,
+        ),
+        (
+            "https://forgejo-instance.com/f-org/",
+            {"forgejo_url": "https://forgejo-instance.com/f-org/f-proj"},
+            "forgejo",
+        ),
+        # gitea
+        (
+            "https://gitea-instance.com/g-org/g-proj/pulls/43",
+            {},
+            "gitea",
+        ),
+        (
+            "https://gitea-instance.com/g-org/",
+            {},
+            None,
+        ),
+        (
+            "https://gitea-instance.com/g-org/",
+            {"gitea_url": "https://gitea-instance.com/g-org/g-proj"},
+            "gitea",
+        ),
+        # gitlab
+        (
+            "https://gitlab-instance.com/g-org/g-proj/-/merge_requests/43",
+            {},
+            "gitlab",
+        ),
+        (
+            "https://gitlab-instance.com/g-org/",
+            {},
+            None,
+        ),
+        (
+            "https://gitlab-instance.com/g-org/",
+            {"gitlab_url": "https://gitlab-instance.com/g-org/g-proj"},
+            "gitlab",
+        ),
+    ],
+)
+def test_identify_selfhosted(url, html_options, expected, shortener):
+    """Unit test for self-hosted forges identification."""
+    url = urlparse(url)
+
+    assert shortener.identify_selfhosted(url, html_options) == expected

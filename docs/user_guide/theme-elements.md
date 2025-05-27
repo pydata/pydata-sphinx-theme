@@ -238,6 +238,37 @@ For example:
 
 There are a variety of link targets supported, here's a table for reference:
 
+**Codeberg**
+
+- `https://codeberg.org`: https://codeberg.org
+- `https://codeberg.org/c-org`: https://codeberg.org/c-org
+- `https://codeberg.org/c-org/c-repo`: https://codeberg.org/c-org/c-repo
+- `https://codeberg.org/c-org/c-repo/issues/375583`: https://codeberg.org/c-org/c-repo/issues/375583
+- `https://codeberg.org/c-org/c-repo/pulls/1012`: https://codeberg.org/c-org/c-repo/pulls/1012
+
+**Forgejo**
+
+Since self-hosted Forgejo instances can't be easily identified, only links specified
+in `forgejo_url` (links to project's own forge) or domains containing "forgejo"
+leading to issues, pull requests or projects are shortened.
+
+- `https://my-forgejo.org`: https://my-forgejo.org
+- `https://forgejo.my.org/forgejo-org/forgejo`: https://my-forgejo.org/forgejo-org/forgejo/pulls
+- `https://my-forgejo.com/forgejo-org/forgejo/issues/375583`: https://my-forgejo.org/forgejo-org/forgejo/issues/375583
+- `https://my.forgejo.org/forgejo-org/forgejo/pulls/1012`: https://my.forgejo.org/forgejo-org/forgejo/pulls/1012
+
+**Gitea**
+
+`https://gitea.com` is always identified, while the same rules in place for Forgejo
+apply to self-hosted instances.
+
+- `https://gitea.com`: https://gitea.com
+- `https://my-gitea.com`: https://my-gitea.com
+- `https://gitea.com/gitea-org`: https://gitea.com/gitea-org
+- `https://gitea.com/gitea-org/gitea`: https://gitea.com/gitea-org/gitea
+- `https://my-gitea.com/gitea-org/gitea/issues/375583`: https://my-gitea.com/gitea-org/gitea/issues/375583
+- `https://gitea.my.com/gitea-org/gitea/pulls/1012`: https://gitea.my.com/gitea-org/gitea/pulls/1012
+
 **GitHub**
 
 - `https://github.com`: https://github.com
