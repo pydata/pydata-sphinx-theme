@@ -19,7 +19,7 @@ your ``conf.py`` file in 'html_theme_options':
    }
 
 A number of providers are available for building *Edit this Page* links, including
-GitHub, GitLab, and Bitbucket. For each, the default public instance URL can be
+GitHub, GitLab, Bitbucket, Forgejo and Gitea. For each, the default public instance URL (should it exist) can be
 replaced with a self-hosted instance.
 
 
@@ -65,6 +65,33 @@ Bitbucket
    }
 
 
+Forgejo
+---------
+
+.. code:: python
+
+   html_context = {
+       # "forgejo_url": "https://codeberg.org", # or your self-hosted Forgejo
+       "forgejo_user": "<your-forgejo-org>",
+       "forgejo_repo": "<your-forgejo-repo>",
+       "forgejo_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }
+
+
+Gitea
+---------
+
+.. code:: python
+
+   html_context = {
+       # "gitea_url": "https://gitea.com", # or your self-hosted Gitea
+       "gitea_user": "<your-gitea-org>",
+       "gitea_repo": "<your-gitea-repo>",
+       "gitea_version": "<your-branch>",
+       "doc_path": "<path-from-root-to-your-docs>",
+   }
+
 Custom Edit URL
 ---------------
 
@@ -80,7 +107,7 @@ any other context values.
        "some_other_arg": "?some-other-arg"
    }
 
-With the predefined providers, the link text reads "Edit on GitHub/GitLab/Bitbucket".
+With the predefined providers, the link text reads "Edit on GitHub/GitLab/Bitbucket/Codeberg/Forgejo/Gitea".
 By default, a simple "Edit" is used if you use a custom URL. However, you can set
 a provider name like this:
 
