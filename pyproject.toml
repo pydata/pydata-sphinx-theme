@@ -12,6 +12,7 @@ additional-compiled-static-assets = [
   "vendor/",
   "scripts/bootstrap.js",
   "scripts/fontawesome.js",
+  "styles/nbsphinx-pydata-theme.css",
   "locale/",
 ]
 
