@@ -67,7 +67,6 @@ div.nbinput.container {
 
   // Label for input
   &::before {
-    // TODO: add to translations
     content: "In:";
   }
 
@@ -96,7 +95,6 @@ div.nboutput.container {
    * .nboutput that follows a .nbinput.
    */
   div.nbinput.container + &::before {
-    // TODO: add to translations
     content: "Out:";
   }
 
