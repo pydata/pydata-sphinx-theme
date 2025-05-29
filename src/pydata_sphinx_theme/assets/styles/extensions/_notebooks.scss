@@ -27,13 +27,12 @@ div.cell_output .output {
     }
   }
 
-  html[data-theme="dark"] & {
-    img,
-    .text_html:not(:has(table.dataframe)),
-    // ipywidgets
-    .widget-subarea {
-      @include cell-output-background;
-    }
+  // Special cases, dark mode
+  img,
+  .text_html:not(:has(table.dataframe)),
+  // ipywidgets
+  .widget-subarea {
+    @include cell-output-force-light-background;
   }
 }
 

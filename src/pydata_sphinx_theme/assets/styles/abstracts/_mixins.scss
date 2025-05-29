@@ -12,17 +12,21 @@
 }
 
 /**
-   * Set background of some cell outputs to white-ish to make sure colors work
-   * This is because many libraries make output that only looks good on white
+   * Set background of some cell outputs to white-ish to make sure colors work.
+   * This is because many libraries make output that only looks good on white.
    */
-@mixin cell-output-background {
-  color: var(--pst-color-on-background);
-  background-color: var(--pst-color-text-base);
-  border-radius: 0.25rem;
-  padding: 0.5rem;
+@mixin cell-output-force-light-background {
+  html[data-theme="dark"] & {
+    color: var(--pst-color-on-background);
+    background-color: var(--pst-color-text-base);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
 
-  :focus-visible {
-    outline-color: #{map-deep-get($pst-semantic-colors, "accent", "light")};
+    // For cell outputs that this mixin has forced to a light background even
+    // when the user has chosen dark mode, change the focus ring to light mode.
+    :focus-visible {
+      outline-color: #{map-deep-get($pst-semantic-colors, "accent", "light")};
+    }
   }
 }
 

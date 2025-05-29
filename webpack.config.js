@@ -104,7 +104,9 @@ var config = {
     "pydata-sphinx-theme": resolve(scriptPath, "pydata-sphinx-theme.js"),
     "fontawesome": resolve(scriptPath, "fontawesome.js"),
     "bootstrap": resolve(scriptPath, "bootstrap.js"),
-    // note: the name of the dictionary key becomes the name of the output file
+    // note: the name of the dictionary key becomes the name of the output files
+    // (js and css - doesn't seem like there is a way to tell webpack to just
+    // build a scss file)
     "nbsphinx-pydata-theme": resolve(scriptPath, "..", "styles", "nbsphinx-pydata-theme.scss")
   },
   output: {

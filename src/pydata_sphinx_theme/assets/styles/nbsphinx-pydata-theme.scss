@@ -198,13 +198,17 @@ div.nboutput.container {
       }
     }
 
-    // Dark theme special-cases
-    html[data-theme="dark"] & {
-      &.rendered_html:not(:has(table.dataframe, .xr-wrap)),
-      // ipywidgets
-      .widget-subarea {
-        @include cell-output-background;
-      }
+    // Special cases, dark mode
+    &.rendered_html:not(
+      :has(
+        /* exclude pandas because we have styled it for dark mode */
+        table.dataframe,
+        /* exclude Xarray because it has been styled for dark mode */
+        .xr-wrap)
+      ),
+    // ipywidgets
+    .widget-subarea {
+      @include cell-output-force-light-background;
     }
   }
 }

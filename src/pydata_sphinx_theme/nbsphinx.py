@@ -27,10 +27,10 @@ def delete_nbsphinx_css(app: Sphinx) -> None:
         # to help us catch a breaking change on nbsphinx's side if they ever
         # rename or move its CSS file. This is important because the other
         # function in this file, which gets executed later in the build process,
-        # also depends on nbsphinx's CSS being at a particular path. If not it's
-        # not there, then without this warning the CSS replacement mechanism
-        # would fail silently, and projects using this theme would load
-        # nbsphinx's notebook styles instead of this theme's.
+        # also depends on nbsphinx's CSS being at a particular path. If it's not
+        # there, then without this warning the CSS replacement would fail
+        # silently, and projects using this theme would load nbsphinx's notebook
+        # styles instead of this theme's.
         utils.maybe_warn(
             app, f"nbpshinx CSS not found in expected place: {nbsphinx_css}"
         )
