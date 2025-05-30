@@ -28,13 +28,6 @@ author = "PyData Community"
 
 # -- General configuration ---------------------------------------------------
 
-source_suffix = {
-    ".rst": "restructuredtext",
-    ".md": "myst-nb",
-    ".ipynb": "jupyter_notebook",
-    ".mystnb": "myst-nb",
-}
-
 extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
@@ -58,43 +51,22 @@ extensions = [
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
-]
-
-
-extensions += [
-    # "myst_parser",
     "nbsphinx",
-    "myst_nb",
+    "myst_nb",  # includes myst_parser
 ]
+
 # MyST-NB treats markdown cells in notebooks as MyST markdown but the
 # example notebooks were not made for MyST so use CommonMark
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".md": "myst-nb",
+    ".ipynb": "jupyter_notebook",
+    ".mystnb": "myst-nb",
+}
 nb_custom_formats = {
     ".mystnb": ["nbformat.reads", {"as_version": 4}, True],
 }
 nb_render_markdown_format = "commonmark"
-
-
-# # Determine which notebook parsing extension to use (nbsphinx or MyST-NB)
-
-# default_notebook_parser = "nbsphinx"
-
-# # Get the notebook parser from the environment variable
-# notebook_parser = os.environ.get("PST_NOTEBOOK_PARSER", default_notebook_parser)
-
-# print(f"Notebook parser: {notebook_parser}")
-
-# if notebook_parser == default_notebook_parser:
-#     extensions += [
-#         "myst_parser",
-#         "nbsphinx",
-#     ]
-# elif notebook_parser == "myst-nb":
-#     extensions += [
-#         "myst_nb",
-#     ]
-#     # MyST-NB treats markdown cells in notebooks as MyST markdown but the
-#     # example notebooks were not made for MyST so use CommonMark
-#     nb_render_markdown_format = "commonmark"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -342,7 +314,6 @@ autoapi_dirs = ["../src/pydata_sphinx_theme"]
 autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
-autoapi_ignore = ["**.mystnb"]
 
 # -- Warnings / Nitpicky -------------------------------------------------------
 
