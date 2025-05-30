@@ -44,25 +44,31 @@ extensions = [
     "_extension.gallery_directive",
     "_extension.component_directive",
     # For extension examples and demos
+    "myst_nb",  # includes myst_parser
     "ablog",
     "jupyter_sphinx",
     "sphinxcontrib.youtube",
+    "nbsphinx",
     "numpydoc",
     "sphinx_togglebutton",
     "jupyterlite_sphinx",
     "sphinx_favicon",
-    "nbsphinx",
-    "myst_nb",  # includes myst_parser
 ]
 
-# MyST-NB treats markdown cells in notebooks as MyST markdown but the
-# example notebooks were not made for MyST so use CommonMark
+# This is a hack to use both nbsphinx and myst_nb Sphinx extensions in the same
+# Sphinx build. If we want a notebook to be processed by the myst_nb Sphinx
+# extension, we give it a .mystnb suffix instead of .ipynb. Here we map each
+# suffix to the desired Sphinx extension. We also have to map .md and .rst at
+# the same time or else the build fails.
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "myst-nb",
-    ".ipynb": "jupyter_notebook",
+    ".ipynb": "jupyter_notebook",  # this is the name of nbsphinx's parser
     ".mystnb": "myst-nb",
 }
+
+# MyST-NB treats markdown cells in notebooks as MyST markdown but the
+# example notebooks were not made for MyST so use CommonMark
 nb_custom_formats = {
     ".mystnb": ["nbformat.reads", {"as_version": 4}, True],
 }
