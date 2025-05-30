@@ -20,7 +20,6 @@ $top-and-bottom-container-space: 1.2em;
 // Common styles for both input and output containers
 div.nbinput.container,
 div.nboutput.container {
-  position: relative; // needed for the absolute positioning of the ::after pseudo-element
   padding-left: $space-between-vertical-bar-and-cell;
 
   > div[class*="highlight"] {
@@ -37,7 +36,8 @@ div.nboutput.container {
     margin-bottom: 0.7em; // space between label and in/output
   }
 
-  // This is the vertical bar that connects the input and output containers
+  // Vertical bar (runs down the left, connects input to output)
+  position: relative; // must set position relative in order to set position absolute on ::after pseudo-element
   &::after {
     content: "";
     position: absolute;
@@ -202,8 +202,9 @@ div.nboutput.container {
         /* exclude pandas because we have styled it for dark mode */
         table.dataframe,
         /* exclude Xarray because it has been styled for dark mode */
-        .xr-wrap)
-      ),
+        .xr-wrap
+      )
+    ),
     // ipywidgets
     .widget-subarea {
       @include cell-output-force-light-background;
