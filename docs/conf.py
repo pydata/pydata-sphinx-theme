@@ -67,13 +67,6 @@ source_suffix = {
     ".mystnb": "myst-nb",
 }
 
-# MyST-NB treats markdown cells in notebooks as MyST markdown but the
-# example notebooks were not made for MyST so use CommonMark
-nb_custom_formats = {
-    ".mystnb": ["nbformat.reads", {"as_version": 4}, True],
-}
-nb_render_markdown_format = "commonmark"
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
@@ -83,6 +76,18 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
+
+# -- MyST-NB ----------------------------------------------------------------
+
+# Even though we already map ".mystnb" in `source_suffix` above, we also have to
+# set this configuration variable for MyST-NB to process it correctly.
+nb_custom_formats = {
+    ".mystnb": [
+        "nbformat.reads",
+        {"as_version": 4},
+        True,  # parse as CommonMark instead of MyST
+    ],
+}
 
 # -- JupyterLite Sphinx ------------------------------------------------------
 
