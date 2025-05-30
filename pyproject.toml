@@ -13,6 +13,7 @@ additional-compiled-static-assets = [
   "scripts/bootstrap.js",
   "scripts/fontawesome.js",
   "styles/nbsphinx-pydata-theme.css",
+  "styles/myst-nb-pydata-theme.css",
   "locale/",
 ]
 

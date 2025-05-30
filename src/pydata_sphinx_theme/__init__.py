@@ -17,6 +17,7 @@ from sphinx.errors import ExtensionError
 from . import (
     edit_this_page,
     logo,
+    myst_nb,
     nbsphinx,
     pygments,
     short_link,
@@ -290,6 +291,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("builder-inited", nbsphinx.delete_nbsphinx_css)
+    app.connect("builder-inited", myst_nb.delete_myst_nb_css)
     app.connect("html-page-context", _fix_canonical_url)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
@@ -297,6 +299,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.connect("html-page-context", logo.setup_logo_path)
     app.connect("html-page-context", utils.set_secondary_sidebar_items)
     app.connect("html-page-context", nbsphinx.point_nbsphinx_pages_to_our_css)
+    app.connect("html-page-context", myst_nb.point_myst_nb_pages_to_our_css)
     app.connect("build-finished", pygments.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 

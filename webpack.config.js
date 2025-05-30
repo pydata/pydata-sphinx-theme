@@ -23,6 +23,7 @@ const { exec } = require("child_process");
  * Paths for various assets (sources and destinations)
  */
 
+const scssPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/styles/extensions")
 const scriptPath = resolve(__dirname, "src/pydata_sphinx_theme/assets/scripts");
 const staticPath = resolve(__dirname, "src/pydata_sphinx_theme/theme/pydata_sphinx_theme/static");
 const localePath = resolve(__dirname, "src/pydata_sphinx_theme/locale");
@@ -107,7 +108,8 @@ var config = {
     // note: the name of the dictionary key becomes the name of the output files
     // (js and css - doesn't seem like there is a way to tell webpack to just
     // build a scss file)
-    "nbsphinx-pydata-theme": resolve(scriptPath, "..", "styles", "nbsphinx-pydata-theme.scss")
+    "nbsphinx-pydata-theme": resolve(scssPath, "nbsphinx-pydata-theme.scss"),
+    "myst-nb-pydata-theme": resolve(scssPath, "myst-nb-pydata-theme.scss")
   },
   output: {
     filename: "scripts/[name].js",
