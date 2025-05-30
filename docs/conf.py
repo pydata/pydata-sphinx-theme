@@ -60,9 +60,9 @@ extensions = [
 
 # This is a hack to use both nbsphinx and myst_nb Sphinx extensions in the same
 # Sphinx build. If we want a notebook to be processed by the myst_nb Sphinx
-# extension, we give it a .mystnb suffix instead of .ipynb. Here we map each
-# suffix to the desired Sphinx extension. We also have to map .md and .rst at
-# the same time or else the build fails.
+# extension, we give it a .mystnb.ipynb suffix instead of just .ipynb. Here we
+# map each suffix to the desired Sphinx extension. We also have to map .md and
+# .rst at the same time or else the build fails.
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "myst-nb",
