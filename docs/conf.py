@@ -5,8 +5,8 @@ list see the documentation:
 https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
-# -- Path setup --------------------------------------------------------------
 import os
+import shutil
 import sys
 
 from pathlib import Path
@@ -18,7 +18,10 @@ from sphinx.locale import _
 import pydata_sphinx_theme
 
 
+# -- Path setup --------------------------------------------------------------
+
 sys.path.append(str(Path(".").resolve()))
+HERE = Path(__file__).parent.resolve()
 
 # -- Project information -----------------------------------------------------
 
@@ -63,8 +66,8 @@ extensions = [
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "myst-nb",
+    ".mystnb.ipynb": "myst-nb",
     ".ipynb": "jupyter_notebook",  # this is the name of nbsphinx's parser
-    ".mystnb": "myst-nb",
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -82,7 +85,7 @@ intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
 # Even though we already map ".mystnb" in `source_suffix` above, we also have to
 # set this configuration variable for MyST-NB to process it correctly.
 nb_custom_formats = {
-    ".mystnb": [
+    ".mystnb.ipynb": [
         "nbformat.reads",
         {"as_version": 4},
         True,  # parse as CommonMark instead of MyST
@@ -376,6 +379,16 @@ def setup_to_main(
     context["to_main"] = to_main
 
 
+def copy_ipynb(app: Sphinx):
+    """Copy the example Jupyter notebook.
+
+    One copy will be converted by nbsphinx, the other by MyST-NB.
+    """
+    src = HERE / "examples" / "code-cells.ipynb"
+    dst = HERE / "examples" / "code-cells-myst-nb.mystnb.ipynb"
+    shutil.copyfile(src, dst)
+
+
 def setup(app: Sphinx) -> Dict[str, Any]:
     """Add custom configuration to sphinx app.
 
@@ -384,6 +397,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     Returns:
         the 2 parallel parameters set to ``True``.
     """
+    app.connect("builder-inited", copy_ipynb)
     app.connect("html-page-context", setup_to_main)
 
     return {
