@@ -17,7 +17,8 @@ See the sections in the primary sidebar and below to explore.
 
     kitchen-sink/index
     pydata
-    code-cells
+    Code Cells (nbsphinx) <code-cells>
+    Code Cells (MyST-NB) <code-cells-myst-nb>
     execution
     graphviz
 
