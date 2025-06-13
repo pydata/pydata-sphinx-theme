@@ -1,9 +1,9 @@
 {% if sourcename is defined and theme_use_edit_page_button and page_source_suffix %}
   {% set src = sourcename.split('.') %}
   <div class="tocsection editthispage">
-    <a href="{{ to_main(get_edit_provider_and_url()[1]) }}">
+    {% set provider, url = get_edit_provider_and_url() %}
+    <a href="{{ to_main(url) }}">
       <i class="fa-solid fa-pencil"></i>
-      {% set provider = get_edit_provider_and_url()[0] %}
       {% block edit_this_page_text %}
         {% if provider %}
           {% trans provider=provider %}Edit on {{ provider }}{% endtrans %}

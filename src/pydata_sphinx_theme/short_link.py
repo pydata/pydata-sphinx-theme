@@ -1,19 +1,20 @@
 """A custom Transform object to shorten github and gitlab links."""
 
-from typing import ClassVar
+from typing import ClassVar, Literal
 from urllib.parse import ParseResult, urlparse, urlunparse
 
 from docutils import nodes
 from sphinx.transforms.post_transforms import SphinxPostTransform
 from sphinx.util.nodes import NodeMatcher
 
-from .utils import traverse_or_findall
+from .utils import get_theme_options_dict, traverse_or_findall
 
 
 class ShortenLinkTransform(SphinxPostTransform):
     """
-    Shorten link when they are coming from github or gitlab and add an extra class to
-    the tag for further styling.
+    Shorten links leading to supported forges.
+    Also attempt to identify self-hosted forge instances.
+    Add an extra class to the tag for further styling.
 
     Before:
         .. code-block:: html
@@ -35,6 +36,8 @@ class ShortenLinkTransform(SphinxPostTransform):
     default_priority = 400
     formats = ("html",)
     supported_platform: ClassVar[dict[str, str]] = {
+        "codeberg.org": "codeberg",
+        "gitea.com": "gitea",
         "github.com": "github",
         "gitlab.com": "gitlab",
     }
@@ -53,9 +56,53 @@ class ShortenLinkTransform(SphinxPostTransform):
                 uri = urlparse(uri)
                 # only do something if the platform is identified
                 self.platform = self.supported_platform.get(uri.netloc)
+                # or we can make a reasonable guess about self-hosted forges
+                if self.platform is None:
+                    html_theme_options = get_theme_options_dict(self.app)
+                    self.platform = self.identify_selfhosted(uri, html_theme_options)
                 if self.platform is not None:
                     node.attributes["classes"].append(self.platform)
                     node.children[0] = nodes.Text(self.parse_url(uri))
+
+    def identify_selfhosted(
+        self, uri: ParseResult, html_theme_options: dict[str, str]
+    ) -> Literal["forgejo", "gitea", "gitlab"] | None:
+        """Try to identify what self-hosted forge uri leads to (if any).
+
+        Args:
+            uri: the link to the platform content
+            html_theme_options: varia
+
+        Returns:
+            likely platform if one matches, None otherwise
+        """
+        # forge name in authority and known url part in the right place
+        # unreliable but may catch any number of hosts
+        path_parts = uri.path.strip("/").split("/")
+        if len(path_parts) > 2 and path_parts[2] in ("pulls", "issues", "projects"):
+            if "forgejo" in uri.netloc:
+                return "forgejo"
+            elif "gitea" in uri.netloc:
+                return "gitea"
+        if (
+            len(path_parts) > 3
+            and path_parts[2] == "-"
+            and path_parts[3] in ("issues", "merge_requests")
+        ):
+            if "gitlab" in uri.netloc:
+                return "gitlab"
+
+        # url passed in *_url option
+        # will only match project's own forge but that's
+        # likely where most doc links will lead anyway
+        str_url = f"{uri.scheme}://{uri.netloc}"
+        selfhosted = ("forgejo", "gitea", "gitlab")
+        for forge in selfhosted:
+            known_url = html_theme_options.get(f"{forge}_url")
+            if known_url and known_url.startswith(str_url):
+                return forge
+
+        return None
 
     def parse_url(self, uri: ParseResult) -> str:
         """Parse the content of the url with respect to the selected platform.
@@ -117,6 +164,15 @@ class ShortenLinkTransform(SphinxPostTransform):
             else:
                 # display the whole uri (after "gitlab.com/") including parameters
                 # for example "<group>/<subgroup1>/<subgroup2>/<repository>"
+                text = uri._replace(netloc="", scheme="")  # remove platform
+                text = urlunparse(text)[1:]  # combine to string and strip leading "/"
+        elif self.platform in ("codeberg", "forgejo", "gitea"):
+            parts = path.rstrip("/").split("/")
+            if len(parts) == 4 and parts[2] in ("issues", "pulls"):
+                text = f"{parts[0]}/{parts[1]}#{parts[3]}"  # element number
+            elif parts == [""]:
+                text = self.platform
+            else:
                 text = uri._replace(netloc="", scheme="")  # remove platform
                 text = urlunparse(text)[1:]  # combine to string and strip leading "/"
 

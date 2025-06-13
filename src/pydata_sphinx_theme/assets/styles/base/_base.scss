@@ -46,14 +46,46 @@ a {
     user-select: none;
   }
 
-  // set up a icon next to the shorten links from github and gitlab
+  // set up an icon next to the shortened links from forges
+  &.codeberg,
+  &.forgejo,
+  &.gitea,
   &.github,
   &.gitlab {
     &::before {
       color: var(--pst-color-text-muted);
-      font: var(--fa-font-brands);
       margin-right: 0.25rem;
     }
+  }
+
+  &.codeberg,
+  &.forgejo,
+  &.gitea {
+    &::before {
+      display: inline-block;
+      vertical-align: -15%;
+      width: calc(var(--pst-font-size-icon) - 0.5rem);
+      height: calc(var(--pst-font-size-icon) - 0.5rem);
+    }
+  }
+
+  &.github,
+  &.gitlab {
+    &::before {
+      font: var(--fa-font-brands);
+    }
+  }
+
+  &.codeberg::before {
+    content: var(--pst-icon-codeberg);
+  }
+
+  &.forgejo::before {
+    content: var(--pst-icon-forgejo);
+  }
+
+  &.gitea::before {
+    content: var(--pst-icon-gitea);
   }
 
   &.github::before {
