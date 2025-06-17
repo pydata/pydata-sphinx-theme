@@ -44,6 +44,8 @@ def update_config(app):
         raise ExtensionError(
             "`icon_links` must be a list of dictionaries, you provided "
             f"type {type(theme_options.get('icon_links'))}."
+            "If you wish to disable this feature, either do not provide "
+            "a value (leave undefined), or set to an empty list."
         )
 
     # Set the anchor link default to be # if the user hasn't provided their own
