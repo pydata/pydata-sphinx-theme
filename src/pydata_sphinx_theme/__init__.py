@@ -40,12 +40,11 @@ def update_config(app):
             )
 
     # Validate icon links
-    if theme_options.get("icon_links") is not None:
-        if not isinstance(theme_options.get("icon_links", []), list):
-            raise ExtensionError(
-                "`icon_links` must be a list of dictionaries, you provided "
-                f"type {type(theme_options.get('icon_links'))}."
-            )
+    if not isinstance(theme_options.get("icon_links", []), list):
+        raise ExtensionError(
+            "`icon_links` must be a list of dictionaries, you provided "
+            f"type {type(theme_options.get('icon_links'))}."
+        )
 
     # Set the anchor link default to be # if the user hasn't provided their own
     if not utils.config_provided_by_user(app, "html_permalinks_icon"):
@@ -141,19 +140,18 @@ def update_config(app):
     # Add extra icon links entries if there were shortcuts present
     # TODO: Deprecate this at some point in the future?
     icon_links = theme_options.get("icon_links", [])
-    if icon_links is not None:
-        for url, icon, name in shortcuts:
-            if theme_options.get(url):
-                # This defaults to an empty list so we can always insert
-                icon_links.insert(
-                    0,
-                    {
-                        "url": theme_options.get(url),
-                        "icon": icon,
-                        "name": name,
-                        "type": "fontawesome",
-                    },
-                )
+    for url, icon, name in shortcuts:
+        if theme_options.get(url):
+            # This defaults to an empty list so we can always insert
+            icon_links.insert(
+                0,
+                {
+                    "url": theme_options.get(url),
+                    "icon": icon,
+                    "name": name,
+                    "type": "fontawesome",
+                },
+            )
     theme_options["icon_links"] = icon_links
 
     # Prepare the logo config dictionary
