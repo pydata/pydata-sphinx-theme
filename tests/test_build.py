@@ -852,6 +852,11 @@ def test_shorten_link(sphinx_build_factory, file_regression) -> None:
     gitlab = sphinx_build.html_tree("page1.html").select(".gitlab-container")[0]
     file_regression.check(gitlab.prettify(), basename="gitlab_links", extension=".html")
 
+    bitbucket = sphinx_build.html_tree("page1.html").select(".bitbucket-container")[0]
+    file_regression.check(
+        bitbucket.prettify(), basename="bitbucket_links", extension=".html"
+    )
+
 
 def test_math_header_item(sphinx_build_factory, file_regression) -> None:
     """Regression test for math items in a header title."""

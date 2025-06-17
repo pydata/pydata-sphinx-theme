@@ -31,6 +31,19 @@ class Mock:
             "https://github.com/pydata/pydata-sphinx-theme/pull/1012",
             "pydata/pydata-sphinx-theme#1012",
         ),
+        (
+            "github",
+            "https://github.com/pydata/pydata-sphinx-theme/issues",
+            # TODO: this is wrong
+            "pydata/pydata-sphinx-theme#issues",
+        ),
+        (
+            # TODO: should this be shortened the way that GitHub does it:
+            # pydata/pydata-sphinx-theme@3caf346
+            "github",
+            "https://github.com/pydata/pydata-sphinx-theme/commit/3caf346cacd2dad2a192a83c6cc9f8852e5a722e",
+            "pydata/pydata-sphinx-theme",
+        ),
         # TODO, I belive this is wrong as both orgs/pydata/projects/2 and
         # pydata/projects/issue/2 shorten to the same
         ("github", "https://github.com/orgs/pydata/projects/2", "pydata/projects#2"),
@@ -88,6 +101,70 @@ class Mock:
             "gitlab",
             "https://gitlab.com/gitlab-com/gl-infra/production/-/issues/6788",
             "gitlab-com/gl-infra/production#6788",
+        ),
+        # Bitbucket
+        ("bitbucket", "https://bitbucket.org", "bitbucket"),
+        ("bitbucket", "https://bitbucket.org/atlassian", "atlassian"),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/workspace/overview",
+            "atlassian",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui",
+            "atlassian/aui",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/",
+            "atlassian/aui",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/pull-requests/4758",
+            "atlassian/aui#4758",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/issues/375583",
+            "atlassian/aui#375583",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/issues",
+            # TODO: this is wrong
+            "atlassian/aui#issues",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/issues/",
+            # TODO: this is wrong
+            "atlassian/aui#",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/commits/de41ded719e579d0ed4ffb8a81c29bb9ada10011",
+            # TODO: this is wrong, unknown patterns should just flow through unchanged
+            "atlassian/aui",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/branch/future/10.0.x",
+            # TODO: this is wrong, unknown patterns should just flow through unchanged
+            "atlassian/aui",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/pipelines",
+            # TODO: this is wrong, known patterns should just flow through unchanged
+            "atlassian/aui",
+        ),
+        (
+            "bitbucket",
+            "https://bitbucket.org/atlassian/aui/pipelines/results/14542",
+            # TODO: this is wrong, known patterns should just flow through unchanged
+            "atlassian/aui",
         ),
     ],
 )

@@ -110,7 +110,7 @@ class ShortenLinkTransform(SphinxPostTransform):
                     text += f"/{parts[1]}"  # repository
                 if len(parts) > 2:
                     if parts[2] in ["issues", "pull-requests"]:
-                        itemnumber = parts[3]
+                        itemnumber = parts[-1]
                         text += f"#{itemnumber}"  # element number
 
         elif self.platform == "gitlab":
