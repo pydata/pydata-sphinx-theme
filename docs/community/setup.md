@@ -29,7 +29,7 @@ time.
 
 ## Workflow for contributing changes
 
-We follow a [typical GitHub workflow](https://guides.github.com/introduction/flow/)
+We follow a [typical GitHub workflow](https://docs.github.com/en/get-started/using-github/github-flow)
 of:
 
 - create a personal fork and local clone of this repo
@@ -50,7 +50,7 @@ First off you'll need your copy of the `pydata-sphinx-theme` codebase.
 You can clone it for local development like so:
 
 1. **Fork the repository**, so you have your own copy on GitHub.
-   See [the GitHub forking guide](https://docs.github.com/en/get-started/quickstart/fork-a-repo) for more information.
+   See [the GitHub forking guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) for more information.
 2. **Clone the repository locally** so that you have a local copy to work from:
 
    ```console

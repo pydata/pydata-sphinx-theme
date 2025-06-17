@@ -44,11 +44,10 @@ use the following tools:
 
 - GitHub Actions to provision machines in the cloud
 - `tox` to install the needed dependencies on those machines
-- `Pytest` with the Playwright plug-in to run the tests.
+- `pytest` with the Playwright plug-in to run the tests.
 
-Look for the string "accessibility" in the file
-[CI.yml](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/CI.yml)
-to find how we have configured GitHub Actions.
+You can check out the [a11y.yml](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/a11y.yml)
+file to find how we have configured GitHub Actions.
 
 ## Known limitations and manual auditing
 
@@ -58,6 +57,7 @@ of three pages from the theme docs. We collected those findings in an issue on
 GitHub, [May 2024 PyData Theme audit
 findings](https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/72)
 
-Nearly all of the issues have been fixed, but of course things do break / have
+Nearly all the issues have been fixed, but naturally things do break / have
 already broken, and some things may have never been discovered, so please
-[create a GitHub issue](https://github.com/pydata/pydata-sphinx-theme/issues/new) if you find something inaccessible.
+[create a GitHub issue](https://github.com/pydata/pydata-sphinx-theme/issues) if you
+find something inaccessible.

@@ -12,7 +12,7 @@ nav.page-toc {
     display: none;
 
     // So we can manually specify a level as visible in the config
-    &.visible {
+    &.pst-show_toc_level {
       display: block;
     }
   }
@@ -40,7 +40,8 @@ nav.page-toc {
 
     @include link-sidebar;
 
-    &.active {
+    &.active,
+    &[aria-current="true"] {
       @include link-sidebar-current;
 
       background-color: transparent;

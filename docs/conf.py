@@ -217,6 +217,7 @@ html_theme_options = {
         "version_match": version_match,
     },
     # "back_to_top_button": False,
+    "search_as_you_type": True,
 }
 
 html_sidebars = {
@@ -256,7 +257,9 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_js_files = ["pydata-icon.js", "custom-icon.js"]
+html_js_files = [
+    ("custom-icons.js", {"defer": "defer"}),
+]
 todo_include_todos = True
 
 # -- favicon options ---------------------------------------------------------
@@ -290,6 +293,27 @@ autoapi_dirs = ["../src/pydata_sphinx_theme"]
 autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
+
+# -- Warnings / Nitpicky -------------------------------------------------------
+
+nitpicky = True
+bad_classes = (
+    r".*abc def.*",  # urllib.parse.unquote_to_bytes
+    r"api_sample\.RandomNumberGenerator",
+    r"bs4\.BeautifulSoup",
+    r"docutils\.nodes\.Node",
+    r"matplotlib\.artist\.Artist",  # matplotlib xrefs are in the class diagram demo
+    r"matplotlib\.figure\.Figure",
+    r"matplotlib\.figure\.FigureBase",
+    r"pygments\.formatters\.HtmlFormatter",
+)
+nitpick_ignore_regex = [
+    *[("py:class", target) for target in bad_classes],
+    # we demo some `urllib` docs on our site; don't care that its xrefs fail to resolve
+    ("py:obj", r"urllib\.parse\.(Defrag|Parse|Split)Result(Bytes)?\.(count|index)"),
+    # the kitchen sink pages include some intentional errors
+    ("token", r"(suite|expression|target)"),
+]
 
 # -- application setup -------------------------------------------------------
 
@@ -334,3 +358,53 @@ def setup(app: Sphinx) -> Dict[str, Any]:
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
+
+
+# -- linkcheck options ---------------------------------------------------------
+
+linkcheck_anchors_ignore = [
+    # match any anchor that starts with a '/' since this is an invalid HTML anchor
+    r"\/.*",
+]
+
+linkcheck_ignore = [
+    # The crawler gets "Anchor not found" for various anchors
+    r"https://github.com.+?#.*",
+    r"https://www.sphinx-doc.org/en/master/*/.+?#.+?",
+    # sample urls
+    "http://someurl/release-0.1.0.tar-gz",
+    "http://python.py",
+    # for whatever reason the Ablog index is treated as broken
+    "../examples/blog/index.html",
+    # get a 403 on CI
+    "https://canvas.workday.com/styles/tokens/type",
+    "https://unsplash.com/",
+    r"https?://www.gnu.org/software/gettext/.*",
+]
+
+linkcheck_allowed_redirects = {
+    r"http://www.python.org": "https://www.python.org/",
+    # :source:`something` linking files in the repository
+    r"https://github.com/pydata/pydata-sphinx-theme/tree/.*": r"https://github.com/pydata/pydata-sphinx-theme/blob/.*",
+    r"https://github.com/sphinx-themes/sphinx-themes.org/raw/.*": r"https://github.com/sphinx-themes/sphinx-themes.org/tree/.*",
+    # project redirects
+    r"https://pypi.org/project/[A-Za-z\d_\-\.]+/": r"https://pypi.org/project/[a-z\d\-\.]+/",
+    r"https://virtualenv.pypa.io/": "https://virtualenv.pypa.io/en/latest/",
+    # catching redirects in rtd
+    r"https://[A-Za-z\d_\-\.]+.readthedocs.io/": r"https://[A-Za-z\d_\-\.]+\.readthedocs\.io(/en)?/(stable|latest)/",
+    r"https://readthedocs.org/": r"https://about.readthedocs.com/\?ref=app.readthedocs.org",
+    r"https://app.readthedocs.org/dashboard/": r"https://app.readthedocs.org/accounts/login/\?next=/dashboard/",
+    # miscellanenous urls
+    r"https://python.arviz.org/": "https://python.arviz.org/en/stable/",
+    r"https://www.sphinx-doc.org/": "https://www.sphinx-doc.org/en/master/",
+    r"https://idtracker.ai/": "https://idtracker.ai/latest/",
+    r"https://gitlab.com": "https://about.gitlab.com/",
+    r"http://www.yahoo.com": "https://www.yahoo.com/",
+    r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
+    r"https://picsum.photos/": r"https://fastly.picsum.photos/",
+}
+
+# we have had issues with linkcheck timing and retries on www.gnu.org
+linkcheck_retries = 1
+linkcheck_timeout = 5
+linkcheck_report_timeouts_as_broken = True

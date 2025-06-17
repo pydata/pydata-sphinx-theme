@@ -217,6 +217,6 @@ $link-hover-decoration-thickness: string.unquote(
   &:focus-visible {
     box-shadow: none; // override Bootstrap
     outline: 3px solid var(--pst-color-accent);
-    outline-offset: 3px;
+    outline-offset: $focus-ring-width;
   }
 }

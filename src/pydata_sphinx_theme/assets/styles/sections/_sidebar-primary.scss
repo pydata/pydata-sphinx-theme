@@ -16,10 +16,10 @@ $sidebar-padding-right: 1rem;
   @include make-col(3);
 
   // Borders padding and whitespace
-  padding: 2rem $sidebar-padding-right 1rem 1rem;
+  padding: $sidebar-padding-right;
   border-right: 1px solid var(--pst-color-border);
   background-color: var(--pst-color-background);
-  overflow-y: auto;
+  overflow: hidden auto;
   font-size: var(--pst-sidebar-font-size-mobile);
 
   @include media-breakpoint-up($breakpoint-sidebar-primary) {

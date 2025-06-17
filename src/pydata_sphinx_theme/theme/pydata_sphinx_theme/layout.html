@@ -37,17 +37,25 @@
   {%- if last_updated %}
     <meta name="docbuild:last-update" content="{{ last_updated | e }}"/>
   {%- endif %}
+  {% if pagename == 'search' %}
+    {# Search tools are already loaded on search page. Don't load them twice. #}
+  {% else %}
+    {# Load Sphinx's built-in search tools so that our custom inline search
+       experience can work on any page. #}
+    <script src="{{ pathto('_static/searchtools.js', 1) | e }}"></script>
+    <script src="{{ pathto('_static/language_data.js', 1) | e }}"></script>
+    <script src="{{ pathto('searchindex.js', 1) | e }}"></script>
+  {% endif %}
 {%- endblock extrahead %}
 {% block body_tag %}
-  {# set up with scrollspy to update the toc as we scroll #}
-  {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="{{ default_mode }}">
+  <body data-default-mode="{{ default_mode }}">
+{%- endblock %}
 
+{% block header %}
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">{{ _("Skip to main content") }}</a></div>
-
-{%- endblock %}
+{% endblock %}
 
 {%- block content %}
   {# A tiny helper pixel to detect if we've scrolled #}
@@ -69,7 +77,7 @@
   {% include "sections/announcement.html" %}
 
   {% block docs_navbar %}
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
       {%- include "sections/header.html" %}
     </header>
   {% endblock docs_navbar %}
@@ -79,7 +87,7 @@
       {# Primary sidebar #}
       {# If we have no sidebar TOC, pop the TOC component from the sidebars list #}
       {% if suppress_sidebar_toctree(includehidden=theme_sidebar_includehidden | tobool) %}
-        {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+        {% set sidebars = sidebars | reject("in", ["sidebar-collapse.html", "sidebar-nav-bs.html"]) | list %}
       {% endif %}
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
@@ -139,7 +147,6 @@
   </footer>
 {%- endblock footer %}
 {# Silence the sidebars and relbars since we define our own #}
-{% block header %}{% endblock %}
 {% block relbar1 %}{% endblock %}
 {% block relbar2 %}{% endblock %}
 {% block sidebarsourcelink %}{% endblock %}

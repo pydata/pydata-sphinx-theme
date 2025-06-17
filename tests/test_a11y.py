@@ -1,4 +1,8 @@
-"""Using Axe-core, scan the Kitchen Sink pages for accessibility violations."""
+"""
+Using Axe-core, scan the Kitchen Sink pages for accessibility violations.
+Note that in contrast with the rest of our tests, the accessibility tests in this file
+are run against a build of our PST documentation, not purposedly-built test sites.
+"""
 
 from urllib.parse import urljoin
 
@@ -194,7 +198,7 @@ def test_axe_core(
         for violation in filtered_violations:
             assert (
                 violation["id"] == "color-contrast"
-            ), f"""Found {violation['id']} violation (expected color-contrast):
+            ), f"""Found {violation["id"]} violation (expected color-contrast):
                     {format_violations([violation])}"""
 
         # Now check that when we exclude notebook outputs, the page has no violations
@@ -235,12 +239,15 @@ def test_code_block_tab_stop(page: Page, url_base: str) -> None:
 
     page.set_viewport_size({"width": 400, "height": 720})
 
-    # Resize handler is debounced with 300 ms wait time
-    page.wait_for_timeout(301)
-
-    # Narrow viewport, content overflows and code block should be a tab stop
+    # Narrow viewport, content overflows ...
     assert code_block.evaluate("el => el.scrollWidth > el.clientWidth") is True
-    assert code_block.evaluate("el => el.tabIndex") == 0
+
+    # ... and code block should be a tab stop.
+    #
+    # Note: expect() will wait until the expect condition is true (up to the
+    # test timeout limit). This is important because the resize handler is
+    # debounced.
+    expect(code_block).to_have_attribute("tabindex", "0")
 
 
 @pytest.mark.a11y
@@ -269,25 +276,48 @@ def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
     ipywidget = page.locator("css=.jp-RenderedHTMLCommon").first
 
     # As soon as the ipywidget is attached to the page it should trigger the
-    # mutation observer, which has a 300 ms debounce
+    # mutation observer
     ipywidget.wait_for(state="attached")
-    page.wait_for_timeout(301)
 
     # At the default viewport size (1280 x 720) the data table inside the
     # ipywidget has overflow...
     assert ipywidget.evaluate("el => el.scrollWidth > el.clientWidth") is True
 
-    # ...and so our js code on the page should make it keyboard-focusable
-    # (tabIndex = 0)
-    assert ipywidget.evaluate("el => el.tabIndex") == 0
+    # ... and so our js code on the page should make it keyboard-focusable
+    # (tabIndex=0).
+    #
+    # Note: expect() will wait until the expect condition is true (up to the
+    # test timeout limit). This is important because the mutation callback that
+    # sets tabIndex=0 is debounced.
+    expect(ipywidget).to_have_attribute("tabindex", "0")
 
 
-def test_breadcrumb_expansion(page: Page, url_base: str) -> None:
-    """Foo."""
-    # page.goto(urljoin(url_base, "community/practices/merge.html"))
-    # expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text("Merge and review policy") # noqa: E501
+@pytest.mark.a11y
+def test_search_as_you_type(page: Page, url_base: str) -> None:
+    """Search-as-you-type feature should support keyboard navigation.
+
+    When the search-as-you-type (inline search results) feature is enabled,
+    pressing Tab after entering a search query should focus the first inline
+    search result.
+    """
     page.set_viewport_size({"width": 1440, "height": 720})
-    page.goto(urljoin(url_base, "community/topics/config.html"))
-    expect(page.get_by_label("Breadcrumb").get_by_role("list")).to_contain_text(
-        "Update Sphinx configuration during the build"
+    page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+    # Click the search textbox.
+    searchbox = page.locator("css=.navbar-header-items .search-button__default-text")
+    searchbox.click()
+    # Type a search query.
+    query_input = page.locator("css=#pst-search-dialog input[type=search]")
+    expect(query_input).to_be_visible()
+    query_input.type("test")
+    page.wait_for_timeout(301)  # Search execution is debounced for 300 ms.
+    search_results = page.locator("css=#search-results")
+    expect(search_results).to_be_visible()
+    # Navigate with the keyboard.
+    query_input.press("Tab")
+    # Make sure that the first inline search result is focused.
+    actual_focused_content = page.evaluate("document.activeElement.textContent")
+    first_result_selector = "#search-results .search li:first-child a"
+    expected_focused_content = page.evaluate(
+        f"document.querySelector('{first_result_selector}').textContent"
     )
+    assert actual_focused_content == expected_focused_content

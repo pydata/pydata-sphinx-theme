@@ -11,29 +11,40 @@ env:
   FORCE_COLOR: "1" # Make tools pretty
   PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
 
+permissions: {}
+
 jobs:
   prerelease:
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.13"]
 
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
+
       - name: "Install (prerelease) dependencies 📦"
         run: |
           python -Im pip install --upgrade pip wheel setuptools
+
       - name: "Build PST docs and check for warnings 📖"
         run: |
           # example substitution: tox run -e docs-py312-docs
           python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
+
       - name: "Run tests ✅ (no coverage)"
         run: |
           # this will compile the assets then run the tests
@@ -41,16 +52,30 @@ jobs:
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@v2
+        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310
         if: matrix.python-version == '3.9'
         id: baipp
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at "${BAIPP_DIST}"
         if: matrix.python-version == '3.9'
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
+
+      # Run tests on the built package (which will be later uploaded to PyPI)
+      - name: "Install PST from wheel and test"
+        if: matrix.python-version == '3.9'
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
+        run: |
+          dist_loc="${BAIPP_DIST}"
+          # calling with --installpkg so we can use the already built package
+          tox run -e py312-tests-no-cov \
+          --installpkg $dist_loc/*.whl \
+          -- --deselect tests/test_build.py::test_translations
 
       # If either the docs build or the tests resulted in an error, create an issue to note it
       - name: "Create an issue if failure"
-        uses: JasonEtco/create-an-issue@v2
+        uses: JasonEtco/create-an-issue@1b14a70e4d8dc185e5cc76d3bec9eab20257b2c5
         if: ${{ env.SPHINX_BUILD_UNEXPECTED_WARNINGS || !env.PYTEST_ERRORS }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
