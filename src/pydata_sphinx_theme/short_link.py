@@ -41,6 +41,11 @@ class ShortenLinkTransform(SphinxPostTransform):
     }
     platform = None
 
+    @classmethod
+    def add_platform_mapping(cls, platform, netloc):
+        """Add domain->platform mapping to class at run-time."""
+        cls.supported_platform.update(dict([(netloc, platform)]))
+
     def run(self, **kwargs):
         """Run the Transform object."""
         matcher = NodeMatcher(nodes.reference)

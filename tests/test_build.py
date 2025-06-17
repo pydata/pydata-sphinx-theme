@@ -858,6 +858,33 @@ def test_shorten_link(sphinx_build_factory, file_regression) -> None:
     )
 
 
+def test_self_hosted_shorten_link(sphinx_build_factory, file_regression) -> None:
+    """Check that self-hosted version control URLs get shortened.
+
+    Example:
+    conf.py
+        html_context = {"github_url": "https://github.example.com"}
+
+    example_page.rst
+
+        In https://github.example.com/pydata/pydata-sphinx-theme/pull/101,
+        we refactored stylesheets and updated typography.
+
+    example_page.html
+
+        In <a href="https://github.example.com/pydata/pydata-sphinx-theme/pull/101">
+        pydata/pydata-sphinx-theme#101</a>, we refactored stylesheets and
+        updated typography.
+    """
+    sphinx_build = sphinx_build_factory("self_hosted_version_control").build()
+    urls_page = sphinx_build.html_tree("links.html").select("article")[0]
+    file_regression.check(
+        urls_page.prettify(),
+        basename="self_hosted_version_control_links",
+        extension=".html",
+    )
+
+
 def test_math_header_item(sphinx_build_factory, file_regression) -> None:
     """Regression test for math items in a header title."""
     sphinx_build = sphinx_build_factory("base").build()

@@ -275,6 +275,33 @@ def _fix_canonical_url(
     context["pageurl"] = app.config.html_baseurl + target
 
 
+def _add_self_hosted_platforms_to_link_transform_class(app: Sphinx) -> None:
+    if not hasattr(app.config, "html_context"):
+        return
+
+    # Use list() to force the iterator to completion because the for-loop below
+    # can modify the dictionary.
+    platforms = list(short_link.ShortenLinkTransform.supported_platform.values())
+
+    for platform in platforms:
+        # {platform}_url -- e.g.: github_url, gitlab_url, bitbucket_url
+        self_hosted_url = app.config.html_context.get(f"{platform}_url", None)
+        if self_hosted_url is None:
+            continue
+        parsed = urlparse(self_hosted_url)
+        if parsed.scheme not in ("http", "https"):
+            raise Exception(
+                f"If you provide a value for html_context option {platform}_url,"
+                " it must begin with http or https."
+            )
+        if not parsed.netloc:
+            raise Exception(
+                f"Unsupported URL provided for html_context option {platform}_url."
+                " Could not get domain (netloc) from ${self_hosted_url}."
+            )
+        short_link.ShortenLinkTransform.add_platform_mapping(platform, parsed.netloc)
+
+
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
@@ -282,30 +309,11 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    if hasattr(app.config, "html_context"):
-        github_url = app.config.html_context.get("github_url", None)
-        gitlab_url = app.config.html_context.get("gitlab_url", None)
-        bitbucket_url = app.config.html_context.get("bitbucket_url", None)
-
-        url_update = {}
-        for url, platform in zip(
-            [github_url, gitlab_url, bitbucket_url], ["github", "gitlab", "bitbucket"]
-        ):
-            if url:
-                # remove "http[s]://" and leading/trailing "/"s
-                url = urlparse(url)._replace(scheme="").geturl().lstrip("/").rstrip("/")
-                url_update[url] = platform
-
-        class ShortenLinkTransformCustom(short_link.ShortenLinkTransform):
-            supported_platform = short_link.ShortenLinkTransform.supported_platform
-            supported_platform.update(url_update)
-
-        app.add_post_transform(ShortenLinkTransformCustom)
-    else:
-        app.add_post_transform(short_link.ShortenLinkTransform)
+    app.add_post_transform(short_link.ShortenLinkTransform)
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("builder-inited", _add_self_hosted_platforms_to_link_transform_class)
     app.connect("html-page-context", _fix_canonical_url)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
