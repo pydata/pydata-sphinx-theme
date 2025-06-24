@@ -57,6 +57,8 @@ doc = [
   "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
+  # sphinx-sitemap v2.7.0 adds the sphinx-last-updated-by-git extension, which
+  # causes our CI jobs to fail
   "sphinx-sitemap<2.7.0",
   "sphinx-autoapi>=3.0.0",
   # For examples section
