@@ -861,20 +861,24 @@ def test_shorten_link(sphinx_build_factory, file_regression) -> None:
 def test_self_hosted_shorten_link(sphinx_build_factory, file_regression) -> None:
     """Check that self-hosted version control URLs get shortened.
 
-    Example:
-    conf.py
-        html_context = {"github_url": "https://github.example.com"}
+    Before build:
 
-    example_page.rst
+        conf.py
 
-        In https://github.example.com/pydata/pydata-sphinx-theme/pull/101,
-        we refactored stylesheets and updated typography.
+            html_context = {"github_url": "https://github.example.com"}
 
-    example_page.html
+        example_page.rst
 
-        In <a href="https://github.example.com/pydata/pydata-sphinx-theme/pull/101">
-        pydata/pydata-sphinx-theme#101</a>, we refactored stylesheets and
-        updated typography.
+            In https://github.example.com/pydata/pydata-sphinx-theme/pull/101,
+            we refactored stylesheets and updated typography.
+
+    After build:
+
+        example_page.html
+
+            In <a href="https://github.example.com/pydata/pydata-sphinx-theme/pull/101">
+            pydata/pydata-sphinx-theme#101</a>, we refactored stylesheets and
+            updated typography.
     """
     sphinx_build = sphinx_build_factory("self_hosted_version_control").build()
     urls_page = sphinx_build.html_tree("links.html").select("article")[0]
