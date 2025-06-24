@@ -114,10 +114,6 @@ bun.lockb
 # MacOSX store files
 **/.DS_Store
 
-# THEME FILES
-# files from the gallery screenshots
-docs/_static/gallery
-
 # Our site profile tests
 profile.svg
 
