@@ -57,7 +57,7 @@ doc = [
   "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
-  "sphinx-sitemap",
+  "sphinx-sitemap<2.7.0",
   "sphinx-autoapi>=3.0.0",
   # For examples section
   "myst-parser",
