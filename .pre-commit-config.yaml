@@ -39,6 +39,7 @@ repos:
     hooks:
       - id: djlint-jinja
         types_or: ["html"]
+        exclude: ^tests/test_build/.*\.html$
 
   - repo: "https://github.com/PyCQA/doc8"
     rev: v1.1.2

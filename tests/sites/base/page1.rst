@@ -15,6 +15,18 @@ Page 1
     https://github.com/pydata/pydata-sphinx-theme/pull/1012
     https://github.com/orgs/pydata/projects/2
 
+    http will get shortened:
+
+    http://github.com/pydata/pydata-sphinx-theme/pull/1012
+
+    www will not get shortened:
+
+    https://www.github.com/pydata/pydata-sphinx-theme/pull/1012
+
+    will not be linkified:
+
+    github.com/pydata/pydata-sphinx-theme/pull/1012
+
 **GitLab**
 
 .. container:: gitlab-container
