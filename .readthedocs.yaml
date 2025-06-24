@@ -20,6 +20,9 @@ build:
       - pip install playwright
       - playwright install chromium
       - python ./docs/scripts/generate_gallery_images.py
+    post_checkout:
+      # Deep fetch needed by sphinx_sitemap extension (via transitive dependency on sphinx_last_updated_by_git)
+      - git fetch --unshallow || true
 
 sphinx:
   configuration: docs/conf.py

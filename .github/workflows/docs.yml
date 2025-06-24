@@ -58,6 +58,8 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
+          # Deep fetch needed by sphinx_sitemap extension (via transitive dependency on sphinx_last_updated_by_git)
+          fetch-depth: 0
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
