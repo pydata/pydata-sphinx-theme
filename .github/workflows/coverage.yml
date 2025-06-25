@@ -16,28 +16,6 @@ jobs:
       contents: write # needed to edit the comment vs opening multiple ones
       actions: read
     steps:
-      - name: "Get the triggering workflow run details"
-        id: get-run
-        uses: octokit/request-action@dad4362715b7fb2ddedf9772c8670824af564f0d
-        with:
-          route: GET /repos/"${REPO}"/actions/runs/"${WORKFLOW_RUN_ID}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          WORKFLOW_RUN_ID: ${{ inputs.workflow_run_id }}
-
-      # this needs the .coverage file so we download from the CI workflow artifacts
-      - name: "Download coverage data 📥"
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
-        with:
-          pattern: coverage-data-*
-          merge-multiple: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ inputs.workflow_run_id }}
-
-      - name: "Check downloaded files"
-        run: ls -R
-
       - name: "Post coverage comment 💬"
         uses: py-cov-action/python-coverage-comment-action@970a227e0c16ef4589a99a9970ab0ceb8c53059a
         with:
