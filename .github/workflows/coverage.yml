@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Run tests & display coverage
+    name: "Display code coverage"
     runs-on: ubuntu-latest
     if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
     permissions:
