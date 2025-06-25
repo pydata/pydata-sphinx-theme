@@ -206,7 +206,7 @@ jobs:
     # ensures this runs even if the coverage step does not continue - e.g. the
     # default coverage action will fail at first for external PRs, this is a workaround
     # to ensure the comment is posted
-    if: ${{ github.event.name == 'pull_request'}}
+    if: ${{ github.event_name == 'pull_request'}}
     with:
       # this is the workflow run ID of the `CI.yml` workflow
       workflow_run_id: ${{ github.event.workflow_run.id }}
