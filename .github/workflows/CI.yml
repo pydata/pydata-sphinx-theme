@@ -121,6 +121,8 @@ jobs:
     steps:
       - name: "Checkout repository 🛎"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
 
       - name: "Setup CI environment 🛠"
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
