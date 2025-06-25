@@ -195,22 +195,3 @@ jobs:
           name: profile-results
           path: docbuild_profile.svg
           if-no-files-found: ignore
-
-  # Calling the coverage-comment action from the main CI workflow
-  # we might want to pin the SHA once merged
-  coverage-comment:
-    # Important: make sure to update the SHA after making any changes to the coverage workflow
-    # removing pin to test changes
-    uses: ./.github/workflows/coverage.yml
-    needs: [coverage]
-    # ensures this runs even if the coverage step does not continue - e.g. the
-    # default coverage action will fail at first for external PRs, this is a workaround
-    # to ensure the comment is posted
-    if: ${{ github.event_name == 'pull_request'}}
-    with:
-      # this is the workflow run ID of the `CI.yml` workflow
-      workflow_run_id: ${{ github.event.workflow_run.id }}
-    permissions:
-      contents: write
-      pull-requests: write
-      actions: read
