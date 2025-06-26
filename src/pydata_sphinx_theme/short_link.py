@@ -3,7 +3,7 @@
 import re
 
 from typing import ClassVar
-from urllib.parse import unquote, urlparse
+from urllib.parse import urlparse
 
 from docutils import nodes
 from sphinx.transforms.post_transforms import SphinxPostTransform
@@ -96,34 +96,28 @@ def shorten_github(url: str) -> str:
     path = urlparse(url).path
 
     # Pull request URL
+    # - Example:
+    #   - https://github.com/pydata/pydata-sphinx-theme/pull/2068
+    #   - pydata/pydata-sphinx-theme#2068
     if match := re.match(r"/([^/]+)/([^/]+)/pull/(\d+)", path):
         owner, repo, pr_id = match.groups()
         return f"{owner}/{repo}#{pr_id}"
 
     # Issue URL
+    # - Example:
+    #   - https://github.com/pydata/pydata-sphinx-theme/issues/2176
+    #   - pydata/pydata-sphinx-theme#2176
     elif match := re.match(r"/([^/]+)/([^/]+)/issues/(\d+)", path):
         owner, repo, issue_id = match.groups()
         return f"{owner}/{repo}#{issue_id}"
 
     # Commit URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/commit/([a-f0-9]{7,40})", path):
+    # - Example:
+    #   - https://github.com/pydata/pydata-sphinx-theme/commit/51af2a27e8a008d0b44ed9ea9b45311e686d12f7
+    #   - pydata/pydata-sphinx-theme@51af2a2
+    elif match := re.match(r"/([^/]+)/([^/]+)/commit/([a-f0-9]+)", path):
         owner, repo, commit_hash = match.groups()
         return f"{owner}/{repo}@{commit_hash[:7]}"
-
-    # Branch URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/tree/([^/]+)", path):
-        owner, repo, branch = match.groups()
-        return f"{owner}/{repo}:{unquote(branch)}"
-
-    # Tag URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/releases/tag/([^/]+)", path):
-        owner, repo, tag = match.groups()
-        return f"{owner}/{repo}@{unquote(tag)}"
-
-    # File URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/blob/([^/]+)/(.*)", path):
-        owner, repo, ref, filepath = match.groups()
-        return f"{owner}/{repo}@{ref}/{unquote(filepath)}"
 
     # No match — return the original URL
     return url
@@ -139,46 +133,31 @@ def shorten_gitlab(url: str) -> str:
     path = urlparse(url).path
 
     # Merge requests
-    if (m := re.match(r"^/(.+)/([^/]+)/-/merge_requests/(\d+)$", path)) or (
-        m := re.match(r"^/(.+)/([^/]+)/merge_requests/(\d+)$", path)
-    ):
-        namespace, project, mr_id = m.groups()
+    # - Example:
+    #   - https://gitlab.com/gitlab-org/gitlab/-/merge_requests/195598
+    #   - gitlab-org/gitlab!195598
+    if match := re.match(r"^/(.+)/([^/]+)/-/merge_requests/(\d+)$", path):
+        namespace, project, mr_id = match.groups()
         return f"{namespace}/{project}!{mr_id}"
 
     # Issues
-    if (m := re.match(r"^/(.+)/([^/]+)/-/issues/(\d+)$", path)) or (
-        m := re.match(r"^/(.+)/([^/]+)/issues/(\d+)$", path)
-    ):
-        namespace, project, issue_id = m.groups()
+    # - Example:
+    #   - https://gitlab.com/gitlab-org/gitlab/-/issues/551885
+    #   - gitlab-org/gitlab#195598
+    #
+    # TODO: support hash URLs, for example:
+    # https://gitlab.com/gitlab-org/gitlab/-/issues/545699#note_2543533261
+    if match := re.match(r"^/(.+)/([^/]+)/-/issues/(\d+)$", path):
+        namespace, project, issue_id = match.groups()
         return f"{namespace}/{project}#{issue_id}"
 
     # Commits
-    if (m := re.match(r"^/(.+)/([^/]+)/-/commit/([a-fA-F0-9]+)$", path)) or (
-        m := re.match(r"^/(.+)/([^/]+)/commit/([a-fA-F0-9]+)$", path)
-    ):
-        namespace, project, commit_hash = m.groups()
+    # - Example:
+    #   - https://gitlab.com/gitlab-org/gitlab/-/commit/81872624c4c58425a040e158fd228d8f0c2bda07
+    #   - gitlab-org/gitlab@8187262
+    if match := re.match(r"^/(.+)/([^/]+)/-/commit/([a-f0-9]+)$", path):
+        namespace, project, commit_hash = match.groups()
         return f"{namespace}/{project}@{commit_hash[:7]}"
-
-    # Branches (tree)
-    if (m := re.match(r"^https://gitlab\.com/(.+)/([^/]+)/-/tree/(.+)$", path)) or (
-        m := re.match(r"^https://gitlab\.com/(.+)/([^/]+)/tree/(.+)$", path)
-    ):
-        namespace, project, branch = m.groups()
-        return f"{namespace}/{project}:{unquote(branch)}"
-
-    # Tags
-    if (m := re.match(r"^/(.+)/([^/]+)/-/tags/(.+)$", path)) or (
-        m := re.match(r"^/(.+)/([^/]+)/tags/(.+)$", path)
-    ):
-        namespace, project, tag = m.groups()
-        return f"{namespace}/{project}@{unquote(tag)}"
-
-    # Blob (files)
-    if (m := re.match(r"^/(.+)/([^/]+)/-/blob/([^/]+)/(.+)$", path)) or (
-        m := re.match(r"^/(.+)/([^/]+)/blob/([^/]+)/(.+)$", path)
-    ):
-        namespace, project, ref, path = m.groups()
-        return f"{namespace}/{project}@{ref}/{unquote(path)}"
 
     # No match — return the original URL
     return url
@@ -192,34 +171,32 @@ def shorten_bitbucket(url: str) -> str:
     path = urlparse(url).path
 
     # Pull request URL
-    if match := re.match(r"/([^/]+)/([^/]+)/pull-requests/(\d+)", path):
+    # - Example:
+    #   - https://bitbucket.org/atlassian/atlassian-jwt-js/pull-requests/23
+    #   - atlassian/atlassian-jwt-js#23
+    if match := re.match(r"^/([^/]+)/([^/]+)/pull-requests/(\d+)$", path):
         workspace, repo, pr_id = match.groups()
         return f"{workspace}/{repo}#{pr_id}"
 
-    # Issue URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/issues/(\d+)", path):
+    # Issue URL.
+    # - Example:
+    #   - https://bitbucket.org/atlassian/atlassian-jwt-js/issues/11/
+    #   - atlassian/atlassian-jwt-js!11
+    #
+    # Deliberately not matching the end of the string because sometimes
+    # Bitbucket issue URLs include a slug at the end, for example:
+    # https://bitbucket.org/atlassian/atlassian-jwt-js/issues/11/nested-object-properties-are-represented
+    elif match := re.match(r"^/([^/]+)/([^/]+)/issues/(\d+)", path):
         workspace, repo, issue_id = match.groups()
         return f"{workspace}/{repo}!{issue_id}"
 
     # Commit URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/commits/([a-f0-9]+)", path):
+    # - Example:
+    #   - https://bitbucket.org/atlassian/atlassian-jwt-js/commits/d9b5197f0aeedeabf9d0f8d0953a80be65743d8a
+    #   - atlassian/atlassian-jwt-js@d9b5197
+    elif match := re.match(r"^/([^/]+)/([^/]+)/commits/([a-f0-9]+)$", path):
         workspace, repo, commit_hash = match.groups()
         return f"{workspace}/{repo}@{commit_hash[:7]}"
-
-    # Branch URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/branch/(.+)", path):
-        workspace, repo, branch = match.groups()
-        return f"{workspace}/{repo}:{unquote(branch)}"
-
-    # Tag URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/commits/tag/(.+)", path):
-        workspace, repo, tag = match.groups()
-        return f"{workspace}/{repo}@{unquote(tag)}"
-
-    # File URL
-    elif match := re.match(r"/([^/]+)/([^/]+)/src/([^/]+)/(.*)", path):
-        workspace, repo, ref, path = match.groups()
-        return f"{workspace}/{repo}@{ref}/{unquote(path)}"
 
     # No match — return the original URL
     return url
