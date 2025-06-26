@@ -56,10 +56,10 @@ from pydata_sphinx_theme.short_link import shorten_url
             "gitlab-org/gitlab#375583",
         ),
         (
-            # non canonical url
+            # non canonical url - not supported
             "gitlab",
             "https://gitlab.com/gitlab-org/gitlab/issues/375583",
-            "gitlab-org/gitlab#375583",
+            "https://gitlab.com/gitlab-org/gitlab/issues/375583",
         ),
         (
             "gitlab",
@@ -147,7 +147,7 @@ from pydata_sphinx_theme.short_link import shorten_url
         (
             "bitbucket",
             "https://bitbucket.org/atlassian/aui/branch/future/10.0.x",
-            "atlassian/aui:future/10.0.x",
+            "https://bitbucket.org/atlassian/aui/branch/future/10.0.x",
         ),
         (
             "bitbucket",
