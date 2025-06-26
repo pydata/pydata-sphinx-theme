@@ -128,7 +128,7 @@ def shorten_gitlab(url: str) -> str:
     Convert a GitLab URL to a short form like group/project!123 or
     group/project@abcdef7.
 
-    Supports both canonical ('/-/') and non-canonical path formats.
+    Only supports canonical ('/-/') GitLab URLs.
     """
     path = urlparse(url).path
 
