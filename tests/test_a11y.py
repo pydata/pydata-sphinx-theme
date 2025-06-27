@@ -256,7 +256,7 @@ def test_notebook_output_tab_stop(page: Page, url_base: str) -> None:
     page.goto(urljoin(url_base, "/examples/pydata.html"))
 
     # A "plain" notebook output
-    nb_output = page.locator("css=#Pandas > .nboutput > .output_area")
+    nb_output = page.locator("css=#Pandas > .nboutput > .output_area").first
 
     # At the default viewport size (1280 x 720) the Pandas data table has
     # overflow...

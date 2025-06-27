@@ -25,3 +25,4 @@ WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.count'.
 WARNING: autosummary: stub file not found 'urllib.parse.SplitResultBytes.index'. Check your autosummary_generate setting.
 ERROR: Unexpected indentation.
 WARNING: py:class reference target not found: sphinx.builders.html._assets._CascadingStyleSheet
+WARNING: py:class reference target not found: os.PathLike
