@@ -28,7 +28,7 @@ jobs:
 
       # this needs the .coverage file so we download from the CI workflow artifacts
       - name: "Download coverage data 📥"
-        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
           pattern: coverage-data-*
           merge-multiple: true
@@ -39,7 +39,7 @@ jobs:
         run: ls -R
 
       - name: "Post coverage comment 💬"
-        uses: py-cov-action/python-coverage-comment-action@d1ff8fbb5ff80feedb3faa0f6d7b424f417ad0e1
+        uses: py-cov-action/python-coverage-comment-action@970a227e0c16ef4589a99a9970ab0ceb8c53059a
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_PR_RUN_ID: ${{ inputs.workflow_run_id }}

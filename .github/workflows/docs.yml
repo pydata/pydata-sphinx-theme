@@ -110,7 +110,8 @@ jobs:
           DOCS_DIR: "audit"
 
       - name: "Audit with Lighthouse 🔦"
-        uses: treosh/lighthouse-ci-action@v12
+        # pin to Lighthouse version 12.1.0
+        uses: treosh/lighthouse-ci-action@2f8dda6cf4de7d73b29853c3f29e73a01e297bd8
         with:
           configPath: ".github/workflows/lighthouserc.json"
           temporaryPublicStorage: true
@@ -134,7 +135,7 @@ jobs:
         run: python -Im tox run -e docs-linkcheck
 
       - name: "Upload file with broken links 📤"
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: broken-links
           path: docs/_build/linkcheck/output.txt

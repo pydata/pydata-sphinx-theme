@@ -7,7 +7,7 @@ When making new decisions about design and UI/UX, we often consult these themes 
 :grid-columns: 1 2 2 3
 :class-container: text-center
 - title: "**GitBook**"
-  link: https://docs.gitbook.com/
+  link: https://gitbook.com/docs/
   image: ../_static/inspiration/GitBook-Icon-Dark.svg
 - title: "**Metaflow**"
   image: https://raw.githubusercontent.com/Netflix/metaflow/refs/heads/master/docs/metaflow.svg
