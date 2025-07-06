@@ -74,7 +74,7 @@ function macroTemplate({ compilation }) {
 
     {% macro head_js_preload() %}
       <!-- So that users can add custom icons -->
-      ${fa_scripts.map(script.bind(compilation)).join("\n")}
+      ${fa_scripts.map(deferScript.bind(compilation)).join("\n")}
       <!-- Pre-loaded scripts that we'll load fully later -->
       ${theme_scripts.map(preloadScript.bind(compilation)).join("\n")}
     {% endmacro %}

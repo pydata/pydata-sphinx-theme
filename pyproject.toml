@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-  "sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip",
+  "sphinx-theme-builder @ git+https://github.com/pradyunsg/sphinx-theme-builder.git@main"
 ]
 build-backend = "sphinx_theme_builder"
 
@@ -52,11 +52,13 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
+  "astroid>=3", # fix for sphinx.autoapi and read the docs, should be reverted at a later date - see issue #2125
   "numpydoc",
   "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
-  "sphinx-sitemap",
+  # TODO: unpin sphinx-sitemap once a solution is offered for https://github.com/jdillard/sphinx-sitemap/issues/109
+  "sphinx-sitemap<2.7.0",
   "sphinx-autoapi>=3.0.0",
   # For examples section
   "myst-parser",
@@ -80,7 +82,6 @@ doc = [
   "ipywidgets",
   "graphviz",
 ]
-test = ["pytest", "pytest-cov", "pytest-regressions", "sphinx[test]"]
 dev = [
   "pyyaml",
   "pre-commit",
@@ -89,7 +90,14 @@ dev = [
   "pandoc",
   "sphinx-theme-builder[cli]",
 ]
-a11y = ["pytest-playwright"]
+test = [
+  "pytest",
+  "pytest-cov",
+  "pytest-regressions",
+  "sphinx[test]",
+  "pytest-playwright"
+]
+a11y = ["pydata-sphinx-theme[test]"]
 i18n = ["Babel", "jinja2"]
 
 [project.entry-points]
@@ -108,7 +116,7 @@ indent-width = 4
 ignore = [
   "D107", # Missing docstring in `__init__` | set the docstring in the class
   "D205", # 1 blank line required between summary line and description,
-  "D212",  # docstring summary must be on first physical line
+  "D212", # docstring summary must be on first physical line
   "W291", # let pre-commit handle trailing whitespace
 
 ]

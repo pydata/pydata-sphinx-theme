@@ -1,7 +1,6 @@
-# This will run every time a release is created and published.
-# It calls our tests workflow via a `workflow_call`, and if tests pass
-# then it triggers our upload to PyPI for a new release.
-name: Publish to PyPI
+# This workflow runs every day at 2AM UTC to publish a new nightly release to Anaconda.org
+# and every time there is a PST release to make sure it gets uploaded to PyPI.
+name: Publish PST package
 on:
   release:
     types:
@@ -17,42 +16,76 @@ permissions:
   contents: read
 
 jobs:
-  # calls our general CI workflow (tests, build docs, etc.)
+  # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
-    uses: ./.github/workflows/CI.yml
+    # Important: make sure to update the SHA after making any changes to the CI workflow
+    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@ac57147185b6f9400cafbcd852e04345e5e841b7
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     # needed for the coverage action
     permissions:
       contents: write
       pull-requests: write
+      actions: read
+      # calls our docs workflow (build docs, check broken links, lighthouse)
+  docs:
+    # Important: make sure to update the SHA after making any changes to the docs workflow
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@3e74810e3ad3778c179f3f836409540e0a3bf0f1
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
 
   build-package:
     name: "Build & verify PST package"
-    needs: [tests] # require tests to pass before deploy runs
+    # require tests and docs to pass before building the package
+    needs: [tests, docs]
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+        with:
+          persist-credentials: false
 
-      - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+      - name: "Setup Python 🐍"
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # 5.6.0
         with:
           python-version: "3.9"
-          pandoc: "False"
+
+      - run: python -Im pip install tox-uv
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@v2
+        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310 # 2.12.0
         id: baipp
 
-      - run: echo Packages can be found at ${{ steps.baipp.outputs.dist }}
+      - run: echo Packages can be found at "${BAIPP_DIST}"
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
-  release-pypi:
+      # Run tests on the built package (which will be later uploaded to PyPI)
+      - name: "Install PST from wheel and test"
+        env:
+          BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
+        run: |
+          dist_loc="${BAIPP_DIST}"
+          # calling with --installpkg so we can use the already built package
+          tox run -e py312-tests-no-cov \
+          --installpkg $dist_loc/*.whl \
+          -- --deselect tests/test_build.py::test_translations
+
+  release-PST:
     runs-on: ubuntu-latest
     needs: [build-package]
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
     permissions:
       id-token: write # needed for PyPI upload
+    environment:
+      name: pst-release
+      url: https://pypi.org/p/pydata-sphinx-theme
     steps:
       - name: "Download PST built package 📦"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # 4.3.0
         with:
           name: Packages
           path: dist
@@ -62,12 +95,14 @@ jobs:
           tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # 1.12.4
         # only publish if this is a published release by pydata
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
+        with:
+          print-hash: true
 
       - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
-        uses: scientific-python/upload-nightly-action@82396a2ed4269ba06c6b2988bb4fd568ef3c3d6b # 0.6.1
+        uses: scientific-python/upload-nightly-action@b36e8c0c10dbcfd2e05bf95f17ef8c14fd708dbf # 0.6.2
         with:
           artifacts_path: dist
           anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}

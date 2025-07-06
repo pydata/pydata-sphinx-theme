@@ -1,3 +1,8 @@
+# This workflow runs our usual CI jobs: testing with pytest, profiling,
+# and coverage checks for PST
+# IMPORTANT: if you make changes to this workflow, you will need to open a follow-up
+# PR after merge to update the action SHA in the publish workflow
+
 name: continuous-integration
 
 # Concurrency group that uses the workflow name and PR number if available
@@ -6,7 +11,7 @@ name: continuous-integration
 # Repeated pushes to a PR will cancel all previous builds, while multiple
 # merges to main will not cancel.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 env:
@@ -21,6 +26,9 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - "*"
+  # allows this to be used as a composite action in other workflows
   workflow_call:
   # allow manual triggering of the workflow, while debugging
   workflow_dispatch:
@@ -31,10 +39,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
+        # https://github.com/actions/runner-images
         # macos-14==latest
-        # ubuntu-20.04==latest
-        os: ["ubuntu-latest", "ubuntu-24.04", "macos-14", "windows-latest"]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        # ubuntu-24.04==latest
+        # windows-2022==latest
+        os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
+        python-version: ["3.9", "3.13"]
         sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
@@ -58,12 +68,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
+
       - name: "Run tests ✅"
         shell: bash
         run: |
@@ -77,119 +92,47 @@ jobs:
           else
             python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
+
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: coverage-data-${{ matrix.python-version }}
           path: .coverage
           if-no-files-found: ignore
           include-hidden-files: true
 
-  # Only run accessibility tests on the latest Python version (3.12) and Ubuntu
-  a11y-tests:
-    name: "a11y-tests (ubuntu-latest, 3.12)"
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
-      - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+      - name: "Upload Playwright traces, if any 🐾"
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6
+        if: ${{ failure() }}
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-          pandoc: true
-          graphviz: true
-      - name: "Run accessibility tests with playwright 🎭"
-        # build PST, build docs, then run a11y-tests
-        run: python -Im tox run -m a11y
-
-  # Build our docs (PST) on major OSes and check for warnings
-  build-site:
-    name: "build PST docs"
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.12"]
-        include:
-          # oldest Python version with the oldest Sphinx version
-          - os: ubuntu-latest
-            python-version: "3.9"
-            sphinx-version: "6.1"
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
-      - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
-        with:
-          python-version: ${{ matrix.python-version }}
-          pandoc: true
-          graphviz: true
-      - name: "Build docs and check for warnings 📖"
-        shell: bash
-        run: |
-          # check if there is a specific Sphinx version to build with
-          # example substitution: tox run -e py39-sphinx61-docs
-          if [ -n "${{matrix.sphinx-version}}" ]; then
-            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-docs
-          # build with the default Sphinx version
-          # example substitution: tox run -e py312-docs
-          else
-            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-docs
-          fi
-
-  # Run Lighthouse audits on the built site (kitchen-sink only)
-  lighthouse-audit:
-    needs: build-site
-    runs-on: ubuntu-latest
-    env:
-      DOCS_DIR: "audit"
-    steps:
-      - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
-      - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - name: "Copy kitchen sink to a tiny site"
-        run: |
-          mkdir -p ${{ env.DOCS_DIR }}/site
-          cp -r docs/examples/kitchen-sink ${{ env.DOCS_DIR }}/site/kitchen-sink
-          printf "Test\n====\n\n.. toctree::\n\n   kitchen-sink/index\n" > ${{ env.DOCS_DIR }}/site/index.rst
-          echo 'html_theme = "pydata_sphinx_theme"' > ${{ env.DOCS_DIR }}/site/conf.py
-          echo '.. toctree::\n   :glob:\n\n   *' >> ${{ env.DOCS_DIR }}/site/index.rst
-
-          # build docs without checking for warnings
-          python -Im tox run -e docs-no-checks
-
-      - name: "Audit with Lighthouse 🔦"
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          configPath: ".github/workflows/lighthouserc.json"
-          temporaryPublicStorage: true
-          uploadArtifacts: true
-          runs: 3 # Multiple runs to reduce variance
+          name: playwright-traces-${{ matrix.os }}-${{ matrix.python-version }}
+          path: test-results/
 
   coverage:
-    name: "Check coverage"
+    name: "check coverage"
     needs: run-pytest
     runs-on: ubuntu-latest
-    # avoid running this on schedule, releases, or workflow_call
-    if: github.event_name != 'schedule' && github.event_name != 'release' && github.event_name != 'workflow_call'
+    # avoid running this on schedule, releases, workflow_call, or workflow_dispatch
+    if: github.event_name != 'schedule' && github.event_name != 'release' && github.event_name != 'workflow_call' && github.event_name != 'workflow_dispatch'
     permissions:
       contents: write
       pull-requests: write
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
       - run: python -Im pip install --upgrade coverage[toml]
+
       - name: "Download coverage data 📥"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
           pattern: coverage-data-*
           merge-multiple: true
@@ -207,7 +150,7 @@ jobs:
           python -Im coverage report --fail-under=80
 
       - name: "Upload HTML report if check failed 📤"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: html-report
           path: htmlcov
@@ -215,13 +158,13 @@ jobs:
 
       # seems we need to call this from the main CI workflow first
       - name: "Coverage comment 💬"
-        uses: py-cov-action/python-coverage-comment-action@v3
+        uses: py-cov-action/python-coverage-comment-action@970a227e0c16ef4589a99a9970ab0ceb8c53059a
         id: coverage_comment
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: "Store Pull Request comment to be posted 📤"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
         with:
           # leave default names
@@ -229,23 +172,47 @@ jobs:
           path: python-coverage-comment-action.txt
 
   profiling:
-    needs: [build-site, run-pytest]
+    needs: [run-pytest]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
         with:
           # 3.12 is not supported by py-spy yet
           python-version: "3.11"
+
       - name: "Run profiling with py-spy 🕵️‍♂️"
         # profiling needs to be run as sudo
         run: python -m tox run -e py311-profile-docs -- -o docbuild_profile.svg
         continue-on-error: true
+
       - name: "Upload profiling data to GH artifacts 📤"
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: profile-results
           path: docbuild_profile.svg
           if-no-files-found: ignore
+
+  # Calling the coverage-comment action from the main CI workflow
+  # we might want to pin the SHA once merged
+  coverage-comment:
+    # Important: make sure to update the SHA after making any changes to the coverage workflow
+    # removing pin to test changes
+    uses: ./.github/workflows/coverage.yml
+    needs: [coverage]
+    # ensures this runs even if the coverage step does not continue - e.g. the
+    # default coverage action will fail at first for external PRs, this is a workaround
+    # to ensure the comment is posted
+    if: ${{ github.event.name == 'pull_request'}}
+    with:
+      # this is the workflow run ID of the `CI.yml` workflow
+      workflow_run_id: ${{ github.event.workflow_run.id }}
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read

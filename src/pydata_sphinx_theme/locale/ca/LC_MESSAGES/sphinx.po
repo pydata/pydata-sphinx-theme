@@ -5,7 +5,8 @@
 #
 # Translators:
 # Cristhian Rivera, 2024
-# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2024
+# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2025
+#
 msgid ""
 msgstr ""
 
@@ -17,11 +18,11 @@ msgstr "Fes clic per a desplegar"
 msgid "Click to collapse"
 msgstr "Fes clic per a replegar"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:48
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:57
 msgid "Skip to main content"
 msgstr "Salta al contingut principal"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:60
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:69
 msgid "Back to top"
 msgstr "Torna a l'inici"
 
@@ -110,6 +111,14 @@ msgstr "pàgina següent"
 msgid "next"
 msgstr "següent"
 
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:6
+msgid "Collapse Sidebar"
+msgstr "Oculta la barra lateral"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:11
+msgid "Expand Sidebar"
+msgstr "Mostra la barra lateral"
+
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
 msgid "Section Navigation"
@@ -150,8 +159,7 @@ msgid ""
 "Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
-"Construïda amb el <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+"Construïda amb el <a href=\"%(PST_url)s\">Tema PyData Sphinx</a> "
 "%(theme_version)s."
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
@@ -189,3 +197,12 @@ msgstr "Navegació del lloc"
 
 #~ msgid "light/dark"
 #~ msgstr "clar/fosc"
+
+#~ msgid ""
+#~ "Built with the <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+#~ "%(theme_version)s."
+#~ msgstr ""
+#~ "Construïda amb el <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+#~ "%(theme_version)s."

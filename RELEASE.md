@@ -31,6 +31,7 @@ These steps should be taken in order to create a new release![^release-refs]
   - [The `publish` github action job](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/publish.yml#L31) has completed successfully in the [actions tab](https://github.com/pydata/pydata-sphinx-theme/actions).
   - [The PyPI version is updated](https://pypi.org/project/pydata-sphinx-theme/)
 - [ ] Hide the previous patch version build in the RDT interface if needed.
+- [ ] Open a new PR to bump the version to the next dev target (e.g. `0.2.1.dev0`) in [`__init__.py`](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/__init__.py#L16)
 - [ ] Celebrate, you're done!
 
 [^release-refs]: Taken from [the release checklist](https://github.com/pydata/pydata-sphinx-theme/blob/main/RELEASE.md). See [the release documentation](https://pydata-sphinx-theme.readthedocs.io/en/latest/contribute/policies.html#release-policy) for an overview of release processes.

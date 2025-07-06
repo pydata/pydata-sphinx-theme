@@ -48,10 +48,10 @@ The default body and header fonts can be changed as follows:
       {% endblock %}
 
     Your text may quickly show up as "unstyled" before the fonts are loaded. To reduce this, you may wish to explore options for
-    `preloading content <https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content>`__,
+    `preloading content <https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/preload>`__,
     specifically the binary font files. This ensures the files will be loaded
     before the CSS is parsed, but should be used with care.
 
-.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/tree/main/src/pydata_sphinx_theme/assets/styles/variables
 .. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties

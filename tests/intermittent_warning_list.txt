@@ -2,7 +2,8 @@ WARNING: Cell printed to stderr:
 Matplotlib is building the font cache; this may take a moment.
 WARNING: failed to reach any of the inventories with the following issues:
 intersphinx inventory
-# THESE 3 WILL GO AWAY WHEN OUR MIN SPHINX VERSION IS 7.3 OR HIGHER
+# THE FOLLOWING 4 LINES WILL GO AWAY WHEN OUR MIN SPHINX VERSION IS 7.3 OR HIGHER (because 7.3 introduces the versionremoved directive)
+We also support *italic*, **bold**, ``code``, `links <https://www.sphinx-doc.org/en/master/>`_, and more.
 Here's a version removed message.
 .. versionremoved:: v0.1.1
 ERROR: Unknown directive type "versionremoved".

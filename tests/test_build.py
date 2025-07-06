@@ -52,8 +52,8 @@ def test_toc_visibility(sphinx_build_factory) -> None:
     index_html = sphinx_build.html_tree("index.html")
 
     # The 3rd level headers should be visible, but not the fourth-level
-    assert "visible" in index_html.select(".toc-h2 ul")[0].attrs["class"]
-    assert "visible" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
+    assert "pst-show_toc_level" in index_html.select(".toc-h2 ul")[0].attrs["class"]
+    assert "pst-show_toc_level" not in index_html.select(".toc-h3 ul")[0].attrs["class"]
 
 
 def test_icon_links(sphinx_build_factory, file_regression) -> None:
@@ -703,9 +703,9 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) ->
     assert edit_link, "no edit link found"
     assert edit_link[0].attrs["href"] == edit_url, f"edit link didn't match {edit_link}"
     # First child is the icon
-    assert (
-        list(edit_link[0].strings)[1].strip() == edit_text
-    ), f"edit text didn't match {edit_text}"
+    assert list(edit_link[0].strings)[1].strip() == edit_text, (
+        f"edit text didn't match {edit_text}"
+    )
 
 
 @pytest.mark.parametrize(
