@@ -844,7 +844,10 @@ def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
 
 def test_shorten_link(sphinx_build_factory, file_regression) -> None:
     """Regression test for "edit on <provider>" link shortening."""
-    sphinx_build = sphinx_build_factory("base").build()
+    confoverrides = {
+        "html_theme_options": {"shorten_urls": True},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
 
     github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
     file_regression.check(github.prettify(), basename="github_links", extension=".html")
