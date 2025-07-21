@@ -167,7 +167,7 @@ color and typography in the PyData Sphinx theme:
       including font stacks, sizes, and weights in the
       [`fonts.scss` file](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_fonts.scss).
    2. You can find all the PyData Sphinx theme colors in the
-      [`color.scss` file](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss)
+      [`color.scss` file](https://github.com/pydata/pydata-sphinx-theme/tree/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss)
 2. **Figma Design File:** The Figma file contains the visual design and specifications
    for the typography styles, including font sizes, line heights,
    and spacing used throughout the theme. It also includes our color palette and its use cases, as well as details on interactive components and their states.

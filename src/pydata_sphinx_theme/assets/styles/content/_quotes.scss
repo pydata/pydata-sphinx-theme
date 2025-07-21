@@ -26,7 +26,7 @@ blockquote {
 
   // Ensure there is enough contrast against the background
   a {
-    color: var(--pst-color-inline-code-links);
+    color: var(--pst-color-link-higher-contrast);
   }
 
   // hack to make the text in the blockquote selectable

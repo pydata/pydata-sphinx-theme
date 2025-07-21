@@ -30,7 +30,7 @@ jobs:
       # calls our docs workflow (build docs, check broken links, lighthouse)
   docs:
     # Important: make sure to update the SHA after making any changes to the docs workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@ac57147185b6f9400cafbcd852e04345e5e841b7
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@3e74810e3ad3778c179f3f836409540e0a3bf0f1
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
 
@@ -48,7 +48,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup Python 🐍"
-        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # 5.5.0
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # 5.6.0
         with:
           python-version: "3.9"
 
@@ -85,7 +85,7 @@ jobs:
       url: https://pypi.org/p/pydata-sphinx-theme
     steps:
       - name: "Download PST built package 📦"
-        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # 4.2.1
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # 4.3.0
         with:
           name: Packages
           path: dist
@@ -95,7 +95,7 @@ jobs:
           tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
-        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70 # 1.12.3
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # 1.12.4
         # only publish if this is a published release by pydata
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
         with:

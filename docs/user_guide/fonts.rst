@@ -48,7 +48,7 @@ The default body and header fonts can be changed as follows:
       {% endblock %}
 
     Your text may quickly show up as "unstyled" before the fonts are loaded. To reduce this, you may wish to explore options for
-    `preloading content <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload>`__,
+    `preloading content <https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/preload>`__,
     specifically the binary font files. This ensures the files will be loaded
     before the CSS is parsed, but should be used with care.
 

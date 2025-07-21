@@ -257,7 +257,9 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_js_files = ["pydata-icon.js", "custom-icon.js"]
+html_js_files = [
+    ("custom-icons.js", {"defer": "defer"}),
+]
 todo_include_todos = True
 
 # -- favicon options ---------------------------------------------------------
@@ -369,8 +371,6 @@ linkcheck_ignore = [
     # The crawler gets "Anchor not found" for various anchors
     r"https://github.com.+?#.*",
     r"https://www.sphinx-doc.org/en/master/*/.+?#.+?",
-    # Known broken links in kitchen sink
-    r"https://source.unsplash.com/.+",
     # sample urls
     "http://someurl/release-0.1.0.tar-gz",
     "http://python.py",
@@ -379,6 +379,7 @@ linkcheck_ignore = [
     # get a 403 on CI
     "https://canvas.workday.com/styles/tokens/type",
     "https://unsplash.com/",
+    r"https?://www.gnu.org/software/gettext/.*",
 ]
 
 linkcheck_allowed_redirects = {
@@ -391,7 +392,7 @@ linkcheck_allowed_redirects = {
     r"https://virtualenv.pypa.io/": "https://virtualenv.pypa.io/en/latest/",
     # catching redirects in rtd
     r"https://[A-Za-z\d_\-\.]+.readthedocs.io/": r"https://[A-Za-z\d_\-\.]+\.readthedocs\.io(/en)?/(stable|latest)/",
-    r"https://readthedocs.org/": r"https://about.readthedocs.com\?ref=readthedocs.org",
+    r"https://readthedocs.org/": r"https://about.readthedocs.com/\?ref=app.readthedocs.org",
     r"https://app.readthedocs.org/dashboard/": r"https://app.readthedocs.org/accounts/login/\?next=/dashboard/",
     # miscellanenous urls
     r"https://python.arviz.org/": "https://python.arviz.org/en/stable/",
@@ -400,8 +401,10 @@ linkcheck_allowed_redirects = {
     r"https://gitlab.com": "https://about.gitlab.com/",
     r"http://www.yahoo.com": "https://www.yahoo.com/",
     r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
+    r"https://picsum.photos/": r"https://fastly.picsum.photos/",
 }
 
 # we have had issues with linkcheck timing and retries on www.gnu.org
-linkcheck_retries = 3
-linkcheck_timeout = 50
+linkcheck_retries = 1
+linkcheck_timeout = 5
+linkcheck_report_timeouts_as_broken = True
