@@ -229,7 +229,7 @@ def add_toctree_functions(
         boilerplate = dedent(
             """
             <li class="{nav_item} {active}">
-              <a class="{nav_link} nav-{ext_int}" href="{href}">
+              <a class="{nav_link} nav-{ext_int}" href="{href}"{target}>
                 {title}
               </a>
             </li>
@@ -247,6 +247,7 @@ def add_toctree_functions(
                     ext_int="external" if link.is_external else "internal",
                     href=link.href,
                     title=link.title,
+                    target=' target="_blank"' if link.is_external else "",
                 )
             )
         for link in links_data[n_links_before_dropdown:]:
@@ -258,6 +259,7 @@ def add_toctree_functions(
                     ext_int="external" if link.is_external else "internal",
                     href=link.href,
                     title=link.title,
+                    target=' target="_blank"' if link.is_external else "",
                 )
             )
 
