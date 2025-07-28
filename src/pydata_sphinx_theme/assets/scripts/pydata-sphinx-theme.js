@@ -1049,22 +1049,41 @@ function setupArticleTocSyncing() {
     }
   }
 
-  // When the page loads and when the user clicks an in-page link,
-  // sync the page's table of contents.
+  // On page load...
+  //
+  // When the page loads, sync the page's table of contents.
   syncTocHash(window.location.hash);
 
-  // Listen for link clicks to sync the table of contents. Note we cannot use
-  // the "hashchange" event because if the user clicks a hash link, then scrolls
-  // away and clicks the same hash link again, it will not fire the change event
-  // (because it's the same hash), but we still want to re-sync the table of
-  // contents.
+  // On navigation to another part of the page...
+  //
+  // When the user navigates to another part of the page, sync the page's table
+  // of contents.
+  window.addEventListener("hashchange", () => {
+    // By the time this event is fired, window.location.hash has already been
+    // updated with the new hash
+    syncTocHash(window.location.hash);
+  });
+
+  // On return to the same part of the page...
+  //
+  // The hashchange event will handle most cases where we need to sync the table
+  // of contents with a hash link click. But there is one edge case it doesn't
+  // handle, which is when the user clicks an internal page link whose hash is
+  // already in the browser address bar. For example, the user loads the page at
+  // #first-heading, scrolls to the bottom of the page, then clicks in the
+  // sidebar table of contents to go back up to the first heading in the
+  // article. In this case the "hashchange" event will not fire. Nonetheless, we
+  // want to guarantee that the TOC entry for the first heading gets
+  // highlighted. Note we cannot rely exclusively on the "click" event for all
+  // internal page navigations because it will not fire in the edge case where
+  // the user modifies the hash directly in the browser address bar.
   window.addEventListener("click", (event) => {
-    // Match any link because an in-page ("hash link") can occur anywhere on the
-    // page, not just in the side table of contents (e.g., one section of the
-    // page linking to another section of the page, also each of the headings
-    // contains a link to itself).
     const link = event.target.closest("a");
-    if (link && link.hash) {
+    if (
+      link &&
+      link.hash === window.location.hash &&
+      link.origin === window.location.origin
+    ) {
       syncTocHash(link.hash);
     }
   });
