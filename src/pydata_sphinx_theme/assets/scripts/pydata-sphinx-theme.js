@@ -1020,22 +1020,30 @@ function setupArticleTocSyncing() {
   // highlight.
   let disableObserver = false;
 
+  function temporarilyDisableObserver(time) {
+    disableObserver = true;
+    setTimeout(() => {
+      disableObserver = false;
+    }, time);
+  }
+
   /**
-   * Check the hash portion of the page URL. If it matches an entry in the page
-   * table of contents, highlight that entry and temporarily disable the
-   * intersection observer while the page scrolls to the corresponding heading.
+   * If the provided URL hash fragment (beginning with "#") matches an entry in
+   * the page table of contents, highlight that entry and temporarily disable
+   * the intersection observer while the page scrolls to the corresponding
+   * heading.
    */
-  function syncTocHash() {
-    const { hash: pageHash } = window.location;
-    if (pageHash.length > 1) {
-      const matchingTocLink = tocLinks.find((link) => link.hash === pageHash);
+  function syncTocHash(hash) {
+    if (hash.length > 1) {
+      const matchingTocLink = tocLinks.find((tocLink) => tocLink.hash === hash);
       if (matchingTocLink) {
-        disableObserver = true;
-        setTimeout(() => {
-          // Give the page ample time to finish scrolling, then re-enable the
-          // intersection observer.
-          disableObserver = false;
-        }, 1000);
+        // It's important to disable the intersection observer before
+        // highlighting the TOC link and its corresponding article heading. This
+        // is because the browser takes a little time to scroll to the article
+        // heading, and while scrolling, it could trigger intersection events
+        // that cause some other link in the table of contents to be
+        // highlighted.
+        temporarilyDisableObserver(1000);
         activate(matchingTocLink);
       }
     }
@@ -1043,23 +1051,21 @@ function setupArticleTocSyncing() {
 
   // When the page loads and when the user clicks an in-page link,
   // sync the page's table of contents.
-  syncTocHash();
-  // Note we cannot use the "hashchange" event because if the user clicks a hash
-  // link, scrolls away, then clicks the same hash link again, it will not fire
-  // the change event (because it's the same hash), but we still want to re-sync
-  // the table of contents.
+  syncTocHash(window.location.hash);
+
+  // Listen for link clicks to sync the table of contents. Note we cannot use
+  // the "hashchange" event because if the user clicks a hash link, then scrolls
+  // away and clicks the same hash link again, it will not fire the change event
+  // (because it's the same hash), but we still want to re-sync the table of
+  // contents.
   window.addEventListener("click", (event) => {
     // Match any link because an in-page ("hash link") can occur anywhere on the
     // page, not just in the side table of contents (e.g., one section of the
     // page linking to another section of the page, also each of the headings
     // contains a link to itself).
-    if (event.target.closest("a")) {
-      // Defer the sync operation because window.location.hash does not change
-      // until after the default action for the event has happened (i.e., the
-      // link click).
-      setTimeout(() => {
-        syncTocHash();
-      }, 0);
+    const link = event.target.closest("a");
+    if (link && link.hash) {
+      syncTocHash(link.hash);
     }
   });
 
