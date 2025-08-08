@@ -31,7 +31,7 @@ jobs:
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@151623d27c775a2706de7bbc7e8102f31fb76af5
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
