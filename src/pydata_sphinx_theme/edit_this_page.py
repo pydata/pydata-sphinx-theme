@@ -1,9 +1,13 @@
 """Create an "edit this page" url compatible with bitbucket, gitlab and github."""
 
+import urllib
+
 import jinja2
 
 from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
+
+from .utils import get_theme_options_dict
 
 
 def setup_edit_url(
@@ -20,11 +24,24 @@ def setup_edit_url(
         if doc_path and not doc_path.endswith("/"):
             doc_path = f"{doc_path}/"
 
-        default_provider_urls = {
+        provider_urls = {
             "bitbucket_url": "https://bitbucket.org",
+            "forgejo_url": "https://codeberg.org",
+            "gitea_url": "https://gitea.com",
             "github_url": "https://github.com",
             "gitlab_url": "https://gitlab.com",
         }
+        provider_labels = {
+            "bitbucket": "Bitbucket",
+            "forgejo": "Forgejo",
+            "gitea": "Gitea",
+            "github": "GitHub",
+            "gitlab": "GitLab",
+        }
+        theme_options = get_theme_options_dict(app)
+        provider_urls, provider_labels = adjust_forge_params(
+            provider_urls, provider_labels, theme_options
+        )
 
         edit_attrs = {}
 
@@ -44,25 +61,35 @@ def setup_edit_url(
         edit_attrs.update(
             {
                 ("bitbucket_user", "bitbucket_repo", "bitbucket_version"): (
-                    "Bitbucket",
+                    provider_labels["bitbucket"],
                     "{{ bitbucket_url }}/{{ bitbucket_user }}/{{ bitbucket_repo }}"
                     "/src/{{ bitbucket_version }}"
                     "/{{ doc_path }}{{ file_name }}?mode=edit",
                 ),
+                ("forgejo_user", "forgejo_repo", "forgejo_version"): (
+                    provider_labels["forgejo"],
+                    "{{ forgejo_url }}/{{ forgejo_user }}/{{ forgejo_repo }}"
+                    "/_edit/{{ forgejo_version }}/{{ doc_path }}{{ file_name }}",
+                ),
+                ("gitea_user", "gitea_repo", "gitea_version"): (
+                    provider_labels["gitea"],
+                    "{{ gitea_url }}/{{ gitea_user }}/{{ gitea_repo }}"
+                    "/_edit/{{ gitea_version }}/{{ doc_path }}{{ file_name }}",
+                ),
                 ("github_user", "github_repo", "github_version"): (
-                    "GitHub",
+                    provider_labels["github"],
                     "{{ github_url }}/{{ github_user }}/{{ github_repo }}"
                     "/edit/{{ github_version }}/{{ doc_path }}{{ file_name }}",
                 ),
                 ("gitlab_user", "gitlab_repo", "gitlab_version"): (
-                    "GitLab",
+                    provider_labels["gitlab"],
                     "{{ gitlab_url }}/{{ gitlab_user }}/{{ gitlab_repo }}"
                     "/-/edit/{{ gitlab_version }}/{{ doc_path }}{{ file_name }}",
                 ),
             }
         )
 
-        doc_context = dict(default_provider_urls)
+        doc_context = dict(provider_urls)
         doc_context.update(context)
         doc_context.update(doc_path=doc_path, file_name=file_name)
 
@@ -80,3 +107,27 @@ def setup_edit_url(
 
     # Ensure that the max TOC level is an integer
     context["theme_show_toc_level"] = int(context.get("theme_show_toc_level", 1))
+
+
+def adjust_forge_params(
+    forge_urls: dict[str, str],
+    forge_labels: dict[str, str],
+    theme_options: dict[str, str],
+) -> (dict[str, str], dict[str, str]):
+    """Adjust labels and URLs for some of the more decentralized forges."""
+    # use *_urls given in html_theme_options as authority (netloc)
+    # instead of default if available
+    for url_key in forge_urls:
+        forge_url = theme_options.get(url_key)
+        if forge_url:
+            forge_url = urllib.parse.urlsplit(forge_url, allow_fragments=False)
+            forge_url = f"{forge_url.scheme}://{forge_url.netloc}"
+            forge_urls[url_key] = forge_url
+
+    # use rebranded forge label instead of generic SW name where known
+    if "forgejo_url" in theme_options:
+        url = theme_options["forgejo_url"]
+        if url.startswith("https://codeberg.org"):
+            forge_labels["forgejo"] = "Codeberg"
+
+    return forge_urls, forge_labels
