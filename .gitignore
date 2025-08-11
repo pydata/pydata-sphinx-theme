@@ -118,6 +118,9 @@ bun.lockb
 # files from the gallery screenshots
 docs/_static/gallery
 
+# File copied during build
+code-cells-myst-nb.mystnb.ipynb
+
 # Our site profile tests
 profile.svg
 
