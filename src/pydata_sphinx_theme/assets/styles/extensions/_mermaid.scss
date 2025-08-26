@@ -1,0 +1,9 @@
+/**
+ * sphinxcontrib-mermaid
+ * ref: https://github.com/mgaitan/sphinxcontrib-mermaid
+ */
+
+/* Style the diagram such that it has a dark mode */
+html[data-theme="dark"] pre.mermaid > svg {
+  filter: brightness(0.8) invert(0.82) contrast(1.2);
+}
