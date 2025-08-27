@@ -12,6 +12,8 @@ additional-compiled-static-assets = [
   "vendor/",
   "scripts/bootstrap.js",
   "scripts/fontawesome.js",
+  "styles/nbsphinx-pydata-theme.css",
+  "styles/myst-nb-pydata-theme.css",
   "locale/",
 ]
 
@@ -61,7 +63,7 @@ doc = [
   "sphinx-sitemap<2.7.0",
   "sphinx-autoapi>=3.0.0",
   # For examples section
-  "myst-parser",
+  "myst-nb", # includes "myst-parser"
   "ablog>=0.11.8",
   "jupyter_sphinx",
   "pandas",
