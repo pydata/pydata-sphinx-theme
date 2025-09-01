@@ -13,7 +13,7 @@ default_language_version:
 
 repos:
   - repo: "https://github.com/pycontribs/mirrors-prettier"
-    rev: v3.5.3
+    rev: v3.6.2
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
@@ -22,7 +22,7 @@ repos:
         exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
   - repo: "https://github.com/astral-sh/ruff-pre-commit"
-    rev: "v0.11.12"
+    rev: "v0.12.11"
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
@@ -41,7 +41,7 @@ repos:
         types_or: ["html"]
 
   - repo: "https://github.com/PyCQA/doc8"
-    rev: v1.1.2
+    rev: v2.0.0
     hooks:
       - id: doc8
 
@@ -56,7 +56,7 @@ repos:
       - id: remove-metadata
 
   - repo: "https://github.com/thibaudcolas/pre-commit-stylelint"
-    rev: v16.20.0
+    rev: v16.23.1
     hooks:
       - id: stylelint
         # automatically fix .scss files where possible
@@ -67,7 +67,7 @@ repos:
           - stylelint-config-standard-scss@13.1.0
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
