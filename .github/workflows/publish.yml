@@ -55,7 +55,7 @@ jobs:
       - run: python -Im pip install tox-uv
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310 # 2.12.0
+        uses: hynek/build-and-inspect-python-package@c52c3a4710070b50470d903818a7b25115dcd076 # 2.13.0
         id: baipp
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
