@@ -39,4 +39,4 @@ $btn-focus-box-shadow: $focus-ring-box-shadow;
 // Don't enable `scroll-behavior: smooth` globally, instead use
 // `scroll-behavior: auto` which is also the behavior when
 // `prefers-reduced-motion` is active.
-$enable-smooth-scroll: false
+$enable-smooth-scroll: false;
