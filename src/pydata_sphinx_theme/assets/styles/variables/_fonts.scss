@@ -33,7 +33,9 @@ html {
 
   // Font family
   // https://modernfontstacks.com/?stack=system-ui
-  --pst-font-family-base-system: system-ui, sans-serif;
+  --pst-font-family-base-system:
+    system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 
   // https://modernfontstacks.com/?stack=monospace-code
   --pst-font-family-monospace-system:
