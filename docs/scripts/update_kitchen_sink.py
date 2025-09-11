@@ -3,10 +3,13 @@
 from pathlib import Path
 from urllib.request import urlopen
 
+
 EXTRA_MESSAGE = """\
 .. note::
 
-   The Kitchen Sink was generated from the `Sphinx Themes website <https://sphinx-themes.org/>`_, a community-supported showcase of themes for `Sphinx <https://sphinx-doc.org>`_.
+   The Kitchen Sink was generated from the
+   `Sphinx Themes website <https://sphinx-themes.org/>`_, a community-supported showcase
+   of themes for `Sphinx <https://www.sphinx-doc.org/>`_.
    Check it out to see other great themes.
 
    .. button-link:: https://sphinx-themes.org
@@ -28,7 +31,8 @@ kitchen_sink_files = [
     "tables.rst",
     "typography.rst",
 ]
-path_sink = Path(__file__).parent.parent / "examples" / "kitchen-sink"
+path_sink = Path(__file__).resolve().parents[1] / "examples" / "kitchen-sink"
+assert path_sink.exists(), path_sink
 for ifile in kitchen_sink_files:
     print(f"Reading {ifile}...")
     url = f"https://github.com/sphinx-themes/sphinx-themes.org/raw/master/sample-docs/kitchen-sink/{ifile}"

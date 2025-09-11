@@ -11,6 +11,11 @@ scripts/bootstrap.js.map
 styles/bootstrap.css
 styles/bootstrap.css.map
 
+# fontawesome generated webpack outputs
+scripts/fontawesome.js
+scripts/fontawesome.js.LICENSE.txt
+scripts/fontawesome.js.map
+
 # webpack files
 webpack-macros.html
 vendor/*

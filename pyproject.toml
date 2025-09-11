@@ -1,16 +1,18 @@
 [build-system]
-requires = ["sphinx-theme-builder @ https://github.com/pradyunsg/sphinx-theme-builder/archive/87214d0671c943992c05e3db01dca997e156e8d6.zip"]
+requires = [
+  "sphinx-theme-builder @ git+https://github.com/pradyunsg/sphinx-theme-builder.git@main"
+]
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
-node-version = "16.13.2"
+node-version = "22.9.0"
 theme-name = "pydata_sphinx_theme"
 additional-compiled-static-assets = [
   "webpack-macros.html",
   "vendor/",
-  "styles/bootstrap.css",
   "scripts/bootstrap.js",
-  "locale/"
+  "scripts/fontawesome.js",
+  "locale/",
 ]
 
 [project]
@@ -20,14 +22,13 @@ dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-  "sphinx>=5.0",
+  "sphinx>=6.1",
   "beautifulsoup4",
   "docutils!=0.17.0",
-  "packaging",
   "Babel",
   "pygments>=2.7",
   "accessible-pygments",
-  "typing-extensions"
+  "typing-extensions",
 ]
 license = { file = "LICENSE" }
 maintainers = [
@@ -51,15 +52,17 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
+  "astroid>=3", # fix for sphinx.autoapi and read the docs, should be reverted at a later date - see issue #2125
   "numpydoc",
   "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
-  "sphinx-sitemap",
+  # TODO: unpin sphinx-sitemap once a solution is offered for https://github.com/jdillard/sphinx-sitemap/issues/109
+  "sphinx-sitemap<2.7.0",
   "sphinx-autoapi>=3.0.0",
   # For examples section
   "myst-parser",
-  "ablog>=0.11.0rc2",
+  "ablog>=0.11.8",
   "jupyter_sphinx",
   "pandas",
   "plotly",
@@ -70,16 +73,32 @@ doc = [
   "sphinx-design",
   "sphinx-togglebutton",
   "jupyterlite-sphinx",
-  "sphinxcontrib-youtube<1.4",
+  "sphinxcontrib-youtube>=1.4.1",
   "sphinx-favicon>=1.0.1",
   "ipykernel",
   "nbsphinx",
   "ipyleaflet",
   "colorama",
+  "ipywidgets",
+  "graphviz",
 ]
-test = ["pytest", "pytest-cov", "pytest-regressions"]
-dev = ["pyyaml", "pre-commit", "nox", "pydata-sphinx-theme[doc,test]"]
-a11y = ["pytest-playwright"]
+dev = [
+  "pyyaml",
+  "pre-commit",
+  "pydata-sphinx-theme[doc,test]",
+  "tox",
+  "pandoc",
+  "sphinx-theme-builder[cli]",
+]
+test = [
+  "pytest",
+  "pytest-cov",
+  "pytest-regressions",
+  "sphinx[test]",
+  "pytest-playwright"
+]
+a11y = ["pydata-sphinx-theme[test]"]
+i18n = ["Babel", "jinja2"]
 
 [project.entry-points]
 "sphinx.html_themes" = { pydata_sphinx_theme = "pydata_sphinx_theme" }
@@ -88,20 +107,30 @@ a11y = ["pytest-playwright"]
 ignore = ["D001"] # we follow a 1 line = 1 paragraph style
 
 [tool.ruff]
-ignore-init-module-imports = true
 fix = true
-select = ["E", "F", "W", "I", "D", "RUF"]
+# keep consistent with black
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
 ignore = [
-  "E501", # line too long | Black take care of it
   "D107", # Missing docstring in `__init__` | set the docstring in the class
+  "D205", # 1 blank line required between summary line and description,
+  "D212", # docstring summary must be on first physical line
+  "W291", # let pre-commit handle trailing whitespace
 
 ]
+select = ["E", "F", "W", "I", "D", "RUF", "G"]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.ruff.lint.isort]
+lines-between-types = 1
+lines-after-imports = 2
 
 [tool.djlint]
 profile = "jinja"
@@ -119,6 +148,12 @@ markers = "a11y: mark a test as an accessibility test"
 [tool.coverage.run]
 source = ["pydata_sphinx_theme"]
 branch = true
+relative_files = true
 
 [tool.coverage.report]
-fail_under = 60
+fail_under = 80
+show_missing = true
+skip_covered = true
+
+[tool.coverage.paths]
+source = ["src", ".tox/py*/**/site-packages"]

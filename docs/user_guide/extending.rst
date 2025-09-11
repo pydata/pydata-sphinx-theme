@@ -33,7 +33,7 @@ Then add the ``dropdown`` class to any admonition directive (shown here on a ``n
             :start-after: begin-example-dropdown
             :end-before: .. end-example-dropdown
             :code: rst
-            :class: highlight-rst
+            :class: highlight
 
     .. tab-item:: markdown
 
@@ -73,7 +73,7 @@ The title is specified on the same line as the ``.. admonition::`` directive:
             :start-after: begin-example-title
             :end-before: .. end-example-title
             :code: rst
-            :class: highlight-rst
+            :class: highlight
 
     .. tab-item:: markdown
 
@@ -87,7 +87,9 @@ The title is specified on the same line as the ``.. admonition::`` directive:
 Styling with semantic color names
 ---------------------------------
 
-You can re-style any admonition to match any of the built-in admonition types using any of the :ref:`theme's semantic color names <color-variables>` as a class (this is most useful for custom-titled admonitions):
+You can re-style any admonition to match any of the built-in admonition types
+using any of the :ref:`theme's semantic color names <color-variables>` as a
+class (this is most useful for custom-titled admonitions):
 
 .. begin-example-semantic
 .. admonition:: Custom title with "warning" style
@@ -106,7 +108,7 @@ Note that it updates both the color and the icon. See :doc:`./styling` for a lis
             :start-after: begin-example-semantic
             :end-before: .. end-example-semantic
             :code: rst
-            :class: highlight-rst
+            :class: highlight
 
     .. tab-item:: markdown
 
@@ -143,7 +145,7 @@ Be sure to use the same color for ``border-color`` and ``color`` and a different
             :start-after: begin-example-color
             :end-before: .. end-example-color
             :code: rst
-            :class: highlight-rst
+            :class: highlight
 
     .. tab-item:: markdown
 
@@ -161,7 +163,7 @@ And add the following to your ``custom.css`` file:
     :start-after: begin-custom-color
     :end-before: /* end-custom-color
     :code: css
-    :class: highlight-css
+    :class: highlight
 
 
 Using a custom icon
@@ -184,7 +186,7 @@ Customizing the icon uses a similar process to customizing the color: create a n
             :start-after: begin-example-icon
             :end-before: .. end-example-icon
             :code: rst
-            :class: highlight-rst
+            :class: highlight
 
     .. tab-item:: markdown
 
@@ -202,7 +204,7 @@ And add the following css to your ``custom.css`` file:
     :start-after: begin-custom-icon
     :end-before: /* end-custom-icon
     :code: css
-    :class: highlight-css
+    :class: highlight
 
 
 Combining all three customizations
@@ -225,7 +227,7 @@ Here we demonstrate an admonition with a custom icon, color, and title (and also
             :start-after: begin-example-youtube
             :end-before: .. end-example-youtube
             :code: rst
-            :class: highlight-rst
+            :class: highlight
 
     .. tab-item:: markdown
 
@@ -245,4 +247,4 @@ And add the following css to your custom.css file:
     :start-after: begin-custom-youtube
     :end-before: /* end-custom-youtube
     :code: css
-    :class: highlight-css
+    :class: highlight

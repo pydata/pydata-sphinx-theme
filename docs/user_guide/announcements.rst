@@ -41,6 +41,23 @@ For example, the following configuration tells the theme to load the ``custom-te
       "announcement": "https://github.com/pydata/pydata-sphinx-theme/raw/main/docs/_templates/custom-template.html",
    }
 
+Update or remove announcement banner
+------------------------------------
+
+If you set ``html_theme_options["announcement"]`` to plain text or HTML, then to
+update the announcement banner you need to modify this string and rebuild your
+documentation pages. To remove the announcement banner, set this value to an
+empty string and rebuild your documentation pages.
+
+If you set ``html_theme_options["announcement"]`` to a URL string (starts with
+``http``), then you can edit the file at that URL to update the announcement
+banner. Saving an empty file at that URL will remove the announcement banner.
+That's the main advantage of using a URL--you can change the announcement banner
+without rebuilding and redeploying all of your documentation pages. For example,
+if you point the announcement to the URL of a file in your repo, as we do on
+this documentation site (see previous section), then you can edit, save and push
+your changes to just that file (empty file = remove announcement) without
+rebuilding and redeploying all your docs.
 
 .. _version-warning-banners:
 
@@ -71,6 +88,11 @@ In addition to the general-purpose announcement banner, the theme includes a bui
             "url": "https://anything",
             "preferred": true
         }
+
+    If the active version compares less than the preferred version, the announcement will inform the user that
+    they are viewing an older version of the documentation and provide a link to the preferred version. If the
+    version compares greater than the preferred version (or if the version match contains the strings `"dev"`,
+    `"rc"` or `"pre"`), the announcement will say they are viewing an unstable development version instead.
 
 If you want similar functionality for *older* versions of your docs (i.e. those built before the ``show_version_warning_banner`` configuration option was available), you can manually add a banner by prepending the following HTML to all pages (be sure to replace ``URL_OF_STABLE_VERSION_OF_PROJECT`` with a valid URL, and adjust styling as desired):
 

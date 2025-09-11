@@ -1,0 +1,142 @@
+# This workflow is checks that the documentation can be built across multiple OSes,
+# Python, and Sphinx versions.
+# It also checks for broken links in the documentation and runs Lighthouse audits
+# on the built site.
+# IMPORTANT: if you make changes to this workflow, you will need to open a follow-up
+# PR after merge to update the action SHA in the publish workflow
+
+name: docs-checks
+
+# Dynamic concurrency group that uses the workflow name and PR number if available
+# or commit SHA as a fallback. If a new build is triggered under that
+# concurrency group while a previous build is running it will be canceled.
+# Repeated pushes to a PR will cancel all previous builds, while multiple
+# merges to main will not cancel.
+# Note we add the prefix `docs-` to avoid race conditions when called from other workflows
+# for example when called from the CI workflow
+concurrency:
+  group: docs-${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: "1" # Make tools pretty
+  DEFAULT_PYTHON_VERSION: "3.12" # keep in sync with tox.ini
+  PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
+
+# disable all permissions by default
+permissions: {}
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+  # allows this to be used as a composite action in other workflows
+  workflow_call:
+  # allow manual triggering of the workflow, while debugging
+  workflow_dispatch:
+
+jobs:
+  # Build our docs (PST) on major OSes and check for warnings
+  build-site:
+    name: "build PST docs"
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.12", "3.13"]
+        include:
+          # oldest Python version with the oldest Sphinx version
+          - os: ubuntu-latest
+            python-version: "3.9"
+            sphinx-version: "6.1"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+        with:
+          python-version: ${{ matrix.python-version }}
+          pandoc: true
+          graphviz: true
+
+      - name: "Build docs and check for warnings 📖"
+        shell: bash
+        run: |
+          # check if there is a specific Sphinx version to build with
+          # example substitution: tox run -e py39-sphinx61-docs
+          if [ -n "${{matrix.sphinx-version}}" ]; then
+            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-docs
+          # build with the default Sphinx version
+          # example substitution: tox run -e py312-docs
+          else
+            python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-docs
+          fi
+
+  # Run Lighthouse audits on the built site (kitchen-sink only)
+  lighthouse-audit:
+    needs: build-site
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
+      - name: "Copy kitchen sink to a tiny site"
+        run: |
+          # ensuring proper scaping of the variable
+          docs_dir="${DOCS_DIR}"
+          mkdir -p $docs_dir/site
+          cp -r docs/examples/kitchen-sink/* $docs_dir/site/
+          echo 'html_theme = "pydata_sphinx_theme"' > $docs_dir/site/conf.py
+
+          # build docs without checking for warnings
+          python -Im tox run -e docs-no-checks
+        env:
+          DOCS_DIR: "audit"
+
+      - name: "Audit with Lighthouse 🔦"
+        # pin to Lighthouse version 12.1.0
+        uses: treosh/lighthouse-ci-action@2f8dda6cf4de7d73b29853c3f29e73a01e297bd8
+        with:
+          configPath: ".github/workflows/lighthouserc.json"
+          temporaryPublicStorage: true
+          uploadArtifacts: true
+          runs: 3 # Multiple runs to reduce variance
+
+  # Check for broken links in our docs
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: "Setup CI environment 🛠"
+        # Important: make sure to update the SHA after making any changes to the set-dev-env action
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+
+      - name: "Check for broken links 🔗"
+        run: python -Im tox run -e docs-linkcheck
+
+      - name: "Upload file with broken links 📤"
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: broken-links
+          path: docs/_build/linkcheck/output.txt
+        if: ${{ always() }}

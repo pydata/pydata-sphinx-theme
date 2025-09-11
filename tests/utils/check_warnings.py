@@ -1,10 +1,13 @@
 """Check the list of warnings produced by a doc build."""
 
 import sys
+
 from pathlib import Path
 
 from colorama import Fore, init
+
 from pydata_sphinx_theme.utils import escape_ansi
+
 
 # init colors for all plateforms
 init()
@@ -27,8 +30,8 @@ def check_warnings(file: Path) -> bool:
     print("\n=== Sphinx Warnings test ===\n")
 
     # find the file where all the known warnings are stored
-    warning_file = Path(__file__).parent.parent / "warning_list.txt"
-    extra_warning_file = Path(__file__).parent.parent / "intermittent_warning_list.txt"
+    warning_file = Path(__file__).parents[1] / "warning_list.txt"
+    extra_warning_file = Path(__file__).parents[1] / "intermittent_warning_list.txt"
 
     received_warnings = escape_ansi(file.read_text()).strip().split("\n")
     expected_warnings = warning_file.read_text().strip().split("\n")

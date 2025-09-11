@@ -50,7 +50,7 @@ For  complete reference of the existing option please see :ref:`the last section
 
             .. grid-item::
                 :padding: 2
-                :columns: 3
+                :columns: 2
 
                 Logo
 
@@ -58,7 +58,7 @@ For  complete reference of the existing option please see :ref:`the last section
 
             .. grid-item::
                 :padding: 2
-                :columns: 6
+                :columns: 4
 
                 Section links
 
@@ -66,7 +66,15 @@ For  complete reference of the existing option please see :ref:`the last section
 
             .. grid-item::
                 :padding: 2
-                :columns: 3
+                :columns: 4
+
+                Persistent components
+
+                ``navbar_persistent``
+
+            .. grid-item::
+                :padding: 2
+                :columns: 2
 
                 Components
 
@@ -346,14 +354,14 @@ By default, it has the following configuration:
 .. code-block:: python
 
     html_sidebars = {
-        "**": ["sidebar-nav-bs", "sidebar-ethical-ads"]
+        "**": ["sidebar-collapse", "sidebar-nav-bs"]
     }
+
+- ``sidebar-collapse.html`` - a button that allows users to expand and collapse the sidebar.
 
 - ``sidebar-nav-bs.html`` - a bootstrap-friendly navigation section.
 
   When there are no pages to show, it will disappear and potentially add extra space for your page's content.
-
-- ``sidebar-ethical-ads.html`` - a placement for ReadTheDocs's Ethical Ads (will only show up on ReadTheDocs).
 
 Primary sidebar end sections
 ----------------------------
@@ -373,6 +381,8 @@ By default, it has the following templates:
       "primary_sidebar_end": ["sidebar-ethical-ads"],
       # ...
     }
+
+``sidebar-ethical-ads.html`` is a placement for ReadTheDocs's Ethical Ads (will only show up on ReadTheDocs).
 
 Remove the primary sidebar from pages
 -------------------------------------
@@ -585,4 +595,3 @@ Please find here the full list of keys you can use in the ``html_theme_options``
 .. include:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/theme.conf
     :code: ini
     :class: highlight-ini
-

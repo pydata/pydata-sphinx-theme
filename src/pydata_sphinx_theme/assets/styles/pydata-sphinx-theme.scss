@@ -1,8 +1,16 @@
-// Import Bootstrap core
-@import "~bootstrap/scss/functions";
+// IMPORTANT: our Bootstrap variable overrides must be imported before the
+// Bootstrap files that reference those variables; otherwise our overrides will
+// have no effect.
 @import "variables/bootstrap";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+
+// Import all of Bootstrap scss.
+@import "~bootstrap/scss/bootstrap";
+
+// Import FontAwesome from _node_modules
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/brands";
 
 // Variables
 @import "variables/layout";
@@ -41,12 +49,12 @@
 @import "./components/prev-next";
 @import "./components/search";
 @import "./components/searchbox";
+@import "./components/sidebar-collapse";
 @import "./components/switcher-theme";
 @import "./components/switcher-version";
 @import "./components/toc-inpage";
 @import "./components/versionmodified";
 @import "./components/indices";
-@import "./components/readthedocs-switcher";
 
 // Content blocks in standard Sphinx
 @import "./content/admonitions";
@@ -68,6 +76,8 @@
 @import "./extensions/copybutton";
 @import "./extensions/ethical-ads";
 @import "./extensions/execution";
+@import "./extensions/gallery_grid";
+@import "./extensions/graphviz";
 @import "./extensions/pydata";
 @import "./extensions/sphinx_design";
 @import "./extensions/togglebutton";

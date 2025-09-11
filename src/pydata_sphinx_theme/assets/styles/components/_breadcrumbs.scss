@@ -13,16 +13,29 @@ ul.bd-breadcrumbs {
   li.breadcrumb-item {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    overflow-x: hidden;
+
+    a,
+    .ellipsis {
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
+      // Need to add margin, otherwise the overflow: hidden rule on the parent
+      // will hide the focus ring
+      margin: $focus-ring-width;
+    }
 
     // Style should look like heavier in-page links
     // keeping visited in the default link colour
     font-weight: bold;
+
     a {
       @include link-style-text;
     }
 
     // Items that aren't the home have a caret to the left
-    &:not(.breadcrumb-home):before {
+    &:not(.breadcrumb-home)::before {
       font: var(--fa-font-solid);
       font-size: 0.8rem;
       content: var(--pst-breadcrumb-divider);

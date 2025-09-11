@@ -1,37 +1,34 @@
-# English translations for pydata-sphinx-theme.
-# Copyright (C) 2023 PyData developers
-# This file is distributed under the same license as the pydata-sphinx-theme
-# project.
+# English translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 # Translators:
-# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2023
+# Cristhian Rivera, 2024
+# Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2025
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-21 07:30-0700\n"
-"PO-Revision-Date: 2023-04-14 14:57+0000\n"
-"Last-Translator: Oriol Abril-Pla <oriol.abril.pla@gmail.com>, 2023\n"
-"Language: ca\n"
-"Language-Team: Catalan "
-"(https://app.transifex.com/12rambau/teams/166811/ca/)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.0\n"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:53
+#: docs/conf.py:111
+msgid "Click to expand"
+msgstr "Fes clic per a desplegar"
+
+#: docs/conf.py:112
+msgid "Click to collapse"
+msgstr "Fes clic per a replegar"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:57
 msgid "Skip to main content"
 msgstr "Salta al contingut principal"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:64
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:69
 msgid "Back to top"
-msgstr ""
+msgstr "Torna a l'inici"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:5
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:7
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:5
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:6
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:8
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:5
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/search.html:28
 msgid "Search"
@@ -45,18 +42,18 @@ msgstr "Error"
 msgid "Please activate JavaScript to enable the search functionality."
 msgstr "Activeu JavaScript per habilitar la funcionalitat de cerca."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:13
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:6
 msgid "Breadcrumb"
 msgstr "Ruta de navegació"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:17
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html:10
 msgid "Home"
 msgstr "Inici"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:5
 #, python-format
-msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
-msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+msgid "Copyright %(copyright)s"
+msgstr "Copyright %(copyright)s"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/copyright.html:8
 #, python-format
@@ -93,12 +90,8 @@ msgstr "Índex de Mòduls Python"
 msgid "Last updated on %(last_updated)s."
 msgstr "Última actualització el %(last_updated)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/navbar-nav.html:6
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/navbar-nav.html:7
-msgid "Site Navigation"
-msgstr "Navegació del lloc"
-
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/page-toc.html:8
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:43
 msgid "On this page"
 msgstr "Continguts de la pàgina"
 
@@ -118,6 +111,14 @@ msgstr "pàgina següent"
 msgid "next"
 msgstr "següent"
 
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:6
+msgid "Collapse Sidebar"
+msgstr "Oculta la barra lateral"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:11
+msgid "Expand Sidebar"
+msgstr "Mostra la barra lateral"
+
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
 msgid "Section Navigation"
@@ -136,20 +137,42 @@ msgstr ""
 "Creada amb <a href=\"https://www.sphinx-doc.org/\">Sphinx</a> "
 "%(sphinx_version)s."
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
-msgid "light/dark"
-msgstr "clar/fosc"
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
+msgid "Color mode"
+msgstr "Mode de color"
 
-#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:3
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
+msgid "Light"
+msgstr "Clar"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
+msgid "Dark"
+msgstr "Fosc"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
+msgid "System Settings"
+msgstr "Configuració del sistema"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:4
 #, python-format
 msgid ""
-"Built with the <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+"Built with the <a href=\"%(PST_url)s\">PyData Sphinx Theme</a> "
 "%(theme_version)s."
 msgstr ""
-"Construïda amb el <a href=\"https://pydata-sphinx-"
-"theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+"Construïda amb el <a href=\"%(PST_url)s\">Tema PyData Sphinx</a> "
 "%(theme_version)s."
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
+msgid "Version warning"
+msgstr "Alerta sobre la versió"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
+msgid "Announcement"
+msgstr "Anunci"
+
+#: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
+msgid "Site navigation"
+msgstr "Navegació del lloc"
 
 #~ msgid "Breadcrumbs"
 #~ msgstr "Rutes de navegació"
@@ -166,3 +189,20 @@ msgstr ""
 #~ msgid "Twitter"
 #~ msgstr "Twitter"
 
+#~ msgid "Site Navigation"
+#~ msgstr "Navegació del lloc"
+
+#~ msgid "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+#~ msgstr "© <a href=\"%(path)s\">Copyright</a> %(copyright)s."
+
+#~ msgid "light/dark"
+#~ msgstr "clar/fosc"
+
+#~ msgid ""
+#~ "Built with the <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">PyData Sphinx Theme</a> "
+#~ "%(theme_version)s."
+#~ msgstr ""
+#~ "Construïda amb el <a href=\"https://pydata-sphinx-"
+#~ "theme.readthedocs.io/en/stable/index.html\">Tema PyData Sphinx</a> "
+#~ "%(theme_version)s."

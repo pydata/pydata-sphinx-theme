@@ -96,34 +96,6 @@ function addModeListener() {
 }
 
 /*******************************************************************************
- * TOC interactivity
- */
-
-/**
- * TOC sidebar - add "active" class to parent list
- *
- * Bootstrap's scrollspy adds the active class to the <a> link,
- * but for the automatic collapsing we need this on the parent list item.
- *
- * The event is triggered on "window" (and not the nav item as documented),
- * see https://github.com/twbs/bootstrap/issues/20086
- */
-function addTOCInteractivity() {
-  window.addEventListener("activate.bs.scrollspy", function () {
-    const navLinks = document.querySelectorAll(".bd-toc-nav a");
-
-    navLinks.forEach((navLink) => {
-      navLink.parentElement.classList.remove("active");
-    });
-
-    const activeNavLinks = document.querySelectorAll(".bd-toc-nav a.active");
-    activeNavLinks.forEach((navLink) => {
-      navLink.parentElement.classList.add("active");
-    });
-  });
-}
-
-/*******************************************************************************
  * Scroll
  */
 
@@ -142,7 +114,7 @@ function scrollToActive() {
   // Inspired on source of revealjs.com
   let storedScrollTop = parseInt(
     sessionStorage.getItem("sidebar-scroll-top"),
-    10
+    10,
   );
 
   if (!isNaN(storedScrollTop)) {
@@ -194,7 +166,7 @@ var findSearchInput = () => {
     } else {
       // must be at least one persistent form, use the first persistent one
       form = document.querySelector(
-        "div:not(.search-button__search-container) > form.bd-search"
+        ":not(#pst-search-dialog) > form.bd-search",
       );
     }
     return form.querySelector("input");
@@ -208,22 +180,30 @@ var findSearchInput = () => {
  */
 var toggleSearchField = () => {
   // Find the search input to highlight
-  let input = findSearchInput();
+  const input = findSearchInput();
 
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
-  let searchPopupWrapper = document.querySelector(".search-button__wrapper");
-  let hiddenInput = searchPopupWrapper.querySelector("input");
+  const searchDialog = document.getElementById("pst-search-dialog");
+  const hiddenInput = searchDialog.querySelector("input");
   if (input === hiddenInput) {
-    searchPopupWrapper.classList.toggle("show");
-  }
-  // when toggling off the search field, remove its focus
-  if (document.activeElement === input) {
-    input.blur();
+    if (searchDialog.open) {
+      searchDialog.close();
+    } else {
+      // Note: browsers should focus the input field inside the modal dialog
+      // automatically when it is opened.
+      searchDialog.showModal();
+    }
   } else {
-    input.focus();
-    input.select();
-    input.scrollIntoView({ block: "center" });
+    // if the input field is not the hidden one, then toggle its focus state
+
+    if (document.activeElement === input) {
+      input.blur();
+    } else {
+      input.focus();
+      input.select();
+      input.scrollIntoView({ block: "center" });
+    }
   }
 };
 
@@ -245,7 +225,7 @@ var addEventListenerForSearchKeyboard = () => {
           ? event.metaKey && !event.ctrlKey
           : !event.metaKey && event.ctrlKey) &&
         // Case-insensitive so the shortcut still works with caps lock
-        /k/i.test(event.key)
+        /^k$/i.test(event.key)
       ) {
         event.preventDefault();
         toggleSearchField();
@@ -253,9 +233,10 @@ var addEventListenerForSearchKeyboard = () => {
       // also allow Escape key to hide (but not show) the dynamic search field
       else if (document.activeElement === input && /Escape/i.test(event.key)) {
         toggleSearchField();
+        resetSearchAsYouTypeResults();
       }
     },
-    true
+    true,
   );
 };
 
@@ -278,8 +259,31 @@ var changeSearchShortcutKey = () => {
   let shortcuts = document.querySelectorAll(".search-button__kbd-shortcut");
   if (useCommandKey) {
     shortcuts.forEach(
-      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘")
+      (f) => (f.querySelector("kbd.kbd-shortcut__modifier").innerText = "⌘"),
     );
+  }
+};
+
+const closeDialogOnBackdropClick = ({
+  currentTarget: dialog,
+  clientX,
+  clientY,
+}) => {
+  if (!dialog.open) {
+    return;
+  }
+
+  // Dialog.getBoundingClientRect() does not include ::backdrop. (This is the
+  // trick that allows us to determine if click was inside or outside of the
+  // dialog: click handler includes backdrop, getBoundingClientRect does not.)
+  const { left, right, top, bottom } = dialog.getBoundingClientRect();
+
+  // 0, 0 means top left
+  const clickWasOutsideDialog =
+    clientX < left || right < clientX || clientY < top || bottom < clientY;
+
+  if (clickWasOutsideDialog) {
+    dialog.close();
   }
 };
 
@@ -295,11 +299,175 @@ var setupSearchButtons = () => {
     btn.onclick = toggleSearchField;
   });
 
-  // Add the search button overlay event callback
-  let overlay = document.querySelector(".search-button__overlay");
-  if (overlay) {
-    overlay.onclick = toggleSearchField;
+  // If user clicks outside the search modal dialog, then close it.
+  const searchDialog = document.getElementById("pst-search-dialog");
+  // Dialog click handler includes clicks on dialog ::backdrop.
+  searchDialog.addEventListener("click", closeDialogOnBackdropClick);
+};
+
+/*******************************************************************************
+ * Inline search results (search-as-you-type)
+ *
+ * Immediately displays search results under the search query textbox.
+ *
+ * The search is conducted by Sphinx's built-in search tools (searchtools.js).
+ * Usually searchtools.js is only available on /search.html but
+ * pydata-sphinx-theme (PST) has been modified to load searchtools.js on every
+ * page. After the user types something into PST's search query textbox,
+ * searchtools.js executes the search and populates the results into
+ * the #search-results container. searchtools.js expects the results container
+ * to have that exact ID.
+ */
+var setupSearchAsYouType = () => {
+  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
+    return;
   }
+
+  // Don't interfere with the default search UX on /search.html.
+  if (window.location.pathname.endsWith("/search.html")) {
+    return;
+  }
+
+  // Bail if the Search class is not available. Search-as-you-type is
+  // impossible without that class. layout.html should ensure that
+  // searchtools.js loads.
+  //
+  // Search class is defined in upstream Sphinx:
+  // https://github.com/sphinx-doc/sphinx/blob/6678e357048ea1767daaad68e7e0569786f3b458/sphinx/themes/basic/static/searchtools.js#L181
+  if (!Search) {
+    return;
+  }
+
+  // Destroy the previous search container and create a new one.
+  resetSearchAsYouTypeResults();
+  let timeoutId = null;
+  let lastQuery = "";
+  const searchInput = document.querySelector(
+    "#pst-search-dialog input[name=q]",
+  );
+
+  // Initiate searches whenever the user types stuff in the search modal textbox.
+  searchInput.addEventListener("keyup", () => {
+    const query = searchInput.value;
+
+    // Don't search when there's nothing in the query textbox.
+    if (query === "") {
+      lastQuery = "";
+      resetSearchAsYouTypeResults(); // Remove previous results.
+      return;
+    }
+
+    // Don't search if there is no detectable change between
+    // the last query and the current query. E.g. the user presses
+    // Tab to start navigating the search results.
+    if (query === lastQuery) {
+      return;
+    }
+
+    // The user has changed the search query. Delete the old results
+    // and start setting up the new container.
+    resetSearchAsYouTypeResults();
+
+    // Debounce so that the search only starts when the user stops typing.
+    const delay_ms = 300;
+    lastQuery = query;
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
+    timeoutId = window.setTimeout(() => {
+      Search.performSearch(query);
+      document.querySelector("#search-results").classList.remove("empty");
+      timeoutId = null;
+    }, delay_ms);
+  });
+};
+
+// Delete the old search results container (if it exists) and set up a new one.
+//
+// There is some complexity around ensuring that the search results links are
+// correct because we're extending searchtools.js past its assumed usage.
+// Sphinx assumes that searches are only executed from /search.html and
+// therefore it assumes that all search results links should be relative to
+// the root directory of the website. In our case the search can now execute
+// from any page of the website so we must fix the relative URLs that
+// searchtools.js generates.
+var resetSearchAsYouTypeResults = () => {
+  if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
+    return;
+  }
+  // If a search-as-you-type results container was previously added,
+  // remove it now.
+  let results = document.querySelector("#search-results");
+  if (results) {
+    results.remove();
+  }
+
+  // Create a new search-as-you-type results container.
+  results = document.createElement("section");
+  results.classList.add("empty");
+  // Remove the container element from the tab order. Individual search
+  // results are still focusable.
+  results.tabIndex = -1;
+  // When focus is on a search result, make sure that pressing Escape closes
+  // the search modal.
+  results.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleSearchField();
+      resetSearchAsYouTypeResults();
+    }
+  });
+  // IMPORTANT: The search results container MUST have this exact ID.
+  // searchtools.js is hardcoded to populate into the node with this ID.
+  results.id = "search-results";
+  let modal = document.querySelector("#pst-search-dialog");
+  modal.appendChild(results);
+
+  // Get the relative path back to the root of the website.
+  const root =
+    "URL_ROOT" in DOCUMENTATION_OPTIONS
+      ? DOCUMENTATION_OPTIONS.URL_ROOT // Sphinx v6 and earlier
+      : document.documentElement.dataset.content_root; // Sphinx v7 and later
+
+  // As Sphinx populates the search results, this observer makes sure that
+  // each URL is correct (i.e. doesn't 404).
+  const linkObserver = new MutationObserver(() => {
+    const links = Array.from(
+      document.querySelectorAll("#search-results .search a"),
+    );
+    // Check every link every time because the timing of when new results are
+    // added is unpredictable and it's not an expensive operation.
+    links.forEach((link) => {
+      link.tabIndex = 0; // Use natural tab order for search results.
+      // Don't use the link.href getter because the browser computes the href
+      // as a full URL. We need the relative URL that Sphinx generates.
+      const href = link.getAttribute("href");
+      if (href.startsWith(root)) {
+        // No work needed. The root has already been prepended to the href.
+        return;
+      }
+      link.href = `${root}${href}`;
+    });
+  });
+
+  // The node that linkObserver watches doesn't exist until the user types
+  // something into the search textbox. This second observer (resultsObserver)
+  // just waits for #search-results to exist and then registers
+  // linkObserver on it.
+  let isObserved = false;
+  const resultsObserver = new MutationObserver(() => {
+    if (isObserved) {
+      return;
+    }
+    const container = document.querySelector("#search-results .search");
+    if (!container) {
+      return;
+    }
+    linkObserver.observe(container, { childList: true });
+    isObserved = true;
+  });
+  resultsObserver.observe(results, { childList: true });
 };
 
 /*******************************************************************************
@@ -312,6 +480,40 @@ var setupSearchButtons = () => {
  */
 
 /**
+ * path component of URL
+ */
+var getCurrentUrlPath = () => {
+  if (DOCUMENTATION_OPTIONS.BUILDER == "dirhtml") {
+    return DOCUMENTATION_OPTIONS.pagename.endsWith("index")
+      ? `${DOCUMENTATION_OPTIONS.pagename.substring(0, DOCUMENTATION_OPTIONS.pagename.length - "index".length)}`
+      : `${DOCUMENTATION_OPTIONS.pagename}/`;
+  }
+  return `${DOCUMENTATION_OPTIONS.pagename}.html`;
+};
+
+/**
+ * Allow user to dismiss the warning banner about the docs version being dev / old.
+ * We store the dismissal date and version, to give us flexibility about making the
+ * dismissal last for longer than one browser session, if we decide to do that.
+ *
+ * @param {event} event the event that trigger the check
+ */
+async function DismissBannerAndStorePref(event) {
+  const banner = document.querySelector("#bd-header-version-warning");
+  banner.remove();
+  const version = DOCUMENTATION_OPTIONS.VERSION;
+  const now = new Date();
+  const banner_pref = JSON.parse(
+    localStorage.getItem("pst_banner_pref") || "{}",
+  );
+  console.debug(
+    `[PST] Dismissing the version warning banner on ${version} starting ${now}.`,
+  );
+  banner_pref[version] = now;
+  localStorage.setItem("pst_banner_pref", JSON.stringify(banner_pref));
+}
+
+/**
  * Check if corresponding page path exists in other version of docs
  * and, if so, go there instead of the homepage of the other docs version
  *
@@ -320,7 +522,7 @@ var setupSearchButtons = () => {
 async function checkPageExistsAndRedirect(event) {
   // ensure we don't follow the initial link
   event.preventDefault();
-  let currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const currentFilePath = getCurrentUrlPath();
   let tryUrl = event.currentTarget.getAttribute("href");
   let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
   try {
@@ -342,15 +544,31 @@ async function checkPageExistsAndRedirect(event) {
  * @param {string} url The URL to load version switcher entries from.
  */
 async function fetchVersionSwitcherJSON(url) {
+  const currentPath = getCurrentUrlPath();
   // first check if it's a valid URL
   try {
     var result = new URL(url);
   } catch (err) {
     if (err instanceof TypeError) {
-      // assume we got a relative path, and fix accordingly. But first, we need to
-      // use `fetch()` to follow redirects so we get the correct final base URL
-      const origin = await fetch(window.location.origin, { method: "HEAD" });
-      result = new URL(url, origin.url);
+      // Assume we got a relative path, and fix accordingly.
+      if (window.location.protocol == "file:") {
+        // Here instead of returning `null` we work out what the file path would be
+        // anyway (same code path as for served docs), as a convenience to folks who
+        // routinely disable CORS when they boot up their browser.
+        console.info(
+          "[PST] looks like you're viewing this site from a local filesystem, so " +
+            "the version switcher won't work unless you've disabled CORS. See " +
+            "https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/version-dropdown.html",
+        );
+      }
+      const cutoff = window.location.href.indexOf(currentPath);
+      // cutoff == -1 can happen e.g. on the homepage of locally served docs, where you
+      // get something like http://127.0.0.1:8000/ (no trailing `index.html`)
+      const origin =
+        cutoff == -1
+          ? window.location.href
+          : window.location.href.substring(0, cutoff);
+      result = new URL(url, origin);
     } else {
       // something unexpected happened
       throw err;
@@ -364,7 +582,7 @@ async function fetchVersionSwitcherJSON(url) {
 
 // Populate the version switcher from the JSON data
 function populateVersionSwitcher(data, versionSwitcherBtns) {
-  const currentFilePath = `${DOCUMENTATION_OPTIONS.pagename}.html`;
+  const currentFilePath = getCurrentUrlPath();
   versionSwitcherBtns.forEach((btn) => {
     // Set empty strings by default so that these attributes exist and can be used in CSS selectors
     btn.dataset["activeVersionName"] = "";
@@ -396,7 +614,7 @@ function populateVersionSwitcher(data, versionSwitcherBtns) {
     const anchor = document.createElement("a");
     anchor.setAttribute(
       "class",
-      "dropdown-item list-group-item list-group-item-action py-1"
+      "dropdown-item list-group-item list-group-item-action py-1",
     );
     anchor.setAttribute("href", `${entry.url}${currentFilePath}`);
     anchor.setAttribute("role", "option");
@@ -456,7 +674,7 @@ function showVersionWarningBanner(data) {
   if (preferredEntries.length !== 1) {
     const howMany = preferredEntries.length == 0 ? "No" : "Multiple";
     console.log(
-      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`
+      `[PST] ${howMany} versions marked "preferred" found in versions JSON, ignoring.`,
     );
     return;
   }
@@ -465,25 +683,52 @@ function showVersionWarningBanner(data) {
   // if already on preferred version, nothing to do
   const versionsAreComparable = validate(version) && validate(preferredVersion);
   if (versionsAreComparable && compare(version, preferredVersion, "=")) {
+    console.log(
+      "[PST]: This is the preferred version of the docs, not showing the warning banner.",
+    );
     return;
   }
+  // check if banner has been dismissed recently
+  const dismiss_date_str = JSON.parse(
+    localStorage.getItem("pst_banner_pref") || "{}",
+  )[version];
+  if (dismiss_date_str != null) {
+    const dismiss_date = new Date(dismiss_date_str);
+    const now = new Date();
+    const milliseconds_in_a_day = 24 * 60 * 60 * 1000;
+    const days_passed = (now - dismiss_date) / milliseconds_in_a_day;
+    const timeout_in_days = 14;
+    if (days_passed < timeout_in_days) {
+      console.info(
+        `[PST] Suppressing version warning banner; was dismissed ${Math.floor(
+          days_passed,
+        )} day(s) ago`,
+      );
+      return;
+    }
+  }
+
   // now construct the warning banner
-  var outer = document.createElement("aside");
-  // TODO: add to translatable strings
-  outer.setAttribute("aria-label", "Version warning");
+  const banner = document.querySelector("#bd-header-version-warning");
   const middle = document.createElement("div");
   const inner = document.createElement("div");
   const bold = document.createElement("strong");
   const button = document.createElement("a");
+  const close_btn = document.createElement("a");
   // these classes exist since pydata-sphinx-theme v0.10.0
-  outer.classList = "bd-header-version-warning container-fluid";
-  middle.classList = "bd-header-announcement__content";
+  // the init class is used for animation
+  middle.classList = "bd-header-announcement__content  ms-auto me-auto";
   inner.classList = "sidebar-message";
   button.classList =
-    "sd-btn sd-btn-danger sd-shadow-sm sd-text-wrap font-weight-bold ms-3 my-1 align-baseline";
-  button.href = `${preferredURL}${DOCUMENTATION_OPTIONS.pagename}.html`;
+    "btn text-wrap font-weight-bold ms-3 my-1 align-baseline pst-button-link-to-stable-version";
+  button.href = `${preferredURL}${getCurrentUrlPath()}`;
   button.innerText = "Switch to stable version";
   button.onclick = checkPageExistsAndRedirect;
+  close_btn.classList = "ms-3 my-1 align-baseline";
+  const close_x = document.createElement("i");
+  close_btn.append(close_x);
+  close_x.classList = "fa-solid fa-xmark";
+  close_btn.onclick = DismissBannerAndStorePref;
   // add the version-dependent text
   inner.innerText = "This is documentation for ";
   const isDev =
@@ -501,84 +746,608 @@ function showVersionWarningBanner(data) {
   } else {
     bold.innerText = `version ${version}`;
   }
-  outer.appendChild(middle);
+  banner.appendChild(middle);
+  banner.append(close_btn);
   middle.appendChild(inner);
   inner.appendChild(bold);
   inner.appendChild(document.createTextNode("."));
   inner.appendChild(button);
-  const skipLink = document.getElementById("pst-skip-link");
-  skipLink.after(outer);
+  banner.classList.remove("d-none");
 }
 
-/*******************************************************************************
- * MutationObserver to move the ReadTheDocs button
- */
-
-/**
- * intercept the RTD flyout and place it in the rtd-footer-container if existing
- * if not it stays where on top of the page
- */
-function initRTDObserver() {
-  const mutatedCallback = (mutationList, observer) => {
-    mutationList.forEach((mutation) => {
-      // Check whether the mutation is for RTD, which will have a specific structure
-      if (mutation.addedNodes.length === 0) {
-        return;
-      }
-      if (mutation.addedNodes[0].data === undefined) {
-        return;
-      }
-      if (mutation.addedNodes[0].data.search("Inserted RTD Footer") != -1) {
-        mutation.addedNodes.forEach((node) => {
-          document.getElementById("rtd-footer-container").append(node);
-        });
-      }
-    });
-  };
-
-  const observer = new MutationObserver(mutatedCallback);
-  const config = { childList: true };
-  observer.observe(document.body, config);
-}
-
-// fetch the JSON version data (only once), then use it to populate the version
-// switcher and maybe show the version warning bar
-var versionSwitcherBtns = document.querySelectorAll(
-  ".version-switcher__button"
-);
-const hasSwitcherMenu = versionSwitcherBtns.length > 0;
-const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
-  "theme_switcher_json_url"
-);
-const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
-
-if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
-  const data = await fetchVersionSwitcherJSON(
-    DOCUMENTATION_OPTIONS.theme_switcher_json_url
+async function fetchAndUseVersions() {
+  // fetch the JSON version data (only once), then use it to populate the version
+  // switcher and maybe show the version warning bar
+  var versionSwitcherBtns = document.querySelectorAll(
+    ".version-switcher__button",
   );
-  populateVersionSwitcher(data, versionSwitcherBtns);
-  if (wantsWarningBanner) {
-    showVersionWarningBanner(data);
+  const hasSwitcherMenu = versionSwitcherBtns.length > 0;
+  const hasVersionsJSON = DOCUMENTATION_OPTIONS.hasOwnProperty(
+    "theme_switcher_json_url",
+  );
+  const wantsWarningBanner = DOCUMENTATION_OPTIONS.show_version_warning_banner;
+
+  if (hasVersionsJSON && (hasSwitcherMenu || wantsWarningBanner)) {
+    const data = await fetchVersionSwitcherJSON(
+      DOCUMENTATION_OPTIONS.theme_switcher_json_url,
+    );
+    // TODO: remove the `if(data)` once the `return null` is fixed within fetchVersionSwitcherJSON.
+    // We don't really want the switcher and warning bar to silently not work.
+    if (data) {
+      populateVersionSwitcher(data, versionSwitcherBtns);
+      if (wantsWarningBanner) {
+        showVersionWarningBanner(data);
+      }
+    }
   }
 }
 
-/**
- * Fix bug #1603
+/*******************************************************************************
+ * Sidebar modals (for mobile / narrow screens)
  */
-function fixMoreLinksInMobileSidebar() {
-  const dropdown = document.querySelector(
-    ".bd-sidebar-primary [id^=pst-nav-more-links]"
+function setupMobileSidebarKeyboardHandlers() {
+  // These are the left and right sidebars for wider screens. We cut and paste
+  // the content from these widescreen sidebars into the mobile dialogs, when
+  // the user clicks the hamburger icon button
+  const primarySidebar = document.getElementById("pst-primary-sidebar");
+  const secondarySidebar = document.getElementById("pst-secondary-sidebar");
+
+  // These are the corresponding left/right <dialog> elements, which are empty
+  // until the user clicks the hamburger icon
+  const primaryDialog = document.getElementById("pst-primary-sidebar-modal");
+  const secondaryDialog = document.getElementById(
+    "pst-secondary-sidebar-modal",
   );
-  dropdown.classList.add("show");
+
+  // These are the hamburger-style buttons in the header nav bar. They only
+  // appear at narrow screen width.
+  const primaryToggle = document.querySelector(".primary-toggle");
+  const secondaryToggle = document.querySelector(".secondary-toggle");
+
+  // Cut nodes and classes from `from`, paste into/onto `to`
+  const cutAndPasteNodesAndClasses = (from, to) => {
+    Array.from(from.childNodes).forEach((node) => to.appendChild(node));
+    Array.from(from.classList).forEach((cls) => {
+      from.classList.remove(cls);
+      to.classList.add(cls);
+    });
+  };
+
+  // Hook up the ways to open and close the dialog
+  [
+    [primaryToggle, primaryDialog, primarySidebar],
+    [secondaryToggle, secondaryDialog, secondarySidebar],
+  ].forEach(([toggleButton, dialog, sidebar]) => {
+    if (!toggleButton || !dialog || !sidebar) {
+      return;
+    }
+
+    // Clicking the button can only open the sidebar, not close it.
+    // Clicking the button is also the *only* way to open the sidebar.
+    toggleButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // When we open the dialog, we cut and paste the nodes and classes from
+      // the widescreen sidebar into the dialog
+      cutAndPasteNodesAndClasses(sidebar, dialog);
+
+      dialog.showModal();
+    });
+
+    // Listen for clicks on the backdrop in order to close the dialog
+    dialog.addEventListener("click", closeDialogOnBackdropClick);
+
+    // We have to manually attach the escape key because there's some code in
+    // Sphinx's Sphinx_highlight.js that prevents the default behavior of the
+    // escape key
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        dialog.close();
+      }
+    });
+
+    // When the dialog is closed, move the nodes (and classes) back to their
+    // original place
+    dialog.addEventListener("close", () => {
+      cutAndPasteNodesAndClasses(dialog, sidebar);
+    });
+  });
+}
+
+/**
+ * When the page loads, or the window resizes, or descendant nodes are added or
+ * removed from the main element, check all code blocks and Jupyter notebook
+ * outputs, and for each one that has scrollable overflow, set tabIndex = 0.
+ */
+function addTabStopsToScrollableElements() {
+  const updateTabStops = () => {
+    document
+      .querySelectorAll(
+        [
+          // code blocks
+          "pre",
+          // NBSphinx notebook output
+          ".nboutput > .output_area",
+          // Myst-NB
+          ".cell_output > .output",
+          // ipywidgets
+          ".jp-RenderedHTMLCommon",
+          // [rST table nodes](https://www.docutils.org/docs/ref/doctree.html#table)
+          ".pst-scrollable-table-container",
+        ].join(", "),
+      )
+      .forEach((el) => {
+        el.tabIndex =
+          el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
+            ? 0
+            : -1;
+      });
+  };
+  const debouncedUpdateTabStops = debounce(updateTabStops, 300);
+
+  // On window resize
+  window.addEventListener("resize", debouncedUpdateTabStops);
+
+  // The following MutationObserver is for ipywidgets, which take some time to
+  // finish loading and rendering on the page (so even after the "load" event is
+  // fired, they still have not finished rendering). Would be nice to replace
+  // the MutationObserver if there is a way to hook into the ipywidgets code to
+  // know when it is done.
+  const mainObserver = new MutationObserver(debouncedUpdateTabStops);
+
+  // On descendant nodes added/removed from main element
+  mainObserver.observe(document.getElementById("main-content"), {
+    subtree: true,
+    childList: true,
+  });
+
+  // On page load (when this function gets called)
+  updateTabStops();
+}
+function debounce(callback, wait) {
+  let timeoutId = null;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback(...args);
+    }, wait);
+  };
+}
+
+/*******************************************************************************
+ * Announcement banner - fetch and load remote HTML
+ */
+async function setupAnnouncementBanner() {
+  const banner = document.querySelector(".bd-header-announcement");
+  const { pstAnnouncementUrl } = banner ? banner.dataset : null;
+
+  if (!pstAnnouncementUrl) {
+    return;
+  }
+
+  try {
+    const response = await fetch(pstAnnouncementUrl);
+    if (!response.ok) {
+      throw new Error(
+        `[PST]: HTTP response status not ok: ${response.status} ${response.statusText}`,
+      );
+    }
+    let data = await response.text();
+    data = data.trim();
+    if (data.length === 0) {
+      console.log(`[PST]: Empty announcement at: ${pstAnnouncementUrl}`);
+      return;
+    }
+    banner.innerHTML = `<div class="bd-header-announcement__content">${data}</div>`;
+    banner.classList.remove("d-none");
+  } catch (_error) {
+    console.log(`[PST]: Failed to load announcement at: ${pstAnnouncementUrl}`);
+    console.error(_error);
+  }
+}
+
+/*******************************************************************************
+ * Reveal (and animate) the banners (version warning, announcement) together
+ */
+async function fetchRevealBannersTogether() {
+  // Wait until finished fetching and loading banners
+  await Promise.allSettled([fetchAndUseVersions(), setupAnnouncementBanner()]);
+
+  // The revealer element should have CSS rules that set height to 0, overflow
+  // to hidden, and an animation transition on the height (unless the user has
+  // turned off animations)
+  const revealer = document.querySelector(".pst-async-banner-revealer");
+  if (!revealer) {
+    return;
+  }
+
+  // Remove the d-none (display-none) class to calculate the children heights.
+  revealer.classList.remove("d-none");
+
+  // Add together the heights of the element's children
+  const height = Array.from(revealer.children).reduce(
+    (height, el) => height + el.offsetHeight,
+    0,
+  );
+
+  // Use the calculated height to give the revealer a non-zero height (if
+  // animations allowed, the height change will animate)
+  revealer.style.setProperty("height", `${height}px`);
+
+  // Wait for a bit more than 300ms (the transition duration), then set height
+  // to auto so the banner can resize if the window is resized.
+  setTimeout(() => {
+    revealer.style.setProperty("height", "auto");
+  }, 320);
+}
+
+/**
+ * Add the machinery needed to highlight elements in the TOC when scrolling.
+ *
+ */
+function setupArticleTocSyncing() {
+  // Right sidebar table of contents container
+  const pageToc = document.querySelector("#pst-page-toc-nav");
+
+  // Not all pages have or include a table of contents. (For example, in the PST
+  // docs, at the time of this writing: /user_guide/index.html.)
+  if (!pageToc) {
+    return;
+  }
+
+  // The table of contents is a list of .toc-entry items each of which contains
+  // a link and possibly a nested list representing one level deeper in the
+  // table of contents.
+  const tocEntries = Array.from(pageToc.querySelectorAll(".toc-entry"));
+  const tocLinks = Array.from(pageToc.querySelectorAll("a"));
+
+  // If there are no links in the TOC, there's no syncing to be done.
+  // (Currently, the template does not render the TOC container if there are no
+  // TOC links, so this condition should never evaluate to true if the TOC
+  // container is found on the page, but should the template change in the
+  // future, this check will prevent a runtime error.)
+  if (tocLinks.length === 0) {
+    return;
+  }
+
+  // Create a boolean variable that allows us to turn off the intersection
+  // observer (and then later back on). When the website visitor clicks an
+  // in-page link, we want that entry in the TOC to be highlighted/activated,
+  // NOT whichever TOC link the intersection observer callback would otherwise
+  // highlight.
+  let disableObserver = false;
+
+  function temporarilyDisableObserver(time) {
+    disableObserver = true;
+    setTimeout(() => {
+      disableObserver = false;
+    }, time);
+  }
+
+  /**
+   * If the provided URL hash fragment (beginning with "#") matches an entry in
+   * the page table of contents, highlight that entry and temporarily disable
+   * the intersection observer while the page scrolls to the corresponding
+   * heading.
+   */
+  function syncTocHash(hash) {
+    if (hash.length > 1) {
+      const matchingTocLink = tocLinks.find((tocLink) => tocLink.hash === hash);
+      if (matchingTocLink) {
+        // It's important to disable the intersection observer before
+        // highlighting the TOC link and its corresponding article heading. This
+        // is because the browser takes a little time to scroll to the article
+        // heading, and while scrolling, it could trigger intersection events
+        // that cause some other link in the table of contents to be
+        // highlighted.
+        temporarilyDisableObserver(1000);
+        activate(matchingTocLink);
+      }
+    }
+  }
+
+  // On page load...
+  //
+  // When the page loads, sync the page's table of contents.
+  syncTocHash(window.location.hash);
+
+  // On navigation to another part of the page...
+  //
+  // When the user navigates to another part of the page, sync the page's table
+  // of contents.
+  window.addEventListener("hashchange", () => {
+    // By the time this event is fired, window.location.hash has already been
+    // updated with the new hash
+    syncTocHash(window.location.hash);
+  });
+
+  // On return to the same part of the page...
+  //
+  // The hashchange event will handle most cases where we need to sync the table
+  // of contents with a hash link click. But there is one edge case it doesn't
+  // handle, which is when the user clicks an internal page link whose hash is
+  // already in the browser address bar. For example, the user loads the page at
+  // #first-heading, scrolls to the bottom of the page, then clicks in the
+  // sidebar table of contents to go back up to the first heading in the
+  // article. In this case the "hashchange" event will not fire. Nonetheless, we
+  // want to guarantee that the TOC entry for the first heading gets
+  // highlighted. Note we cannot rely exclusively on the "click" event for all
+  // internal page navigations because it will not fire in the edge case where
+  // the user modifies the hash directly in the browser address bar.
+  window.addEventListener("click", (event) => {
+    const link = event.target.closest("a");
+    if (
+      link &&
+      link.hash === window.location.hash &&
+      link.origin === window.location.origin
+    ) {
+      syncTocHash(link.hash);
+    }
+  });
+
+  /**
+   * Activate an element and its chain of ancestor TOC entries; deactivate
+   * everything else in the TOC. Together with the theme CSS, this unfolds
+   * the TOC out to the given entry and highlights that entry.
+   *
+   * @param {HTMLElement} tocLink The TOC entry to be highlighted
+   */
+  function activate(tocLink) {
+    tocLinks.forEach((el) => {
+      if (el === tocLink) {
+        el.classList.add("active");
+        el.setAttribute("aria-current", "true");
+      } else {
+        el.classList.remove("active");
+        el.removeAttribute("aria-current");
+      }
+    });
+    tocEntries.forEach((el) => {
+      if (el.contains(tocLink)) {
+        el.classList.add("active");
+      } else {
+        el.classList.remove("active");
+      }
+    });
+  }
+
+  /**
+   * Get the heading in the article associated with the link in the table of contents
+   *
+   * @param {HTMLElement} tocLink TOC DOM element to use to grab an article heading
+   *
+   * @returns The article heading that the TOC element links to
+   */
+  function getHeading(tocLink) {
+    const href = tocLink.getAttribute("href");
+    if (!href.startsWith("#")) {
+      return;
+    }
+    const id = href.substring(1);
+    // There are cases where href="#" (for example, the first one at /examples/kitchen-sink/structure.html)
+    if (!id) {
+      return;
+    }
+    // Use getElementById() because querySelector() requires escaping the id string
+    const target = document.getElementById(id);
+    // Often the target is a section but we want to track section's heading
+    const heading = target.querySelector(":is(h1,h2,h3,h4,h5,h6)");
+    // Fallback to the target if there is no heading (for example, links on the
+    // PST docs page /examples/kitchen-sink/api.html target <dt> elements)
+    return heading || target;
+  }
+
+  // Map heading elements to their associated TOC links
+  const headingsToTocLinks = new Map();
+  tocLinks.forEach((tocLink) => {
+    const heading = getHeading(tocLink);
+    if (heading) {
+      headingsToTocLinks.set(heading, tocLink);
+    }
+  });
+
+  let observer;
+
+  function connectIntersectionObserver() {
+    if (observer) {
+      observer.disconnect();
+    }
+
+    const header = document.querySelector("#pst-header");
+    const headerHeight = header.getBoundingClientRect().height;
+
+    // Intersection observer options
+    const options = {
+      root: null,
+      rootMargin: `-${headerHeight}px 0px -70% 0px`, // Use -70% for the bottom margin so that intersection events happen in only the top third of the viewport
+      threshold: 0, // Trigger as soon as the heading goes into (or out of) the top 30% of the viewport
+    };
+
+    /**
+     *
+     * @param {IntersectionObserverEntry[]} entries Objects containing threshold-crossing
+     * event information
+     *
+     */
+    function callback(entries) {
+      if (disableObserver) {
+        return;
+      }
+      const entry = entries.filter((entry) => entry.isIntersecting).pop();
+      if (!entry) {
+        return;
+      }
+      const heading = entry.target;
+      const tocLink = headingsToTocLinks.get(heading);
+      activate(tocLink);
+    }
+
+    observer = new IntersectionObserver(callback, options);
+    Array.from(headingsToTocLinks.keys()).forEach((heading) => {
+      observer.observe(heading);
+    });
+  }
+
+  // If the user resizes the window, the header height may change and the
+  // intersection observer's root margin will need to be recalculated
+  window.addEventListener("resize", debounce(connectIntersectionObserver, 300));
+  connectIntersectionObserver();
+}
+
+/*******************************************************************************
+ * Set up expand/collapse button for primary sidebar
+ */
+function setupCollapseSidebarButton() {
+  const button = document.getElementById("pst-collapse-sidebar-button");
+  const sidebar = document.getElementById("pst-primary-sidebar");
+
+  // If this page rendered without the button or sidebar, then there's nothing to do.
+  if (!button || !sidebar) {
+    return;
+  }
+
+  const sidebarSections = Array.from(sidebar.children);
+
+  const expandTooltip = new bootstrap.Tooltip(button, {
+    title: button.querySelector(".pst-expand-sidebar-label").textContent,
+
+    // In manual testing, relying on Bootstrap to handle "hover" and "focus" was buggy.
+    trigger: "manual",
+
+    placement: "left",
+    fallbackPlacements: ["right"],
+
+    // Offsetting the tooltip a bit more than the default [0, 0] solves an issue
+    // where the appearance of the tooltip triggers a mouseleave event which in
+    // turn triggers the call to hide the tooltip. So in certain areas around
+    // the button, it would appear to the user that tooltip flashes in and then
+    // back out.
+    offset: [0, 12],
+  });
+
+  const showTooltip = () => {
+    // Only show the "expand sidebar" tooltip when the sidebar is not expanded
+    if (button.getAttribute("aria-expanded") === "false") {
+      expandTooltip.show();
+    }
+  };
+  const hideTooltip = () => {
+    expandTooltip.hide();
+  };
+
+  function squeezeSidebar(prefersReducedMotion, done) {
+    // Before squeezing the sidebar, freeze the widths of its subsections.
+    // Otherwise, the subsections will also narrow and cause the text in the
+    // sidebar to reflow and wrap, which we don't want. This is necessary
+    // because we do not remove the sidebar contents from the layout (with
+    // `display: none`). Rather, we hide the contents from both sighted users
+    // and screen readers (with `visibility: hidden`). This provides better
+    // stability to the overall layout.
+    sidebarSections.forEach(
+      (el) => (el.style.width = el.getBoundingClientRect().width + "px"),
+    );
+
+    const afterSqueeze = () => {
+      // After squeezing the sidebar, set aria-expanded to false
+      button.setAttribute("aria-expanded", "false"); // "false" is in quotes because HTML attributes are strings
+
+      button.dataset.busy = false;
+    };
+
+    if (prefersReducedMotion) {
+      sidebar.classList.add("pst-squeeze");
+      afterSqueeze();
+    } else {
+      sidebar.addEventListener("transitionend", function onTransitionEnd() {
+        afterSqueeze();
+        sidebar.removeEventListener("transitionend", onTransitionEnd);
+      });
+      sidebar.classList.add("pst-squeeze");
+    }
+  }
+
+  function expandSidebar(prefersReducedMotion, done) {
+    hideTooltip();
+
+    const afterExpand = () => {
+      // After expanding the sidebar (which may be delayed by a CSS transition),
+      // unfreeze the widths of the subsections that were frozen when the sidebar
+      // was squeezed.
+      sidebarSections.forEach((el) => (el.style.width = null));
+
+      // After expanding the sidebar, set aria-expanded to "true" - in quotes
+      // because HTML attributes are strings.
+      button.setAttribute("aria-expanded", "true");
+
+      button.dataset.busy = false;
+    };
+
+    if (prefersReducedMotion) {
+      sidebar.classList.remove("pst-squeeze");
+      afterExpand();
+    } else {
+      sidebar.addEventListener("transitionend", function onTransitionEnd() {
+        afterExpand();
+        sidebar.removeEventListener("transitionend", onTransitionEnd);
+      });
+      sidebar.classList.remove("pst-squeeze");
+    }
+  }
+
+  button.addEventListener("click", () => {
+    if (button.dataset.busy === "true") {
+      return;
+    }
+    button.dataset.busy = "true";
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion)", // must be in parentheses
+    ).matches;
+
+    if (button.getAttribute("aria-expanded") === "true") {
+      squeezeSidebar(prefersReducedMotion);
+    } else {
+      expandSidebar(prefersReducedMotion);
+    }
+  });
+
+  button.addEventListener("focus", showTooltip);
+  button.addEventListener("mouseenter", showTooltip);
+  button.addEventListener("mouseleave", hideTooltip);
+  button.addEventListener("blur", hideTooltip);
 }
 
 /*******************************************************************************
  * Call functions after document loading.
  */
 
+// This one first to kick off the network request for the version warning
+// and announcement banner data as early as possible.
+documentReady(fetchRevealBannersTogether);
+
 documentReady(addModeListener);
 documentReady(scrollToActive);
-documentReady(addTOCInteractivity);
 documentReady(setupSearchButtons);
-documentReady(initRTDObserver);
-documentReady(fixMoreLinksInMobileSidebar);
+documentReady(setupSearchAsYouType);
+documentReady(setupMobileSidebarKeyboardHandlers);
+documentReady(setupArticleTocSyncing);
+documentReady(() => {
+  try {
+    setupCollapseSidebarButton();
+  } catch (err) {
+    // This exact error message is used in pytest tests
+    console.log("[PST] Error setting up collapse sidebar button");
+    console.error(err);
+  }
+});
+
+// Determining whether an element has scrollable content depends on stylesheets,
+// so we're checking for the "load" event rather than "DOMContentLoaded"
+if (document.readyState === "complete") {
+  addTabStopsToScrollableElements();
+} else {
+  window.addEventListener("load", addTabStopsToScrollableElements);
+}

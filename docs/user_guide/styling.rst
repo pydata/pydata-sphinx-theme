@@ -2,8 +2,8 @@
 Theme variables and CSS
 =======================
 
-.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/
-.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+.. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/tree/main/src/pydata_sphinx_theme/assets/styles/variables
+.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascading_variables/Using_CSS_custom_properties
 
 This section covers a few ways that you can control the look and feel of your theme via your own CSS and theme variables.
 
@@ -34,6 +34,8 @@ To add a custom stylesheet, follow these steps:
        ]
 
 When you build your documentation, this stylesheet should now be activated.
+
+.. _css-variables:
 
 CSS theme variables
 ===================
@@ -117,18 +119,18 @@ Here is an overview of the colors available in the theme (change theme mode to s
     </style>
 
     <p>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-primary sd-bg-text-primary">primary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-secondary sd-bg-text-secondary">secondary</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-accent sd-bg-text-secondary">accent</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-success sd-bg-text-success">success</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-info sd-bg-text-info">info</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-warning sd-bg-text-warning">warning</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-danger sd-bg-text-danger">danger</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-background">background</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-on-background">on-background</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-surface">surface</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-on-surface sd-bg-text-primary">on-surface</span>
-      <span class="sd-sphinx-override sd-badge pst-badge pst-target">target</span>
+      <span class="sd-badge pst-badge pst-primary sd-bg-text-primary">primary</span>
+      <span class="sd-badge pst-badge pst-secondary sd-bg-text-secondary">secondary</span>
+      <span class="sd-badge pst-badge pst-accent sd-bg-text-secondary">accent</span>
+      <span class="sd-badge pst-badge pst-success sd-bg-text-success">success</span>
+      <span class="sd-badge pst-badge pst-info sd-bg-text-info">info</span>
+      <span class="sd-badge pst-badge pst-warning sd-bg-text-warning">warning</span>
+      <span class="sd-badge pst-badge pst-danger sd-bg-text-danger">danger</span>
+      <span class="sd-badge pst-badge pst-background">background</span>
+      <span class="sd-badge pst-badge pst-on-background">on-background</span>
+      <span class="sd-badge pst-badge pst-surface">surface</span>
+      <span class="sd-badge pst-badge pst-on-surface sd-bg-text-primary">on-surface</span>
+      <span class="sd-badge pst-badge pst-target">target</span>
     </p>
 
 
@@ -193,15 +195,15 @@ For a complete list of the theme colors that you may override, see the :download
 Configure pygments theme
 ========================
 
-As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygment_light_style`` and ``pygment_dark_style``.
+As the Sphinx theme supports multiple modes, the code highlighting colors can be modified for each one of them by modifying the ``pygments_light_style`` and ``pygments_dark_style``.
 You can check available Pygments colors on this `pygments demo page <https://pygments.org/styles/>`__.
 
 .. code-block:: python
 
    html_theme_options = {
       ...
-      "pygment_light_style": "tango",
-      "pygment_dark_style": "monokai"
+      "pygments_light_style": "tango",
+      "pygments_dark_style": "monokai"
    }
 
 Note that the PyData Sphinx theme uses the `accessible pygments styles <https://github.com/Quansight-Labs/accessible-pygments>`__ for its default syntax highlighting themes.

@@ -1,19 +1,23 @@
 """Bootstrap-based sphinx theme from the PyData community."""
 
 import json
+
 from functools import partial
 from pathlib import Path
 from typing import Dict
 from urllib.parse import urlparse
 
 import requests
+
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
+from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
-from . import edit_this_page, logo, pygment, short_link, toctree, translator, utils
+from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
-__version__ = "0.15.2dev0"
+
+__version__ = "0.16.2dev0"
 
 
 def update_config(app):
@@ -25,40 +29,15 @@ def update_config(app):
     theme_options = utils.get_theme_options_dict(app)
     warning = partial(utils.maybe_warn, app)
 
-    # TODO: deprecation; remove after 0.14 release
-    if theme_options.get("logo_text"):
-        logo = theme_options.get("logo", {})
-        logo["text"] = theme_options.get("logo_text")
-        theme_options["logo"] = logo
-        warning(
-            "The configuration `logo_text` is deprecated. Use `'logo': {'text': }`."
-        )
-
-    # TODO: DEPRECATE after 0.14
-    if theme_options.get("footer_items"):
-        theme_options["footer_start"] = theme_options.get("footer_items")
-        warning(
-            "`footer_items` is deprecated. Use `footer_start` or `footer_end` instead."
-        )
-
-    # TODO: DEPRECATE after v0.15
-    if theme_options.get("favicons"):
-        warning(
-            "The configuration `favicons` is deprecated. "
-            "Use the sphinx-favicon extension instead."
-        )
-
-    # TODO: in 0.15, set the default navigation_with_keys value to False and remove this deprecation notice
-    if theme_options.get("navigation_with_keys", None) is None:
-        warning(
-            "The default value for `navigation_with_keys` will change to `False` in "
-            "the next release. If you wish to preserve the old behavior for your site, "
-            "set `navigation_with_keys=True` in the `html_theme_options` dict in your "
-            "`conf.py` file. Be aware that `navigation_with_keys = True` has negative "
-            "accessibility implications: "
-            "https://github.com/pydata/pydata-sphinx-theme/issues/1492"
-        )
-        theme_options["navigation_with_keys"] = False
+    # TODO: DEPRECATE after v1.0
+    themes = ["light", "dark"]
+    for theme in themes:
+        if style := theme_options.get(f"pygment_{theme}_style"):
+            theme_options[f"pygments_{theme}_style"] = style
+            warning(
+                f'The parameter "pygment_{theme}_style" was renamed to '
+                f'"pygments_{theme}_style" (note the "s" on "pygments").'
+            )
 
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
@@ -182,6 +161,9 @@ def update_config(app):
         theme_logo = {}
     if not isinstance(theme_logo, dict):
         raise ValueError(f"Incorrect logo config type: {type(theme_logo)}")
+    theme_logo_link = theme_options.get("theme_logo_link")
+    if theme_logo_link:
+        theme_logo["link"] = theme_logo_link
     theme_options["logo"] = theme_logo
 
 
@@ -223,7 +205,7 @@ def update_and_remove_templates(
         for i in range(len(context["css_files"])):
             asset = context["css_files"][i]
             # TODO: eventually the contents of context['css_files'] etc should probably
-            #       only be _CascadingStyleSheet etc. For now, assume mixed with strings.
+            # only be _CascadingStyleSheet etc. For now, assume mixed with strings.
             asset_path = getattr(asset, "filename", str(asset))
             if asset_path == theme_css_name:
                 del context["css_files"][i]
@@ -254,12 +236,43 @@ def update_and_remove_templates(
         DOCUMENTATION_OPTIONS.theme_version = '{__version__}';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = '{json_url}';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '{version_match}';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = {str(context["theme_show_version_warning_banner"]).lower()};
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            {str(context["theme_show_version_warning_banner"]).lower()};
         """
         app.add_js_file(None, body=js)
 
+    # Specify whether search-as-you-type should be used or not.
+    search_as_you_type = str(context["theme_search_as_you_type"]).lower()
+    app.add_js_file(
+        None, body=f"DOCUMENTATION_OPTIONS.search_as_you_type = {search_as_you_type};"
+    )
+
     # Update version number for the "made with version..." component
     context["theme_version"] = __version__
+
+
+def _fix_canonical_url(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree
+) -> None:
+    """Fix the canonical URL when using the dirhtml builder.
+
+    Sphinx builds a canonical URL if ``html_baseurl`` config is set. However,
+    it builds a URL ending with ".html" when using the dirhtml builder, which is
+    incorrect. Detect this and generate the correct URL for each page.
+
+    Workaround for https://github.com/sphinx-doc/sphinx/issues/9730; can be removed
+    when that is fixed, released, and available in our minimum supported Sphinx version.
+    """
+    if (
+        not app.config.html_baseurl
+        or not isinstance(app.builder, DirectoryHTMLBuilder)
+        or not context["pageurl"]
+        or not context["pageurl"].endswith(".html")
+    ):
+        return
+
+    target = app.builder.get_target_uri(pagename)
+    context["pageurl"] = app.config.html_baseurl + target
 
 
 def setup(app: Sphinx) -> Dict[str, str]:
@@ -273,12 +286,13 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("html-page-context", _fix_canonical_url)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
     app.connect("html-page-context", utils.set_secondary_sidebar_items)
-    app.connect("build-finished", pygment.overwrite_pygments_css)
+    app.connect("build-finished", pygments.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 
     # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api

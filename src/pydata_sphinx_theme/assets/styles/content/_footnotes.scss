@@ -1,10 +1,10 @@
 // For consistency, add bracket around footnotes/citations which are
 // cited more than once. E.g. [Newton](1,2) instead of Newton(1,2)
-dt.label > span.brackets:not(:only-child):before {
+dt.label > span.brackets:not(:only-child)::before {
   content: "[";
 }
 
-dt.label > span.brackets:not(:only-child):after {
+dt.label > span.brackets:not(:only-child)::after {
   content: "]";
 }
 
@@ -17,9 +17,11 @@ a.footnote-reference {
 // Docutils 0.18 uses an `aside.footnote` container with different internal structure
 aside.footnote {
   margin-bottom: 0.5rem;
+
   &:last-child {
     margin-bottom: 1rem;
   }
+
   span.label,
   span.backrefs {
     font-weight: bold;

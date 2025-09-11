@@ -21,17 +21,15 @@ A clean, Bootstrap-based Sphinx theme by and for [the PyData community](https://
 - header: "{fas}`circle-half-stroke;pst-color-primary` Light / Dark theme"
   content: "Users can toggle between light and dark themes interactively."
 - header: "{fas}`palette;pst-color-primary` Customizable UI and themes"
-  content: "Customize colors and branding with CSS variables, and build custom UIs with [Sphinx Design](user_guide/web-components)."
+  content: "Customize colors and branding with CSS variables, and build custom UIs with [Sphinx Design components](user_guide/web-components)."
 - header: "{fab}`python;pst-color-primary` Supports PyData and Jupyter"
-  content: "CSS and UI support for Jupyter extensions and PyData execution outputs."
-  link: "examples/pydata.html"
+  content: "CSS and UI support for [Jupyter extensions](examples/execution) and [PyData execution outputs](examples/pydata.ipynb)."
 - header: "{fas}`lightbulb;pst-color-primary` Example Gallery"
-  content: "See our gallery of projects that use this theme."
-  link: "examples/gallery.html"
+  content: "See [our gallery](examples/gallery.md) of projects that use this theme."
 ```
 
 ```{seealso}
-If you are looking for a Sphinx theme that puts all of its sub-pages in the sidebar, the [Sphinx Book Theme](https://sphinx-book-theme.readthedocs.io/) has a similar look and feel, and [Furo](https://pradyunsg.me/furo/quickstart/) is another excellent choice. You can also see [the Sphinx Themes Gallery](https://sphinx-themes.org) for more ideas.
+If you are looking for a Sphinx theme that puts all of its sub-pages in the sidebar, the [Sphinx Book Theme](https://sphinx-book-theme.readthedocs.io/) has a similar look and feel, and [Furo](https://pradyunsg.me/furo/quickstart/) is another excellent choice. You can also see the [Sphinx Themes Gallery](https://sphinx-themes.org) for more ideas.
 ```
 
 ## User Guide

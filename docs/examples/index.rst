@@ -18,6 +18,7 @@ See the sections in the primary sidebar and below to explore.
     kitchen-sink/index
     pydata
     execution
+    graphviz
 
 
 .. Note: the caption below is intentionally long in order to test out what long captions look like.
@@ -27,6 +28,7 @@ See the sections in the primary sidebar and below to explore.
     :numbered:
     :caption: Reference and test section. Mostly meant for developers to check that things look OK.
 
+    regressions
     no-sidebar
     persistent-search-field
     in-page-toc

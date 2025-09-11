@@ -1,11 +1,14 @@
 """Methods to build the toctree used in the html pages."""
 
+from dataclasses import dataclass
 from functools import cache
 from itertools import count
-from typing import Iterator, List, Union
+from textwrap import dedent
+from typing import Iterator, List, Tuple, Union
 from urllib.parse import urlparse
 
 import sphinx
+
 from bs4 import BeautifulSoup
 from docutils import nodes
 from docutils.nodes import Node
@@ -31,8 +34,11 @@ def add_inline_math(node: Node) -> str:
     )
 
 
-def _get_ancestor_section(app: Sphinx, pagename: str, startdepth: int) -> str:
-    """Get the TocTree node `startdepth` levels below the root that dominates `pagename`."""
+def _get_ancestor_pagename(app: Sphinx, pagename: str, startdepth: int) -> str:
+    """
+    Get the name of `pagename`'s ancestor that is rooted `startdepth` levels below the
+    global root.
+    """
     toctree = TocTree(app.env)
     if sphinx.version_info[:2] >= (7, 2):
         from sphinx.environment.adapters.toctree import _get_toctree_ancestors
@@ -41,31 +47,24 @@ def _get_ancestor_section(app: Sphinx, pagename: str, startdepth: int) -> str:
     else:
         ancestors = toctree.get_toctree_ancestors(pagename)
     try:
-        return ancestors[-startdepth]  # will be a pagename (string)?
+        out = ancestors[-startdepth]
     except IndexError:
         # eg for index.rst, but also special pages such as genindex, py-modindex, search
         # those pages don't have a "current" element in the toctree, so we can
-        # directly return an empty string instead of using the default sphinx
+        # directly return None instead of using the default sphinx
         # toctree.get_toctree_for(pagename, app.builder, collapse, **kwargs)
-        return None
+        out = None
+    return out, toctree
 
 
-def get_unrendered_local_toctree(app: Sphinx, pagename: str, startdepth: int, **kwargs):
-    """Get the "local" (starting at `startdepth`) TocTree containing `pagename`.
+@dataclass
+class LinkInfo:
+    """Dataclass to generate toctree data."""
 
-    This is similar to `context["toctree"](**kwargs)` in sphinx templating,
-    but using the startdepth-local instead of global TOC tree.
-    """
-    kwargs.setdefault("collapse", True)
-    if kwargs.get("maxdepth") == "":
-        kwargs.pop("maxdepth")
-    toctree = TocTree(app.env)
-    indexname = _get_ancestor_section(app=app, pagename=pagename, startdepth=startdepth)
-    if indexname is None:
-        return None
-    return get_local_toctree_for_doc(
-        toctree, indexname, pagename, app.builder, **kwargs
-    )
+    is_current: bool
+    href: str
+    title: str
+    is_external: bool
 
 
 def add_toctree_functions(
@@ -73,7 +72,7 @@ def add_toctree_functions(
 ) -> None:
     """Add functions so Jinja templates can add toctree objects."""
 
-    def missing_sidebar_toctree(startdepth: int = 1, **kwargs):
+    def suppress_sidebar_toctree(startdepth: int = 1, **kwargs):
         """Check if there's a sidebar TocTree that needs to be rendered.
 
         Parameters:
@@ -81,9 +80,24 @@ def add_toctree_functions(
             entire TocTree for the site; 1 (default) gets the TocTree for the current
             top-level section.
 
-            kwargs: passed to the Sphinx `toctree` template function.
+            kwargs : passed to the Sphinx `toctree` template function.
         """
-        toctree = get_unrendered_local_toctree(app, pagename, startdepth, **kwargs)
+        ancestorname, toctree_obj = _get_ancestor_pagename(
+            app=app, pagename=pagename, startdepth=startdepth
+        )
+        if ancestorname is None:
+            return True  # suppress
+        if kwargs.get("includehidden", False):
+            # if ancestor is found and `includehidden=True` we're guaranteed there's a
+            # TocTree to be shown, so don't suppress
+            return False
+
+        # we've found an ancestor page, but `includehidden=False` so we can't be sure if
+        # there's a TocTree fragment that should be shown on this page; unfortunately we
+        # must resolve the whole TOC subtree to find out
+        toctree = get_nonroot_toctree(
+            app, pagename, ancestorname, toctree_obj, **kwargs
+        )
         return toctree is None
 
     @cache
@@ -95,7 +109,9 @@ def add_toctree_functions(
                 yield f"{base_id}-{n}"
 
     def unique_html_id(base_id: str):
-        """Create an id that is unique from other ids created by this function at build time.
+        """
+        Create an id that is unique from other ids created by this function at build
+        time.
 
         The function works by sequentially returning "<base_id>", "<base_id>-2",
         "<base_id>-3", etc. each time it is called.
@@ -103,14 +119,13 @@ def add_toctree_functions(
         return next(get_or_create_id_generator(base_id))
 
     @cache
-    def generate_header_nav_before_dropdown(n_links_before_dropdown):
-        """The cacheable part."""
-        try:
-            n_links_before_dropdown = int(n_links_before_dropdown)
-        except Exception:
-            raise ValueError(
-                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
-            )
+    def _generate_nav_info() -> List[LinkInfo]:
+        """Generate informations necessary to generate nav.
+
+        Instead of messing with html later, having this as a util function
+        should make it slightly easier to generate different html snippet for
+        sidebar or navbar.
+        """
         toctree = TocTree(app.env)
 
         # Find the active header navigation item so we decide whether to highlight
@@ -118,29 +133,36 @@ def add_toctree_functions(
         if sphinx.version_info[:2] >= (7, 2):
             from sphinx.environment.adapters.toctree import _get_toctree_ancestors
 
-            active_header_page = [
-                *_get_toctree_ancestors(app.env.toctree_includes, pagename)
-            ]
+            # NOTE: `env.toctree_includes` is a dict mapping pagenames to any (possibly
+            # hidden) TocTree directives on that page (i.e., the "child" pages nested
+            # under `pagename`).
+            header_pages = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
         else:
-            active_header_page = toctree.get_toctree_ancestors(pagename)
-        if active_header_page:
+            header_pages = toctree.get_toctree_ancestors(pagename)
+        if header_pages:
             # The final list item will be the top-most ancestor
-            active_header_page = active_header_page[-1]
+            active_header_page = header_pages[-1]
+        else:
+            active_header_page = None
 
-        # Find the root document because it lists our top-level toctree pages
-        root = app.env.tocs[app.config.root_doc]
+        # NOTE: `env.tocs` is a dict mapping pagenames to hierarchical bullet-lists
+        # ("nodetrees" in Sphinx parlance) of in-page headings (including `toctree::`
+        # directives). Thus the `tocs` of `root_doc` yields the top-level pages that sit
+        # just below the root of our site
+        root_toc = app.env.tocs[app.config.root_doc]
 
-        # Iterate through each toctree node in the root document
+        links_data = []
+
+        # Iterate through each node in the root document toc.
         # Grab the toctree pages and find the relative link + title.
-        links_html = []
-        # TODO: use `root.findall(TocTreeNodeClass)` once docutils min version >=0.18.1
-        for toc in traverse_or_findall(root, TocTreeNodeClass):
+        for toc in traverse_or_findall(root_toc, TocTreeNodeClass):
+            # TODO: ↑↑↑ use `root_toc.findall(TocTreeNodeClass)` ↑↑↑
+            #              once docutils min version >=0.18.1
             for title, page in toc.attributes["entries"]:
                 # if the page is using "self" use the correct link
                 page = toc.attributes["parent"] if page == "self" else page
 
                 # If this is the active ancestor page, add a class so we highlight it
-                current = " current active" if page == active_header_page else ""
 
                 # sanitize page title for use in the html output if needed
                 if title is None:
@@ -157,45 +179,97 @@ def add_toctree_functions(
                 # If it's an absolute one then we use the external class and
                 # the complete url.
                 is_absolute = bool(urlparse(page).netloc)
-                link_status = "external" if is_absolute else "internal"
                 link_href = page if is_absolute else context["pathto"](page)
 
-                # create the html output
-                links_html.append(
-                    f"""
-                    <li class="nav-item{current}">
-                      <a class="nav-link nav-{link_status}" href="{link_href}">
-                        {title}
-                      </a>
-                    </li>
-                """
+                links_data.append(
+                    LinkInfo(
+                        is_current=(page == active_header_page),
+                        href=link_href,
+                        title=title,
+                        is_external=is_absolute,
+                    )
                 )
 
         # Add external links defined in configuration as sibling list items
         for external_link in context["theme_external_links"]:
+            links_data.append(
+                LinkInfo(
+                    is_current=False,
+                    href=external_link["url"],
+                    title=external_link["name"],
+                    is_external=True,
+                )
+            )
+
+        return links_data
+
+    @cache
+    def _generate_header_nav_before_dropdown(
+        n_links_before_dropdown,
+    ) -> Tuple[str, List[str]]:
+        """Return html for navbar and dropdown.
+
+        Given the number of links before the dropdown, return the html for the navbar,
+        as well as the list of links to put in a dropdown.
+
+        Returns:
+            - HTML str for the navbar
+            - list of HTML str for the dropdown
+        """
+        try:
+            n_links_before_dropdown = int(n_links_before_dropdown)
+        except Exception:
+            raise ValueError(
+                f"n_links_before_dropdown is not an int: {n_links_before_dropdown}"
+            )
+        links_data = _generate_nav_info()
+
+        links_html = []
+        links_dropdown = []
+        boilerplate = dedent(
+            """
+            <li class="{nav_item} {active}">
+              <a class="{nav_link} nav-{ext_int}" href="{href}">
+                {title}
+              </a>
+            </li>
+            """
+        )
+        nav_item = "nav-item"
+        nav_link = "nav-link"
+        dropdown_item = "dropdown-item"
+        if len(links_data) <= n_links_before_dropdown + 1:
+            # max items without a dropdown is n + 1,
+            # the cutoff counting the dropdown itself.
+            # avoids having a dropdown with exactly one item
+            dropdown_cutoff = n_links_before_dropdown + 1
+        else:
+            dropdown_cutoff = n_links_before_dropdown
+        for link in links_data[:dropdown_cutoff]:
             links_html.append(
-                f"""
-                <li class="nav-item">
-                  <a class="nav-link nav-external" href="{ external_link["url"] }">
-                    { external_link["name"] }
-                  </a>
-                </li>
-                """
+                boilerplate.format(
+                    active="current active" if link.is_current else "",
+                    nav_link=nav_link,
+                    nav_item=nav_item,
+                    ext_int="external" if link.is_external else "internal",
+                    href=link.href,
+                    title=link.title,
+                )
+            )
+        for link in links_data[dropdown_cutoff:]:
+            links_dropdown.append(
+                boilerplate.format(
+                    active="current active" if link.is_current else "",
+                    nav_link=nav_link + " " + dropdown_item,
+                    nav_item="",
+                    ext_int="external" if link.is_external else "internal",
+                    href=link.href,
+                    title=link.title,
+                )
             )
 
         # The first links will always be visible
-        links_solo = links_html[:n_links_before_dropdown]
-        out = "\n".join(links_solo)
-
-        # Wrap the final few header items in a "more" dropdown
-        links_dropdown = [
-            # 🐲 brittle code, relies on the assumption that the code above
-            # gives each link in the nav a `nav-link` CSS class
-            html.replace("nav-link", "nav-link dropdown-item")
-            for html in links_html[n_links_before_dropdown:]
-        ]
-
-        return out, links_dropdown
+        return "\n".join(links_html), links_dropdown
 
     def generate_header_nav_html(
         n_links_before_dropdown: int = 5, dropdown_text: str = "More"
@@ -215,10 +289,11 @@ def add_toctree_functions(
         a cutoff.
 
         Parameters:
-            n_links_before_dropdown:The number of links to show before nesting the remaining links in a Dropdown element.
+            n_links_before_dropdown:The number of links to show before nesting the
+                remaining links in a Dropdown element.
             dropdown_text:Text of the dropdown element button.
         """
-        out, links_dropdown = generate_header_nav_before_dropdown(
+        out, links_dropdown = _generate_header_nav_before_dropdown(
             n_links_before_dropdown
         )
 
@@ -227,7 +302,9 @@ def add_toctree_functions(
             links_dropdown_html = "\n".join(links_dropdown)
             out += f"""
             <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="{dropdown_id}">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="{dropdown_id}">
                     {_(dropdown_text)}
                 </button>
                 <ul id="{dropdown_id}" class="dropdown-menu">
@@ -259,20 +336,38 @@ def add_toctree_functions(
         ref: https://www.sphinx-doc.org/en/master/templating.html#toctree
 
         Parameters:
-            kind : "sidebar" or "raw". Whether to generate HTML meant for sidebar navigation ("sidebar") or to return the raw BeautifulSoup object ("raw").
-            startdepth : The level of the toctree at which to start. By default, for the navbar uses the normal toctree (`startdepth=0`), and for the sidebar starts from the second level (`startdepth=1`).
-            show_nav_level : The level of the navigation bar to toggle as visible on page load. By default, this level is 1, and only top-level pages are shown, with drop-boxes to reveal children. Increasing `show_nav_level` will show child levels as well.
-            kwargs: passed to the Sphinx `toctree` template function.
+            kind : "sidebar" or "raw". Whether to generate HTML meant for sidebar
+                navigation ("sidebar") or to return the raw BeautifulSoup object
+                ("raw").
+            startdepth : The level of the toctree at which to start. By default,
+                for the navbar uses the normal toctree (`startdepth=0`), and for the
+                sidebar starts from the second level (`startdepth=1`).
+            show_nav_level : The level of the navigation bar to toggle as visible on
+                page load. By default, this level is 1, and only top-level pages are
+                shown, with drop-boxes to reveal children. Increasing `show_nav_level`
+                will show child levels as well.
+            kwargs : passed to the Sphinx `toctree` template function.
 
         Returns:
-            HTML string (if kind == "sidebar") OR BeautifulSoup object (if kind == "raw")
+            HTML string (if kind == "sidebar") OR BeautifulSoup object
+                (if kind == "raw")
         """
         if startdepth == 0:
             html_toctree = context["toctree"](**kwargs)
         else:
+            # find relevant ancestor page; some pages (search, genindex) won't have one
+            ancestorname, toctree_obj = _get_ancestor_pagename(
+                app=app, pagename=pagename, startdepth=startdepth
+            )
+            if ancestorname is None:
+                raise RuntimeError(
+                    "Template requested to generate a TocTree fragment but no suitable "
+                    "ancestor found to act as root node. Please report this to theme "
+                    "developers."
+                )
             # select the "active" subset of the navigation tree for the sidebar
-            toctree_element = get_unrendered_local_toctree(
-                app, pagename, startdepth, **kwargs
+            toctree_element = get_nonroot_toctree(
+                app, pagename, ancestorname, toctree_obj, **kwargs
             )
             html_toctree = app.builder.render_partial(toctree_element)["fragment"]
 
@@ -321,10 +416,8 @@ def add_toctree_functions(
 
             # Open the sidebar navigation to the proper depth
             for ii in range(int(show_nav_level)):
-                for checkbox in soup.select(
-                    f"li.toctree-l{ii} > input.toctree-checkbox"
-                ):
-                    checkbox.attrs["checked"] = None
+                for details in soup.select(f"li.toctree-l{ii} > details"):
+                    details["open"] = "open"
 
         return soup
 
@@ -341,7 +434,7 @@ def add_toctree_functions(
             if ul is None:
                 return
             if level <= (context["theme_show_toc_level"] + 1):
-                ul["class"] = [*ul.get("class", []), "visible"]
+                ul["class"] = [*ul.get("class", []), "pst-show_toc_level"]
             for li in ul("li", recursive=False):
                 li["class"] = [*li.get("class", []), f"toc-h{level}"]
                 add_header_level_recursive(li.find("ul", recursive=False), level + 1)
@@ -394,7 +487,7 @@ def add_toctree_functions(
 
     context["unique_html_id"] = unique_html_id
     context["generate_header_nav_html"] = generate_header_nav_html
-    context["missing_sidebar_toctree"] = missing_sidebar_toctree
+    context["suppress_sidebar_toctree"] = suppress_sidebar_toctree
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
@@ -404,8 +497,6 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
     """Add checkboxes to collapse children in a toctree."""
     # based on https://github.com/pradyunsg/furo
 
-    toctree_checkbox_count = 0
-
     for element in soup.find_all("li", recursive=True):
         # We check all "li" elements, to add a "current-page" to the correct li.
         classes = element.get("class", [])
@@ -414,7 +505,7 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         if "current" in classes:
             parentli = element.find_parent("li", class_="toctree-l0")
             if parentli:
-                parentli.select("p.caption ~ input")[0].attrs["checked"] = ""
+                parentli.find("details")["open"] = None
 
         # Nothing more to do, unless this has "children"
         if not element.find("ul"):
@@ -423,72 +514,139 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
         # Add a class to indicate that this has children.
         element["class"] = [*classes, "has-children"]
 
-        # We're gonna add a checkbox.
-        toctree_checkbox_count += 1
-        checkbox_name = f"toctree-checkbox-{toctree_checkbox_count}"
-
-        # Add the "label" for the checkbox which will get filled.
         if soup.new_tag is None:
             continue
 
-        label = soup.new_tag(
-            "label", attrs={"for": checkbox_name, "class": "toctree-toggle"}
-        )
-        label.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
-        if "toctree-l0" in classes:
-            # making label cover the whole caption text with css
-            label["class"] = "label-parts"
-        element.insert(1, label)
+        # For table of contents nodes that have subtrees, we modify the HTML so
+        # that the subtree can be expanded or collapsed in the browser.
+        #
+        # The HTML markup tree at the parent node starts with this structure:
+        #
+        # - li.has-children
+        #   - a.reference or p.caption
+        #   - ul
+        #
+        # Note the first child of li.has-children is p.caption only if this node
+        # is a section heading. (This only happens when show_nav_level is set to
+        # 0.)
+        #
+        # Now we modify the tree structure in one of two ways.
+        #
+        # (1) If the node holds a section heading, the HTML tree will be
+        # modified like so:
+        #
+        # - li.has-children
+        #   - details
+        #     - summary
+        #       - p.caption
+        #       - .toctree-toggle
+        #     - ul
+        #
+        # (2) Otherwise, if the node holds a link to a page in the docs:
+        #
+        # - li.has-children
+        #   - a.reference
+        #   - details
+        #     - summary
+        #       - .toctree-toggle
+        #   - ul
+        #
+        # Why the difference? In the first case, the TOC section heading is not
+        # a link, but in the second case it is. So in the first case it makes
+        # sense to put the (non-link) text inside the summary tag so that the
+        # user can click either the text or the .toctree-toggle chevron icon to
+        # expand/collapse the TOC subtree. But in the second case, putting the
+        # link in the summary tag would make it unclear whether clicking on the
+        # link should expand the subtree or take you to the link.
 
-        # Add the checkbox that's used to store expanded/collapsed state.
-        checkbox = soup.new_tag(
-            "input",
+        # Create <details> and put the entire subtree into it
+        details = soup.new_tag("details")
+        details.extend(element.contents)
+        element.append(details)
+
+        # Hoist the link to the top if there is one
+        toc_link = element.select_one("details > a.reference")
+        if toc_link:
+            element.insert(0, toc_link)
+
+        # Create <summary> with chevron icon
+        summary = soup.new_tag("summary")
+        span = soup.new_tag(
+            "span",
             attrs={
-                "type": "checkbox",
-                "class": ["toctree-checkbox"],
-                "id": checkbox_name,
-                "name": checkbox_name,
+                "class": "toctree-toggle",
+                # This element and the chevron it contains are purely decorative;
+                # the actual expand/collapse functionality is delegated to the
+                # <summary> tag
+                "role": "presentation",
             },
         )
+        span.append(soup.new_tag("i", attrs={"class": "fa-solid fa-chevron-down"}))
+        summary.append(span)
 
-        # if this has a "current" class, be expanded by default
-        # (by checking the checkbox)
+        # Prepend section heading (if there is one) to <summary>
+        collapsible_section_heading = element.select_one("details > p.caption")
+        if collapsible_section_heading:
+            # Put heading inside summary so that the heading text (and chevron) are both
+            # clickable
+            summary.insert(0, collapsible_section_heading)
+
+        # Prepend <summary> to <details>
+        details.insert(0, summary)
+
+        # If this TOC node has a "current" class, be expanded by default
+        # (by opening the details/summary disclosure widget)
         if "current" in classes:
-            checkbox.attrs["checked"] = ""
-
-        element.insert(1, checkbox)
+            details["open"] = "open"
 
 
-def get_local_toctree_for_doc(
-    toctree: TocTree, indexname: str, pagename: str, builder, collapse: bool, **kwargs
-) -> List[BeautifulSoup]:
-    """Get the "local" TocTree containing `pagename` rooted at `indexname`.
+def get_nonroot_toctree(
+    app: Sphinx, pagename: str, ancestorname: str, toctree, **kwargs
+):
+    """Get the partial TocTree (rooted at `ancestorname`) that dominates `pagename`.
 
-    The Sphinx equivalent is TocTree.get_toctree_for(), which always uses the "root"
-    or "global" TocTree:
+    Parameters:
+    app : Sphinx app.
+    pagename : Name of the current page (as Sphinx knows it; i.e., its relative path
+    from the documentation root).
+    ancestorname : Name of a page that dominates `pagename` and that will serve as the
+    root of the TocTree fragment.
+    toctree : A Sphinx TocTree object. Since this is always needed when finding the
+    ancestorname (see _get_ancestor_pagename), it's more efficient to pass it here to
+    re-use it.
+    kwargs : passed to the Sphinx `toctree` template function.
 
-        doctree = self.env.get_doctree(self.env.config.root_doc)
-
-    Whereas here we return a subset of the global toctree, rooted at `indexname`
-    (e.g. starting at a second level for the sidebar).
+    This is similar to `context["toctree"](**kwargs)` (AKA `toctree(**kwargs)` within a
+    Jinja template), or `TocTree.get_toctree_for()`, which always uses the "root"
+    doctree (i.e., `doctree = self.env.get_doctree(self.env.config.root_doc)`).
     """
-    partial_doctree = toctree.env.tocs[indexname].deepcopy()
-
-    toctrees = []
+    kwargs.setdefault("collapse", True)
     if "maxdepth" not in kwargs or not kwargs["maxdepth"]:
         kwargs["maxdepth"] = 0
     kwargs["maxdepth"] = int(kwargs["maxdepth"])
-    kwargs["collapse"] = collapse
+    # starting from ancestor page, recursively parse `toctree::` elements
+    ancestor_doctree = toctree.env.tocs[ancestorname].deepcopy()
+    toctrees = []
 
-    # TODO: use `doctree.findall(TocTreeNodeClass)` once docutils min version >=0.18.1
-    for _node in traverse_or_findall(partial_doctree, TocTreeNodeClass):
-        # defaults for resolve: prune=True, maxdepth=0, titles_only=False, collapse=False, includehidden=False
-        _toctree = toctree.resolve(pagename, builder, _node, **kwargs)
-        if _toctree:
-            toctrees.append(_toctree)
+    # for each `toctree::` directive in the ancestor page...
+    for toctree_node in traverse_or_findall(ancestor_doctree, TocTreeNodeClass):
+        # TODO: ↑↑↑↑↑↑ use `ancestor_doctree.findall(TocTreeNodeClass)` ↑↑↑↑↑↑
+        #              once docutils min version >=0.18.1
+
+        # ... resolve that `toctree::` (recursively get children, prune, collapse, etc)
+        resolved_toctree = toctree.resolve(
+            docname=pagename,
+            builder=app.builder,
+            toctree=toctree_node,
+            **kwargs,
+        )
+        # ... keep the non-empty ones
+        if resolved_toctree:
+            toctrees.append(resolved_toctree)
     if not toctrees:
         return None
+    # ... and merge them into a single entity
     result = toctrees[0]
-    for toctree in toctrees[1:]:
-        result.extend(toctree.children)
+    for resolved_toctree in toctrees[1:]:
+        result.extend(resolved_toctree.children)
     return result

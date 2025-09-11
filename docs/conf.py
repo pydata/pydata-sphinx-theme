@@ -8,11 +8,15 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 # -- Path setup --------------------------------------------------------------
 import os
 import sys
+
 from pathlib import Path
 from typing import Any, Dict
 
-import pydata_sphinx_theme
 from sphinx.application import Sphinx
+from sphinx.locale import _
+
+import pydata_sphinx_theme
+
 
 sys.path.append(str(Path(".").resolve()))
 
@@ -30,6 +34,8 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.graphviz",
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
@@ -58,6 +64,8 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
+
+intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
 
 # -- Sitemap -----------------------------------------------------------------
 
@@ -88,6 +96,27 @@ blog_authors = {
     "pydata": ("PyData", "https://pydata.org"),
     "jupyter": ("Jupyter", "https://jupyter.org"),
 }
+
+
+# -- sphinx_ext_graphviz options ---------------------------------------------
+
+graphviz_output_format = "svg"
+inheritance_graph_attrs = dict(
+    rankdir="LR",
+    fontsize=14,
+    ratio="compress",
+)
+
+# -- sphinx_togglebutton options ---------------------------------------------
+togglebutton_hint = str(_("Click to expand"))
+togglebutton_hint_hide = str(_("Click to collapse"))
+
+# -- Sphinx-copybutton options ---------------------------------------------
+# Exclude copy button from appearing over notebook cell numbers by using :not()
+# The default copybutton selector is `div.highlight pre`
+# https://github.com/executablebooks/sphinx-copybutton/blob/master/sphinx_copybutton/__init__.py#L82
+copybutton_exclude = ".linenos, .gp"
+copybutton_selector = ":not(.prompt) > div.highlight pre"
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -122,7 +151,7 @@ html_theme_options = {
     "external_links": [
         {
             "url": "https://pydata.org",
-            "name": "PyData",
+            "name": "PyData Website",
         },
         {
             "url": "https://numfocus.org/",
@@ -136,9 +165,9 @@ html_theme_options = {
     "header_links_before_dropdown": 4,
     "icon_links": [
         {
-            "name": "Twitter",
-            "url": "https://twitter.com/PyData",
-            "icon": "fa-brands fa-twitter",
+            "name": "X",
+            "url": "https://x.com/PyData",
+            "icon": "fa-brands fa-x-twitter",
         },
         {
             "name": "GitHub",
@@ -153,9 +182,7 @@ html_theme_options = {
         {
             "name": "PyData",
             "url": "https://pydata.org",
-            "icon": "_static/pydata-logo.png",
-            "type": "local",
-            "attributes": {"target": "_blank"},
+            "icon": "fa-custom fa-pydata",
         },
     ],
     # alternative way to set twitter and github header icons
@@ -167,7 +194,8 @@ html_theme_options = {
     },
     "use_edit_page_button": True,
     "show_toc_level": 1,
-    "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
+    # [left, content, right] For testing that the navbar items align properly
+    "navbar_align": "left",
     # "show_nav_level": 2,
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     "show_version_warning_banner": True,
@@ -188,8 +216,8 @@ html_theme_options = {
         "json_url": json_url,
         "version_match": version_match,
     },
-    "navigation_with_keys": False,
-    # "search_bar_position": "navbar",  # TODO: Deprecated - remove in future version
+    # "back_to_top_button": False,
+    "search_as_you_type": True,
 }
 
 html_sidebars = {
@@ -229,7 +257,9 @@ rediraffe_redirects = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_js_files = ["custom-icon.js"]
+html_js_files = [
+    ("custom-icons.js", {"defer": "defer"}),
+]
 todo_include_todos = True
 
 # -- favicon options ---------------------------------------------------------
@@ -264,16 +294,42 @@ autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
 
+# -- Warnings / Nitpicky -------------------------------------------------------
+
+nitpicky = True
+bad_classes = (
+    r".*abc def.*",  # urllib.parse.unquote_to_bytes
+    r"api_sample\.RandomNumberGenerator",
+    r"bs4\.BeautifulSoup",
+    r"docutils\.nodes\.Node",
+    r"matplotlib\.artist\.Artist",  # matplotlib xrefs are in the class diagram demo
+    r"matplotlib\.figure\.Figure",
+    r"matplotlib\.figure\.FigureBase",
+    r"pygments\.formatters\.HtmlFormatter",
+)
+nitpick_ignore_regex = [
+    *[("py:class", target) for target in bad_classes],
+    # we demo some `urllib` docs on our site; don't care that its xrefs fail to resolve
+    ("py:obj", r"urllib\.parse\.(Defrag|Parse|Split)Result(Bytes)?\.(count|index)"),
+    # the kitchen sink pages include some intentional errors
+    ("token", r"(suite|expression|target)"),
+]
+
 # -- application setup -------------------------------------------------------
 
 
 def setup_to_main(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
-    """Add a function that jinja can access for returning an "edit this page" link pointing to `main`."""
+    """
+    Add a function that jinja can access for returning an "edit this page" link
+    pointing to `main`.
+    """
 
     def to_main(link: str) -> str:
-        """Transform "edit on github" links and make sure they always point to the main branch.
+        """
+        Transform "edit on github" links and make sure they always point to the
+        main branch.
 
         Args:
             link: the link to the github edit interface
@@ -302,3 +358,53 @@ def setup(app: Sphinx) -> Dict[str, Any]:
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
+
+
+# -- linkcheck options ---------------------------------------------------------
+
+linkcheck_anchors_ignore = [
+    # match any anchor that starts with a '/' since this is an invalid HTML anchor
+    r"\/.*",
+]
+
+linkcheck_ignore = [
+    # The crawler gets "Anchor not found" for various anchors
+    r"https://github.com.+?#.*",
+    r"https://www.sphinx-doc.org/en/master/*/.+?#.+?",
+    # sample urls
+    "http://someurl/release-0.1.0.tar-gz",
+    "http://python.py",
+    # for whatever reason the Ablog index is treated as broken
+    "../examples/blog/index.html",
+    # get a 403 on CI
+    "https://canvas.workday.com/styles/tokens/type",
+    "https://unsplash.com/",
+    r"https?://www.gnu.org/software/gettext/.*",
+]
+
+linkcheck_allowed_redirects = {
+    r"http://www.python.org": "https://www.python.org/",
+    # :source:`something` linking files in the repository
+    r"https://github.com/pydata/pydata-sphinx-theme/tree/.*": r"https://github.com/pydata/pydata-sphinx-theme/blob/.*",
+    r"https://github.com/sphinx-themes/sphinx-themes.org/raw/.*": r"https://github.com/sphinx-themes/sphinx-themes.org/tree/.*",
+    # project redirects
+    r"https://pypi.org/project/[A-Za-z\d_\-\.]+/": r"https://pypi.org/project/[a-z\d\-\.]+/",
+    r"https://virtualenv.pypa.io/": "https://virtualenv.pypa.io/en/latest/",
+    # catching redirects in rtd
+    r"https://[A-Za-z\d_\-\.]+.readthedocs.io/": r"https://[A-Za-z\d_\-\.]+\.readthedocs\.io(/en)?/(stable|latest)/",
+    r"https://readthedocs.org/": r"https://about.readthedocs.com/\?ref=app.readthedocs.org",
+    r"https://app.readthedocs.org/dashboard/": r"https://app.readthedocs.org/accounts/login/\?next=/dashboard/",
+    # miscellanenous urls
+    r"https://python.arviz.org/": "https://python.arviz.org/en/stable/",
+    r"https://www.sphinx-doc.org/": "https://www.sphinx-doc.org/en/master/",
+    r"https://idtracker.ai/": "https://idtracker.ai/latest/",
+    r"https://gitlab.com": "https://about.gitlab.com/",
+    r"http://www.yahoo.com": "https://www.yahoo.com/",
+    r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
+    r"https://picsum.photos/": r"https://fastly.picsum.photos/",
+}
+
+# we have had issues with linkcheck timing and retries on www.gnu.org
+linkcheck_retries = 1
+linkcheck_timeout = 5
+linkcheck_report_timeouts_as_broken = True

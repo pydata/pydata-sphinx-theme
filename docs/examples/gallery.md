@@ -24,23 +24,39 @@ Thanks for your support!
 :class-card: "downstream-project-links"
 
 - title: Binder
+  link-alt: Binder docs
   link: https://mybinder.readthedocs.io/en/latest/index.html
 - title: cashocs
+  link-alt: cashocs docs
   link: https://cashocs.readthedocs.io/en/stable/
 - title: CuPy
+  link-alt: CuPy docs
   link: https://docs.cupy.dev/en/stable/index.html
+- title: DecentralChain
+  link-alt: DecentralChain docs
+  link: https://docs.decentralchain.io/en/master/
 - title: Fairlearn
+  link-alt: Fairlearn docs
   link: https://fairlearn.org/main/about/
 - title: Feature-engine
+  link-alt: Feature-engine docs
   link: https://feature-engine.readthedocs.io/
-- title: idtracker.ai
+- title: idtracker&period;ai
+  link-alt: idtracker&period;ai docs
   link: https://idtracker.ai/
+- title: itom measurement and simulation software
+  link-alt: itom documentation
+  link: https://itom-project.github.io/latest/docs/index.html
 - title: MegEngine
+  link-alt: MegEngine docs
   link: https://www.megengine.org.cn/doc/stable/en/index.html
-- title: PyVista
-  link: https://docs.pyvista.org
 - title: Pastas
+  link-alt: Pastas docs
   link: https://pastas.readthedocs.io/
-- title: DecentralChain
-  link: https://docs.decentralchain.io/en/master/
+- title: PhaseFieldX
+  link-alt: PhaseFieldX docs
+  link: https://phasefieldx.readthedocs.io/en/latest/index.html
+- title: PyVista
+  link-alt: PyVista docs
+  link: https://docs.pyvista.org
 ```

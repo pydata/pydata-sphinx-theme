@@ -2,20 +2,25 @@
 Search bar / search button
 ==========================
 
-By default, the search input field is hidden, and there is a search button
-(a magnifying glass icon :fas:`search`) in the top navbar.
-The search input field will be displayed when a user either:
+On narrow viewports, users can access search by clicking the magnifying glass
+icon (:fas:`search`) in the :ref:`layout-header`. On wide viewports, the
+magnifying glass icon, search input field, and keyboard shortcut for focusing
+the search input field are all shown. The keyboard shortcut is:
 
-- Clicks the search button in the header.
-- Presses the keyboard shortcut :kbd:`Ctrl` + :kbd:`K` (Linux, Windows) or :kbd:`⌘` + :kbd:`K` (macOS).
+* :kbd:`Ctrl` + :kbd:`K` (Linux, Windows)
+* :kbd:`⌘` + :kbd:`K` (macOS)
 
 You can also configure some aspects of the search button and search field, described below.
 
 Configure the search field position
 -----------------------------------
 
-The position of the search *button* is controlled by ``search-button`` and by default is included in ``html_theme_options["navbar_persistent"]``; you may move it elsewhere as befits your site's layout, or remove it.
-You can also add an always-visible search field to some/all pages in your site by adding ``search-field.html`` to one of the configuration variables (e.g., ``html_sidebars``, ``html_theme_options["footer_start"]``, etc.).
+The position of the search *button* is controlled by ``search-button`` and by
+default is included in ``html_theme_options["navbar_persistent"]``; you may move
+it elsewhere as befits your site's layout, or remove it. You can also add an
+always-visible search field to some/all pages in your site by adding
+``search-field.html`` to one of the configuration variables (e.g.,
+``html_sidebars``, ``html_theme_options["footer_start"]``, etc.).
 
 For example, if you'd like the search field to be in your sidebar, add it to
 the sidebar templates like so:
@@ -37,7 +42,14 @@ following configuration:
 
 .. warning::
 
-    If a page includes *both* the search button and an always-visible search field, the keyboard shortcuts will focus on the always-visible field and the hidden search field overlay will not display. *This may not be what you want:* on small screens (i.e. mobile devices) the sidebars may be hidden in a drawer, and if the persistent search field is there, it may receive focus without actually being made visible. It is **strongly recommended** that you use *either* the search button and the hidden/overlaid field that comes with it, *or* use a persistent search field in a place that makes sense for your layout.
+    If a page includes *both* the search button and an always-visible search
+    field, the keyboard shortcuts will focus on the always-visible field and the
+    hidden search field overlay will not display. *This may not be what you want:*
+    on small screens (i.e. mobile devices) the sidebars may be hidden in a drawer,
+    and if the persistent search field is there, it may receive focus without
+    actually being made visible. It is **strongly recommended** that you use
+    *either* the search button and the hidden/overlaid field that comes with it,
+    *or* use a persistent search field in a place that makes sense for your layout.
 
 
 Configure the search bar text
@@ -50,4 +62,15 @@ following configuration to your ``conf.py`` file:
 
    html_theme_options = {
        "search_bar_text": "Your text here..."
+   }
+
+Configure the inline search results (search-as-you-type) feature
+----------------------------------------------------------------
+
+Set the ``search_as_you_type`` HTML theme option to ``True``.
+
+.. code:: python
+
+   html_theme_options = {
+       "search_as_you_type": True
    }

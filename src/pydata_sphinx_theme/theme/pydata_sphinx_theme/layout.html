@@ -7,71 +7,77 @@
 {%- extends "basic/layout.html" %}
 {%- import "static/webpack-macros.html" as _webpack with context %}
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
-{% set remove_sidebar_secondary = (meta is defined and meta is not none and 'html_theme.sidebar_secondary.remove' in meta) or not theme_secondary_sidebar_items %}
+{# Note: secondary_sidebar_items is an array set by set_secondary_sidebar_items() in utils.py #}
+{% set remove_sidebar_secondary = (meta is defined and meta is not none and 'html_theme.sidebar_secondary.remove' in meta) or secondary_sidebar_items|length == 0 %}
 {%- block css %}
   {# The data-cfasync attribute disables CloudFlare's Rocket loader so that #}
   {# mode/theme are correctly set before the browser renders the page. #}
   {# https://github.com/pydata/pydata-sphinx-theme/pull/1045 #}
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "{{ default_mode }}";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "{{ default_mode }}";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   {{ _webpack.head_pre_assets() }}
-  {{ _webpack.head_pre_icons() }}
   {{- css() }}
   {{ _webpack.head_js_preload() }}
 {%- endblock css %}
 {%- block extrahead %}
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="{{ language }}"/>
+  <meta name="docsearch:version" content="{{ version }}" />
   {%- if last_updated %}
     <meta name="docbuild:last-update" content="{{ last_updated | e }}"/>
   {%- endif %}
+  {% if pagename == 'search' %}
+    {# Search tools are already loaded on search page. Don't load them twice. #}
+  {% else %}
+    {# Load Sphinx's built-in search tools so that our custom inline search
+       experience can work on any page. #}
+    <script src="{{ pathto('_static/searchtools.js', 1) | e }}"></script>
+    <script src="{{ pathto('_static/language_data.js', 1) | e }}"></script>
+    <script src="{{ pathto('searchindex.js', 1) | e }}"></script>
+  {% endif %}
 {%- endblock extrahead %}
 {% block body_tag %}
-  {# set up with scrollspy to update the toc as we scroll #}
-  {# ref: https://getbootstrap.com/docs/4.0/components/scrollspy/ #}
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="{{ default_mode }}">
+  <body data-default-mode="{{ default_mode }}">
+{%- endblock %}
 
+{% block header %}
   {# A button hidden by default to help assistive devices quickly jump to main content #}
   {# ref: https://www.youtube.com/watch?v=VUR0I5mqq7I #}
-  <a id="pst-skip-link" class="skip-link" href="#main-content">{{ _("Skip to main content") }}</a>
-
-{%- endblock %}
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">{{ _("Skip to main content") }}</a></div>
+{% endblock %}
 
 {%- block content %}
   {# A tiny helper pixel to detect if we've scrolled #}
   <div id="pst-scroll-pixel-helper"></div>
 
+  {%- if theme_back_to_top_button %}
   {# the scroll to top button #}
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
-    {{ _("Back to top") }}
+    {{- _("Back to top") -}}
   </button>
-
-  {# checkbox to toggle primary sidebar #}
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  {# Checkboxes to toggle the secondary sidebar #}
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  {# A search field pop-up that will only show when the search button is clicked #}
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">{% include "../components/search-field.html" %}</div>
-  </div>
-
-  {%- if theme_announcement -%}
-    {% include "sections/announcement.html" %}
   {%- endif %}
+
+  {# A search field pop-up that will only show when the search button is clicked #}
+  <dialog id="pst-search-dialog">
+    {% include "../components/search-field.html" %}
+  </dialog>
+
+  {% include "sections/announcement.html" %}
+
   {% block docs_navbar %}
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
       {%- include "sections/header.html" %}
     </header>
   {% endblock docs_navbar %}
@@ -79,21 +85,22 @@
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       {# Primary sidebar #}
-      {# If we have no sidebar TOC, pop the TOC component from the sidebar list #}
-      {% if missing_sidebar_toctree(includehidden=theme_sidebar_includehidden) %}
-        {% set sidebars = sidebars | reject("in", "sidebar-nav-bs.html") | list %}
+      {# If we have no sidebar TOC, pop the TOC component from the sidebars list #}
+      {% if suppress_sidebar_toctree(includehidden=theme_sidebar_includehidden | tobool) %}
+        {% set sidebars = sidebars | reject("in", ["sidebar-collapse.html", "sidebar-nav-bs.html"]) | list %}
       {% endif %}
-      <div class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
       {# Using an ID here so that the skip-link works #}
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         {# Main content area #}
         {% block docs_main %}
           <div class="bd-content">
             <div class="bd-article-container">
               {# Article header #}
-              <div class="bd-header-article">{% include "sections/header-article.html" %}</div>
+              <div class="bd-header-article d-print-none">{% include "sections/header-article.html" %}</div>
               {# Article content #}
               {% block docs_body %}
               {# This is empty and only shows up if text has been highlighted by the URL #}
@@ -110,7 +117,7 @@
               {% endif %}
               {# prev-next buttons #}
               {% if theme_show_prev_next %}
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   {% include "components/prev-next.html" %}
                 </footer>
               {% endif %}
@@ -118,7 +125,8 @@
             {# Secondary sidebar #}
             {% block docs_toc %}
               {% if not remove_sidebar_secondary %}
-                <div class="bd-sidebar-secondary bd-toc">{% include "sections/sidebar-secondary.html" %}</div>
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc">{% include "sections/sidebar-secondary.html" %}</div>
               {% endif %}
             {% endblock docs_toc %}
           </div>
@@ -139,7 +147,6 @@
   </footer>
 {%- endblock footer %}
 {# Silence the sidebars and relbars since we define our own #}
-{% block header %}{% endblock %}
 {% block relbar1 %}{% endblock %}
 {% block relbar2 %}{% endblock %}
 {% block sidebarsourcelink %}{% endblock %}

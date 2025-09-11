@@ -4,7 +4,8 @@
 Light and dark themes
 =====================
 
-You can change the major background/foreground colors of this theme using built-in "dark" and "light" modes.
+You can change the major background/foreground colors of this theme using
+built-in "dark" and "light" modes.
 These are controlled by a button in the navigation header, with the following options:
 
 - A ``light`` theme with a bright background and dark text / UI elements
@@ -16,7 +17,8 @@ Configure default theme mode
 ----------------------------
 
 By default, visitors to your documentation will use the theme mode ``auto``.
-This will choose a theme based on the user's system settings, and default to ``light`` if no system setting is found.
+This will choose a theme based on the user's system settings, and default to
+``light`` if no system setting is found.
 
 If you wish to use a different default theme mode, set the ``default_mode`` configuration to one of ``auto``, ``dark``, ``light``.
 For example:
@@ -59,14 +61,14 @@ For example to define a different background color for both the light and dark t
     html[data-theme="light"] {
 
         /* whatever you want to change */
-        background: white;
+        background-color: white;
     }
 
     /* anything related to the dark theme */
     html[data-theme="dark"] {
 
         /* whatever you want to change */
-        background: black;
+        background-color: black;
     }
 
 A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.

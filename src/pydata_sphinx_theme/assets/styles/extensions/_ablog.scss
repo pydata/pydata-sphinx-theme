@@ -10,6 +10,7 @@
   h2,
   h3 {
     font-size: var(--pst-sidebar-header-font-size);
+
     // Remove unnecessary vertical whitespace
     margin-top: 0.5rem;
 
@@ -24,8 +25,10 @@
     // No bullet points for the primary sidebar items
     list-style: none;
     padding-left: 0;
+
     // Otherwise a scrollbar randomly shows up
     overflow-y: hidden;
+
     // List of recent post items
     display: flex;
     flex-direction: column;
@@ -34,8 +37,7 @@
 
     // The ablog cloud should move horizontally
     &.ablog-cloud {
-      flex-direction: row;
-      flex-flow: wrap;
+      flex-flow: row wrap;
       gap: 0.5rem;
 
       // Vertical-align tag clouds
@@ -70,7 +72,7 @@
       gap: 1rem;
       line-height: 1.5rem;
 
-      i:before {
+      i::before {
         color: var(--pst-color-text-base);
       }
     }
@@ -78,7 +80,7 @@
 
   // The first span is for the previous page and aligns to the left
   span.ablog__prev {
-    i.fa-arrow-circle-left:before {
+    i.fa-arrow-circle-left::before {
       content: var(--pst-icon-angle-left);
     }
   }
@@ -94,7 +96,7 @@
     margin-left: auto;
     text-align: right;
 
-    i.fa-arrow-circle-right:before {
+    i.fa-arrow-circle-right::before {
       content: var(--pst-icon-angle-right);
     }
   }
@@ -113,8 +115,7 @@
     // Post metadata tags (author, links ,etc) should be a bit smaller
     .ablog-archive {
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      flex-flow: row wrap;
       gap: 1rem;
       list-style: none;
       font-size: 0.75rem;

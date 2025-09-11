@@ -1,0 +1,66 @@
+# Accessibility tests for PST, using playwright and axe-core
+
+name: a11y-tests
+
+# Dynamic concurrency group that uses the workflow name and PR number if available
+# or commit SHA as a fallback. If a new build is triggered under that
+# concurrency group while a previous build is running it will be canceled.
+# Repeated pushes to a PR will cancel all previous builds, while multiple
+# merges to main will not cancel.
+# Note we add the prefix `a11y-` to avoid race conditions when called from other workflows
+# for example when called from the CI workflow
+concurrency:
+  group: a11y-${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: "1" # Make tools pretty
+  DEFAULT_PYTHON_VERSION: "3.12" # keep in sync with tox.ini
+  PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
+
+permissions: {}
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+  # allows this to be used as a composite action in other workflows
+  workflow_call:
+  # allow manual triggering of the workflow, while debugging
+  workflow_dispatch:
+
+jobs:
+  a11y-tests:
+    strategy:
+      fail-fast: true
+      matrix:
+        # ubuntu-latest = 24.04
+        os: ["ubuntu-latest", "ubuntu-22.04", "macos-14"]
+        browser: ["firefox", "chromium"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: "Checkout repository 🛎"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: "Setup CI environment 🛠"
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          pandoc: true
+          graphviz: true
+
+      - name: "Run accessibility tests with playwright 🎭"
+        # build PST, build docs, then run a11y-tests
+        run: python -Im tox run -e compile-assets,i18n-compile,py312-docs,a11y-tests-${{ matrix.browser }}
+
+      - name: "Upload Playwright traces, if any 🐾"
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6
+        if: ${{ failure() }}
+        with:
+          name: playwright-traces-${{ matrix.os }}-${{ matrix.browser }}
+          path: test-results/

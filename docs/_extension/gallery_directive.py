@@ -8,8 +8,9 @@ in a helper-directive to generate it with a single YAML configuration file.
 It currently exists for maintainers of the pydata-sphinx-theme,
 but might be abstracted into a standalone package if it proves useful.
 """
+
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, ClassVar, Dict, List
 
 from docutils import nodes
 from docutils.parsers.rst import directives
@@ -17,6 +18,7 @@ from sphinx.application import Sphinx
 from sphinx.util import logging
 from sphinx.util.docutils import SphinxDirective
 from yaml import safe_load
+
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +60,7 @@ class GalleryGridDirective(SphinxDirective):
     required_arguments = 0
     optional_arguments = 1
     final_argument_whitespace = True
-    option_spec = {
+    option_spec: ClassVar[dict[str, Any]] = {
         # A class to be added to the resulting container
         "grid-columns": directives.unchanged,
         "class-container": directives.unchanged,
@@ -75,7 +77,7 @@ class GalleryGridDirective(SphinxDirective):
             path_doc = Path(path_doc).parent
             path_data = (path_doc / path_data_rel).resolve()
             if not path_data.exists():
-                logger.info(f"Could not find grid data at {path_data}.")
+                logger.info("Could not find grid data at %s.", path_data)
                 nodes.text("No grid data found at {path_data}.")
                 return
             yaml_string = path_data.read_text()
@@ -107,7 +109,7 @@ class GalleryGridDirective(SphinxDirective):
 
         # Parse the template with Sphinx Design to create an output container
         # Prep the options for the template grid
-        class_ = "gallery-directive" + f' {self.options.get("class-container", "")}'
+        class_ = "gallery-directive" + f" {self.options.get('class-container', '')}"
         options = {"gutter": 2, "class-container": class_}
         options_str = "\n".join(f":{k}: {v}" for k, v in options.items())
 

@@ -4,13 +4,26 @@ This theme comes with support for {{ rtd }}, a popular service for hosting docum
 
 ## Version switcher
 
-Projects hosted on {{ rtd }} can use the {{ rtd }} supplied version switcher instead of the [version switcher that this theme provides](version-dropdown.rst).
-Its presence will be automatically detected by this theme, and placed in the `rtd-footer-container` node inside the primary sidebar.
+Read the Docs provides a version switcher by default to projects as part of a
+[flyout menu](https://docs.readthedocs.com/platform/stable/flyout-menu.html) that can
+be disabled.
 
-```{warning}
-The {{ rtd }} version switcher will be hidden any time the primary sidebar is hidden (see [this section](layout-sidebar-primary) for discussion of when the primary sidebar might get hidden automatically and how to hide it purposely).
-We intend to make {{ rtd }} switcher placement more flexible; you can track progress toward that in [this issue](https://github.com/pydata/pydata-sphinx-theme/issues/705).
-```
+This means that you have one of three options if you are hosting a PyData
+Sphinx Theme-enabled site on Read the Docs:
+
+1. Use only the Read the Docs version switcher. You must disable the [version
+   switcher that this theme provides](version-dropdown.rst) if you previously
+   enabled it.
+2. Use only this theme's version switcher. You must disable the Read the Docs
+   version switcher by going to your project's [Read the Docs
+   dashboard](https://app.readthedocs.org/dashboard/). Then go to
+   `Settings > Addons > Flyout menu` and uncheck the "Flyout enabled" box.
+3. Not recommended: use both version switchers.
+
+Be aware that the two version switchers are not feature equivalent. For example,
+the Read the Docs flyout provides a translation switcher in addition to a
+version switcher. On the other hand, the Read the Docs switcher is not styled to
+match the look and feel of this theme. And there are other differences.
 
 ## Add ethical advertisements to your sidebar
 

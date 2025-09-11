@@ -142,48 +142,6 @@ this assumption by supplying both ``text`` and ``alt_text``).
 Add favicons
 ============
 
-.. deprecated:: 0.15
-
-   Support for complex and multiple favicons will be dropped in version 0.15. Instead, use the `sphinx-favicon <https://sphinx-favicon.readthedocs.io/en/stable/>`__ extension.
-   It provides the same functionality using more flexible parameters.
-
-
 ``pydata_sphinx_theme`` supports the `standard sphinx favicon configuration <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_favicon>`_, using ``html_favicon``.
-
-Additionally, you may add any number of browser- or device-specific favicons of any size.
-To do so, use the ``html_theme_options["favicons"]`` configuration key.
-The only required argument is ``href``, which can be either an absolute URL (beginning with ``http``) or a local path relative to your ``html_static_path``.
-In addition, you may specify a size with ``sizes``, specify a ``rel`` value, and specify a ``color``.
-See `this blog post on SVG favicons for more information <https://medium.com/swlh/are-you-using-svg-favicons-yet-a-guide-for-modern-browsers-836a6aace3df>`_.
-
-For example, below we define three extra favicons of different sizes and ``rel`` types, and one with a specific color.
-
-.. code-block:: python
-
-   html_theme_options = {
-      "favicons": [
-         {
-            "rel": "icon",
-            "sizes": "16x16",
-            "href": "https://secure.example.com/favicon/favicon-16x16.png",
-         },
-         {
-            "rel": "icon",
-            "sizes": "32x32",
-            "href": "favicon-32x32.png",
-         },
-         {
-            "rel": "apple-touch-icon",
-            "sizes": "180x180",
-            "href": "apple-touch-icon-180x180.png",
-            "color": "#000000",
-         },
-      ]
-   }
-
-``pydata_sphinx_theme`` will add ``link`` tags to your document's ``head``
-section, following this pattern:
-
-.. code-block:: html+jinja
-
-   <link rel="{{ favicon.rel }}" sizes="{{ favicon.sizes }}" href="{{ favicon.href }}" color="{{ favicon.color }}">
+Support for complex and multiple favicons was dropped in version 0.15.3. Instead, use the `sphinx-favicon <https://sphinx-favicon.readthedocs.io/en/stable/>`__ extension.
+It provides the same functionality using more flexible parameters.

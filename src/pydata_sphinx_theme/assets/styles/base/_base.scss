@@ -7,7 +7,7 @@ body {
   background-color: var(--pst-color-background);
   font-family: var(--pst-font-family-base);
   font-weight: 400;
-  line-height: 1.65;
+  line-height: $line-height-body;
   color: var(--pst-color-text-base);
   min-height: 100vh;
   display: flex;
@@ -15,14 +15,13 @@ body {
 
   // hack to avoid the black background on some browser including Safari
   &::-webkit-scrollbar-track {
-    background: var(--pst-color-background);
+    background-color: var(--pst-color-background);
   }
 }
 
 p {
   margin-bottom: 1.15rem;
   font-size: 1em;
-  color: var(--pst-color-text-base);
 
   /* section header in docstring pages */
   &.rubric {
@@ -40,17 +39,11 @@ a {
   // The # anchor that appears on hover over headings
   &.headerlink {
     color: var(--pst-color-secondary);
-    opacity: 0.7;
     font-size: 0.8em;
-    padding: 0 4px 0 4px;
+    padding: 0 4px;
     margin-left: 0.2em;
     text-decoration: none;
-    transition: all 0.2s ease-out;
     user-select: none;
-
-    &:hover {
-      opacity: 1;
-    }
   }
 
   // set up a icon next to the shorten links from github and gitlab
@@ -72,46 +65,55 @@ a {
   }
 }
 
-.heading-style {
+%heading-style {
   margin: 2.75rem 0 1.05rem;
   font-family: var(--pst-font-family-heading);
   font-weight: var(--pst-font-weight-heading);
   line-height: 1.15;
 }
 
+// From 0.16.1, the preferred variable for headings is --pst-color-heading
+// if you have --pst-heading-color, this variable will be used, otherwise the default
+// --pst-color-heading will be used.
 h1 {
-  @extend .heading-style;
+  @extend %heading-style;
+
   margin-top: 0;
   font-size: var(--pst-font-size-h1);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h2 {
-  @extend .heading-style;
+  @extend %heading-style;
+
   font-size: var(--pst-font-size-h2);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h3 {
-  @extend .heading-style;
+  @extend %heading-style;
+
   font-size: var(--pst-font-size-h3);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h4 {
-  @extend .heading-style;
+  @extend %heading-style;
+
   font-size: var(--pst-font-size-h4);
-  color: var(--pst-heading-color);
+  color: var(--pst-heading-color, --pst-color-heading);
 }
 
 h5 {
-  @extend .heading-style;
+  @extend %heading-style;
+
   font-size: var(--pst-font-size-h5);
   color: var(--pst-color-text-base);
 }
 
 h6 {
-  @extend .heading-style;
+  @extend %heading-style;
+
   font-size: var(--pst-font-size-h6);
   color: var(--pst-color-text-base);
 }
@@ -152,7 +154,7 @@ code {
 }
 
 pre {
-  margin: 1.5em 0 1.5em 0;
+  margin: 1.5em 0;
   padding: 1rem;
   background-color: var(--pst-color-surface);
   color: var(--pst-color-text-base);
@@ -169,13 +171,45 @@ pre {
 
 // the back to top btn
 #pst-back-to-top {
+  // zindex-tooltip comes from Bootstrap https://getbootstrap.com/docs/5.2/layout/z-index/
   z-index: $zindex-tooltip;
   position: fixed;
   display: none;
-  top: 80vh;
+  top: 90vh;
   left: 50vw;
   transform: translate(-50%);
   color: var(--pst-color-secondary-text);
   background-color: var(--pst-color-secondary);
   border: none;
+
+  .fa-arrow-up {
+    // Using margin instead of a space character prevents the space between the
+    // icon and the text from being underlined when the button is hovered.
+    margin-inline-end: 0.5em;
+  }
+
+  &:hover {
+    @include link-style-hover;
+
+    text-decoration-thickness: 1px;
+    background-color: var(--pst-color-secondary-highlight);
+    color: var(--pst-color-secondary-highlight-text);
+  }
+
+  &:focus-visible {
+    box-shadow: none;
+    outline: $focus-ring-outline;
+    outline-color: var(--pst-color-secondary);
+    outline-offset: $focus-ring-width;
+  }
+}
+
+// Focus ring
+// ----------
+// Note: The Bootstrap stylesheet provides the focus ring (customized by this
+// theme via Sass variables in _bootstrap.scss) in some cases. This rule covers
+// all other cases.
+:focus-visible {
+  outline: $focus-ring-outline;
+  box-shadow: none; // override Bootstrap
 }

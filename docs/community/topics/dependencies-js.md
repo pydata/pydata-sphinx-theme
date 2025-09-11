@@ -8,7 +8,7 @@ There are two kinds of dependency definitions in this theme:
 To update or add a JS dependency, follow these steps:
 
 1. **Edit `package.json`** by adding or modifying a dependency.
-2. **Re-generate `package-lock.json`** in order to create a new set of frozen dependencies for the theme. To do this, run the following command from [the Sphinx Theme Builder](https://github.com/pradyunsg/sphinx-theme-builder).
+2. **Re-generate `package-lock.json`** in order to create a new set of frozen dependencies for the theme. To do this, run the following command from the [Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/).
 
    ```
    stb npm install --include=dev

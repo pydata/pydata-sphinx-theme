@@ -3,31 +3,24 @@
  */
 
 .theme-switch-button {
-  // overide bootstrap settings
-  margin: 0 -0.5rem;
-  padding: 0; // We pad the `span` not the container
-  color: var(--pst-color-text-muted);
-  border-radius: 0;
-  @include focus-indicator;
-
-  span {
+  .theme-switch {
     display: none;
-    padding: 0.5em;
 
-    @include icon-navbar-hover;
     &:active {
       text-decoration: none;
       color: var(--pst-color-link-hover);
     }
+
+    .fa-lg {
+      aspect-ratio: 1 / 1;
+    }
   }
 }
 
-html[data-mode="auto"] .theme-switch-button span[data-mode="auto"] {
-  display: flex;
-}
-html[data-mode="light"] .theme-switch-button span[data-mode="light"] {
-  display: flex;
-}
-html[data-mode="dark"] .theme-switch-button span[data-mode="dark"] {
-  display: flex;
+@each $mode in auto, light, dark {
+  html[data-mode="#{$mode}"]
+    .theme-switch-button
+    .theme-switch[data-mode="#{$mode}"] {
+    display: inline; // inline needed for span height to be calculated using inherited font size and line height
+  }
 }

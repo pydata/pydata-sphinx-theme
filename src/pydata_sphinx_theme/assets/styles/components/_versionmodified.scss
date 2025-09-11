@@ -1,21 +1,32 @@
 div.versionadded,
 div.versionchanged,
-div.deprecated {
+div.deprecated,
+div.versionremoved {
   vertical-align: middle;
   margin: 1.5625em auto;
-  padding: 0 0.6rem 0 0.6rem;
+  padding: 0 0.6rem;
   overflow: hidden;
+
+  /* break-inside has replaced page-break-inside and is widely usable since 2019 */
   page-break-inside: avoid;
+  break-inside: avoid;
   border-left: 0.2rem solid;
   border-color: var(--pst-color-info);
   border-radius: $admonition-border-radius;
   background-color: var(--pst-color-on-background);
-  @include box-shadow();
+
+  @include box-shadow;
+
   position: relative;
 
   > p {
     margin-bottom: 0.6rem;
     margin-top: 0.6rem;
+  }
+
+  // fix color contrast failures (accessibility)
+  a {
+    color: var(--pst-color-link-higher-contrast);
   }
 }
 
@@ -27,9 +38,18 @@ div.versionadded {
 div.versionchanged {
   border-color: var(--pst-color-warning);
   background-color: var(--pst-color-warning-bg);
+
+  html[data-theme="dark"] & {
+    // This is a one-off because `--pst-color-link-higher-contrast` works for
+    // all of the other admonitions except this one in dark mode.
+    a {
+      color: map-deep-get($color-palette, "teal", "300");
+    }
+  }
 }
 
-div.deprecated {
+div.deprecated,
+div.versionremoved {
   border-color: var(--pst-color-danger);
   background-color: var(--pst-color-danger-bg);
 }
@@ -37,7 +57,7 @@ div.deprecated {
 span.versionmodified {
   font-weight: 600;
 
-  &:before {
+  &::before {
     margin-right: 0.6rem;
     color: var(--pst-color-info);
     font: var(--fa-font-solid);
@@ -46,22 +66,29 @@ span.versionmodified {
 }
 
 span.versionmodified.added {
-  &:before {
+  &::before {
     color: var(--pst-color-success);
     content: var(--pst-icon-versionmodified-added);
   }
 }
 
 span.versionmodified.changed {
-  &:before {
+  &::before {
     color: var(--pst-color-warning);
     content: var(--pst-icon-versionmodified-changed);
   }
 }
 
 span.versionmodified.deprecated {
-  &:before {
+  &::before {
     color: var(--pst-color-danger);
     content: var(--pst-icon-versionmodified-deprecated);
+  }
+}
+
+span.versionmodified.removed {
+  &::before {
+    color: var(--pst-color-danger);
+    content: var(--pst-icon-versionmodified-removed);
   }
 }
