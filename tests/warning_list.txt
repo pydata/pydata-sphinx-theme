@@ -1,16 +1,3 @@
-WARNING: image file not readable: _static/gallery/pandas.png
-WARNING: image file not readable: _static/gallery/numpy.png
-WARNING: image file not readable: _static/gallery/scipy.png
-WARNING: image file not readable: _static/gallery/bokeh.png
-WARNING: image file not readable: _static/gallery/mne-python.png
-WARNING: image file not readable: _static/gallery/networkx.png
-WARNING: image file not readable: _static/gallery/jupyter_book.png
-WARNING: image file not readable: _static/gallery/jupyter.png
-WARNING: image file not readable: _static/gallery/arviz.png
-WARNING: image file not readable: _static/gallery/sepal.png
-WARNING: image file not readable: _static/gallery/matplotlib.png
-WARNING: image file not readable: _static/gallery/brightway.png
-WARNING: image file not readable: _static/gallery/scikit-learn.png
 WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.count'. Check your autosummary_generate setting.
 WARNING: autosummary: stub file not found 'urllib.parse.DefragResult.index'. Check your autosummary_generate setting.
 WARNING: autosummary: stub file not found 'urllib.parse.DefragResultBytes.count'. Check your autosummary_generate setting.
