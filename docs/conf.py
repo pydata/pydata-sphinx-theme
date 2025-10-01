@@ -380,6 +380,7 @@ linkcheck_ignore = [
     "https://canvas.workday.com/styles/tokens/type",
     "https://unsplash.com/",
     r"https?://www.gnu.org/software/gettext/.*",
+    r"https://www.npmjs.com/.*",
 ]
 
 linkcheck_allowed_redirects = {
