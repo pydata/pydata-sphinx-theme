@@ -223,12 +223,10 @@ You may skip the need to manually define the link text by [activating the MyST L
 For example:
 
 - **reStructuredText**
-
   - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
   - https://github.com/pydata/pydata-sphinx-theme/pull/1012
 
 - **MyST Markdown (default)**
-
   - `[https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)`
   - [https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)
 
