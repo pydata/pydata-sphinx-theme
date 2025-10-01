@@ -39,7 +39,7 @@ jobs:
         run: ls -R
 
       - name: "Post coverage comment 💬"
-        uses: py-cov-action/python-coverage-comment-action@91aaf3b39c7e2331c6bc77767ce017f5160c5f11
+        uses: py-cov-action/python-coverage-comment-action@91aaf3b39c7e2331c6bc77767ce017f5160c5f11 # 3.38.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_PR_RUN_ID: ${{ inputs.workflow_run_id }}
