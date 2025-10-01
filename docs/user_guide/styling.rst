@@ -63,7 +63,7 @@ Follow these steps to update the base variables:
 .. important::
 
    Note that the theme is defined with `CSS variables <css-variable-help_>`_
-   and **not** `SASS variables <https://sass-lang.com/documentation/variables>`_.
+   and **not** `SASS variables <https://sass-lang.com/documentation/variables/>`_.
 
    Refer to :ref:`the managing themes section in this documentation <manage-themes>` if
    you desire a different behavior between the light and dark theme.
