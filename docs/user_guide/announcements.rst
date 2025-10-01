@@ -38,7 +38,7 @@ For example, the following configuration tells the theme to load the ``custom-te
 
    html_theme_options = {
       ...
-      "announcement": "https://github.com/pydata/pydata-sphinx-theme/raw/main/docs/_templates/custom-template.html",
+      "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
    }
 
 Update or remove announcement banner
