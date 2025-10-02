@@ -38,6 +38,9 @@ Thanks for your support!
 - title: Fairlearn
   link-alt: Fairlearn docs
   link: https://fairlearn.org/main/about/
+- title: Falcon web framework
+  link-alt: The Falcon web framework
+  link: https://falcon.readthedocs.io/
 - title: Feature-engine
   link-alt: Feature-engine docs
   link: https://feature-engine.readthedocs.io/
