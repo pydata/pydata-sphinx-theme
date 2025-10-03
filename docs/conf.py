@@ -372,8 +372,7 @@ linkcheck_ignore = [
     r"https://github.com.+?#.*",
     r"https://www.sphinx-doc.org/en/master/*/.+?#.+?",
     # sample urls
-    "http://someurl/release-0.1.0.tar-gz",
-    "http://python.py",
+    "https://someurl/release-0.1.0.tar-gz",
     # for whatever reason the Ablog index is treated as broken
     "../examples/blog/index.html",
     # get a 403 on CI
@@ -381,6 +380,7 @@ linkcheck_ignore = [
     "https://unsplash.com/",
     r"https?://www.gnu.org/software/gettext/.*",
     r"https://www.npmjs.com/.*",
+    r"https://sass-lang.com/.*",
 ]
 
 linkcheck_allowed_redirects = {
@@ -400,7 +400,6 @@ linkcheck_allowed_redirects = {
     r"https://www.sphinx-doc.org/": "https://www.sphinx-doc.org/en/master/",
     r"https://idtracker.ai/": "https://idtracker.ai/latest/",
     r"https://gitlab.com": "https://about.gitlab.com/",
-    r"http://www.yahoo.com": "https://www.yahoo.com/",
     r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
     r"https://picsum.photos/": r"https://fastly.picsum.photos/",
 }
