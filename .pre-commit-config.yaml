@@ -63,8 +63,9 @@ repos:
         args: [--fix]
         additional_dependencies:
           # stylelint itself needs to be here when using additional_dependencies.
-          - stylelint@16.5.0
-          - stylelint-config-standard-scss@13.1.0
+          - stylelint
+          - stylelint-scss
+          - stylelint-config-standard-scss
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: v6.0.0
