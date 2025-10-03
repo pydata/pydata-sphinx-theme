@@ -31,7 +31,7 @@ jobs:
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -52,7 +52,7 @@ jobs:
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310
+        uses: hynek/build-and-inspect-python-package@c52c3a4710070b50470d903818a7b25115dcd076 # 2.13.0
         if: matrix.python-version == '3.9'
         id: baipp
 
