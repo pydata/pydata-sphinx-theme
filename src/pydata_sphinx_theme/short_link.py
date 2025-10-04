@@ -1,7 +1,9 @@
 """A custom Transform object to shorten github and gitlab links."""
 
+import re
+
 from typing import ClassVar
-from urllib.parse import ParseResult, urlparse, urlunparse
+from urllib.parse import urlparse
 
 from docutils import nodes
 from sphinx.transforms.post_transforms import SphinxPostTransform
@@ -12,8 +14,8 @@ from .utils import traverse_or_findall
 
 class ShortenLinkTransform(SphinxPostTransform):
     """
-    Shorten link when they are coming from github or gitlab and add an extra class to
-    the tag for further styling.
+    Shorten link when they are coming from github, gitlab, or bitbucket and add
+    an extra class to the tag for further styling.
 
     Before:
         .. code-block:: html
@@ -37,8 +39,13 @@ class ShortenLinkTransform(SphinxPostTransform):
     supported_platform: ClassVar[dict[str, str]] = {
         "github.com": "github",
         "gitlab.com": "gitlab",
+        "bitbucket.org": "bitbucket",
     }
-    platform = None
+
+    @classmethod
+    def add_platform_mapping(cls, platform, netloc):
+        """Add domain->platform mapping to class at run-time."""
+        cls.supported_platform.update({netloc: platform})
 
     def run(self, **kwargs):
         """Run the Transform object."""
@@ -50,74 +57,146 @@ class ShortenLinkTransform(SphinxPostTransform):
             # only act if the uri and text are the same
             # if not the user has already customized the display of the link
             if uri is not None and text is not None and text == uri:
-                uri = urlparse(uri)
+                parsed_uri = urlparse(uri)
                 # only do something if the platform is identified
-                self.platform = self.supported_platform.get(uri.netloc)
-                if self.platform is not None:
-                    node.attributes["classes"].append(self.platform)
-                    node.children[0] = nodes.Text(self.parse_url(uri))
+                platform = self.supported_platform.get(parsed_uri.netloc)
+                if platform is not None:
+                    short = shorten_url(platform, uri)
+                    if short != uri:
+                        node.attributes["classes"].append(platform)
+                        node.children[0] = nodes.Text(short)
 
-    def parse_url(self, uri: ParseResult) -> str:
-        """Parse the content of the url with respect to the selected platform.
 
-        Args:
-            uri: the link to the platform content
+def shorten_url(platform: str, url: str) -> str:
+    """Parse the content of the path with respect to the selected platform.
 
-        Returns:
-            the reformated url title
-        """
-        path = uri.path
-        if path == "":
-            # plain url passed, return platform only
-            return self.platform
+    Args:
+        platform: "github", "gitlab", "bitbucket", etc.
+        url: the full url to the platform content, beginning with https://
 
-        # if the path is not empty it contains a leading "/", which we don't want to
-        # include in the parsed content
-        path = path.lstrip("/")
+    Returns:
+        short form version of the url,
+        or the full url if it could not shorten it
+    """
+    if platform == "github":
+        return shorten_github(url)
+    elif platform == "bitbucket":
+        return shorten_bitbucket(url)
+    elif platform == "gitlab":
+        return shorten_gitlab(url)
 
-        # check the platform name and read the information accordingly
-        # as "<organisation>/<repository>#<element number>"
-        # or "<group>/<subgroup 1>/…/<subgroup N>/<repository>#<element number>"
-        if self.platform == "github":
-            # split the url content
-            parts = path.split("/")
+    return url
 
-            if parts[0] == "orgs" and "/projects" in path:
-                # We have a projects board link
-                # ref: `orgs/{org}/projects/{project-id}`
-                text = f"{parts[1]}/projects#{parts[3]}"
-            else:
-                # We have an issues, PRs, or repository link
-                if len(parts) > 0:
-                    text = parts[0]  # organisation
-                if len(parts) > 1:
-                    text += f"/{parts[1]}"  # repository
-                if len(parts) > 2:
-                    if parts[2] in ["issues", "pull", "discussions"]:
-                        text += f"#{parts[-1]}"  # element number
 
-        elif self.platform == "gitlab":
-            # cp. https://docs.gitlab.com/ee/user/markdown.html#gitlab-specific-references
-            if "/-/" in path and any(
-                map(uri.path.__contains__, ["issues", "merge_requests"])
-            ):
-                group_and_subgroups, parts, *_ = path.split("/-/")
-                parts = parts.rstrip("/")
-                if "/" not in parts:
-                    text = f"{group_and_subgroups}/{parts}"
-                else:
-                    parts = parts.split("/")
-                    url_type, element_number, *_ = parts
-                    if not element_number:
-                        text = group_and_subgroups
-                    elif url_type == "issues":
-                        text = f"{group_and_subgroups}#{element_number}"
-                    elif url_type == "merge_requests":
-                        text = f"{group_and_subgroups}!{element_number}"
-            else:
-                # display the whole uri (after "gitlab.com/") including parameters
-                # for example "<group>/<subgroup1>/<subgroup2>/<repository>"
-                text = uri._replace(netloc="", scheme="")  # remove platform
-                text = urlunparse(text)[1:]  # combine to string and strip leading "/"
+def shorten_github(url: str) -> str:
+    """
+    Convert a GitHub URL to a short form like owner/repo#123 or
+    owner/repo@abc123.
+    """
+    path = urlparse(url).path
 
-        return text
+    # Pull request URL
+    # - Example:
+    #   - https://github.com/pydata/pydata-sphinx-theme/pull/2068
+    #   - pydata/pydata-sphinx-theme#2068
+    if match := re.match(r"/([^/]+)/([^/]+)/pull/(\d+)", path):
+        owner, repo, pr_id = match.groups()
+        return f"{owner}/{repo}#{pr_id}"
+
+    # Issue URL
+    # - Example:
+    #   - https://github.com/pydata/pydata-sphinx-theme/issues/2176
+    #   - pydata/pydata-sphinx-theme#2176
+    elif match := re.match(r"/([^/]+)/([^/]+)/issues/(\d+)", path):
+        owner, repo, issue_id = match.groups()
+        return f"{owner}/{repo}#{issue_id}"
+
+    # Commit URL
+    # - Example:
+    #   - https://github.com/pydata/pydata-sphinx-theme/commit/51af2a27e8a008d0b44ed9ea9b45311e686d12f7
+    #   - pydata/pydata-sphinx-theme@51af2a2
+    elif match := re.match(r"/([^/]+)/([^/]+)/commit/([a-f0-9]+)", path):
+        owner, repo, commit_hash = match.groups()
+        return f"{owner}/{repo}@{commit_hash[:7]}"
+
+    # No match — return the original URL
+    return url
+
+
+def shorten_gitlab(url: str) -> str:
+    """
+    Convert a GitLab URL to a short form like group/project!123 or
+    group/project@abcdef7.
+
+    Only supports canonical ('/-/') GitLab URLs.
+    """
+    path = urlparse(url).path
+
+    # Merge requests
+    # - Example:
+    #   - https://gitlab.com/gitlab-org/gitlab/-/merge_requests/195598
+    #   - gitlab-org/gitlab!195598
+    if match := re.match(r"^/(.+)/([^/]+)/-/merge_requests/(\d+)$", path):
+        namespace, project, mr_id = match.groups()
+        return f"{namespace}/{project}!{mr_id}"
+
+    # Issues
+    # - Example:
+    #   - https://gitlab.com/gitlab-org/gitlab/-/issues/551885
+    #   - gitlab-org/gitlab#195598
+    #
+    # TODO: support hash URLs, for example:
+    # https://gitlab.com/gitlab-org/gitlab/-/issues/545699#note_2543533261
+    if match := re.match(r"^/(.+)/([^/]+)/-/issues/(\d+)$", path):
+        namespace, project, issue_id = match.groups()
+        return f"{namespace}/{project}#{issue_id}"
+
+    # Commits
+    # - Example:
+    #   - https://gitlab.com/gitlab-org/gitlab/-/commit/81872624c4c58425a040e158fd228d8f0c2bda07
+    #   - gitlab-org/gitlab@8187262
+    if match := re.match(r"^/(.+)/([^/]+)/-/commit/([a-f0-9]+)$", path):
+        namespace, project, commit_hash = match.groups()
+        return f"{namespace}/{project}@{commit_hash[:7]}"
+
+    # No match — return the original URL
+    return url
+
+
+def shorten_bitbucket(url: str) -> str:
+    """
+    Convert a Bitbucket URL to a short form like team/repo#123 or
+    team/repo@main.
+    """
+    path = urlparse(url).path
+
+    # Pull request URL
+    # - Example:
+    #   - https://bitbucket.org/atlassian/atlassian-jwt-js/pull-requests/23
+    #   - atlassian/atlassian-jwt-js#23
+    if match := re.match(r"^/([^/]+)/([^/]+)/pull-requests/(\d+)$", path):
+        workspace, repo, pr_id = match.groups()
+        return f"{workspace}/{repo}#{pr_id}"
+
+    # Issue URL.
+    # - Example:
+    #   - https://bitbucket.org/atlassian/atlassian-jwt-js/issues/11/
+    #   - atlassian/atlassian-jwt-js!11
+    #
+    # Deliberately not matching the end of the string because sometimes
+    # Bitbucket issue URLs include a slug at the end, for example:
+    # https://bitbucket.org/atlassian/atlassian-jwt-js/issues/11/nested-object-properties-are-represented
+    elif match := re.match(r"^/([^/]+)/([^/]+)/issues/(\d+)", path):
+        workspace, repo, issue_id = match.groups()
+        return f"{workspace}/{repo}!{issue_id}"
+
+    # Commit URL
+    # - Example:
+    #   - https://bitbucket.org/atlassian/atlassian-jwt-js/commits/d9b5197f0aeedeabf9d0f8d0953a80be65743d8a
+    #   - atlassian/atlassian-jwt-js@d9b5197
+    elif match := re.match(r"^/([^/]+)/([^/]+)/commits/([a-f0-9]+)$", path):
+        workspace, repo, commit_hash = match.groups()
+        return f"{workspace}/{repo}@{commit_hash[:7]}"
+
+    # No match — return the original URL
+    return url
