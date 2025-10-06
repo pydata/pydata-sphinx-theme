@@ -44,6 +44,8 @@ def update_config(app):
         raise ExtensionError(
             "`icon_links` must be a list of dictionaries, you provided "
             f"type {type(theme_options.get('icon_links'))}."
+            "If you wish to disable this feature, either do not provide "
+            "a value (leave undefined), or set to an empty list."
         )
 
     # Set the anchor link default to be # if the user hasn't provided their own
@@ -282,7 +284,9 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    app.add_post_transform(short_link.ShortenLinkTransform)
+    theme_options = utils.get_theme_options_dict(app)
+    if theme_options.get("shorten_urls"):
+        app.add_post_transform(short_link.ShortenLinkTransform)
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)

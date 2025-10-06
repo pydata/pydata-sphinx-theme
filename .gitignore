@@ -116,7 +116,8 @@ bun.lockb
 
 # THEME FILES
 # files from the gallery screenshots
-docs/_static/gallery
+# Sep 2025: we do not ignore those as running the generation script crashes RTD for now
+# docs/_static/gallery
 
 # Our site profile tests
 profile.svg

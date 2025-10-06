@@ -19,7 +19,7 @@ jobs:
   # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
     # Important: make sure to update the SHA after making any changes to the CI workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@ac57147185b6f9400cafbcd852e04345e5e841b7
+    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@469e90895696e21b765121e952d84ea82c71410c
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
     # needed for the coverage action
@@ -30,7 +30,7 @@ jobs:
       # calls our docs workflow (build docs, check broken links, lighthouse)
   docs:
     # Important: make sure to update the SHA after making any changes to the docs workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@3e74810e3ad3778c179f3f836409540e0a3bf0f1
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@469e90895696e21b765121e952d84ea82c71410c
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
 
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # 5.0.0
         with:
           persist-credentials: false
 
@@ -55,7 +55,7 @@ jobs:
       - run: python -Im pip install tox-uv
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310 # 2.12.0
+        uses: hynek/build-and-inspect-python-package@c52c3a4710070b50470d903818a7b25115dcd076 # 2.13.0
         id: baipp
 
       - run: echo Packages can be found at "${BAIPP_DIST}"

@@ -169,7 +169,7 @@ https://docutils.sourceforge.io/docs/ref/rst/directives.html#parsed-literal-bloc
 .. parsed-literal::
 
     # parsed-literal test
-    curl -O http://someurl/release-0.1.0.tar-gz
+    curl -O https://someurl/release-0.1.0.tar-gz
     echo "This is an intentionally very long line because I want to make sure that we are handling scrollable code blocks correctly."
 
 Code Block
