@@ -47,6 +47,7 @@ extensions = [
     "myst_parser",
     "ablog",
     "jupyter_sphinx",
+    "sphinxcontrib.mermaid",
     "sphinxcontrib.youtube",
     "nbsphinx",
     "numpydoc",
