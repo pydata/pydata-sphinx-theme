@@ -56,6 +56,9 @@ Thanks for your support!
 - title: MegEngine
   link-alt: MegEngine docs
   link: https://www.megengine.org.cn/doc/stable/en/index.html
+- title: movement
+  link-alt: movement docs
+  link: https://movement.neuroinformatics.dev
 - title: Pastas
   link-alt: Pastas docs
   link: https://pastas.readthedocs.io/
