@@ -26,6 +26,9 @@ Thanks for your support!
 - title: Binder
   link-alt: Binder docs
   link: https://mybinder.readthedocs.io/en/latest/index.html
+- title: BrainGlobe
+  link-alt: BrainGlobe docs
+  link: https://brainglobe.info
 - title: cashocs
   link-alt: cashocs docs
   link: https://cashocs.readthedocs.io/en/stable/
@@ -53,6 +56,9 @@ Thanks for your support!
 - title: MegEngine
   link-alt: MegEngine docs
   link: https://www.megengine.org.cn/doc/stable/en/index.html
+- title: movement
+  link-alt: movement docs
+  link: https://movement.neuroinformatics.dev
 - title: Pastas
   link-alt: Pastas docs
   link: https://pastas.readthedocs.io/
