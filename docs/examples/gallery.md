@@ -53,9 +53,6 @@ Thanks for your support!
 - title: itom measurement and simulation software
   link-alt: itom documentation
   link: https://itom-project.github.io/latest/docs/index.html
-- title: MegEngine
-  link-alt: MegEngine docs
-  link: https://www.megengine.org.cn/doc/stable/en/index.html
 - title: movement
   link-alt: movement docs
   link: https://movement.neuroinformatics.dev
