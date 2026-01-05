@@ -279,18 +279,16 @@ $pst-semantic-colors: (
   }
 
   // assign the "duplicate" colors (ones that just reference other variables)
-  & {
-    // From 0.16.1, the preferred variable for headings is --pst-color-heading
-    // if you have --pst-heading-color, this variable will be used, otherwise the default
-    // --pst-color-heading will be used
-    --pst-color-heading: var(--pst-color-text-base);
-    --pst-color-link: var(--pst-color-primary);
-    --pst-color-link-hover: var(--pst-color-secondary);
-    --pst-color-table-outer-border: var(--pst-color-surface);
-    --pst-color-table-heading-bg: var(--pst-color-surface);
-    --pst-color-table-row-zebra-high-bg: var(--pst-color-on-background);
-    --pst-color-table-row-zebra-low-bg: var(--pst-color-surface);
-  }
+  // From 0.16.1, the preferred variable for headings is --pst-color-heading
+  // if you have --pst-heading-color, this variable will be used, otherwise the default
+  // --pst-color-heading will be used
+  --pst-color-heading: var(--pst-color-text-base);
+  --pst-color-link: var(--pst-color-primary);
+  --pst-color-link-hover: var(--pst-color-secondary);
+  --pst-color-table-outer-border: var(--pst-color-surface);
+  --pst-color-table-heading-bg: var(--pst-color-surface);
+  --pst-color-table-row-zebra-high-bg: var(--pst-color-on-background);
+  --pst-color-table-row-zebra-low-bg: var(--pst-color-surface);
 
   // adapt to light/dark-specific content
   @if $mode == "light" {
