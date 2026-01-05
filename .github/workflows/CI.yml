@@ -44,12 +44,12 @@ jobs:
         # ubuntu-24.04==latest
         # windows-2022==latest
         os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
-        python-version: ["3.9", "3.13"]
+        python-version: ["3.10", "3.14"]
         sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
-            python-version: "3.9"
+            python-version: "3.10"
             sphinx-version: "6.1"
             # newest Python version with the newest Sphinx version
           - os: ubuntu-latest
@@ -57,12 +57,12 @@ jobs:
             # Sphinx HEAD
             sphinx-version: "dev"
         exclude:
-          # Python 3.9 is not supported on macOS 14 - https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
+          # Python 3.10 is not supported on arm64 darwin - https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
           - os: macos-14
-            python-version: "3.9"
+            python-version: "3.10"
           # do not need all the tests so will limit to the latest versions of Python
           - os: ubuntu-24.04
-            python-version: "3.9"
+            python-version: "3.10"
           - os: ubuntu-24.04
             python-version: "3.10"
     runs-on: ${{ matrix.os }}
@@ -84,11 +84,11 @@ jobs:
         run: |
           # this will compile the assets and translations then run the tests
           # check if there is a specific Sphinx version to test with
-          # example substitution: tox run -e compile-assets,i18n-compile,py39-sphinx61-tests
+          # example substitution: tox run -e compile-assets,i18n-compile,py310-sphinx61-tests
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-tests
           # if not we use the default version
-          # example substitution: tox run -e compile-assets,i18n-compile,py39-tests
+          # example substitution: tox run -e compile-assets,i18n-compile,py310-tests
           else
             python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
