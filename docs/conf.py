@@ -290,7 +290,7 @@ autodoc_member_order = "groupwise"
 
 # -- Options for autoapi -------------------------------------------------------
 autoapi_type = "python"
-autoapi_dirs = ["../src/pydata_sphinx_theme"]
+autoapi_dirs = [str(Path(__file__).parent.parent / "src" / "pydata_sphinx_theme")]
 autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
