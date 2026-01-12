@@ -29,6 +29,8 @@ author = "PyData Community"
 # -- General configuration ---------------------------------------------------
 
 extensions = [
+    # AutoAPI must run early to generate API files before other extensions
+    "autoapi.extension",
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -39,7 +41,6 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
-    "autoapi.extension",
     # custom extentions
     "_extension.gallery_directive",
     "_extension.component_directive",
