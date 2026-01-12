@@ -20,7 +20,7 @@ concurrency:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty
-  DEFAULT_PYTHON_VERSION: "3.12" # keep in sync with tox.ini
+  DEFAULT_PYTHON_VERSION: "3.14" # keep in sync with tox.ini
   PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
 
 # disable all permissions by default
