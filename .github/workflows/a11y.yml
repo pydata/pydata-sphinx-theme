@@ -21,12 +21,9 @@ env:
 permissions: {}
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - "*"
+  workflow_run:
+    workflows: [continuous-integration]
+    types: [completed]
   # allows this to be used as a composite action in other workflows
   workflow_call:
   # allow manual triggering of the workflow, while debugging
