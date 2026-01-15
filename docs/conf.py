@@ -321,11 +321,6 @@ nitpick_ignore_regex = [
     ("token", r"(suite|expression|target)"),
 ]
 
-# Suppress autosummary warnings for external urllib.parse documentation
-suppress_warnings = [
-    "autosummary.stub_file_not_found",  # silence urllib.parse autosummary stub warnings
-]
-
 # -- application setup -------------------------------------------------------
 
 
