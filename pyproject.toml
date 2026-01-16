@@ -53,14 +53,14 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
-  "astroid>=3", # fix for sphinx.autoapi and read the docs, should be reverted at a later date - see issue #2125
+  "astroid>=3,!=4.0.3", # fix for sphinx.autoapi and read the docs, should be reverted at a later date - see issue #2125
   "numpydoc",
   "linkify-it-py", # for link shortening
   "rich",
   "sphinxext-rediraffe",
   # TODO: unpin sphinx-sitemap once a solution is offered for https://github.com/jdillard/sphinx-sitemap/issues/109
   "sphinx-sitemap<2.7.0",
-  "sphinx-autoapi>=3.0.0",
+  "sphinx-autoapi==3.6.1",
   # For examples section
   "myst-parser",
   "ablog>=0.11.8",
