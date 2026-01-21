@@ -1,7 +1,7 @@
 // IMPORTANT: our Bootstrap variable overrides must be imported before the
 // Bootstrap files that reference those variables; otherwise our overrides will
 // have no effect.
-@import "variables/bootstrap";
+@import "abstracts/all";
 
 // Import all of Bootstrap scss.
 @import "~bootstrap/scss/bootstrap";
@@ -12,16 +12,13 @@
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
-// Variables
+// These files output *CSS* variables (not to be confused with SCSS variables)
 @import "variables/layout";
 @import "variables/fonts";
 @import "variables/icons";
 @import "variables/admonitions";
 @import "variables/versionmodified";
 @import "variables/color";
-
-// re-usable SCSS functions / classes
-@import "abstracts/all";
 
 // Basic styling applied throughout site
 @import "./base/base";
@@ -82,7 +79,6 @@
 @import "./extensions/pydata";
 @import "./extensions/sphinx_design";
 @import "./extensions/togglebutton";
-@import "./extensions/notebooks";
 @import "./extensions/leaflet";
 
 // Page-specific CSS

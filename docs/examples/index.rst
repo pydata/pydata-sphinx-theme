@@ -11,12 +11,16 @@ See the sections in the primary sidebar and below to explore.
     gallery
 
 
+.. Note: the source for code-cells-myst-nb is actually code-cells.ipynb but it is copied to a separate file at build time
+
 .. toctree::
     :maxdepth: 2
     :caption: Theme-specific styles
 
     kitchen-sink/index
     pydata
+    Code Cells (nbsphinx) <code-cells>
+    Code Cells (MyST-NB) <code-cells-myst-nb>
     execution
     graphviz
     mermaid

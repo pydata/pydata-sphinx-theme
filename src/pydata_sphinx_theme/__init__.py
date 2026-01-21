@@ -14,7 +14,17 @@ from sphinx.application import Sphinx
 from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
-from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
+from . import (
+    edit_this_page,
+    logo,
+    myst_nb,
+    nbsphinx,
+    pygments,
+    short_link,
+    toctree,
+    translator,
+    utils,
+)
 
 
 __version__ = "0.16.2dev0"
@@ -204,14 +214,8 @@ def update_and_remove_templates(
     # - manually linked in `webpack-macros.html`
     if "css_files" in context:
         theme_css_name = "_static/styles/pydata-sphinx-theme.css"
-        for i in range(len(context["css_files"])):
-            asset = context["css_files"][i]
-            # TODO: eventually the contents of context['css_files'] etc should probably
-            # only be _CascadingStyleSheet etc. For now, assume mixed with strings.
-            asset_path = getattr(asset, "filename", str(asset))
-            if asset_path == theme_css_name:
-                del context["css_files"][i]
-                break
+        utils._delete_from_css_files(context["css_files"], theme_css_name)
+
     # Add links for favicons in the topbar
     for favicon in context.get("theme_favicons", []):
         icon_type = Path(favicon["href"]).suffix.strip(".")
@@ -290,12 +294,16 @@ def setup(app: Sphinx) -> Dict[str, str]:
 
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
+    app.connect("builder-inited", nbsphinx.delete_nbsphinx_css)
+    app.connect("builder-inited", myst_nb.delete_myst_nb_css)
     app.connect("html-page-context", _fix_canonical_url)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
     app.connect("html-page-context", logo.setup_logo_path)
     app.connect("html-page-context", utils.set_secondary_sidebar_items)
+    app.connect("html-page-context", nbsphinx.point_nbsphinx_pages_to_our_css)
+    app.connect("html-page-context", myst_nb.point_myst_nb_pages_to_our_css)
     app.connect("build-finished", pygments.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
 

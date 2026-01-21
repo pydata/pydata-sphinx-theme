@@ -5,8 +5,8 @@ list see the documentation:
 https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
-# -- Path setup --------------------------------------------------------------
 import os
+import shutil
 import sys
 
 from pathlib import Path
@@ -18,7 +18,10 @@ from sphinx.locale import _
 import pydata_sphinx_theme
 
 
+# -- Path setup --------------------------------------------------------------
+
 sys.path.append(str(Path(".").resolve()))
+HERE = Path(__file__).parent.resolve()
 
 # -- Project information -----------------------------------------------------
 
@@ -40,11 +43,11 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "autoapi.extension",
-    # custom extentions
+    # custom extensions (extensions defined in this repo)
     "_extension.gallery_directive",
     "_extension.component_directive",
     # For extension examples and demos
-    "myst_parser",
+    "myst_nb",  # includes myst_parser
     "ablog",
     "jupyter_sphinx",
     "sphinxcontrib.mermaid",
@@ -56,7 +59,17 @@ extensions = [
     "sphinx_favicon",
 ]
 
-jupyterlite_config = "jupyterlite_config.json"
+# This is a hack to use both nbsphinx and myst_nb Sphinx extensions in the same
+# Sphinx build. If we want a notebook to be processed by the myst_nb Sphinx
+# extension, we give it a .mystnb.ipynb suffix instead of just .ipynb. Here we
+# map each suffix to the desired Sphinx extension. We also have to map .md and
+# .rst at the same time or else the build fails.
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".md": "myst-nb",
+    ".mystnb.ipynb": "myst-nb",
+    ".ipynb": "jupyter_notebook",  # this is the name of nbsphinx's parser
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -67,6 +80,28 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
+
+# -- MyST-NB ----------------------------------------------------------------
+
+# Even though we already map ".mystnb" in `source_suffix` above, we also have to
+# set this configuration variable for MyST-NB to process it correctly.
+nb_custom_formats = {
+    ".mystnb.ipynb": [
+        "nbformat.reads",
+        {"as_version": 4},
+        True,  # parse as CommonMark instead of MyST
+    ],
+}
+
+# -- JupyterLite Sphinx ------------------------------------------------------
+
+jupyterlite_config = "jupyterlite_config.json"
+
+
+# We want .ipynb files in the repo to be handled by the notebook parsing
+# extension (nbsphinx or MyST-NB), NOT JupyterLite.
+jupyterlite_bind_ipynb_suffix = False
+
 
 # -- Sitemap -----------------------------------------------------------------
 
@@ -345,6 +380,16 @@ def setup_to_main(
     context["to_main"] = to_main
 
 
+def copy_ipynb(app: Sphinx):
+    """Copy the example Jupyter notebook.
+
+    One copy will be converted by nbsphinx, the other by MyST-NB.
+    """
+    src = HERE / "examples" / "code-cells.ipynb"
+    dst = HERE / "examples" / "code-cells-myst-nb.mystnb.ipynb"
+    shutil.copyfile(src, dst)
+
+
 def setup(app: Sphinx) -> Dict[str, Any]:
     """Add custom configuration to sphinx app.
 
@@ -353,6 +398,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
     Returns:
         the 2 parallel parameters set to ``True``.
     """
+    app.connect("builder-inited", copy_ipynb)
     app.connect("html-page-context", setup_to_main)
 
     return {

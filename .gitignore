@@ -119,6 +119,9 @@ bun.lockb
 # Sep 2025: we do not ignore those as running the generation script crashes RTD for now
 # docs/_static/gallery
 
+# File copied during build
+code-cells-myst-nb.mystnb.ipynb
+
 # Our site profile tests
 profile.svg
 

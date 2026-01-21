@@ -1,18 +1,26 @@
 Execution Libraries
 ===================
 
-Many execution libraries can be used to display the output of IPyhton cells. We used ``MySTnb`` to parse and display the outputs presented in :doc:`./pydata`. In this section we'll show alternatives that runs code for you using a Jupyter like kernel.
+Many execution libraries can be used to display the output of IPython cells. We
+used ``nbsphinx`` to parse and display the outputs presented in :doc:`./pydata`.
+In this section we'll show alternatives that run code for you using a Jupyter
+like kernel.
 
-Jupyterlite
+JupyterLite
 -----------
 
 .. warning::
-    The jupyterLite lib is not yet providing a handle to switch from light to dark theme. If you consider using it in your documentation you should also enforce the light theme to your users.
+    As of April 2025, we have not found a way to sync JupyterLite widgets with the theme's light/dark mode.
+    You can see this for yourself if you change this page from light to dark mode. The rest of the page will
+    appear in dark mode but the JupyterLite widget below will still be in light mode.
     Follow https://github.com/jupyterlite/jupyterlite-sphinx/issues/69 for more information.
 
-``jupyterlite-sphinx`` brings the power of `JupyterLite <https://jupyterlite.readthedocs.io/en/latest/>`__ to your Sphinx documentation. It makes a full JupyterLite deployment in your docs and provide some utilities for using that deployment easily.
+``jupyterlite-sphinx`` brings the power of `JupyterLite
+<https://jupyterlite.readthedocs.io/en/latest/>`__ to your Sphinx documentation.
+It does a full JupyterLite deployment in your docs and provides some utilities
+for using that deployment easily.
 
-This section demonstrate how it displays in a **pydata-sphinx-theme** context:
+This section demonstrates how it displays in a **pydata-sphinx-theme** context:
 
 .. replite::
     :kernel: python

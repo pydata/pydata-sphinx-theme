@@ -1,0 +1,375 @@
+/*******************************************************************************
+ * PyData Sphinx Theme replacement stylesheet for nbsphinx
+ *
+ * nbsphinx is a Sphinx extension for turning Jupyter notebooks (.ipynb) into
+ * doc pages.
+ *
+ * This stylesheet is a replacement for nbsphinx's default stylesheet,
+ * nbsphinx-code-cells.css. Some of the style rules in this file were copied
+ * from there.
+ *
+ * This file implements Isabela's design for notebook code cells:
+ * https://github.com/Quansight-Labs/czi-scientific-python-mgmt/issues/142#issuecomment-2759132381.
+ */
+
+@import "../abstracts/all";
+
+$space-between-vertical-bar-and-cell: 1em;
+$top-and-bottom-container-space: 1.2em;
+
+// Common styles for both input and output containers
+div.nbinput.container,
+div.nboutput.container {
+  padding-left: $space-between-vertical-bar-and-cell;
+
+  > div[class*="highlight"] {
+    margin: 0; // Override Sphinx base styles
+  }
+
+  // Common styles for the both input and output labels
+  &::before {
+    display: block;
+    color: var(--pst-color-text-base);
+    font-family: var(--pst-font-family-monospace-system);
+    font-size: 0.875em; // * 16px = 14px (14px monospace font looks about the same size as 16px regular font)
+    line-height: 1; // align with top of container
+    margin-bottom: 0.7em; // space between label and in/output
+  }
+
+  // Vertical bar (runs down the left, connects input to output)
+  position: relative; // must set position relative in order to set position absolute on ::after pseudo-element
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0.2em;
+    background: var(--pst-color-primary);
+
+    // TODO: figure out a way to create a single vertical bar that runs the
+    // entire height of both the input and output cells, rather than two
+    // stacked bars, that way we can add border radius to the ends without it
+    // looking funky.
+
+    // border-radius: 1px;
+  }
+
+  // Hide the label that nbsphinx generates. We add our own.
+  div.prompt {
+    display: none;
+  }
+}
+
+// Styles for input containers (one per notebook code cell)
+div.nbinput.container {
+  margin-top: $top-and-bottom-container-space; // space between the top of the notebook cell and the surrounding content
+
+  // Label for input
+  &::before {
+    content: "In:";
+  }
+
+  div.input_area {
+    border: none; // border taken care of by <pre> styles elsewhere in the theme
+    overflow: visible;
+
+    > div.highlight {
+      overflow: visible; // necessary for focus ring
+    }
+  }
+}
+
+// Styles for output containers (0, 1, or more per notebook code cell)
+div.nboutput.container {
+  // Space between the input portion and the output portion. Cannot use margin
+  // here because we do not want to create a break in the vertical bar running
+  // down the left side.
+  padding-top: $top-and-bottom-container-space;
+
+  /* Label for output
+   *
+   * Why the next sibling (+) selector? The way that nbsphinx converts notebook
+   * code cells, they have exactly one div.nbinput but can have 0, 1 or multiple
+   * div.nboutput. We only want one "Out" label and we want it above the first
+   * .nboutput that follows a .nbinput.
+   */
+  div.nbinput.container + &::before {
+    content: "Out:";
+  }
+
+  div.output_area {
+    // What this selector attempts to do is to override a bunch of CSS rules
+    // that come from multiple places that add top and bottom whitespace to elements,
+    // like paragraph elements. These rules mess up the alignment between the
+    // bottom of the notebook cell content and the left bar that we've added.
+    // They also create unnecessary extra whitespace at the bottom of notebook
+    // cells. However, this selector may be a bit too wide, too blunt. We may
+    // need find a different way to achieve this.
+    :last-child:not(.highlight, .widget-tab-contents, .jupyter-widgets) {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    &.rendered_html {
+      overflow-x: auto;
+    }
+
+    &.stderr {
+      div[class*="highlight"] > pre {
+        background-color: var(--pst-color-danger-bg);
+      }
+    }
+
+    // Override our own styles in _math.scss
+    div.math {
+      display: block;
+      overflow: visible;
+    }
+
+    span.math {
+      display: inline;
+    }
+
+    /* Some of these rules were taken from the Jupyter notebook CSS */
+    &.rendered_html,
+    .jp-RenderedHTMLCommon {
+      table {
+        border: none;
+        border-collapse: collapse;
+        border-spacing: 0;
+        color: black;
+        font-size: 12px;
+
+        thead {
+          border-bottom: 1px solid black;
+          vertical-align: bottom;
+        }
+
+        tr,
+        th,
+        td {
+          text-align: right;
+          vertical-align: middle;
+          padding: 0.5em;
+          line-height: normal;
+          white-space: normal;
+          max-width: none;
+          border: none;
+        }
+
+        th {
+          font-weight: bold;
+        }
+
+        tbody tr:nth-child(odd) {
+          background: #131111;
+        }
+
+        tbody tr:hover {
+          background: rgb(66 165 245 / 20%);
+        }
+
+        // pandas
+        &.dataframe {
+          @include table-colors;
+
+          tbody {
+            tr:hover {
+              background-color: var(--pst-color-table-row-hover-bg);
+            }
+          }
+        }
+      }
+    }
+
+    .widget-slider {
+      // Fix accessibility contrast failure. (This was added primarily to
+      // prevent the theme docs from having an accessibility violation, but
+      // putting it here extends this fix to other sites that use this theme.)
+      .noUi-handle {
+        border-color: var(--pst-gray-600);
+      }
+
+      .noUi-connects {
+        background: var(--pst-gray-600);
+      }
+    }
+
+    // Special cases, dark mode
+    &.rendered_html:not(
+      :has(
+        /* exclude pandas because we have styled it for dark mode */
+        table.dataframe,
+        /* exclude Xarray because it has been styled for dark mode */
+        .xr-wrap
+      )
+    ),
+    // ipywidgets
+    .widget-subarea {
+      @include cell-output-force-light-background;
+    }
+  }
+}
+
+// Styles for the last container in the group that represents a notebook code
+// cell. Examples:
+// - Code cell with only input:
+//   - div.nbinput.nblast
+// - Code cell with input and output:
+//   - div.nbinput
+//   - div.nboutput.nblast
+// - Code cell with one input and multiple output containers:
+//   - div.nbinput
+//   - div.nboutput
+//   - div.nboutput.nblast
+div.container.nblast {
+  margin-bottom: $top-and-bottom-container-space;
+}
+
+/*
+ * Syntax highlighting for console/terminal output
+ */
+.ansi-black-fg {
+  color: #3e424d;
+}
+
+.ansi-black-bg {
+  background-color: #3e424d;
+}
+
+.ansi-black-intense-fg {
+  color: #282c36;
+}
+
+.ansi-black-intense-bg {
+  background-color: #282c36;
+}
+
+.ansi-red-fg {
+  color: #e75c58;
+}
+
+.ansi-red-bg {
+  background-color: #e75c58;
+}
+
+.ansi-red-intense-fg {
+  color: #b22b31;
+}
+
+.ansi-red-intense-bg {
+  background-color: #b22b31;
+}
+
+.ansi-green-fg {
+  color: #00a250;
+}
+
+.ansi-green-bg {
+  background-color: #00a250;
+}
+
+.ansi-green-intense-fg {
+  color: #007427;
+}
+
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+
+.ansi-yellow-fg {
+  color: #ddb62b;
+}
+
+.ansi-yellow-bg {
+  background-color: #ddb62b;
+}
+
+.ansi-yellow-intense-fg {
+  color: #b27d12;
+}
+
+.ansi-yellow-intense-bg {
+  background-color: #b27d12;
+}
+
+.ansi-blue-fg {
+  color: #208ffb;
+}
+
+.ansi-blue-bg {
+  background-color: #208ffb;
+}
+
+.ansi-blue-intense-fg {
+  color: #0065ca;
+}
+
+.ansi-blue-intense-bg {
+  background-color: #0065ca;
+}
+
+.ansi-magenta-fg {
+  color: #d160c4;
+}
+
+.ansi-magenta-bg {
+  background-color: #d160c4;
+}
+
+.ansi-magenta-intense-fg {
+  color: #a03196;
+}
+
+.ansi-magenta-intense-bg {
+  background-color: #a03196;
+}
+
+.ansi-cyan-fg {
+  color: #60c6c8;
+}
+
+.ansi-cyan-bg {
+  background-color: #60c6c8;
+}
+
+.ansi-cyan-intense-fg {
+  color: #258f8f;
+}
+
+.ansi-cyan-intense-bg {
+  background-color: #258f8f;
+}
+
+.ansi-white-fg {
+  color: #c5c1b4;
+}
+
+.ansi-white-bg {
+  background-color: #c5c1b4;
+}
+
+.ansi-white-intense-fg {
+  color: #a1a6b2;
+}
+
+.ansi-white-intense-bg {
+  background-color: #a1a6b2;
+}
+
+.ansi-default-inverse-fg {
+  color: #fff;
+}
+
+.ansi-default-inverse-bg {
+  background-color: #000;
+}
+
+.ansi-bold {
+  font-weight: bold;
+}
+
+.ansi-underline {
+  text-decoration: underline;
+}

@@ -5,7 +5,6 @@
  * NOTE: sphinx-design uses !important quite liberally, so here we must do the
  * same for our overrides to have any effect.
  */
-@use "../variables/color" as pst-color;
 @use "sass:color";
 @use "sass:map";
 @use "sass:meta";
