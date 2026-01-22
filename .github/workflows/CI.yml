@@ -79,7 +79,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           pandoc: true
 
-      - name: "Run tests ✅"
+      - name: "Run tests"
         shell: bash
         run: |
           # this will compile the assets and translations then run the tests
