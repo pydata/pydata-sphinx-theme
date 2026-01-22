@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-  "sphinx-theme-builder @ git+https://github.com/pradyunsg/sphinx-theme-builder.git@main"
+  "sphinx-theme-builder>=0.3.2"
 ]
 build-backend = "sphinx_theme_builder"
 
