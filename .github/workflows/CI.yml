@@ -79,6 +79,15 @@ jobs:
           python-version: ${{ matrix.python-version }}
           pandoc: true
 
+      - name: "Cache Playwright browsers 🎭"
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/Library/Caches/ms-playwright
+            ~\AppData\Local\ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+
       - name: "Run tests"
         shell: bash
         run: |
