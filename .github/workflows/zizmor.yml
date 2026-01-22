@@ -1,6 +1,10 @@
 # Performs static analysis in GitHub actions with https://github.com/woodruffw/zizmor
 name: Zizmor
 
+concurrency:
+  group: zizmor-${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:

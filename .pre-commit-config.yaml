@@ -56,15 +56,15 @@ repos:
       - id: remove-metadata
 
   - repo: "https://github.com/thibaudcolas/pre-commit-stylelint"
-    rev: v16.25.0
+    rev: v16.26.1
     hooks:
       - id: stylelint
         # automatically fix .scss files where possible
         args: [--fix]
         additional_dependencies:
           # stylelint itself needs to be here when using additional_dependencies.
-          - stylelint@16.5.0
-          - stylelint-config-standard-scss@13.1.0
+          - stylelint@16.26.1
+          - stylelint-config-standard-scss@16.0.0
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: v6.0.0

@@ -3,7 +3,7 @@ Theme variables and CSS
 =======================
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/tree/main/src/pydata_sphinx_theme/assets/styles/variables
-.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascading_variables/Using_CSS_custom_properties
+.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties
 
 This section covers a few ways that you can control the look and feel of your theme via your own CSS and theme variables.
 
