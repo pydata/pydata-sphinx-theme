@@ -22,7 +22,7 @@ dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-  "sphinx>=7.0",
+  "sphinx>=7.0,<9",
   "beautifulsoup4",
   "docutils!=0.17.0",
   "Babel",
