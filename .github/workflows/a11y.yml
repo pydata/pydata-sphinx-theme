@@ -21,6 +21,9 @@ env:
 permissions: {}
 
 on:
+  pull_request:
+    branches:
+      - "*"
   # workflow_run:
   #   workflows: [continuous-integration]
   #   types: [completed]
