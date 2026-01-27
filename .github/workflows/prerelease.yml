@@ -52,7 +52,7 @@ jobs:
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@c52c3a4710070b50470d903818a7b25115dcd076 # 2.13.0
+        uses: hynek/build-and-inspect-python-package@efb823f52190ad02594531168b7a2d5790e66516 # 2.14.0
         if: matrix.python-version == '3.10'
         id: baipp
 
