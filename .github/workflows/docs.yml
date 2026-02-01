@@ -135,7 +135,7 @@ jobs:
         run: python -Im tox run -e docs-linkcheck
 
       - name: "Upload file with broken links 📤"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: broken-links
           path: docs/_build/linkcheck/output.txt
