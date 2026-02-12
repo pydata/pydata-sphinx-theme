@@ -387,6 +387,7 @@ linkcheck_ignore = [
     r"https?://www.gnu.org/software/gettext/.*",
     r"https://www.npmjs.com/.*",
     r"https://sass-lang.com/.*",
+    r"https://docutils.sourceforge.io/.*",
 ]
 
 linkcheck_allowed_redirects = {
