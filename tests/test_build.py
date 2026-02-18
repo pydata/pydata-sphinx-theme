@@ -862,6 +862,42 @@ def test_shorten_link(sphinx_build_factory, file_regression) -> None:
     gitlab = sphinx_build.html_tree("page1.html").select(".gitlab-container")[0]
     file_regression.check(gitlab.prettify(), basename="gitlab_links", extension=".html")
 
+    bitbucket = sphinx_build.html_tree("page1.html").select(".bitbucket-container")[0]
+    file_regression.check(
+        bitbucket.prettify(), basename="bitbucket_links", extension=".html"
+    )
+
+
+def test_self_hosted_shorten_link(sphinx_build_factory, file_regression) -> None:
+    """Check that self-hosted version control URLs get shortened.
+
+    Before build:
+
+        conf.py
+
+            html_context = {"github_url": "https://github.example.com"}
+
+        example_page.rst
+
+            In https://github.example.com/pydata/pydata-sphinx-theme/pull/101,
+            we refactored stylesheets and updated typography.
+
+    After build:
+
+        example_page.html
+
+            In <a href="https://github.example.com/pydata/pydata-sphinx-theme/pull/101">
+            pydata/pydata-sphinx-theme#101</a>, we refactored stylesheets and
+            updated typography.
+    """
+    sphinx_build = sphinx_build_factory("self_hosted_version_control").build()
+    urls_page = sphinx_build.html_tree("links.html").select("article")[0]
+    file_regression.check(
+        urls_page.prettify(),
+        basename="self_hosted_version_control_links",
+        extension=".html",
+    )
+
 
 def test_dont_shorten_link(sphinx_build_factory, file_regression) -> None:
     """Regression test for setting shorten_urls to false ."""

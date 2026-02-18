@@ -15,6 +15,18 @@ Page 1
     https://github.com/pydata/pydata-sphinx-theme/pull/1012
     https://github.com/orgs/pydata/projects/2
 
+    http will get shortened:
+
+    http://github.com/pydata/pydata-sphinx-theme/pull/1012
+
+    www will not get shortened:
+
+    https://www.github.com/pydata/pydata-sphinx-theme/pull/1012
+
+    will not be linkified:
+
+    github.com/pydata/pydata-sphinx-theme/pull/1012
+
 **GitLab**
 
 .. container:: gitlab-container
@@ -31,3 +43,12 @@ Page 1
     https://gitlab.com/gitlab-org/gitlab/-/merge_requests/84669
     https://gitlab.com/gitlab-org/gitlab/-/pipelines/511894707
     https://gitlab.com/gitlab-com/gl-infra/production/-/issues/6788
+
+**Bitbucket**
+
+.. container:: bitbucket-container
+
+    https://bitbucket.org
+    https://bitbucket.org/atlassian/workspace/overview
+    https://bitbucket.org/atlassian/aui
+    https://bitbucket.org/atlassian/aui/pull-requests/4758
