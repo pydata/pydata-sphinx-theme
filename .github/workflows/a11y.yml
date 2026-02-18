@@ -15,18 +15,18 @@ concurrency:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty
-  DEFAULT_PYTHON_VERSION: "3.12" # keep in sync with tox.ini
+  DEFAULT_PYTHON_VERSION: "3.14" # keep in sync with tox.ini
   PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
 
 permissions: {}
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - "*"
+  # workflow_run:
+  #   workflows: [continuous-integration]
+  #   types: [completed]
   # allows this to be used as a composite action in other workflows
   workflow_call:
   # allow manual triggering of the workflow, while debugging
@@ -56,10 +56,10 @@ jobs:
 
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
-        run: python -Im tox run -e compile-assets,i18n-compile,py312-docs,a11y-tests-${{ matrix.browser }}
+        run: python -Im tox run -e compile-assets,i18n-compile,py314-docs,a11y-tests-${{ matrix.browser }}
 
       - name: "Upload Playwright traces, if any 🐾"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4.6
         if: ${{ failure() }}
         with:
           name: playwright-traces-${{ matrix.os }}-${{ matrix.browser }}

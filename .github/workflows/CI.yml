@@ -16,7 +16,7 @@ concurrency:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty
-  DEFAULT_PYTHON_VERSION: "3.12" # keep in sync with tox.ini
+  DEFAULT_PYTHON_VERSION: "3.14" # keep in sync with tox.ini
   PIP_DISABLE_PIP_VERSION_CHECK: "1" # Don't check for pip updates
 
 permissions: {}
@@ -44,25 +44,25 @@ jobs:
         # ubuntu-24.04==latest
         # windows-2022==latest
         os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
-        python-version: ["3.9", "3.13"]
+        python-version: ["3.10", "3.14"]
         sphinx-version: [""]
         include:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
-            python-version: "3.9"
-            sphinx-version: "6.1"
+            python-version: "3.10"
+            sphinx-version: "7.0"
             # newest Python version with the newest Sphinx version
           - os: ubuntu-latest
-            python-version: "3.12"
+            python-version: "3.14"
             # Sphinx HEAD
             sphinx-version: "dev"
         exclude:
-          # Python 3.9 is not supported on macOS 14 - https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
+          # Python 3.10 is not supported on arm64 darwin - https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
           - os: macos-14
-            python-version: "3.9"
+            python-version: "3.10"
           # do not need all the tests so will limit to the latest versions of Python
           - os: ubuntu-24.04
-            python-version: "3.9"
+            python-version: "3.10"
           - os: ubuntu-24.04
             python-version: "3.10"
     runs-on: ${{ matrix.os }}
@@ -79,23 +79,32 @@ jobs:
           python-version: ${{ matrix.python-version }}
           pandoc: true
 
-      - name: "Run tests ✅"
+      - name: "Cache Playwright browsers 🎭"
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/Library/Caches/ms-playwright
+            ~\AppData\Local\ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: "Run tests"
         shell: bash
         run: |
           # this will compile the assets and translations then run the tests
           # check if there is a specific Sphinx version to test with
-          # example substitution: tox run -e compile-assets,i18n-compile,py39-sphinx61-tests
+          # example substitution: tox run -e compile-assets,i18n-compile,py310-sphinx61-tests
           if [ -n "${{matrix.sphinx-version}}" ]; then
             python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-sphinx$(echo ${{ matrix.sphinx-version }} | tr -d .)-tests
           # if not we use the default version
-          # example substitution: tox run -e compile-assets,i18n-compile,py39-tests
+          # example substitution: tox run -e compile-assets,i18n-compile,py310-tests
           else
             python -Im tox run -e compile-assets,i18n-compile,py$(echo ${{ matrix.python-version }} | tr -d .)-tests
           fi
 
       - name: "Upload coverage data to GH artifacts 📤"
-        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: matrix.python-version == '3.14' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: coverage-data-${{ matrix.python-version }}
           path: .coverage
@@ -103,7 +112,7 @@ jobs:
           include-hidden-files: true
 
       - name: "Upload Playwright traces, if any 🐾"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4.6
         if: ${{ failure() }}
         with:
           name: playwright-traces-${{ matrix.os }}-${{ matrix.python-version }}
@@ -150,7 +159,7 @@ jobs:
           python -Im coverage report --fail-under=80
 
       - name: "Upload HTML report if check failed 📤"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: html-report
           path: htmlcov
@@ -158,13 +167,13 @@ jobs:
 
       # seems we need to call this from the main CI workflow first
       - name: "Coverage comment 💬"
-        uses: py-cov-action/python-coverage-comment-action@91aaf3b39c7e2331c6bc77767ce017f5160c5f11 # 3.38.0
+        uses: py-cov-action/python-coverage-comment-action@e623398c19eb3853a5572d4a516e10b15b5cefbc # 3.38.0
         id: coverage_comment
         with:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: "Store Pull Request comment to be posted 📤"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
         with:
           # leave default names
@@ -183,16 +192,16 @@ jobs:
       - name: "Setup CI environment 🛠"
         uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
         with:
-          # 3.12 is not supported by py-spy yet
-          python-version: "3.11"
+          # 3.14 is not supported by py-spy yet
+          python-version: "3.13"
 
       - name: "Run profiling with py-spy 🕵️‍♂️"
         # profiling needs to be run as sudo
-        run: python -m tox run -e py311-profile-docs -- -o docbuild_profile.svg
+        run: python -m tox run -e py313-profile-docs -- -o docbuild_profile.svg
         continue-on-error: true
 
       - name: "Upload profiling data to GH artifacts 📤"
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: profile-results
           path: docbuild_profile.svg

@@ -22,14 +22,14 @@ repos:
         exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
   - repo: "https://github.com/astral-sh/ruff-pre-commit"
-    rev: "v0.12.11"
+    rev: "v0.14.14"
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
       - id: ruff-format
 
   - repo: "https://github.com/asottile/pyupgrade"
-    rev: v3.20.0
+    rev: v3.21.2
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
@@ -46,7 +46,7 @@ repos:
       - id: doc8
 
   - repo: "https://github.com/kynan/nbstripout"
-    rev: "0.8.1"
+    rev: "0.9.0"
     hooks:
       - id: nbstripout
 
@@ -56,15 +56,15 @@ repos:
       - id: remove-metadata
 
   - repo: "https://github.com/thibaudcolas/pre-commit-stylelint"
-    rev: v16.23.1
+    rev: v17.1.0
     hooks:
       - id: stylelint
         # automatically fix .scss files where possible
         args: [--fix]
         additional_dependencies:
           # stylelint itself needs to be here when using additional_dependencies.
-          - stylelint@16.5.0
-          - stylelint-config-standard-scss@13.1.0
+          - stylelint@16.26.1
+          - stylelint-config-standard-scss@16.0.0
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: v6.0.0

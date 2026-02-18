@@ -29,6 +29,8 @@ author = "PyData Community"
 # -- General configuration ---------------------------------------------------
 
 extensions = [
+    # AutoAPI must run early to generate API files before other extensions
+    "autoapi.extension",
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -39,7 +41,6 @@ extensions = [
     "sphinxext.rediraffe",
     "sphinx_design",
     "sphinx_copybutton",
-    "autoapi.extension",
     # custom extentions
     "_extension.gallery_directive",
     "_extension.component_directive",
@@ -47,6 +48,7 @@ extensions = [
     "myst_parser",
     "ablog",
     "jupyter_sphinx",
+    "sphinxcontrib.mermaid",
     "sphinxcontrib.youtube",
     "nbsphinx",
     "numpydoc",
@@ -289,7 +291,11 @@ autodoc_member_order = "groupwise"
 
 # -- Options for autoapi -------------------------------------------------------
 autoapi_type = "python"
-autoapi_dirs = ["../src/pydata_sphinx_theme"]
+# Use absolute path to ensure AutoAPI can find the source code in all environments
+_autoapi_source = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "src", "pydata_sphinx_theme")
+)
+autoapi_dirs = [_autoapi_source]
 autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
@@ -381,6 +387,7 @@ linkcheck_ignore = [
     r"https?://www.gnu.org/software/gettext/.*",
     r"https://www.npmjs.com/.*",
     r"https://sass-lang.com/.*",
+    r"https://docutils.sourceforge.io/.*",
 ]
 
 linkcheck_allowed_redirects = {
