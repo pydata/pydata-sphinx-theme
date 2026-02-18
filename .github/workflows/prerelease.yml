@@ -21,17 +21,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.13"]
+        python-version: ["3.10", "3.14"]
 
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@4a1e7898d6c92dade5e489684277ab4ffd0eb053
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -52,18 +52,18 @@ jobs:
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310
-        if: matrix.python-version == '3.9'
+        uses: hynek/build-and-inspect-python-package@c52c3a4710070b50470d903818a7b25115dcd076 # 2.13.0
+        if: matrix.python-version == '3.10'
         id: baipp
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
-        if: matrix.python-version == '3.9'
+        if: matrix.python-version == '3.10'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
       # Run tests on the built package (which will be later uploaded to PyPI)
       - name: "Install PST from wheel and test"
-        if: matrix.python-version == '3.9'
+        if: matrix.python-version == '3.10'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
         run: |

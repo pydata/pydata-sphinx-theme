@@ -26,6 +26,9 @@ Thanks for your support!
 - title: Binder
   link-alt: Binder docs
   link: https://mybinder.readthedocs.io/en/latest/index.html
+- title: BrainGlobe
+  link-alt: BrainGlobe docs
+  link: https://brainglobe.info
 - title: cashocs
   link-alt: cashocs docs
   link: https://cashocs.readthedocs.io/en/stable/
@@ -38,6 +41,9 @@ Thanks for your support!
 - title: Fairlearn
   link-alt: Fairlearn docs
   link: https://fairlearn.org/main/about/
+- title: Falcon web framework
+  link-alt: The Falcon web framework
+  link: https://falcon.readthedocs.io/
 - title: Feature-engine
   link-alt: Feature-engine docs
   link: https://feature-engine.readthedocs.io/
@@ -47,9 +53,9 @@ Thanks for your support!
 - title: itom measurement and simulation software
   link-alt: itom documentation
   link: https://itom-project.github.io/latest/docs/index.html
-- title: MegEngine
-  link-alt: MegEngine docs
-  link: https://www.megengine.org.cn/doc/stable/en/index.html
+- title: movement
+  link-alt: movement docs
+  link: https://movement.neuroinformatics.dev
 - title: Pastas
   link-alt: Pastas docs
   link: https://pastas.readthedocs.io/

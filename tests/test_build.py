@@ -740,6 +740,13 @@ def test_analytics(sphinx_build_factory, provider, tags) -> None:
     tags_found = False
     for script in index_html.select("script"):
         if script.string and tags[0] in script.string and tags[1] in script.string:
+            # If the tag is found, make sure the consent mode is also there
+            if tags[0] == "gtag":
+                assert "gtag('consent', 'default', {" in script.string
+                assert "'ad_storage': 'denied'," in script.string
+                assert "'ad_user_data': 'denied'," in script.string
+                assert "'ad_personalization': 'denied'," in script.string
+                assert "'analytics_storage': 'denied'" in script.string
             tags_found = True
     assert tags_found is True
 
@@ -844,7 +851,10 @@ def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
 
 def test_shorten_link(sphinx_build_factory, file_regression) -> None:
     """Regression test for "edit on <provider>" link shortening."""
-    sphinx_build = sphinx_build_factory("base").build()
+    confoverrides = {
+        "html_theme_options": {"shorten_urls": True},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
 
     github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
     file_regression.check(github.prettify(), basename="github_links", extension=".html")
@@ -886,6 +896,24 @@ def test_self_hosted_shorten_link(sphinx_build_factory, file_regression) -> None
         urls_page.prettify(),
         basename="self_hosted_version_control_links",
         extension=".html",
+    )
+
+
+def test_dont_shorten_link(sphinx_build_factory, file_regression) -> None:
+    """Regression test for setting shorten_urls to false ."""
+    confoverrides = {
+        "html_theme_options": {"shorten_urls": False},
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+
+    github = sphinx_build.html_tree("page1.html").select(".github-container")[0]
+    file_regression.check(
+        github.prettify(), basename="github_links_not_shortened", extension=".html"
+    )
+
+    gitlab = sphinx_build.html_tree("page1.html").select(".gitlab-container")[0]
+    file_regression.check(
+        gitlab.prettify(), basename="gitlab_links_not_shortened", extension=".html"
     )
 
 

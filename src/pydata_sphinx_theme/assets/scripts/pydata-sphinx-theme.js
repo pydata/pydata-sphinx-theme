@@ -922,6 +922,28 @@ function debounce(callback, wait) {
  */
 async function setupAnnouncementBanner() {
   const banner = document.querySelector(".bd-header-announcement");
+
+  // check if banner has been dismissed recently
+  const dismiss_date_str = JSON.parse(
+    localStorage.getItem("pst_announcement_banner_pref") || "{}",
+  )["closed"];
+  if (dismiss_date_str != null) {
+    const dismiss_date = new Date(dismiss_date_str);
+    const now = new Date();
+    const milliseconds_in_a_day = 24 * 60 * 60 * 1000;
+    const days_passed = (now - dismiss_date) / milliseconds_in_a_day;
+    const timeout_in_days = 14;
+    if (days_passed < timeout_in_days) {
+      console.info(
+        `[PST] Suppressing announcement banner; was dismissed ${Math.floor(
+          days_passed,
+        )} day(s) ago`,
+      );
+      banner.remove();
+      return;
+    }
+  }
+
   const { pstAnnouncementUrl } = banner ? banner.dataset : null;
 
   if (!pstAnnouncementUrl) {
@@ -947,6 +969,31 @@ async function setupAnnouncementBanner() {
     console.log(`[PST]: Failed to load announcement at: ${pstAnnouncementUrl}`);
     console.error(_error);
   }
+
+  // Add close button
+  console.debug("[PST] Adding close button to announcement banner");
+  const close_btn = document.createElement("a");
+  close_btn.classList = "ms-3 my-1 align-baseline";
+  const close_x = document.createElement("i");
+  close_btn.append(close_x);
+  close_x.classList = "fa-solid fa-xmark";
+  close_btn.onclick = DismissAnnouncementBannerAndStorePref;
+  banner.append(close_btn);
+}
+
+async function DismissAnnouncementBannerAndStorePref(event) {
+  const banner = document.querySelector(".bd-header-announcement");
+  banner.remove();
+  const now = new Date();
+  const banner_pref = JSON.parse(
+    localStorage.getItem("pst_announcement_banner_pref") || "{}",
+  );
+  console.debug(`[PST] Dismissing the announcement banner starting ${now}.`);
+  banner_pref["closed"] = now.toISOString();
+  localStorage.setItem(
+    "pst_announcement_banner_pref",
+    JSON.stringify(banner_pref),
+  );
 }
 
 /*******************************************************************************
@@ -1013,20 +1060,79 @@ function setupArticleTocSyncing() {
     return;
   }
 
-  // When the website visitor clicks a link in the TOC, we want that link to be
-  // highlighted/activated, NOT whichever TOC link the intersection observer
-  // callback would otherwise highlight, so we turn off the observer and turn it
-  // back on later.
+  // Create a boolean variable that allows us to turn off the intersection
+  // observer (and then later back on). When the website visitor clicks an
+  // in-page link, we want that entry in the TOC to be highlighted/activated,
+  // NOT whichever TOC link the intersection observer callback would otherwise
+  // highlight.
   let disableObserver = false;
-  pageToc.addEventListener("click", (event) => {
+
+  function temporarilyDisableObserver(time) {
     disableObserver = true;
-    const clickedTocLink = tocLinks.find((el) => el.contains(event.target));
-    activate(clickedTocLink);
     setTimeout(() => {
-      // Give the page ample time to finish scrolling, then re-enable the
-      // intersection observer.
       disableObserver = false;
-    }, 1000);
+    }, time);
+  }
+
+  /**
+   * If the provided URL hash fragment (beginning with "#") matches an entry in
+   * the page table of contents, highlight that entry and temporarily disable
+   * the intersection observer while the page scrolls to the corresponding
+   * heading.
+   */
+  function syncTocHash(hash) {
+    if (hash.length > 1) {
+      const matchingTocLink = tocLinks.find((tocLink) => tocLink.hash === hash);
+      if (matchingTocLink) {
+        // It's important to disable the intersection observer before
+        // highlighting the TOC link and its corresponding article heading. This
+        // is because the browser takes a little time to scroll to the article
+        // heading, and while scrolling, it could trigger intersection events
+        // that cause some other link in the table of contents to be
+        // highlighted.
+        temporarilyDisableObserver(1000);
+        activate(matchingTocLink);
+      }
+    }
+  }
+
+  // On page load...
+  //
+  // When the page loads, sync the page's table of contents.
+  syncTocHash(window.location.hash);
+
+  // On navigation to another part of the page...
+  //
+  // When the user navigates to another part of the page, sync the page's table
+  // of contents.
+  window.addEventListener("hashchange", () => {
+    // By the time this event is fired, window.location.hash has already been
+    // updated with the new hash
+    syncTocHash(window.location.hash);
+  });
+
+  // On return to the same part of the page...
+  //
+  // The hashchange event will handle most cases where we need to sync the table
+  // of contents with a hash link click. But there is one edge case it doesn't
+  // handle, which is when the user clicks an internal page link whose hash is
+  // already in the browser address bar. For example, the user loads the page at
+  // #first-heading, scrolls to the bottom of the page, then clicks in the
+  // sidebar table of contents to go back up to the first heading in the
+  // article. In this case the "hashchange" event will not fire. Nonetheless, we
+  // want to guarantee that the TOC entry for the first heading gets
+  // highlighted. Note we cannot rely exclusively on the "click" event for all
+  // internal page navigations because it will not fire in the edge case where
+  // the user modifies the hash directly in the browser address bar.
+  window.addEventListener("click", (event) => {
+    const link = event.target.closest("a");
+    if (
+      link &&
+      link.hash === window.location.hash &&
+      link.origin === window.location.origin
+    ) {
+      syncTocHash(link.hash);
+    }
   });
 
   /**
@@ -1127,7 +1233,7 @@ function setupArticleTocSyncing() {
     }
 
     observer = new IntersectionObserver(callback, options);
-    headingsToTocLinks.keys().forEach((heading) => {
+    Array.from(headingsToTocLinks.keys()).forEach((heading) => {
       observer.observe(heading);
     });
   }

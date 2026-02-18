@@ -13,7 +13,7 @@ default_language_version:
 
 repos:
   - repo: "https://github.com/pycontribs/mirrors-prettier"
-    rev: v3.5.3
+    rev: v3.6.2
     hooks:
       - id: prettier
         # Exclude the HTML, since it doesn't understand Jinja2
@@ -22,14 +22,14 @@ repos:
         exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
 
   - repo: "https://github.com/astral-sh/ruff-pre-commit"
-    rev: "v0.11.12"
+    rev: "v0.14.14"
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
       - id: ruff-format
 
   - repo: "https://github.com/asottile/pyupgrade"
-    rev: v3.20.0
+    rev: v3.21.2
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
@@ -42,12 +42,12 @@ repos:
         exclude: ^tests/test_build/.*\.html$
 
   - repo: "https://github.com/PyCQA/doc8"
-    rev: v1.1.2
+    rev: v2.0.0
     hooks:
       - id: doc8
 
   - repo: "https://github.com/kynan/nbstripout"
-    rev: "0.8.1"
+    rev: "0.9.0"
     hooks:
       - id: nbstripout
 
@@ -57,18 +57,18 @@ repos:
       - id: remove-metadata
 
   - repo: "https://github.com/thibaudcolas/pre-commit-stylelint"
-    rev: v16.20.0
+    rev: v17.1.0
     hooks:
       - id: stylelint
         # automatically fix .scss files where possible
         args: [--fix]
         additional_dependencies:
           # stylelint itself needs to be here when using additional_dependencies.
-          - stylelint@16.5.0
-          - stylelint-config-standard-scss@13.1.0
+          - stylelint@16.26.1
+          - stylelint-config-standard-scss@16.0.0
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
