@@ -922,6 +922,28 @@ function debounce(callback, wait) {
  */
 async function setupAnnouncementBanner() {
   const banner = document.querySelector(".bd-header-announcement");
+
+  // check if banner has been dismissed recently
+  const dismiss_date_str = JSON.parse(
+    localStorage.getItem("pst_announcement_banner_pref") || "{}",
+  )["closed"];
+  if (dismiss_date_str != null) {
+    const dismiss_date = new Date(dismiss_date_str);
+    const now = new Date();
+    const milliseconds_in_a_day = 24 * 60 * 60 * 1000;
+    const days_passed = (now - dismiss_date) / milliseconds_in_a_day;
+    const timeout_in_days = 14;
+    if (days_passed < timeout_in_days) {
+      console.info(
+        `[PST] Suppressing announcement banner; was dismissed ${Math.floor(
+          days_passed,
+        )} day(s) ago`,
+      );
+      banner.remove();
+      return;
+    }
+  }
+
   const { pstAnnouncementUrl } = banner ? banner.dataset : null;
 
   if (!pstAnnouncementUrl) {
@@ -947,6 +969,31 @@ async function setupAnnouncementBanner() {
     console.log(`[PST]: Failed to load announcement at: ${pstAnnouncementUrl}`);
     console.error(_error);
   }
+
+  // Add close button
+  console.debug("[PST] Adding close button to announcement banner");
+  const close_btn = document.createElement("a");
+  close_btn.classList = "ms-3 my-1 align-baseline";
+  const close_x = document.createElement("i");
+  close_btn.append(close_x);
+  close_x.classList = "fa-solid fa-xmark";
+  close_btn.onclick = DismissAnnouncementBannerAndStorePref;
+  banner.append(close_btn);
+}
+
+async function DismissAnnouncementBannerAndStorePref(event) {
+  const banner = document.querySelector(".bd-header-announcement");
+  banner.remove();
+  const now = new Date();
+  const banner_pref = JSON.parse(
+    localStorage.getItem("pst_announcement_banner_pref") || "{}",
+  );
+  console.debug(`[PST] Dismissing the announcement banner starting ${now}.`);
+  banner_pref["closed"] = now.toISOString();
+  localStorage.setItem(
+    "pst_announcement_banner_pref",
+    JSON.stringify(banner_pref),
+  );
 }
 
 /*******************************************************************************
