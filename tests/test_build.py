@@ -585,6 +585,44 @@ good_edits = [
             "https://bitbucket.org/foo/bar/src/HEAD/docs/index.rst?mode=edit",
         ),
     ],
+    [
+        {
+            "forgejo_user": "foo",
+            "forgejo_repo": "bar",
+            "forgejo_version": "HEAD",
+            "doc_path": "docs",
+            "forgejo_url": "https://my-forgejo.com",
+        },
+        (
+            "Edit on Forgejo",
+            "https://my-forgejo.com/foo/bar/_edit/HEAD/docs/index.rst",
+        ),
+    ],
+    [
+        {
+            "forgejo_user": "foo",
+            "forgejo_repo": "bar",
+            "forgejo_version": "HEAD",
+            "doc_path": "docs",
+            "forgejo_url": "https://codeberg.org",
+        },
+        (
+            "Edit on Codeberg",
+            "https://codeberg.org/foo/bar/_edit/HEAD/docs/index.rst",
+        ),
+    ],
+    [
+        {
+            "gitea_user": "foo",
+            "gitea_repo": "bar",
+            "gitea_version": "HEAD",
+            "doc_path": "docs",
+        },
+        (
+            "Edit on Gitea",
+            "https://gitea.com/foo/bar/_edit/HEAD/docs/index.rst",
+        ),
+    ],
 ]
 
 
@@ -608,16 +646,22 @@ providers = [
         dict(
             # copy all the values
             **html_context,
-            # add a provider url
-            **{f"{provider}_url": f"https://{provider}.example.com"},
+            # add a provider url if not specified in html_context
+            **(
+                {f"{provider}_url": f"https://{provider}.example.com"}
+                if f"{provider}_url" not in html_context
+                else {}
+            ),
         ),
         (
             text,
-            f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}""",
+            f"""https://{provider}.example.com/foo/{url.split("/foo/")[1]}"""
+            if f"{provider}_url" not in html_context
+            else f"{html_context[f'{provider}_url']}/foo/{url.split('/foo/')[1]}",
         ),
     ]
     for html_context, (text, url) in good_edits
-    for provider in ["github", "gitlab", "bitbucket"]
+    for provider in ["github", "gitlab", "bitbucket", "forgejo", "gitea"]
     if provider in text.lower()
 ]
 
@@ -687,6 +731,10 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) ->
         "html_theme_options.use_edit_page_button": True,
         "html_context": html_context,
     }
+    if html_context.get("forgejo_url"):
+        confoverrides.update(
+            {"html_theme_options.forgejo_url": html_context["forgejo_url"]}
+        )
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides)
 
     if edit_text_and_url is None:
