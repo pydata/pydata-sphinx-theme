@@ -19,7 +19,7 @@ jobs:
   # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
     # Important: make sure to update the SHA after making any changes to the CI workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@3ab5f486deab29159b87ac337f172ad116608a24
+    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@213af5a59dd18500fdc3b82fb49afc89a54fff33
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
     # needed for the coverage action
