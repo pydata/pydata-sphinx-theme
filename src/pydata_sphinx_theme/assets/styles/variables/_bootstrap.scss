@@ -34,3 +34,9 @@ $focus-ring-offset: 0.125rem; // 2px at 100% zoom (0.125 * 16px base font = 2px)
 // outline creates the same style of focus ring, it just uses CSS outline instead of box shadow
 $focus-ring-outline: $focus-ring-color solid $focus-ring-width;
 $btn-focus-box-shadow: $focus-ring-box-shadow;
+
+// Speed up site navigation and reduce animation when using anchor links:
+// Don't enable `scroll-behavior: smooth` globally, instead use
+// `scroll-behavior: auto` which is also the behavior when
+// `prefers-reduced-motion` is active.
+$enable-smooth-scroll: false;
