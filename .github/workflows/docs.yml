@@ -61,7 +61,7 @@ jobs:
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@213af5a59dd18500fdc3b82fb49afc89a54fff33
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -92,7 +92,7 @@ jobs:
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@213af5a59dd18500fdc3b82fb49afc89a54fff33
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 
@@ -129,7 +129,7 @@ jobs:
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@213af5a59dd18500fdc3b82fb49afc89a54fff33
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
 
       - name: "Check for broken links 🔗"
         run: python -Im tox run -e docs-linkcheck
