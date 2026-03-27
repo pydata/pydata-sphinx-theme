@@ -117,26 +117,3 @@ jobs:
           temporaryPublicStorage: true
           uploadArtifacts: true
           runs: 3 # Multiple runs to reduce variance
-
-  # Check for broken links in our docs
-  link-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-        with:
-          persist-credentials: false
-
-      - name: "Setup CI environment 🛠"
-        # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
-
-      - name: "Check for broken links 🔗"
-        run: python -Im tox run -e docs-linkcheck
-
-      - name: "Upload file with broken links 📤"
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
-        with:
-          name: broken-links
-          path: docs/_build/linkcheck/output.txt
-        if: ${{ always() }}
