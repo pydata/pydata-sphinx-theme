@@ -1,0 +1,100 @@
+# Check for broken links in the documentation.
+# Runs daily on the main branch and opens/reopens/closes a GitHub issue accordingly.
+
+name: link-check
+
+env:
+  FORCE_COLOR: "1"
+  DEFAULT_PYTHON_VERSION: "3.14" # keep in sync with tox.ini
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+permissions: {}
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          persist-credentials: false
+
+      - name: "Setup CI environment"
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
+      - name: "Check for broken links"
+        run: python -Im tox run -e docs-linkcheck
+
+      - name: "Upload broken-links report"
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: broken-links
+          path: docs/_build/linkcheck/output.txt
+        if: ${{ always() }}
+
+  report-issue:
+    needs: link-check
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: "Create, update, or close link-check issue"
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        env:
+          CONCLUSION: ${{ needs.link-check.result }}
+          RUN_ID: ${{ github.run_id }}
+        with:
+          script: |
+            const TITLE = "Link-check found broken links";
+            const LABEL = "link-check";
+            const { owner, repo } = context.repo;
+            const conclusion = process.env.CONCLUSION;
+            const run_url = `https://github.com/${owner}/${repo}/actions/runs/${process.env.RUN_ID}`;
+
+            const q = `repo:${owner}/${repo} author:app/github-actions label:"${LABEL}" is:issue`;
+            const search = await github.rest.search.issuesAndPullRequests({ q });
+            const existing = search.data.items.find(i => i.title === TITLE);
+
+            if (conclusion === "failure") {
+              const body = [
+                `link-check failed, see ${run_url}`,
+                ``,
+                `This issue will be closed automatically the next time link-check succeeds.`,
+              ].join("\n");
+
+              if (existing) {
+                await github.rest.issues.update({
+                  owner, repo,
+                  issue_number: existing.number,
+                  state: "open",
+                  body,
+                });
+                console.log(`Reopened/updated issue #${existing.number}`);
+              } else {
+                const { data: issue } = await github.rest.issues.create({
+                  owner, repo,
+                  title: TITLE,
+                  body,
+                  labels: [LABEL],
+                });
+                console.log(`Created issue #${issue.number}`);
+              }
+            }
+
+            if (conclusion === "success" && existing) {
+              await github.rest.issues.update({
+                owner, repo,
+                issue_number: existing.number,
+                state: "closed",
+                body: `Closed automatically because link-check succeeded (${run_url})`,
+              });
+              console.log(`Closed issue #${existing.number}`);
+            }
