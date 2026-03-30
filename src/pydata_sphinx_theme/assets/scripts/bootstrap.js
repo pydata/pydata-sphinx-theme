@@ -39,6 +39,7 @@ function backToTop() {
 
 function showBackToTop() {
   var btn = document.getElementById("pst-back-to-top");
+  if (!btn) return;
   var header = document
     .getElementsByClassName("bd-header")[0]
     .getBoundingClientRect();
