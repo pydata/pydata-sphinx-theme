@@ -48,17 +48,14 @@ def update_config(app):
             "a value (leave undefined), or set to an empty list."
         )
 
-    # When search is disabled, remove the built-in search button from the navbar so
-    # the user only needs to set one option instead of also clearing navbar_persistent.
-    if theme_options.get("disable_search", False):
-        navbar_persistent = theme_options.get(
-            "navbar_persistent", ["search-button-field"]
-        )
-        if isinstance(navbar_persistent, str):
-            navbar_persistent = [s.strip() for s in navbar_persistent.split(",")]
-        theme_options["navbar_persistent"] = [
-            t for t in navbar_persistent if t.strip() != "search-button-field"
-        ]
+    # If navbar_persistent is unset (None), default it based on disable_search:
+    # show the search button field unless search is disabled.
+    if theme_options.get("navbar_persistent") is None:
+        if theme_options.get("disable_search", False):
+            navbar_persistent = []
+        else:
+            navbar_persistent = ["search-button-field"]
+        theme_options["navbar_persistent"] = navbar_persistent
 
     # Set the anchor link default to be # if the user hasn't provided their own
     if not utils.config_provided_by_user(app, "html_permalinks_icon"):

@@ -94,13 +94,16 @@ This does two things automatically:
 * The ``#pst-search-dialog`` overlay is omitted from the page, so the
   built-in search dialog never appears and keyboard shortcuts (:kbd:`Ctrl` +
   :kbd:`K` / :kbd:`⌘` + :kbd:`K`) do not open it.
-* ``search-button-field`` is removed from ``navbar_persistent``, so the
-  default search button is no longer rendered in the navbar.
+* ``navbar_persistent`` is set to an empty list, so the default search button
+  is no longer rendered in the navbar.
 
 .. note::
 
-   ``disable_search`` only removes ``search-button-field`` (the full navbar
-   button showing the search label and keyboard shortcut) from
+   ``disable_search`` only controls ``search-button-field`` (the full navbar
+   button showing the search label and keyboard shortcut) via
    ``navbar_persistent``. It does not remove ``search-button`` (the icon-only
    variant) or ``search-field.html`` if you have placed either of those
    explicitly elsewhere in your layout. Remove them manually if needed.
+
+   If you set ``navbar_persistent`` explicitly in your ``html_theme_options``,
+   that value takes precedence and ``disable_search`` will not modify it.
