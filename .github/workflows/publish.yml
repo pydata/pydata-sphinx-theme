@@ -99,7 +99,7 @@ jobs:
         with:
           artifacts_path: dist
           anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
-        if: github.repository_owner == 'pydata' && github.event_name == 'schedule'
+        if: github.repository_owner == 'pydata' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
 
   release-PST:
     runs-on: ubuntu-latest
