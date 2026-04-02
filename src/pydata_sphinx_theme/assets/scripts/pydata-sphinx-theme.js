@@ -845,6 +845,9 @@ function setupMobileSidebarKeyboardHandlers() {
       if (event.key === "Escape") {
         event.preventDefault();
         event.stopPropagation();
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
         dialog.close();
       }
     });
