@@ -76,6 +76,31 @@ jobs:
           --installpkg $dist_loc/*.whl \
           -- --deselect tests/test_build.py::test_translations
 
+  nightly-release-PST:
+    runs-on: ubuntu-latest
+    needs: [build-package]
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
+    environment:
+      name: pst-release
+    steps:
+      - name: "Download PST built package 📦"
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # 8.0.1
+        with:
+          name: Packages
+          path: dist
+
+      - name: "Unzip artifact"
+        run: |
+          tar xvf dist/*.tar.gz --strip-components=1
+
+      - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
+        uses: scientific-python/upload-nightly-action@5748273c71e2d8d3a61f3a11a16421c8954f9ecf # 0.6.3
+        with:
+          artifacts_path: dist
+          anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
+        if: github.repository_owner == 'pydata' && github.event_name == 'schedule'
+
   release-PST:
     runs-on: ubuntu-latest
     needs: [build-package]
@@ -103,10 +128,3 @@ jobs:
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
         with:
           print-hash: true
-
-      - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
-        uses: scientific-python/upload-nightly-action@5748273c71e2d8d3a61f3a11a16421c8954f9ecf # 0.6.3
-        with:
-          artifacts_path: dist
-          anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
-        if: github.repository_owner == 'pydata' && github.event_name == 'schedule'
