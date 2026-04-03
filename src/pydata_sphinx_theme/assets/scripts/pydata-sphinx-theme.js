@@ -828,11 +828,25 @@ function setupMobileSidebarKeyboardHandlers() {
       event.preventDefault();
       event.stopPropagation();
 
+      // Save focus so we can restore it when the dialog closes
+      const previouslyFocused = document.activeElement;
+
       // When we open the dialog, we cut and paste the nodes and classes from
       // the widescreen sidebar into the dialog
       cutAndPasteNodesAndClasses(sidebar, dialog);
 
       dialog.showModal();
+
+      // Restore focus when dialog closes
+      dialog.addEventListener(
+        "close",
+        () => {
+          if (previouslyFocused && previouslyFocused.focus) {
+            previouslyFocused.focus();
+          }
+        },
+        { once: true },
+      );
     });
 
     // Listen for clicks on the backdrop in order to close the dialog
@@ -845,9 +859,6 @@ function setupMobileSidebarKeyboardHandlers() {
       if (event.key === "Escape") {
         event.preventDefault();
         event.stopPropagation();
-        if (document.activeElement) {
-          document.activeElement.blur();
-        }
         dialog.close();
       }
     });
