@@ -48,6 +48,15 @@ def update_config(app):
             "a value (leave undefined), or set to an empty list."
         )
 
+    # If navbar_persistent is unset (None), default it based on disable_search:
+    # show the search button field unless search is disabled.
+    if theme_options.get("navbar_persistent") == "":
+        if theme_options.get("disable_search", False):
+            navbar_persistent = []
+        else:
+            navbar_persistent = ["search-button-field"]
+        theme_options["navbar_persistent"] = navbar_persistent
+
     # Set the anchor link default to be # if the user hasn't provided their own
     if not utils.config_provided_by_user(app, "html_permalinks_icon"):
         app.config.html_permalinks_icon = "#"
