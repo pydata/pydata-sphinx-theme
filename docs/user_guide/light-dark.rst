@@ -94,28 +94,28 @@ Change the theme and a new image should be displayed.
 
         .. code-block:: rst
 
-            .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+            .. image:: https://picsum.photos/id/237/200/200
                 :class: only-dark
 
-            .. image:: https://source.unsplash.com/200x200/daily?cute+dog
+            .. image:: https://picsum.photos/id/1025/200/200
                 :class: only-light
 
     .. tab-item:: markdown
 
         .. code-block:: md
 
-            ```{image} https://source.unsplash.com/200x200/daily?cute+cat
+            ```{image} https://picsum.photos/id/237/200/200
             :class: only-dark
             ```
 
-            ```{image} https://source.unsplash.com/200x200/daily?cute+dog
+            ```{image} https://picsum.photos/id/1025/200/200
             :class: only-light
             ```
 
-.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+.. image:: https://picsum.photos/id/237/200/200
     :class: only-dark
 
-.. image:: https://source.unsplash.com/200x200/daily?cute+dog
+.. image:: https://picsum.photos/id/1025/200/200
     :class: only-light
 
 Images and content that work in both themes
@@ -139,19 +139,19 @@ Change to the dark theme and a grey background will be present.
 
         .. code-block:: rst
 
-            .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+            .. image:: https://picsum.photos/id/237/200/200
                 :class: p-2
 
     .. tab-item:: markdown
 
         .. code-block:: md
 
-            ```{image} https://source.unsplash.com/200x200/daily?cute+cat
+            ```{image} https://picsum.photos/id/237/200/200
             :class: p-2
             ```
 
 
-.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+.. image:: https://picsum.photos/id/237/200/200
     :class: p-2
 
 Here's the same image with this class added:
@@ -162,18 +162,18 @@ Here's the same image with this class added:
 
         .. code-block:: rst
 
-            .. image:: https://source.unsplash.com/200x200/daily?cute+cat
+            .. image:: https://picsum.photos/id/237/200/200
                 :class: dark-light
 
     .. tab-item:: markdown
 
         .. code-block:: md
 
-            ```{image} https://source.unsplash.com/200x200/daily?cute+cat
+            ```{image} https://picsum.photos/id/237/200/200
             :class: dark-light p-2
             ```
 
-.. image:: https://source.unsplash.com/200x200/daily?cute+cat
+.. image:: https://picsum.photos/id/237/200/200
     :class: dark-light p-2
 
 Define custom JavaScript to react to theme changes
