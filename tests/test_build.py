@@ -843,7 +843,9 @@ def test_version_switcher_error_states(
 def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
     """Regression test for the theme switcher button."""
     sphinx_build = sphinx_build_factory("base").build()
-    switcher = sphinx_build.html_tree("index.html").find(class_="theme-switch-button")
+    switcher = sphinx_build.html_tree("index.html").find(
+        class_="theme-switch-container"
+    )
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extension=".html"
     )
