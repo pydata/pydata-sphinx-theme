@@ -30,7 +30,7 @@ jobs:
       # calls our docs workflow (build docs, check broken links, lighthouse)
   docs:
     # Important: make sure to update the SHA after making any changes to the docs workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@43f9003549c495bcb43483fa21b6c1c396247f39
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@cd00a86a87aba3903543c00c5ce5f009c436e0b1
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
 
