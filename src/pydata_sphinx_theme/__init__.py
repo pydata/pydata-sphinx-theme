@@ -149,15 +149,17 @@ def update_config(app):
 
     # Handle icon link shortcuts
     shortcuts = [
-        ("twitter_url", "fa-brands fa-square-twitter", "Twitter"),
-        ("bitbucket_url", "fa-brands fa-bitbucket", "Bitbucket"),
-        ("gitlab_url", "fa-brands fa-square-gitlab", "GitLab"),
-        ("github_url", "fa-brands fa-square-github", "GitHub"),
+        ("twitter_url", "fa-brands fa-square-twitter", "Twitter", "fontawesome"),
+        ("bitbucket_url", "fa-brands fa-bitbucket", "Bitbucket", "fontawesome"),
+        ("gitlab_url", "fa-brands fa-square-gitlab", "GitLab", "fontawesome"),
+        ("github_url", "fa-brands fa-square-github", "GitHub", "fontawesome"),
+        ("gitea_url", "fa-custom fa-gitea", "Gitea", "fontawesome"),
+        ("forgejo_url", "fa-custom fa-forgejo", "Forgejo", "fontawesome"),
     ]
     # Add extra icon links entries if there were shortcuts present
     # TODO: Deprecate this at some point in the future?
     icon_links = theme_options.get("icon_links", [])
-    for url, icon, name in shortcuts:
+    for url, icon, name, icon_type in shortcuts:
         if theme_options.get(url):
             # This defaults to an empty list so we can always insert
             icon_links.insert(
@@ -166,9 +168,10 @@ def update_config(app):
                     "url": theme_options.get(url),
                     "icon": icon,
                     "name": name,
-                    "type": "fontawesome",
+                    "type": icon_type,
                 },
             )
+            icon_links[0] = adjust_known_instances(icon_links[0])
     theme_options["icon_links"] = icon_links
 
     # Prepare the logo config dictionary
@@ -290,6 +293,14 @@ def _fix_canonical_url(
 
     target = app.builder.get_target_uri(pagename)
     context["pageurl"] = app.config.html_baseurl + target
+
+
+def adjust_known_instances(icon_link: dict[str, str]) -> dict[str, str]:
+    """Adjust icon data for supported self-hostable forge instances."""
+    if icon_link["url"].startswith("https://codeberg.org"):
+        icon_link["icon"] = "fa-custom fa-codeberg"
+        icon_link["name"] = "Codeberg"
+    return icon_link
 
 
 def setup(app: Sphinx) -> Dict[str, str]:
