@@ -185,6 +185,10 @@ var toggleSearchField = () => {
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
   const searchDialog = document.getElementById("pst-search-dialog");
+  if (!searchDialog) {
+    // Search dialog was disabled via disable_search theme option; nothing to do.
+    return;
+  }
   const hiddenInput = searchDialog.querySelector("input");
   if (input === hiddenInput) {
     if (searchDialog.open) {
@@ -301,6 +305,10 @@ var setupSearchButtons = () => {
 
   // If user clicks outside the search modal dialog, then close it.
   const searchDialog = document.getElementById("pst-search-dialog");
+  if (!searchDialog) {
+    // Search dialog was disabled via disable_search theme option; nothing to do.
+    return;
+  }
   // Dialog click handler includes clicks on dialog ::backdrop.
   searchDialog.addEventListener("click", closeDialogOnBackdropClick);
 };
