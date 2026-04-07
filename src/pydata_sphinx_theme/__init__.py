@@ -48,9 +48,9 @@ def update_config(app):
             "a value (leave undefined), or set to an empty list."
         )
 
-    # If navbar_persistent is unset (None), default it based on disable_search:
-    # show the search button field unless search is disabled.
-    if theme_options.get("navbar_persistent") == "":
+    # If the user hasn't explicitly set navbar_persistent, default it based on
+    # disable_search: show the search button field unless search is disabled.
+    if "navbar_persistent" not in theme_options:
         if theme_options.get("disable_search", False):
             navbar_persistent = []
         else:
