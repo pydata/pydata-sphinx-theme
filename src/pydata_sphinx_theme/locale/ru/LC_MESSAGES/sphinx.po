@@ -8,11 +8,11 @@ msgstr ""
 
 #: docs/conf.py:111
 msgid "Click to expand"
-msgstr ""
+msgstr "Нажмите, чтобы развернуть"
 
 #: docs/conf.py:112
 msgid "Click to collapse"
-msgstr ""
+msgstr "Нажмите, чтобы свернуть"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:57
 msgid "Skip to main content"
@@ -20,7 +20,7 @@ msgstr "Перейти к основному содержанию"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html:69
 msgid "Back to top"
-msgstr ""
+msgstr "Наверх"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:6
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/search-button-field.html:8
@@ -67,7 +67,7 @@ msgstr "Редактировать"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:4
 msgid "Indices"
-msgstr ""
+msgstr "Указатели"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/indices.html:11
 msgid "General Index"
@@ -109,11 +109,11 @@ msgstr "далее"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:6
 msgid "Collapse Sidebar"
-msgstr ""
+msgstr "Свернуть боковую панель"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-collapse.html:11
 msgid "Expand Sidebar"
-msgstr ""
+msgstr "Развернуть боковую панель"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:3
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/sidebar-nav-bs.html:4
@@ -135,19 +135,19 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:3
 msgid "Color mode"
-msgstr ""
+msgstr "Цветовая схема"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:4
 msgid "Light"
-msgstr "светлая"
+msgstr "Светлая"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:5
 msgid "Dark"
-msgstr "темная"
+msgstr "Темная"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-switcher.html:6
 msgid "System Settings"
-msgstr ""
+msgstr "Системные настройки"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/theme-version.html:4
 #, python-format
@@ -161,11 +161,11 @@ msgstr ""
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:4
 msgid "Version warning"
-msgstr ""
+msgstr "Предупреждение о версии"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/announcement.html:6
 msgid "Announcement"
-msgstr ""
+msgstr "Объявление"
 
 #: src/pydata_sphinx_theme/theme/pydata_sphinx_theme/sections/header.html:3
 msgid "Site navigation"
