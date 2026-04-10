@@ -94,7 +94,7 @@ Change the theme and a new image should be displayed.
 
         .. code-block:: rst
 
-            .. image:: https://picsum.photos/id/237/200/200
+            .. image:: https://picsum.photos/id/9/200/200
                 :class: only-dark
 
             .. image:: https://picsum.photos/id/1025/200/200
@@ -104,7 +104,7 @@ Change the theme and a new image should be displayed.
 
         .. code-block:: md
 
-            ```{image} https://picsum.photos/id/237/200/200
+            ```{image} https://picsum.photos/id/9/200/200
             :class: only-dark
             ```
 
@@ -112,7 +112,7 @@ Change the theme and a new image should be displayed.
             :class: only-light
             ```
 
-.. image:: https://picsum.photos/id/237/200/200
+.. image:: https://picsum.photos/id/9/200/200
     :class: only-dark
 
 .. image:: https://picsum.photos/id/1025/200/200
