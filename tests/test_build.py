@@ -15,6 +15,14 @@ COMMON_CONF_OVERRIDES = dict(
 )
 
 
+def test_theme_loaded_as_extension(sphinx_build_factory) -> None:
+    """Theme must not crash when loaded via extensions= instead of html_theme=."""
+    sphinx_build = sphinx_build_factory(
+        "base", confoverrides={"extensions": ["pydata_sphinx_theme"]}
+    )
+    sphinx_build.build(no_warning=False)
+
+
 def test_build_html(sphinx_build_factory, file_regression) -> None:
     """Test building the base html template and config."""
     sphinx_build = sphinx_build_factory("base")
