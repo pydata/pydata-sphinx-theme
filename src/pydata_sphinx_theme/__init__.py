@@ -292,17 +292,21 @@ def _fix_canonical_url(
     context["pageurl"] = app.config.html_baseurl + target
 
 
+def add_shorten_xform(app: Sphinx) -> None:
+    """Add the link shortening transform."""
+    theme_options = utils.get_theme_options_dict(app)
+    theme_conf_options = app.builder.theme.get_options()
+    if (theme_conf_options | theme_options).get("shorten_urls"):
+        app.add_post_transform(short_link.ShortenLinkTransform)
+
+
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
-
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    theme_options = utils.get_theme_options_dict(app)
-    if theme_options.get("shorten_urls", True):
-        app.add_post_transform(short_link.ShortenLinkTransform)
-
+    app.connect("builder-inited", add_shorten_xform)
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", _fix_canonical_url)
