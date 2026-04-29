@@ -2,9 +2,10 @@
  * Span-level styling within content
  */
 
-span.guilabel{
+span.guilabel {
   font-size: 80%;
 }
+
 span.guilabel,
 span.menuselection {
   border: 1px solid var(--pst-color-info);

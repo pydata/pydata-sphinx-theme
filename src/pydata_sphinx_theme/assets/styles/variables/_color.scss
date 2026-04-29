@@ -25,7 +25,7 @@
 
 /* Assign base colors for the PyData theme */
 $color-palette: (
-  // Primary color
+  /* Primary color*/
   "teal": (
       "50": #f4fbfc,
       "100": #e9f6f8,
@@ -38,7 +38,7 @@ $color-palette: (
       "800": #042c33,
       "900": #021b1f,
     ),
-  // Secondary color
+  /* Secondary color*/
   "violet": (
       "50": #f4eefb,
       "100": #e0c7ff,
@@ -51,7 +51,7 @@ $color-palette: (
       "800": #341a61,
       "900": #1e0e39,
     ),
-  // Neutrals
+  /* Neutrals*/
   "gray": (
       "50": #f9f9fa,
       "100": #f3f4f5,
@@ -64,7 +64,7 @@ $color-palette: (
       "800": #222832,
       "900": #14181e,
     ),
-  // Accent color
+  /* Accent color*/
   "pink": (
       "50": #fcf8fd,
       "100": #fcf0fa,
@@ -78,8 +78,8 @@ $color-palette: (
       "900": #2b0b27,
     ),
   "foundation": (
-    "white": #ffffff,
-    // gray-900
+    "white": #fff,
+    /* gray-900*/
     "black": #14181e,
   )
 );
@@ -156,7 +156,7 @@ $pst-semantic-colors: (
     "dark": #5fb488,
     "bg-dark": #002f17,
   ),
-  // This is based on the warning color
+  /* This is based on the warning color*/
   "attention": (
       "light": var(--pst-color-warning),
       "bg-light": var(--pst-color-warning-bg),
@@ -178,20 +178,20 @@ $pst-semantic-colors: (
     "dark": #{map-deep-get($color-palette, "gray", "400")},
   ),
   "shadow": (
-    "light": rgba(0, 0, 0, 0.1),
-    "dark": rgba(0, 0, 0, 0.2),
+    "light": rgb(0 0 0 / 10%),
+    "dark": rgb(0 0 0 / 20%),
   ),
   "border": (
     "light": #{map-deep-get($color-palette, "gray", "300")},
     "dark": #{map-deep-get($color-palette, "gray", "600")},
   ),
   "border-muted": (
-    "light": rgba(23, 23, 26, 0.2),
+    "light": rgb(23 23 26 / 20%),
     "dark": #{map-deep-get($color-palette, "gray", "700")},
   ),
   "blockquote-notch": (
-    // These colors have a contrast ratio > 3.0 against both the background and
-    // surface colors that the notch is sandwiched between
+    /* These colors have a contrast ratio > 3.0 against both the background and*/
+    /* surface colors that the notch is sandwiched between*/
     "light": #{map-deep-get($color-palette, "gray", "500")},
     "dark": #{map-deep-get($color-palette, "gray", "400")},
   ),
@@ -200,11 +200,11 @@ $pst-semantic-colors: (
     "dark": #{map-deep-get($color-palette, "pink", "300")},
   ),
   "link-higher-contrast": (
-    // teal-600 provides higher contrast than teal-500 (our regular light mode
-    // link color) for off-white or non-white backgrounds
+    /* teal-600 provides higher contrast than teal-500 (our regular light mode*/
+    /* link color) for off-white or non-white backgrounds*/
     "light": #{map-deep-get($color-palette, "teal", "600")},
-    // teal-400 is actually the same color already used for links in dark mode,
-    // but it actually works for most of our other dark mode backgrounds
+    /* teal-400 is actually the same color already used for links in dark mode,*/
+    /* but it actually works for most of our other dark mode backgrounds*/
     "dark": #{map-deep-get($color-palette, "teal", "400")},
   ),
   "target": (
@@ -223,15 +223,15 @@ $pst-semantic-colors: (
     "light": #{map-deep-get($color-palette, "gray", "200")},
     "dark": #364150,
   ),
-  // DEPTH COLORS - you can see the elevation colours and shades
-  // in the Figma file https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1492%3A922&t=sQeQZehkOzposYEg-1
-  // background: color of the canvas / the furthest back layer
+  /* DEPTH COLORS - you can see the elevation colours and shades*/
+  /* in the Figma file https://www.figma.com/file/rUrrHGhUBBIAAjQ82x6pz9/PyData-Design-system---proposal-for-implementation-(2)?node-id=1492%3A922&t=sQeQZehkOzposYEg-1*/
+  /* background: color of the canvas / the furthest back layer*/
   "background": (
       "light": #{map-deep-get($color-palette, "foundation", "white")},
       "dark": #{map-deep-get($color-palette, "foundation", "black")},
     ),
-  // on-background: provides slight contrast against background
-  // (by use of shadows in light theme)
+  /* on-background: provides slight contrast against background*/
+  /* (by use of shadows in light theme)*/
   "on-background": (
       "light": #{map-deep-get($color-palette, "foundation", "white")},
       "dark": #{map-deep-get($color-palette, "gray", "800")},
@@ -240,7 +240,7 @@ $pst-semantic-colors: (
     "light": #{map-deep-get($color-palette, "gray", "100")},
     "dark": #{map-deep-get($color-palette, "gray", "700")},
   ),
-  // on_surface: object on top of surface object (without shadows)
+  /* on_surface: object on top of surface object (without shadows)*/
   "on-surface": (
       "light": #{map-deep-get($color-palette, "gray", "800")},
       "dark": $foundation-light-gray,
