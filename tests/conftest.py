@@ -11,7 +11,6 @@ from subprocess import PIPE, Popen
 from typing import Callable
 
 import pytest
-import sphinx
 
 from bs4 import BeautifulSoup
 from sphinx.testing.util import SphinxTestApp
@@ -84,11 +83,6 @@ def sphinx_build_factory(make_app: Callable, tmp_path: Path, request) -> Callabl
         if no_temp is not None:
             tmp_path = Path(no_temp) / request.node.name / str(src_folder)
         srcdir = tmp_path / src_folder
-        if sphinx.version_info < (7, 2):
-            from sphinx.testing.path import path as sphinx_path
-
-            srcdir = sphinx_path(srcdir)
-
         copytree(tests_path / "sites" / src_folder, tmp_path / src_folder)
         app = make_app(srcdir=srcdir, **kwargs)
         return SphinxBuild(app, tmp_path / src_folder)
