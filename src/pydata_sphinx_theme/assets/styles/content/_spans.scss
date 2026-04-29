@@ -2,9 +2,12 @@
  * Span-level styling within content
  */
 
-span.guilabel {
-  border: 1px solid var(--pst-color-info);
+span.guilabel{
   font-size: 80%;
+}
+span.guilabel,
+span.menuselection {
+  border: 1px solid var(--pst-color-info);
   font-weight: 700;
   border-radius: 4px;
   padding: 2.4px 6px;
