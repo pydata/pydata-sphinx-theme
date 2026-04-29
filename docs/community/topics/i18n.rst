@@ -5,7 +5,7 @@ This section covers how to internationalize (I18n) and localize (L10n) the PyDat
 For details on how to localize the configurable strings in your Sphinx project, see the
 :ref:`User guide section on internationalization <user-guide-i18n>`.
 
-The PyData Sphinx Theme I18n/i10n workflows are based on `GNU Gettext <http://www.gnu.org/software/gettext/>`__
+The PyData Sphinx Theme I18n/i10n workflows are based on `GNU Gettext <https://www.gnu.org/software/gettext/>`__
 and `pybabel <https://babel.pocoo.org/en/latest/messages.html>`__ is used to keep the catalogs up to date.
 Crowd-sourced localizations are managed on `Transifex <https://explore.transifex.com/12rambau/pydata-sphinx-theme/>`__.
 

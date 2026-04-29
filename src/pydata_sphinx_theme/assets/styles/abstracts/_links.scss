@@ -67,7 +67,7 @@ $link-hover-decoration-thickness: string.unquote(
 // TODO: @trallard to improve focus styles in subsequent PR
 @mixin link-style-default {
   // So that really long links don't spill out of their container
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   color: var(--pst-color-link);
 
   @include link-decoration;

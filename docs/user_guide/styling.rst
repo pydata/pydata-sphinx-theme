@@ -3,7 +3,7 @@ Theme variables and CSS
 =======================
 
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/tree/main/src/pydata_sphinx_theme/assets/styles/variables
-.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascading_variables/Using_CSS_custom_properties
+.. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties
 
 This section covers a few ways that you can control the look and feel of your theme via your own CSS and theme variables.
 
@@ -63,7 +63,7 @@ Follow these steps to update the base variables:
 .. important::
 
    Note that the theme is defined with `CSS variables <css-variable-help_>`_
-   and **not** `SASS variables <https://sass-lang.com/documentation/variables>`_.
+   and **not** `SASS variables <https://sass-lang.com/documentation/variables/>`_.
 
    Refer to :ref:`the managing themes section in this documentation <manage-themes>` if
    you desire a different behavior between the light and dark theme.

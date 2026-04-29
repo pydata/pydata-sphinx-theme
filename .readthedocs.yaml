@@ -19,7 +19,7 @@ build:
     post_install:
       - pip install playwright
       - playwright install chromium
-      - python ./docs/scripts/generate_gallery_images.py
+      # - python ./docs/scripts/generate_gallery_images.py
 
 sphinx:
   configuration: docs/conf.py

@@ -139,7 +139,7 @@ There are also a few browser extensions that some of the maintainers of this
 theme use when working to make websites more accessible. Some of these include:
 
 - [Accessibility Insights for Web](https://accessibilityinsights.io/docs/web/overview/)
-- [Axe DevTools](https://www.deque.com/axe/browser-extensions/)
+- [Axe DevTools](https://www.deque.com/axe/devtools/extension/)
 - [WAVE](https://wave.webaim.org/extension/)
 
 We have also found [Polypane](https://polypane.app/) to be a great tool (but it

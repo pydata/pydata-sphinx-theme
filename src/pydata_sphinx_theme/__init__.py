@@ -17,7 +17,7 @@ from sphinx.errors import ExtensionError
 from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
 
-__version__ = "0.16.2dev0"
+__version__ = "0.17.1"
 
 
 def update_config(app):
@@ -44,7 +44,18 @@ def update_config(app):
         raise ExtensionError(
             "`icon_links` must be a list of dictionaries, you provided "
             f"type {type(theme_options.get('icon_links'))}."
+            "If you wish to disable this feature, either do not provide "
+            "a value (leave undefined), or set to an empty list."
         )
+
+    # If the user hasn't explicitly set navbar_persistent, default it based on
+    # disable_search: show the search button field unless search is disabled.
+    if "navbar_persistent" not in theme_options:
+        if theme_options.get("disable_search", False):
+            navbar_persistent = []
+        else:
+            navbar_persistent = ["search-button-field"]
+        theme_options["navbar_persistent"] = navbar_persistent
 
     # Set the anchor link default to be # if the user hasn't provided their own
     if not utils.config_provided_by_user(app, "html_permalinks_icon"):
@@ -117,6 +128,12 @@ def update_config(app):
             gid_script = f"""
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){{ dataLayer.push(arguments); }}
+                gtag('consent', 'default', {{
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                }});
                 gtag('js', new Date());
                 gtag('config', '{gid}');
             """
@@ -275,15 +292,21 @@ def _fix_canonical_url(
     context["pageurl"] = app.config.html_baseurl + target
 
 
+def add_shorten_xform(app: Sphinx) -> None:
+    """Add the link shortening transform."""
+    theme_options = utils.get_theme_options_dict(app)
+    theme_conf_options = app.builder.theme.get_options()
+    if (theme_conf_options | theme_options).get("shorten_urls"):
+        app.add_post_transform(short_link.ShortenLinkTransform)
+
+
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"
-
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
-    app.add_post_transform(short_link.ShortenLinkTransform)
-
+    app.connect("builder-inited", add_shorten_xform)
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", _fix_canonical_url)

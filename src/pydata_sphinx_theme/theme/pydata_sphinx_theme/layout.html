@@ -69,10 +69,17 @@
   </button>
   {%- endif %}
 
-  {# A search field pop-up that will only show when the search button is clicked #}
+  {%- block search_dialog %}
+  {# A search field pop-up that will only show when the search button is clicked. #}
+  {# Set disable_search = True in html_theme_options to omit this dialog entirely, #}
+  {# e.g. when using a third-party search addon (such as Read the Docs server-side #}
+  {# search) that provides its own UI and keyboard shortcut. #}
+  {%- if not theme_disable_search | tobool %}
   <dialog id="pst-search-dialog">
     {% include "../components/search-field.html" %}
   </dialog>
+  {%- endif %}
+  {%- endblock search_dialog %}
 
   {% include "sections/announcement.html" %}
 

@@ -28,14 +28,18 @@ function TriggerTooltip() {
  */
 function backToTop() {
   var btn = document.getElementById("pst-back-to-top");
-  btn.addEventListener("click", function () {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  });
+  // Config allows button to be disabled, so check it exists
+  if (btn) {
+    btn.addEventListener("click", function () {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+  }
 }
 
 function showBackToTop() {
   var btn = document.getElementById("pst-back-to-top");
+  if (!btn) return;
   var header = document
     .getElementsByClassName("bd-header")[0]
     .getBoundingClientRect();

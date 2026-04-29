@@ -19,7 +19,7 @@ jobs:
   # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
     # Important: make sure to update the SHA after making any changes to the CI workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@ac57147185b6f9400cafbcd852e04345e5e841b7
+    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@cd00a86a87aba3903543c00c5ce5f009c436e0b1
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
     # needed for the coverage action
@@ -30,7 +30,7 @@ jobs:
       # calls our docs workflow (build docs, check broken links, lighthouse)
   docs:
     # Important: make sure to update the SHA after making any changes to the docs workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@3e74810e3ad3778c179f3f836409540e0a3bf0f1
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@cd00a86a87aba3903543c00c5ce5f009c436e0b1
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
 
@@ -43,20 +43,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
         with:
           persist-credentials: false
 
       - name: "Setup Python 🐍"
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # 5.6.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # 6.2.0
         with:
-          python-version: "3.9"
+          python-version: "3.10"
 
       - run: python -Im pip install tox-uv
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@b5076c307dc91924a82ad150cdd1533b444d3310 # 2.12.0
+        uses: hynek/build-and-inspect-python-package@fe0a0fb1925ca263d076ca4f2c13e93a6e92a33e # 2.17.0
         id: baipp
+        with:
+          # pydantic-core (via PyO3) does not yet support Python 3.14
+          python-version: "3.13"
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
         env:
@@ -73,6 +76,31 @@ jobs:
           --installpkg $dist_loc/*.whl \
           -- --deselect tests/test_build.py::test_translations
 
+  nightly-release-PST:
+    runs-on: ubuntu-latest
+    needs: [build-package]
+    # only run this workflow for pydata owned repositories (avoid forks)
+    if: github.repository_owner == 'pydata'
+    environment:
+      name: pst-release
+    steps:
+      - name: "Download PST built package 📦"
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # 8.0.1
+        with:
+          name: Packages
+          path: dist
+
+      - name: "Unzip artifact"
+        run: |
+          tar xvf dist/*.tar.gz --strip-components=1
+
+      - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
+        uses: scientific-python/upload-nightly-action@5748273c71e2d8d3a61f3a11a16421c8954f9ecf # 0.6.3
+        with:
+          artifacts_path: dist
+          anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
+        if: github.repository_owner == 'pydata' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+
   release-PST:
     runs-on: ubuntu-latest
     needs: [build-package]
@@ -85,7 +113,7 @@ jobs:
       url: https://pypi.org/p/pydata-sphinx-theme
     steps:
       - name: "Download PST built package 📦"
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # 4.3.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # 8.0.1
         with:
           name: Packages
           path: dist
@@ -95,15 +123,8 @@ jobs:
           tar xvf dist/*.tar.gz --strip-components=1
 
       - name: "Publish PST package to PyPI 🚀"
-        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # 1.12.4
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # 1.13.0
         # only publish if this is a published release by pydata
         if: github.repository_owner == 'pydata' && github.event_name == 'release' && github.event.action == 'published'
         with:
           print-hash: true
-
-      - name: "Publish PST package to scientific-python-nightly-wheels 🚀"
-        uses: scientific-python/upload-nightly-action@b36e8c0c10dbcfd2e05bf95f17ef8c14fd708dbf # 0.6.2
-        with:
-          artifacts_path: dist
-          anaconda_nightly_upload_token: ${{ secrets.ANACONDA_ORG_UPLOAD_TOKEN }}
-        if: github.repository_owner == 'pydata' && github.event_name == 'schedule'

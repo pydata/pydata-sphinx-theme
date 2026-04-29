@@ -17,7 +17,7 @@ To do so, use a tool like [conda](https://docs.conda.io/en/latest/), [mamba](htt
 
 Before you start, ensure that you have the following installed:
 
-- Python >= 3.9
+- Python >= 3.10
 - [Pandoc](https://pandoc.org/): we use `nbsphinx` to support notebook (`.ipynb`) files in the documentation, which requires [installing Pandoc](https://pandoc.org/installing.html) at a system level (or within a Conda environment).
 
 ## Clone the repository locally

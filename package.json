@@ -10,7 +10,7 @@
   "devDependencies": {
     "axe-core": "^4.6.3",
     "css-loader": "^6.8.1",
-    "css-minimizer-webpack-plugin": "^4.2.2",
+    "css-minimizer-webpack-plugin": "^8.0.0",
     "dedent": "^0.7.0",
     "html-webpack-plugin": "^5.0.0",
     "imports-loader": "^0.8.0",
@@ -19,8 +19,8 @@
     "sass": "^1.59.3",
     "sass-loader": "^10.3.1",
     "style-loader": "^4.0.0",
-    "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.94.0",
+    "terser-webpack-plugin": "^5.4.0",
+    "webpack": "^5.105.1",
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {

@@ -23,7 +23,7 @@
   img-bottom: ../_static/gallery/jupyter.png
 - title: Jupyter Book
   link-alt: Jupyter Book docs
-  link: https://jupyterbook.org/en/stable/intro.html
+  link: https://jupyterbook.org/v1/intro.html
   img-bottom: ../_static/gallery/jupyter_book.png
 - title: Matplotlib
   link-alt: Matplotlib docs

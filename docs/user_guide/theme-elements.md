@@ -60,7 +60,7 @@ For example, the following code:
 `````{tab-item} rST
 ````rst
 .. code-block:: python
-    :caption: python.py
+    :caption: `python.py`
 
     print("A code block with a caption.")
 ````
@@ -68,7 +68,7 @@ For example, the following code:
 `````{tab-item} Markdown
 ````md
 ```{code-block} python
-:caption: python.py
+:caption: `python.py`
 
 print("A code block with a caption.")
 ```
@@ -79,7 +79,7 @@ print("A code block with a caption.")
 results in:
 
 ```{code-block} python
-:caption: python.py
+:caption: `python.py`
 
 print("A code block with a caption.")
 ```
@@ -91,7 +91,7 @@ For example, the following code:
 `````{tab-item} rST
 ````rst
 ..  code-block:: python
-    :caption: python.py
+    :caption: `python.py`
     :linenos:
 
     print("A code block with a caption and line numbers.")
@@ -102,7 +102,7 @@ For example, the following code:
 `````{tab-item} Markdown
 ````md
 ```{code-block} python
-:caption: python.py
+:caption: `python.py`
 :linenos:
 
 print("A code block with a caption and line numbers.")
@@ -116,7 +116,7 @@ print("A code block with a caption and line numbers.")
 results in:
 
 ```{code-block} python
-:caption: python.py
+:caption: `python.py`
 :linenos:
 
 print("A code block with a caption and line numbers.")
@@ -220,15 +220,21 @@ In **reStructuredText**, URLs are automatically converted to links, so this work
 In **MyST Markdown**, by default, you must define a standard Markdown link and duplicate the URL in the link text.
 You may skip the need to manually define the link text by [activating the MyST Linkify extension](https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#linkify).
 
+Link shortening is enabled by default. To disable it, set the following option in your `conf.py`:
+
+```python
+html_theme_options = {
+    "shorten_urls": False,
+}
+```
+
 For example:
 
 - **reStructuredText**
-
   - `https://github.com/pydata/pydata-sphinx-theme/pull/1012`
   - https://github.com/pydata/pydata-sphinx-theme/pull/1012
 
 - **MyST Markdown (default)**
-
   - `[https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)`
   - [https://github.com/pydata/pydata-sphinx-theme/pull/1012](https://github.com/pydata/pydata-sphinx-theme/pull/1012)
 
