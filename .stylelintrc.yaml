@@ -1,0 +1,23 @@
+$schema: https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/stylelintrc.json
+
+extends:
+  - stylelint-config-standard-scss
+  - stylelint-prettier/recommended
+
+rules:
+  no-descending-specificity: null
+  # this fixer is incompatible with the copyright headers
+  comment-whitespace-inside: null
+  # these fixers assume use of `autoprefixer`
+  property-no-vendor-prefix: null
+  selector-no-vendor-prefix: null
+  value-no-vendor-prefix: null
+  # these fixers don't work well with variables
+  alpha-value-notation: null
+  color-function-notation: null
+  # rejects rgba
+  color-function-alias-notation: null
+  # enforce #ffffff instead of #fff
+  color-hex-length: null
+  # disable enforce kebab case
+  selector-class-pattern: null

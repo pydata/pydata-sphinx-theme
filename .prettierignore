@@ -1,0 +1,8 @@
+# Exclude the HTML, since it doesn't understand Jinja2
+**/*.html
+
+# webpack.config.js embeds complete url dificult to prettify
+webpack.config.js
+
+# exclude the pytest-regressions folder
+tests/test_a11y/
