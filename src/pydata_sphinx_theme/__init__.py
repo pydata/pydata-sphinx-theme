@@ -124,21 +124,27 @@ def update_config(app):
         # Google Analytics
         gid = analytics.get("google_analytics_id")
         if gid:
-            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
-            gid_script = f"""
+            gid_defaults = """
                 window.dataLayer = window.dataLayer || [];
-                function gtag(){{ dataLayer.push(arguments); }}
-                gtag('consent', 'default', {{
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
                     'ad_storage': 'denied',
                     'ad_user_data': 'denied',
                     'ad_personalization': 'denied',
                     'analytics_storage': 'denied'
-                }});
+                });
+            """
+            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
+            gid_script = f"""
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){{dataLayer.push(arguments);}}
                 gtag('js', new Date());
                 gtag('config', '{gid}');
             """
 
             # Link the JS files
+            # Ref: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced#implementation_example
+            app.add_js_file(None, body=gid_defaults)
             app.add_js_file(gid_js_path, loading_method="async")
             app.add_js_file(None, body=gid_script)
 
