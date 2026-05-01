@@ -17,12 +17,6 @@
   }
 }
 
-.theme-change-button.active {
-  text-decoration: none;
-  color: var(--pst-color-link-hover);
-  background: none;
-}
-
 @each $mode in auto, light, dark {
   html[data-mode="#{$mode}"]
     .theme-switch-button
