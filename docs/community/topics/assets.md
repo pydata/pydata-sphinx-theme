@@ -38,7 +38,7 @@ This is configured in the `webpack.config.js` file, and imported in the respecti
 ## FontAwesome icons
 
 Three "styles" of the [FontAwesome 7 Free](https://fontawesome.com/icons?m=free)
-icon font are used for {ref}`icon links <icon-links>` and admonitions and is
+icon font are used for {ref}`icon links <icon-links>` and admonitions, and it is
 the only `vendored` font.
 
 - It is managed as a dependency in `package.json`
