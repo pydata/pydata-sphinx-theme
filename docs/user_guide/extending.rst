@@ -169,7 +169,7 @@ And add the following to your ``custom.css`` file:
 Using a custom icon
 -------------------
 
-Customizing the icon uses a similar process to customizing the color: create a new CSS class in your `custom.css <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_css_files>`__ file. The theme supports `fontawesome v6 icons <https://fontawesome.com/v6/search?o=r&m=free&f=brands>`__ ("free" and "brands" sets). To use an icon, copy its unicode value into your custom class as shown in the CSS tab below:
+Customizing the icon uses a similar process to customizing the color: create a new CSS class in your `custom.css <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_css_files>`__ file. The theme supports `fontawesome v7 icons <https://fontawesome.com/v7.2/search?o=r&m=free&f=brands>`__ ("free" and "brands" sets). To use an icon, copy its unicode value into your custom class as shown in the CSS tab below:
 
 .. begin-example-icon
 .. admonition:: Check out my custom icon
