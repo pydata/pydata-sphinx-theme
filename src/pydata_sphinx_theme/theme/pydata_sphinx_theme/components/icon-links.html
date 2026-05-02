@@ -14,7 +14,7 @@
           <a {{ attributeString }}>
             {%- if type == "fontawesome" -%}
             <i class="{{ icon }} fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">{{ name }}</span>
+            <span class="visually-hidden">{{ name }}</span>
             {%- elif type == "local" -%}
             <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ name }}"/>
             {%- elif type == "url" -%}
