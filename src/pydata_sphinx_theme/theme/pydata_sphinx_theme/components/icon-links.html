@@ -13,7 +13,12 @@
           {% set attributeString = attributeString | join(" ") -%}
           <a {{ attributeString }}>
             {%- if type == "fontawesome" -%}
+            {%- set icon_parts = icon.split() -%}
+            {%- if icon_parts[0] == "fa-custom" -%}
+            <i class="{{ icon_parts[0] }} fa-lg" data-prefix="{{ icon_parts[0] }}" data-icon="{{ icon_parts[1][3:] }}" aria-hidden="true"></i>
+            {%- else -%}
             <i class="{{ icon }} fa-lg" aria-hidden="true"></i>
+            {%- endif -%}
             <span class="visually-hidden">{{ name }}</span>
             {%- elif type == "local" -%}
             <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ name }}"/>
