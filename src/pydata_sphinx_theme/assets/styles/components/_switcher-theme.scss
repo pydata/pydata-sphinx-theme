@@ -14,6 +14,14 @@
     .fa-lg {
       aspect-ratio: 1 / 1;
     }
+
+    // FA v7 has redesigned fa-moon with a ~14% larger crescent glyph, where the
+    // path grew from 16x18.66px to 18.36x21.33px within the same SVG canvas).
+    // We can scale it back to the old value, to match the visual weight of the
+    // other theme icons.
+    &.fa-moon {
+      transform: scaleX(0.871459695) scaleY(0.8748241913);
+    }
   }
 }
 
