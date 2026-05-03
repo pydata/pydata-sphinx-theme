@@ -155,7 +155,7 @@ var config = {
     },
     {
       // Font vendoring and management - will separate FA and export the font files
-      test: /\.(woff|woff2|eot|ttf|otf)$/i,
+      test: /\.woff2$/i,
       type: 'asset/resource',
       generator: {
         filename: 'vendor/fontawesome/webfonts/[name][ext]'
