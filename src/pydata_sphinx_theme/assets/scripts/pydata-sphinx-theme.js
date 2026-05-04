@@ -433,10 +433,7 @@ var resetSearchAsYouTypeResults = () => {
   modal.appendChild(results);
 
   // Get the relative path back to the root of the website.
-  const root =
-    "URL_ROOT" in DOCUMENTATION_OPTIONS
-      ? DOCUMENTATION_OPTIONS.URL_ROOT // Sphinx v6 and earlier
-      : document.documentElement.dataset.content_root; // Sphinx v7 and later
+  const root = document.documentElement.dataset.content_root;
 
   // As Sphinx populates the search results, this observer makes sure that
   // each URL is correct (i.e. doesn't 404).
