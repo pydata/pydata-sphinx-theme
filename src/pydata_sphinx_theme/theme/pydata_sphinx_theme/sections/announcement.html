@@ -1,5 +1,9 @@
 {#- The "revealer" allows async banners to be loaded, revealed, and animated together in a controlled way -#}
-<div class="pst-async-banner-revealer d-none">
+{%- set revealer_classes = "pst-async-banner-revealer d-none" -%}
+{%- if theme_sticky_version_warning_banner | tobool -%}
+  {%- set revealer_classes = revealer_classes + " pst-sticky-banners" -%}
+{%- endif -%}
+<div class="{{ revealer_classes }}">
 {#- Version warning banner is always loaded remotely/asynchronously #}
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="{{ _('Version warning') }}"></aside>
 {#- But the announcement banner might be loaded locally or remotely -#}
