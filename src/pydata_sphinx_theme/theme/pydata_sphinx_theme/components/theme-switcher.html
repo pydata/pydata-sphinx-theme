@@ -1,6 +1,6 @@
 {# Displays an icon to switch between light mode, dark mode, and auto (use browser's setting). #}
 {# As the theme switcher will only work when JavaScript is enabled, we hide it with `pst-js-only`. #}
-<div class="theme-switch-container dropdown pst-js-only">
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ _('Color mode') }}">
   <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="{{ _('Color mode') }}" data-bs-toggle="dropdown">
     <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="{{ _('Light') }}"></i>
     <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark"  title="{{ _('Dark') }}"></i>
