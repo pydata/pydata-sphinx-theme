@@ -23,6 +23,29 @@ function TriggerTooltip() {
   });
 }
 
+/**
+ * disable theme switch tooltip while the theme switch dropdown is open
+ */
+function setupThemeSwitchDropdownTooltip() {
+  const themeSwitchContainer = document.querySelector(
+    ".theme-switch-container",
+  );
+  if (!themeSwitchContainer) return;
+
+  const themeSwitchTooltip =
+    bootstrap.Tooltip.getInstance(themeSwitchContainer);
+  if (!themeSwitchTooltip) return;
+
+  themeSwitchContainer.addEventListener("show.bs.dropdown", () => {
+    themeSwitchTooltip.hide();
+    themeSwitchTooltip.disable();
+  });
+
+  themeSwitchContainer.addEventListener("hide.bs.dropdown", () => {
+    themeSwitchTooltip.enable();
+  });
+}
+
 /*******************************************************************************
  * back to top button
  */
@@ -58,6 +81,7 @@ function showBackToTop() {
  */
 
 documentReady(TriggerTooltip);
+documentReady(setupThemeSwitchDropdownTooltip);
 documentReady(backToTop);
 documentReady(showBackToTop);
 
