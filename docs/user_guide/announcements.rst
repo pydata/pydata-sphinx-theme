@@ -94,6 +94,24 @@ In addition to the general-purpose announcement banner, the theme includes a bui
     version compares greater than the preferred version (or if the version match contains the strings `"dev"`,
     `"rc"` or `"pre"`), the announcement will say they are viewing an unstable development version instead.
 
+Stick the warning banner to the top of the viewport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default the version warning banner scrolls off-screen with the rest of the page,
+which can hide the warning when users land on a deep-link inside an old-version page.
+To keep the banner visible while users scroll, set:
+
+.. code-block:: python
+    :caption: conf.py
+
+    html_theme_options = {
+        ...
+        "sticky_version_warning_banner": True,
+    }
+
+This sticks the entire banner wrapper (version warning plus any announcement)
+to the top of the viewport. Default is ``False``.
+
 If you want similar functionality for *older* versions of your docs (i.e. those built before the ``show_version_warning_banner`` configuration option was available), you can manually add a banner by prepending the following HTML to all pages (be sure to replace ``URL_OF_STABLE_VERSION_OF_PROJECT`` with a valid URL, and adjust styling as desired):
 
 .. code-block:: html
