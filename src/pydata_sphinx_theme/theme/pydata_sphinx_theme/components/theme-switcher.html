@@ -1,7 +1,14 @@
 {# Displays an icon to switch between light mode, dark mode, and auto (use browser's setting). #}
 {# As the theme switcher will only work when JavaScript is enabled, we hide it with `pst-js-only`. #}
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="{{ _('Color mode') }}" data-bs-title="{{ _('Color mode') }}"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="{{ _('Light') }}"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="{{ _('Dark') }}"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="{{ _('System Settings') }}"></i>
-</button>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ _('Color mode') }}">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="{{ _('Color mode') }}" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="{{ _('Light') }}"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="{{ _('Dark') }}"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="{{ _('System Settings') }}"></i>
+  </button>
+  <ul class="dropdown-menu">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>{{ _('System Settings') }}</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>{{ _('Light') }}</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>{{ _('Dark') }}</button></li>
+  </ul>
+</div>

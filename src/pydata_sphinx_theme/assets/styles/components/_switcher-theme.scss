@@ -6,11 +6,6 @@
   .theme-switch {
     display: none;
 
-    &:active {
-      text-decoration: none;
-      color: var(--pst-color-link-hover);
-    }
-
     .fa-lg {
       aspect-ratio: 1 / 1;
     }
