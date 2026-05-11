@@ -52,6 +52,57 @@ The default body and header fonts can be changed as follows:
     specifically the binary font files. This ensures the files will be loaded
     before the CSS is parsed, but should be used with care.
 
+.. _override-fontawesome-version:
+
+Using a different FontAwesome version
+--------------------------------------
+
+.. warning::
+
+   Overriding the bundled FontAwesome version is unsupported and done at your
+   own risk. The theme's styles and icon names are tied to the bundled version,
+   and loading a different version may cause visual regressions or unintended
+   behaviour.
+   Always review the `FontAwesome changelog`_ for breaking changes between
+   versions.
+
+If you need a different version of FontAwesome than the one the theme bundles,
+you can load FontAwesome assets from a CDN by adding entries to ``html_js_files``
+in your ``conf.py``:
+
+.. code-block:: python
+
+   html_js_files = [
+       (
+           "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@X.Y.Z/js/all.min.js",
+           {"defer": "defer"},
+       ),
+   ]
+
+Replace ``X.Y.Z`` with the desired FontAwesome version. If you only need
+a specific set of icons, you can load a sub-package instead of ``all.min.js``.
+For example, to load only the brands module:
+
+.. code-block:: python
+
+   html_js_files = [
+       (
+           "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@X.Y.Z/js/brands.min.js",
+           {"defer": "defer"},
+       ),
+   ]
+
+See the `FontAwesome CDN docs`_ for the full list of available files.
+
+.. note::
+
+   Because the theme already bundles FontAwesome, loading ``all.min.js`` will
+   cause the icons to be registered twice, across versions. Loading only the
+   specific sub-packages you need (``brands``, ``solid``, ``regular``) avoids this.
+
+.. _FontAwesome changelog: https://fontawesome.com/changelog
+.. _FontAwesome CDN docs: https://cdnjs.com/libraries/font-awesome
+
 .. _pydata-css-variables: https://github.com/pydata/pydata-sphinx-theme/tree/main/src/pydata_sphinx_theme/assets/styles/variables
 .. _pydata-css-colors: https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/assets/styles/variables/_color.scss
 .. _css-variable-help: https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
