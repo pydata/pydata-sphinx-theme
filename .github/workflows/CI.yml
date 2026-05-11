@@ -104,7 +104,7 @@ jobs:
 
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.14' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: coverage-data-${{ matrix.python-version }}
           path: .coverage
@@ -112,7 +112,7 @@ jobs:
           include-hidden-files: true
 
       - name: "Upload Playwright traces, if any 🐾"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v4.7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.7.0.1
         if: ${{ failure() }}
         with:
           name: playwright-traces-${{ matrix.os }}-${{ matrix.python-version }}
@@ -159,7 +159,7 @@ jobs:
           python -Im coverage report --fail-under=80
 
       - name: "Upload HTML report if check failed 📤"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: html-report
           path: htmlcov
@@ -173,7 +173,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: "Store Pull Request comment to be posted 📤"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
         with:
           # leave default names
@@ -201,7 +201,7 @@ jobs:
         continue-on-error: true
 
       - name: "Upload profiling data to GH artifacts 📤"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: profile-results
           path: docbuild_profile.svg

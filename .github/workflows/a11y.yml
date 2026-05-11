@@ -59,7 +59,7 @@ jobs:
         run: python -Im tox run -e compile-assets,i18n-compile,py314-docs,a11y-tests-${{ matrix.browser }}
 
       - name: "Upload Playwright traces, if any 🐾"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v4.7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.7.0.1
         if: ${{ failure() }}
         with:
           name: playwright-traces-${{ matrix.os }}-${{ matrix.browser }}
