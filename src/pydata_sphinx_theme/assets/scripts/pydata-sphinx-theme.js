@@ -58,27 +58,27 @@ function setTheme(mode) {
 }
 
 /**
- * Change the theme option order so that clicking on the btn is always a change
- * from "auto"
+ * Update the active dropdown item based on the current color mode.
  */
-function cycleMode() {
-  const defaultMode = document.documentElement.dataset.defaultMode || "auto";
-  const currentMode = localStorage.getItem("mode") || defaultMode;
-
-  var loopArray = (arr, current) => {
-    var nextPosition = arr.indexOf(current) + 1;
-    if (nextPosition === arr.length) {
-      nextPosition = 0;
+function updateColorModeDropdown(mode) {
+  const activeClass = "active";
+  document.querySelectorAll(".theme-change-button").forEach((el) => {
+    if (el.dataset.mode === mode) {
+      el.classList.add(activeClass);
+    } else {
+      el.classList.remove(activeClass);
     }
-    return arr[nextPosition];
-  };
+  });
+}
 
-  // make sure the next theme after auto is always a change
-  var modeList = prefersDark.matches
-    ? ["auto", "light", "dark"]
-    : ["auto", "dark", "light"];
-  var newMode = loopArray(modeList, currentMode);
-  setTheme(newMode);
+/**
+ * Change the color mode based on the clicked dropdown item.
+ */
+function changeColorMode(e) {
+  const btn = e.currentTarget;
+  const mode = btn.dataset.mode;
+  setTheme(mode);
+  updateColorModeDropdown(mode);
 }
 
 /**
@@ -87,11 +87,13 @@ function cycleMode() {
 function addModeListener() {
   // the theme was set a first time using the initial mini-script
   // running setMode will ensure the use of the dark mode if auto is selected
-  setTheme(document.documentElement.dataset.mode);
+  const mode = document.documentElement.dataset.mode;
+  setTheme(mode);
+  updateColorModeDropdown(mode);
 
-  // Attach event handlers for toggling themes colors
-  document.querySelectorAll(".theme-switch-button").forEach((el) => {
-    el.addEventListener("click", cycleMode);
+  // Attach click handlers to color mode dropdown items
+  document.querySelectorAll(".theme-change-button").forEach((el) => {
+    el.addEventListener("click", changeColorMode);
   });
 }
 

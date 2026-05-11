@@ -13,6 +13,14 @@
   }
 }
 
+.pst-async-banner-revealer.pst-sticky-banners {
+  position: sticky;
+  top: 0;
+
+  // Above the fixed header (which uses z-index inside the bd-navbar).
+  z-index: 1030;
+}
+
 #bd-header-version-warning,
 .bd-header-announcement {
   min-height: 3rem;
