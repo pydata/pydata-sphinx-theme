@@ -352,6 +352,29 @@ def test_remote_announcement_banner(sphinx_build_factory) -> None:
     assert "pst-async-banner-revealer" in banner.parent["class"]
 
 
+def test_sticky_version_warning_banner_on(sphinx_build_factory) -> None:
+    """When the option is True, the revealer carries the sticky class."""
+    confoverrides = {
+        "html_theme_options.sticky_version_warning_banner": True,
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="pst-async-banner-revealer")
+
+    assert len(results) == 1
+    assert "pst-sticky-banners" in results[0]["class"]
+
+
+def test_sticky_version_warning_banner_default_off(sphinx_build_factory) -> None:
+    """The sticky class is absent by default (no behavior change for existing users)."""
+    sphinx_build = sphinx_build_factory("base").build()
+    index_html = sphinx_build.html_tree("index.html")
+    results = index_html.find_all(class_="pst-async-banner-revealer")
+
+    assert len(results) == 1
+    assert "pst-sticky-banners" not in results[0]["class"]
+
+
 @pytest.mark.parametrize(
     "align,klass",
     [
