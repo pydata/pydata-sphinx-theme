@@ -53,6 +53,7 @@ classifiers = [
 
 [project.optional-dependencies]
 doc = [
+  "fonttools[woff]",
   "astroid>=3,!=4.0.3", # fix for sphinx.autoapi and read the docs, should be reverted at a later date - see issue #2125
   "numpydoc",
   "linkify-it-py", # for link shortening
@@ -93,6 +94,7 @@ dev = [
   "sphinx-theme-builder[cli]",
 ]
 test = [
+  "fonttools[woff]",
   "pytest",
   "pytest-cov",
   "pytest-regressions",

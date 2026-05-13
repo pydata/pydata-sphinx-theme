@@ -1284,3 +1284,51 @@ def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
     # Hence the secondary sidebar has all its templates empty and should be removed
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     assert not sphinx_build.html_tree("page1.html").select("div.bd-sidebar-secondary")
+
+
+def test_subset_fonts_reduces_size(sphinx_build_factory) -> None:
+    """subset_fonts.py must shrink font files while keeping used glyphs intact."""
+    import subprocess
+    import sys
+
+    from fontTools.ttLib import TTFont
+
+    confoverrides = {
+        "html_theme_options": {
+            "icon_links": [
+                {
+                    "name": "GitHub",
+                    "url": "https://example.com",
+                    "icon": "fa-brands fa-github",
+                },
+                {
+                    "name": "Bell",
+                    "url": "https://example.com",
+                    "icon": "fa-solid fa-bell",
+                },
+            ]
+        }
+    }
+    build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    outdir = build.outdir
+
+    fonts_path = outdir / "_static/vendor/fontawesome/webfonts"
+
+    solid = fonts_path / "fa-solid-900.woff2"
+    brands = fonts_path / "fa-brands-400.woff2"
+    before_solid = solid.stat().st_size
+    before_brands = brands.stat().st_size
+
+    subprocess.run(
+        [sys.executable, "docs/scripts/subset_fonts.py", str(outdir)],
+        check=True,
+    )
+
+    assert solid.stat().st_size < before_solid
+    assert brands.stat().st_size < before_brands
+
+    solid_cmap = TTFont(str(solid)).getBestCmap()
+    brands_cmap = TTFont(str(brands)).getBestCmap()
+    assert 0xF0C9 in solid_cmap  # fa-bars, hardcoded in templates
+    assert 0xF0F3 in solid_cmap  # fa-bell, via icon_links
+    assert 0xF09B in brands_cmap  # fa-github, via icon_links
