@@ -46,6 +46,24 @@ the only `vendored` font.
 - Partially preloaded to reduce flicker and artifacts of early icon renders
 - Configured in `webpack.config.js`
 
+### FontAwesome subsetting
+
+After every `sphinx-build`, PST's `build-finished` Sphinx hook runs `pydata_sphinx_theme.fontawesome.subset_all()`, which does two things:
+
+**1. Subset the woff2 font files** — the full FA woff2 files are over 100 KB each. The hook rewrites the copies in `_static/vendor/fontawesome/webfonts/` to keep only the glyphs actually used.
+
+**2. Generate `_static/scripts/fontawesome-user-icons.js`** — a small per-build JS file that calls `FontAwesome.library.add()` with SVG path data for every icon found in the build. This enables full SVG rendering (power transforms, layering, masking) for all icons, not just PST's own.
+
+Three sources are scanned:
+
+1. **Built HTML** — `fa-solid fa-bars` class patterns, resolved to codepoints and icon names via the compiled CSS `--fa` custom properties.
+2. **`_icons.scss`** — codepoints for admonition and pseudo-element icons that appear via CSS variables, not HTML classes. Icons whose comment ends with the icon name (e.g. `// fa-brands fa-github`) also get SVG rendering; others (e.g. `fa-xmark`, which is dynamically injected by JS) keep their woff2 glyph and render via webfont fallback.
+3. **User CSS** — raw FA codepoints found in any non-PST CSS file in `_static/`. These are added to the woff2 subset but not to the JS file (no icon name is available from a bare codepoint).
+
+The hook runs for HTML builds only and is a no-op if `fontawesome` is not installed. It does not run during `sphinx-autobuild` (live reload), so font sizes will be larger in that environment.
+
+The lookup table for SVG path data is `src/pydata_sphinx_theme/fa-icon-data.json`, generated at PST compile time from `@fortawesome/free-solid-svg-icons` and `@fortawesome/free-brands-svg-icons`. It ships with the package and is never sent to the browser. FA Pro icons are not in this table and fall back to webfont rendering.
+
 ## Jinja macros
 
 Our Webpack build generates a collection of [Jinja macros](https://jinja.palletsprojects.com/en/stable/templates/) in the `static/webpack-macros.html` file.

@@ -29,6 +29,7 @@
   {{ _webpack.head_pre_assets() }}
   {{- css() }}
   {{ _webpack.head_js_preload() }}
+  <script defer src="{{ pathto('_static/scripts/fontawesome-user-icons.js', 1) }}"></script>
 {%- endblock css %}
 {%- block extrahead %}
   <meta name="viewport" content="width=device-width, initial-scale=1"/>

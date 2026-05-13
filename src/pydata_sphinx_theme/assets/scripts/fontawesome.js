@@ -1,4 +1,7 @@
-// TODO: @trallard might end up moving this to the main JS file
-// Define the custom behavior of the page
+import { dom, library } from "@fortawesome/fontawesome-svg-core";
 
-import "@fortawesome/fontawesome-free/js/all.min.js";
+dom.watch();
+
+// Expose globally so user scripts (custom-icons.js) and the
+// generated fontawesome-user-icons.js can call library.add / dom.i2svg.
+window.FontAwesome = { dom, library };

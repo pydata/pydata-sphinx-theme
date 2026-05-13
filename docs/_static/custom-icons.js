@@ -28,3 +28,4 @@ FontAwesome.library.add(
     ],
   },
 );
+FontAwesome.dom.i2svg();
