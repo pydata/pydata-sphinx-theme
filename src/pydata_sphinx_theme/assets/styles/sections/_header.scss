@@ -5,8 +5,8 @@
 
 // Styling for the Icon links can be found in components/_icon-links.scss
 
-// A wrapper used when `sticky_version_warning_banner` is enabled. It pins the
-// announcement/version-warning banners and the navbar at the top of the viewport.
+// A wrapper used when `sticky_banners` is enabled. It pins the announcement /
+// version-warning banners and the navbar at the top of the viewport.
 .pst-sticky-header {
   position: sticky;
   top: 0;
