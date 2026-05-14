@@ -4,6 +4,7 @@ from pydata_sphinx_theme.fontawesome import (
     build_css_icon_map,
     collect_html_glyphs,
     collect_scss_glyphs,
+    collect_user_css_glyphs,
     subset_font,
 )
 
@@ -34,6 +35,17 @@ def test_collect_html_glyphs_finds_classes(tmp_path):
     assert "f09b" in glyphs["brands"]
 
 
+def test_collect_html_glyphs_finds_short_prefix_classes(tmp_path):
+    """sphinx-design short prefixes (fab, fas) are mapped to the correct family."""
+    (tmp_path / "page.html").write_text(
+        '<span class="fab fa-github"></span><span class="fas fa-bars"></span>'
+    )
+    icon_map = {"fa-github": "f09b", "fa-bars": "f0c9"}
+    glyphs = collect_html_glyphs(icon_map, tmp_path)
+    assert "f09b" in glyphs["brands"]
+    assert "f0c9" in glyphs["solid"]
+
+
 def test_collect_html_glyphs_ignores_unknown_icons(tmp_path):
     """Icons not present in the CSS map produce no codepoints."""
     (tmp_path / "page.html").write_text('<i class="fa-solid fa-does-not-exist"></i>')
@@ -49,6 +61,27 @@ def test_collect_scss_glyphs_partitions_by_family():
     # brands: github and gitlab icons are defined with fa-brands comments
     assert "f09b" in glyphs["brands"]
     assert "f296" in glyphs["brands"]
+
+
+def test_collect_user_css_glyphs_finds_codepoints(tmp_path):
+    """Codepoints in user CSS are returned, PST and vendor CSS are skipped."""
+    static = tmp_path / "_static"
+    (static / "styles").mkdir(parents=True)
+    (static / "vendor" / "fontawesome").mkdir(parents=True)
+
+    # user CSS
+    (static / "custom.css").write_text('html { --my-icon: "\\f999"; }')
+    # our CSS
+    (static / "styles" / "pydata-sphinx-theme.css").write_text(
+        'html { --pst: "\\faaa"; }'
+    )
+    # vendor FA CSS
+    (static / "vendor" / "fontawesome" / "all.css").write_text('.x { --fa: "\\fbbb"; }')
+
+    codepoints = collect_user_css_glyphs(tmp_path)
+    assert "f999" in codepoints
+    assert "faaa" not in codepoints
+    assert "fbbb" not in codepoints
 
 
 def test_subset_font_skips_missing_file(tmp_path):

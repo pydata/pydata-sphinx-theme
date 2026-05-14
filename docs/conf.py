@@ -299,6 +299,7 @@ autoapi_dirs = [_autoapi_source]
 autoapi_keep_files = True
 autoapi_root = "api"
 autoapi_member_order = "groupwise"
+autoapi_ignore = ["*/fontawesome.py"]
 
 # -- Warnings / Nitpicky -------------------------------------------------------
 

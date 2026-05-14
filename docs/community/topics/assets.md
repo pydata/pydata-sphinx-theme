@@ -48,14 +48,9 @@ the only `vendored` font.
 
 ### Font subsetting
 
-The full FontAwesome woff2 files are over 100kb each. After `sphinx-build`, `docs/scripts/subset_fonts.py` rewrites them in-place to keep only the glyphs actually used in the built HTML. This runs automatically in the `docs` and `docs-dev` tox environments.
+The theme registers a `build-finished` Sphinx hook (`pydata_sphinx_theme.fontawesome.subset_all`) that rewrites the woff2 files in-place after every `sphinx-build`.
 
-Two sources are scanned to collect used glyphs:
-
-1. **HTML class names** — `fa-solid fa-bars` patterns in the built HTML, resolved to codepoints via the compiled CSS (`--fa` custom properties).
-2. **`_icons.scss`** — raw codepoints for admonition and UI icons that are applied via CSS variables and never appear as HTML class names.
-
-The script does not run during `sphinx-autobuild` (live reload), so font sizes will be larger in that environment.
+See {ref}`fa-subsetting` in the user guide for details.
 
 ## Jinja macros
 
