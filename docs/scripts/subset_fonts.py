@@ -1,9 +1,9 @@
-"""Subset FontAwesome woff2 files to only the glyphs used in the built docs.
-Avoids loading a >1MB fontawesome font every time.
+r"""Subset FontAwesome woff2 files to only the glyphs used in the built docs.
+Saves ~100kb per font file.
 
 Glyph sources:
-1. HTML class names (fa-solid fa-bars) → codepoint from compiled CSS --fa var
-2. Raw codepoints in _icons.scss (--pst-icon-*: "\\fXXX") → family from inline comment
+1. HTML class names (fa-solid fa-bars)
+2. Raw codepoints in _icons.scss (--pst-icon-*: "\fXXX")
 """
 
 import re
@@ -32,10 +32,10 @@ PREFIX_TO_FAMILY = {"fa-solid": "solid", "fa-brands": "brands"}
 
 
 def build_css_icon_map(css: str) -> dict[str, str]:
-    """Return {icon-name: codepoint} from the compiled FA CSS.
+    r"""Return {icon-name: codepoint} from the compiled FA CSS.
 
     FA7 stores codepoints as --fa custom properties:
-        .fa-bars,.fa-navicon{--fa:"\\f0c9"}
+        .fa-bars,.fa-navicon{--fa:"\f0c9"}
     Family is not in the icon rule — it comes from the HTML prefix class.
     """
     icon_map: dict[str, str] = {}
@@ -61,14 +61,14 @@ def collect_html_glyphs(
 
 
 def collect_scss_glyphs() -> dict[str, set[str]]:
-    """Extract codepoints from _icons.scss, partitioned by font family.
+    r"""Extract codepoints from _icons.scss, partitioned by font family.
 
     Each line has an inline comment identifying the family, e.g.:
-        --pst-icon-github: "\\f09b"; // fa-brands fa-github
+        --pst-icon-github: "\f09b"; // fa-brands fa-github
     Lines without a recognisable prefix default to solid.
     """
     result: dict[str, set[str]] = {family: set() for family in FONT_FILES}
-    for line in ICONS_SCSS.read_text().splitlines():
+    for line in ICONS_SCSS.read_text(encoding="utf-8").splitlines():
         match = re.search(r'"\\([0-9a-fA-F]+)"', line)
         if not match:
             continue
@@ -83,6 +83,7 @@ def collect_scss_glyphs() -> dict[str, set[str]]:
 
 
 def subset_font(font_path: Path, codepoints: set[str]) -> None:
+    """Subset a woff2 font file in-place to only the given codepoints."""
     if not codepoints or not font_path.exists():
         return
     before = font_path.stat().st_size
@@ -93,13 +94,14 @@ def subset_font(font_path: Path, codepoints: set[str]) -> None:
     subsetter.subset(font)
     font.save(str(font_path))
     after = font_path.stat().st_size
+    kept = len(codepoints)
     print(
-        f"  {font_path.name}: {before / 1024:.1f} KB → {after / 1024:.1f} KB ({len(codepoints)} glyphs)"
+        f"  {font_path.name}:{before / 1024:.1f}KB→{after / 1024:.1f}KB ({kept} glyphs)"
     )
 
 
 if __name__ == "__main__":
-    css = CSS_FILE.read_text()
+    css = CSS_FILE.read_text(encoding="utf-8")
     icon_map = build_css_icon_map(css)
     glyphs = collect_html_glyphs(icon_map)
     for family, codepoints in collect_scss_glyphs().items():
