@@ -1,5 +1,4 @@
 r"""Subset FontAwesome woff2 files to only the glyphs used in the built docs.
-Saves ~100kb per font file.
 
 Glyph sources:
 1. HTML class names (fa-solid fa-bars)
@@ -7,7 +6,6 @@ Glyph sources:
 """
 
 import re
-import sys
 
 from pathlib import Path
 
@@ -15,20 +13,14 @@ from fontTools.subset import Options, Subsetter
 from fontTools.ttLib import TTFont
 
 
-BUILD_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("docs/_build/html")
-FONTS_DIR = BUILD_DIR / "_static/vendor/fontawesome/webfonts"
-CSS_FILE = BUILD_DIR / "_static/styles/pydata-sphinx-theme.css"
-ICONS_SCSS = (
-    Path(__file__).parents[2]
-    / "src/pydata_sphinx_theme/assets/styles/variables/_icons.scss"
-)
+_ICONS_SCSS = Path(__file__).parent / "assets" / "styles" / "variables" / "_icons.scss"
 
-FONT_FILES = {
-    "solid": FONTS_DIR / "fa-solid-900.woff2",
-    "brands": FONTS_DIR / "fa-brands-400.woff2",
+_FONT_FILES = {
+    "solid": "fa-solid-900.woff2",
+    "brands": "fa-brands-400.woff2",
 }
 
-PREFIX_TO_FAMILY = {"fa-solid": "solid", "fa-brands": "brands"}
+_PREFIX_TO_FAMILY = {"fa-solid": "solid", "fa-brands": "brands"}
 
 
 def build_css_icon_map(css: str) -> dict[str, str]:
@@ -45,17 +37,17 @@ def build_css_icon_map(css: str) -> dict[str, str]:
 
 
 def collect_html_glyphs(
-    icon_map: dict[str, str], build_dir: Path = BUILD_DIR
+    icon_map: dict[str, str], build_dir: Path
 ) -> dict[str, set[str]]:
     """Scan built HTML for FA class usage, return {family: {codepoints}}."""
-    used: dict[str, set[str]] = {family: set() for family in FONT_FILES}
+    used: dict[str, set[str]] = {family: set() for family in _FONT_FILES}
     pattern = re.compile(r'class="[^"]*?(fa-(?:solid|brands|regular))\s+(fa-[\w-]+)')
 
     for html_file in build_dir.rglob("*.html"):
         for match in pattern.finditer(html_file.read_text(errors="ignore")):
             prefix, icon = match.group(1), match.group(2)
             if icon in icon_map:
-                used[PREFIX_TO_FAMILY[prefix]].add(icon_map[icon])
+                used[_PREFIX_TO_FAMILY[prefix]].add(icon_map[icon])
 
     return used
 
@@ -67,22 +59,22 @@ def collect_scss_glyphs() -> dict[str, set[str]]:
         --pst-icon-github: "\f09b"; // fa-brands fa-github
     Lines without a recognisable prefix default to solid.
     """
-    result: dict[str, set[str]] = {family: set() for family in FONT_FILES}
-    for line in ICONS_SCSS.read_text(encoding="utf-8").splitlines():
+    result: dict[str, set[str]] = {family: set() for family in _FONT_FILES}
+    for line in _ICONS_SCSS.read_text(encoding="utf-8").splitlines():
         match = re.search(r'"\\([0-9a-fA-F]+)"', line)
         if not match:
             continue
         codepoint = match.group(1)
         comment = line.split("//", 1)[1] if "//" in line else ""
         family = next(
-            (fam for prefix, fam in PREFIX_TO_FAMILY.items() if prefix in comment),
+            (fam for prefix, fam in _PREFIX_TO_FAMILY.items() if prefix in comment),
             "solid",
         )
         result[family].add(codepoint)
     return result
 
 
-def subset_font(font_path: Path, codepoints: set[str]) -> None:
+def _subset_font(font_path: Path, codepoints: set[str]) -> None:
     """Subset a woff2 font file in-place to only the given codepoints."""
     if not codepoints or not font_path.exists():
         return
@@ -95,18 +87,29 @@ def subset_font(font_path: Path, codepoints: set[str]) -> None:
     font.save(str(font_path))
     after = font_path.stat().st_size
     kept = len(codepoints)
-    print(
-        f"  {font_path.name}:{before / 1024:.1f}KB→{after / 1024:.1f}KB ({kept} glyphs)"
-    )
+    saved = f"{before / 1024:.1f} KB → {after / 1024:.1f} KB ({kept} glyphs)"
+    print(f"  {font_path.name}: {saved}")
 
 
-if __name__ == "__main__":
-    css = CSS_FILE.read_text(encoding="utf-8")
+def subset_font(font_path: Path, codepoints: set[str]) -> None:
+    """Subset a woff2 font file in-place to only the given codepoints."""
+    _subset_font(font_path, codepoints)
+
+
+def subset_all(build_dir: Path) -> None:
+    """Subset all FA woff2 fonts in *build_dir* to glyphs actually used."""
+    fonts_dir = build_dir / "_static" / "vendor" / "fontawesome" / "webfonts"
+    css_file = build_dir / "_static" / "styles" / "pydata-sphinx-theme.css"
+
+    if not css_file.exists():
+        return
+
+    css = css_file.read_text(encoding="utf-8")
     icon_map = build_css_icon_map(css)
-    glyphs = collect_html_glyphs(icon_map)
+    glyphs = collect_html_glyphs(icon_map, build_dir)
     for family, codepoints in collect_scss_glyphs().items():
         glyphs[family] |= codepoints
 
     print("Subsetting FontAwesome fonts...")
-    for family, codepoints in glyphs.items():
-        subset_font(FONT_FILES[family], codepoints)
+    for family, filename in _FONT_FILES.items():
+        _subset_font(fonts_dir / filename, glyphs[family])

@@ -1287,11 +1287,10 @@ def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
 
 
 def test_subset_fonts_reduces_size(sphinx_build_factory) -> None:
-    """subset_fonts.py must shrink font files while keeping used glyphs intact."""
-    import subprocess
-    import sys
-
+    """build-finished hook must shrink font files while keeping used glyphs intact."""
     from fontTools.ttLib import TTFont
+
+    import pydata_sphinx_theme
 
     confoverrides = {
         "html_theme_options": {
@@ -1309,23 +1308,23 @@ def test_subset_fonts_reduces_size(sphinx_build_factory) -> None:
             ]
         }
     }
+
+    # Original (unsubsetted) sizes from the installed theme package
+    pkg_fonts = (
+        Path(pydata_sphinx_theme.__file__).parent
+        / "theme/pydata_sphinx_theme/static/vendor/fontawesome/webfonts"
+    )
+    solid_orig = (pkg_fonts / "fa-solid-900.woff2").stat().st_size
+    brands_orig = (pkg_fonts / "fa-brands-400.woff2").stat().st_size
+
     build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     outdir = build.outdir
 
-    fonts_path = outdir / "_static/vendor/fontawesome/webfonts"
+    solid = outdir / "_static/vendor/fontawesome/webfonts/fa-solid-900.woff2"
+    brands = outdir / "_static/vendor/fontawesome/webfonts/fa-brands-400.woff2"
 
-    solid = fonts_path / "fa-solid-900.woff2"
-    brands = fonts_path / "fa-brands-400.woff2"
-    before_solid = solid.stat().st_size
-    before_brands = brands.stat().st_size
-
-    subprocess.run(
-        [sys.executable, "docs/scripts/subset_fonts.py", str(outdir)],
-        check=True,
-    )
-
-    assert solid.stat().st_size < before_solid
-    assert brands.stat().st_size < before_brands
+    assert solid.stat().st_size < solid_orig
+    assert brands.stat().st_size < brands_orig
 
     solid_cmap = TTFont(str(solid)).getBestCmap()
     brands_cmap = TTFont(str(brands)).getBestCmap()

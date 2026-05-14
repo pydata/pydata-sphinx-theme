@@ -1,6 +1,6 @@
 """Tests for docs/scripts/subset_fonts.py."""
 
-from docs.scripts.subset_fonts import (
+from pydata_sphinx_theme.fontawesome import (
     build_css_icon_map,
     collect_html_glyphs,
     collect_scss_glyphs,
