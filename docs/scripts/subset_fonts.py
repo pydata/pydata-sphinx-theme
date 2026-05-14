@@ -25,10 +25,9 @@ ICONS_SCSS = (
 FONT_FILES = {
     "solid": FONTS_DIR / "fa-solid-900.woff2",
     "brands": FONTS_DIR / "fa-brands-400.woff2",
-    "regular": FONTS_DIR / "fa-regular-400.woff2",
 }
 
-PREFIX_TO_FAMILY = {"fa-solid": "solid", "fa-brands": "brands", "fa-regular": "regular"}
+PREFIX_TO_FAMILY = {"fa-solid": "solid", "fa-brands": "brands"}
 
 
 def build_css_icon_map(css: str) -> dict[str, str]:
