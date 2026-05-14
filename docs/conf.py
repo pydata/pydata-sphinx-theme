@@ -201,6 +201,8 @@ html_theme_options = {
     # "show_nav_level": 2,
     "announcement": "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html",
     "show_version_warning_banner": True,
+    # Temporary for testing. TODO remove before merging
+    "sticky_version_warning_banner": True,
     "navbar_center": ["version-switcher", "navbar-nav"],
     # "navbar_start": ["navbar-logo"],
     # "navbar_end": ["theme-switcher", "navbar-icon-links"],
