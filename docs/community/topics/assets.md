@@ -48,7 +48,7 @@ the only `vendored` font.
 
 ### Font subsetting
 
-The full FontAwesome woff2 files are over 400kb each. After `sphinx-build`, `docs/scripts/subset_fonts.py` rewrites them in-place to keep only the glyphs actually used in the built HTML. This runs automatically in the `docs` and `docs-dev` tox environments.
+The full FontAwesome woff2 files are over 100kb each. After `sphinx-build`, `docs/scripts/subset_fonts.py` rewrites them in-place to keep only the glyphs actually used in the built HTML. This runs automatically in the `docs` and `docs-dev` tox environments.
 
 Two sources are scanned to collect used glyphs:
 
