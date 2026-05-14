@@ -11,7 +11,8 @@ import sys
 
 from pathlib import Path
 
-from fontTools.subset import main as pyftsubset
+from fontTools.subset import Options, Subsetter
+from fontTools.ttLib import TTFont
 
 
 BUILD_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("docs/_build/html")
@@ -84,16 +85,13 @@ def collect_scss_glyphs() -> dict[str, set[str]]:
 def subset_font(font_path: Path, codepoints: set[str]) -> None:
     if not codepoints or not font_path.exists():
         return
-    unicodes = ",".join(f"U+{cp.upper()}" for cp in codepoints)
     before = font_path.stat().st_size
-    pyftsubset(
-        [
-            str(font_path),
-            f"--unicodes={unicodes}",
-            "--flavor=woff2",
-            f"--output-file={font_path}",
-        ]
-    )
+    font = TTFont(str(font_path))
+    options = Options(flavor="woff2")
+    subsetter = Subsetter(options=options)
+    subsetter.populate(unicodes=[int(cp, 16) for cp in codepoints])
+    subsetter.subset(font)
+    font.save(str(font_path))
     after = font_path.stat().st_size
     print(
         f"  {font_path.name}: {before / 1024:.1f} KB → {after / 1024:.1f} KB ({len(codepoints)} glyphs)"
