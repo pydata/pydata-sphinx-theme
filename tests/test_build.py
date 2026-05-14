@@ -352,12 +352,12 @@ def test_remote_announcement_banner(sphinx_build_factory) -> None:
     assert "pst-async-banner-revealer" in banner.parent["class"]
 
 
-def test_sticky_version_warning_banner_on(sphinx_build_factory) -> None:
+def test_sticky_banners_on(sphinx_build_factory) -> None:
     """When the option is True, the banner and the navbar are wrapped in a
     sticky container.
     """
     confoverrides = {
-        "html_theme_options.sticky_version_warning_banner": True,
+        "html_theme_options.sticky_banners": True,
     }
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     index_html = sphinx_build.html_tree("index.html")
@@ -369,7 +369,7 @@ def test_sticky_version_warning_banner_on(sphinx_build_factory) -> None:
     assert wrapper.find(id="pst-header") is not None
 
 
-def test_sticky_version_warning_banner_default_off(sphinx_build_factory) -> None:
+def test_sticky_banners_default_off(sphinx_build_factory) -> None:
     """The sticky class is absent by default (no behavior change for existing users)."""
     sphinx_build = sphinx_build_factory("base").build()
     index_html = sphinx_build.html_tree("index.html")
