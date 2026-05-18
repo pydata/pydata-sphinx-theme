@@ -81,6 +81,11 @@
   {%- endif %}
   {%- endblock search_dialog %}
 
+  {%- set pst_stick_banners = theme_sticky_banners | tobool -%}
+  {%- if pst_stick_banners %}
+  <div class="pst-sticky-header">
+  {%- endif %}
+
   {% include "sections/announcement.html" %}
 
   {% block docs_navbar %}
@@ -88,6 +93,10 @@
       {%- include "sections/header.html" %}
     </header>
   {% endblock docs_navbar %}
+
+  {%- if pst_stick_banners %}
+  </div>
+  {%- endif %}
 
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">

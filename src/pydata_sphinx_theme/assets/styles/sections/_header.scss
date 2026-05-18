@@ -5,6 +5,20 @@
 
 // Styling for the Icon links can be found in components/_icon-links.scss
 
+// A wrapper used when `sticky_banners` is enabled. It pins the announcement /
+// version-warning banners and the navbar at the top of the viewport.
+.pst-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: $zindex-fixed;
+
+  // The .bd-header (top navbar) inside the wrapper must not be sticky on its
+  // own, as .pst-sticky-header above is already sticky.
+  .bd-header {
+    position: static;
+  }
+}
+
 // If we want the shadow to only point downward in the future, set
 // box-shadow to: 0 0.125rem 0.25rem -0.125rem rgba(0, 0, 0, 0.11);
 .bd-header {
