@@ -48,7 +48,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@178df7a9d69695be4e49fa56822d76b048977387
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           pandoc: true
