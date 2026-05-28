@@ -777,23 +777,53 @@ def test_analytics(sphinx_build_factory, provider, tags) -> None:
     #   1. Set consent (first gtag).
     #   2. Load the library.
     #   3. Initialize the library (second gtag).
-    first_gtag_found = False
-    second_gtag_found = False
-    for script in index_html.select("script"):
-        if script.string and tags[0] in script.string:
-            # If the tag is found, make sure the consent mode is also there
-            if tags[0] == "gtag" and not first_gtag_found:
-                assert "gtag('consent', 'default', {" in script.string
-                assert "'ad_storage': 'denied'," in script.string
-                assert "'ad_user_data': 'denied'," in script.string
-                assert "'ad_personalization': 'denied'," in script.string
-                assert "'analytics_storage': 'denied'" in script.string
-                first_gtag_found = True
-            elif script.string and tags[0] == "gtag" and first_gtag_found:
-                assert tags[1] in script.string
-                second_gtag_found = True
-    assert first_gtag_found is True
-    assert second_gtag_found is True
+
+    inline_scripts = [s.string for s in index_html.select("script") if s.string]
+
+    # 1. Set consent (first gtag)
+    consent_scripts = [s for s in inline_scripts if f"{tags[0]}('consent'" in s]
+    assert len(consent_scripts) == 1, (
+        "Expected exactly 1 consent script, "
+        f"but found {len(consent_scripts)}: {consent_scripts}"
+    )
+    consent_script = consent_scripts[0]
+    assert "window.dataLayer = window.dataLayer || [];" in consent_script
+    assert (
+        f"function {tags[0]}(){{ dataLayer.push(arguments); }}" in consent_script
+        or f"function {tags[0]}(){{dataLayer.push(arguments);}}" in consent_script
+    )
+    assert f"{tags[0]}('consent', 'default', {{" in consent_script
+    assert "'ad_storage': 'denied'," in consent_script
+    assert "'ad_user_data': 'denied'," in consent_script
+    assert "'ad_personalization': 'denied'," in consent_script
+    assert "'analytics_storage': 'denied'" in consent_script
+
+    # 2. Load the library (external script)
+    external_scripts = [s for s in index_html.select("script") if s.attrs.get("src")]
+    expected_src = f"https://www.googletagmanager.com/gtag/js?id={tags[1]}"
+    matching_external = [
+        s for s in external_scripts if s.attrs.get("src") == expected_src
+    ]
+    assert len(matching_external) == 1, (
+        f"Expected exactly 1 external script loading {expected_src}, "
+        f"but found {len(matching_external)}"
+    )
+    assert matching_external[0].attrs.get("async") == "async"
+
+    # 3. Initialize the library (second gtag)
+    init_scripts = [
+        s for s in inline_scripts if f"{tags[0]}('config', '{tags[1]}')" in s
+    ]
+    assert len(init_scripts) == 1, (
+        f"Expected exactly 1 init script, found {len(init_scripts)}: {init_scripts}"
+    )
+    init_script = init_scripts[0]
+    assert "window.dataLayer = window.dataLayer || [];" in init_script
+    assert (
+        f"function {tags[0]}(){{ dataLayer.push(arguments); }}" in init_script
+        or f"function {tags[0]}(){{dataLayer.push(arguments);}}" in init_script
+    )
+    assert f"{tags[0]}('js', new Date());" in init_script
 
 
 def test_plausible(sphinx_build_factory) -> None:
