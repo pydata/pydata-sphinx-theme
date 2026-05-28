@@ -144,9 +144,9 @@ def update_config(app):
 
             # Link the JS files
             # Ref: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced#implementation_example
-            app.add_js_file(None, body=gid_defaults)
+            app.add_js_file("", body=gid_defaults)
             app.add_js_file(gid_js_path, loading_method="async")
-            app.add_js_file(None, body=gid_script)
+            app.add_js_file("", body=gid_script)
 
     # Update ABlog configuration default if present
     fa_provided = utils.config_provided_by_user(app, "fontawesome_included")
