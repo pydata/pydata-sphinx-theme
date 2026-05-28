@@ -780,7 +780,7 @@ def test_analytics(sphinx_build_factory, provider, tags) -> None:
     first_gtag_found = False
     second_gtag_found = False
     for script in index_html.select("script"):
-        if script.string and tags[0] in script.string and tags[1] in script.string:
+        if script.string and tags[0] in script.string:
             # If the tag is found, make sure the consent mode is also there
             if tags[0] == "gtag" and not first_gtag_found:
                 assert "gtag('consent', 'default', {" in script.string
@@ -790,6 +790,7 @@ def test_analytics(sphinx_build_factory, provider, tags) -> None:
                 assert "'analytics_storage': 'denied'" in script.string
                 first_gtag_found = True
             elif script.string and tags[0] == "gtag" and first_gtag_found:
+                assert tags[1] in script.string
                 second_gtag_found = True
     assert first_gtag_found is True
     assert second_gtag_found is True
