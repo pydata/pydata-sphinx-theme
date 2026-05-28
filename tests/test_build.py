@@ -770,19 +770,29 @@ def test_analytics(sphinx_build_factory, provider, tags) -> None:
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
 
-    # Search all the scripts and make sure one of them has the Google tag in there
-    tags_found = False
+    # Search all the scripts and make sure the Google tag in there.
+    # To match
+    # https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced#implementation_example
+    # there are three script tags:
+    #   1. Set consent (first gtag).
+    #   2. Load the library.
+    #   3. Initialize the library (second gtag).
+    first_gtag_found = False
+    second_gtag_found = False
     for script in index_html.select("script"):
         if script.string and tags[0] in script.string and tags[1] in script.string:
             # If the tag is found, make sure the consent mode is also there
-            if tags[0] == "gtag":
+            if tags[0] == "gtag" and not first_gtag_found:
                 assert "gtag('consent', 'default', {" in script.string
                 assert "'ad_storage': 'denied'," in script.string
                 assert "'ad_user_data': 'denied'," in script.string
                 assert "'ad_personalization': 'denied'," in script.string
                 assert "'analytics_storage': 'denied'" in script.string
-            tags_found = True
-    assert tags_found is True
+                first_gtag_found = True
+            elif script.string and tags[0] == "gtag" and first_gtag_found:
+                second_gtag_found = True
+    assert first_gtag_found is True
+    assert second_gtag_found is True
 
 
 def test_plausible(sphinx_build_factory) -> None:
