@@ -58,27 +58,27 @@ function setTheme(mode) {
 }
 
 /**
- * Change the theme option order so that clicking on the btn is always a change
- * from "auto"
+ * Update the active dropdown item based on the current color mode.
  */
-function cycleMode() {
-  const defaultMode = document.documentElement.dataset.defaultMode || "auto";
-  const currentMode = localStorage.getItem("mode") || defaultMode;
-
-  var loopArray = (arr, current) => {
-    var nextPosition = arr.indexOf(current) + 1;
-    if (nextPosition === arr.length) {
-      nextPosition = 0;
+function updateColorModeDropdown(mode) {
+  const activeClass = "active";
+  document.querySelectorAll(".theme-change-button").forEach((el) => {
+    if (el.dataset.mode === mode) {
+      el.classList.add(activeClass);
+    } else {
+      el.classList.remove(activeClass);
     }
-    return arr[nextPosition];
-  };
+  });
+}
 
-  // make sure the next theme after auto is always a change
-  var modeList = prefersDark.matches
-    ? ["auto", "light", "dark"]
-    : ["auto", "dark", "light"];
-  var newMode = loopArray(modeList, currentMode);
-  setTheme(newMode);
+/**
+ * Change the color mode based on the clicked dropdown item.
+ */
+function changeColorMode(e) {
+  const btn = e.currentTarget;
+  const mode = btn.dataset.mode;
+  setTheme(mode);
+  updateColorModeDropdown(mode);
 }
 
 /**
@@ -87,11 +87,13 @@ function cycleMode() {
 function addModeListener() {
   // the theme was set a first time using the initial mini-script
   // running setMode will ensure the use of the dark mode if auto is selected
-  setTheme(document.documentElement.dataset.mode);
+  const mode = document.documentElement.dataset.mode;
+  setTheme(mode);
+  updateColorModeDropdown(mode);
 
-  // Attach event handlers for toggling themes colors
-  document.querySelectorAll(".theme-switch-button").forEach((el) => {
-    el.addEventListener("click", cycleMode);
+  // Attach click handlers to color mode dropdown items
+  document.querySelectorAll(".theme-change-button").forEach((el) => {
+    el.addEventListener("click", changeColorMode);
   });
 }
 
@@ -185,6 +187,10 @@ var toggleSearchField = () => {
   // if the input field is the hidden one (the one associated with the
   // search button) then toggle the button state (to show/hide the field)
   const searchDialog = document.getElementById("pst-search-dialog");
+  if (!searchDialog) {
+    // Search dialog was disabled via disable_search theme option; nothing to do.
+    return;
+  }
   const hiddenInput = searchDialog.querySelector("input");
   if (input === hiddenInput) {
     if (searchDialog.open) {
@@ -301,6 +307,10 @@ var setupSearchButtons = () => {
 
   // If user clicks outside the search modal dialog, then close it.
   const searchDialog = document.getElementById("pst-search-dialog");
+  if (!searchDialog) {
+    // Search dialog was disabled via disable_search theme option; nothing to do.
+    return;
+  }
   // Dialog click handler includes clicks on dialog ::backdrop.
   searchDialog.addEventListener("click", closeDialogOnBackdropClick);
 };
@@ -425,10 +435,7 @@ var resetSearchAsYouTypeResults = () => {
   modal.appendChild(results);
 
   // Get the relative path back to the root of the website.
-  const root =
-    "URL_ROOT" in DOCUMENTATION_OPTIONS
-      ? DOCUMENTATION_OPTIONS.URL_ROOT // Sphinx v6 and earlier
-      : document.documentElement.dataset.content_root; // Sphinx v7 and later
+  const root = document.documentElement.dataset.content_root;
 
   // As Sphinx populates the search results, this observer makes sure that
   // each URL is correct (i.e. doesn't 404).
@@ -828,11 +835,25 @@ function setupMobileSidebarKeyboardHandlers() {
       event.preventDefault();
       event.stopPropagation();
 
+      // Save focus so we can restore it when the dialog closes
+      const previouslyFocused = document.activeElement;
+
       // When we open the dialog, we cut and paste the nodes and classes from
       // the widescreen sidebar into the dialog
       cutAndPasteNodesAndClasses(sidebar, dialog);
 
       dialog.showModal();
+
+      // Restore focus when dialog closes
+      dialog.addEventListener(
+        "close",
+        () => {
+          if (previouslyFocused && previouslyFocused.focus) {
+            previouslyFocused.focus();
+          }
+        },
+        { once: true },
+      );
     });
 
     // Listen for clicks on the backdrop in order to close the dialog

@@ -25,7 +25,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 
@@ -33,7 +33,7 @@ jobs:
         run: python -Im tox run -e docs-linkcheck
 
       - name: "Upload broken-links report"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: broken-links
           path: docs/_build/linkcheck/output.txt
@@ -47,7 +47,7 @@ jobs:
       issues: write
     steps:
       - name: "Create, update, or close link-check issue"
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           CONCLUSION: ${{ needs.link-check.result }}
           RUN_ID: ${{ github.run_id }}

@@ -51,7 +51,7 @@ jobs:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
             python-version: "3.10"
-            sphinx-version: "7.0"
+            sphinx-version: "8.0"
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
@@ -61,7 +61,7 @@ jobs:
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -92,7 +92,7 @@ jobs:
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@e8db643b990df73812cf9397bc0f8cfa1164e4d3
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 

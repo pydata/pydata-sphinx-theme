@@ -15,6 +15,14 @@ COMMON_CONF_OVERRIDES = dict(
 )
 
 
+def test_theme_loaded_as_extension(sphinx_build_factory) -> None:
+    """Theme must not crash when loaded via extensions= instead of html_theme=."""
+    sphinx_build = sphinx_build_factory(
+        "base", confoverrides={"extensions": ["pydata_sphinx_theme"]}
+    )
+    sphinx_build.build(no_warning=False)
+
+
 def test_build_html(sphinx_build_factory, file_regression) -> None:
     """Test building the base html template and config."""
     sphinx_build = sphinx_build_factory("base")
@@ -342,6 +350,32 @@ def test_remote_announcement_banner(sphinx_build_factory) -> None:
 
     # Remote announcement banner should be inside the async banner revealer
     assert "pst-async-banner-revealer" in banner.parent["class"]
+
+
+def test_sticky_banners_on(sphinx_build_factory) -> None:
+    """When the option is True, the banner and the navbar are wrapped in a
+    sticky container.
+    """
+    confoverrides = {
+        "html_theme_options.sticky_banners": True,
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    index_html = sphinx_build.html_tree("index.html")
+    wrappers = index_html.find_all(class_="pst-sticky-header")
+
+    assert len(wrappers) == 1
+    wrapper = wrappers[0]
+    assert wrapper.find(class_="pst-async-banner-revealer") is not None
+    assert wrapper.find(id="pst-header") is not None
+
+
+def test_sticky_banners_default_off(sphinx_build_factory) -> None:
+    """The sticky class is absent by default (no behavior change for existing users)."""
+    sphinx_build = sphinx_build_factory("base").build()
+    index_html = sphinx_build.html_tree("index.html")
+
+    assert not index_html.find_all(class_="pst-sticky-header")
+    assert len(index_html.find_all(class_="pst-async-banner-revealer")) == 1
 
 
 @pytest.mark.parametrize(
@@ -843,7 +877,9 @@ def test_version_switcher_error_states(
 def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
     """Regression test for the theme switcher button."""
     sphinx_build = sphinx_build_factory("base").build()
-    switcher = sphinx_build.html_tree("index.html").find(class_="theme-switch-button")
+    switcher = sphinx_build.html_tree("index.html").find(
+        class_="theme-switch-container"
+    )
     file_regression.check(
         switcher.prettify(), basename="navbar_theme", extension=".html"
     )

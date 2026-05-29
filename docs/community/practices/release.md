@@ -38,6 +38,12 @@ Follow these steps to make a release:
 - **Copy the [release checklist](https://github.com/pydata/pydata-sphinx-theme/blob/main/RELEASE.md) into a new issue**.
 - **Complete the checklist**. That's it!
 
+### Release candidates
+
+If you choose to add the release candidate to the switcher.json, it will not be deployed by default on Read the Docs and cause a 404.
+
+To deploy it, go to the [RTD panel](https://app.readthedocs.org/projects/pydata-sphinx-theme/), Add version, select the release candidate tag and set it to Hidden and Active.
+
 ## Choosing a version increment
 
 We use [semantic versioning](https://semver.org/) to decide whether it's a major, minor, or patch bump. Before we have released `1.0`, treat minor versions as breaking releases, and patch versions as feature / patch releases. **If this is a release candidate**, tag it like `0.1rc1`.
