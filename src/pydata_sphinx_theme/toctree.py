@@ -7,8 +7,6 @@ from textwrap import dedent
 from typing import Iterator, List, Tuple, Union
 from urllib.parse import urlparse
 
-import sphinx
-
 from bs4 import BeautifulSoup
 from docutils import nodes
 from docutils.nodes import Node
@@ -40,12 +38,9 @@ def _get_ancestor_pagename(app: Sphinx, pagename: str, startdepth: int) -> str:
     global root.
     """
     toctree = TocTree(app.env)
-    if sphinx.version_info[:2] >= (7, 2):
-        from sphinx.environment.adapters.toctree import _get_toctree_ancestors
+    from sphinx.environment.adapters.toctree import _get_toctree_ancestors
 
-        ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
-    else:
-        ancestors = toctree.get_toctree_ancestors(pagename)
+    ancestors = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
     try:
         out = ancestors[-startdepth]
     except IndexError:
@@ -126,19 +121,14 @@ def add_toctree_functions(
         should make it slightly easier to generate different html snippet for
         sidebar or navbar.
         """
-        toctree = TocTree(app.env)
-
         # Find the active header navigation item so we decide whether to highlight
         # Will be empty if there is no active page (root_doc, or genindex etc)
-        if sphinx.version_info[:2] >= (7, 2):
-            from sphinx.environment.adapters.toctree import _get_toctree_ancestors
+        from sphinx.environment.adapters.toctree import _get_toctree_ancestors
 
-            # NOTE: `env.toctree_includes` is a dict mapping pagenames to any (possibly
-            # hidden) TocTree directives on that page (i.e., the "child" pages nested
-            # under `pagename`).
-            header_pages = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
-        else:
-            header_pages = toctree.get_toctree_ancestors(pagename)
+        # NOTE: `env.toctree_includes` is a dict mapping pagenames to any (possibly
+        # hidden) TocTree directives on that page (i.e., the "child" pages nested
+        # under `pagename`).
+        header_pages = [*_get_toctree_ancestors(app.env.toctree_includes, pagename)]
         if header_pages:
             # The final list item will be the top-most ancestor
             active_header_page = header_pages[-1]

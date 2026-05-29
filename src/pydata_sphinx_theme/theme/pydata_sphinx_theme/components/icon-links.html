@@ -13,8 +13,20 @@
           {% set attributeString = attributeString | join(" ") -%}
           <a {{ attributeString }}>
             {%- if type == "fontawesome" -%}
+            {%- set icon_parts = icon.split() -%}
+            {%- if icon_parts[0] == "fa-custom" -%}
+            {#-
+              FA v7 no longer resolves custom icon prefixes from CSS class names alone.
+              We can keep the fa-custom class for DOM discovery and add these
+              data-prefix/data-icon attributes to ensure the custom icon is rendered, and
+              that the prefix is resolved correctly. See the discussion at
+              https://github.com/pydata/pydata-sphinx-theme/pull/2370#discussion_r3178092050
+            -#}
+            <i class="{{ icon_parts[0] }} fa-lg" data-prefix="{{ icon_parts[0] }}" data-icon="{{ icon_parts[1][3:] }}" aria-hidden="true"></i>
+            {%- else -%}
             <i class="{{ icon }} fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">{{ name }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ name }}</span>
             {%- elif type == "local" -%}
             <img src="{{ pathto(icon, 1) }}" class="icon-link-image" alt="{{ name }}"/>
             {%- elif type == "url" -%}
