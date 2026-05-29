@@ -383,7 +383,6 @@ linkcheck_ignore = [
     "../examples/blog/index.html",
     # get a 403 on CI
     "https://canvas.workday.com/styles/tokens/type",
-    "https://unsplash.com/",
     r"https?://www.gnu.org/software/gettext/.*",
     r"https://www.npmjs.com/.*",
     r"https://sass-lang.com/.*",
@@ -413,5 +412,5 @@ linkcheck_allowed_redirects = {
 
 # we have had issues with linkcheck timing and retries on www.gnu.org
 linkcheck_retries = 1
-linkcheck_timeout = 5
+linkcheck_timeout = 30
 linkcheck_report_timeouts_as_broken = True

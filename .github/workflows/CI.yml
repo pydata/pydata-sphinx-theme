@@ -50,7 +50,7 @@ jobs:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
             python-version: "3.10"
-            sphinx-version: "7.0"
+            sphinx-version: "8.0"
             # newest Python version with the newest Sphinx version
           - os: ubuntu-latest
             python-version: "3.14"
@@ -68,19 +68,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
 
       - name: "Cache Playwright browsers 🎭"
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: |
             ~/.cache/ms-playwright
@@ -104,7 +104,7 @@ jobs:
 
       - name: "Upload coverage data to GH artifacts 📤"
         if: matrix.python-version == '3.14' && matrix.os == 'ubuntu-latest' && matrix.sphinx-version == 'dev'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: coverage-data-${{ matrix.python-version }}
           path: .coverage
@@ -112,7 +112,7 @@ jobs:
           include-hidden-files: true
 
       - name: "Upload Playwright traces, if any 🐾"
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v4.6
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.7.0.1
         if: ${{ failure() }}
         with:
           name: playwright-traces-${{ matrix.os }}-${{ matrix.python-version }}
@@ -129,19 +129,19 @@ jobs:
       pull-requests: write
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 
       - run: python -Im pip install --upgrade coverage[toml]
 
       - name: "Download coverage data 📥"
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           pattern: coverage-data-*
           merge-multiple: true
@@ -159,7 +159,7 @@ jobs:
           python -Im coverage report --fail-under=80
 
       - name: "Upload HTML report if check failed 📤"
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: html-report
           path: htmlcov
@@ -167,13 +167,13 @@ jobs:
 
       # seems we need to call this from the main CI workflow first
       - name: "Coverage comment 💬"
-        uses: py-cov-action/python-coverage-comment-action@e623398c19eb3853a5572d4a516e10b15b5cefbc # 3.38.0
+        uses: py-cov-action/python-coverage-comment-action@63f52f4fbbffada6e8dee8ec432de7e01df9ba79 # 3.38.0
         id: coverage_comment
         with:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: "Store Pull Request comment to be posted 📤"
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
         with:
           # leave default names
@@ -185,12 +185,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           # 3.14 is not supported by py-spy yet
           python-version: "3.13"
@@ -201,7 +201,7 @@ jobs:
         continue-on-error: true
 
       - name: "Upload profiling data to GH artifacts 📤"
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: profile-results
           path: docbuild_profile.svg

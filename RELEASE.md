@@ -10,7 +10,7 @@ These steps should be taken in order to create a new release![^release-refs]
 **Double check for quality-control**
 
 - [ ] There are no [open issues with a `impact: block-release` label](https://github.com/pydata/pydata-sphinx-theme/labels/impact%3A%20block-release)
-- [ ] Check wether the localization files are up-to-date, or [open a PR to update them if needed](https://pydata-sphinx-theme.readthedocs.io/en/stable/community/topics/i18n.html#compiling-the-localization-files).
+- [ ] Check whether the localization files are up-to-date, or [open a PR to update them if needed](https://pydata-sphinx-theme.readthedocs.io/en/stable/community/topics/i18n.html#compiling-the-localization-files).
 
 **Prepare the codebase for a new version**
 
@@ -30,6 +30,7 @@ These steps should be taken in order to create a new release![^release-refs]
 - [ ] Confirm that the release completed
   - [The `publish` github action job](https://github.com/pydata/pydata-sphinx-theme/blob/main/.github/workflows/publish.yml#L31) has completed successfully in the [actions tab](https://github.com/pydata/pydata-sphinx-theme/actions).
   - [The PyPI version is updated](https://pypi.org/project/pydata-sphinx-theme/)
+- [ ] If it's a pre-release, activate it in RDT interface (Add version).
 - [ ] Hide the previous patch version build in the RDT interface if needed.
 - [ ] Open a new PR to bump the version to the next dev target (e.g. `0.2.1.dev0`) in [`__init__.py`](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/__init__.py#L16)
 - [ ] Celebrate, you're done!

@@ -20,7 +20,11 @@ def get_theme_options_dict(app: Sphinx) -> Dict[str, Any]:
     their ``conf.py``); sometimes that copy never occurs though which is why we
     check both.
     """
-    if hasattr(app.builder, "theme_options"):
+    if (
+        hasattr(app, "builder")
+        and app.builder is not None
+        and hasattr(app.builder, "theme_options")
+    ):
         return app.builder.theme_options
     elif hasattr(app.config, "html_theme_options"):
         return app.config.html_theme_options

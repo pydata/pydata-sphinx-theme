@@ -19,6 +19,7 @@ div.math {
 // Inline-only
 span.math {
   display: inline-flex;
+  align-items: baseline;
 }
 
 // Block-level only

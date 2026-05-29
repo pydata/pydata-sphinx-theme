@@ -23,19 +23,46 @@ function TriggerTooltip() {
   });
 }
 
+/**
+ * disable theme switch tooltip while the theme switch dropdown is open
+ */
+function setupThemeSwitchDropdownTooltip() {
+  const themeSwitchContainer = document.querySelector(
+    ".theme-switch-container",
+  );
+  if (!themeSwitchContainer) return;
+
+  const themeSwitchTooltip =
+    bootstrap.Tooltip.getInstance(themeSwitchContainer);
+  if (!themeSwitchTooltip) return;
+
+  themeSwitchContainer.addEventListener("show.bs.dropdown", () => {
+    themeSwitchTooltip.hide();
+    themeSwitchTooltip.disable();
+  });
+
+  themeSwitchContainer.addEventListener("hide.bs.dropdown", () => {
+    themeSwitchTooltip.enable();
+  });
+}
+
 /*******************************************************************************
  * back to top button
  */
 function backToTop() {
   var btn = document.getElementById("pst-back-to-top");
-  btn.addEventListener("click", function () {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  });
+  // Config allows button to be disabled, so check it exists
+  if (btn) {
+    btn.addEventListener("click", function () {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+  }
 }
 
 function showBackToTop() {
   var btn = document.getElementById("pst-back-to-top");
+  if (!btn) return;
   var header = document
     .getElementsByClassName("bd-header")[0]
     .getBoundingClientRect();
@@ -54,6 +81,7 @@ function showBackToTop() {
  */
 
 documentReady(TriggerTooltip);
+documentReady(setupThemeSwitchDropdownTooltip);
 documentReady(backToTop);
 documentReady(showBackToTop);
 

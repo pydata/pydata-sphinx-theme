@@ -25,13 +25,13 @@ jobs:
 
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -52,9 +52,12 @@ jobs:
           echo "PYTEST_ERRORS=$?" >> $GITHUB_ENV
 
       - name: "Build and inspect package 📦"
-        uses: hynek/build-and-inspect-python-package@c52c3a4710070b50470d903818a7b25115dcd076 # 2.13.0
+        uses: hynek/build-and-inspect-python-package@d44ca7d91762de7a7d5436ddae667c6da6d1c3df # 2.18.0
         if: matrix.python-version == '3.10'
         id: baipp
+        with:
+          # pydantic-core (via PyO3) does not yet support Python 3.14
+          python-version: "3.13"
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
         if: matrix.python-version == '3.10'

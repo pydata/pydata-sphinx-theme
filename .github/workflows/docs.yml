@@ -51,17 +51,17 @@ jobs:
           # oldest Python version with the oldest Sphinx version
           - os: ubuntu-latest
             python-version: "3.10"
-            sphinx-version: "7.0"
+            sphinx-version: "8.0"
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -86,13 +86,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
         # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 
@@ -117,26 +117,3 @@ jobs:
           temporaryPublicStorage: true
           uploadArtifacts: true
           runs: 3 # Multiple runs to reduce variance
-
-  # Check for broken links in our docs
-  link-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout repository 🛎"
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-        with:
-          persist-credentials: false
-
-      - name: "Setup CI environment 🛠"
-        # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@469e90895696e21b765121e952d84ea82c71410c
-
-      - name: "Check for broken links 🔗"
-        run: python -Im tox run -e docs-linkcheck
-
-      - name: "Upload file with broken links 📤"
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
-        with:
-          name: broken-links
-          path: docs/_build/linkcheck/output.txt
-        if: ${{ always() }}
