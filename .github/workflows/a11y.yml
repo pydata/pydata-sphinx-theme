@@ -48,7 +48,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@a4986faa4b8241e041634d39ca6ed0e30c175240
+        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           pandoc: true
@@ -59,7 +59,7 @@ jobs:
         run: python -Im tox run -e compile-assets,i18n-compile,py314-docs,a11y-tests-${{ matrix.browser }}
 
       - name: "Upload Playwright traces, if any 🐾"
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v4.7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.7.0.1
         if: ${{ failure() }}
         with:
           name: playwright-traces-${{ matrix.os }}-${{ matrix.browser }}
