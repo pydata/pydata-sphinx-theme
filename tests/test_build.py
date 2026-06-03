@@ -23,6 +23,20 @@ def test_theme_loaded_as_extension(sphinx_build_factory) -> None:
     sphinx_build.build(no_warning=False)
 
 
+def test_gettext_builder(sphinx_build_factory) -> None:
+    """Non-HTML builders (gettext) have no builder.theme, #2402."""
+    sphinx_build = sphinx_build_factory(
+        "base",
+        buildername="gettext",
+        confoverrides={
+            "extensions": ["pydata_sphinx_theme"],
+            "html_theme_options": {"shorten_urls": True},
+        },
+    )
+    sphinx_build.build(no_warning=False)
+    assert (sphinx_build.outdir / "index.pot").exists()
+
+
 def test_build_html(sphinx_build_factory, file_regression) -> None:
     """Test building the base html template and config."""
     sphinx_build = sphinx_build_factory("base")

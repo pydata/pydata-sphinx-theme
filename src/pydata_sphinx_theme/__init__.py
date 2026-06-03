@@ -294,6 +294,10 @@ def _fix_canonical_url(
 
 def add_shorten_xform(app: Sphinx) -> None:
     """Add the link shortening transform."""
+    # Non-HTML builders (e.g. sphinx-build -b gettext, MessageCatalogBuilder)
+    # have no theme
+    if not hasattr(app.builder, "theme"):
+        return
     theme_options = utils.get_theme_options_dict(app)
     theme_conf_options = app.builder.theme.get_options()
     if (theme_conf_options | theme_options).get("shorten_urls"):
