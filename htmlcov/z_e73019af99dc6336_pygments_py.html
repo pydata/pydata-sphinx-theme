@@ -3,21 +3,21 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Coverage for src/pydata_sphinx_theme/pygments.py: 95%</title>
-    <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
-    <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
-    <script src="coverage_html_cb_6fb7b396.js" defer></script>
+    <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
+    <link rel="stylesheet" href="style_cb_4667309f.css" type="text/css">
+    <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
 </head>
 <body class="pyfile">
 <header>
     <div class="content">
         <h1>
-            <span class="text">Coverage for </span><b>src/pydata_sphinx_theme/pygments.py</b>:
+            <span class="text">Coverage for </span><b>src<span class="sep">/</span>pydata_sphinx_theme<span class="sep">/</span>pygments.py</b>:
             <span class="pc_cov">95%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
             <label for="help_panel_state">
-                <img id="keyboard_icon" src="keybd_closed_cb_ce680311.png" alt="Show/hide keyboard shortcuts">
+                <img id="keyboard_icon" src="keybd_closed_cb_900cfef5.png" alt="Show/hide keyboard shortcuts">
             </label>
             <div id="help_panel">
                 <p class="legend">Shortcuts on this page</p>
@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_e73019af99dc6336_short_link_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-03-04 15:47 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.14.1">coverage.py v7.14.1</a>,
+            created at 2026-06-05 09:06 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -170,9 +170,9 @@
     <p class="pln"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">            <span class="com"># only warn if user asked for a highlight theme that we can't find</span>&nbsp;</span><span class="r"></span></p>
     <p class="par run show_par"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">            <span class="key">if</span> <span class="nam">style_name</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">87&#x202F;&#x219B;&#x202F;92</span><span class="annotate long">line 87 didn't jump to line 92 because the condition on line 87 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">                <span class="nam">warning</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">Highlighting style </span><span class="op">{</span><span class="nam">style_name</span><span class="op">}</span><span class="fst"> not found by pygments, </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">falling back to </span><span class="op">{</span><span class="nam">fallback</span><span class="op">}</span><span class="fst">.</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">                <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">Highlighting style </span><span class="op">{</span><span class="nam">style_name</span><span class="op">}</span><span class="fst"> not found by pygments, </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">falling back to </span><span class="op">{</span><span class="nam">fallback</span><span class="op">}</span><span class="fst">.</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">                <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t92" href="#t92">92</a></span><span class="t">            <span class="nam">style_name</span> <span class="op">=</span> <span class="nam">fallback</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">        <span class="com"># assign to the appropriate variable</span>&nbsp;</span><span class="r"></span></p>
@@ -183,8 +183,9 @@
     <p class="pln"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t100" href="#t100">100</a></span><span class="t">    <span class="com"># re-write pygments.css</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">    <span class="nam">pygments_css</span> <span class="op">=</span> <span class="nam">Path</span><span class="op">(</span><span class="nam">app</span><span class="op">.</span><span class="nam">builder</span><span class="op">.</span><span class="nam">outdir</span><span class="op">)</span> <span class="op">/</span> <span class="str">"_static"</span> <span class="op">/</span> <span class="str">"pygments.css"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">    <span class="key">with</span> <span class="nam">pygments_css</span><span class="op">.</span><span class="nam">open</span><span class="op">(</span><span class="str">"w"</span><span class="op">)</span> <span class="key">as</span> <span class="nam">f</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">        <span class="nam">f</span><span class="op">.</span><span class="nam">write</span><span class="op">(</span><span class="nam">get_pygments_stylesheet</span><span class="op">(</span><span class="nam">light_theme</span><span class="op">,</span> <span class="nam">dark_theme</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">    <span class="com"># Ensure the _static folder exists for all builders</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">    <span class="nam">pygments_css</span><span class="op">.</span><span class="nam">parent</span><span class="op">.</span><span class="nam">mkdir</span><span class="op">(</span><span class="nam">exist_ok</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t">    <span class="nam">pygments_css</span><span class="op">.</span><span class="nam">write_text</span><span class="op">(</span><span class="nam">get_pygments_stylesheet</span><span class="op">(</span><span class="nam">light_theme</span><span class="op">,</span> <span class="nam">dark_theme</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -193,8 +194,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_e73019af99dc6336_short_link_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-03-04 15:47 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.14.1">coverage.py v7.14.1</a>,
+            created at 2026-06-05 09:06 +0000
         </p>
     </div>
 </footer>
