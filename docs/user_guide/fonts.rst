@@ -52,6 +52,28 @@ The default body and header fonts can be changed as follows:
     specifically the binary font files. This ensures the files will be loaded
     before the CSS is parsed, but should be used with care.
 
+.. _fa-subsetting:
+
+Font subsetting
+---------------
+
+After ``sphinx-build``, the theme automatically rewrites the FontAwesome woff2 files
+in-place to keep only the glyphs your docs actually use, reducing each file from ~100 KB
+to a few kilobytes.
+
+.. _fa-js-icons:
+
+Icons injected by JavaScript will not be picked up by the subsetter.
+
+To preserve them, declare their codepoints in a CSS variable in any stylesheet loaded by
+your docs, or in a hidden html tag.
+
+.. code-block:: css
+
+   html {
+     --my-runtime-icon: "\f0c9"; /* fa-solid fa-bars */
+   }
+
 .. _override-fontawesome-version:
 
 Using a different FontAwesome version

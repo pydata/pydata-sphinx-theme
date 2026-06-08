@@ -304,6 +304,15 @@ def add_shorten_xform(app: Sphinx) -> None:
         app.add_post_transform(short_link.ShortenLinkTransform)
 
 
+def _subset_fontawesome(app: Sphinx, exception: Exception | None) -> None:
+    """Post-build hook: subset FA woff2 fonts to glyphs used in the built docs."""
+    if exception or app.builder.name != "html":
+        return
+    from pydata_sphinx_theme.fontawesome import subset_all
+
+    subset_all(Path(app.outdir))
+
+
 def setup(app: Sphinx) -> Dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
@@ -321,6 +330,7 @@ def setup(app: Sphinx) -> Dict[str, str]:
     app.connect("html-page-context", utils.set_secondary_sidebar_items)
     app.connect("build-finished", pygments.overwrite_pygments_css)
     app.connect("build-finished", logo.copy_logo_images)
+    app.connect("build-finished", _subset_fontawesome)
 
     # https://www.sphinx-doc.org/en/master/extdev/i18n.html#extension-internationalization-i18n-and-localization-l10n-using-i18n-api
     app.add_message_catalog("sphinx", here / "locale")

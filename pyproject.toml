@@ -29,6 +29,7 @@ dependencies = [
   "pygments>=2.7",
   "accessible-pygments",
   "typing-extensions",
+  "fonttools[woff]",
 ]
 license = { file = "LICENSE" }
 maintainers = [

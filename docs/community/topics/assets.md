@@ -46,6 +46,12 @@ the only `vendored` font.
 - Partially preloaded to reduce flicker and artifacts of early icon renders
 - Configured in `webpack.config.js`
 
+### Font subsetting
+
+The theme registers a `build-finished` Sphinx hook (`pydata_sphinx_theme.fontawesome.subset_all`) that rewrites the woff2 files in-place after every `sphinx-build`.
+
+See {ref}`fa-subsetting` in the user guide for details.
+
 ## Jinja macros
 
 Our Webpack build generates a collection of [Jinja macros](https://jinja.palletsprojects.com/en/stable/templates/) in the `static/webpack-macros.html` file.

@@ -1301,3 +1301,50 @@ def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
     # Hence the secondary sidebar has all its templates empty and should be removed
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     assert not sphinx_build.html_tree("page1.html").select("div.bd-sidebar-secondary")
+
+
+def test_subset_fonts_reduces_size(sphinx_build_factory) -> None:
+    """build-finished hook must shrink font files while keeping used glyphs intact."""
+    from fontTools.ttLib import TTFont
+
+    import pydata_sphinx_theme
+
+    confoverrides = {
+        "html_theme_options": {
+            "icon_links": [
+                {
+                    "name": "GitHub",
+                    "url": "https://example.com",
+                    "icon": "fa-brands fa-github",
+                },
+                {
+                    "name": "Bell",
+                    "url": "https://example.com",
+                    "icon": "fa-solid fa-bell",
+                },
+            ]
+        }
+    }
+
+    # Original (unsubsetted) sizes from the installed theme package
+    pkg_fonts = (
+        Path(pydata_sphinx_theme.__file__).parent
+        / "theme/pydata_sphinx_theme/static/vendor/fontawesome/webfonts"
+    )
+    solid_orig = (pkg_fonts / "fa-solid-900.woff2").stat().st_size
+    brands_orig = (pkg_fonts / "fa-brands-400.woff2").stat().st_size
+
+    build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    outdir = build.outdir
+
+    solid = outdir / "_static/vendor/fontawesome/webfonts/fa-solid-900.woff2"
+    brands = outdir / "_static/vendor/fontawesome/webfonts/fa-brands-400.woff2"
+
+    assert solid.stat().st_size < solid_orig
+    assert brands.stat().st_size < brands_orig
+
+    solid_cmap = TTFont(str(solid)).getBestCmap()
+    brands_cmap = TTFont(str(brands)).getBestCmap()
+    assert 0xF0C9 in solid_cmap  # fa-bars, hardcoded in templates
+    assert 0xF0F3 in solid_cmap  # fa-bell, via icon_links
+    assert 0xF09B in brands_cmap  # fa-github, via icon_links

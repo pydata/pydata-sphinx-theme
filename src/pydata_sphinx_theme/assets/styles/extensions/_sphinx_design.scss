@@ -5,11 +5,29 @@
  * NOTE: sphinx-design uses !important quite liberally, so here we must do the
  * same for our overrides to have any effect.
  */
+
 @use "../variables/color" as pst-color;
 @use "sass:color";
 @use "sass:map";
 @use "sass:meta";
 @use "sass:string";
+
+// sphinx-design uses FA5/6 short prefix classes (fab, fas, far).
+// FA7 dropped these in favour of fa-brands/fa-solid/fa-regular.
+// These shims restore web-font rendering for those legacy class names.
+// !important is required because sphinx-design ships its own .fab { font-family: "Font Awesome 5 Brands" }
+// which would otherwise override our FA7 font variable.
+.fab {
+  font: var(--fa-font-brands) !important;
+}
+
+.fas {
+  font: var(--fa-font-solid) !important;
+}
+
+.far {
+  font: var(--fa-font-regular) !important;
+}
 
 /*******************************************************************************
   * Color and variables
