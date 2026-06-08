@@ -4,14 +4,14 @@
 
 | Name                                      |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------------ | -------: | -------: | -------: | -------: | ------: | --------: |
-| src/pydata\_sphinx\_theme/\_\_init\_\_.py |      142 |       17 |       58 |       12 |     84% |44, 53-\>61, 55, 61-\>65, 81-82, 88-89, 148, 163, 180, 183, 220-\>231, 222-\>231, 232-241, 291-292 |
+| src/pydata\_sphinx\_theme/\_\_init\_\_.py |      144 |       17 |       60 |       12 |     85% |44, 53-\>61, 55, 61-\>65, 81-82, 88-89, 148, 163, 180, 183, 220-\>231, 222-\>231, 232-241, 291-292 |
 | src/pydata\_sphinx\_theme/logo.py         |       41 |        1 |       18 |        1 |     97% |        76 |
-| src/pydata\_sphinx\_theme/pygments.py     |       45 |        1 |       16 |        2 |     95% |75, 87-\>92 |
+| src/pydata\_sphinx\_theme/pygments.py     |       45 |        1 |       16 |        1 |     97% |        75 |
 | src/pydata\_sphinx\_theme/short\_link.py  |       55 |        1 |       32 |        5 |     93% |91-\>93, 96-\>123, 99-\>123, 112, 115-\>123 |
 | src/pydata\_sphinx\_theme/toctree.py      |      222 |       12 |      108 |       15 |     92% |93-96, 100-\>exit, 211-212, 346, 353, 373-\>371, 376, 378-\>412, 395-\>399, 440-\>438, 461, 472, 508, 615, 634-\>622, 641 |
-| src/pydata\_sphinx\_theme/translator.py   |       42 |       20 |       14 |        2 |     46% |42-65, 72-73, 88, 93-95, 107-116 |
-| src/pydata\_sphinx\_theme/utils.py        |       65 |        3 |       30 |        2 |     93% |29-32, 78-\>exit |
-| **TOTAL**                                 |  **639** |   **55** |  **286** |   **39** | **89%** |           |
+| src/pydata\_sphinx\_theme/translator.py   |       42 |       19 |       14 |        1 |     50% |42-65, 72-73, 93-95, 107-116 |
+| src/pydata\_sphinx\_theme/utils.py        |       65 |        1 |       30 |        2 |     97% |32, 78-\>exit |
+| **TOTAL**                                 |  **641** |   **52** |  **288** |   **37** | **89%** |           |
 
 1 file skipped due to complete coverage.
 
