@@ -17,7 +17,7 @@ from sphinx.errors import ExtensionError
 from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
 
-__version__ = "0.18.0"
+__version__ = "0.19.0rc0"
 
 
 def update_config(app):
@@ -124,23 +124,29 @@ def update_config(app):
         # Google Analytics
         gid = analytics.get("google_analytics_id")
         if gid:
-            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
-            gid_script = f"""
+            gid_defaults = """
                 window.dataLayer = window.dataLayer || [];
-                function gtag(){{ dataLayer.push(arguments); }}
-                gtag('consent', 'default', {{
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
                     'ad_storage': 'denied',
                     'ad_user_data': 'denied',
                     'ad_personalization': 'denied',
                     'analytics_storage': 'denied'
-                }});
+                });
+            """
+            gid_js_path = f"https://www.googletagmanager.com/gtag/js?id={gid}"
+            gid_script = f"""
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){{dataLayer.push(arguments);}}
                 gtag('js', new Date());
                 gtag('config', '{gid}');
             """
 
             # Link the JS files
+            # Ref: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced#implementation_example
+            app.add_js_file("", body=gid_defaults)
             app.add_js_file(gid_js_path, loading_method="async")
-            app.add_js_file(None, body=gid_script)
+            app.add_js_file("", body=gid_script)
 
     # Update ABlog configuration default if present
     fa_provided = utils.config_provided_by_user(app, "fontawesome_included")
@@ -294,6 +300,10 @@ def _fix_canonical_url(
 
 def add_shorten_xform(app: Sphinx) -> None:
     """Add the link shortening transform."""
+    # Non-HTML builders (e.g. sphinx-build -b gettext, MessageCatalogBuilder)
+    # have no theme
+    if not hasattr(app.builder, "theme"):
+        return
     theme_options = utils.get_theme_options_dict(app)
     theme_conf_options = app.builder.theme.get_options()
     if (theme_conf_options | theme_options).get("shorten_urls"):
