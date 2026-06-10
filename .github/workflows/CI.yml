@@ -68,7 +68,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
           persist-credentials: false
 
@@ -112,7 +112,7 @@ jobs:
           include-hidden-files: true
 
       - name: "Upload Playwright traces, if any 🐾"
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4.7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: ${{ failure() }}
         with:
           name: playwright-traces-${{ matrix.os }}-${{ matrix.python-version }}
@@ -129,7 +129,7 @@ jobs:
       pull-requests: write
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
           persist-credentials: false
 
@@ -165,9 +165,17 @@ jobs:
           path: htmlcov
         if: ${{ failure() }}
 
+      # persist-credentials: false above strips the git credential helper, but
+      # python-coverage-comment-action relies on `git push` to save coverage data.
+      # Re-inject the token into the remote URL so git can authenticate.
+      - name: "Restore git credentials for coverage data push"
+        run: git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
       # seems we need to call this from the main CI workflow first
       - name: "Coverage comment 💬"
-        uses: py-cov-action/python-coverage-comment-action@63f52f4fbbffada6e8dee8ec432de7e01df9ba79 # 3.38.0
+        uses: py-cov-action/python-coverage-comment-action@63f52f4fbbffada6e8dee8ec432de7e01df9ba79
         id: coverage_comment
         with:
           GITHUB_TOKEN: ${{ github.token }}
@@ -185,7 +193,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
           persist-credentials: false
 
@@ -206,22 +214,3 @@ jobs:
           name: profile-results
           path: docbuild_profile.svg
           if-no-files-found: ignore
-
-  # Calling the coverage-comment action from the main CI workflow
-  # we might want to pin the SHA once merged
-  coverage-comment:
-    # Important: make sure to update the SHA after making any changes to the coverage workflow
-    # removing pin to test changes
-    uses: ./.github/workflows/coverage.yml
-    needs: [coverage]
-    # ensures this runs even if the coverage step does not continue - e.g. the
-    # default coverage action will fail at first for external PRs, this is a workaround
-    # to ensure the comment is posted
-    if: ${{ github.event.name == 'pull_request'}}
-    with:
-      # this is the workflow run ID of the `CI.yml` workflow
-      workflow_run_id: ${{ github.event.workflow_run.id }}
-    permissions:
-      contents: write
-      pull-requests: write
-      actions: read

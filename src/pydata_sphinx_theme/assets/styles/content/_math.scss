@@ -39,7 +39,7 @@ div.math {
   mjx-container {
     flex-grow: 1;
     padding-bottom: 0.2rem;
-    overflow: auto;
+    overflow: auto hidden;
 
     // Set height to 0 so that it does not cause scrollbars to appear
     // ref: https://github.com/mathjax/MathJax/issues/2521
