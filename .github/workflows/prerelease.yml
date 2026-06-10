@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.14"]
+        python-version: ["3.11", "3.14"]
 
     steps:
       - name: "Checkout repository 🛎"
@@ -53,20 +53,20 @@ jobs:
 
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@d44ca7d91762de7a7d5436ddae667c6da6d1c3df # 2.18.0
-        if: matrix.python-version == '3.10'
+        if: matrix.python-version == '3.11'
         id: baipp
         with:
           # pydantic-core (via PyO3) does not yet support Python 3.14
           python-version: "3.13"
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
-        if: matrix.python-version == '3.10'
+        if: matrix.python-version == '3.11'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
       # Run tests on the built package (which will be later uploaded to PyPI)
       - name: "Install PST from wheel and test"
-        if: matrix.python-version == '3.10'
+        if: matrix.python-version == '3.11'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
         run: |
