@@ -4,13 +4,13 @@
 
 | Name                                      |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------------ | -------: | -------: | -------: | -------: | ------: | --------: |
-| src/pydata\_sphinx\_theme/\_\_init\_\_.py |      146 |       17 |       60 |       12 |     85% |44, 53-\>61, 55, 61-\>65, 81-82, 88-89, 154, 169, 186, 189, 226-\>237, 228-\>237, 238-247, 297-298 |
+| src/pydata\_sphinx\_theme/\_\_init\_\_.py |      145 |       17 |       60 |       12 |     85% |43, 52-\>60, 54, 60-\>64, 80-81, 87-88, 153, 168, 185, 188, 225-\>236, 227-\>236, 237-246, 296-297 |
 | src/pydata\_sphinx\_theme/logo.py         |       41 |        1 |       18 |        1 |     97% |        76 |
 | src/pydata\_sphinx\_theme/pygments.py     |       45 |        1 |       16 |        1 |     97% |        75 |
 | src/pydata\_sphinx\_theme/short\_link.py  |       55 |        1 |       32 |        5 |     93% |91-\>93, 96-\>123, 99-\>123, 112, 115-\>123 |
 | src/pydata\_sphinx\_theme/toctree.py      |      222 |       12 |      108 |       15 |     92% |93-96, 100-\>exit, 211-212, 346, 353, 373-\>371, 376, 378-\>412, 395-\>399, 440-\>438, 461, 472, 508, 615, 634-\>622, 641 |
 | src/pydata\_sphinx\_theme/translator.py   |       42 |       19 |       14 |        1 |     50% |42-65, 72-73, 93-95, 107-116 |
-| src/pydata\_sphinx\_theme/utils.py        |       65 |        1 |       30 |        2 |     97% |32, 78-\>exit |
+| src/pydata\_sphinx\_theme/utils.py        |       66 |        1 |       30 |        2 |     97% |33, 79-\>exit |
 | **TOTAL**                                 |  **643** |   **52** |  **288** |   **37** | **89%** |           |
 
 1 file skipped due to complete coverage.
