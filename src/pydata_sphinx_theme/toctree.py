@@ -1,10 +1,10 @@
 """Methods to build the toctree used in the html pages."""
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 from functools import cache
 from itertools import count
 from textwrap import dedent
-from typing import Iterator, List, Tuple, Union
 from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
@@ -114,7 +114,7 @@ def add_toctree_functions(
         return next(get_or_create_id_generator(base_id))
 
     @cache
-    def _generate_nav_info() -> List[LinkInfo]:
+    def _generate_nav_info() -> list[LinkInfo]:
         """Generate informations necessary to generate nav.
 
         Instead of messing with html later, having this as a util function
@@ -196,7 +196,7 @@ def add_toctree_functions(
     @cache
     def _generate_header_nav_before_dropdown(
         n_links_before_dropdown,
-    ) -> Tuple[str, List[str]]:
+    ) -> tuple[str, list[str]]:
         """Return html for navbar and dropdown.
 
         Given the number of links before the dropdown, return the html for the navbar,
@@ -310,7 +310,7 @@ def add_toctree_functions(
     @cache
     def generate_toctree_html(
         kind: str, startdepth: int = 1, show_nav_level: int = 1, **kwargs
-    ) -> Union[BeautifulSoup, str]:
+    ) -> BeautifulSoup | str:
         """Return the navigation link structure in HTML.
 
         This is similar to Sphinx's own default TocTree generation, but it is modified
@@ -460,7 +460,7 @@ def add_toctree_functions(
         else:
             return soup
 
-    def navbar_align_class() -> List[str]:
+    def navbar_align_class() -> list[str]:
         """Return the class that aligns the navbar based on config."""
         align = context.get("theme_navbar_align", "content")
         align_options = {

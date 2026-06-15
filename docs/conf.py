@@ -10,7 +10,7 @@ import os
 import sys
 
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 from sphinx.application import Sphinx
 from sphinx.locale import _
@@ -350,7 +350,7 @@ def setup_to_main(
     context["to_main"] = to_main
 
 
-def setup(app: Sphinx) -> Dict[str, Any]:
+def setup(app: Sphinx) -> dict[str, Any]:
     """Add custom configuration to sphinx app.
 
     Args:
