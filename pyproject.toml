@@ -20,9 +20,9 @@ name = "pydata-sphinx-theme"
 description = "Bootstrap-based Sphinx theme from the PyData community"
 dynamic = ["version"]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
-  "sphinx>=8.0,<10",
+  "sphinx>=8.2,<10",
   "beautifulsoup4",
   "docutils!=0.17.0",
   "Babel",
@@ -37,7 +37,6 @@ maintainers = [
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
