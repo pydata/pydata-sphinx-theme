@@ -67,7 +67,13 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
-intersphinx_mapping = {"sphinx": ("https://www.sphinx-doc.org/en/master", None)}
+intersphinx_mapping = {
+    "sphinx": ("https://www.sphinx-doc.org/en/master", None),
+    # Sphinx treats typing.* as reftype = 'obj' but pyupgrade moved
+    # from typing.* in favor of collections.abc (reftype = 'class'),
+    # whose references are not found without the following line:
+    "python": ("https://docs.python.org/3", None),
+}
 
 # -- Sitemap -----------------------------------------------------------------
 
