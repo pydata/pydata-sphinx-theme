@@ -42,8 +42,8 @@ jobs:
 
       - name: "Build PST docs and check for warnings 📖"
         run: |
-          # example substitution: tox run -e docs-py312-docs
-          python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
+          # example substitution: tox run -e py312-docs
+          python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
 
       - name: "Run tests ✅ (no coverage)"
         run: |
