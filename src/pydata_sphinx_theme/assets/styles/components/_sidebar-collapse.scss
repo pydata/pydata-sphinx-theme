@@ -43,6 +43,7 @@
 
       // This value was also chosen by trial and error until it looked good.
       height: 1.3em;
+      box-sizing: content-box;
     }
 
     .pst-collapse-sidebar-label {
