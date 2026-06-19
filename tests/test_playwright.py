@@ -6,8 +6,8 @@ to `tests/sites/` or use an existing one.
 
 import re
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 from urllib.parse import urljoin
 
 import pytest

@@ -28,7 +28,8 @@ dependencies = [
   "Babel",
   "pygments>=2.7",
   "accessible-pygments",
-  "typing-extensions",
+  "jinja2",
+  "requests",
 ]
 license = { file = "LICENSE" }
 maintainers = [
@@ -96,7 +97,8 @@ test = [
   "pytest-cov",
   "pytest-regressions",
   "sphinx[test]",
-  "pytest-playwright"
+  "pytest-playwright",
+  "typing-extensions",
 ]
 a11y = ["pydata-sphinx-theme[test]"]
 i18n = ["Babel", "jinja2"]

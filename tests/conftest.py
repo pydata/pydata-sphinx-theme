@@ -3,18 +3,18 @@
 import re
 import time
 
+from collections.abc import Callable
 from http.client import HTTPConnection
 from os import environ
 from pathlib import Path
 from shutil import copytree
 from subprocess import PIPE, Popen
-from typing import Callable
+from typing import Self
 
 import pytest
 
 from bs4 import BeautifulSoup
 from sphinx.testing.util import SphinxTestApp
-from typing_extensions import Self
 
 
 pytest_plugins = "sphinx.testing.fixtures"
