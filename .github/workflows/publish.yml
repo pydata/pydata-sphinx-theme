@@ -19,7 +19,7 @@ jobs:
   # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
     # Important: make sure to update the SHA after making any changes to the CI workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@562617b8cf2f4e86e159641a800415a71ee861af
+    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@620d9ebd05ecde3df5d4a09b563c2d62c468634c
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
     # needed for the coverage action
@@ -30,7 +30,7 @@ jobs:
       # calls our docs workflow (build docs, check broken links, lighthouse)
   docs:
     # Important: make sure to update the SHA after making any changes to the docs workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@562617b8cf2f4e86e159641a800415a71ee861af
+    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@620d9ebd05ecde3df5d4a09b563c2d62c468634c
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
 
