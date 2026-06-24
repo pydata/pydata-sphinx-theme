@@ -12,7 +12,7 @@ build:
   # `playwright install-deps`).  NB: Graphviz is a separate dep urelated to playwright
   apt_packages:
     - graphviz
-    - libasound2
+    - libasound2t64
     - libdbus-glib-1-2
   jobs:
     # build the gallery of themes before building the doc
