@@ -1,7 +1,5 @@
 # This workflow runs our usual CI jobs: testing with pytest, profiling,
 # and coverage checks for PST
-# IMPORTANT: if you make changes to this workflow, you will need to open a follow-up
-# PR after merge to update the action SHA in the publish workflow
 
 name: continuous-integration
 
@@ -64,8 +62,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@620d9ebd05ecde3df5d4a09b563c2d62c468634c
+        uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -125,7 +122,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@620d9ebd05ecde3df5d4a09b563c2d62c468634c
+        uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
 
@@ -189,7 +186,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@620d9ebd05ecde3df5d4a09b563c2d62c468634c
+        uses: ./.github/actions/set-dev-env
         with:
           # 3.14 is not supported by py-spy yet
           python-version: "3.13"
