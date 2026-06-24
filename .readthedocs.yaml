@@ -3,9 +3,9 @@ version: 2
 formats:
   - htmlzip
 
-# build with latest available ubuntu version
+# Build with a supported Ubuntu LTS version for Playwright/Chromium.
 build:
-  os: ubuntu-lts-latest
+  os: ubuntu-24.04
   tools:
     python: "3.12"
   # need to install playwright deps via apt (lack of sudo means we can't use
