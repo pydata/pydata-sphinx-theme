@@ -53,6 +53,9 @@ Thanks for your support!
 - title: movement
   link-alt: movement docs
   link: https://movement.neuroinformatics.dev
+- title: Napari
+  link-alt: napari docs
+  link: https://napari.org/stable/
 - title: Pastas
   link-alt: Pastas docs
   link: https://pastas.readthedocs.io/
