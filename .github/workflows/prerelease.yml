@@ -21,17 +21,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.14"]
+        python-version: ["3.11", "3.14"]
 
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        # Important: make sure to update the SHA after making any changes to the set-dev-env action
-        uses: pydata/pydata-sphinx-theme/.github/actions/set-dev-env@047227ad41f26a993ea7b2182955d26aa837acea
+        uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
@@ -42,8 +41,8 @@ jobs:
 
       - name: "Build PST docs and check for warnings 📖"
         run: |
-          # example substitution: tox run -e docs-py312-docs
-          python -Im tox run -e docs-py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
+          # example substitution: tox run -e py312-docs
+          python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-docs -- --keep-going
 
       - name: "Run tests ✅ (no coverage)"
         run: |
@@ -53,20 +52,20 @@ jobs:
 
       - name: "Build and inspect package 📦"
         uses: hynek/build-and-inspect-python-package@d44ca7d91762de7a7d5436ddae667c6da6d1c3df # 2.18.0
-        if: matrix.python-version == '3.10'
+        if: matrix.python-version == '3.11'
         id: baipp
         with:
           # pydantic-core (via PyO3) does not yet support Python 3.14
           python-version: "3.13"
 
       - run: echo Packages can be found at "${BAIPP_DIST}"
-        if: matrix.python-version == '3.10'
+        if: matrix.python-version == '3.11'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
 
       # Run tests on the built package (which will be later uploaded to PyPI)
       - name: "Install PST from wheel and test"
-        if: matrix.python-version == '3.10'
+        if: matrix.python-version == '3.11'
         env:
           BAIPP_DIST: ${{ steps.baipp.outputs.dist }}
         run: |

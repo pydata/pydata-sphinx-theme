@@ -4,7 +4,6 @@ import json
 
 from functools import partial
 from pathlib import Path
-from typing import Dict
 from urllib.parse import urlparse
 
 import requests
@@ -17,7 +16,7 @@ from sphinx.errors import ExtensionError
 from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
 
-__version__ = "0.19.0rc0"
+__version__ = "0.19.0"
 
 
 def update_config(app):
@@ -310,7 +309,7 @@ def add_shorten_xform(app: Sphinx) -> None:
         app.add_post_transform(short_link.ShortenLinkTransform)
 
 
-def setup(app: Sphinx) -> Dict[str, str]:
+def setup(app: Sphinx) -> dict[str, str]:
     """Setup the Sphinx application."""
     here = Path(__file__).parent.resolve()
     theme_path = here / "theme" / "pydata_sphinx_theme"

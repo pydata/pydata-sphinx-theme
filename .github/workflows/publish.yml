@@ -18,8 +18,7 @@ permissions:
 jobs:
   # calls our general CI workflows (tests, coverage, profile, etc.)
   tests:
-    # Important: make sure to update the SHA after making any changes to the CI workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/CI.yml@047227ad41f26a993ea7b2182955d26aa837acea
+    uses: ./.github/workflows/CI.yml
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
     # needed for the coverage action
@@ -29,8 +28,7 @@ jobs:
       actions: read
       # calls our docs workflow (build docs, check broken links, lighthouse)
   docs:
-    # Important: make sure to update the SHA after making any changes to the docs workflow
-    uses: pydata/pydata-sphinx-theme/.github/workflows/docs.yml@047227ad41f26a993ea7b2182955d26aa837acea
+    uses: ./.github/workflows/docs.yml
     # only run this workflow for pydata owned repositories (avoid forks)
     if: github.repository_owner == 'pydata'
 
@@ -43,14 +41,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # 6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # 7.0.0
         with:
           persist-credentials: false
 
       - name: "Setup Python 🐍"
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # 6.2.0
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # 6.3.0
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - run: python -Im pip install tox-uv
 

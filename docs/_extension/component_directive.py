@@ -8,7 +8,7 @@ GitHub file.
 import re
 
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 from docutils import nodes
 from sphinx.application import Sphinx
@@ -33,7 +33,7 @@ class ComponentListDirective(SphinxDirective):
     optional_arguments = 0
     final_argument_whitespace = True
 
-    def run(self) -> List[nodes.Node]:
+    def run(self) -> list[nodes.Node]:
         """Create the list."""
         # get the list of all th jinja templates
         # not that to remain compatible with sphinx they are labeled as html files
@@ -84,7 +84,7 @@ class ComponentListDirective(SphinxDirective):
         return [nodes.bullet_list("", *items)]
 
 
-def setup(app: Sphinx) -> Dict[str, Any]:
+def setup(app: Sphinx) -> dict[str, Any]:
     """Add custom configuration to sphinx app.
 
     Args:

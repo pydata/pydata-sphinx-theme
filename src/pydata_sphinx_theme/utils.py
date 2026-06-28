@@ -4,14 +4,15 @@ import copy
 import os
 import re
 
-from typing import Any, Callable, Dict, Iterable, List, Optional, Union
+from collections.abc import Callable, Iterable
+from typing import Any
 
 from docutils.nodes import Node
 from sphinx.application import Sphinx
 from sphinx.util import logging, matching
 
 
-def get_theme_options_dict(app: Sphinx) -> Dict[str, Any]:
+def get_theme_options_dict(app: Sphinx) -> dict[str, Any]:
     """Return theme options for the application w/ a fallback if they don't exist.
 
     The "top-level" mapping (the one we should usually check first, and modify
@@ -38,7 +39,7 @@ def config_provided_by_user(app: Sphinx, key: str) -> bool:
 
 
 def traverse_or_findall(
-    node: Node, condition: Union[Callable, type], **kwargs
+    node: Node, condition: Callable | type, **kwargs
 ) -> Iterable[Node]:
     """Triage node.traverse (docutils <0.18.1) vs node.findall.
 
@@ -90,11 +91,11 @@ def set_secondary_sidebar_items(
 
 def _update_and_remove_templates(
     app: Sphinx,
-    context: Dict[str, Any],
-    templates: Union[List, str],
+    context: dict[str, Any],
+    templates: list | str,
     section: str,
-    templates_skip_empty_check: Optional[List[str]] = None,
-) -> List[str]:
+    templates_skip_empty_check: list[str] | None = None,
+) -> list[str]:
     """
     Update templates to include html suffix if needed; remove templates which render
     empty.
@@ -155,8 +156,8 @@ def _update_and_remove_templates(
 
 
 def _get_matching_sidebar_items(
-    pagename: str, sidebars: Dict[str, List[str]]
-) -> List[str]:
+    pagename: str, sidebars: dict[str, list[str]]
+) -> list[str]:
     """Get the matching sidebar templates to render for the given pagename.
 
     If a page matches more than one pattern, a warning is emitted, and the templates
