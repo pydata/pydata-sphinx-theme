@@ -35,9 +35,6 @@ Thanks for your support!
 - title: CuPy
   link-alt: CuPy docs
   link: https://docs.cupy.dev/en/stable/index.html
-- title: DecentralChain
-  link-alt: DecentralChain docs
-  link: https://docs.decentralchain.io/en/master/
 - title: Fairlearn
   link-alt: Fairlearn docs
   link: https://fairlearn.org/main/about/
@@ -56,6 +53,9 @@ Thanks for your support!
 - title: movement
   link-alt: movement docs
   link: https://movement.neuroinformatics.dev
+- title: Napari
+  link-alt: napari docs
+  link: https://napari.org/stable/
 - title: Pastas
   link-alt: Pastas docs
   link: https://pastas.readthedocs.io/
