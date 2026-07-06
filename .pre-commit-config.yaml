@@ -11,7 +11,7 @@ ci:
 
 repos:
   - repo: "https://github.com/astral-sh/ruff-pre-commit"
-    rev: "v0.15.15"
+    rev: "v0.15.20"
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
@@ -24,7 +24,7 @@ repos:
         args: [--py311-plus]
 
   - repo: "https://github.com/Riverside-Healthcare/djLint"
-    rev: v1.36.4
+    rev: v1.40.3
     hooks:
       - id: djlint-jinja
         types_or: ["html"]
