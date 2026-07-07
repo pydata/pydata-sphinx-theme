@@ -568,7 +568,9 @@ async function fetchVersionSwitcherJSON(url) {
             "https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/version-dropdown.html",
         );
       }
-      const cutoff = window.location.href.indexOf(currentPath);
+      const cutoff = currentPath
+        ? window.location.href.indexOf(currentPath)
+        : -1;
       // cutoff == -1 can happen e.g. on the homepage of locally served docs, where you
       // get something like http://127.0.0.1:8000/ (no trailing `index.html`)
       const origin =
