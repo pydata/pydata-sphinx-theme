@@ -16,6 +16,9 @@ These steps should be taken in order to create a new release![^release-refs]
 
 - [ ] Bump `__version__` in [`__init__.py`](https://github.com/pydata/pydata-sphinx-theme/blob/main/src/pydata_sphinx_theme/__init__.py#L16)
 - [ ] Update our [version switcher `.json` file](https://github.com/pydata/pydata-sphinx-theme/blob/main/docs/_static/switcher.json) with the new version
+
+The two above steps can be done automatically with `python tools/bump_version.py 0.2.0`.
+
 - [ ] Make a release commit: `git commit -m 'bump: 0.1.9 → 0.2.0'`
 - [ ] Push the RLS commit `git push upstream main`
 - [ ] If a **release candidate** is needed, tick this box when we're now ready for a full release.
