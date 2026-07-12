@@ -247,6 +247,15 @@ $ tox run -m a11y
 $ tox run -e a11y-tests
 ```
 
+To run a single accessibility test, pass a pytest `-k` expression after `--`:
+
+```console
+$ tox run -e a11y-tests -- -k=test_search_as_you_type
+```
+
+The `-k` expression matches test names by substring. The `a11y-tests` environment
+expects the assets and documentation to have already been built, as described above.
+
 ## GitHub Codespaces
 
 If you have good internet connectivity and want a temporary set-up, it is often faster to work on the PyData Sphinx Theme
