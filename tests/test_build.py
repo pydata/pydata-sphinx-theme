@@ -583,6 +583,26 @@ def test_included_toc(sphinx_build_factory) -> None:
     assert included_page_html is not None
 
 
+@pytest.mark.parametrize("root", ["default", "custom"])
+def test_toc_special_docnames(sphinx_build_factory, file_regression, root) -> None:
+    """
+    Test that Sphinx project with TOC (.. toctree::) referencing genindex, modindex or
+    search virtual docnames can be successfully built.
+    """
+    # Regression test for #2446.
+    root_doc = f"index-{root}"
+    sphinx_build = sphinx_build_factory(
+        "test_toc_special_docnames", confoverrides={"root_doc": root_doc}
+    ).build()
+    index_html = sphinx_build.html_tree(f"{root_doc}.html")
+    navbar = index_html.select("ul.bd-navbar-elements")[0]
+    file_regression.check(
+        navbar.prettify(),
+        basename=f"test_toc_special_docnames_{root}",
+        extension=".html",
+    )
+
+
 def test_footer(sphinx_build_factory) -> None:
     """Test for expected footer contents."""
     overrides = {
