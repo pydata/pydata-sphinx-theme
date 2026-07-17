@@ -1,5 +1,7 @@
 """Methods to build the toctree used in the html pages."""
 
+import posixpath
+
 from collections.abc import Iterator
 from dataclasses import dataclass
 from functools import cache
@@ -342,6 +344,44 @@ def add_toctree_functions(
             HTML string (if kind == "sidebar") OR BeautifulSoup object
                 (if kind == "raw")
         """
+        # When `collapse=False` (the default), the structure of the resolved
+        # sidebar toctree is identical for every page below the same ancestor:
+        # only the location of the "current" markers (``current``/``active``
+        # classes and ``open`` attributes) and the relative link targets
+        # differ. Resolving and soup-ifying the toctree is expensive on large
+        # sites, so cache the finished soup per (ancestor, directory) and, on
+        # a cache hit, simply move the "current" markers from the previously
+        # rendered page's entry to this page's entry.
+        cache_root = None
+        if kind == "sidebar" and startdepth > 0 and not kwargs.get("collapse"):
+            cache_root, _ = _get_ancestor_pagename(
+                app=app, pagename=pagename, startdepth=startdepth
+            )
+        if cache_root is not None:
+            sidebar_cache = getattr(app, "_pst_sidebar_toctree_cache", None)
+            if sidebar_cache is None:
+                sidebar_cache = app._pst_sidebar_toctree_cache = {}
+            cache_key = (
+                cache_root,
+                posixpath.dirname(pagename),
+                show_nav_level,
+                tuple(sorted(kwargs.items())),
+            )
+            cached = sidebar_cache.get(cache_key)
+            if cached is not None:
+                cached_pagename, cached_soup = cached[:]
+                patched = _move_current_markers(
+                    cached_soup,
+                    old_href=app.builder.get_relative_uri(pagename, cached_pagename),
+                    new_href=app.builder.get_relative_uri(cached_pagename, pagename),
+                    show_nav_level=int(show_nav_level),
+                )
+                if patched:
+                    cached[0] = pagename
+                    return str(cached_soup)
+                # Couldn't find this page's entry (e.g. pruned by maxdepth);
+                # fall through and build the sidebar the slow way.
+
         if startdepth == 0:
             html_toctree = context["toctree"](**kwargs)
         else:
@@ -408,6 +448,11 @@ def add_toctree_functions(
             for ii in range(int(show_nav_level)):
                 for details in soup.select(f"li.toctree-l{ii} > details"):
                     details["open"] = "open"
+
+        if cache_root is not None and soup.find("a", href="#") is not None:
+            # Only cache when this page's own entry (rendered with href="#")
+            # is present, so that later cache hits can find and demote it.
+            sidebar_cache[cache_key] = [pagename, soup]
 
         return soup
 
@@ -481,6 +526,74 @@ def add_toctree_functions(
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
+
+
+def _move_current_markers(
+    soup: BeautifulSoup, *, old_href: str, new_href: str, show_nav_level: int
+) -> bool:
+    """Move the "current page" markers in a rendered sidebar toctree.
+
+    ``soup`` was rendered for another page in the same directory, whose entry (as
+    seen from the page at ``new_href``) is at ``old_href``. Relocate the
+    ``current``/``active`` classes and the ``open`` state of ``<details>``
+    disclosure widgets from that page's entry chain to the entry for the page at
+    ``new_href``. Return ``False`` (leaving ``soup`` unmodified) if no entry for
+    ``new_href`` exists.
+    """
+    if old_href == new_href:
+        return True  # same page, nothing to move
+    new_anchors = soup.find_all("a", href=new_href)
+    if not new_anchors:
+        return False
+    # Demote the previous page's entry; its self-link is rendered as href="#"
+    for anchor in soup.find_all("a", href="#"):
+        anchor["href"] = old_href
+        anchor["class"] = [cls for cls in anchor.get("class", []) if cls != "current"]
+        _set_current_chain(anchor, current=False, show_nav_level=show_nav_level)
+    # Promote this page's entry
+    for anchor in new_anchors:
+        anchor["href"] = "#"
+        anchor["class"] = ["current", *anchor.get("class", [])]
+        _set_current_chain(anchor, current=True, show_nav_level=show_nav_level)
+    return True
+
+
+def _set_current_chain(anchor, *, current: bool, show_nav_level: int) -> None:
+    """Add or remove current/active/open markers on an entry's ancestor chain."""
+    for parent in anchor.parents:
+        if parent.name == "li":
+            classes = [
+                cls
+                for cls in parent.get("class", [])
+                if cls not in ("current", "active")
+            ]
+            if current:
+                # match the class order of a freshly built toctree, where
+                # Sphinx adds "current" right after "toctree-l*"
+                classes[1:1] = ["current", "active"]
+            parent["class"] = classes
+            # Every <details> disclosure widget added by `add_collapse_checkboxes`
+            # is a direct child of an <li> on the chain -- including the current
+            # entry's own <li> (when the current page has child pages), whose
+            # <details> is a *sibling* of `anchor` rather than an ancestor.
+            details = parent.find("details", recursive=False)
+            if details is not None:
+                if current:
+                    details["open"] = "open"
+                elif not any(
+                    f"toctree-l{level}" in parent.get("class", [])
+                    for level in range(show_nav_level)
+                ):
+                    # (keep <details> open where mandated by ``show_nav_level``)
+                    details.attrs.pop("open", None)
+        elif parent.name == "ul":
+            classes = [cls for cls in parent.get("class", []) if cls != "current"]
+            if current:
+                classes.insert(0, "current")
+            if classes:
+                parent["class"] = classes
+            else:
+                parent.attrs.pop("class", None)
 
 
 def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
