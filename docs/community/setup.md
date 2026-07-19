@@ -237,6 +237,16 @@ $ tox run -m tests
 $ tox run -e tests-no-cov
 ```
 
+To run a single test in any pytest-based test environment, pass a pytest `-k`
+expression after `--`:
+
+```console
+$ tox run -e py314-tests-no-cov -- -k=test_theme_loaded_as_extension
+```
+
+The `-k` expression matches test names by substring. The same syntax works with
+other test environments, such as `a11y-tests`.
+
 To run the accessibility checks:
 
 ```console
@@ -246,15 +256,6 @@ $ tox run -m a11y
 # to run the tests without pre-compiling the assets and without re-building the docs (for example if you recently compiled the assets or built the docs)
 $ tox run -e a11y-tests
 ```
-
-To run a single accessibility test, pass a pytest `-k` expression after `--`:
-
-```console
-$ tox run -e a11y-tests -- -k=test_search_as_you_type
-```
-
-The `-k` expression matches test names by substring. The `a11y-tests` environment
-expects the assets and documentation to have already been built, as described above.
 
 ## GitHub Codespaces
 
