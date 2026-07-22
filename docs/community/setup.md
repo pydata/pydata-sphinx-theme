@@ -241,7 +241,7 @@ To run a single test in any pytest-based test environment, pass a pytest `-k`
 expression after `--`:
 
 ```console
-$ tox run -e py314-tests-no-cov -- -k=test_theme_loaded_as_extension
+$ tox run -e py314-tests-no-cov -- -k test_theme_loaded_as_extension
 ```
 
 The `-k` expression matches test names by substring. The same syntax works with
