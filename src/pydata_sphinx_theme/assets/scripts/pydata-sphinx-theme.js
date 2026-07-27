@@ -329,12 +329,11 @@ var setupSearchButtons = () => {
  * to have that exact ID.
  */
 var setupSearchAsYouType = () => {
+  // False when the theme option is off, and also forced off by the Python
+  // html-page-context hook on the dedicated search page (search.html, or
+  // search/ under the dirhtml builder), where searchtools.js owns the
+  // #search-results container.
   if (!DOCUMENTATION_OPTIONS.search_as_you_type) {
-    return;
-  }
-
-  // Don't interfere with the default search UX on /search.html.
-  if (window.location.pathname.endsWith("/search.html")) {
     return;
   }
 
@@ -568,7 +567,9 @@ async function fetchVersionSwitcherJSON(url) {
             "https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/version-dropdown.html",
         );
       }
-      const cutoff = window.location.href.indexOf(currentPath);
+      const cutoff = currentPath
+        ? window.location.href.indexOf(currentPath)
+        : -1;
       // cutoff == -1 can happen e.g. on the homepage of locally served docs, where you
       // get something like http://127.0.0.1:8000/ (no trailing `index.html`)
       const origin =

@@ -96,6 +96,21 @@ def test_version_switcher_highlighting(
     _check_test_site(site_name, site_path, check_version_switcher_highlighting)
 
 
+def test_version_switcher_dirhtml_homepage(
+    sphinx_build_factory: Callable, page: Page, url_base: str
+) -> None:
+    """#2434: relative json_url + dirhtml builder resolves the switcher url on home."""
+    site_name = "version_switcher_dirhtml"
+    sphinx_build = sphinx_build_factory("version_switcher", buildername="dirhtml")
+    sphinx_build.build()
+
+    def check_switcher_populated():
+        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/"))
+        expect(page.get_by_role("option", include_hidden=True)).to_have_count(2)
+
+    _check_test_site(site_name, sphinx_build.outdir, check_switcher_populated)
+
+
 def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> None:
     """Test that things get colored the way we expect them to.
 
