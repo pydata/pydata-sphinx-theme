@@ -175,7 +175,9 @@ pre {
   z-index: $zindex-tooltip;
   position: fixed;
   display: none;
-  top: 90vh;
+
+  // #2411: anchor on bottom to prevent overflowing on mobile
+  bottom: 2dvh;
   left: 50vw;
   transform: translate(-50%);
   color: var(--pst-color-secondary-text);
