@@ -263,8 +263,13 @@ def update_and_remove_templates(
         """
         app.add_js_file(None, body=js)
 
-    # Specify whether search-as-you-type should be used or not.
-    search_as_you_type = str(context["theme_search_as_you_type"]).lower()
+    # Specify whether search-as-you-type should be used or not. It is always
+    # off on the dedicated search page, where it would fight searchtools.js
+    # over the #search-results container.
+    if pagename == "search":
+        search_as_you_type = "false"
+    else:
+        search_as_you_type = str(context["theme_search_as_you_type"]).lower()
     app.add_js_file(
         None, body=f"DOCUMENTATION_OPTIONS.search_as_you_type = {search_as_you_type};"
     )

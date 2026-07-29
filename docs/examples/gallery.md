@@ -65,4 +65,7 @@ Thanks for your support!
 - title: PyVista
   link-alt: PyVista docs
   link: https://docs.pyvista.org
+- title: GALACTIC
+  link-alt: GALACTIC docs
+  link: https://www.thegalactic.org
 ```
