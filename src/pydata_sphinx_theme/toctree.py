@@ -159,11 +159,22 @@ def add_toctree_functions(
                 # sanitize page title for use in the html output if needed
                 if title is None:
                     title = ""
-                    for node in app.env.titles[page].children:
-                        if isinstance(node, nodes.math):
-                            title += add_inline_math(node)
-                        else:
-                            title += node.astext()
+                    if page in app.env.titles:
+                        for node in app.env.titles[page].children:
+                            if isinstance(node, nodes.math):
+                                title += add_inline_math(node)
+                            else:
+                                title += node.astext()
+                    elif page == "genindex":
+                        title = _("Index")
+                    elif page == "modindex":
+                        title = _("Python Module Index")
+                    elif page == "search":
+                        title = _("Search")
+                    else:
+                        raise RuntimeError(
+                            f"Could not find title for toctree entry: {page!r}"
+                        )
 
                 # set up the status of the link and the path
                 # if the path is relative then we use the context for the path
@@ -171,7 +182,13 @@ def add_toctree_functions(
                 # If it's an absolute one then we use the external class and
                 # the complete url.
                 is_absolute = bool(urlparse(page).netloc)
-                link_href = page if is_absolute else context["pathto"](page)
+                link_href = (
+                    page
+                    if is_absolute
+                    else context["pathto"](
+                        "py-modindex" if page == "modindex" else page
+                    )
+                )
 
                 links_data.append(
                     LinkInfo(
@@ -728,6 +745,8 @@ def get_nonroot_toctree(
         kwargs["maxdepth"] = 0
     kwargs["maxdepth"] = int(kwargs["maxdepth"])
     # starting from ancestor page, recursively parse `toctree::` elements
+    if ancestorname not in toctree.env.tocs:
+        return None
     ancestor_doctree = toctree.env.tocs[ancestorname].deepcopy()
     toctrees = []
 
