@@ -340,7 +340,8 @@ def add_toctree_functions(
         It also modifies the generated TocTree slightly for Bootstrap classes
         and structure (via BeautifulSoup).
 
-        Arguments are passed to Sphinx "toctree" function (context["toctree"] below).
+        Arguments are passed to the Sphinx `_get_local_toctree` function
+        (`context["toctree"]` below).
 
         ref: https://www.sphinx-doc.org/en/master/templating.html#toctree
 
@@ -355,53 +356,16 @@ def add_toctree_functions(
                 page load. By default, this level is 1, and only top-level pages are
                 shown, with drop-boxes to reveal children. Increasing `show_nav_level`
                 will show child levels as well.
-            kwargs : passed to the Sphinx `toctree` template function.
+            kwargs : passed to the Sphinx `_get_local_toctree` template function.
 
         Returns:
             HTML string (if kind == "sidebar") OR BeautifulSoup object
                 (if kind == "raw")
         """
-        # When `collapse=False` (the default), the structure of the resolved
-        # sidebar toctree is identical for every page below the same ancestor:
-        # only the location of the "current" markers (``current``/``active``
-        # classes and ``open`` attributes) and the relative link targets
-        # differ. Resolving and soup-ifying the toctree is expensive on large
-        # sites, so cache the finished soup per (ancestor, directory) and, on
-        # a cache hit, simply move the "current" markers from the previously
-        # rendered page's entry to this page's entry.
-        cache_root = None
-        if kind == "sidebar" and startdepth > 0 and not kwargs.get("collapse"):
-            cache_root, _ = _get_ancestor_pagename(
-                app=app, pagename=pagename, startdepth=startdepth
-            )
-        if cache_root is not None:
-            sidebar_cache = getattr(app, "_pst_sidebar_toctree_cache", None)
-            if sidebar_cache is None:
-                sidebar_cache = app._pst_sidebar_toctree_cache = {}
-            cache_key = (
-                cache_root,
-                posixpath.dirname(pagename),
-                show_nav_level,
-                tuple(sorted(kwargs.items())),
-            )
-            cached = sidebar_cache.get(cache_key)
-            if cached is not None:
-                cached_pagename, cached_soup = cached[:]
-                patched = _move_current_markers(
-                    cached_soup,
-                    old_href=app.builder.get_relative_uri(pagename, cached_pagename),
-                    new_href=app.builder.get_relative_uri(cached_pagename, pagename),
-                    show_nav_level=int(show_nav_level),
-                )
-                if patched:
-                    cached[0] = pagename
-                    return str(cached_soup)
-                # Couldn't find this page's entry (e.g. pruned by maxdepth);
-                # fall through and build the sidebar the slow way.
+        show_nav_level = int(show_nav_level)
 
-        if startdepth == 0:
-            html_toctree = context["toctree"](**kwargs)
-        else:
+        ancestorname = toctree_obj = None
+        if startdepth > 0:
             # find relevant ancestor page; some pages (search, genindex) won't have one
             ancestorname, toctree_obj = _get_ancestor_pagename(
                 app=app, pagename=pagename, startdepth=startdepth
@@ -412,6 +376,44 @@ def add_toctree_functions(
                     "ancestor found to act as root node. Please report this to theme "
                     "developers."
                 )
+
+        # Resolving and soup-ifying the sidebar toctree is expensive on large sites.
+        # When `collapse=False` (i.e., theme option `collapse_navigation=False`, which
+        # is our default; note that Sphinx's `_get_local_toctree` defaults to
+        # `collapse=True`), the resolved toctree has the same structure for every page
+        # under the same ancestor -- only the "current" markers (`current`/`active`
+        # classes and open `<details>`) and the relative link targets differ. So we
+        # cache the finished soup and, on a hit, just move the "current" markers from
+        # the previously rendered page's toctree entry to this page's entry.
+        cache_key = None
+        if kind == "sidebar" and ancestorname and not kwargs.get("collapse", True):
+            if not hasattr(app, "_pst_sidebar_toctree_cache"):
+                app._pst_sidebar_toctree_cache = {}
+            sidebar_cache = app._pst_sidebar_toctree_cache
+            # relative link targets only match for pages in the same directory
+            cache_key = (
+                ancestorname,
+                posixpath.dirname(pagename),
+                show_nav_level,
+                tuple(sorted(kwargs.items())),
+            )
+            if (cached := sidebar_cache.get(cache_key)) is not None:
+                cached_pagename, cached_soup = cached
+                patched = _move_current_markers(
+                    cached_soup,
+                    old_href=app.builder.get_relative_uri(pagename, cached_pagename),
+                    new_href=app.builder.get_relative_uri(cached_pagename, pagename),
+                    show_nav_level=show_nav_level,
+                )
+                if patched:
+                    cached[0] = pagename
+                    return str(cached_soup)
+                # this page has no entry in the cached soup (e.g., it was pruned by
+                # `maxdepth`), so fall through and build its sidebar the slow way
+
+        if startdepth == 0:
+            html_toctree = context["toctree"](**kwargs)
+        else:
             # select the "active" subset of the navigation tree for the sidebar
             toctree_element = get_nonroot_toctree(
                 app, pagename, ancestorname, toctree_obj, **kwargs
@@ -462,13 +464,13 @@ def add_toctree_functions(
             add_collapse_checkboxes(soup)
 
             # Open the sidebar navigation to the proper depth
-            for ii in range(int(show_nav_level)):
+            for ii in range(show_nav_level):
                 for details in soup.select(f"li.toctree-l{ii} > details"):
                     details["open"] = "open"
 
-        if cache_root is not None and soup.find("a", href="#") is not None:
-            # Only cache when this page's own entry (rendered with href="#")
-            # is present, so that later cache hits can find and demote it.
+        if cache_key is not None and soup.find("a", href="#") is not None:
+            # only cache a soup containing this page's own entry (rendered with
+            # href="#") so that a later cache hit can find and demote that entry
             sidebar_cache[cache_key] = [pagename, soup]
 
         return soup
@@ -579,16 +581,17 @@ def _set_current_chain(anchor, *, current: bool, show_nav_level: int) -> None:
     """Add or remove current/active/open markers on an entry's ancestor chain."""
     for parent in anchor.parents:
         if parent.name == "li":
-            classes = [
-                cls
-                for cls in parent.get("class", [])
-                if cls not in ("current", "active")
-            ]
-            if current:
-                # match the class order of a freshly built toctree, where
-                # Sphinx adds "current" right after "toctree-l*"
-                classes[1:1] = ["current", "active"]
-            parent["class"] = classes
+            classes = parent.get("class", [])
+            # `li.toctree-l0` is a wrapper the theme synthesizes around a part's
+            # caption when `show_nav_level=0`; fresh builds never mark it current
+            is_part = "toctree-l0" in classes
+            if not is_part:
+                classes = [cls for cls in classes if cls not in ("current", "active")]
+                if current:
+                    # match the class order of a freshly built toctree, where
+                    # Sphinx adds "current" right after "toctree-l*"
+                    classes[1:1] = ["current", "active"]
+                parent["class"] = classes
             # Every <details> disclosure widget added by `add_collapse_checkboxes`
             # is a direct child of an <li> on the chain -- including the current
             # entry's own <li> (when the current page has child pages), whose
@@ -596,16 +599,18 @@ def _set_current_chain(anchor, *, current: bool, show_nav_level: int) -> None:
             details = parent.find("details", recursive=False)
             if details is not None:
                 if current:
-                    details["open"] = "open"
+                    # fresh builds give an open part a bare `open` attribute
+                    details["open"] = None if is_part else "open"
                 elif not any(
-                    f"toctree-l{level}" in parent.get("class", [])
-                    for level in range(show_nav_level)
+                    f"toctree-l{level}" in classes for level in range(show_nav_level)
                 ):
                     # (keep <details> open where mandated by ``show_nav_level``)
                     details.attrs.pop("open", None)
         elif parent.name == "ul":
             classes = [cls for cls in parent.get("class", []) if cls != "current"]
-            if current:
+            # `ul.list-caption` is the theme-synthesized wrapper around all parts
+            # (`show_nav_level=0`); fresh builds never mark it current
+            if current and "list-caption" not in classes:
                 classes.insert(0, "current")
             if classes:
                 parent["class"] = classes
