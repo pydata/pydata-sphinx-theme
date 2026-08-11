@@ -238,6 +238,23 @@ With line numbers
             "This is an intentionally very long line because I want to make sure that we are handling scrollable code blocks correctly."
         )
 
+With prompts
+~~~~~~~~~~~~
+
+Pygments tags the prompts below as ``Generic.Prompt``, which the theme renders
+unselectable so that selecting the block copies only the commands.
+
+.. code-block:: console
+
+    $ python -m pip install pydata-sphinx-theme
+    $ sphinx-build -b html docs docs/_build/html
+
+.. code-block:: pycon
+
+    >>> import pydata_sphinx_theme
+    >>> pydata_sphinx_theme.__version__
+    '0.0.0'
+
 Without highlighting
 ~~~~~~~~~~~~~~~~~~~~
 
