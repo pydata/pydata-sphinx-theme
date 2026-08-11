@@ -377,39 +377,18 @@ def add_toctree_functions(
                     "developers."
                 )
 
-        # Resolving and soup-ifying the sidebar toctree is expensive on large sites.
-        # When `collapse=False` (i.e., theme option `collapse_navigation=False`, which
-        # is our default; note that Sphinx's `_get_local_toctree` defaults to
-        # `collapse=True`), the resolved toctree has the same structure for every page
-        # under the same ancestor -- only the "current" markers (`current`/`active`
-        # classes and open `<details>`) and the relative link targets differ. So we
-        # cache the finished soup and, on a hit, just move the "current" markers from
-        # the previously rendered page's toctree entry to this page's entry.
-        cache_key = None
-        if kind == "sidebar" and ancestorname and not kwargs.get("collapse", True):
-            if not hasattr(app, "_pst_sidebar_toctree_cache"):
-                app._pst_sidebar_toctree_cache = {}
-            sidebar_cache = app._pst_sidebar_toctree_cache
-            # relative link targets only match for pages in the same directory
-            cache_key = (
-                ancestorname,
-                posixpath.dirname(pagename),
-                show_nav_level,
-                tuple(sorted(kwargs.items())),
+        # Resolving and soup-ifying the sidebar toctree below is expensive on
+        # large sites, so where possible we serve it from a cache instead
+        # (see _sidebar_cache_key for when and _patch_cached_sidebar for how)
+        cache_key = _sidebar_cache_key(
+            kind, ancestorname, pagename, show_nav_level, kwargs
+        )
+        if cache_key is not None:
+            cached_html = _patch_cached_sidebar(
+                app, cache_key, pagename, show_nav_level
             )
-            if (cached := sidebar_cache.get(cache_key)) is not None:
-                cached_pagename, cached_soup = cached
-                patched = _move_current_markers(
-                    cached_soup,
-                    old_href=app.builder.get_relative_uri(pagename, cached_pagename),
-                    new_href=app.builder.get_relative_uri(cached_pagename, pagename),
-                    show_nav_level=show_nav_level,
-                )
-                if patched:
-                    cached[0] = pagename
-                    return str(cached_soup)
-                # this page has no entry in the cached soup (e.g., it was pruned by
-                # `maxdepth`), so fall through and build its sidebar the slow way
+            if cached_html is not None:
+                return cached_html
 
         if startdepth == 0:
             html_toctree = context["toctree"](**kwargs)
@@ -471,7 +450,7 @@ def add_toctree_functions(
         if cache_key is not None and soup.find("a", href="#") is not None:
             # only cache a soup containing this page's own entry (rendered with
             # href="#") so that a later cache hit can find and demote that entry
-            sidebar_cache[cache_key] = [pagename, soup]
+            _sidebar_cache(app)[cache_key] = [pagename, soup]
 
         return soup
 
@@ -545,6 +524,67 @@ def add_toctree_functions(
     context["generate_toctree_html"] = generate_toctree_html
     context["generate_toc_html"] = generate_toc_html
     context["navbar_align_class"] = navbar_align_class
+
+
+def _sidebar_cache_key(
+    kind: str,
+    ancestorname: str | None,
+    pagename: str,
+    show_nav_level: int,
+    kwargs: dict,
+) -> tuple | None:
+    """Return the sidebar toctree cache key for this page, or None if uncacheable.
+
+    When `collapse=False` (i.e., theme option `collapse_navigation=False`, which
+    is our default; note that Sphinx's `_get_local_toctree` defaults to
+    `collapse=True`), the resolved toctree has the same structure for every page
+    under the same ancestor -- only the "current" markers (`current`/`active`
+    classes and open `<details>`) and the relative link targets differ. So the
+    finished soup can be shared by all pages in the same directory (same
+    relative link targets) below the same ancestor, provided the "current"
+    markers are moved to each page's own toctree entry (_patch_cached_sidebar).
+    """
+    if kind != "sidebar" or ancestorname is None or kwargs.get("collapse", True):
+        return None
+    return (
+        ancestorname,
+        posixpath.dirname(pagename),
+        show_nav_level,
+        tuple(sorted(kwargs.items())),
+    )
+
+
+def _sidebar_cache(app: Sphinx) -> dict:
+    """Return the per-build sidebar toctree cache, stored on the Sphinx app."""
+    if not hasattr(app, "_pst_sidebar_toctree_cache"):
+        app._pst_sidebar_toctree_cache = {}
+    return app._pst_sidebar_toctree_cache
+
+
+def _patch_cached_sidebar(
+    app: Sphinx, cache_key: tuple, pagename: str, show_nav_level: int
+) -> str | None:
+    """Return this page's sidebar HTML by patching a cached sibling page's soup.
+
+    Return None (and leave the cache unmodified) if no soup is cached under
+    `cache_key` yet, or if the cached soup contains no entry for this page
+    (e.g., it was pruned by `maxdepth`) -- the caller then builds the sidebar
+    the slow way.
+    """
+    cached = _sidebar_cache(app).get(cache_key)
+    if cached is None:
+        return None
+    cached_pagename, cached_soup = cached
+    patched = _move_current_markers(
+        cached_soup,
+        old_href=app.builder.get_relative_uri(pagename, cached_pagename),
+        new_href=app.builder.get_relative_uri(cached_pagename, pagename),
+        show_nav_level=show_nav_level,
+    )
+    if not patched:
+        return None
+    cached[0] = pagename  # the "current" markers are now on this page's entry
+    return str(cached_soup)
 
 
 def _move_current_markers(
