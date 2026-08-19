@@ -381,7 +381,11 @@ def add_toctree_functions(
         # large sites, so where possible we serve it from a cache instead
         # (see _sidebar_cache_key for when and _patch_cached_sidebar for how)
         cache_key = _sidebar_cache_key(
-            kind, ancestorname, pagename, show_nav_level, kwargs
+            kind,
+            ancestorname,
+            app.builder.get_target_uri(pagename),
+            show_nav_level,
+            kwargs,
         )
         if cache_key is not None:
             cached_html = _patch_cached_sidebar(
@@ -529,7 +533,7 @@ def add_toctree_functions(
 def _sidebar_cache_key(
     kind: str,
     ancestorname: str | None,
-    pagename: str,
+    page_uri: str,
     show_nav_level: int,
     kwargs: dict,
 ) -> tuple | None:
@@ -540,15 +544,23 @@ def _sidebar_cache_key(
     `collapse=True`), the resolved toctree has the same structure for every page
     under the same ancestor -- only the "current" markers (`current`/`active`
     classes and open `<details>`) and the relative link targets differ. So the
-    finished soup can be shared by all pages in the same directory (same
-    relative link targets) below the same ancestor, provided the "current"
-    markers are moved to each page's own toctree entry (_patch_cached_sidebar).
+    finished soup can be shared by all pages written to the same output
+    directory (same relative link targets) below the same ancestor, provided the
+    "current" markers are moved to each page's own toctree entry
+    (_patch_cached_sidebar).
+
+    `page_uri` is this page's output URI (`builder.get_target_uri()`), not its
+    docname: builders whose page URIs are directories rather than files (e.g.
+    "dirhtml") give every page its own output directory, so no two pages can
+    share a sidebar and nothing is cached for them.
     """
     if kind != "sidebar" or ancestorname is None or kwargs.get("collapse", True):
         return None
+    if not page_uri or page_uri.endswith("/"):
+        return None
     return (
         ancestorname,
-        posixpath.dirname(pagename),
+        posixpath.dirname(page_uri),
         show_nav_level,
         tuple(sorted(kwargs.items())),
     )
