@@ -177,7 +177,7 @@ pre {
   display: none;
 
   // #2411: anchor on bottom to prevent overflowing on mobile
-  bottom: 2dvh;
+  bottom: 1.5rem;
   left: 50vw;
   transform: translate(-50%);
   color: var(--pst-color-secondary-text);
