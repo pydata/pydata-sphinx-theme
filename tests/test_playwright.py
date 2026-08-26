@@ -324,6 +324,70 @@ class TestCollapseSidebarButton:
 
         _check_test_site(self.site_name, site_path, check_collapse_expand)
 
+    @pytest.mark.parametrize("squeezed", [False, True], ids=["expanded", "squeezed"])
+    def test_sidebar_width_not_animated_across_breakpoint(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str, squeezed: bool
+    ) -> None:
+        """Crossing the sidebar breakpoint must swap the width without animating."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def get_width(locator):
+            bbox = locator.bounding_box()
+            assert bbox is not None
+            return bbox["width"]
+
+        def settle_a_frame():
+            # Give the browser a frame to start whatever the new styles ask for
+            page.evaluate("""
+                () =>
+                    new Promise((done) =>
+                        requestAnimationFrame(() => requestAnimationFrame(done)),
+                    )
+            """)
+
+        def running_animations(locator):
+            return locator.evaluate(
+                "el => el.getAnimations().map((a) => a.transitionProperty)"
+            )
+
+        def check_width_after_breakpoint_flip():
+            page.set_viewport_size({"width": 1200, "height": 900})
+            page.goto(
+                urljoin(
+                    url_base, f"playwright_tests/{self.site_name}/section1/index.html"
+                )
+            )
+            page.wait_for_load_state("load")
+
+            sidebar = page.locator("#pst-primary-sidebar")
+            button = page.locator("#pst-collapse-sidebar-button")
+
+            if squeezed:
+                button.click()
+                # aria-expanded flips once the squeeze transition has finished
+                expect(button).to_have_attribute("aria-expanded", "false")
+
+            page.set_viewport_size({"width": 800, "height": 900})
+            settle_a_frame()
+            assert running_animations(sidebar) == []
+
+            page.set_viewport_size({"width": 1200, "height": 900})
+            settle_a_frame()
+            assert running_animations(sidebar) == []
+
+            flipped_width = get_width(sidebar)
+            if squeezed:
+                # 4rem at the browser's default 16px font size
+                assert flipped_width == pytest.approx(64, abs=1)
+
+            page.wait_for_timeout(600)
+            assert get_width(sidebar) == pytest.approx(flipped_width, abs=1)
+
+        _check_test_site(self.site_name, site_path, check_width_after_breakpoint_flip)
+
     def test_collapse_sidebar_button_not_in_mobile(
         self, sphinx_build_factory: Callable, page: Page, url_base: str
     ) -> None:
@@ -392,3 +456,305 @@ class TestCollapseSidebarButton:
             expect(button).not_to_be_attached()
 
         _check_test_site(self.site_name, site_path, check_no_collapse_sidebar_button)
+
+
+# ----------------- Test functions: mobile sidebar drawers -----------------------------
+# Below both breakpoints both sidebars are drawers; between them, only the secondary.
+NARROW_VIEWPORT = {"width": 800, "height": 900}
+MEDIUM_VIEWPORT = {"width": 1100, "height": 900}
+WIDE_VIEWPORT = {"width": 1300, "height": 900}
+
+
+class TestSidebarDrawers:
+    """Group the tests for the narrow-screen sidebar drawers."""
+
+    site_name = "sidebars"
+    page_path = "section1/index.html"
+
+    def _open(self, page: Page, url_base: str, viewport: dict) -> None:
+        """Load the test page at `viewport`, with both sidebars present."""
+        page.set_viewport_size(viewport)
+        page.goto(
+            urljoin(url_base, f"playwright_tests/{self.site_name}/{self.page_path}")
+        )
+        page.wait_for_load_state("load")
+
+    def _focused_is_visible(self, page: Page) -> bool:
+        """Whether focus is on something the reader can see and use."""
+        return page.evaluate("""
+            () => {
+                const el = document.activeElement;
+                return Boolean(
+                    el && el !== document.body && el.getClientRects().length > 0,
+                );
+            }
+        """)
+
+    @pytest.mark.parametrize(
+        ("sidebar_id", "toggle_name", "crossed_viewport"),
+        [
+            ("pst-primary-sidebar", "Site navigation", MEDIUM_VIEWPORT),
+            ("pst-secondary-sidebar", "On this page", WIDE_VIEWPORT),
+        ],
+    )
+    def test_drawer_closes_when_its_breakpoint_is_crossed(
+        self,
+        sphinx_build_factory: Callable,
+        page: Page,
+        url_base: str,
+        sidebar_id: str,
+        toggle_name: str,
+        crossed_viewport: dict,
+    ) -> None:
+        """Widening past a sidebar's breakpoint must close its open drawer."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_drawer_closed_after_flip():
+            self._open(page, url_base, NARROW_VIEWPORT)
+
+            sidebar = page.locator(f"#{sidebar_id}")
+            dialog = page.locator(f"#{sidebar_id}-modal")
+
+            page.get_by_role("button", name=toggle_name).click()
+            expect(dialog).to_be_visible()
+            assert sidebar.locator("> *").count() == 0
+
+            page.set_viewport_size(crossed_viewport)
+
+            # This close is not animated: the drawer must already be parked
+            page.wait_for_function(
+                f"""() => !document.getElementById("{sidebar_id}-modal").open"""
+            )
+
+            # Filtered to what a reader can see: Chromium reports a display
+            # transition as the dialog leaves the top layer, drawing nothing
+            visible_animations = dialog.evaluate(
+                """el => el.getAnimations({ subtree: true })
+                    .map((a) => a.transitionProperty)
+                    .filter((name) => ["translate", "opacity"].includes(name))"""
+            )
+            assert visible_animations == []
+
+            parked = "-100%" if sidebar_id == "pst-primary-sidebar" else "100%"
+            assert dialog.evaluate("el => getComputedStyle(el).translate") == parked
+
+            # The drawer has left the top layer, so no backdrop remains
+            assert dialog.evaluate("el => el.matches(':modal')") is False
+
+            # Wait on the sidebar filling up: the nodes move back on `close`
+            expect(sidebar.locator("> *").first).to_be_attached()
+
+            assert self._focused_is_visible(page)
+
+            expect(sidebar).to_be_visible()
+            assert sidebar.locator("> *").count() > 0
+
+            assert page.locator("dialog[open]").count() == 0
+
+            header_link = page.locator(".bd-header a[href]").first
+            header_link.focus()
+            expect(header_link).to_be_focused()
+
+        _check_test_site(self.site_name, site_path, check_drawer_closed_after_flip)
+
+    def test_only_one_drawer_open_at_a_time(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """Opening one drawer must close the other."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_second_drawer_replaces_first():
+            self._open(page, url_base, NARROW_VIEWPORT)
+
+            primary_sidebar = page.locator("#pst-primary-sidebar")
+            primary_dialog = page.locator("#pst-primary-sidebar-modal")
+            secondary_dialog = page.locator("#pst-secondary-sidebar-modal")
+            secondary_toggle = page.get_by_role("button", name="On this page")
+
+            page.get_by_role("button", name="Site navigation").click()
+            expect(primary_dialog).to_be_visible()
+
+            # The open modal makes this toggle inert; deliver the click as AT does
+            secondary_toggle.dispatch_event("click")
+
+            expect(secondary_dialog).to_be_visible()
+            expect(primary_dialog).not_to_be_visible()
+            assert page.locator("dialog[open]").count() == 1
+
+            expect(primary_sidebar.locator("> *").first).to_be_attached()
+            assert secondary_dialog.locator("> *").count() > 0
+
+            assert page.evaluate("""
+                () =>
+                    document
+                        .getElementById("pst-secondary-sidebar-modal")
+                        .contains(document.activeElement)
+            """)
+
+            page.keyboard.press("Escape")
+            expect(secondary_dialog).not_to_be_visible()
+            expect(secondary_toggle).to_be_focused()
+
+        _check_test_site(self.site_name, site_path, check_second_drawer_replaces_first)
+
+    def test_drawer_toggles_report_their_state(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """Each toggle must name the drawer it controls and say whether it is open."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_toggle_state():
+            self._open(page, url_base, NARROW_VIEWPORT)
+
+            for toggle_name, sidebar_id in [
+                ("Site navigation", "pst-primary-sidebar"),
+                ("On this page", "pst-secondary-sidebar"),
+            ]:
+                toggle = page.get_by_role("button", name=toggle_name)
+                expect(toggle).to_have_attribute("aria-controls", f"{sidebar_id}-modal")
+                expect(toggle).to_have_attribute("aria-expanded", "false")
+
+                toggle.click()
+                expect(toggle).to_have_attribute("aria-expanded", "true")
+
+                page.keyboard.press("Escape")
+                expect(toggle).to_have_attribute("aria-expanded", "false")
+
+            # By class: above the breakpoint the button is hidden and has no role
+            primary_toggle = page.locator("button.primary-toggle")
+            primary_toggle.click()
+            expect(primary_toggle).to_have_attribute("aria-expanded", "true")
+            page.set_viewport_size(MEDIUM_VIEWPORT)
+            expect(primary_toggle).to_have_attribute("aria-expanded", "false")
+
+        _check_test_site(self.site_name, site_path, check_toggle_state)
+
+    def test_toggle_closes_the_drawer_it_opened(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """Pressing a toggle a second time must close the drawer it opened."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_toggle_closes():
+            self._open(page, url_base, NARROW_VIEWPORT)
+
+            dialog = page.locator("#pst-primary-sidebar-modal")
+            sidebar = page.locator("#pst-primary-sidebar")
+            toggle = page.get_by_role("button", name="Site navigation")
+
+            toggle.click()
+            expect(dialog).to_be_visible()
+
+            # The open modal makes this toggle inert; deliver the click as AT does
+            toggle.dispatch_event("click")
+
+            expect(dialog).not_to_be_visible()
+            expect(sidebar.locator("> *").first).to_be_attached()
+            expect(toggle).to_be_focused()
+
+            # Nothing keeps the drawer in the top layer after it has left
+            assert dialog.evaluate("el => el.matches(':modal')") is False
+
+        _check_test_site(self.site_name, site_path, check_toggle_closes)
+
+    def test_drawer_does_not_move_the_page_behind_it(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """A drawer must leave the reader where they were on the page behind it."""
+        # This site's fixture page is long enough to scroll
+        site_name = "version_switcher"
+        site_path = _build_test_site(
+            site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def press(selector: str) -> None:
+            """Press the button where it sits, without scrolling it into view."""
+            box = page.locator(selector).bounding_box()
+            assert box is not None
+            page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+
+        def scroll_position() -> int:
+            return page.evaluate("() => Math.round(window.scrollY)")
+
+        def check_page_does_not_move():
+            page.set_viewport_size(NARROW_VIEWPORT)
+            page.goto(
+                urljoin(url_base, f"playwright_tests/{site_name}/fixture_blocks.html")
+            )
+            page.wait_for_load_state("load")
+
+            dialog = page.locator("#pst-primary-sidebar-modal")
+            sidebar = page.locator("#pst-primary-sidebar")
+            toggle = page.locator("button.primary-toggle")
+
+            page.evaluate("() => window.scrollTo(0, 400)")
+            reading_position = scroll_position()
+            assert reading_position > 0
+
+            # Do this round first, while nothing on the page has been focused
+            toggle.dispatch_event("click")
+            expect(dialog).to_be_visible()
+            assert scroll_position() == reading_position
+
+            page.keyboard.press("Escape")
+            expect(sidebar.locator("> *").first).to_be_attached()
+            expect(toggle).to_be_focused()
+            assert scroll_position() == reading_position
+
+            press("button.primary-toggle")
+            expect(dialog).to_be_visible()
+            assert scroll_position() == reading_position
+
+            page.keyboard.press("Escape")
+            expect(sidebar.locator("> *").first).to_be_attached()
+            assert scroll_position() == reading_position
+
+        _check_test_site(site_name, site_path, check_page_does_not_move)
+
+    def test_breakpoint_close_focuses_the_article_when_there_is_no_sidebar(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """A page with no primary sidebar still has somewhere to put focus."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_focus_lands_on_the_article():
+            page.set_viewport_size(NARROW_VIEWPORT)
+            page.goto(
+                urljoin(
+                    url_base,
+                    f"playwright_tests/{self.site_name}/section2/no-sidebar.html",
+                )
+            )
+            page.wait_for_load_state("load")
+
+            sidebar = page.locator("#pst-primary-sidebar")
+            dialog = page.locator("#pst-primary-sidebar-modal")
+            article = page.locator("#main-content")
+
+            expect(sidebar).to_have_class(re.compile(r"\bhide-on-wide\b"))
+
+            page.get_by_role("button", name="Site navigation").click()
+            expect(dialog).to_be_visible()
+
+            page.set_viewport_size(MEDIUM_VIEWPORT)
+
+            expect(sidebar).not_to_be_visible()
+            expect(article).to_be_focused()
+
+        _check_test_site(self.site_name, site_path, check_focus_lands_on_the_article)

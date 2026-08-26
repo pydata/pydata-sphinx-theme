@@ -15,7 +15,7 @@
  * And the wide-screen behavior of the sections is defined in their own section
  * .scss files.
  */
-@mixin sliding-drawer($side: "left") {
+@mixin drawer-shape($side: "left") {
   position: fixed;
   top: 0;
   z-index: $zindex-modal;
@@ -24,44 +24,110 @@
   width: 75%;
   flex-grow: 0.75;
   max-width: 350px;
-  transition:
-    visibility $animation-time ease-out,
-    margin $animation-time ease-out;
-  visibility: hidden;
   border: 0;
+  background-color: var(--pst-color-background);
 
   @if $side == "right" {
-    margin-right: -75%;
     right: 0;
   } @else {
-    margin-left: -75%;
     left: 0;
   }
 }
 
-.bd-sidebar::backdrop {
-  background-color: black;
-  opacity: 0.5;
-}
-
 .bd-sidebar-primary {
   @include media-breakpoint-down($breakpoint-sidebar-primary) {
-    @include sliding-drawer("left");
-  }
+    @include drawer-shape("left");
 
-  &[open] {
-    margin-left: 0;
-    visibility: visible;
+    margin-left: -75%;
+    visibility: hidden;
   }
 }
 
 .bd-sidebar-secondary {
   @include media-breakpoint-down($breakpoint-sidebar-secondary) {
-    @include sliding-drawer("right");
+    @include drawer-shape("right");
+
+    margin-right: -75%;
+    visibility: hidden;
   }
+}
+
+#pst-primary-sidebar-modal {
+  @include drawer-shape("left");
+
+  // The browser's dialog styles pin both `left` and `right`, so the free margin holds the drawer to its edge.
+  margin-inline: 0 auto;
+  translate: -100%;
+
+  // A border, not padding: the sidebars set their own padding.
+  border-left: env(safe-area-inset-left, 0) solid transparent;
+}
+
+#pst-secondary-sidebar-modal {
+  @include drawer-shape("right");
+
+  margin-inline: auto 0;
+  translate: 100%;
+  border-right: env(safe-area-inset-right, 0) solid transparent;
+}
+
+#pst-primary-sidebar-modal,
+#pst-secondary-sidebar-modal {
+  visibility: visible;
+  overscroll-behavior: contain;
+  border-top: env(safe-area-inset-top, 0) solid transparent;
+  border-bottom: env(safe-area-inset-bottom, 0) solid transparent;
 
   &[open] {
-    margin-right: 0;
-    visibility: visible;
+    translate: 0;
   }
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #pst-primary-sidebar-modal,
+  #pst-secondary-sidebar-modal {
+    transition:
+      translate $animation-time ease-out,
+      display $animation-time allow-discrete,
+      overlay $animation-time allow-discrete;
+
+    &::backdrop {
+      opacity: 0;
+      transition:
+        opacity $animation-time ease-out,
+        display $animation-time allow-discrete,
+        overlay $animation-time allow-discrete;
+    }
+
+    &[open]::backdrop {
+      opacity: 1;
+    }
+  }
+
+  @starting-style {
+    #pst-primary-sidebar-modal[open] {
+      translate: -100%;
+    }
+
+    #pst-secondary-sidebar-modal[open] {
+      translate: 100%;
+    }
+
+    #pst-primary-sidebar-modal[open]::backdrop,
+    #pst-secondary-sidebar-modal[open]::backdrop {
+      opacity: 0;
+    }
+  }
+}
+
+// Scoped to the drawers: other dialogs (search, ones in page content) never
+// locked the page scroll and must not start to.
+// Without the stable gutter the page shifts sideways when the scrollbar goes.
+html:has(#pst-primary-sidebar-modal[open], #pst-secondary-sidebar-modal[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
 }

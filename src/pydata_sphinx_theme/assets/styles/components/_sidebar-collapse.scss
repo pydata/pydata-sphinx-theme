@@ -81,99 +81,108 @@
     }
   }
 
-  // Define transitions (if the environment permits animation)
-  @media (prefers-reduced-motion: no-preference) {
-    $duration: 400ms;
-
-    transition: width $duration ease;
-
-    #pst-collapse-sidebar-button {
-      .pst-icon {
-        transition:
-          transform $duration ease,
-          padding $duration ease;
-      }
-    }
-
-    @each $selector,
-      $delay
-        in (
-          // When the sidebar is collapsing, we need to delay the transition of
-          // properties that make the elements invisible so the user can see the
-          // opacity transition from 1 to 0 first.
-          ".pst-squeeze": $duration,
-          // When the sidebar is expanding, it's the opposite: we need to transition
-          // the properties that make the elements visible immediately so the user
-          // can watch the opacity transition from 0 to 1.
-          ":not(.pst-squeeze)": "0s"
-        )
-    {
-      &#{$selector} {
-        .pst-collapse-sidebar-label {
-          transition:
-            opacity $duration linear,
-            visibility 0s linear $delay,
-            width 0s linear $delay,
-            height 0s linear $delay;
-        }
-
-        .sidebar-primary-item:not(.pst-sidebar-collapse) {
-          transition:
-            opacity $duration linear,
-            visibility 0s linear $delay;
-        }
-
-        // There is no need to transition any other properties on the expand
-        // label (width, height, opacity) because it is always visually hidden
-        // (i.e., width 0, height 0, etc), but toggles its availability to
-        // screen readers as the sidebar collapses or expands via the
-        // `visibility` property.
-        .pst-expand-sidebar-label {
-          transition: visibility 0s linear $delay;
-        }
-      }
-    }
+  // Unscoped: the squeezed width must hold on both sides of the breakpoint,
+  // or crossing it while squeezed would change the transitioned property
+  // (sections/_sidebar-primary.scss) and animate the width.
+  &.pst-squeeze {
+    --pst-sidebar-primary-width: 4rem;
   }
 
-  // Why "squeeze" and not "collapse"? Bootstrap uses the class name `collapse`
-  // so it seemed best to avoid possible confusion. (Later the class name was
-  // prefixed with `pst-`.)
-  &.pst-squeeze {
-    width: 4rem;
-    overflow: hidden;
+  // The collapsed state only applies while the sidebar is a column, not a drawer.
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    // Define transitions (if the environment permits animation)
+    @media (prefers-reduced-motion: no-preference) {
+      $duration: 400ms;
 
-    #pst-collapse-sidebar-button {
-      .pst-icon {
-        transform: translateX(0.25em) rotate(180deg);
+      transition: --pst-sidebar-primary-width $duration ease;
+
+      #pst-collapse-sidebar-button {
+        .pst-icon {
+          transition:
+            transform $duration ease,
+            padding $duration ease;
+        }
       }
 
-      .pst-collapse-sidebar-label {
+      @each $selector,
+        $delay
+          in (
+            // When the sidebar is collapsing, we need to delay the transition of
+            // properties that make the elements invisible so the user can see the
+            // opacity transition from 1 to 0 first.
+            ".pst-squeeze": $duration,
+            // When the sidebar is expanding, it's the opposite: we need to transition
+            // the properties that make the elements visible immediately so the user
+            // can watch the opacity transition from 0 to 1.
+            ":not(.pst-squeeze)": 0s
+          )
+      {
+        &#{$selector} {
+          .pst-collapse-sidebar-label {
+            transition:
+              opacity $duration linear,
+              visibility 0s linear $delay,
+              width 0s linear $delay,
+              height 0s linear $delay;
+          }
+
+          .sidebar-primary-item:not(.pst-sidebar-collapse) {
+            transition:
+              opacity $duration linear,
+              visibility 0s linear $delay;
+          }
+
+          // There is no need to transition any other properties on the expand
+          // label (width, height, opacity) because it is always visually hidden
+          // (i.e., width 0, height 0, etc), but toggles its availability to
+          // screen readers as the sidebar collapses or expands via the
+          // `visibility` property.
+          .pst-expand-sidebar-label {
+            transition: visibility 0s linear $delay;
+          }
+        }
+      }
+    }
+
+    // Why "squeeze" and not "collapse"? Bootstrap uses the class name `collapse`
+    // so it seemed best to avoid possible confusion. (Later the class name was
+    // prefixed with `pst-`.)
+    &.pst-squeeze {
+      overflow: hidden;
+
+      #pst-collapse-sidebar-button {
+        .pst-icon {
+          transform: translateX(0.25em) rotate(180deg);
+        }
+
+        .pst-collapse-sidebar-label {
+          opacity: 0;
+          visibility: hidden;
+          width: 0;
+          height: 0;
+        }
+
+        .pst-expand-sidebar-label {
+          visibility: visible;
+        }
+      }
+
+      .sidebar-primary-item:not(.pst-sidebar-collapse) {
         opacity: 0;
         visibility: hidden;
-        width: 0;
-        height: 0;
       }
+    }
 
+    &:not(.pst-squeeze) {
+      // When the sidebar is expanded, hide the "Expand Sidebar" label.
       .pst-expand-sidebar-label {
-        visibility: visible;
+        visibility: hidden;
       }
-    }
 
-    .sidebar-primary-item:not(.pst-sidebar-collapse) {
-      opacity: 0;
-      visibility: hidden;
+      // This block is shorter than its counterpart above because there's no need,
+      // for example, to explicitly set `visibility: visible` or `opacity: 1` on
+      // the collapse label and sidebar subsections because those are the default
+      // values.
     }
-  }
-
-  &:not(.pst-squeeze) {
-    // When the sidebar is expanded, hide the "Expand Sidebar" label.
-    .pst-expand-sidebar-label {
-      visibility: hidden;
-    }
-
-    // This block is shorter than its counterpart above because there's no need,
-    // for example, to explicitly set `visibility: visible` or `opacity: 1` on
-    // the collapse label and sidebar subsections because those are the default
-    // values.
   }
 }

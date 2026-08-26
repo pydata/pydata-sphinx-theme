@@ -1,14 +1,4 @@
-html {
-  /*****************************************************************************
-  * Overall Layout Variables
-  */
-
-  // Header height will impact the top offset for many sections
-  // Article header is 66% of Header
-  --pst-header-height: 4rem;
-  --pst-header-article-height: calc(var(--pst-header-height) * 2 / 3);
-  --pst-sidebar-secondary: 17rem;
-}
+@use "sass:map";
 
 /*******************************************************************************
 * Breakpoints that trigger UI changes
@@ -21,6 +11,29 @@ html {
 $breakpoint-sidebar-primary: lg; // When we collapse the primary sidebar
 $breakpoint-sidebar-secondary: xl; // When we collapse the secondary sidebar
 $breakpoint-page-width: 88rem; // taken from sphinx-basic-ng, which we are ultimately going to inherit
+
+html {
+  /*****************************************************************************
+  * Overall Layout Variables
+  */
+
+  // Header height will impact the top offset for many sections
+  // Article header is 66% of Header
+  --pst-header-height: 4rem;
+  --pst-header-article-height: calc(var(--pst-header-height) * 2 / 3);
+  --pst-sidebar-secondary: 17rem;
+
+  // Published for the drawer script, whose matchMedia queries need the same
+  // widths the stylesheet's own media queries use.
+  --pst-breakpoint-sidebar-primary: #{map.get(
+      $grid-breakpoints,
+      $breakpoint-sidebar-primary
+    )};
+  --pst-breakpoint-sidebar-secondary: #{map.get(
+      $grid-breakpoints,
+      $breakpoint-sidebar-secondary
+    )};
+}
 
 /*******************************************************************************
 * Define the animation behaviour

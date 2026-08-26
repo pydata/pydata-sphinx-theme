@@ -1429,3 +1429,21 @@ def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
     # Hence the secondary sidebar has all its templates empty and should be removed
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     assert not sphinx_build.html_tree("page1.html").select("div.bd-sidebar-secondary")
+
+
+def test_sidebar_breakpoints_match_stylesheet() -> None:
+    """The stylesheet publishes the breakpoints under the names the JS reads."""
+    assets = Path(__file__).parents[1] / "src" / "pydata_sphinx_theme" / "assets"
+    layout_scss = (assets / "styles" / "variables" / "_layout.scss").read_text()
+    theme_js = (assets / "scripts" / "pydata-sphinx-theme.js").read_text()
+
+    for sidebar in ("primary", "secondary"):
+        prop = f"--pst-breakpoint-sidebar-{sidebar}"
+
+        published = re.search(
+            rf"{prop}:\s*#\{{map\.get\(\s*\$grid-breakpoints,\s*"
+            rf"\$breakpoint-sidebar-{sidebar}\s*\)\}}",
+            layout_scss,
+        )
+        assert published is not None, f"{prop} is not published by _layout.scss"
+        assert f'inFlowAbove("{prop}")' in theme_js

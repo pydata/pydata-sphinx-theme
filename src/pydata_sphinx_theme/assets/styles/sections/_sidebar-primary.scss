@@ -5,6 +5,13 @@
 
 $sidebar-padding-right: 1rem;
 
+// The collapse button transitions this, not `width`, so the width change at the breakpoint is not animated.
+@property --pst-sidebar-primary-width {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 25%;
+}
+
 .bd-sidebar-primary {
   display: flex;
   flex-direction: column;
@@ -14,6 +21,15 @@ $sidebar-padding-right: 1rem;
   top: var(--pst-header-height);
 
   @include make-col(3);
+
+  // Only the column regime uses the property; below the breakpoint the drawer
+  // width in sections/_sidebar-toggle.scss applies instead, so crossing the
+  // breakpoint changes no transitioned value and animates nothing.
+  @include media-breakpoint-up($breakpoint-sidebar-primary) {
+    --pst-sidebar-primary-width: 25%;
+
+    width: var(--pst-sidebar-primary-width);
+  }
 
   // Borders padding and whitespace
   padding: $sidebar-padding-right;
