@@ -74,6 +74,15 @@ In addition to the general-purpose announcement banner, the theme includes a bui
         "show_version_warning_banner": True,
     }
 
+The banner compares Sphinx's `release configuration value
+<https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-release>`__
+for the current build with the ``version`` of the preferred switcher entry.
+This is separate from ``switcher["version_match"]``, which identifies and
+highlights the current entry in the version switcher. Sphinx also provides a
+shorter `version configuration value
+<https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-version>`__,
+but the warning banner uses ``release``.
+
 .. important::
 
     This functionality relies on the :ref:`version switcher <version-dropdowns>` to determine the version number of the latest stable release.
@@ -89,10 +98,14 @@ In addition to the general-purpose announcement banner, the theme includes a bui
             "preferred": true
         }
 
-    If the active version compares less than the preferred version, the announcement will inform the user that
+    The comparison runs in the browser when the page loads. Updating the switcher
+    ``.json`` can therefore update warning banners on documentation that has
+    already been built.
+
+    If the active ``release`` compares less than the preferred version, the announcement will inform the user that
     they are viewing an older version of the documentation and provide a link to the preferred version. If the
-    version compares greater than the preferred version (or if the version match contains the strings `"dev"`,
-    `"rc"` or `"pre"`), the announcement will say they are viewing an unstable development version instead.
+    release compares greater than the preferred version (or if the release contains the strings ``"dev"``,
+    ``"rc"`` or ``"pre"``), the announcement will say they are viewing an unstable development version instead.
 
 Stick banners to the top of the viewport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
