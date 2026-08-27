@@ -188,11 +188,22 @@ def update_config(app):
         theme_logo["link"] = theme_logo_link
     theme_options["logo"] = theme_logo
 
+    if "templates_skip_empty_check" not in theme_options and hasattr(
+        app.builder, "theme"
+    ):
+        default_tsec = app.builder.theme.get_options().get(
+            "templates_skip_empty_check"
+        ) or ["sidebar-nav-bs.html", "navbar-nav.html"]
+        theme_options["templates_skip_empty_check"] = default_tsec
+
 
 def update_and_remove_templates(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
     """Update template names and assets for page build."""
+    templates_skip_empty_check_config = utils.get_theme_options_dict(app).get(
+        "templates_skip_empty_check", []
+    )
     # Allow for more flexibility in template names
     template_sections = [
         "theme_navbar_start",
@@ -216,7 +227,7 @@ def update_and_remove_templates(
                 context=context,
                 templates=context.get(section, []),
                 section=section,
-                templates_skip_empty_check=["sidebar-nav-bs.html", "navbar-nav.html"],
+                templates_skip_empty_check=templates_skip_empty_check_config,
             )
 
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
