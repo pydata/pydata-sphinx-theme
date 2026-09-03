@@ -966,7 +966,7 @@ async function setupAnnouncementBanner() {
     }
   }
 
-  const { pstAnnouncementUrl } = banner ? banner.dataset : null;
+  const { pstAnnouncementUrl } = banner ? banner.dataset : {};
 
   if (!pstAnnouncementUrl) {
     return;
