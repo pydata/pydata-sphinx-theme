@@ -872,8 +872,19 @@ function setupMobileSidebarKeyboardHandlers() {
     });
 
     // When the dialog is closed, move the nodes (and classes) back to their
-    // original place
-    dialog.addEventListener("close", () => {
+    // original place. Wait for the slide-out (and the backdrop's fade, which
+    // `subtree` includes) to finish first, or the drawer would empty
+    // mid-slide.
+    dialog.addEventListener("close", async () => {
+      await Promise.allSettled(
+        dialog.getAnimations({ subtree: true }).map((a) => a.finished),
+      );
+
+      // Opened again while we waited: the content belongs in the dialog now.
+      if (dialog.open) {
+        return;
+      }
+
       cutAndPasteNodesAndClasses(dialog, sidebar);
     });
   });
