@@ -4,7 +4,7 @@ This page shows off what the documentation looks like when you explicitly tell S
 
 ```python
 html_sidebars = {
-  "path/to/page": [],
+    "path/to/page": [],
 }
 html_theme_options = {
     "secondary_sidebar_items": {
