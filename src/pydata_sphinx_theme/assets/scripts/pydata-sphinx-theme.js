@@ -853,6 +853,7 @@ function setupMobileSidebarKeyboardHandlers() {
       cutAndPasteNodesAndClasses(sidebar, dialog);
 
       dialog.showModal();
+      toggleButton.setAttribute("aria-expanded", "true");
     });
 
     // Listen for clicks on the backdrop in order to close the dialog
@@ -885,6 +886,8 @@ function setupMobileSidebarKeyboardHandlers() {
     // `subtree` includes) to finish first, or the drawer would empty
     // mid-slide.
     dialog.addEventListener("close", async () => {
+      toggleButton.setAttribute("aria-expanded", "false");
+
       await Promise.allSettled(
         dialog.getAnimations({ subtree: true }).map((a) => a.finished),
       );

@@ -661,3 +661,38 @@ class TestSidebarDrawers:
             expect(header_link).to_be_focused()
 
         _check_test_site(self.site_name, site_path, check_drawer_closed_after_flip)
+
+    def test_drawer_toggles_report_their_state(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """Each toggle must name the drawer it controls and say whether it is open."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_toggle_state():
+            self._open(page, url_base, NARROW_VIEWPORT)
+
+            for toggle_name, sidebar_id in [
+                ("Site navigation", "pst-primary-sidebar"),
+                ("On this page", "pst-secondary-sidebar"),
+            ]:
+                toggle = page.get_by_role("button", name=toggle_name)
+                expect(toggle).to_have_attribute("aria-controls", f"{sidebar_id}-modal")
+                expect(toggle).to_have_attribute("aria-expanded", "false")
+
+                toggle.click()
+                expect(toggle).to_have_attribute("aria-expanded", "true")
+
+                page.keyboard.press("Escape")
+                expect(toggle).to_have_attribute("aria-expanded", "false")
+
+            # By class: above the breakpoint the button is hidden and has no role
+            primary_toggle = page.locator("button.primary-toggle")
+            primary_toggle.click()
+            expect(primary_toggle).to_have_attribute("aria-expanded", "true")
+            page.set_viewport_size(MEDIUM_VIEWPORT)
+            expect(primary_toggle).to_have_attribute("aria-expanded", "false")
+
+        _check_test_site(self.site_name, site_path, check_toggle_state)
