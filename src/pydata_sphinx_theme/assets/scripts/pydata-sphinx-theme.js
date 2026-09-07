@@ -843,9 +843,6 @@ function setupMobileSidebarKeyboardHandlers() {
       event.preventDefault();
       event.stopPropagation();
 
-      // Save focus so we can restore it when the dialog closes
-      const previouslyFocused = document.activeElement;
-
       // When we open the dialog, we cut and paste the nodes and classes from
       // the widescreen sidebar into the dialog
       cutAndPasteNodesAndClasses(sidebar, dialog);
@@ -857,17 +854,6 @@ function setupMobileSidebarKeyboardHandlers() {
       // after a tap or click. Focus the drawer itself instead (the dialog has
       // tabindex="-1" for this): Tab still reaches that first control.
       dialog.focus();
-
-      // Restore focus when dialog closes
-      dialog.addEventListener(
-        "close",
-        () => {
-          if (previouslyFocused && previouslyFocused.focus) {
-            previouslyFocused.focus();
-          }
-        },
-        { once: true },
-      );
     });
 
     // Listen for clicks on the backdrop in order to close the dialog
@@ -883,6 +869,19 @@ function setupMobileSidebarKeyboardHandlers() {
         dialog.close();
       }
     });
+
+    // Once the window is wide enough for the sidebar to be a column, the
+    // stylesheet hides the toggle, and an open drawer has nothing left to
+    // show, so close it. Hiding the toggle changes its size, so this runs when
+    // the breakpoint is crossed, not on every resize. The reader did not press
+    // anything, so skip the slide-out: cancel the animations the close
+    // starts, backdrop included.
+    new ResizeObserver(() => {
+      if (dialog.open && getComputedStyle(toggleButton).display === "none") {
+        dialog.close();
+        dialog.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+      }
+    }).observe(toggleButton);
 
     // When the dialog is closed, move the nodes (and classes) back to their
     // original place. Wait for the slide-out (and the backdrop's fade, which
