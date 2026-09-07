@@ -848,6 +848,7 @@ function setupMobileSidebarKeyboardHandlers() {
       cutAndPasteNodesAndClasses(sidebar, dialog);
 
       dialog.showModal();
+      toggleButton.setAttribute("aria-expanded", "true");
 
       // showModal() puts focus on the first control in the drawer, and WebKit
       // (Safari, every iOS browser) then draws a focus ring around it even
@@ -888,6 +889,8 @@ function setupMobileSidebarKeyboardHandlers() {
     // `subtree` includes) to finish first, or the drawer would empty
     // mid-slide.
     dialog.addEventListener("close", async () => {
+      toggleButton.setAttribute("aria-expanded", "false");
+
       await Promise.allSettled(
         dialog.getAnimations({ subtree: true }).map((a) => a.finished),
       );
