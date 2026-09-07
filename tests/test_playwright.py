@@ -593,3 +593,71 @@ class TestSidebarDrawers:
             )
 
         _check_test_site(self.site_name, site_path, check_dialog_slides)
+
+    @pytest.mark.parametrize(
+        ("sidebar_id", "toggle_name", "crossed_viewport"),
+        [
+            ("pst-primary-sidebar", "Site navigation", MEDIUM_VIEWPORT),
+            ("pst-secondary-sidebar", "On this page", WIDE_VIEWPORT),
+        ],
+    )
+    def test_drawer_closes_when_its_breakpoint_is_crossed(
+        self,
+        sphinx_build_factory: Callable,
+        page: Page,
+        url_base: str,
+        sidebar_id: str,
+        toggle_name: str,
+        crossed_viewport: dict,
+    ) -> None:
+        """Widening past a sidebar's breakpoint must close its open drawer."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_drawer_closed_after_flip():
+            self._open(page, url_base, NARROW_VIEWPORT)
+
+            sidebar = page.locator(f"#{sidebar_id}")
+            dialog = page.locator(f"#{sidebar_id}-modal")
+
+            page.get_by_role("button", name=toggle_name).click()
+            expect(dialog).to_be_visible()
+            assert sidebar.locator("> *").count() == 0
+
+            page.set_viewport_size(crossed_viewport)
+
+            # This close is not animated: the drawer must already be parked
+            page.wait_for_function(
+                f"""() => !document.getElementById("{sidebar_id}-modal").open"""
+            )
+
+            # Filtered to what a reader can see: Chromium reports a display
+            # transition as the dialog leaves the top layer, drawing nothing
+            visible_animations = dialog.evaluate(
+                """el => el.getAnimations({ subtree: true })
+                    .map((a) => a.transitionProperty)
+                    .filter((name) => ["translate", "opacity"].includes(name))"""
+            )
+            assert visible_animations == []
+
+            parked = "-100%" if sidebar_id == "pst-primary-sidebar" else "100%"
+            assert dialog.evaluate("el => getComputedStyle(el).translate") == parked
+
+            # The drawer has left the top layer, so no backdrop remains
+            assert dialog.evaluate("el => el.matches(':modal')") is False
+
+            # Wait on the sidebar filling up: the nodes move back on `close`
+            expect(sidebar.locator("> *").first).to_be_attached()
+
+            expect(sidebar).to_be_visible()
+            assert sidebar.locator("> *").count() > 0
+
+            assert page.locator("dialog[open]").count() == 0
+
+            header_link = page.locator(".bd-header a[href]").first
+            header_link.focus()
+            expect(header_link).to_be_focused()
+
+        _check_test_site(self.site_name, site_path, check_drawer_closed_after_flip)
