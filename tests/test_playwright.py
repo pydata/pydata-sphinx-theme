@@ -388,6 +388,49 @@ class TestCollapseSidebarButton:
 
         _check_test_site(self.site_name, site_path, check_width_after_breakpoint_flip)
 
+    def test_collapsed_sidebar_opens_as_a_full_drawer(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str
+    ) -> None:
+        """A sidebar collapsed on a wide window must still open as a full drawer."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_drawer_is_not_squeezed():
+            page.set_viewport_size({"width": 1200, "height": 900})
+            page.goto(
+                urljoin(
+                    url_base, f"playwright_tests/{self.site_name}/section1/index.html"
+                )
+            )
+            page.wait_for_load_state("load")
+
+            button = page.locator("#pst-collapse-sidebar-button")
+            button.click()
+            expect(button).to_have_attribute("aria-expanded", "false")
+
+            page.set_viewport_size({"width": 800, "height": 900})
+            page.get_by_role("button", name="Site navigation").click()
+
+            dialog = page.locator("#pst-primary-sidebar-modal")
+            expect(dialog).to_be_visible()
+            expect(dialog).to_have_class(re.compile(r"\bpst-squeeze\b"))
+
+            box = dialog.bounding_box()
+            assert box is not None
+            # 75% of the viewport, capped at 350px: the drawer, not the 4rem strip
+            assert box["width"] == pytest.approx(350, abs=1)
+
+            # The navigation is readable, not hidden as it is in the squeezed column
+            nav_link = dialog.locator(".bd-links a").first
+            expect(nav_link).to_be_visible()
+            assert (
+                nav_link.evaluate("el => getComputedStyle(el).visibility") == "visible"
+            )
+
+        _check_test_site(self.site_name, site_path, check_drawer_is_not_squeezed)
+
     def test_collapse_sidebar_button_not_in_mobile(
         self, sphinx_build_factory: Callable, page: Page, url_base: str
     ) -> None:
