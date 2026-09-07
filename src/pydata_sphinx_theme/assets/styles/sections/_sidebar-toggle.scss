@@ -15,7 +15,7 @@
  * And the wide-screen behavior of the sections is defined in their own section
  * .scss files.
  */
-@mixin sliding-drawer($side: "left") {
+@mixin drawer-shape($side: "left") {
   position: fixed;
   top: 0;
   z-index: $zindex-modal;
@@ -24,44 +24,115 @@
   width: 75%;
   flex-grow: 0.75;
   max-width: 350px;
-  transition:
-    visibility $animation-time ease-out,
-    margin $animation-time ease-out;
-  visibility: hidden;
   border: 0;
+  background-color: var(--pst-color-background);
 
   @if $side == "right" {
-    margin-right: -75%;
     right: 0;
   } @else {
-    margin-left: -75%;
     left: 0;
   }
 }
 
-.bd-sidebar::backdrop {
-  background-color: black;
-  opacity: 0.5;
-}
-
+// Below the breakpoint the sidebar element itself is parked off screen and
+// hidden. What the reader sees as the drawer is the dialog, styled further down.
 .bd-sidebar-primary {
   @include media-breakpoint-down($breakpoint-sidebar-primary) {
-    @include sliding-drawer("left");
-  }
+    @include drawer-shape("left");
 
-  &[open] {
-    margin-left: 0;
-    visibility: visible;
+    margin-left: -75%;
+    visibility: hidden;
   }
 }
 
 .bd-sidebar-secondary {
   @include media-breakpoint-down($breakpoint-sidebar-secondary) {
-    @include sliding-drawer("right");
+    @include drawer-shape("right");
+
+    margin-right: -75%;
+    visibility: hidden;
   }
+}
+
+#pst-primary-sidebar-modal {
+  @include drawer-shape("left");
+
+  // The browser centres a dialog with `margin: auto` on both sides. Zero the
+  // margin on the drawer's own side so it sits against that edge, and park
+  // it just off screen until it opens.
+  margin-inline: 0 auto;
+  translate: -100%;
+}
+
+#pst-secondary-sidebar-modal {
+  @include drawer-shape("right");
+
+  margin-inline: auto 0;
+  translate: 100%;
+}
+
+#pst-primary-sidebar-modal,
+#pst-secondary-sidebar-modal {
+  // The sidebar's classes move onto the dialog with its content, and above
+  // they hide the sidebar element; the dialog must stay visible.
+  visibility: visible;
+
+  // Scrolling past the end of the drawer must not scroll the page behind it.
+  overscroll-behavior: contain;
 
   &[open] {
-    margin-right: 0;
-    visibility: visible;
+    translate: 0;
   }
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 50%);
+  }
+}
+
+// The slide. `display` and `overlay` transition with allow-discrete so the
+// dialog stays in the top layer until the slide-out has finished, and
+// @starting-style gives the slide-in its starting point.
+@media (prefers-reduced-motion: no-preference) {
+  #pst-primary-sidebar-modal,
+  #pst-secondary-sidebar-modal {
+    transition:
+      translate $animation-time ease-out,
+      display $animation-time allow-discrete,
+      overlay $animation-time allow-discrete;
+
+    &::backdrop {
+      opacity: 0;
+      transition:
+        opacity $animation-time ease-out,
+        display $animation-time allow-discrete,
+        overlay $animation-time allow-discrete;
+    }
+
+    &[open]::backdrop {
+      opacity: 1;
+    }
+  }
+
+  @starting-style {
+    #pst-primary-sidebar-modal[open] {
+      translate: -100%;
+    }
+
+    #pst-secondary-sidebar-modal[open] {
+      translate: 100%;
+    }
+
+    #pst-primary-sidebar-modal[open]::backdrop,
+    #pst-secondary-sidebar-modal[open]::backdrop {
+      opacity: 0;
+    }
+  }
+}
+
+// No page scrolling behind an open drawer. Scoped to the two drawers: the
+// search dialog never locked the page and should not start to. The stable
+// gutter keeps the page from shifting sideways when the scrollbar goes.
+html:has(#pst-primary-sidebar-modal[open], #pst-secondary-sidebar-modal[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
 }

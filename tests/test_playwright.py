@@ -456,3 +456,97 @@ class TestCollapseSidebarButton:
             expect(button).not_to_be_attached()
 
         _check_test_site(self.site_name, site_path, check_no_collapse_sidebar_button)
+
+
+# ----------------- Test functions: mobile sidebar drawers -----------------------------
+# Below both breakpoints both sidebars are drawers; between them, only the secondary.
+NARROW_VIEWPORT = {"width": 800, "height": 900}
+MEDIUM_VIEWPORT = {"width": 1100, "height": 900}
+WIDE_VIEWPORT = {"width": 1300, "height": 900}
+
+
+class TestSidebarDrawers:
+    """Group the tests for the narrow-screen sidebar drawers."""
+
+    site_name = "sidebars"
+    page_path = "section1/index.html"
+
+    def _open(self, page: Page, url_base: str, viewport: dict) -> None:
+        """Load the test page at `viewport`, with both sidebars present."""
+        page.set_viewport_size(viewport)
+        page.goto(
+            urljoin(url_base, f"playwright_tests/{self.site_name}/{self.page_path}")
+        )
+        page.wait_for_load_state("load")
+
+    @pytest.mark.parametrize(
+        ("sidebar_id", "toggle_name", "parked"),
+        [
+            ("pst-primary-sidebar", "Site navigation", "-100%"),
+            ("pst-secondary-sidebar", "On this page", "100%"),
+        ],
+    )
+    def test_drawer_slides_and_holds_the_page(
+        self,
+        sphinx_build_factory: Callable,
+        page: Page,
+        url_base: str,
+        sidebar_id: str,
+        toggle_name: str,
+        parked: str,
+    ) -> None:
+        """The dialog the reader sees is what slides; the page behind holds still."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def check_dialog_slides():
+            self._open(page, url_base, NARROW_VIEWPORT)
+
+            sidebar = page.locator(f"#{sidebar_id}")
+            dialog = page.locator(f"#{sidebar_id}-modal")
+
+            # Parked off its own edge, and it is the dialog that moves
+            assert dialog.evaluate("el => getComputedStyle(el).translate") == parked
+            assert "translate" in dialog.evaluate(
+                "el => getComputedStyle(el).transitionProperty"
+            )
+            assert "margin" not in sidebar.evaluate(
+                "el => getComputedStyle(el).transitionProperty"
+            )
+
+            def wait_for_translate(value: str) -> None:
+                page.wait_for_function(
+                    "([id, value]) => getComputedStyle(document.getElementById(id))"
+                    ".translate === value",
+                    arg=[f"{sidebar_id}-modal", value],
+                )
+
+            page.get_by_role("button", name=toggle_name).click()
+            expect(dialog).to_be_visible()
+            wait_for_translate("0px")
+
+            # The page behind does not scroll while the drawer is open
+            assert (
+                page.evaluate(
+                    "() => getComputedStyle(document.documentElement).overflow"
+                )
+                == "hidden"
+            )
+
+            page.keyboard.press("Escape")
+
+            # The content stays in the drawer until it has finished leaving
+            expect(dialog).not_to_be_visible()
+            expect(sidebar.locator("> *").first).to_be_attached()
+            assert dialog.locator("> *").count() == 0
+            wait_for_translate(parked)
+            assert (
+                page.evaluate(
+                    "() => getComputedStyle(document.documentElement).overflow"
+                )
+                != "hidden"
+            )
+
+        _check_test_site(self.site_name, site_path, check_dialog_slides)
