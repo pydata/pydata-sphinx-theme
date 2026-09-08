@@ -188,22 +188,18 @@ def update_config(app):
         theme_logo["link"] = theme_logo_link
     theme_options["logo"] = theme_logo
 
-    if "templates_skip_empty_check" not in theme_options and hasattr(
-        app.builder, "theme"
-    ):
-        default_tsec = app.builder.theme.get_options().get(
-            "templates_skip_empty_check"
-        ) or ["sidebar-nav-bs.html", "navbar-nav.html"]
-        theme_options["templates_skip_empty_check"] = default_tsec
-
 
 def update_and_remove_templates(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
     """Update template names and assets for page build."""
-    templates_skip_empty_check_config = utils.get_theme_options_dict(app).get(
-        "templates_skip_empty_check", []
+    templates_skip_empty_check_config = context.get(
+        "theme_templates_skip_empty_check", []
     )
+    if isinstance(templates_skip_empty_check_config, str):
+        templates_skip_empty_check_config = [
+            t.strip() for t in templates_skip_empty_check_config.split(",")
+        ]
     # Allow for more flexibility in template names
     template_sections = [
         "theme_navbar_start",
