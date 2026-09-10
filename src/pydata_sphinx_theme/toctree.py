@@ -62,6 +62,10 @@ class LinkInfo:
     href: str
     title: str
     is_external: bool
+    # `is_current` is true for the whole section the reader is inside, which is what
+    # drives the visual highlight. `is_current_page` is true only on the section's own
+    # landing page, which is the narrower condition `aria-current="page"` describes.
+    is_current_page: bool = False
 
 
 def add_toctree_functions(
@@ -193,6 +197,7 @@ def add_toctree_functions(
                 links_data.append(
                     LinkInfo(
                         is_current=(page == active_header_page),
+                        is_current_page=(page == pagename),
                         href=link_href,
                         title=title,
                         is_external=is_absolute,
@@ -238,7 +243,7 @@ def add_toctree_functions(
         boilerplate = dedent(
             """
             <li class="{nav_item} {active}">
-              <a class="{nav_link} nav-{ext_int}" href="{href}">
+              <a class="{nav_link} nav-{ext_int}" href="{href}"{aria_current}>
                 {title}
               </a>
             </li>
@@ -258,6 +263,7 @@ def add_toctree_functions(
             links_html.append(
                 boilerplate.format(
                     active="current active" if link.is_current else "",
+                    aria_current=' aria-current="page"' if link.is_current_page else "",
                     nav_link=nav_link,
                     nav_item=nav_item,
                     ext_int="external" if link.is_external else "internal",
@@ -269,6 +275,7 @@ def add_toctree_functions(
             links_dropdown.append(
                 boilerplate.format(
                     active="current active" if link.is_current else "",
+                    aria_current=' aria-current="page"' if link.is_current_page else "",
                     nav_link=nav_link + " " + dropdown_item,
                     nav_item="",
                     ext_int="external" if link.is_external else "internal",
@@ -408,6 +415,12 @@ def add_toctree_functions(
         # pair "current" with "active" since that's what we use w/ bootstrap
         for li in soup("li", {"class": "current"}):
             li["class"].append("active")
+
+        # Sphinx puts the "current" class on every ancestor <li> but only on the
+        # anchor of the page actually being rendered, so this marks that one page
+        # and not the section it sits under.
+        for anchor in soup("a", {"class": "current"}):
+            anchor["aria-current"] = "page"
 
         # Remove sidebar links to sub-headers on the page
         for li in soup.select("li"):
@@ -620,11 +633,16 @@ def _move_current_markers(
     for anchor in soup.find_all("a", href="#"):
         anchor["href"] = old_href
         anchor["class"] = [cls for cls in anchor.get("class", []) if cls != "current"]
+        # `aria-current` has to move with the class it mirrors. A cached sidebar
+        # that kept it would announce the wrong page as the current one, which is
+        # worse than not marking a current page at all.
+        del anchor["aria-current"]
         _set_current_chain(anchor, current=False, show_nav_level=show_nav_level)
     # Promote this page's entry
     for anchor in new_anchors:
         anchor["href"] = "#"
         anchor["class"] = ["current", *anchor.get("class", [])]
+        anchor["aria-current"] = "page"
         _set_current_chain(anchor, current=True, show_nav_level=show_nav_level)
     return True
 

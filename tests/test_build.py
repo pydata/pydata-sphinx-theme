@@ -515,6 +515,46 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression) -> None:
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
+def test_aria_current_marks_only_the_current_page(sphinx_build_factory) -> None:
+    """The current page is marked in the accessibility tree, not just visually.
+
+    Sphinx marks the reader's position with a ``current`` class, which is
+    invisible to assistive technology. ``aria-current="page"`` has to say the
+    same thing, and it has to be narrower than the class: the class highlights
+    the whole section the reader is inside, while ``aria-current="page"`` may
+    only ever be on the one page being viewed.
+    """
+    sphinx_build = sphinx_build_factory("sidebars").build()
+
+    page_html = sphinx_build.html_tree("section1/subsection1/page1.html")
+    sidebar = page_html.select("nav.bd-docs-nav")[0]
+
+    marked = sidebar.select('a[aria-current="page"]')
+    assert len(marked) == 1, "exactly one sidebar entry may be the current page"
+    # A toctree renders the current page's own entry as a self-link
+    assert marked[0]["href"] == "#"
+    assert "current" in marked[0]["class"]
+
+    # The ancestors of the current page are highlighted with the `current`
+    # class, and must not claim to be the current page themselves.
+    for li in sidebar.select("li.current"):
+        for ancestor_link in li.select("a"):
+            if ancestor_link is marked[0]:
+                continue
+            assert ancestor_link.get("aria-current") is None
+
+    # The header nav marks a top-level entry only when that page is the one
+    # being viewed, not when the reader is merely somewhere beneath it.
+    navbar = page_html.select("ul.bd-navbar-elements")[0]
+    assert not navbar.select("a[aria-current]"), (
+        "a section the reader is inside is not the current page"
+    )
+
+    landing_html = sphinx_build.html_tree("section1/index.html")
+    landing_navbar = landing_html.select("ul.bd-navbar-elements")[0]
+    assert len(landing_navbar.select('a[aria-current="page"]')) == 1
+
+
 def test_sidebars_level2(sphinx_build_factory, file_regression) -> None:
     """Test sidebars in a second-level page w/ children."""
     confoverrides = {
