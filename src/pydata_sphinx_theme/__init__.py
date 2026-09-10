@@ -193,6 +193,13 @@ def update_and_remove_templates(
     app: Sphinx, pagename: str, templatename: str, context, doctree
 ) -> None:
     """Update template names and assets for page build."""
+    templates_skip_empty_check_config = context.get(
+        "theme_templates_skip_empty_check", []
+    )
+    if isinstance(templates_skip_empty_check_config, str):
+        templates_skip_empty_check_config = [
+            t.strip() for t in templates_skip_empty_check_config.split(",")
+        ]
     # Allow for more flexibility in template names
     template_sections = [
         "theme_navbar_start",
@@ -216,7 +223,7 @@ def update_and_remove_templates(
                 context=context,
                 templates=context.get(section, []),
                 section=section,
-                templates_skip_empty_check=["sidebar-nav-bs.html", "navbar-nav.html"],
+                templates_skip_empty_check=templates_skip_empty_check_config,
             )
 
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
