@@ -1179,6 +1179,58 @@ def test_empty_templates(sphinx_build_factory) -> None:
     assert not html.select(".navbar-icon-links")
 
 
+@pytest.mark.parametrize(
+    ("skip_empty_check", "navbar_center_rendered"),
+    [
+        # With no user config the default (from theme.conf) skips navbar-nav.html
+        pytest.param(None, True, id="default"),
+        # An explicitly empty list opts out of skipping navbar-nav.html
+        pytest.param([], False, id="empty-list"),
+        # navbar-nav.html is skipped if listed w/ its .html suffix
+        pytest.param(["navbar-nav.html"], True, id="list"),
+        # A suffix-less skip entry doesn't match; entries must include the
+        # suffix (or be a suffix of the full template name)
+        pytest.param(["navbar-nav"], False, id="list-no-suffix"),
+        # A list that doesn't contain navbar-nav.html does not skip it
+        pytest.param(["sidebar-nav-bs.html"], False, id="list-other-template"),
+        # Strings are parsed as comma-separated lists, like theme.conf options
+        pytest.param("navbar-nav.html", True, id="string"),
+        pytest.param("sidebar-nav-bs.html, navbar-nav.html", True, id="string-comma"),
+    ],
+)
+def test_templates_skip_empty_check(
+    skip_empty_check, navbar_center_rendered, sphinx_build_factory
+) -> None:
+    """Templates in templates_skip_empty_check are kept even if they render empty."""
+    confoverrides = {
+        # Override navbar-nav.html with a template that renders empty, so the
+        # empty check removes it (w/ its whole navbar section) unless it is skipped.
+        "templates_path": ["_templates_empty_navbar"],
+        # The default sidebars are turned off because opting sidebar-nav-bs.html
+        # out of the skip list makes the empty check render it w/o the guard in
+        # layout.html, which raises on pages w/o a toctree ancestor (e.g. the root)
+        "html_sidebars": {"**": []},
+        "html_theme_options": (
+            {"templates_skip_empty_check": skip_empty_check}
+            if skip_empty_check is not None
+            else {}
+        ),
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    html = sphinx_build.html_tree("page1.html")
+
+    navbar_center = html.select(".navbar-header-items__center")
+    if navbar_center_rendered:
+        # The empty template was kept, so the section and its (empty) item render
+        assert len(navbar_center) == 1
+        navbar_items = navbar_center[0].select(".navbar-item")
+        assert len(navbar_items) == 1
+        assert navbar_items[0].get_text(strip=True) == ""
+    else:
+        # The empty template was removed along w/ its parent section
+        assert not navbar_center
+
+
 def test_translations(sphinx_build_factory) -> None:
     """Test that basic translation functionality works.
 
