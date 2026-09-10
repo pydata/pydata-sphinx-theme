@@ -515,6 +515,46 @@ def test_sidebars_nested_page(sphinx_build_factory, file_regression) -> None:
     file_regression.check(sidebar.prettify(), extension=".html")
 
 
+def test_aria_current_marks_only_the_current_page(sphinx_build_factory) -> None:
+    """The current page is marked in the accessibility tree, not just visually.
+
+    Sphinx marks the reader's position with a ``current`` class, which is
+    invisible to assistive technology. ``aria-current="page"`` has to say the
+    same thing, and it has to be narrower than the class: the class highlights
+    the whole section the reader is inside, while ``aria-current="page"`` may
+    only ever be on the one page being viewed.
+    """
+    sphinx_build = sphinx_build_factory("sidebars").build()
+
+    page_html = sphinx_build.html_tree("section1/subsection1/page1.html")
+    sidebar = page_html.select("nav.bd-docs-nav")[0]
+
+    marked = sidebar.select('a[aria-current="page"]')
+    assert len(marked) == 1, "exactly one sidebar entry may be the current page"
+    # A toctree renders the current page's own entry as a self-link
+    assert marked[0]["href"] == "#"
+    assert "current" in marked[0]["class"]
+
+    # The ancestors of the current page are highlighted with the `current`
+    # class, and must not claim to be the current page themselves.
+    for li in sidebar.select("li.current"):
+        for ancestor_link in li.select("a"):
+            if ancestor_link is marked[0]:
+                continue
+            assert ancestor_link.get("aria-current") is None
+
+    # The header nav marks a top-level entry only when that page is the one
+    # being viewed, not when the reader is merely somewhere beneath it.
+    navbar = page_html.select("ul.bd-navbar-elements")[0]
+    assert not navbar.select("a[aria-current]"), (
+        "a section the reader is inside is not the current page"
+    )
+
+    landing_html = sphinx_build.html_tree("section1/index.html")
+    landing_navbar = landing_html.select("ul.bd-navbar-elements")[0]
+    assert len(landing_navbar.select('a[aria-current="page"]')) == 1
+
+
 def test_sidebars_level2(sphinx_build_factory, file_regression) -> None:
     """Test sidebars in a second-level page w/ children."""
     confoverrides = {
@@ -1177,6 +1217,58 @@ def test_empty_templates(sphinx_build_factory) -> None:
 
     # Should not be any icon link wrapper because none are given in conf
     assert not html.select(".navbar-icon-links")
+
+
+@pytest.mark.parametrize(
+    ("skip_empty_check", "navbar_center_rendered"),
+    [
+        # With no user config the default (from theme.conf) skips navbar-nav.html
+        pytest.param(None, True, id="default"),
+        # An explicitly empty list opts out of skipping navbar-nav.html
+        pytest.param([], False, id="empty-list"),
+        # navbar-nav.html is skipped if listed w/ its .html suffix
+        pytest.param(["navbar-nav.html"], True, id="list"),
+        # A suffix-less skip entry doesn't match; entries must include the
+        # suffix (or be a suffix of the full template name)
+        pytest.param(["navbar-nav"], False, id="list-no-suffix"),
+        # A list that doesn't contain navbar-nav.html does not skip it
+        pytest.param(["sidebar-nav-bs.html"], False, id="list-other-template"),
+        # Strings are parsed as comma-separated lists, like theme.conf options
+        pytest.param("navbar-nav.html", True, id="string"),
+        pytest.param("sidebar-nav-bs.html, navbar-nav.html", True, id="string-comma"),
+    ],
+)
+def test_templates_skip_empty_check(
+    skip_empty_check, navbar_center_rendered, sphinx_build_factory
+) -> None:
+    """Templates in templates_skip_empty_check are kept even if they render empty."""
+    confoverrides = {
+        # Override navbar-nav.html with a template that renders empty, so the
+        # empty check removes it (w/ its whole navbar section) unless it is skipped.
+        "templates_path": ["_templates_empty_navbar"],
+        # The default sidebars are turned off because opting sidebar-nav-bs.html
+        # out of the skip list makes the empty check render it w/o the guard in
+        # layout.html, which raises on pages w/o a toctree ancestor (e.g. the root)
+        "html_sidebars": {"**": []},
+        "html_theme_options": (
+            {"templates_skip_empty_check": skip_empty_check}
+            if skip_empty_check is not None
+            else {}
+        ),
+    }
+    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
+    html = sphinx_build.html_tree("page1.html")
+
+    navbar_center = html.select(".navbar-header-items__center")
+    if navbar_center_rendered:
+        # The empty template was kept, so the section and its (empty) item render
+        assert len(navbar_center) == 1
+        navbar_items = navbar_center[0].select(".navbar-item")
+        assert len(navbar_items) == 1
+        assert navbar_items[0].get_text(strip=True) == ""
+    else:
+        # The empty template was removed along w/ its parent section
+        assert not navbar_center
 
 
 def test_translations(sphinx_build_factory) -> None:
