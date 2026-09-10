@@ -85,7 +85,7 @@
   @media (prefers-reduced-motion: no-preference) {
     $duration: 400ms;
 
-    transition: width $duration ease;
+    transition: --pst-sidebar-primary-width $duration ease;
 
     #pst-collapse-sidebar-button {
       .pst-icon {
@@ -105,7 +105,7 @@
           // When the sidebar is expanding, it's the opposite: we need to transition
           // the properties that make the elements visible immediately so the user
           // can watch the opacity transition from 0 to 1.
-          ":not(.pst-squeeze)": "0s"
+          ":not(.pst-squeeze)": 0s
         )
     {
       &#{$selector} {
@@ -139,7 +139,10 @@
   // so it seemed best to avoid possible confusion. (Later the class name was
   // prefixed with `pst-`.)
   &.pst-squeeze {
-    width: 4rem;
+    // Collapse by changing the animated property, see
+    // sections/_sidebar-primary.scss, rather than `width`.
+    --pst-sidebar-primary-width: 4rem;
+
     overflow: hidden;
 
     #pst-collapse-sidebar-button {

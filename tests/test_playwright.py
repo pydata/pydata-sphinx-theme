@@ -324,6 +324,70 @@ class TestCollapseSidebarButton:
 
         _check_test_site(self.site_name, site_path, check_collapse_expand)
 
+    @pytest.mark.parametrize("squeezed", [False, True], ids=["expanded", "squeezed"])
+    def test_sidebar_width_not_animated_across_breakpoint(
+        self, sphinx_build_factory: Callable, page: Page, url_base: str, squeezed: bool
+    ) -> None:
+        """Crossing the sidebar breakpoint must swap the width without animating."""
+        site_path = _build_test_site(
+            self.site_name, sphinx_build_factory=sphinx_build_factory
+        )
+        assert site_path is not None
+
+        def get_width(locator):
+            bbox = locator.bounding_box()
+            assert bbox is not None
+            return bbox["width"]
+
+        def settle_a_frame():
+            # Give the browser a frame to start whatever the new styles ask for
+            page.evaluate("""
+                () =>
+                    new Promise((done) =>
+                        requestAnimationFrame(() => requestAnimationFrame(done)),
+                    )
+            """)
+
+        def running_animations(locator):
+            return locator.evaluate(
+                "el => el.getAnimations().map((a) => a.transitionProperty)"
+            )
+
+        def check_width_after_breakpoint_flip():
+            page.set_viewport_size({"width": 1200, "height": 900})
+            page.goto(
+                urljoin(
+                    url_base, f"playwright_tests/{self.site_name}/section1/index.html"
+                )
+            )
+            page.wait_for_load_state("load")
+
+            sidebar = page.locator("#pst-primary-sidebar")
+            button = page.locator("#pst-collapse-sidebar-button")
+
+            if squeezed:
+                button.click()
+                # aria-expanded flips once the squeeze transition has finished
+                expect(button).to_have_attribute("aria-expanded", "false")
+
+            page.set_viewport_size({"width": 800, "height": 900})
+            settle_a_frame()
+            assert running_animations(sidebar) == []
+
+            page.set_viewport_size({"width": 1200, "height": 900})
+            settle_a_frame()
+            assert running_animations(sidebar) == []
+
+            flipped_width = get_width(sidebar)
+            if squeezed:
+                # 4rem at the browser's default 16px font size
+                assert flipped_width == pytest.approx(64, abs=1)
+
+            page.wait_for_timeout(600)
+            assert get_width(sidebar) == pytest.approx(flipped_width, abs=1)
+
+        _check_test_site(self.site_name, site_path, check_width_after_breakpoint_flip)
+
     def test_collapse_sidebar_button_not_in_mobile(
         self, sphinx_build_factory: Callable, page: Page, url_base: str
     ) -> None:
