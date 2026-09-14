@@ -329,6 +329,8 @@ $pst-semantic-colors: (
 /* Defaults to light mode if data-theme is not set */
 html:not([data-theme]) {
   @include theme-colors("light");
+
+  color-scheme: light;
 }
 
 /* NOTE: @each {...} is like a for-loop
