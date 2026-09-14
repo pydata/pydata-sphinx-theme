@@ -4,6 +4,11 @@
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/latest/"
   },
   {
+    "name": "0.22.0rc0",
+    "version": "v0.22.0rc0",
+    "url": "https://pydata-sphinx-theme.readthedocs.io/en/v0.22.0rc0/"
+  },
+  {
     "name": "0.21.0 (stable)",
     "version": "v0.21.0",
     "url": "https://pydata-sphinx-theme.readthedocs.io/en/stable/",
