@@ -43,3 +43,11 @@ runs:
     - name: "Install Graphviz"
       uses: ts-graphviz/setup-graphviz@v2
       if: ${{ inputs.graphviz }} == true
+      with:
+        # Skip `brew update` on macOS runners. On current macOS runner images
+        # the update tries to upgrade python@3.x and fails at the `brew link`
+        # step because of symlink conflicts with the pre-installed Python
+        # framework (e.g. /usr/local/bin/2to3 already exists), which broke the
+        # Graphviz install with no change on our side.
+        # See https://github.com/ts-graphviz/setup-graphviz/issues/457
+        macos-skip-brew-update: true
