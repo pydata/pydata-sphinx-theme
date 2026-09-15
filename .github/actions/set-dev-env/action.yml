@@ -59,9 +59,6 @@ runs:
       shell: pwsh
       run: |
         choco install graphviz --yes --no-progress
-        Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-        Update-SessionEnvironment
-        Split-Path (Get-Command dot).Source | Out-File $env:GITHUB_PATH -Append
 
     - name: "Check Graphviz installation"
       if: ${{ inputs.graphviz == 'true' }}
