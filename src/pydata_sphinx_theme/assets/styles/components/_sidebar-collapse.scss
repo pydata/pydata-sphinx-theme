@@ -144,9 +144,6 @@
       }
     }
 
-    // Why "squeeze" and not "collapse"? Bootstrap uses the class name `collapse`
-    // so it seemed best to avoid possible confusion. (Later the class name was
-    // prefixed with `pst-`.)
     &.pst-squeeze {
       overflow: hidden;
 
