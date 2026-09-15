@@ -44,6 +44,14 @@
   opacity: 0.5;
 }
 
+// A drawer opens with focus on the dialog itself (see the script), so no
+// control inside it lights up when the reader taps the toggle. The dialog is
+// a container, not a control: no focus ring on it.
+#pst-primary-sidebar-modal,
+#pst-secondary-sidebar-modal {
+  outline: none;
+}
+
 .bd-sidebar-primary {
   @include media-breakpoint-down($breakpoint-sidebar-primary) {
     @include sliding-drawer("left");
