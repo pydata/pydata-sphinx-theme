@@ -105,7 +105,7 @@
       {% if suppress_sidebar_toctree(includehidden=theme_sidebar_includehidden | tobool) %}
         {% set sidebars = sidebars | reject("in", ["sidebar-collapse.html", "sidebar-nav-bs.html"]) | list %}
       {% endif %}
-      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar{% if not sidebars %} hide-on-wide{% endif %}">
         {% include "sections/sidebar-primary.html" %}
       </div>
@@ -141,7 +141,7 @@
             {# Secondary sidebar #}
             {% block docs_toc %}
               {% if not remove_sidebar_secondary %}
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc">{% include "sections/sidebar-secondary.html" %}</div>
               {% endif %}
             {% endblock docs_toc %}

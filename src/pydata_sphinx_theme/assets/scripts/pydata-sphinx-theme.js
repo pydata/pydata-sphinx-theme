@@ -845,6 +845,12 @@ function setupMobileSidebarKeyboardHandlers() {
 
       dialog.showModal();
 
+      // showModal() puts focus on the first control in the drawer, and on a
+      // phone the browser then draws a focus ring around it, as if the reader
+      // had picked it. Focus the drawer itself instead (the dialog has
+      // tabindex="-1" for this): Tab still reaches that first control.
+      dialog.focus();
+
       // Restore focus when dialog closes
       dialog.addEventListener(
         "close",
