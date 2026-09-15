@@ -874,12 +874,17 @@ function setupMobileSidebarKeyboardHandlers() {
     // stylesheet hides its toggle button. An open drawer has nothing to show
     // then, so close it. The reader did not press anything, so skip the
     // slide-out: cancel the animations the close starts, backdrop included.
-    window.addEventListener("resize", () => {
-      if (dialog.open && !toggleButton.checkVisibility()) {
-        dialog.close();
-        dialog.getAnimations({ subtree: true }).forEach((a) => a.cancel());
-      }
-    });
+    // Debounced like the other resize listeners in this file: a drag fires
+    // resize many times a second, and this only needs to run once it settles.
+    window.addEventListener(
+      "resize",
+      debounce(() => {
+        if (dialog.open && !toggleButton.checkVisibility()) {
+          dialog.close();
+          dialog.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+        }
+      }, 300),
+    );
 
     // When the dialog is closed, move the nodes (and classes) back to their
     // original place. Wait for the slide-out (and the backdrop's fade, which
