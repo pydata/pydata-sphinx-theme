@@ -40,6 +40,27 @@ runs:
         pandoc-version: "latest"
       if: ${{ inputs.pandoc }} == true
 
-    - name: "Install Graphviz"
-      uses: ts-graphviz/setup-graphviz@v2
-      if: ${{ inputs.graphviz }} == true
+    - name: "Install Graphviz (Linux)"
+      if: ${{ inputs.graphviz == 'true' && runner.os == 'Linux' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install --yes graphviz
+
+    - name: "Install Graphviz (macOS)"
+      if: ${{ inputs.graphviz == 'true' && runner.os == 'macOS' }}
+      shell: bash
+      run: brew install graphviz
+      env:
+        HOMEBREW_NO_AUTO_UPDATE: "1"
+
+    - name: "Install Graphviz (Windows)"
+      if: ${{ inputs.graphviz == 'true' && runner.os == 'Windows' }}
+      shell: pwsh
+      run: |
+        choco install graphviz --yes --no-progress
+
+    - name: "Check Graphviz installation"
+      if: ${{ inputs.graphviz == 'true' }}
+      shell: bash
+      run: dot -V
