@@ -1521,3 +1521,27 @@ def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
     # Hence the secondary sidebar has all its templates empty and should be removed
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     assert not sphinx_build.html_tree("page1.html").select("div.bd-sidebar-secondary")
+
+
+def test_sidebar_breakpoints_match_stylesheet() -> None:
+    """The drawer script names the same Bootstrap breakpoints as the stylesheet."""
+    assets = Path(__file__).parents[1] / "src" / "pydata_sphinx_theme" / "assets"
+    layout_scss = (assets / "styles" / "variables" / "_layout.scss").read_text()
+    theme_js = (assets / "scripts" / "pydata-sphinx-theme.js").read_text()
+
+    for sidebar in ("primary", "secondary"):
+        declared = re.search(rf"\$breakpoint-sidebar-{sidebar}:\s*(\w+);", layout_scss)
+        assert declared is not None, (
+            f"$breakpoint-sidebar-{sidebar} not in _layout.scss"
+        )
+
+        # The name must sit in that drawer's own entry, not merely somewhere in
+        # the file, or the two drawers could have them swapped
+        used = re.search(
+            rf"sidebar: {sidebar}Sidebar,\s*breakpoint: \"(\w+)\",", theme_js
+        )
+        assert used is not None, f"the {sidebar} drawer names no breakpoint"
+        assert used.group(1) == declared.group(1), (
+            f"the {sidebar} drawer uses {used.group(1)}, "
+            f"the stylesheet {declared.group(1)}"
+        )
