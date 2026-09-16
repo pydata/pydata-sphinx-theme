@@ -874,8 +874,10 @@ function setupMobileSidebarKeyboardHandlers() {
     // stylesheet hides its toggle button. An open drawer has nothing to show
     // then, so close it. The reader did not press anything, so skip the
     // slide-out: cancel the animations the close starts, backdrop included.
+    // Resize fires at most once per frame, and this is a property read unless
+    // a drawer is open, so it is not debounced.
     window.addEventListener("resize", () => {
-      if (dialog.open && !toggleButton.checkVisibility()) {
+      if (dialog.open && getComputedStyle(toggleButton).display === "none") {
         dialog.close();
         dialog.getAnimations({ subtree: true }).forEach((a) => a.cancel());
       }
