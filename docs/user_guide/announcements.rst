@@ -84,15 +84,18 @@ In addition to the general-purpose announcement banner, the theme includes a bui
 
         {
             "name": "stable",
-            "version": "9.9.9",
+            "version": "9.9",
             "url": "https://anything",
             "preferred": true
         }
 
-    If the active version compares less than the preferred version, the announcement will inform the user that
-    they are viewing an older version of the documentation and provide a link to the preferred version. If the
-    version compares greater than the preferred version (or if the version match contains the strings `"dev"`,
-    `"rc"` or `"pre"`), the announcement will say they are viewing an unstable development version instead.
+    No banner is shown when the preferred entry's ``version`` equals ``switcher['version_match']``, whatever the
+    ``release`` string of the build is (so with the entry above, a ``9.9.1`` release built with ``version_match
+    = "9.9"`` counts as the stable docs). Otherwise, if the active version compares less than the preferred
+    version, the announcement will inform the user that they are viewing an older version of the documentation
+    and provide a link to the preferred version. If the version compares greater than the preferred version (or
+    if the version match contains the strings `"dev"`, `"rc"` or `"pre"`), the announcement will say they are
+    viewing an unstable development version instead.
 
 Stick banners to the top of the viewport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

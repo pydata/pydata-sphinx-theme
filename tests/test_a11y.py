@@ -4,6 +4,12 @@ Note that in contrast with the rest of our tests, the accessibility tests in thi
 are run against a build of our PST documentation, not purposedly-built test sites.
 """
 
+import json
+import re
+
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from threading import Thread
 from urllib.parse import urljoin
 
 import pytest
@@ -321,3 +327,58 @@ def test_search_as_you_type(page: Page, url_base: str) -> None:
         f"document.querySelector('{first_result_selector}').textContent"
     )
     assert actual_focused_content == expected_focused_content
+
+
+@pytest.mark.parametrize(
+    ("release", "version_match", "banner"),
+    [
+        ("1.13.0", "1.13", None),
+        ("1.13.2", "1.13", None),  # patch of the preferred minor: still stable
+        ("1.13.2", "1.13.0", "an unstable development version"),  # matches no entry
+        ("1.12.1", "1.12", "an old version (1.12.1)"),
+        ("1.14.0.dev3", "dev", "an unstable development version"),
+    ],
+)
+def test_version_warning_banner(
+    sphinx_build_factory, page: Page, release: str, version_match: str, banner: str
+) -> None:
+    """The banner trusts ``version_match`` before comparing release strings."""
+    build = sphinx_build_factory(
+        "version_switcher",
+        confoverrides={
+            "release": release,
+            "version": ".".join(release.split(".")[:2]),
+            "html_theme_options": {
+                "switcher": {
+                    "json_url": "_static/switcher.json",
+                    "version_match": version_match,
+                },
+                "navbar_start": ["navbar-logo", "version-switcher"],
+                "show_version_warning_banner": True,
+            },
+        },
+    ).build()
+    (build.outdir / "_static" / "switcher.json").write_text(
+        json.dumps(
+            [
+                {"version": "dev", "url": "http://x/dev/"},
+                {"version": "1.13", "url": "http://x/stable/", "preferred": True},
+                {"version": "1.12", "url": "http://x/1.12/"},
+            ]
+        )
+    )
+    # 127.0.0.1 rather than "" or "localhost": binding all interfaces makes
+    # http.server reverse-resolve the hostname, which can take seconds
+    handler = partial(SimpleHTTPRequestHandler, directory=str(build.outdir))
+    server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        page.goto(f"http://127.0.0.1:{server.server_address[1]}/index.html")
+        expect(page.locator("css=.version-switcher__menu a")).to_have_count(3)
+        warning = page.locator("css=#bd-header-version-warning")
+        if banner is None:
+            expect(warning).to_have_class(re.compile(r"\bd-none\b"))
+        else:
+            expect(warning).to_contain_text(banner)
+    finally:
+        server.shutdown()
