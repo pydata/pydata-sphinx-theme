@@ -255,6 +255,15 @@ def test_primary_logo_is_dark_when_default_mode_is_dark(sphinx_build_factory) ->
     assert navbar_brand.find("img", class_="only-light") is not None
 
 
+def test_color_scheme_meta_tag(sphinx_build_factory) -> None:
+    """Test that the page declares support for both light and dark color schemes."""
+    sphinx_build = sphinx_build_factory("base").build()
+    index_html = sphinx_build.html_tree("index.html")
+    meta = index_html.select('head meta[name="color-scheme"]')
+    assert len(meta) == 1
+    assert meta[0]["content"] == "light dark"
+
+
 def test_logo_missing_image(sphinx_build_factory) -> None:
     """Test that a missing image will raise a warning."""
     # Test with a specified title and a dark logo
