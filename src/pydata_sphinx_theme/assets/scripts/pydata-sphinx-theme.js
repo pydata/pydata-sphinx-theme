@@ -688,7 +688,14 @@ function showVersionWarningBanner(data) {
   }
   const preferredVersion = preferredEntries[0].version;
   const preferredURL = preferredEntries[0].url;
-  // if already on preferred version, nothing to do
+  // version_match is what the switcher matches on, so check it before comparing
+  // release strings (a 1.13.2 release with version_match 1.13 is still stable)
+  if (preferredVersion === DOCUMENTATION_OPTIONS.theme_switcher_version_match) {
+    console.log(
+      "[PST]: This is the preferred version of the docs, not showing the warning banner.",
+    );
+    return;
+  }
   const versionsAreComparable = validate(version) && validate(preferredVersion);
   if (versionsAreComparable && compare(version, preferredVersion, "=")) {
     console.log(
