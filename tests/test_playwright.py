@@ -64,6 +64,44 @@ def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
 
 
 # ------------------------- Test functions: style -------------------------
+@pytest.mark.parametrize("type_index", [0, 1, 2])
+def test_unnamed_api_type_spacing(
+    sphinx_build_factory: Callable, page: Page, type_index: int
+) -> None:
+    """Preserve rendered spaces between cross-references in unnamed return types."""
+    site_path = _build_test_site("api_types", sphinx_build_factory)
+    page.goto((site_path / "index.html").as_uri())
+    term = page.locator("#unnamed-types .field-list dd dt").nth(type_index)
+    space_widths = term.evaluate(
+        """element => {
+            const widths = [];
+            for (const node of element.childNodes) {
+                if (node.nodeType !== Node.TEXT_NODE) continue;
+                for (let i = 0; i < node.length; i++) {
+                    if (node.textContent[i] !== ' ') continue;
+                    const range = document.createRange();
+                    range.setStart(node, i);
+                    range.setEnd(node, i + 1);
+                    widths.push(range.getBoundingClientRect().width);
+                }
+            }
+            return widths;
+        }"""
+    )
+    assert space_widths
+    assert all(width > 0 for width in space_widths)
+
+
+def test_api_parameter_name_selection(
+    sphinx_build_factory: Callable, page: Page
+) -> None:
+    """Double-clicking a parameter name must not select its type as well."""
+    site_path = _build_test_site("api_types", sphinx_build_factory)
+    page.goto((site_path / "index.html").as_uri())
+    page.locator("#named-parameter strong").dblclick()
+    assert page.evaluate("window.getSelection().toString()") == "value"
+
+
 def test_version_switcher_highlighting(
     sphinx_build_factory: Callable, page: Page, url_base: str
 ) -> None:
