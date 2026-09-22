@@ -38,6 +38,13 @@ def update_config(app):
                 f'"pygments_{theme}_style" (note the "s" on "pygments").'
             )
 
+    # TODO: remove in v0.24.0, when #2494 is merged
+    if __version__ < "0.24":
+        utils.SPHINX_LOGGER.info(
+            "DEPRECATION WARNING: pydata-sphinx-theme v0.24.0 will stop turning "
+            "fontawesome <i> into <svg>. Change any CSS that targets 'svg.fa-*."
+        )
+
     # Validate icon links
     if not isinstance(theme_options.get("icon_links", []), list):
         raise ExtensionError(
