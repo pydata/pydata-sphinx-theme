@@ -25,7 +25,5 @@ html_theme.sidebar_secondary.remove: true
 Note how the period naturally separates nested sections, and looks very similar to what we'd expect if we put this in a Python dictionary in `conf.py`:
 
 ```python
-html_theme_options = {
-   "sidebar_secondary": {"remove": "true"}
-}
+html_theme_options = {"sidebar_secondary": {"remove": "true"}}
 ```
