@@ -38,7 +38,7 @@ runs:
       uses: r-lib/actions/setup-pandoc@v2
       with:
         pandoc-version: "latest"
-      if: ${{ inputs.pandoc }} == true
+      if: ${{ inputs.pandoc == 'true' }}
 
     - name: "Install Graphviz (Linux)"
       if: ${{ inputs.graphviz == 'true' && runner.os == 'Linux' }}
