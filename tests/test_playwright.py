@@ -64,7 +64,6 @@ def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
 
 
 # ------------------------- Test functions: style -------------------------
-@pytest.mark.parametrize("type_index", [0, 1, 2])
 def test_api_parameter_name_selection(
     sphinx_build_factory: Callable, page: Page
 ) -> None:
