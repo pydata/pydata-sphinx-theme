@@ -10,6 +10,14 @@ available system fonts for normal body text and headers.
 For more details on the PyData Sphinx Theme typography and text styles, see the
 :doc:`../community/design-system` section.
 
+.. deprecated:: 0.22.0
+
+   To stay compatible with extensions that bundle an older FontAwesome (for
+   example Jupyter widgets, which ship FontAwesome 5), the theme forces
+   FontAwesome 7 on the legacy ``.fa``/``.fas``/``.far``/``.fab`` classes.
+   This shim is temporary and will be removed in a future release; prefer the
+   namespaced ``.fa-solid``/``.fa-regular``/``.fa-brands`` classes.
+
 The default body and header fonts can be changed as follows:
 
 - Using :ref:`custom-css`, you can specify which fonts to use for the body, header,
