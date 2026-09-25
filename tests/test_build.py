@@ -676,6 +676,58 @@ def test_sidebar_toctree_cache(
         assert path.read_text("utf8") == cached_html, path
 
 
+@pytest.mark.parametrize("buildername", ["html", "dirhtml"])
+@pytest.mark.parametrize("show_nav_level", [0, 1, 2])
+def test_sidebar_toctree_cache_startdepth0(
+    sphinx_build_factory, make_app, monkeypatch, show_nav_level, buildername
+) -> None:
+    """A whole-site (startdepth=0) sidebar is served from the cache too.
+
+    sunpy-sphinx-theme and similar themes render the sidebar from the site root
+    (startdepth=0) rather than from the current top-level section (startdepth=1).
+    Such a sidebar has no ancestor page, but with collapse_navigation=False every
+    page shares one resolved tree, so it must still be cached across pages.
+    """
+    from pydata_sphinx_theme import toctree
+
+    hits = []
+    orig = toctree._move_current_markers
+
+    def spy(*args, **kwargs):
+        result = orig(*args, **kwargs)
+        hits.append(result)
+        return result
+
+    monkeypatch.setattr(toctree, "_move_current_markers", spy)
+    confoverrides = {
+        "templates_path": ["_templates_sidebar_startdepth0"],
+        "html_theme_options.show_nav_level": show_nav_level,
+    }
+    build = sphinx_build_factory(
+        "sidebars", confoverrides=confoverrides, buildername=buildername
+    ).build()
+    if buildername == "html":
+        assert any(hits), "whole-site sidebar was never served from the cache"
+    else:
+        assert not hits, "sidebars must not be shared when page URIs are not flat"
+
+    with_cache = {
+        path: path.read_text("utf8") for path in sorted(build.outdir.rglob("*.html"))
+    }
+    # rebuild with every cache lookup missing (each sidebar built the slow way)
+    # and check that all pages come out identical
+    monkeypatch.setattr(toctree, "_move_current_markers", lambda *a, **kw: False)
+    app = make_app(
+        srcdir=build.src,
+        confoverrides=confoverrides,
+        buildername=buildername,
+        freshenv=True,
+    )
+    app.build()
+    for path, cached_html in with_cache.items():
+        assert path.read_text("utf8") == cached_html, path
+
+
 def test_included_toc(sphinx_build_factory) -> None:
     """
     Test that Sphinx project containing TOC (.. toctree::) included via .. include::
