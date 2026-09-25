@@ -64,6 +64,16 @@ def _check_test_site(site_name: str, site_path: Path, test_func: Callable):
 
 
 # ------------------------- Test functions: style -------------------------
+def test_api_parameter_name_selection(
+    sphinx_build_factory: Callable, page: Page
+) -> None:
+    """Double-clicking a parameter name must not select its type as well."""
+    site_path = _build_test_site("api_types", sphinx_build_factory)
+    page.goto((site_path / "index.html").as_uri())
+    page.locator("#named-parameter strong").dblclick()
+    assert page.evaluate("window.getSelection().toString()") == "value"
+
+
 def test_version_switcher_highlighting(
     sphinx_build_factory: Callable, page: Page, url_base: str
 ) -> None:

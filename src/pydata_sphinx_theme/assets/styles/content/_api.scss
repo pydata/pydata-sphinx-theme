@@ -141,7 +141,9 @@ dl[class]:not(.option-list, .field-list, .footnote, .glossary, .simple) {
     margin-left: 2rem;
 
     // Fix until this will be solved to Sphinx https://github.com/sphinx-doc/sphinx/issues/10815
-    & > dl.simple > dt {
+    // Flex collapses spaces between inline references in unnamed return types,
+    // so limit the selection workaround to terms with a classifier.
+    & > dl.simple > dt:has(> .classifier) {
       display: flex;
     }
   }
