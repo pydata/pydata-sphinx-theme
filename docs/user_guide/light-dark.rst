@@ -55,8 +55,7 @@ Customize the CSS of light and dark themes
 The theme sets the CSS `color-scheme <https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme>`__ property to ``light`` or ``dark`` to match the active theme.
 Native browser UI such as scrollbars and form controls follows it, and so does the CSS
 `light-dark() <https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/light-dark>`__ function.
-To give a color a different value in each theme, pass both values to ``light-dark()``.
-For example to define a different background color for both the light and dark themes:
+To give a color a different value in each theme, pass both values to ``light-dark()``:
 
 .. code-block:: css
 
@@ -67,24 +66,17 @@ For example to define a different background color for both the light and dark t
 
 .. note::
 
-    ``light-dark()`` only works for colors.
-    Use the ``html[data-theme='<THEME>']`` CSS selector for anything else, such as
-    ``display``, ``filter``, or ``background-image``:
+    ``light-dark()`` does not work for all CSS properties.
+    Use the ``html[data-theme='<THEME>']`` selector for unsupported properties.
 
     .. code-block:: css
 
-        /* anything related to the light theme */
         html[data-theme="light"] {
-
-            /* whatever you want to change */
-            background-image: url("light.png");
+            font-family: "Jedi Sans";
         }
 
-        /* anything related to the dark theme */
         html[data-theme="dark"] {
-
-            /* whatever you want to change */
-            background-image: url("dark.png");
+            font-family: "Dark Vador Sans";
         }
 
 A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.
