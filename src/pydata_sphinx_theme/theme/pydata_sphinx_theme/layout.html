@@ -1,10 +1,12 @@
+{%- extends "basic/layout.html" %}
+{# djlint:off H007 (don't complain about doctype missing, it's in the above layout) #}
 {# We redefine <html/> for "basic/layout.html" to add a default `data-theme` attribute when
  # a default mode has been set. This also improves compatibility when JavaScript is disabled.
  #}
 {% set html_tag %}
 <html{% if not html5_doctype %} xmlns="http://www.w3.org/1999/xhtml"{% endif %}{% if language is not none %} lang="{{ language }}"{% endif %} data-content_root="{{ content_root }}" {% if default_mode %}data-theme="{{ default_mode }}"{% endif %}>
 {% endset %}
-{%- extends "basic/layout.html" %}
+{# djlint:on #}
 {%- import "static/webpack-macros.html" as _webpack with context %}
 {# A flag for whether we include a secondary sidebar based on the page metadata #}
 {# Note: secondary_sidebar_items is an array set by set_secondary_sidebar_items() in utils.py #}

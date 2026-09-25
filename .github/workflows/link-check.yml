@@ -28,6 +28,7 @@ jobs:
         uses: ./.github/actions/set-dev-env
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          pandoc: true
 
       - name: "Check for broken links"
         run: python -Im tox run -e docs-linkcheck

@@ -34,6 +34,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
+          graphviz: true
 
       - name: "Install (prerelease) dependencies 📦"
         run: |
