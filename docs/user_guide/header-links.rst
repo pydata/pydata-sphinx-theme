@@ -134,7 +134,7 @@ Here are several examples:
 
    .. code:: css
 
-      svg.fa-square-twitter {
+      i.fa-square-twitter {
          color: #55acee;
       }
 

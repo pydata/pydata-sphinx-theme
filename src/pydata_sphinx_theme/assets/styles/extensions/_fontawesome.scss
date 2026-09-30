@@ -1,0 +1,19 @@
+// Some extensions (e.g. Jupyter widgets, thebe) inject their own bundled
+// FontAwesome, whose legacy .fa/.fas/.far/.fab rules override our icons by class
+// name and point at fonts that 404. Re-assert FontAwesome 7 for those classes.
+// TODO: remove once the legacy non-namespaced FontAwesome classes are dropped.
+.fa,
+.fas {
+  font-family: var(--fa-family-classic) !important;
+  font-weight: 900 !important;
+}
+
+.far {
+  font-family: var(--fa-family-classic) !important;
+  font-weight: 400 !important;
+}
+
+.fab {
+  font-family: var(--fa-family-brands) !important;
+  font-weight: 400 !important;
+}
