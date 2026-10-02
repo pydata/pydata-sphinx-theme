@@ -10,6 +10,9 @@
   position: sticky;
   top: var(--pst-header-height);
   max-height: calc(100vh - var(--pst-header-height));
+
+  // Without this, the footer pushes the sidebar up at the end of a page.
+  align-self: flex-start;
   padding: 2rem 1rem 1rem;
   width: var(--pst-sidebar-secondary);
   font-size: var(--pst-sidebar-font-size-mobile);
