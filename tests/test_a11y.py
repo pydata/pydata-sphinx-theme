@@ -174,6 +174,16 @@ def test_axe_core(
     url_full = urljoin(url_base, url_pathname)
     page.goto(url_full)
 
+    # Wait for the announcement and version warning banners to be fetched and
+    # revealed, which our JavaScript does asynchronously with a 300 ms
+    # transition before finally setting the height to "auto"
+    page.wait_for_function(
+        """() => {
+            const revealer = document.querySelector(".pst-async-banner-revealer");
+            return !revealer || revealer.style.height === "auto";
+        }"""
+    )
+
     # Run a line of JavaScript that sets the light/dark theme on the page
     page.evaluate(f"document.documentElement.dataset.theme = '{theme}'")
 
