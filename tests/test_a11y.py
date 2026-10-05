@@ -177,8 +177,16 @@ def test_axe_core(
     # Run a line of JavaScript that sets the light/dark theme on the page
     page.evaluate(f"document.documentElement.dataset.theme = '{theme}'")
 
-    # Wait for CSS transitions (Bootstrap's transitions are 300 ms)
-    page.wait_for_timeout(301)
+    # Wait for the color transitions triggered by the theme change to finish. A
+    # fixed timeout is not enough on slow CI runners. getAnimations() flushes
+    # pending style changes, so the transitions exist by the time we ask.
+    page.evaluate(
+        """Promise.all(
+            document.getAnimations()
+                .filter((a) => a instanceof CSSTransition)
+                .map((a) => a.finished.catch(() => {}))
+        )"""
+    )
 
     # On the PyData Library Styles page, wait for ipywidget to load and for our
     # JavaScript to apply tabindex="0" before running Axe checker (to avoid
