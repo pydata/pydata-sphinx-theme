@@ -34,6 +34,8 @@ class Mock:
         # TODO, I belive this is wrong as both orgs/pydata/projects/2 and
         # pydata/projects/issue/2 shorten to the same
         ("github", "https://github.com/orgs/pydata/projects/2", "pydata/projects#2"),
+        ("github", "https://github.com/orgs/pydata/projects", "pydata/projects"),
+        ("github", "https://github.com/orgs/pydata/projects/", "pydata/projects"),
         ("github", "https://github.com/pydata/projects/pull/2", "pydata/projects#2"),
         # issues and pulls are athe same, so it's ok to normalise to the same here
         ("github", "https://github.com/pydata/projects/issues/2", "pydata/projects#2"),

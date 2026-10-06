@@ -52,24 +52,32 @@ Customize the CSS of light and dark themes
     Theming is still a beta feature, so the variables related to color theming are likely to change in the future. No backward compatibility is guaranteed when customization is done.
 
 
-To customize the CSS of page elements in a theme-dependent manner, use the ``html[data-theme='<THEME>']`` CSS selector.
-For example to define a different background color for both the light and dark themes:
+The theme sets the CSS `color-scheme <https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme>`__ property to ``light`` or ``dark`` to match the active theme.
+Native browser UI such as scrollbars and form controls follows it, and so does the CSS
+`light-dark() <https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/light-dark>`__ function.
+To give a color a different value in each theme, pass both values to ``light-dark()``:
 
 .. code-block:: css
 
-    /* anything related to the light theme */
-    html[data-theme="light"] {
-
-        /* whatever you want to change */
-        background-color: white;
+    html[data-theme] {
+        /* light-dark(<light theme value>, <dark theme value>) */
+        background-color: light-dark(white, black);
     }
 
-    /* anything related to the dark theme */
-    html[data-theme="dark"] {
+.. note::
 
-        /* whatever you want to change */
-        background-color: black;
-    }
+    ``light-dark()`` does not work for all CSS properties.
+    Use the ``html[data-theme='<THEME>']`` selector for unsupported properties.
+
+    .. code-block:: css
+
+        html[data-theme="light"] {
+            font-family: "Jedi Sans";
+        }
+
+        html[data-theme="dark"] {
+            font-family: "Dark Vador Sans";
+        }
 
 A complete list of the colors used in this theme can be found in the :doc:`CSS style section <styling>`.
 
