@@ -7,9 +7,6 @@ are run against a build of our PST documentation, not purposedly-built test site
 import json
 import re
 
-from functools import partial
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-from threading import Thread
 from urllib.parse import urljoin
 
 import pytest
@@ -340,7 +337,12 @@ def test_search_as_you_type(page: Page, url_base: str) -> None:
     ],
 )
 def test_version_warning_banner(
-    sphinx_build_factory, page: Page, release: str, version_match: str, banner: str
+    sphinx_build_factory,
+    serve_directory,
+    page: Page,
+    release: str,
+    version_match: str,
+    banner: str,
 ) -> None:
     """The banner trusts ``version_match`` before comparing release strings."""
     build = sphinx_build_factory(
@@ -367,18 +369,10 @@ def test_version_warning_banner(
             ]
         )
     )
-    # 127.0.0.1 rather than "" or "localhost": binding all interfaces makes
-    # http.server reverse-resolve the hostname, which can take seconds
-    handler = partial(SimpleHTTPRequestHandler, directory=str(build.outdir))
-    server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
-    Thread(target=server.serve_forever, daemon=True).start()
-    try:
-        page.goto(f"http://127.0.0.1:{server.server_address[1]}/index.html")
-        expect(page.locator("css=.version-switcher__menu a")).to_have_count(3)
-        warning = page.locator("css=#bd-header-version-warning")
-        if banner is None:
-            expect(warning).to_have_class(re.compile(r"\bd-none\b"))
-        else:
-            expect(warning).to_contain_text(banner)
-    finally:
-        server.shutdown()
+    page.goto(f"{serve_directory(build.outdir)}/index.html")
+    expect(page.locator("css=.version-switcher__menu a")).to_have_count(3)
+    warning = page.locator("css=#bd-header-version-warning")
+    if banner is None:
+        expect(warning).to_have_class(re.compile(r"\bd-none\b"))
+    else:
+        expect(warning).to_contain_text(banner)
