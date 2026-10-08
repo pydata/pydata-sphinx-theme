@@ -234,9 +234,11 @@ def test_article_toc_syncing(
         expect(some_toc_link_with_active).to_have_count(1)
         expect(some_toc_link_with_aria_current).to_have_count(1)
 
-        # After clicking a link, the pydata-sphinx-theme.js script sets a 1
-        # second timeout before processing intersection events again
-        page.wait_for_timeout(1500)
+        # Scroll down about one viewport right away, and check that the TOC
+        # follows instead of staying on the clicked link
+        for _ in range(10):
+            page.mouse.wheel(0, page.viewport_size["height"] / 10)
+        expect(first_toc_link).not_to_have_class(active_re)
 
         # Scroll to the bottom of the page, check that the first TOC entry
         # becomes un-highlighted. For some reason, we have to use page.mouse
