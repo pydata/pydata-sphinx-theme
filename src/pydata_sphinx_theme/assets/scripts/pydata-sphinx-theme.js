@@ -1103,6 +1103,14 @@ function setupArticleTocSyncing() {
     }, time);
   }
 
+  // The visitor may scroll on right after clicking a link. Enable the
+  // observer again as soon as they do, instead of waiting for the timeout.
+  ["wheel", "touchstart", "keydown", "mousedown"].forEach((eventType) => {
+    window.addEventListener(eventType, () => {
+      disableObserver = false;
+    });
+  });
+
   /**
    * If the provided URL hash fragment (beginning with "#") matches an entry in
    * the page table of contents, highlight that entry and temporarily disable
