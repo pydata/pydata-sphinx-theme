@@ -23,6 +23,16 @@ $breakpoint-sidebar-secondary: xl; // When we collapse the secondary sidebar
 $breakpoint-page-width: 88rem; // taken from sphinx-basic-ng, which we are ultimately going to inherit
 
 /*******************************************************************************
+* The header's items are --pst-header-height tall, and its padding above and
+* below them makes the whole header taller. Sticky elements below the header
+* sit at its full height.
+*/
+$header-padding-block: 0.5rem;
+$header-height-total: calc(
+  var(--pst-header-height) + 2 * #{$header-padding-block}
+);
+
+/*******************************************************************************
 * Define the animation behaviour
 */
 $animation-time: 200ms;
