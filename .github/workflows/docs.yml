@@ -77,9 +77,9 @@ jobs:
             python -Im tox run -e py$(echo ${{ matrix.python-version }} | tr -d .)-docs
           fi
 
-  # Run Lighthouse audits on the built site (kitchen-sink only)
+  # Run Lighthouse audits on a separately built site (kitchen-sink only), so it
+  # doesn't need to wait for build-site
   lighthouse-audit:
-    needs: build-site
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository 🛎"
