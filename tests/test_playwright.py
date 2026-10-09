@@ -404,3 +404,55 @@ class TestCollapseSidebarButton:
             expect(button).not_to_be_attached()
 
         _check_test_site(self.site_name, site_path, check_no_collapse_sidebar_button)
+
+
+@pytest.mark.parametrize(
+    ("toggle_name", "dialog_id"),
+    [
+        ("Site navigation", "pst-primary-sidebar-modal"),
+        ("On this page", "pst-secondary-sidebar-modal"),
+    ],
+)
+def test_drawer_opens_with_focus_on_the_drawer_itself(
+    sphinx_build_factory: Callable,
+    page: Page,
+    url_base: str,
+    toggle_name: str,
+    dialog_id: str,
+) -> None:
+    """Opening a drawer must not land focus on one of its controls.
+
+    WebKit draws a focus ring on the control that showModal() focuses, even
+    after a click. Chromium does not, so this checks where focus lands rather
+    than whether a ring is drawn.
+    """
+    site_name = "sidebars"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+    assert site_path is not None
+
+    def check_focus_on_dialog():
+        page.set_viewport_size({"width": 800, "height": 900})
+        page.goto(
+            urljoin(url_base, f"playwright_tests/{site_name}/section1/index.html")
+        )
+        page.wait_for_load_state("load")
+
+        dialog = page.locator(f"#{dialog_id}")
+        toggle = page.get_by_role("button", name=toggle_name)
+
+        toggle.click()
+        expect(dialog).to_be_visible()
+        expect(dialog).to_be_focused()
+        assert dialog.evaluate("el => getComputedStyle(el).outlineStyle") == "none"
+
+        # A keyboard user still gets into the drawer with one Tab
+        page.keyboard.press("Tab")
+        assert dialog.evaluate(
+            "el => el.contains(document.activeElement) && el !== document.activeElement"
+        )
+
+        page.keyboard.press("Escape")
+        expect(dialog).not_to_be_visible()
+        expect(toggle).to_be_focused()
+
+    _check_test_site(site_name, site_path, check_focus_on_dialog)

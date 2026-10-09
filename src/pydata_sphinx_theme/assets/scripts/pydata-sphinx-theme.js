@@ -852,6 +852,12 @@ function setupMobileSidebarKeyboardHandlers() {
 
       dialog.showModal();
 
+      // showModal() puts focus on the first control in the drawer, and WebKit
+      // (Safari, every iOS browser) then draws a focus ring around it even
+      // after a tap or click. Focus the drawer itself instead (the dialog has
+      // tabindex="-1" for this): Tab still reaches that first control.
+      dialog.focus();
+
       // Restore focus when dialog closes
       dialog.addEventListener(
         "close",
