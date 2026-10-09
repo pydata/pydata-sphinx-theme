@@ -871,6 +871,15 @@ function setupMobileSidebarKeyboardHandlers() {
       }
     });
 
+    // The drawer's own animations: the slide and the backdrop's fade.
+    // `subtree` is needed to reach ::backdrop, but it also reaches the
+    // sidebar content inside the dialog, whose animations are not ours to
+    // cancel and may be infinite, so keep only those targeting the dialog.
+    const drawerAnimations = () =>
+      dialog
+        .getAnimations({ subtree: true })
+        .filter((a) => a.effect?.target === dialog);
+
     // Once the window is wide enough for the sidebar to be a column, the
     // stylesheet hides the toggle, and an open drawer has nothing left to
     // show, so close it. Hiding the toggle changes its size, so this runs when
@@ -880,20 +889,17 @@ function setupMobileSidebarKeyboardHandlers() {
     new ResizeObserver(() => {
       if (dialog.open && getComputedStyle(toggleButton).display === "none") {
         dialog.close();
-        dialog.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+        drawerAnimations().forEach((a) => a.cancel());
       }
     }).observe(toggleButton);
 
     // When the dialog is closed, move the nodes (and classes) back to their
-    // original place. Wait for the slide-out (and the backdrop's fade, which
-    // `subtree` includes) to finish first, or the drawer would empty
-    // mid-slide.
+    // original place. Wait for the slide-out and the backdrop's fade to
+    // finish first, or the drawer would empty mid-slide.
     dialog.addEventListener("close", async () => {
       toggleButton.setAttribute("aria-expanded", "false");
 
-      await Promise.allSettled(
-        dialog.getAnimations({ subtree: true }).map((a) => a.finished),
-      );
+      await Promise.allSettled(drawerAnimations().map((a) => a.finished));
 
       // Opened again while we waited: the content belongs in the dialog now.
       if (dialog.open) {
