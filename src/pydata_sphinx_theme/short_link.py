@@ -82,10 +82,12 @@ class ShortenLinkTransform(SphinxPostTransform):
             # split the url content
             parts = path.split("/")
 
-            if parts[0] == "orgs" and "/projects" in path:
+            if len(parts) >= 3 and parts[0] == "orgs" and parts[2] == "projects":
                 # We have a projects board link
                 # ref: `orgs/{org}/projects/{project-id}`
-                text = f"{parts[1]}/projects#{parts[3]}"
+                text = f"{parts[1]}/projects"
+                if len(parts) > 3 and parts[3]:
+                    text += f"#{parts[3]}"
             else:
                 # We have an issues, PRs, or repository link
                 if len(parts) > 0:

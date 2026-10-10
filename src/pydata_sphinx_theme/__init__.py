@@ -16,7 +16,7 @@ from sphinx.errors import ExtensionError
 from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
 
 
-__version__ = "0.22.0rc0"
+__version__ = "0.24.0dev0"
 
 
 def update_config(app):
@@ -47,14 +47,11 @@ def update_config(app):
             "a value (leave undefined), or set to an empty list."
         )
 
-    # If the user hasn't explicitly set navbar_persistent, default it based on
-    # disable_search: show the search button field unless search is disabled.
-    if "navbar_persistent" not in theme_options:
-        if theme_options.get("disable_search", False):
-            navbar_persistent = []
-        else:
-            navbar_persistent = ["search-button-field"]
-        theme_options["navbar_persistent"] = navbar_persistent
+    # If search is disabled and the user hasn't explicitly set navbar_persistent,
+    # drop the default search button field. The default itself lives in
+    # theme.conf so that child themes can override it.
+    if theme_options.get("disable_search", False):
+        theme_options.setdefault("navbar_persistent", [])
 
     # Set the anchor link default to be # if the user hasn't provided their own
     if not utils.config_provided_by_user(app, "html_permalinks_icon"):

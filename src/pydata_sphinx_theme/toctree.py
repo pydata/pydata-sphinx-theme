@@ -389,6 +389,7 @@ def add_toctree_functions(
         # (see _sidebar_cache_key for when and _patch_cached_sidebar for how)
         cache_key = _sidebar_cache_key(
             kind,
+            startdepth,
             ancestorname,
             app.builder.get_target_uri(pagename),
             show_nav_level,
@@ -545,6 +546,7 @@ def add_toctree_functions(
 
 def _sidebar_cache_key(
     kind: str,
+    startdepth: int,
     ancestorname: str | None,
     page_uri: str,
     show_nav_level: int,
@@ -567,10 +569,14 @@ def _sidebar_cache_key(
     "dirhtml") give every page its own output directory, so no two pages can
     share a sidebar and nothing is cached for them.
     """
-    if kind != "sidebar" or ancestorname is None or kwargs.get("collapse", True):
+    if kind != "sidebar":
         return None
+    if kwargs.get("collapse", True):
+        return None  # collapsing sidebars differ per page
+    if startdepth != 0 and ancestorname is None:
+        return None  # one-section sidebar with no section (root/search/genindex)
     if not page_uri or page_uri.endswith("/"):
-        return None
+        return None  # relative links only match within one dir (i.e. dirhtml)
     return (
         ancestorname,
         posixpath.dirname(page_uri),

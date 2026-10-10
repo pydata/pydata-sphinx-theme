@@ -138,6 +138,21 @@ Here is an overview of the colors available in the theme (change theme mode to s
 
 .. code-block:: css
 
+    html[data-theme] {
+        /* light-dark(<light theme value>, <dark theme value>) */
+        --pst-color-primary: light-dark(black, white);
+    }
+
+.. note::
+
+    Use the ``html[data-theme]`` selector rather than ``:root``.
+    The theme defines its colors on ``html[data-theme="light"]`` and ``html[data-theme="dark"]``,
+    which are more specific than ``:root``, so a ``:root`` rule would be ignored.
+
+You can also set each theme separately, which is equivalent:
+
+.. code-block:: css
+
     html[data-theme="light"] {
         --pst-color-primary: black;
     }

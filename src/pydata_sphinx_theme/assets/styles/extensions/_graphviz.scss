@@ -3,5 +3,5 @@
 /* Style the inheritance diagram such that it has a dark mode */
 html[data-theme="dark"] div.graphviz > object.inheritance {
   filter: brightness(0.8) invert(0.82) contrast(1.2);
-  color-scheme: normal;
+  color-scheme: light;
 }

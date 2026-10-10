@@ -38,7 +38,7 @@
     display: flex;
     align-items: center;
     height: fit-content;
-    padding: 0.5rem 1rem;
+    padding: $header-padding-block 1rem;
   }
 
   :focus-visible {
