@@ -98,6 +98,10 @@ test = [
   "pytest-regressions",
   "sphinx[test]",
   "pytest-playwright",
+  # playwright is pinned so that CI's browser cache stays correct: each
+  # playwright version requires specific browser versions, and the cache key
+  # is a hash of this file. Bumped by Dependabot.
+  "playwright==1.63.0",
   "typing-extensions",
 ]
 a11y = ["pydata-sphinx-theme[test]"]
