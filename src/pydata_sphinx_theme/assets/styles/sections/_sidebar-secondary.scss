@@ -10,6 +10,11 @@
   position: sticky;
   top: $header-height-total;
   max-height: calc(100vh - #{$header-height-total});
+
+  // As a flex item the sidebar would stretch to the full height of the row,
+  // leaving its sticky box no room to settle. Sized to its own content
+  // instead, it fits above the footer rather than being pushed up by it.
+  align-self: flex-start;
   padding: 2rem 1rem 1rem;
   width: var(--pst-sidebar-secondary);
   font-size: var(--pst-sidebar-font-size-mobile);
