@@ -31,12 +31,6 @@
     left: 25px;
   }
 
-  .fa-solid.fa-magnifying-glass {
-    position: absolute;
-    left: calc((2.5rem - 0.7em) / 2);
-    color: var(--pst-color-text-muted);
-  }
-
   input.form-control {
     background-color: var(--pst-color-background);
     color: var(--pst-color-text-base);
@@ -101,6 +95,7 @@
 
     // Font and input text a bit bigger
     svg,
+    i,
     input {
       font-size: var(--pst-font-size-icon);
     }
@@ -166,7 +161,7 @@
   }
 
   // Only the icon should be visible on narrow screens
-  > :not(svg) {
+  > :not(svg, i) {
     display: none;
 
     @include media-breakpoint-up(lg) {
