@@ -1,0 +1,54 @@
+/**
+ * Keep the sticky sidebars in place as the footer scrolls into view.
+ *
+ * Without this, the footer pushes the sidebars up. A negative bottom margin
+ * stops the push, and the sidebars get shorter instead, ending where the
+ * footer begins. The footer is painted on top, so a height that lags a fast
+ * scroll by a frame stays hidden behind it.
+ */
+
+// The farthest the footer can scroll into view.
+$footer-entry: 100vh;
+
+// Shrink from this height to 0, rather than to a negative height, which
+// WebKit clamps before interpolating.
+$sidebar-height: calc(100vh - #{$header-height-total});
+
+@mixin above-footer {
+  margin-bottom: calc(-1 * #{$footer-entry});
+  animation: pst-sidebar-above-footer linear both;
+  animation-timeline: --pst-footer;
+  animation-range: cover 0 cover $sidebar-height;
+}
+
+@supports (animation-timeline: --pst-footer) and (timeline-scope: --pst-footer) {
+  body {
+    timeline-scope: --pst-footer;
+  }
+
+  .bd-footer {
+    view-timeline: --pst-footer block;
+    position: relative;
+    z-index: 1;
+    background-color: var(--pst-color-background);
+  }
+
+  @keyframes pst-sidebar-above-footer {
+    to {
+      max-height: 0;
+    }
+  }
+
+  // Below their breakpoints the sidebars are drawers, out of the footer's way.
+  .bd-sidebar-primary {
+    @include media-breakpoint-up($breakpoint-sidebar-primary) {
+      @include above-footer;
+    }
+  }
+
+  .bd-sidebar-secondary {
+    @include media-breakpoint-up($breakpoint-sidebar-secondary) {
+      @include above-footer;
+    }
+  }
+}
