@@ -21,7 +21,7 @@ span.menuselection {
 }
 
 a.reference.download::before {
-  content: var(--pst-icon-download);
+  @include decorative-icon-content(var(--pst-icon-download));
   font: var(--fa-font-solid);
   font-size: 0.8em;
   padding: 0 0.25em;

@@ -83,3 +83,17 @@
     }
   }
 }
+
+// Decorative icon-font glyph
+// --------------------------
+// Draws a Font Awesome glyph with `content`, giving it empty alternative text
+// so the private-use character it is made of stays out of what assistive
+// technology reads. Browsers without alternative text in `content` get the
+// glyph alone, as Font Awesome's own CSS does.
+@mixin decorative-icon-content($glyph) {
+  content: $glyph;
+
+  @supports (content: "" / "") {
+    content: #{$glyph} / "";
+  }
+}
