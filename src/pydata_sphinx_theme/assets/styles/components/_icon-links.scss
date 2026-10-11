@@ -34,25 +34,6 @@ ul.navbar-icon-links {
   margin-bottom: 0;
   list-style: none;
 
-  // Icons styling
-  svg {
-    &.fa-brands,
-    &.fa-regular,
-    &.fa-solid {
-      vertical-align: middle;
-      font-style: normal;
-      font-size: var(--pst-font-size-icon);
-    }
-
-    /* We no longer color the social media icons in their brand colors (makes a11y harder)
-       but this one is left in as an example in case we decide to go back to it someday:
-
-    &.fa-square-twitter {
-      color: #55acee;
-    }
-    */
-  }
-
   // Force images to be icon-sized
   img.icon-link-image {
     height: 1.5em;
