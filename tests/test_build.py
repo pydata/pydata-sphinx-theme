@@ -1128,6 +1128,18 @@ def test_theme_switcher(sphinx_build_factory, file_regression) -> None:
     )
 
 
+def test_search_button_field_uses_visible_label(sphinx_build_factory) -> None:
+    """The search button's accessible name must include its visible shortcut."""
+    sphinx_build = sphinx_build_factory("base").build()
+    search_button = sphinx_build.html_tree("index.html").select_one(
+        ".search-button-field"
+    )
+
+    assert search_button is not None
+    assert search_button.get("title") == "Search"
+    assert search_button.get("aria-label") is None
+
+
 def test_shorten_link(sphinx_build_factory, file_regression) -> None:
     """Regression test for "edit on <provider>" link shortening."""
     confoverrides = {
