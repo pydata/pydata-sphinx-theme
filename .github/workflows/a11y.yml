@@ -53,6 +53,7 @@ jobs:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
           pandoc: true
           graphviz: true
+          playwright-browser: ${{ matrix.browser }}
 
       - name: "Run accessibility tests with playwright 🎭"
         # build PST, build docs, then run a11y-tests
