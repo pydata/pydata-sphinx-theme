@@ -19,6 +19,10 @@ inputs:
     description: Whether this should install Graphviz or not
     required: false
     default: "false"
+  playwright-browser:
+    description: The Playwright browser to cache (e.g. chromium), if any
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -64,3 +68,27 @@ runs:
       if: ${{ inputs.graphviz == 'true' }}
       shell: bash
       run: dot -V
+
+    # The cache key includes:
+    # - a hash of pyproject.toml, where playwright is pinned, as each
+    #   playwright version requires specific browser versions
+    # - the runner image (e.g. ubuntu24), as some browser builds are OS
+    #   version specific
+    - name: "Get Playwright cache key 🎭"
+      id: playwright-cache
+      if: ${{ inputs.playwright-browser != '' }}
+      shell: bash
+      env:
+        BROWSER: ${{ inputs.playwright-browser }}
+        PYPROJECT_HASH: ${{ hashFiles('pyproject.toml') }}
+      run: echo "key=playwright-$ImageOS-$BROWSER-$PYPROJECT_HASH" >> "$GITHUB_OUTPUT"
+
+    - name: "Cache Playwright browsers 🎭"
+      if: ${{ inputs.playwright-browser != '' }}
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          ~/.cache/ms-playwright
+          ~/Library/Caches/ms-playwright
+          ~\AppData\Local\ms-playwright
+        key: ${{ steps.playwright-cache.outputs.key }}

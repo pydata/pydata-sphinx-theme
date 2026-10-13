@@ -8,6 +8,18 @@ updates:
     labels:
       - "tag: dependencies"
       - "tag: CI"
+  # pip, only for playwright, which we pin (see pyproject.toml)
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    allow:
+      - dependency-name: "playwright"
+    cooldown:
+      default-days: 7
+    labels:
+      - "tag: dependencies"
+      - "tag: CI"
   # npm
   - package-ecosystem: "npm"
     directory: "/"
