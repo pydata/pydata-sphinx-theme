@@ -30,7 +30,7 @@ jobs:
           persist-credentials: false
 
       - name: "Setup CI environment 🛠"
-        uses: ./.github/actions/set-dev-env
+        uses: $/.github/actions/set-dev-env
         with:
           python-version: ${{ matrix.python-version }}
           pandoc: true
