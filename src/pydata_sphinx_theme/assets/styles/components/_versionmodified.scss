@@ -60,34 +60,36 @@ span.versionmodified {
     margin-right: 0.6rem;
     color: var(--pst-color-info);
     font: var(--fa-font-solid);
-    content: var(--pst-icon-versionmodified-default);
+    @include decorative-icon-content(var(--pst-icon-versionmodified-default));
   }
 }
 
 span.versionmodified.added {
   &::before {
     color: var(--pst-color-success);
-    content: var(--pst-icon-versionmodified-added);
+    @include decorative-icon-content(var(--pst-icon-versionmodified-added));
   }
 }
 
 span.versionmodified.changed {
   &::before {
     color: var(--pst-color-warning);
-    content: var(--pst-icon-versionmodified-changed);
+    @include decorative-icon-content(var(--pst-icon-versionmodified-changed));
   }
 }
 
 span.versionmodified.deprecated {
   &::before {
     color: var(--pst-color-danger);
-    content: var(--pst-icon-versionmodified-deprecated);
+    @include decorative-icon-content(
+      var(--pst-icon-versionmodified-deprecated)
+    );
   }
 }
 
 span.versionmodified.removed {
   &::before {
     color: var(--pst-color-danger);
-    content: var(--pst-icon-versionmodified-removed);
+    @include decorative-icon-content(var(--pst-icon-versionmodified-removed));
   }
 }
