@@ -314,6 +314,86 @@ def test_notebook_ipywidget_output_tab_stop(page: Page, url_base: str) -> None:
 
 
 @pytest.mark.a11y
+@pytest.mark.parametrize(
+    "url_pathname,selector",
+    [
+        # nbsphinx code cell
+        ("/examples/pydata.html", "#Xarray .nbinput .input_area pre"),
+        # nbsphinx text output
+        ("/examples/pydata.html", "#Matplotlib .nboutput .output_area pre"),
+        # jupyter-sphinx text output, which has the same markup as a MyST-NB
+        # text output (our docs don't use MyST-NB)
+        ("/examples/execution.html", "#jupyter-sphinx .cell_output .output pre"),
+    ],
+)
+def test_notebook_cell_focus_ring(
+    page: Page, url_base: str, url_pathname: str, selector: str
+) -> None:
+    """Scrollable notebook cells should show a focus ring that is not clipped."""
+    page.set_viewport_size({"width": 400, "height": 720})
+    page.goto(urljoin(url_base, url_pathname))
+
+    # Narrow viewport, the cell content overflows, so the cell is a tab stop
+    cell = page.locator(f"css={selector}").first
+    expect(cell).to_have_attribute("tabindex", "0")
+
+    # Tab into the cell, so that it matches :focus-visible
+    cell.focus()
+    page.keyboard.press("Shift+Tab")
+    page.keyboard.press("Tab")
+    expect(cell).to_be_focused()
+
+    # The cell has a focus ring...
+    ring = cell.evaluate(
+        """(el) => {
+            const style = getComputedStyle(el);
+            return {
+                focusVisible: el.matches(":focus-visible"),
+                style: style.outlineStyle,
+                width: parseFloat(style.outlineWidth),
+                offset: parseFloat(style.outlineOffset),
+            };
+        }"""
+    )
+    assert ring["focusVisible"]
+    assert ring["style"] != "none"
+    assert ring["width"] > 0
+
+    # ...and no ancestor that hides overflow clips any part of it. Notebook
+    # extensions put cells inside such ancestors (see #2153).
+    clipped_by = cell.evaluate(
+        """(el, ring) => {
+            const box = el.getBoundingClientRect();
+            const extent = ring.offset + ring.width;  // beyond the border box
+            const clippedBy = [];
+            for (let a = el.parentElement; a; a = a.parentElement) {
+                const s = getComputedStyle(a);
+                if (s.overflowX === "visible" && s.overflowY === "visible") {
+                    continue;
+                }
+                // Overflow is clipped at the padding box (0.5px for rounding)
+                const clip = a.getBoundingClientRect();
+                const left = clip.left + a.clientLeft - 0.5;
+                const top = clip.top + a.clientTop - 0.5;
+                const right = clip.right - parseFloat(s.borderRightWidth) + 0.5;
+                const bottom = clip.bottom - parseFloat(s.borderBottomWidth) + 0.5;
+                if (
+                    box.left - extent < left ||
+                    box.top - extent < top ||
+                    box.right + extent > right ||
+                    box.bottom + extent > bottom
+                ) {
+                    clippedBy.push(a.tagName.toLowerCase() + "." + a.className);
+                }
+            }
+            return clippedBy;
+        }""",
+        ring,
+    )
+    assert clipped_by == [], f"focus ring is clipped by {clipped_by}"
+
+
+@pytest.mark.a11y
 def test_search_as_you_type(page: Page, url_base: str) -> None:
     """Search-as-you-type feature should support keyboard navigation.
 
