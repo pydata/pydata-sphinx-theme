@@ -264,7 +264,7 @@ nav.bd-links {
     &.reference.external {
       &::after {
         font: var(--fa-font-solid);
-        content: var(--pst-icon-external-link);
+        @include decorative-icon-content(var(--pst-icon-external-link));
         font-size: 0.75em;
         margin-left: 0.3em;
       }
