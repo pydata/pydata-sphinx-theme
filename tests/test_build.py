@@ -438,6 +438,43 @@ def test_navbar_no_in_page_headers(sphinx_build_factory, file_regression) -> Non
     file_regression.check(navbar.prettify(), extension=".html")
 
 
+def test_multiple_h1_warning(sphinx_build_factory) -> None:
+    """Warn about pages with more than one top-level heading, see #1351."""
+    confoverrides = {"html_theme_options": {**COMMON_CONF_OVERRIDES}}
+    sphinx_build = sphinx_build_factory(
+        "test_navbar_no_in_page_headers", confoverrides=confoverrides
+    ).build(no_warning=False)
+
+    # page1 has three top-level headings; index and page2 have one each
+    warnings = escape_ansi(sphinx_build.warnings).strip().split("\n")
+    assert len(warnings) == 1
+    assert "page1.rst:7: WARNING: Page has 3 top-level headings (H1)." in warnings[0]
+    assert "[pydata_sphinx_theme.multiple_h1]" in warnings[0]
+
+
+@pytest.mark.parametrize(
+    "confoverrides",
+    (
+        pytest.param(
+            {
+                "html_theme_options": {**COMMON_CONF_OVERRIDES},
+                "suppress_warnings": ["pydata_sphinx_theme.multiple_h1"],
+            },
+            id="suppress_warnings",
+        ),
+        pytest.param(
+            {"html_theme_options": {"surface_warnings": False}},
+            id="surface_warnings",
+        ),
+    ),
+)
+def test_multiple_h1_warning_silenced(sphinx_build_factory, confoverrides) -> None:
+    """The multiple top-level headings warning can be turned off."""
+    sphinx_build_factory(
+        "test_navbar_no_in_page_headers", confoverrides=confoverrides
+    ).build()
+
+
 @pytest.mark.parametrize("n_links", (0, 4, 8))  # 0 = only dropdown, 8 = no dropdown
 def test_navbar_header_dropdown(sphinx_build_factory, n_links) -> None:
     """Test whether dropdown appears based on number of header links + config."""
