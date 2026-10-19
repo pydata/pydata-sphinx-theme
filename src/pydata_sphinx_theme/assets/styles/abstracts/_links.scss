@@ -161,6 +161,19 @@ $link-hover-decoration-thickness: string.unquote(
       box-shadow: $notch-shadow, $focus-ring-box-shadow;
       outline: none;
     }
+
+    // Forced colors mode drops box-shadow, which removes both the notch and,
+    // because the outline is turned off above, the focus ring. Redraw them
+    // with a border and an outline, which forced colors keeps.
+    @media (forced-colors: active) {
+      // the mixin is always included inside a rule, so this is not top level
+      // stylelint-disable-next-line no-invalid-position-declaration
+      border-inline-start: $link-hover-decoration-thickness solid LinkText;
+
+      &:focus-visible {
+        outline: $focus-ring-width solid Highlight;
+      }
+    }
   }
 }
 
