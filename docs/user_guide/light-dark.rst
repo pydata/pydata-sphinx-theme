@@ -126,6 +126,62 @@ Change the theme and a new image should be displayed.
 .. image:: https://picsum.photos/id/1025/200/200
     :class: only-light
 
+Automatic dark mode images
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Writing every image twice gets tedious, and is tricky for figures:
+the caption of the hidden figure disappears with it, and only one of the two figures can carry a label for cross-references.
+Instead, you can let the theme pick up dark variants of your local images automatically, by setting ``dark_mode_image_suffix`` in ``html_theme_options``:
+
+.. code-block:: python
+
+    html_theme_options = {
+        # ...
+        "dark_mode_image_suffix": "-dark",
+    }
+
+Now every local image ``name.ext`` that has a ``name-dark.ext`` next to it is shown as ``name-dark.ext`` in dark mode, without changing your source files:
+
+- the image is duplicated in the HTML output and the copies are tagged with the ``only-light`` and ``only-dark`` classes
+- an enclosing link or figure is duplicated with it, so the caption is visible in both modes
+- links to a labelled image or figure (e.g. with ``:name:``) work in both modes, and both copies share one figure number
+- images that already use one of the ``only-light``, ``only-dark`` or ``dark-light`` classes, or are themselves a dark variant, are left alone
+
+This only affects HTML output; other builders (e.g. LaTeX) keep the original image.
+The documentation of this theme uses it for the figure below, which shows ``_static/logo-dark.svg`` in dark mode:
+
+.. tab-set::
+
+    .. tab-item:: rst
+
+        .. code-block:: rst
+
+            .. figure:: /_static/logo.svg
+                :alt: The PyData logo
+                :width: 300px
+                :name: dark-mode-logo
+
+                The PyData logo, switch the theme to see the dark variant.
+
+    .. tab-item:: markdown
+
+        .. code-block:: md
+
+            ```{figure} /_static/logo.svg
+            :alt: The PyData logo
+            :width: 300px
+            :name: dark-mode-logo
+
+            The PyData logo, switch the theme to see the dark variant.
+            ```
+
+.. figure:: /_static/logo.svg
+    :alt: The PyData logo
+    :width: 300px
+    :name: dark-mode-logo
+
+    The PyData logo, switch the theme to see the dark variant.
+
 Images and content that work in both themes
 -------------------------------------------
 
