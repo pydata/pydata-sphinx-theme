@@ -13,7 +13,16 @@ from sphinx.application import Sphinx
 from sphinx.builders.dirhtml import DirectoryHTMLBuilder
 from sphinx.errors import ExtensionError
 
-from . import edit_this_page, logo, pygments, short_link, toctree, translator, utils
+from . import (
+    dark_mode_images,
+    edit_this_page,
+    logo,
+    pygments,
+    short_link,
+    toctree,
+    translator,
+    utils,
+)
 
 
 __version__ = "0.24.0dev0"
@@ -325,6 +334,7 @@ def setup(app: Sphinx) -> dict[str, str]:
     app.add_html_theme("pydata_sphinx_theme", str(theme_path))
 
     app.connect("builder-inited", add_shorten_xform)
+    app.connect("builder-inited", dark_mode_images.setup_dark_mode_images)
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", _fix_canonical_url)
