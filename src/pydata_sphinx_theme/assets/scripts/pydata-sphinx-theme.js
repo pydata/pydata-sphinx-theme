@@ -1051,38 +1051,15 @@ async function DismissAnnouncementBannerAndStorePref(event) {
 }
 
 /*******************************************************************************
- * Reveal (and animate) the banners (version warning, announcement) together
+ * Reveal the banners (version warning, announcement) together
  */
 async function fetchRevealBannersTogether() {
   // Wait until finished fetching and loading banners
   await Promise.allSettled([fetchAndUseVersions(), setupAnnouncementBanner()]);
 
-  // The revealer element should have CSS rules that set height to 0, overflow
-  // to hidden, and an animation transition on the height (unless the user has
-  // turned off animations)
-  const revealer = document.querySelector(".pst-async-banner-revealer");
-  if (!revealer) {
-    return;
-  }
-
-  // Remove the d-none (display-none) class to calculate the children heights.
-  revealer.classList.remove("d-none");
-
-  // Add together the heights of the element's children
-  const height = Array.from(revealer.children).reduce(
-    (height, el) => height + el.offsetHeight,
-    0,
-  );
-
-  // Use the calculated height to give the revealer a non-zero height (if
-  // animations allowed, the height change will animate)
-  revealer.style.setProperty("height", `${height}px`);
-
-  // Wait for a bit more than 300ms (the transition duration), then set height
-  // to auto so the banner can resize if the window is resized.
-  setTimeout(() => {
-    revealer.style.setProperty("height", "auto");
-  }, 320);
+  document
+    .querySelector(".pst-async-banner-revealer")
+    ?.classList.remove("d-none");
 }
 
 /**
