@@ -18,15 +18,6 @@ For more details on the PyData Sphinx Theme typography and text styles, see the
 
    Please note, custom icons are still ``<svg>``.
 
-.. deprecated:: v0.24.0
-
-   To stay compatible with extensions that bundle an older FontAwesome,
-   the theme forces FontAwesome 7 on the legacy
-   ``.fa``/``.fas``/``.far``/``.fab`` classes.
-
-   This shim is temporary and will be removed in a future release; prefer the
-   namespaced ``.fa-solid`` or ``.fa-brands`` classes.
-
 The default body and header fonts can be changed as follows:
 
 - Using :ref:`custom-css`, you can specify which fonts to use for the body, header,
