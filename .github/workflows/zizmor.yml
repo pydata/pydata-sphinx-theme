@@ -37,7 +37,7 @@ jobs:
         run: uvx zizmor --format sarif . > results.sarif
 
       - name: "Upload SARIF file 📤"
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@d208ec71e39ae46397cbf6569bef8439b9aab974
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: results.sarif
