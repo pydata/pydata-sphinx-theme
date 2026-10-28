@@ -49,14 +49,14 @@ repos:
       - id: prettier
         name: prettier
         entry: 'npm run prettier:files'
-        language: node
+        language: system
         types_or: [json, ts, tsx, javascript, jsx, css, scss]
-        exclude: .+\.html|webpack\.config\.js|tests/test_a11y/
+        exclude: .+\.html|webpack\.config\.js|tests/test_a11y/|\.ipynb$
 
       - id: stylelint
         name: stylelint
         entry: 'npm run stylelint:files'
-        language: node
+        language: system
         types: [scss]
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
