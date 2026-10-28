@@ -114,7 +114,7 @@ They will not be installed in the isolated environments used by `tox`.
 Alternatively, if you do not want to install pre-commit and its dependencies globally, you can use `tox` to run the checks:
 
 ```python
-tox -e run lint
+tox run -e lint
 ```
 
 The caveat to using `tox` is that this will not install the required hooks to run the checks automatically before each commit, so you need to run this manually.
