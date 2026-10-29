@@ -53,6 +53,16 @@ html .jp-RenderedHTMLCommon {
   }
 }
 
+// Code cells and text outputs scroll inside nbsphinx's input and output areas,
+// which hide overflow, so a focus ring drawn outside the cell gets clipped.
+// Draw it inside the cell instead.
+.nbinput .input_area,
+.nboutput .output_area {
+  pre:focus-visible {
+    outline-offset: -$focus-ring-width;
+  }
+}
+
 // Add extra padding to the final item in an nbsphinx container
 div.nblast.container {
   margin-bottom: 1rem;
@@ -97,6 +107,12 @@ div.nblast.container {
 div.cell_output .output {
   max-width: 100%;
   overflow-x: auto;
+
+  // Because of the overflow rule above, a focus ring drawn outside a text
+  // output gets clipped. Draw it inside the text output instead.
+  pre:focus-visible {
+    outline-offset: -$focus-ring-width;
+  }
 }
 
 .bd-content div.cell_output {
