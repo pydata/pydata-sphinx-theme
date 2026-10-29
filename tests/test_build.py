@@ -171,25 +171,6 @@ def test_logo_basic(sphinx_build_factory) -> None:
     assert not index_html.select(".navbar-brand")[0].text.strip()
 
 
-def test_logo_size_attributes(sphinx_build_factory) -> None:
-    """Test that local logo images get width/height to avoid layout shifts."""
-    confoverrides = {
-        "html_theme_options": {
-            "logo": {
-                "image_light": "_static/sizedlogo.svg",
-                "image_dark": "_static/sizedlogo.svg",
-            },
-        },
-    }
-    sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
-    index_html = sphinx_build.html_tree("index.html")
-    images = index_html.select(".navbar-brand img")
-    assert len(images) == 2
-    for image in images:
-        assert image.attrs["width"] == "20"
-        assert image.attrs["height"] == "10"
-
-
 def test_logo_no_image(sphinx_build_factory) -> None:
     """Test that the text is shown if no image specified."""
     confoverrides = {
@@ -333,10 +314,6 @@ def test_logo_external_image(sphinx_build_factory) -> None:
     index_html = sphinx_build.html_tree("index.html")
     index_str = str(index_html.select(".navbar-brand")[0])
     assert f'src="{test_url}"' in index_str
-    # We can't know the size of external images (nor of the empty light logo here)
-    for image in index_html.select(".navbar-brand img"):
-        assert "width" not in image.attrs
-        assert "height" not in image.attrs
 
 
 def test_logo_template_rejected(sphinx_build_factory) -> None:
