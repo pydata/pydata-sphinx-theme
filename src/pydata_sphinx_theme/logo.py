@@ -12,6 +12,7 @@ from sphinx.application import Sphinx
 from sphinx.errors import ExtensionError
 from sphinx.util import isurl
 from sphinx.util.fileutil import copy_asset_file
+from sphinx.util.images import get_image_size
 
 from .utils import get_theme_options_dict, maybe_warn
 
@@ -35,13 +36,18 @@ def setup_logo_path(
 
     # Define the final path to logo images in the HTML context
     theme_logo["image_relative"] = {}
+    # Intrinsic sizes of local logo images, so that the browser can reserve space
+    # for them before they load instead of shifting the navbar content.
+    theme_logo["image_size"] = {}
     for kind in ["light", "dark"]:
         image_kind_logo = theme_logo.get(f"image_{kind}")
+        source = None
 
         # If it's a URL the "relative" path is just the URL
         # else we need to calculate the relative path to a local file
         if image_kind_logo:
             if not isurl(image_kind_logo):
+                source = Path(app.srcdir) / image_kind_logo
                 image_kind_name = Path(image_kind_logo).name
                 image_kind_logo = pathto(f"_static/{image_kind_name}", resource=True)
             theme_logo["image_relative"][kind] = image_kind_logo
@@ -49,7 +55,14 @@ def setup_logo_path(
         # If there's no custom logo for this kind, just use `html_logo`
         # If `logo` is also None, then do not add this key to context.
         elif isinstance(logo, str) and len(logo) > 0:
+            html_logo = app.config.html_logo
+            if html_logo and not isurl(html_logo):
+                source = Path(app.confdir) / html_logo
             theme_logo["image_relative"][kind] = logo
+
+        size = get_image_size(source) if source else None
+        if size:
+            theme_logo["image_size"][kind] = size
 
     # Update our context logo variables with the new image paths
     context["theme_logo"] = theme_logo

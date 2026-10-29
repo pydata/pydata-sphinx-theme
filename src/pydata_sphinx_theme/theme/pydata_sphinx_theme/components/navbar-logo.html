@@ -28,8 +28,16 @@
       {% set default_mode = "light" %}
     {% endif %}
     {% set js_mode = "light" if default_mode == "dark" else "dark" %}
-    <img src="{{ theme_logo['image_relative'][default_mode] }}" class="logo__image only-{{ default_mode }}" alt="{{ alt }}"/>
-    <img src="{{ theme_logo['image_relative'][js_mode] }}" class="logo__image only-{{ js_mode }} pst-js-only" alt="{{ alt }}"/>
+    {#
+       Width and height let the browser reserve space for the image before it
+       loads, which avoids shifting the navbar content (local images only).
+     #}
+    {% macro size_attrs(mode) -%}
+      {%- set size = theme_logo.get("image_size", {}).get(mode) -%}
+      {%- if size %} width="{{ size[0] }}" height="{{ size[1] }}"{% endif -%}
+    {%- endmacro %}
+    <img src="{{ theme_logo['image_relative'][default_mode] }}" class="logo__image only-{{ default_mode }}" alt="{{ alt }}"{{ size_attrs(default_mode) }}/>
+    <img src="{{ theme_logo['image_relative'][js_mode] }}" class="logo__image only-{{ js_mode }} pst-js-only" alt="{{ alt }}"{{ size_attrs(js_mode) }}/>
   {% endif %}
   {% if not is_logo or theme_logo.get("text") %}
     <p class="title logo__title">{{ theme_logo.get("text") or docstitle }}</p>
