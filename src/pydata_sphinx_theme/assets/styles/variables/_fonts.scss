@@ -41,10 +41,8 @@ html {
     -apple-system, BlinkMacSystemFont,
     /* Windows */
     "Segoe UI Variable Text", "Segoe UI",
-    /* Linux */
-    "Inter", "Adwaita", "Noto Sans",
-    /* Android */
-    "Roboto",
+    /* Linux (Roboto for Android specifically) */
+    "Inter", "Adwaita Sans", "Roboto", "Noto Sans",
     /* Emoji and symbol fallback */
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
     /* system fallback to make sure we get at least sans-serif */
