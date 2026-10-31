@@ -32,10 +32,23 @@ html {
   --pst-font-weight-heading: 600;
 
   // Font family
-  // https://modernfontstacks.com/?stack=system-ui
+  // Slightly modified version of https://modernfontstacks.com/?stack=neo-grotesque:
+  // 1. Prefer native system fonts on Apple, as both Furo and the Python documentation do.
+  // 2. Add Segoe UI to prevent Windows users from falling back to Arial. Segoe UI Variable
+  //    is the modernized, variable-font successor to Segoe UI introduced in Windows 11.
   --pst-font-family-base-system:
-    system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "Noto Color Emoji";
+    /* MacOS */
+    -apple-system, BlinkMacSystemFont,
+    /* Windows */
+    "Segoe UI Variable Text", "Segoe UI",
+    /* Linux */
+    "Inter", "Adwaita", "Noto Sans",
+    /* Android */
+    "Roboto",
+    /* Emoji and symbol fallback */
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
+    /* system fallback to make sure we get at least sans-serif */
+    system-ui, sans-serif;
 
   // https://modernfontstacks.com/?stack=monospace-code
   --pst-font-family-monospace-system:
