@@ -37,9 +37,9 @@ html {
   // 2. Add Segoe UI to prevent Windows users from falling back to Arial. Segoe UI Variable
   //    is the modernized, variable-font successor to Segoe UI introduced in Windows 11.
   --pst-font-family-base-system:
-    -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Inter", "Roboto",
-    "Helvetica Neue", "Arial Nova", "Nimbus Sans", "Arial", "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+    -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Inter",
+    "Roboto", "Helvetica Neue", "Arial Nova", "Nimbus Sans", "Noto Sans", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", system-ui, sans-serif;
 
   // https://modernfontstacks.com/?stack=monospace-code
   --pst-font-family-monospace-system:
