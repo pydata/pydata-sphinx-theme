@@ -1582,3 +1582,76 @@ def test_sidebar_secondary_templates_all_empty(sphinx_build_factory) -> None:
     # Hence the secondary sidebar has all its templates empty and should be removed
     sphinx_build = sphinx_build_factory("base", confoverrides=confoverrides).build()
     assert not sphinx_build.html_tree("page1.html").select("div.bd-sidebar-secondary")
+
+
+def test_dark_mode_images(sphinx_build_factory) -> None:
+    """Images with a ``-dark`` variant get a dark mode copy."""
+    sphinx_build = sphinx_build_factory("dark_mode_images").build()
+    index_html = sphinx_build.html_tree("index.html")
+    body = index_html.select("article")[0]
+    images = {img["alt"]: img for img in body.select("img")}
+    # 2 images and the figure get a dark copy, 3 images are left alone
+    assert len(body.select("img")) == 2 * 3 + 3
+
+    def classes(img) -> list[str]:
+        return [c for c in img.get("class", []) if c.startswith("only-")]
+
+    # a plain image and its copy
+    plain = body.select('img[alt="plain"]')
+    assert [classes(img) for img in plain] == [["only-light"], ["only-dark"]]
+    assert plain[0]["src"] == "_images/plot.svg"
+    assert plain[1]["src"] == "_images/plot-dark.svg"
+    assert (sphinx_build.outdir / "_images" / "plot-dark.svg").exists()
+
+    # the link is duplicated with the image
+    links = [img.parent for img in body.select('img[alt="linked"]')]
+    assert [link.name for link in links] == ["a", "a"]
+    assert [classes(link) for link in links] == [["only-light"], ["only-dark"]]
+
+    # images without a variant, already themed or already dark are left alone
+    for alt in ["no variant", "themed", "already dark"]:
+        assert classes(images[alt]) == []
+        assert len(body.select(f'img[alt="{alt}"]')) == 1
+
+    # the labelled figure is wrapped, both copies keep the caption and number
+    wrapper = body.select("#fig-plot")[0]
+    assert "dark-mode-image" in wrapper["class"]
+    figures = wrapper.select("figure")
+    assert [fig["id"] for fig in figures] == ["fig-plot-light", "fig-plot-dark"]
+    assert [classes(fig) for fig in figures] == [["only-light"], ["only-dark"]]
+    for fig in figures:
+        caption = fig.select("figcaption")[0].get_text(" ", strip=True)
+        assert caption.startswith("Fig. 1 The caption")
+
+    # links point to the wrapper, so they work in both modes
+    refs = body.select('a[href="#fig-plot"]')
+    assert [ref.get_text(strip=True) for ref in refs] == ["Fig. 1", "The caption"]
+
+
+def test_dark_mode_images_disabled(sphinx_build_factory) -> None:
+    """The dark mode images are opt-in."""
+    confoverrides = {"html_theme_options": {}}
+    sphinx_build = sphinx_build_factory(
+        "dark_mode_images", confoverrides=confoverrides
+    ).build()
+    body = sphinx_build.html_tree("index.html").select("article")[0]
+    assert len(body.select("img")) == 6
+    assert not body.select(".only-dark")
+
+
+@pytest.mark.parametrize("buildername", ["latex", "singlehtml"])
+def test_dark_mode_images_other_builders(sphinx_build_factory, buildername) -> None:
+    """Non-HTML output is unchanged, singlehtml keeps the figure number."""
+    sphinx_build = sphinx_build_factory(
+        "dark_mode_images", buildername=buildername
+    ).build()
+    if buildername == "latex":
+        tex = next(sphinx_build.outdir.glob("*.tex")).read_text()
+        assert "plot-dark" in tex  # only the image that is already dark
+        assert tex.count("plot.svg") + tex.count("{plot}") >= 4
+        return
+    body = sphinx_build.html_tree("index.html").select("article")[0]
+    figures = body.select("figure")
+    assert [fig["id"] for fig in figures] == ["fig-plot-light", "fig-plot-dark"]
+    for fig in figures:
+        assert fig.select("figcaption")[0].get_text(strip=True).startswith("Fig. 1")
