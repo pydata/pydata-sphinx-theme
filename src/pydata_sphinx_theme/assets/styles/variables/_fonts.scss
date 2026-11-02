@@ -1,3 +1,5 @@
+@import "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap";
+
 html {
   /*****************************************************************************
   * Font features used in this theme
@@ -32,15 +34,23 @@ html {
   --pst-font-weight-heading: 600;
 
   // Font family
-  // https://modernfontstacks.com/?stack=system-ui
   --pst-font-family-base-system:
-    system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "Noto Color Emoji";
+    "Inter",
+    /* MacOS */
+    -apple-system, BlinkMacSystemFont,
+    /* Windows */
+    "Segoe UI Variable Text", "Segoe UI",
+    /* Linux (Roboto for Android specifically) */
+    "Inter", "Adwaita Sans", "Roboto", "Noto Sans",
+    /* Emoji and symbol fallback */
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
+    /* system fallback to make sure we get at least sans-serif */
+    system-ui, sans-serif;
 
-  // https://modernfontstacks.com/?stack=monospace-code
+  // Prefer JetBrains Mono, falling back to https://modernfontstacks.com/?stack=monospace-code.
   --pst-font-family-monospace-system:
-    ui-monospace, "Cascadia Code", "Source Code Pro", "Menlo", "Consolas",
-    "DejaVu Sans Mono", monospace;
+    "JetBrains Mono", ui-monospace, "Cascadia Code", "Source Code Pro", "Menlo",
+    "Consolas", "DejaVu Sans Mono", monospace;
   --pst-font-family-base: var(--pst-font-family-base-system);
   --pst-font-family-heading: var(--pst-font-family-base-system);
   --pst-font-family-monospace: var(--pst-font-family-monospace-system);
