@@ -36,7 +36,7 @@ PyData Sphinx uses default system fonts.
 ### Type Scale
 
 A type scale refers to the multiple by which font sizes increase.
-You can find more about typographic scales at [Typographic Scale](https://designcode.io/typographic-scales).
+You can find more about typographic scales at [Typographic Scale](https://designcode.io/tutorials/ui-design-handbook/typographic-scales).
 For content-heavy websites, a medium contrast scale, which provides balanced
 contrast between heading sizes without overly large jumps, is ideal,
 typically ranging from `1.2x` to `1.33x`.
@@ -175,7 +175,7 @@ color and typography in the PyData Sphinx theme:
 
 ### References
 
-1. [https://carbondesignsystem.com/elements/typography/overview/](https://carbondesignsystem.com/elements/typography/overview/)
+1. [https://www.carbondesignsystem.com/building-blocks/foundations/typography/overview](https://www.carbondesignsystem.com/building-blocks/foundations/typography/overview)
 2. [https://canvas.workday.com/styles/tokens/type](https://canvas.workday.com/styles/tokens/type)
 3. [https://atlassian.design/foundations/typography-beta](https://atlassian.design/foundations/typography-beta)
    refer to the [Figma Design File](https://www.figma.com/community/file/1443191723065200671/pydata-sphinx-theme-design-system).

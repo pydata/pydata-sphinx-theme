@@ -5,7 +5,7 @@ requires = [
 build-backend = "sphinx_theme_builder"
 
 [tool.sphinx-theme-builder]
-node-version = "24.21.0"
+node-version = "24.22.2"
 theme-name = "pydata_sphinx_theme"
 additional-compiled-static-assets = [
   "webpack-macros.html",
@@ -98,6 +98,10 @@ test = [
   "pytest-regressions",
   "sphinx[test]",
   "pytest-playwright",
+  # playwright is pinned so that CI's browser cache stays correct: each
+  # playwright version requires specific browser versions, and the cache key
+  # is a hash of this file. Bumped by Dependabot.
+  "playwright==1.64.1",
   "typing-extensions",
 ]
 a11y = ["pydata-sphinx-theme[test]"]
