@@ -156,6 +156,7 @@ elif version_match == "stable":
     version_match = f"v{release}"
 
 html_theme_options = {
+    "dark_mode_image_suffix": "-dark",
     "external_links": [
         {
             "url": "https://pydata.org",
@@ -313,7 +314,7 @@ bad_classes = (
     r".*abc def.*",  # urllib.parse.unquote_to_bytes
     r"api_sample\.RandomNumberGenerator",
     r"bs4\.BeautifulSoup",
-    r"docutils\.nodes\.Node",
+    r"docutils\.nodes\.\w+",
     r"matplotlib\.artist\.Artist",  # matplotlib xrefs are in the class diagram demo
     r"matplotlib\.figure\.Figure",
     r"matplotlib\.figure\.FigureBase",
