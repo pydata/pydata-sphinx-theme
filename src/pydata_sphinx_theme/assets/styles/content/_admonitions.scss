@@ -65,7 +65,7 @@ div.admonition,
       color: var(--pst-color-info);
       font: var(--fa-font-solid);
       line-height: inherit;
-      content: var(--pst-icon-admonition-default);
+      @include decorative-icon-content(var(--pst-icon-admonition-default));
       opacity: 1;
     }
 
@@ -83,7 +83,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-attention);
-        content: var(--pst-icon-admonition-attention);
+        @include decorative-icon-content(var(--pst-icon-admonition-attention));
       }
     }
   }
@@ -96,7 +96,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-warning);
-        content: var(--pst-icon-admonition-caution);
+        @include decorative-icon-content(var(--pst-icon-admonition-caution));
       }
     }
   }
@@ -109,7 +109,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-warning);
-        content: var(--pst-icon-admonition-warning);
+        @include decorative-icon-content(var(--pst-icon-admonition-warning));
       }
     }
   }
@@ -122,7 +122,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-danger);
-        content: var(--pst-icon-admonition-danger);
+        @include decorative-icon-content(var(--pst-icon-admonition-danger));
       }
     }
   }
@@ -135,7 +135,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-danger);
-        content: var(--pst-icon-admonition-error);
+        @include decorative-icon-content(var(--pst-icon-admonition-error));
       }
     }
   }
@@ -148,7 +148,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-success);
-        content: var(--pst-icon-admonition-hint);
+        @include decorative-icon-content(var(--pst-icon-admonition-hint));
       }
     }
   }
@@ -161,7 +161,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-success);
-        content: var(--pst-icon-admonition-tip);
+        @include decorative-icon-content(var(--pst-icon-admonition-tip));
       }
     }
   }
@@ -174,7 +174,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-attention);
-        content: var(--pst-icon-admonition-important);
+        @include decorative-icon-content(var(--pst-icon-admonition-important));
       }
     }
   }
@@ -187,7 +187,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-info);
-        content: var(--pst-icon-admonition-note);
+        @include decorative-icon-content(var(--pst-icon-admonition-note));
       }
     }
   }
@@ -200,7 +200,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-success);
-        content: var(--pst-icon-admonition-seealso);
+        @include decorative-icon-content(var(--pst-icon-admonition-seealso));
       }
     }
   }
@@ -213,7 +213,7 @@ div.admonition,
 
       &::after {
         color: var(--pst-color-secondary);
-        content: var(--pst-icon-admonition-todo);
+        @include decorative-icon-content(var(--pst-icon-admonition-todo));
       }
     }
   }

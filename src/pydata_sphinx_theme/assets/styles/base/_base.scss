@@ -57,11 +57,11 @@ a {
   }
 
   &.github::before {
-    content: var(--pst-icon-github);
+    @include decorative-icon-content(var(--pst-icon-github));
   }
 
   &.gitlab::before {
-    content: var(--pst-icon-gitlab);
+    @include decorative-icon-content(var(--pst-icon-gitlab));
   }
 }
 
