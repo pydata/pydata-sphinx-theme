@@ -28,6 +28,12 @@ button.btn.version-switcher__button {
   border-color: var(--pst-color-border);
   border-radius: var(--bs-dropdown-border-radius);
 
+  // Keep a long list of versions on screen, and let it scroll. The scroll
+  // padding keeps the item focused with the arrow keys fully in view.
+  max-height: calc(100vh - #{$header-height-total} - 1rem);
+  overflow-y: auto;
+  scroll-padding-block: $focus-ring-width;
+
   a.list-group-item {
     background-color: var(--pst-color-on-background);
     color: var(--pst-color-text-base);
@@ -62,6 +68,7 @@ button.btn.version-switcher__button {
 
     &:focus-visible {
       z-index: 10; // keep focus ring on top (prevent the hover background of the next dropdown item from covering the ring)
+      outline-offset: -$focus-ring-width; // draw it inside the item, where the scrolling menu can't clip it
     }
   }
 }
