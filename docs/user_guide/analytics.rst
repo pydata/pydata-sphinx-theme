@@ -31,21 +31,16 @@ Plausible Analytics
 ===================
 
 `plausible.io <https://plausible.io>`__ can be used to gather simple
-and privacy-friendly analytics for the site. To configure, you will need to provide two things:
-
-- A URL pointing to the JavaScript analytics script that is served by your Plausible server
-- A domain that reflects where your documentation lives
+and privacy-friendly analytics for the site. Each site has a unique tracking script.
+Copy its URL from the **Site Installation** area in your Plausible site settings.
 
 Plausible's JavaScript will be included in all HTML pages to gather metrics.
-The dashboard with analytics results will be accessible at ``https://<plausible-url>/<my-domain>``.
 
 .. code:: python
 
    html_theme_options["analytics"] = {
-       # The domain you'd like to use for this analytics instance
-       "plausible_analytics_domain": "my-domain",
-       # The analytics script that is served by Plausible
-       "plausible_analytics_url": "https://.../script.js",
+       # The unique analytics script for your site
+       "plausible_analytics_url": "https://plausible.io/js/pa-XXXXX.js",
    }
 
 .. seealso::

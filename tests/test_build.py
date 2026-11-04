@@ -957,8 +957,7 @@ def test_edit_page_url(sphinx_build_factory, html_context, edit_text_and_url) ->
             {
                 "html_theme_options.analytics": {
                     "google_analytics_id": "G-XXXXX",
-                    "plausible_analytics_domain": "toto",
-                    "plausible_analytics_url": "http://.../script.js",
+                    "plausible_analytics_url": "https://plausible.io/js/pa-XXXXX.js",
                 }
             },
             ["gtag", "G-XXXXX"],
@@ -1032,8 +1031,7 @@ def test_plausible(sphinx_build_factory) -> None:
     """Test the Plausible analytics."""
     provider = {
         "html_theme_options.analytics": {
-            "plausible_analytics_domain": "toto",
-            "plausible_analytics_url": "http://.../script.js",
+            "plausible_analytics_url": "https://plausible.io/js/pa-XXXXX.js",
         },
     }
     confoverrides = provider
@@ -1041,12 +1039,19 @@ def test_plausible(sphinx_build_factory) -> None:
     sphinx_build.build()
     index_html = sphinx_build.html_tree("index.html")
 
-    # Search all the scripts and make sure one of them has the Google tag in there
-    attr_found = False
-    for script in index_html.select("script"):
-        if script.attrs.get("data-domain") == "toto":
-            attr_found = True
-    assert attr_found is True
+    external_scripts = [s for s in index_html.select("script") if s.attrs.get("src")]
+    matching_external = [
+        s
+        for s in external_scripts
+        if s.attrs.get("src") == "https://plausible.io/js/pa-XXXXX.js"
+    ]
+    assert len(matching_external) == 1
+    assert matching_external[0].attrs.get("async") == "async"
+    assert "data-domain" not in matching_external[0].attrs
+
+    inline_scripts = [s.string for s in index_html.select("script") if s.string]
+    plausible_init = [s for s in inline_scripts if "plausible.init()" in s]
+    assert len(plausible_init) == 1
 
 
 def test_show_nav_level(sphinx_build_factory) -> None:
