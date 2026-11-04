@@ -68,6 +68,12 @@ To simplify this process, we use a few helper tools:
 - [tox](https://tox.wiki/en/latest/index.html) for automating common development tasks.
 - [pandoc](https://pandoc.org/) the universal document converter.
 
+```{note}
+`pandoc` must be installed on your system, not only in your Python environment.
+The `pandoc` package that the `dev` extra installs from PyPI is a Python library, and it needs the pandoc program installed separately.
+Install pandoc with your operating system's package manager, with `conda install -c conda-forge pandoc`, or with an installer from [pandoc.org](https://pandoc.org/installing.html).
+```
+
 In particular, `tox` can be used to automatically create isolated local development environments with all the correct packages installed to work on the theme.
 The rest of this guide focuses on using `tox` to start with a basic environment.
 
