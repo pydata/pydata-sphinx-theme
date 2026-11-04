@@ -5,6 +5,12 @@ Your right table of contents will behave slightly differently depending on
 whether your page has one top-level header, or multiple top-level headers. See
 below for more information.
 
+.. note::
+
+   We recommend a single top-level header on each page. Screen reader users often navigate a page by its headings, and several ``<h1>`` headings make the structure harder to follow. Sphinx also does not apply a custom ``toctree`` title (``Custom title <page>``) to a page with several top-level headers.
+
+   The theme reports such pages when it builds your documentation (see :doc:`../user_guide/warnings`). To turn off only this warning, add ``"pydata_sphinx_theme.multiple_h1"`` to `suppress_warnings <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-suppress_warnings>`__ in your ``conf.py``.
+
 An example with multiple top-level headers
 ==========================================
 
