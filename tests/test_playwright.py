@@ -175,7 +175,31 @@ def test_breadcrumb_expansion(
         page.set_viewport_size({"width": 150, "height": 720})
         assert _is_overflowing(el)
 
-        _check_test_site(site_name, site_path, check_breadcrumb_expansion)
+    _check_test_site(site_name, site_path, check_breadcrumb_expansion)
+
+
+def test_search_shortcut_handler_can_be_removed(
+    sphinx_build_factory: Callable, page: Page, url_base: str
+) -> None:
+    """Sites can remove the theme's search shortcut when using their own search."""
+    site_name = "base"
+    site_path = _build_test_site(site_name, sphinx_build_factory=sphinx_build_factory)
+
+    def check_search_shortcut():
+        page.goto(urljoin(url_base, f"playwright_tests/{site_name}/index.html"))
+        dialog = page.locator("#pst-search-dialog")
+
+        page.keyboard.press("ControlOrMeta+k")
+        expect(dialog).to_be_visible()
+        dialog.evaluate("dialog => dialog.close()")
+
+        page.evaluate(
+            'window.removeEventListener("keydown", window.pyDataCtrlKHandler, true)'
+        )
+        page.keyboard.press("ControlOrMeta+k")
+        expect(dialog).not_to_be_visible()
+
+    _check_test_site(site_name, site_path, check_search_shortcut)
 
 
 def test_breadcrumbs_everywhere(
