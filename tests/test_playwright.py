@@ -175,7 +175,7 @@ def test_breadcrumb_expansion(
         page.set_viewport_size({"width": 150, "height": 720})
         assert _is_overflowing(el)
 
-    _check_test_site(site_name, site_path, check_breadcrumb_expansion)
+        _check_test_site(site_name, site_path, check_breadcrumb_expansion)
 
 
 def test_search_shortcut_handler_can_be_removed(
