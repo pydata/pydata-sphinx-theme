@@ -592,6 +592,6 @@ References
 
 Please find here the full list of keys you can use in the ``html_theme_options`` in ``conf.py``:
 
-.. include:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/theme.conf
+.. include:: ../../src/pydata_sphinx_theme/theme/pydata_sphinx_theme/theme.toml
     :code: ini
     :class: highlight-ini

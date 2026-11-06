@@ -1,5 +1,7 @@
 [theme]
 inherit = "basic"
+# Note that we don't link the CSS file via Sphinx
+# instead we manually link it in `webpack-macros.html`
 stylesheets = [
     "styles/pydata-sphinx-theme.css",
 ]
@@ -10,6 +12,7 @@ sidebars = [
 pygments_style = { default = "tango" }
 
 [options]
+# General configuration
 sidebar_includehidden = "True"
 use_edit_page_button = "False"
 external_links = ""
@@ -41,6 +44,8 @@ back_to_top_button = "True"
 disable_search = "False"
 search_as_you_type = "False"
 shorten_urls = "True"
+
+# Template placement in theme layouts
 navbar_start = "navbar-logo"
 navbar_center = "navbar-nav"
 navbar_end = "theme-switcher, navbar-icon-links"
@@ -58,5 +63,7 @@ show_version_warning_banner = "False"
 sticky_banners = "False"
 announcement = ""
 templates_skip_empty_check = "sidebar-nav-bs.html, navbar-nav.html"
+
+# DEPRECATED (remove after 1.0 release)
 pygment_light_style = ""
 pygment_dark_style = ""

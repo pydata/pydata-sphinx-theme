@@ -77,7 +77,7 @@ def overwrite_pygments_css(app: Sphinx, exception=None):
         # see if user specified a light/dark pygments theme:
         style_key = f"pygments_{light_or_dark}_style"
         style_name = theme_options.get(style_key, None)
-        # if not, use the one we set in `theme.conf`:
+        # if not, use the one we set in `theme.toml`:
         if style_name is None and hasattr(app.builder, "theme"):
             style_name = app.builder.theme.get_options()[style_key]
 

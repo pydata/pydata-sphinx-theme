@@ -49,7 +49,7 @@ def update_config(app):
 
     # If search is disabled and the user hasn't explicitly set navbar_persistent,
     # drop the default search button field. The default itself lives in
-    # theme.conf so that child themes can override it.
+    # theme.toml so that child themes can override it.
     if theme_options.get("disable_search", False):
         theme_options.setdefault("navbar_persistent", [])
 
@@ -224,7 +224,7 @@ def update_and_remove_templates(
             )
 
     # Remove a duplicate entry of the theme CSS. This is because it is in both:
-    # - theme.conf
+    # - theme.toml
     # - manually linked in `webpack-macros.html`
     if "css_files" in context:
         theme_css_name = "_static/styles/pydata-sphinx-theme.css"
