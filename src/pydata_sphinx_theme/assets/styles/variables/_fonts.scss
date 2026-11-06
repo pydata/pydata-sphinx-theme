@@ -35,15 +35,13 @@ html {
   // Custom font stack (see discussion in https://github.com/pydata/pydata-sphinx-theme/pull/2560)
   --pst-font-family-base-system:
     /* MacOS */
-    -apple-system, BlinkMacSystemFont,
-    /* Windows */
-    "Segoe UI Variable Text", "Segoe UI",
-    /* Linux (Roboto mainly for Android) */
-    "Inter", "Adwaita Sans", "Noto Sans", "Roboto", "Liberation Sans",
-    /* system fallback to make sure we get at least sans-serif */
-    sans-serif,
+    -apple-system, blinkmacsystemfont, /* Windows */ "Segoe UI Variable Text",
+    "Segoe UI", /* Linux (Roboto mainly for Android) */ "Inter", "Adwaita Sans",
+    "Noto Sans", "Roboto", "Liberation Sans",
+    /* system fallback to make sure we get at least sans-serif */ sans-serif,
     /* Emoji and symbol fallback (must come after text fonts: emoji fonts contain space/digit glyphs) */
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   // https://modernfontstacks.com/?stack=monospace-code
   --pst-font-family-monospace-system:
