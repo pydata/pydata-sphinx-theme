@@ -38,7 +38,8 @@
     display: flex;
     align-items: center;
     height: fit-content;
-    padding: $header-padding-block 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   :focus-visible {
@@ -61,7 +62,6 @@
       flex-grow: 1;
       padding: 0 0 0 0.5rem;
       flex-wrap: wrap;
-      row-gap: 0.5rem;
     }
   }
 
@@ -109,16 +109,30 @@
       > .nav-link {
         @include link-style-block;
 
+        height: var(--pst-header-height);
+
+        &::before {
+          top: auto;
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
+        }
+
+        &:hover::before {
+          border-bottom: 0;
+          border-top: 3px solid var(--pst-color-secondary);
+        }
+
         padding-inline: 6px;
       }
 
       &.current {
         > .nav-link {
           color: var(--pst-color-primary);
+          font-weight: 600;
 
           // Underline the current navbar item
           &::before {
-            border-bottom: 3px solid var(--pst-color-primary);
+            border-top: 3px solid var(--pst-color-primary);
           }
         }
       }
@@ -193,6 +207,12 @@
         }
       }
     }
+  }
+
+  .search-button-field {
+    padding:0.375em;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
   }
 
   // **************************************************************
