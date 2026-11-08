@@ -38,7 +38,7 @@ jobs:
       fail-fast: true
       matrix:
         # ubuntu-latest = 24.04
-        os: ["ubuntu-latest", "ubuntu-22.04", "macos-14"]
+        os: ["ubuntu-latest", "ubuntu-22.04", "macos-15"]
         browser: ["firefox", "chromium"]
     runs-on: ${{ matrix.os }}
     steps:
