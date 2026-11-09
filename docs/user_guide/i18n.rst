@@ -47,7 +47,7 @@ documentation translations.
               {
                   "name": _("GitHub"),
                   "url": "https://github.com/<your-org>/<your-repo>",
-                  "icon": "fab fa-github-square",
+                  "icon": "fa-brands fa-square-github",
               },
           ],
           "external_links": [

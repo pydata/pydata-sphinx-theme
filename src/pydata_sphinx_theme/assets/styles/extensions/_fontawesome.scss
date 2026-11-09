@@ -1,0 +1,17 @@
+// ipywidgets injects FontAwesome 5 CSS whose .fa/.fas/.far/.fab rules load
+// after ours and point at missing webfonts. Re-assert FontAwesome 7 on them.
+.fa,
+.fas {
+  font-family: var(--fa-family-classic) !important;
+  font-weight: 900 !important;
+}
+
+.far {
+  font-family: var(--fa-family-classic) !important;
+  font-weight: 400 !important;
+}
+
+.fab {
+  font-family: var(--fa-family-brands) !important;
+  font-weight: 400 !important;
+}

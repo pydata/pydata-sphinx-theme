@@ -168,7 +168,7 @@ Cards
 
     .. grid-item-card:: A card with a dropdown menu
 
-        .. dropdown:: :fa:`eye me-1` Click to expand dropdown
+        .. dropdown:: :fas:`eye me-1` Click to expand dropdown
 
             Hidden content
 

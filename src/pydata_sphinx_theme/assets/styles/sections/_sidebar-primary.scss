@@ -17,9 +17,9 @@ $sidebar-padding-right: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: calc(100vh - var(--pst-header-height));
+  max-height: calc(100vh - #{$header-height-total});
   position: sticky;
-  top: var(--pst-header-height);
+  top: $header-height-total;
 
   @include make-col(3);
 

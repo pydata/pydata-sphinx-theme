@@ -1,14 +1,15 @@
 """Configuration of the pytest session."""
 
 import re
-import time
 
-from collections.abc import Callable
-from http.client import HTTPConnection
+from collections.abc import Callable, Iterator
+from contextlib import ExitStack, contextmanager
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from os import environ
 from pathlib import Path
 from shutil import copytree
-from subprocess import PIPE, Popen
+from threading import Thread
 from typing import Self
 
 import pytest
@@ -90,42 +91,39 @@ def sphinx_build_factory(make_app: Callable, tmp_path: Path, request) -> Callabl
     yield _func
 
 
+class _HTTPServer(ThreadingHTTPServer):
+    # Browsers fire off dozens of parallel requests when loading a page, and
+    # SimpleHTTPRequestHandler speaks HTTP/1.0 so each one is a new connection.
+    # With the default listen backlog of 5, macOS resets and Windows refuses
+    # the overflowing connections (Linux makes the client retry instead), so
+    # assets randomly fail to load and tests flake.
+    request_queue_size = 128
+
+
+@contextmanager
+def _serve(directory: Path) -> Iterator[str]:
+    """Serve a directory over HTTP and return the base URL."""
+    # 127.0.0.1 rather than "" or "localhost": binding all interfaces makes
+    # http.server reverse-resolve the hostname, which can take seconds.
+    handler = partial(SimpleHTTPRequestHandler, directory=str(directory))
+    server = _HTTPServer(("127.0.0.1", 0), handler)
+    Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        yield f"http://127.0.0.1:{server.server_address[1]}"
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+@pytest.fixture
+def serve_directory() -> Iterator[Callable[[Path], str]]:
+    """Return a function that serves a directory over HTTP and returns its URL."""
+    with ExitStack() as stack:
+        yield lambda directory: stack.enter_context(_serve(directory))
+
+
 @pytest.fixture(scope="module")
-def url_base():
-    """Start local server on built docs and return the localhost URL as the base URL."""
-    # Use a port that is not commonly used during development or else you will
-    # force the developer to stop running their dev server in order to run the
-    # tests.
-    port = "8213"
-    host = "localhost"
-    url = f"http://{host}:{port}"
-
-    # Try starting the server
-    process = Popen(
-        ["python", "-m", "http.server", port, "--directory", docs_build_path],
-        stdout=PIPE,
-    )
-
-    # Try connecting to the server
-    retries = 5
-    while retries > 0:
-        conn = HTTPConnection(host, port)
-        try:
-            conn.request("HEAD", "/")
-            response = conn.getresponse()
-            if response is not None:
-                yield url
-                break
-        except ConnectionRefusedError:
-            time.sleep(1)
-            retries -= 1
-
-    # If the code above never yields a URL, then we were never able to connect
-    # to the server and retries == 0.
-    if not retries:
-        raise RuntimeError("Failed to start http server in 5 seconds")
-    else:
-        # Otherwise the server started and this fixture is done now and we clean
-        # up by stopping the server.
-        process.terminate()
-        process.wait()
+def url_base() -> Iterator[str]:
+    """Start local server on built docs and return its URL as the base URL."""
+    with _serve(docs_build_path) as url:
+        yield url
