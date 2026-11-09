@@ -50,7 +50,7 @@ First off you'll need your copy of the `pydata-sphinx-theme` codebase.
 You can clone it for local development like so:
 
 1. **Fork the repository**, so you have your own copy on GitHub.
-   See [the GitHub forking guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) for more information.
+   See [the GitHub forking guide](https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo) for more information.
 2. **Clone the repository locally** so that you have a local copy to work from:
 
    ```console
@@ -113,8 +113,9 @@ They will not be installed in the isolated environments used by `tox`.
 
 Alternatively, if you do not want to install pre-commit and its dependencies globally, you can use `tox` to run the checks:
 
-```python
-tox -e run lint
+```console
+$ npm ci
+$ tox run -e lint
 ```
 
 The caveat to using `tox` is that this will not install the required hooks to run the checks automatically before each commit, so you need to run this manually.

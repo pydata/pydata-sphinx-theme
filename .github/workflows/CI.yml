@@ -38,10 +38,10 @@ jobs:
       fail-fast: true
       matrix:
         # https://github.com/actions/runner-images
-        # macos-14==latest
+        # macos-26==latest
         # ubuntu-24.04==latest
         # windows-2022==latest
-        os: ["ubuntu-latest", "ubuntu-22.04", "macos-14", "windows-latest"]
+        os: ["ubuntu-latest", "ubuntu-22.04", "macos-15", "windows-latest"]
         python-version: ["3.11", "3.14"]
         sphinx-version: [""]
         include:
@@ -122,7 +122,7 @@ jobs:
       - run: python -Im pip install --upgrade coverage[toml]
 
       - name: "Download coverage data 📥"
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           pattern: coverage-data-*
           merge-multiple: true
