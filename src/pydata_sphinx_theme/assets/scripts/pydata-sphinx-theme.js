@@ -214,36 +214,36 @@ var toggleSearchField = () => {
 };
 
 /**
- * Add an event listener for toggleSearchField() for Ctrl/Cmd + K
+ * Handle Ctrl/Cmd + K and Escape for the search field.
  */
+function pyDataCtrlKHandler(event) {
+  let input = findSearchInput();
+  // toggle on Ctrl+k or ⌘+k
+  if (
+    // Ignore if shift or alt are pressed
+    !event.shiftKey &&
+    !event.altKey &&
+    // On Mac use ⌘, all other OS use Ctrl
+    (useCommandKey
+      ? event.metaKey && !event.ctrlKey
+      : !event.metaKey && event.ctrlKey) &&
+    // Case-insensitive so the shortcut still works with caps lock
+    /^k$/i.test(event.key)
+  ) {
+    event.preventDefault();
+    toggleSearchField();
+  }
+  // also allow Escape key to hide (but not show) the dynamic search field
+  else if (document.activeElement === input && /Escape/i.test(event.key)) {
+    toggleSearchField();
+    resetSearchAsYouTypeResults();
+  }
+}
+
+window.pyDataCtrlKHandler = pyDataCtrlKHandler;
+
 var addEventListenerForSearchKeyboard = () => {
-  window.addEventListener(
-    "keydown",
-    (event) => {
-      let input = findSearchInput();
-      // toggle on Ctrl+k or ⌘+k
-      if (
-        // Ignore if shift or alt are pressed
-        !event.shiftKey &&
-        !event.altKey &&
-        // On Mac use ⌘, all other OS use Ctrl
-        (useCommandKey
-          ? event.metaKey && !event.ctrlKey
-          : !event.metaKey && event.ctrlKey) &&
-        // Case-insensitive so the shortcut still works with caps lock
-        /^k$/i.test(event.key)
-      ) {
-        event.preventDefault();
-        toggleSearchField();
-      }
-      // also allow Escape key to hide (but not show) the dynamic search field
-      else if (document.activeElement === input && /Escape/i.test(event.key)) {
-        toggleSearchField();
-        resetSearchAsYouTypeResults();
-      }
-    },
-    true,
-  );
+  window.addEventListener("keydown", pyDataCtrlKHandler, true);
 };
 
 /**
@@ -356,7 +356,7 @@ var setupSearchAsYouType = () => {
   );
 
   // Initiate searches whenever the user types stuff in the search modal textbox.
-  searchInput.addEventListener("keyup", () => {
+  function handleSearchInputKeyup() {
     const query = searchInput.value;
 
     // Don't search when there's nothing in the query textbox.
@@ -388,7 +388,8 @@ var setupSearchAsYouType = () => {
       document.querySelector("#search-results").classList.remove("empty");
       timeoutId = null;
     }, delay_ms);
-  });
+  }
+  searchInput.addEventListener("keyup", handleSearchInputKeyup);
 };
 
 // Delete the old search results container (if it exists) and set up a new one.
@@ -419,14 +420,15 @@ var resetSearchAsYouTypeResults = () => {
   results.tabIndex = -1;
   // When focus is on a search result, make sure that pressing Escape closes
   // the search modal.
-  results.addEventListener("keydown", (event) => {
+  function handleSearchResultsKeydown(event) {
     if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();
       toggleSearchField();
       resetSearchAsYouTypeResults();
     }
-  });
+  }
+  results.addEventListener("keydown", handleSearchResultsKeydown);
   // IMPORTANT: The search results container MUST have this exact ID.
   // searchtools.js is hardcoded to populate into the node with this ID.
   results.id = "search-results";
@@ -863,13 +865,14 @@ function setupMobileSidebarKeyboardHandlers() {
     // We have to manually attach the escape key because there's some code in
     // Sphinx's Sphinx_highlight.js that prevents the default behavior of the
     // escape key
-    dialog.addEventListener("keydown", (event) => {
+    function handleSidebarDialogKeydown(event) {
       if (event.key === "Escape") {
         event.preventDefault();
         event.stopPropagation();
         dialog.close();
       }
-    });
+    }
+    dialog.addEventListener("keydown", handleSidebarDialogKeydown);
 
     // The drawer's own animations: the slide and the backdrop's fade.
     // `subtree` is needed to reach ::backdrop, but it also reaches the
@@ -1130,10 +1133,11 @@ function setupArticleTocSyncing() {
 
   // The visitor may scroll on right after clicking a link. Enable the
   // observer again as soon as they do, instead of waiting for the timeout.
+  function resumeTocObserver() {
+    disableObserver = false;
+  }
   ["wheel", "touchstart", "keydown", "mousedown"].forEach((eventType) => {
-    window.addEventListener(eventType, () => {
-      disableObserver = false;
-    });
+    window.addEventListener(eventType, resumeTocObserver);
   });
 
   /**
