@@ -67,7 +67,6 @@ a {
 
 %heading-style {
   margin: 2.75rem 0 1.05rem;
-  font-family: var(--pst-font-family-heading);
   font-weight: var(--pst-font-weight-heading);
   line-height: 1.15;
 }
@@ -79,6 +78,7 @@ h1 {
   @extend %heading-style;
 
   margin-top: 0;
+  font-family: var(--pst-font-family-display);
   font-size: var(--pst-font-size-h1);
   color: var(--pst-heading-color, --pst-color-heading);
 }
@@ -86,6 +86,7 @@ h1 {
 h2 {
   @extend %heading-style;
 
+  font-family: var(--pst-font-family-display);
   font-size: var(--pst-font-size-h2);
   color: var(--pst-heading-color, --pst-color-heading);
 }
@@ -93,6 +94,7 @@ h2 {
 h3 {
   @extend %heading-style;
 
+  font-family: var(--pst-font-family-display);
   font-size: var(--pst-font-size-h3);
   color: var(--pst-heading-color, --pst-color-heading);
 }
@@ -100,6 +102,7 @@ h3 {
 h4 {
   @extend %heading-style;
 
+  font-family: var(--pst-font-family-display);
   font-size: var(--pst-font-size-h4);
   color: var(--pst-heading-color, --pst-color-heading);
 }
@@ -107,6 +110,7 @@ h4 {
 h5 {
   @extend %heading-style;
 
+  font-family: var(--pst-font-family-display);
   font-size: var(--pst-font-size-h5);
   color: var(--pst-color-text-base);
 }
@@ -114,6 +118,7 @@ h5 {
 h6 {
   @extend %heading-style;
 
+  font-family: var(--pst-font-family-base);
   font-size: var(--pst-font-size-h6);
   color: var(--pst-color-text-base);
 }
