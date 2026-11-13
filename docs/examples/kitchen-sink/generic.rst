@@ -3,7 +3,7 @@
    Licensed under Creative Commons Attribution-ShareAlike 4.0 International License
    SPDX-License-Identifier: CC-BY-SA-4.0
 
-.. |EXAMPLE| image:: https://picsum.photos/16/16
+.. |EXAMPLE| image:: /_static/example-images/16x16.png
     :width: 1em
 
 =============
@@ -110,7 +110,7 @@ Sidebar
 
     Lorem ipsum dolor sit amet consectetur adipisicing elit.
 
-    .. image:: https://picsum.photos/200/200
+    .. image:: /_static/example-images/200x200.png
 
     Lorem ipsum dolor sit amet consectetur adipisicing elit.
 
@@ -268,4 +268,4 @@ voluptatem officia culpa optio atque. Quaerat sed quibusdam ratione nam.
 Download Links
 ==============
 
-:download:`This long long long long long long long long long long long long long long long download link should wrap white-spaces <https://picsum.photos/200/200>`
+:download:`This long long long long long long long long long long long long long long long download link should wrap white-spaces </_static/example-images/200x200.png>`

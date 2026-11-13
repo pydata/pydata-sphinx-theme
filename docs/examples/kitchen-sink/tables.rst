@@ -137,11 +137,11 @@ List Tables
 
 .. list-table:: This is a list table with images in it.
 
-    * - .. figure:: https://picsum.photos/200/200
+    * - .. figure:: /_static/example-images/200x200.png
 
            This is a short caption for a figure.
 
-      - .. figure:: https://picsum.photos/200/200
+      - .. figure:: /_static/example-images/200x200.png
 
            This is a long caption for a figure. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
            Donec porttitor dolor in odio posuere, vitae ornare libero mattis. In lobortis justo vestibulum nibh aliquet, non.
