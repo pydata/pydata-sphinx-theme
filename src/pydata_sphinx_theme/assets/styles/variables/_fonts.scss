@@ -45,12 +45,24 @@ html {
     /* Emoji and symbol fallback (must come after text fonts: emoji fonts contain space/digit glyphs) */
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
+  --pst-font-family-display-system:
+    /* MacOS */
+    -apple-system, BlinkMacSystemFont,
+    /* Windows */
+    "Segoe UI Variable Display", "Segoe UI",
+    /* Linux (Roboto mainly for Android) */
+    "Inter Display", "Adwaita Sans", "Noto Sans Display", "Roboto", "Liberation Sans",
+    /* system fallback to make sure we get at least sans-serif */
+    sans-serif,
+    /* Emoji and symbol fallback (must come after text fonts: emoji fonts contain space/digit glyphs) */
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
   // https://modernfontstacks.com/?stack=monospace-code
   --pst-font-family-monospace-system:
     ui-monospace, "Cascadia Code", "Source Code Pro", "Menlo", "Consolas",
     "DejaVu Sans Mono", monospace;
   --pst-font-family-base: var(--pst-font-family-base-system);
-  --pst-font-family-heading: var(--pst-font-family-base-system);
+  --pst-font-family-display: var(--pst-font-family-display-system);
   --pst-font-family-monospace: var(--pst-font-family-monospace-system);
 }
 
