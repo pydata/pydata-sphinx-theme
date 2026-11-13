@@ -1283,7 +1283,7 @@ def test_empty_templates(sphinx_build_factory) -> None:
 @pytest.mark.parametrize(
     ("skip_empty_check", "navbar_center_rendered"),
     [
-        # With no user config the default (from theme.conf) skips navbar-nav.html
+        # With no user config the default (from theme.toml) skips navbar-nav.html
         pytest.param(None, True, id="default"),
         # An explicitly empty list opts out of skipping navbar-nav.html
         pytest.param([], False, id="empty-list"),
@@ -1294,7 +1294,7 @@ def test_empty_templates(sphinx_build_factory) -> None:
         pytest.param(["navbar-nav"], False, id="list-no-suffix"),
         # A list that doesn't contain navbar-nav.html does not skip it
         pytest.param(["sidebar-nav-bs.html"], False, id="list-other-template"),
-        # Strings are parsed as comma-separated lists, like theme.conf options
+        # Strings are parsed as comma-separated lists, like theme.toml options
         pytest.param("navbar-nav.html", True, id="string"),
         pytest.param("sidebar-nav-bs.html, navbar-nav.html", True, id="string-comma"),
     ],
