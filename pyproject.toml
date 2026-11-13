@@ -71,7 +71,7 @@ doc = [
   "numpy",
   "xarray",
   "sphinx-copybutton",
-  "sphinx-design<0.8",  # TODO: remove pin, see #2584
+  "sphinx-design>=0.8",
   "sphinx-togglebutton",
   "jupyterlite-sphinx",
   "sphinxcontrib-mermaid",
