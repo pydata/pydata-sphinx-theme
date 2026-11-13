@@ -413,7 +413,6 @@ linkcheck_allowed_redirects = {
     r"https://idtracker.ai/": "https://idtracker.ai/latest/",
     r"https://gitlab.com": "https://about.gitlab.com/",
     r"https://feature-engine.readthedocs.io/": "https://feature-engine.trainindata.com/en/latest/",
-    r"https://picsum.photos/": r"https://fastly.picsum.photos/",
 }
 
 # we have had issues with linkcheck timing and retries on www.gnu.org
