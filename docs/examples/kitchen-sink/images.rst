@@ -12,18 +12,18 @@ Images
 
 An image:
 
-.. image:: https://picsum.photos/200/200
+.. image:: /_static/example-images/200x200.png
    :height: 200
    :width: 200
 
 A clickable image:
 
-.. image:: https://picsum.photos/200/200
-   :target: https://picsum.photos/
+.. image:: /_static/example-images/200x200.png
+   :target: https://pydata-sphinx-theme.readthedocs.io/en/stable/
    :height: 200
    :width: 200
 
-.. image:: https://picsum.photos/200/200
+.. image:: /_static/example-images/200x200.png
    :align: right
    :height: 200
    :width: 200
@@ -43,7 +43,7 @@ sapiente veritatis doloribus accusantium molestiae modi recusandae
 excepturi facere, corrupti expedita sit nihil temporibus eius sequi
 animi, illo libero labore fuga.
 
-.. image:: https://picsum.photos/200/200
+.. image:: /_static/example-images/200x200.png
    :align: left
    :height: 200
    :width: 200
@@ -66,7 +66,7 @@ animi, illo libero labore fuga.
 Figures
 -------
 
-.. figure:: https://picsum.photos/200/200
+.. figure:: /_static/example-images/200x200.png
    :alt: reStructuredText, the markup syntax
 
    A figure is an image with a caption and/or a legend:
@@ -83,7 +83,7 @@ Figures
 
 A figure directive with center alignment
 
-.. figure:: https://picsum.photos/200/200
+.. figure:: /_static/example-images/200x200.png
    :align: center
 
    This caption should be centered.

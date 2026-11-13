@@ -83,7 +83,7 @@ luctus efficitur arcu. Cras ut dictum mi. Nulla congue interdum lorem, semper se
 Document Subsection
 -------------------
 
-.. figure:: https://picsum.photos/200/200
+.. figure:: /_static/example-images/200x200.png
     :align: right
     :figwidth: 200px
 
