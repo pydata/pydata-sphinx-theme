@@ -38,11 +38,25 @@
     display: flex;
     align-items: center;
     height: fit-content;
-    padding: $header-padding-block 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   :focus-visible {
     border-radius: $focus-ring-radius;
+  }
+
+  .navbar-brand:focus-visible { // Prevent overflow beyond the top of the viewport.
+    outline: 0;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -$focus-ring-width;
+      right: -$focus-ring-width;
+      bottom: -$focus-ring-width;
+      border: 3px solid var(--pst-color-accent);
+    }
   }
 
   // These items will define the height of the header
@@ -61,7 +75,6 @@
       flex-grow: 1;
       padding: 0 0 0 0.5rem;
       flex-wrap: wrap;
-      row-gap: 0.5rem;
     }
   }
 
@@ -107,18 +120,21 @@
       margin-inline: 2px; // breathing room so hover and focus styles do not overlap
 
       > .nav-link {
-        @include link-style-block;
+        @include link-style-block($nav: true);
 
-        padding-inline: 6px;
+        height: var(--pst-header-height);
+        padding-inline: 0; // override Bootstrap
+        margin-inline: 6px; // Using `margin` instead of `padding` to align the Active Navbar Indicator with text.
       }
 
       &.current {
         > .nav-link {
           color: var(--pst-color-primary);
+          font-weight: 600;
 
           // Underline the current navbar item
           &::before {
-            border-bottom: 3px solid var(--pst-color-primary);
+            border-top: 3px solid var(--pst-color-primary);
           }
         }
       }
@@ -193,6 +209,12 @@
         }
       }
     }
+  }
+
+  .search-button-field {
+    padding:0.375em;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
   }
 
   // **************************************************************

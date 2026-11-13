@@ -181,7 +181,7 @@ $link-hover-decoration-thickness: string.unquote(
 // that we want to treat as blocks, such as the header nav links because the
 // underline will wrap across two lines if the link text also wraps across two
 // lines.
-@mixin link-style-block {
+@mixin link-style-block($nav: false) {
   color: var(--pst-color-text-muted);
 
   // Set position relative so that the child ::before pseudo-element's absolute
@@ -193,7 +193,11 @@ $link-hover-decoration-thickness: string.unquote(
     content: "";
     display: block;
     position: absolute;
-    inset: 0;
+    inset: if($nav, auto 0 0 0, 0);
+    @if $nav {
+      border-top-left-radius: $link-hover-decoration-thickness;
+      border-top-right-radius: $link-hover-decoration-thickness;
+    }
     background-color: transparent;
 
     @if $link-hover-decoration-thickness {
@@ -207,7 +211,7 @@ $link-hover-decoration-thickness: string.unquote(
     text-decoration: none; // override the link-style-hover mixin
     &::before {
       @if $link-hover-decoration-thickness {
-        border-bottom: $link-hover-decoration-thickness
+        border-#{if($nav, top, bottom)}: $link-hover-decoration-thickness
           solid
           var(--pst-color-secondary);
       }
@@ -216,7 +220,19 @@ $link-hover-decoration-thickness: string.unquote(
 
   &:focus-visible {
     box-shadow: none; // override Bootstrap
-    outline: 3px solid var(--pst-color-accent);
-    outline-offset: $focus-ring-width;
+    @if $nav { // Prevent overflow beyond the top of the viewport.
+      &::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -$focus-ring-width;
+        right: -$focus-ring-width;
+        bottom: -$focus-ring-width;
+        border: 3px solid var(--pst-color-accent);
+      }
+    } @else {
+      outline: 3px solid var(--pst-color-accent);
+      outline-offset: $focus-ring-width;
+    }
   }
 }
