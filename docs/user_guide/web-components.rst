@@ -182,20 +182,28 @@ Cards
 
     .. grid-item-card::
 
-        panel 1 header
-        ^^^^^^^^^^^^^^
+        .. card-header::
+
+            panel 1 header
+
         panel 1 content
         more content
-        ++++++++++++++
-        panel 1 footer
+
+        .. card-footer::
+
+            panel 1 footer
 
     .. grid-item-card::
 
-        panel 2 header
-        ^^^^^^^^^^^^^^
+        .. card-header::
+
+            panel 2 header
+
         panel 2 content
-        ++++++++++++++
-        panel 2 footer
+
+        .. card-footer::
+
+            panel 2 footer
 
 Tabs
 ====
