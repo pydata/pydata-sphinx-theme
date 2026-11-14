@@ -344,6 +344,28 @@ def test_search_as_you_type(page: Page, url_base: str) -> None:
     assert actual_focused_content == expected_focused_content
 
 
+@pytest.mark.a11y
+def test_search_dialog_is_not_a_tab_stop(page: Page, url_base: str) -> None:
+    """The search dialog itself should not be a tab stop.
+
+    Firefox and WebKit put a <dialog> in the tab order unless it has
+    tabindex="-1". Tabbing then focused the dialog: a focus ring around the
+    search field, but typed text went nowhere. Chromium does not do this, so
+    this test can only fail in Firefox or WebKit.
+    """
+    page.set_viewport_size({"width": 1440, "height": 720})
+    page.goto(urljoin(url_base, "/examples/kitchen-sink/blocks.html"))
+    page.locator("css=.navbar-header-items .search-button__default-text").click()
+    dialog = page.locator("css=#pst-search-dialog")
+    expect(dialog).to_be_visible()
+    # Opening the dialog still focuses the search field, not the dialog.
+    expect(dialog.locator("css=input[type=search]")).to_be_focused()
+    # Tabbing forward and backward, focus must never land on the dialog itself.
+    for key in ["Tab", "Tab", "Shift+Tab"]:
+        page.keyboard.press(key)
+        expect(dialog).not_to_be_focused()
+
+
 @pytest.mark.parametrize(
     ("release", "version_match", "banner"),
     [
