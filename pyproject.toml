@@ -71,7 +71,7 @@ doc = [
   "numpy",
   "xarray",
   "sphinx-copybutton",
-  "sphinx-design",
+  "sphinx-design>=0.8",
   "sphinx-togglebutton",
   "jupyterlite-sphinx",
   "sphinxcontrib-mermaid",
