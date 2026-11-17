@@ -1,4 +1,4 @@
-# Wrapped code links
+# Wrapped examples
 
 ## [`wrapped heading`](/index)
 
