@@ -150,6 +150,51 @@ def test_colors(sphinx_build_factory: Callable, page: Page, url_base: str) -> No
     _check_test_site(site_name, site_path, check_colors)
 
 
+@pytest.mark.parametrize("mode", ["light", "dark"])
+def test_wrapped_inline_code_link_colors(
+    sphinx_build_factory: Callable, page: Page, mode: str
+) -> None:
+    """Style code inside a MyST link like code that is a direct child of a link."""
+    site_path = _build_test_site("colors", sphinx_build_factory)
+    page.set_viewport_size({"width": 1440, "height": 720})
+    page.goto((site_path / "wrapped.html").as_uri())
+    page.locator("html").evaluate("(html, mode) => html.dataset.theme = mode", mode)
+
+    main = page.get_by_role("main")
+    wrapped_link = main.get_by_role("link", name="wrapped link", exact=True)
+    direct_link = main.get_by_role("link", name="direct link", exact=True)
+    plain_code = main.get_by_text("plain code", exact=True)
+    wrapped_code = wrapped_link.locator("code")
+    direct_code = direct_link.locator("code")
+
+    heading_code = (
+        main.get_by_role("heading", name="wrapped heading", exact=True)
+        .get_by_role("link", name="wrapped heading", exact=True)
+        .locator("code")
+    )
+    link_color = direct_code.evaluate("(code) => getComputedStyle(code).color")
+    expect(plain_code).not_to_have_css("color", link_color)
+    expect(wrapped_code).to_have_css("color", link_color)
+    expect(heading_code).to_have_css("color", link_color)
+    expect(wrapped_code).to_have_css(
+        "background-color",
+        plain_code.evaluate("(code) => getComputedStyle(code).backgroundColor"),
+    )
+
+    toc = page.locator("#pst-page-toc-nav")
+    direct_toc_code = toc.get_by_role("link", name="direct heading").locator("code")
+    wrapped_toc_code = toc.get_by_role("link", name="wrapped heading").locator("code")
+    toc_color = direct_toc_code.evaluate("(code) => getComputedStyle(code).color")
+    assert toc_color != link_color
+    expect(wrapped_toc_code).to_have_css("color", toc_color)
+
+    direct_link.hover()
+    hover_color = direct_code.evaluate("(code) => getComputedStyle(code).color")
+    assert hover_color != link_color
+    wrapped_link.hover()
+    expect(wrapped_code).to_have_css("color", hover_color)
+
+
 # ------------------------- Test functions: layout & components -----------------------
 
 
