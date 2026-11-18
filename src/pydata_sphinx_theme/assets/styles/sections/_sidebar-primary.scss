@@ -279,6 +279,7 @@ nav.bd-links {
 
   // Title
   p.bd-links__title {
+    font-family: var(--pst-font-family-display);
     font-size: var(--pst-sidebar-header-font-size);
     font-weight: var(--pst-sidebar-header-font-weight);
     margin-bottom: 0.5rem;
