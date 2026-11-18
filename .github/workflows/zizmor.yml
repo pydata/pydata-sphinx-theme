@@ -28,19 +28,5 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Install uv 📦"
-        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e
-        with:
-          version: "latest"
-
       - name: "Run zizmor 🕵️‍♂️"
-        run: uvx zizmor --format sarif . > results.sarif
-
-      - name: "Upload SARIF file 📤"
-        uses: github/codeql-action/upload-sarif@d208ec71e39ae46397cbf6569bef8439b9aab974
-        with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: results.sarif
-          # Optional category for the results
-          # Used to differentiate multiple results for one commit
-          category: zizmor
+        uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd
