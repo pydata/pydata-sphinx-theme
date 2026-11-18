@@ -66,7 +66,10 @@ html {
   --pst-font-family-display: var(--pst-font-family-display-system);
   --pst-font-family-monospace: var(--pst-font-family-monospace-system);
 
-  // --pst-font-family-heading: ...; Set --pst-font-family-heading to change the heading font
+  /* --pst-font-family-heading: ...;
+   * Set --pst-font-family-heading to set the section heading font independently
+   * from the other places display font is used.
+   */
 }
 
 $line-height-body: 1.65;

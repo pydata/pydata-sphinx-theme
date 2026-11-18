@@ -114,6 +114,9 @@ h5 {
 h6 {
   @extend %heading-style;
 
+  /* unlike other heading levels, h6 falls back to base font (not display font) when
+   * --pst-font-family-heading is undefined, because of h6's small size.
+   */
   font-family: var(--pst-font-family-heading, var(--pst-font-family-base));
   font-size: var(--pst-font-size-h6);
   color: var(--pst-color-text-base);
