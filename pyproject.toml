@@ -93,6 +93,7 @@ dev = [
   "sphinx-theme-builder[cli]",
 ]
 test = [
+  "myst-parser",
   "pytest",
   "pytest-cov",
   "pytest-regressions",
