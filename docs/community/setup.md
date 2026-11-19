@@ -66,7 +66,7 @@ To simplify this process, we use a few helper tools:
 - [The Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) compiles web assets in an automated way.
 - [pre-commit](https://pre-commit.com/) for automatically enforcing code standards and quality checks before commits.
 - [tox](https://tox.wiki/en/latest/index.html) for automating common development tasks.
-- [pandoc](https://pandoc.org/) the universal document converter.
+- [pandoc](https://pandoc.org/) the universal document converter (must be installed system-wide).
 
 In particular, `tox` can be used to automatically create isolated local development environments with all the correct packages installed to work on the theme.
 The rest of this guide focuses on using `tox` to start with a basic environment.
