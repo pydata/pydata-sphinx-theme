@@ -20,14 +20,15 @@ For more details on the PyData Sphinx Theme typography and text styles, see the
 
 The default body and header fonts can be changed as follows:
 
-- Using :ref:`custom-css`, you can specify which fonts to use for the body, header,
-  and monospaced text. For example, the following can be added to a custom
+- Using :ref:`custom-css`, you can specify which fonts to use for regular text, large text,
+  headings, and monospaced text. For example, the following can be added to a custom
   CSS file:
 
   .. code-block:: css
 
       html {
           --pst-font-family-base: Verdana, var(--pst-font-family-base-system);
+          --pst-font-family-display: "Funnel Display", var(--pst-font-family-display-system);
           --pst-font-family-heading: Cambria, Georgia, Times, var(--pst-font-family-base-system);
           --pst-font-family-monospace: Courier, var(--pst-font-family-monospace-system);
       }
