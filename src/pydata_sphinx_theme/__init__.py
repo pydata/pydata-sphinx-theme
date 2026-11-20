@@ -105,17 +105,19 @@ def update_config(app):
     analytics = theme_options.get("analytics", {})
     if analytics:
         # Plausible analytics
-        plausible_domain = analytics.get("plausible_analytics_domain")
         plausible_url = analytics.get("plausible_analytics_url")
 
         # Ref: https://plausible.io/docs/plausible-script
-        if plausible_domain and plausible_url:
-            kwargs = {
-                "loading_method": "defer",
-                "data-domain": plausible_domain,
-                "filename": plausible_url,
-            }
-            app.add_js_file(**kwargs)
+        if plausible_url:
+            plausible_init = """
+                window.plausible=window.plausible||function(){
+                    (plausible.q=plausible.q||[]).push(arguments)
+                };
+                plausible.init=plausible.init||function(i){plausible.o=i||{}};
+                plausible.init();
+            """
+            app.add_js_file(plausible_url, loading_method="async")
+            app.add_js_file("", body=plausible_init)
 
         # Google Analytics
         gid = analytics.get("google_analytics_id")
