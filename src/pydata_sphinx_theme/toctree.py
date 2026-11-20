@@ -771,7 +771,11 @@ def add_collapse_checkboxes(soup: BeautifulSoup) -> None:
             element.insert(0, toc_link)
 
         # Create <summary> with chevron icon
-        summary = soup.new_tag("summary")
+        toc_text = element.select_one("a,p")
+        summary_label = "Toggle navigation"
+        if toc_text:
+            summary_label = f"Toggle navigation for {toc_text.text}"
+        summary = soup.new_tag("summary", attrs={"aria-label": summary_label})
         span = soup.new_tag(
             "span",
             attrs={
