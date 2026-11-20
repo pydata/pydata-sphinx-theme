@@ -2,6 +2,10 @@ button.btn.version-switcher__button {
   border-color: var(--pst-color-border);
   color: var(--pst-color-text-base);
 
+  // Keep the button at least as wide as the "Choose version" placeholder, so the
+  // layout doesn't shift when JS replaces it with a shorter version name.
+  min-width: 16ch;
+
   // Add a margin on narrow screens to avoid feeling cramped
   margin-bottom: 1em;
 
