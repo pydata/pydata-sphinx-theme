@@ -87,30 +87,25 @@ def setup_translators(app: Sphinx):
     if app.builder.format != "html":
         return
 
-    if not app.registry.translators.items():
+    # Only the translator for the builder we are building with is relevant,
+    # so look it up by name, and fall back to the builder's default.
+    # Other extensions may have registered translators for other builders,
+    # so a non-empty registry does not mean our builder has a translator.
+    # https://github.com/pydata/pydata-sphinx-theme/issues/1418
+    translator_class = app.registry.translators.get(app.builder.name)
+    if translator_class is None:
         try:
-            default_translator_class = app.builder.default_translator_class
+            translator_class = app.builder.default_translator_class
         except AttributeError:
             # some builders, e.g. linkcheck, do not define 'default_translator_class'
             return
 
-        translator = types.new_class(
-            "BootstrapHTML5Translator",
-            (
-                BootstrapHTML5TranslatorMixin,
-                default_translator_class,
-            ),
-            {},
-        )
-        app.set_translator(app.builder.name, translator, override=True)
-    else:
-        for name, klass in app.registry.translators.items():
-            translator = types.new_class(
-                "BootstrapHTML5Translator",
-                (
-                    BootstrapHTML5TranslatorMixin,
-                    klass,
-                ),
-                {},
-            )
-            app.set_translator(name, translator, override=True)
+    translator = types.new_class(
+        "BootstrapHTML5Translator",
+        (
+            BootstrapHTML5TranslatorMixin,
+            translator_class,
+        ),
+        {},
+    )
+    app.set_translator(app.builder.name, translator, override=True)
