@@ -127,3 +127,50 @@ def url_base() -> Iterator[str]:
     """Start local server on built docs and return its URL as the base URL."""
     with _serve(docs_build_path) as url:
         yield url
+
+
+# External URLs the docs fetch at runtime, served from local files instead
+_LOCAL_COPIES = {
+    "https://raw.githubusercontent.com/pydata/pydata-sphinx-theme/main/docs/_templates/custom-template.html": (  # noqa: E501
+        repo_path / "docs" / "_templates" / "custom-template.html"
+    ),
+    "https://pydata-sphinx-theme.readthedocs.io/en/latest/_static/switcher.json": (
+        repo_path / "docs" / "_static" / "switcher.json"
+    ),
+}
+
+# External URLs still allowed, as they load scripts that render tested content:
+# MathJax, and the ipywidgets with require.js and widget modules like ipyleaflet
+_ALLOWED_URL_PREFIXES = (
+    "https://cdn.jsdelivr.net/npm/",
+    "https://cdnjs.cloudflare.com/ajax/libs/require.js/",
+)
+
+
+def _handle_external_request(route) -> None:
+    url = route.request.url
+    if url in _LOCAL_COPIES:
+        route.fulfill(path=_LOCAL_COPIES[url])
+    elif url.startswith(_ALLOWED_URL_PREFIXES):
+        route.continue_()
+    else:
+        route.abort()
+
+
+@pytest.fixture
+def context(context):
+    """Playwright's browser context, with external requests blocked or served locally.
+
+    External requests make tests slow and flaky, as a single hanging request
+    (e.g. a placeholder image) delays the page's load event that page.goto
+    waits for.
+
+    See https://docs.pytest.org/en/stable/how-to/fixtures.html#override-a-fixture-on-a-directory-conftest-level
+    and https://playwright.dev/python/docs/network#abort-requests.
+    """
+    # Only intercept requests to other hosts than the local test servers
+    context.route(
+        re.compile(r"^https?://(?!(127\.0\.0\.1|localhost)[:/])"),
+        _handle_external_request,
+    )
+    return context
