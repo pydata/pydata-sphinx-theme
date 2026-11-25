@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 
 import requests
 
+from docutils import nodes
 from requests.exceptions import ConnectionError, HTTPError, RetryError
 from sphinx.application import Sphinx
 from sphinx.builders.dirhtml import DirectoryHTMLBuilder
@@ -306,6 +307,29 @@ def _fix_canonical_url(
     context["pageurl"] = app.config.html_baseurl + target
 
 
+def _warn_multiple_h1(
+    app: Sphinx, pagename: str, templatename: str, context: dict, doctree
+) -> None:
+    """Warn when a page has more than one top-level heading.
+
+    Each top-level section of a page is rendered as an ``<h1>``. A page should
+    have only one, for accessibility, and Sphinx ignores a custom title given
+    in a ``toctree`` for pages that have several.
+    """
+    if doctree is None:
+        return
+    sections = [child for child in doctree.children if isinstance(child, nodes.section)]
+    if len(sections) > 1:
+        utils.maybe_warn(
+            app,
+            f"Page has {len(sections)} top-level headings (H1). Use a single "
+            "top-level heading as the page title and nest the others under it.",
+            type="pydata_sphinx_theme",
+            subtype="multiple_h1",
+            location=sections[1],
+        )
+
+
 def add_shorten_xform(app: Sphinx) -> None:
     """Add the link shortening transform."""
     # Non-HTML builders (e.g. sphinx-build -b gettext, MessageCatalogBuilder)
@@ -328,6 +352,7 @@ def setup(app: Sphinx) -> dict[str, str]:
     app.connect("builder-inited", translator.setup_translators)
     app.connect("builder-inited", update_config)
     app.connect("html-page-context", _fix_canonical_url)
+    app.connect("html-page-context", _warn_multiple_h1)
     app.connect("html-page-context", edit_this_page.setup_edit_url)
     app.connect("html-page-context", toctree.add_toctree_functions)
     app.connect("html-page-context", update_and_remove_templates)
