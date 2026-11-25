@@ -78,7 +78,8 @@
   {# e.g. when using a third-party search addon (such as Read the Docs server-side #}
   {# search) that provides its own UI and keyboard shortcut. #}
   {%- if not theme_disable_search | tobool %}
-  <dialog id="pst-search-dialog">
+  {# tabindex="-1" stops Firefox and Safari from making the dialog itself a tab stop. #}
+  <dialog id="pst-search-dialog" tabindex="-1">
     {% include "../components/search-field.html" %}
   </dialog>
   {%- endif %}
