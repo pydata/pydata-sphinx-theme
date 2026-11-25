@@ -26,3 +26,8 @@ Some text with a |code link|_.
 
 .. |code link| replace:: ``inline code link``
 .. _code link: https://pydata.org
+
+.. toctree::
+   :hidden:
+
+   wrapped

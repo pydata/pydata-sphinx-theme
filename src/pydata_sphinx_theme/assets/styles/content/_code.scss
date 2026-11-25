@@ -57,11 +57,11 @@ code.literal {
   border-radius: 0.25rem;
 }
 
-a > code {
+a code {
   color: var(--pst-color-link-higher-contrast);
 }
 
-a:hover > code {
+a:hover code {
   color: var(--pst-color-link-hover);
 }
 
