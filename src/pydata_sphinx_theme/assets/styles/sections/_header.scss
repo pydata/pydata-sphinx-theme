@@ -50,7 +50,7 @@
     &::after {
       content: '';
       position: absolute;
-      inset: 0 -$focus-ring-width -$focus-ring-width;
+      inset: 0 (-$focus-ring-width) (-$focus-ring-width);
       border: 3px solid var(--pst-color-accent);
     }
   }
