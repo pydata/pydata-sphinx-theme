@@ -224,10 +224,7 @@ $link-hover-decoration-thickness: string.unquote(
       &::after{
         content: '';
         position: absolute;
-        top: 0;
-        left: -$focus-ring-width;
-        right: -$focus-ring-width;
-        bottom: -$focus-ring-width;
+        inset: 0 -$focus-ring-width -$focus-ring-width;
         border: 3px solid var(--pst-color-accent);
       }
     } @else {
