@@ -81,7 +81,7 @@
   // The first span is for the previous page and aligns to the left
   span.ablog__prev {
     i.fa-arrow-circle-left::before {
-      content: var(--pst-icon-angle-left);
+      @include decorative-icon-content(var(--pst-icon-angle-left));
     }
   }
 
@@ -97,7 +97,7 @@
     text-align: right;
 
     i.fa-arrow-circle-right::before {
-      content: var(--pst-icon-angle-right);
+      @include decorative-icon-content(var(--pst-icon-angle-right));
     }
   }
 }
