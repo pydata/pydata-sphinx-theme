@@ -38,8 +38,7 @@
     display: flex;
     align-items: center;
     height: fit-content;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-inline: 1rem;
   }
 
   :focus-visible {
@@ -210,8 +209,7 @@
 
   .search-button-field {
     padding:0.375em;
-    margin-top: 0.3rem;
-    margin-bottom: 0.3rem;
+    margin-block: 0.3rem;
   }
 
   // **************************************************************
