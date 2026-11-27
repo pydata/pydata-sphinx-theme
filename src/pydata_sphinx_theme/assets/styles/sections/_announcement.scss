@@ -1,18 +1,3 @@
-.pst-async-banner-revealer {
-  // Setting height to 0 and overflow to hidden allows us to add up the heights
-  // of this element's children before revealing them.
-  height: 0;
-  overflow: hidden;
-
-  // Height to be set by JavaScript, which should trigger the following
-  // transition rule (unless the user has set their system to reduce motion).
-  transition: height 300ms ease-in-out;
-
-  @media (prefers-reduced-motion) {
-    transition: none;
-  }
-}
-
 #bd-header-version-warning,
 .bd-header-announcement {
   min-height: 3rem;
