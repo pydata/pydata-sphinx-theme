@@ -30,7 +30,7 @@ button.btn.version-switcher__button {
 
   // Keep a long list of versions on screen, and let it scroll. The scroll
   // padding keeps the item focused with the arrow keys fully in view.
-  max-height: calc(100vh - #{$header-height-total} - 1rem);
+  max-height: calc(100vh - var(--pst-header-height) - 1rem);
   overflow-y: auto;
   scroll-padding-block: $focus-ring-width;
 
